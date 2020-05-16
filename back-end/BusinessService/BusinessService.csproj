@@ -13,10 +13,5 @@
     <Folder Include="Controllers\Public\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Evolve" Version="2.4.0" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
-  </ItemGroup>
-
 
 </Project>

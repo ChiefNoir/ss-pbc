@@ -10,7 +10,7 @@ namespace BusinessService.DataLayer.Model
         public int Id { get; set; }
 
         [Required]
-        public int Code { get; set; }
+        public string Code { get; set; }
 
         [Required]
         public string DisplayName { get; set; }

@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BusinessService.DataLayer.Model
 {
-    /// <summary> Informational blocks for index page </summary>
-    public class Introduction : IVersion
+    /// <summary> News block for index page </summary>
+    public class News : IVersion
     {
         [Key]
         public int Id { get; set; }

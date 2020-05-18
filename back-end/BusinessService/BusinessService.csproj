@@ -5,6 +5,12 @@
     <AssemblyVersion>0.0.0.1</AssemblyVersion>
     <Version>0.0.0.1</Version>
     <FileVersion>0.0.0.1</FileVersion>
+    <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
+    <Company>Fireplace of Despair</Company>
+    <Authors>Stanislav "Chief" Shevtsov</Authors>
+    <NeutralLanguage>en</NeutralLanguage>
+    <StartupObject>BusinessService.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

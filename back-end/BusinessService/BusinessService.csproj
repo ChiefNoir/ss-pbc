@@ -16,7 +16,6 @@
   <ItemGroup>
     <Folder Include="Controllers\Gateway\" />
     <Folder Include="Controllers\Private\" />
-    <Folder Include="Controllers\Public\" />
   </ItemGroup>
 
   <ItemGroup>

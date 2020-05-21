@@ -1,4 +1,4 @@
-﻿namespace BusinessService.DataLayer.Interfaces
+﻿namespace BusinessService.Common.Interfaces
 {
     /// <summary> Entity with version </summary>
     public interface IVersion

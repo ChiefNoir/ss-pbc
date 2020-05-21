@@ -15,12 +15,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Evolve" Version="2.4.0" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
+    <None Remove="Migrations\V0_0_0_1__Init.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <EmbeddedResource Include="Migrations\V0_0_0_1__Init.sql" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Evolve" Version="2.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
+  </ItemGroup>
+  
+  
 
 </Project>

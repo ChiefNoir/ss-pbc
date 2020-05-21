@@ -4,21 +4,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BusinessService.DataLayer.Model
 {
-    /// <summary> URL to the external resource </summary>
-    [Table("externalurl")]
-    public class ExternalUrl : IVersion
+    [Table("serversetting")]
+    public class ServerSetting : IVersion
     {
         [Key]
-        [Column("id")]
-        public int Id { get; set; }
-
-        [Required]
-        [Column("url")]
-        public string Url { get; set; }
+        [Column("key")]
+        public string Key { get; set; }
 
         [Required]
         [Column("displayname")]
         public string DisplayName { get; set; }
+
+        [Column("value")]
+        public string Value { get; set; }
 
         [Required]
         [Column("version")]

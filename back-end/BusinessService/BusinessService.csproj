@@ -19,5 +19,10 @@
     <Folder Include="Controllers\Public\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessService.DataLayer\BusinessService.DataLayer.csproj" />
+    <ProjectReference Include="..\BusinessService.Logic\BusinessService.Logic.csproj" />
+  </ItemGroup>
+
 
 </Project>

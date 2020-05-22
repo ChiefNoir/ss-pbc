@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessService.Controllers.Public
 {
-    public class SimpleGet : Controller
+    [ApiController]
+    [Route("api")]
+    public class SimpleGet : ControllerBase
     {
         [HttpGet("news")]
         public JsonResult GetNews()

@@ -1,14 +1,8 @@
 ﻿using BusinessService.DataLayer.Model;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Data;
-using System.IO;
 using System.Reflection;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BusinessService.DataLayer
 {

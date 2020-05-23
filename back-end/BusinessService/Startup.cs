@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessService.DataLayer;
+using BusinessService.DataLayer.Interfaces;
+using BusinessService.DataLayer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,10 +30,9 @@ namespace BusinessService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default"))
-            , ServiceLifetime.Scoped
-            );
+
+            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
+            services.AddTransient<IGenericRepository, GenericRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

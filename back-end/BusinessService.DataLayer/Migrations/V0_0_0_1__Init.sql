@@ -1,5 +1,5 @@
 ﻿create table ExternalUrl (
-	Id integer primary key,
+	Id serial primary key,
 	Url varchar(256),
 	DisplayName varchar(64) not null,
 	Version int not null default 0
@@ -7,7 +7,7 @@
 
 create table Category 
 (
-	Id integer primary key,
+	Id serial primary key,
 	Code varchar(126) not null unique,
 	DisplayName varchar(64) not null,
 	ImageUrl varchar(126),
@@ -16,7 +16,7 @@ create table Category
 );
 
 create table News (
-	Id integer primary key,
+	Id serial primary key,
 	Title varchar(64) not null,
 	Text text,
 	ImageUrl varchar(64) not null,
@@ -24,7 +24,7 @@ create table News (
 );
 
 create table Project (
-	Id integer primary key,
+	Id serial primary key,
 	Code varchar(126) not null unique,
 	DisplayName varchar(64) not null,
 	ImageUrl varchar(126),
@@ -35,7 +35,7 @@ create table Project (
 );
 
 create table Project2ExternalUrl (
-	Id integer primary key,
+	Id serial primary key,
 	ProjectId int not null REFERENCES Project (Id),
 	ExternalUrlId int not null REFERENCES ExternalUrl (Id)
 );

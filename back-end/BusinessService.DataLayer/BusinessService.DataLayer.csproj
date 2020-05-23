@@ -15,13 +15,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Migrations\V0_0_0_1__Init.sql" />
-    <None Remove="Migrations\V0_0_0_2__reserved_keywords.sql" />
+    <None Remove="Migrations\V0_0_0_1__initial_tables.sql" />
+    <None Remove="Migrations\V0_0_0_2__category_constraints.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\V0_0_0_1__Init.sql" />
-    <EmbeddedResource Include="Migrations\V0_0_0_2__reserved_keywords.sql" />
+    <EmbeddedResource Include="Migrations\V0_0_0_1__initial_tables.sql" />
+    <EmbeddedResource Include="Migrations\V0_0_0_2__category_constraints.sql" />
   </ItemGroup>
 
   <ItemGroup>

@@ -27,6 +27,7 @@ create table Project (
 	Id serial primary key,
 	Code varchar(126) not null unique,
 	DisplayName varchar(64) not null,
+	ReleaseDate date, 
 	ImageUrl varchar(126),
 	CategoryId int not null REFERENCES Category (Id),
 	DescriptionShort text,

@@ -1,4 +1,5 @@
 ﻿using BusinessService.Common.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,6 +22,9 @@ namespace BusinessService.DataLayer.Model
         [Required]
         [Column("displayname")]
         public string DisplayName { get; set; }
+
+        [Column("releasedate")]
+        public DateTime? ReleaseDate { get; set; }
 
         [Column("imageurl")]
         public string ImageUrl { get; set; }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BusinessService.Controllers.Public
 {
     [ApiController]
-    [Route("api")]
+    [Route("api/v1/")]
     public class SimpleGet : ControllerBase
     {
         private readonly IGenericRepository _repository;
@@ -16,7 +16,7 @@ namespace BusinessService.Controllers.Public
             _repository = repository;
         }
 
-        [HttpGet("news")]
+        [HttpGet("news/all")]
         public JsonResult GetNews()
         {
             var result = Supervisor.SafeExecute(() =>
@@ -27,8 +27,8 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
-        [HttpGet("categories")]
-        public JsonResult GetCategory()
+        [HttpGet("categories/all")]
+        public JsonResult GetCategories()
         {
             var result = Supervisor.SafeExecute(() =>
             {
@@ -38,27 +38,31 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
-        [HttpGet("projects/{start}/{length}/{categoryCode}")]
-        public JsonResult GetProjects(int start, int length, string categoryCode)
+        [HttpGet("settings/all")]
+        public JsonResult GetSettings()
         {
             var result = Supervisor.SafeExecute(() =>
             {
-                var defaultCode = _repository.FirstOrDefault<Category>(x => x.IsEverything)?.Code;
-
-                return _repository.Get<Project>
-                (
-                    start,
-                    length,
-                    f => defaultCode == categoryCode || string.IsNullOrEmpty(categoryCode) || f.Category.Code == categoryCode,
-                    x => x.Category, x => x.ExternalUrls
-                );
+                return _repository.Get<ServerSetting>();
             });
 
             return new JsonResult(result);
         }
 
-        [HttpGet("projects/{categoryCode}")]
-        public JsonResult GetProjects(string categoryCode)
+
+        [HttpGet("projects/count")]
+        public JsonResult GetProjectsTotal()
+        {
+            var result = Supervisor.SafeExecute(() =>
+            {
+                return _repository.Count<Project>();
+            });
+
+            return new JsonResult(result);
+        }
+
+        [HttpGet("projects/count/{categoryCode}")]
+        public JsonResult GetProjectsTotal(string categoryCode)
         {
             var result = Supervisor.SafeExecute(() =>
             {
@@ -73,23 +77,20 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
-        [HttpGet("projects")]
-        public JsonResult GetProjects()
+        [HttpGet("projects/{categoryCode}/{start}/{length}/")]
+        public JsonResult GetProjects(int start, int length, string categoryCode)
         {
             var result = Supervisor.SafeExecute(() =>
             {
-                return _repository.Count<Project>();
-            });
+                var defaultCode = _repository.FirstOrDefault<Category>(x => x.IsEverything)?.Code;
 
-            return new JsonResult(result);
-        }
-
-        [HttpGet("settings")]
-        public JsonResult GetSettings()
-        {
-            var result = Supervisor.SafeExecute(() =>
-            {
-                return _repository.Get<ServerSetting>();
+                return _repository.Get<Project>
+                (
+                    start,
+                    length,
+                    f => defaultCode == categoryCode || string.IsNullOrEmpty(categoryCode) || f.Category.Code == categoryCode,
+                    x => x.Category, x => x.ExternalUrls
+                );
             });
 
             return new JsonResult(result);

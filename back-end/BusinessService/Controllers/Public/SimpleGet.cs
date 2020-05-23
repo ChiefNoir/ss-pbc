@@ -96,5 +96,15 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
+        [HttpGet("projects/{code}")]
+        public JsonResult GetProject(string code)
+        {
+            var result = Supervisor.SafeExecute(() =>
+            {
+                return _repository.FirstOrDefault<Project>(x => x.Code == code, x => x.Category, x => x.ExternalUrls);
+            });
+
+            return new JsonResult(result);
+        }
     }
 }

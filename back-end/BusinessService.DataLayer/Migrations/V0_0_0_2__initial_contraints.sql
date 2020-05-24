@@ -23,3 +23,8 @@ alter table project add constraint CK_project_code__only_latin_and_numbers
 alter table project add constraint CK_project_code__only_lowercase
     check (code = lower(code));
 -- --------------------------------------------------------------
+
+-- Server Settings
+alter table serversetting add constraint CK_serversetting_key__only_latin_and_numbers
+    check (code ~* '^[a-z0-9_.-]*$');
+-- --------------------------------------------------------------

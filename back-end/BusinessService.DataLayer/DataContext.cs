@@ -9,20 +9,13 @@ namespace BusinessService.DataLayer
     public class DataContext : DbContext
     {
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Project> Projects { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<Project> Projects { get; set; }
         public DbSet<ServerSetting> ServerSettings { get; set; }
 
         public DataContext(DbContextOptions options) : base(options) 
         {
-            MigrateDatabase(this.Database.GetDbConnection());
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            
+            MigrateDatabase(Database.GetDbConnection());
         }
 
         private void MigrateDatabase(IDbConnection connection)

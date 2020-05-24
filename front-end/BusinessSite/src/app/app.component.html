@@ -1,2 +1,13 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
+<div flex fxLayout="row" fxLayout.lt-sm="column" ngClass.sm="class-for-small-devices">
+    <div fxFlex="10%"></div>
+    <div fxFlex="80%">
+        <div>
+            <app-header fxFlex="100%"></app-header>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+    <div fxFlex="10%"></div>
+</div>
+
+
+

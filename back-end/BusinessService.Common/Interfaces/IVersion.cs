@@ -1,6 +1,6 @@
 ﻿namespace BusinessService.Common.Interfaces
 {
-    /// <summary> Entity with version </summary>
+    /// <summary> Entity with a version </summary>
     public interface IVersion
     {
         /// <summary>Entity version</summary>

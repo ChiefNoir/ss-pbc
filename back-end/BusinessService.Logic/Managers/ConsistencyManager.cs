@@ -2,7 +2,6 @@
 using BusinessService.Logic.Exceptions;
 using BusinessService.Logic.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace BusinessService.Logic.Managers
 {
@@ -15,16 +14,16 @@ namespace BusinessService.Logic.Managers
             _context = context;
         }
 
-        public void ValidateBeforeUpdate<T>(object key, T item) where T : class, IVersion
+        public void ValidateBeforeUpdate<T>(object key, T entity) where T : class, IVersion
         {
-            var dbItem = _context.Find<T>(key);
-            _context.Entry(dbItem).State = EntityState.Detached;
+            var dbEntity = _context.Find<T>(key);
+            _context.Entry(dbEntity).State = EntityState.Detached;
 
-            if (dbItem == null)
-                throw new KeyNotFoundException($"{typeof(T)} not found by key {key}.");
+            if (dbEntity == null)
+                throw new NotFoundException($"{typeof(T)} not found by key {key}.");
 
-            if (dbItem.Version != item.Version)
-                throw new InconsistencyException($"Version inconsistency in {typeof(T)}. {dbItem.Version} != {item.Version}.");
+            if (dbEntity.Version != entity.Version)
+                throw new InconsistencyException($"Version inconsistency in {typeof(T)}. {dbEntity.Version} != {entity.Version}.");
         }
     }
 }

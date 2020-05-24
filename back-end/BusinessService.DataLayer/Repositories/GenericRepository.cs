@@ -17,44 +17,76 @@ namespace BusinessService.DataLayer.Repositories
             _context = context;
         }
 
-        public int Count<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
-        {
-            return _context.Set<T>().IncludeMultiple(includes).Where(predicate).Count();
-        }
-
         public int Count<T>() where T : class
         {
-            return _context.Set<T>().Count();
+            return _context.Set<T>()
+                            .AsNoTracking()
+                            .Count();
         }
+
+        public int Count<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
+        {
+            return _context.Set<T>()
+                           .IncludeMultiple(includes)
+                           .Where(predicate)
+                           .AsNoTracking()
+                           .Count();
+        }
+
 
         public T FirstOrDefault<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>().IncludeMultiple(includes).AsNoTracking().FirstOrDefault(predicate);
+            return _context.Set<T>()
+                           .IncludeMultiple(includes)
+                           .AsNoTracking()
+                           .FirstOrDefault(predicate);
         }
 
         public T FirstOrDefault<T>(params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>().IncludeMultiple(includes).AsNoTracking().FirstOrDefault();
+            return _context.Set<T>()
+                           .IncludeMultiple(includes)
+                           .AsNoTracking()
+                           .FirstOrDefault();
         }
+
 
         public IEnumerable<T> Get<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>().IncludeMultiple(includes).AsNoTracking().Where(predicate).ToList();
+            return _context.Set<T>()
+                           .IncludeMultiple(includes)                           
+                           .Where(predicate)
+                           .AsNoTracking()
+                           .ToList();
         }
 
         public IEnumerable<T> Get<T>(params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>().IncludeMultiple(includes).AsNoTracking().ToList();
+            return _context.Set<T>()
+                           .IncludeMultiple(includes)
+                           .AsNoTracking()
+                           .ToList();
         }
 
         public IEnumerable<T> Get<T>(int start, int length, params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>().IncludeMultiple(includes).AsNoTracking().Skip(start).Take(length).ToList();
+            return _context.Set<T>()
+                           .IncludeMultiple(includes)
+                           .Skip(start)
+                           .Take(length)
+                           .AsNoTracking()
+                           .ToList();
         }
 
         public IEnumerable<T> Get<T>(int start, int length, Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>().IncludeMultiple(includes).AsNoTracking().Where(predicate).Skip(start).Take(length).ToList();
+            return _context.Set<T>()
+                           .IncludeMultiple(includes)
+                           .Where(predicate)
+                           .Skip(start)
+                           .Take(length)
+                           .AsNoTracking()
+                           .ToList();
         }
     }
 }

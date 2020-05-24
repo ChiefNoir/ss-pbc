@@ -5,8 +5,14 @@ using System.Linq.Expressions;
 
 namespace BusinessService.DataLayer.Extensions
 {
-    public static class ExtIQueryable
+    /// <summary> Extension of the <seealso cref="IQueryable"/></summary>
+    public static class ExtensionIQueryable
     {
+        /// <summary> Include values from multiple foreign tables</summary>
+        /// <typeparam name="T">Type of the result</typeparam>
+        /// <param name="query">Query</param>
+        /// <param name="includes">Includes from foreign tables</param>
+        /// <returns>Result of the query</returns>
         public static IQueryable<T> IncludeMultiple<T>(this IQueryable<T> query, params Expression<Func<T, object>>[] includes) where T : class
         {
             if (includes == null || !includes.Any())

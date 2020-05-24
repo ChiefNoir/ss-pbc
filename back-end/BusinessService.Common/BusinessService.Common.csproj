@@ -7,6 +7,8 @@
     <Authors>Stanislav "Chief" Shevtsov</Authors>
     <Company>Fireplace of Despair</Company>
     <NeutralLanguage>en</NeutralLanguage>
+    <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
   </PropertyGroup>
 
 </Project>

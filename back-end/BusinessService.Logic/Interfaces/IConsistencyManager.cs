@@ -3,10 +3,13 @@
 namespace BusinessService.Logic.Interfaces
 {
     /// <summary> Consistency Manager will validate <see cref="IVersion"/> entity on update action
-    /// If Version is different, so the update action is invalid
-    /// </summary>
+    /// If <see cref="int"/> Version of the entity is different, then the update action is invalid and must be stopped.</summary>
     public interface IConsistencyManager
     {
-        void ValidateUpdateAction<T>(object key, T item) where T : class, IVersion;
+        /// <summary> Validate <typeparamref name="T"/> entity</summary>
+        /// <typeparam name="T">Class of the <seealso cref="IVersion"/> entity</typeparam>
+        /// <param name="key">[Key] field of the entity</param>
+        /// <param name="item">Database entity to validate before database update</param>
+        void ValidateBeforeUpdate<T>(object key, T entity) where T : class, IVersion;
     }
 }

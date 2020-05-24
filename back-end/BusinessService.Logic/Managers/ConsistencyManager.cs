@@ -15,7 +15,7 @@ namespace BusinessService.Logic.Managers
             _context = context;
         }
 
-        public void ValidateUpdateAction<T>(object key, T item) where T : class, IVersion
+        public void ValidateBeforeUpdate<T>(object key, T item) where T : class, IVersion
         {
             var dbItem = _context.Find<T>(key);
             _context.Entry(dbItem).State = EntityState.Detached;

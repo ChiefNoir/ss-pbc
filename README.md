@@ -4,8 +4,8 @@ Personal website.
 For the change of pace, for the playing around and for the developing new skills.
 
 ## Front-end
-
-- none
+- [Angular](https://angular.io/)
+- [Angular Material](https://material.angular.io/)
 
 ## Back-end
 - [.Net Core 3.1](https://dotnet.microsoft.com/download)

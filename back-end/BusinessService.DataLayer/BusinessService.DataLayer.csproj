@@ -17,6 +17,11 @@
   <ItemGroup>
     <None Remove="Migrations\V0_0_0_1__initial_tables.sql" />
     <None Remove="Migrations\V0_0_0_2__initial_contraints.sql" />
+    <None Remove="Migrations\V0_0_0_3__init_serversettings.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\V0_0_0_3__init_serversettings.sql" />
   </ItemGroup>
 
   <ItemGroup>

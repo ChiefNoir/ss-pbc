@@ -21,6 +21,7 @@ namespace BusinessService.Logic.Supervision
             }
             catch (Exception ee)
             {
+                //TODO: log error
                 result.IsSucceed = false;
                 result.ErrorMessage = ee.Message;
             }
@@ -42,6 +43,7 @@ namespace BusinessService.Logic.Supervision
             }
             catch (Exception ee)
             {
+                //TODO: log error
                 result.IsSucceed = false;
                 result.ErrorMessage = ee.Message;
             }

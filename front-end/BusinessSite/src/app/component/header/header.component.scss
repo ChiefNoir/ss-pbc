@@ -1,0 +1,19 @@
+@import "variables";
+@import "mixins";
+
+.header {
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 25px;
+}
+
+.header a {
+  font-family: $font-header;
+  color: $color-text;
+  font-size: 400%;
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  @include text-reto-shadow($color-shadow-text-light);
+}

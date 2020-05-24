@@ -3,12 +3,12 @@
 namespace BusinessService.Logic.Supervision
 {
     /// <summary> Utility class that provides wrapper for all things that might fail </summary>
-    /// <remarks> Service CAN NOT throw Exception and die</remarks>
+    /// <remarks> Service <b>CAN NOT</b> throw <seealso cref="Exception"/> and die</remarks>
     public static class Supervisor
     {
-        /// <summary> Execute function and return its result if anything goes right </summary>
+        /// <summary> Execute function and return its result if everything goes right </summary>
         /// <typeparam name="T">Type of returning result</typeparam>
-        /// <param name="func">Function to execute</param>
+        /// <param name="func"><seealso cref="Func"/> to execute</param>
         /// <returns>Result of execution or ErrorMessage will have message </returns>
         public static ExecutionResult<T> SafeExecute<T>(Func<T> func)
         {
@@ -28,16 +28,16 @@ namespace BusinessService.Logic.Supervision
             return result;
         }
 
-        /// <summary> Execute function and return empty result if anything goes right </summary>
-        /// <param name="func">Function to execute</param>
-        /// <returns>Empty result of execution or ErrorMessage will have message </returns>
-        public static ExecutionResult<object> SafeExecute(Action func)
+        /// <summary> Execute function </summary>
+        /// <param name="action"><seealso cref="Action"/> to execute</param>
+        /// <returns>Result of execution or ErrorMessage will have message </returns>
+        public static ExecutionResult SafeExecute(Action action)
         {
-            var result = new ExecutionResult<object>();
+            var result = new ExecutionResult();
 
             try
             {
-                func();
+                action();
                 result.IsSucceed = true;
             }
             catch (Exception ee)
@@ -48,5 +48,6 @@ namespace BusinessService.Logic.Supervision
 
             return result;
         }
+
     }
 }

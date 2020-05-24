@@ -70,6 +70,7 @@ namespace BusinessService.Controllers.Public
 
                 return _repository.Count<Project>
                 (
+                    //todo: fixit
                     f => defaultCode == categoryCode || string.IsNullOrEmpty(categoryCode) || f.Category.Code == categoryCode
                 );
             });

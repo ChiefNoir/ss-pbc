@@ -15,18 +15,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Migrations\V0_0_0_1__initial_tables.sql" />
-    <None Remove="Migrations\V0_0_0_2__initial_contraints.sql" />
-    <None Remove="Migrations\V0_0_0_3__init_serversettings.sql" />
+    <None Remove="Migrations\V0_0_0_1__init_tables.sql" />
+    <None Remove="Migrations\V0_0_0_2__init_constraints.sql" />
+    <None Remove="Migrations\V0_0_0_3__init_indexes.sql" />
+    <None Remove="Migrations\V0_0_0_4__init_serversettings.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\V0_0_0_3__init_serversettings.sql" />
+    <EmbeddedResource Include="Migrations\V0_0_0_3__init_indexes.sql" />
+    <EmbeddedResource Include="Migrations\V0_0_0_4__init_serversettings.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\V0_0_0_1__initial_tables.sql" />
-    <EmbeddedResource Include="Migrations\V0_0_0_2__initial_contraints.sql" />
+    <EmbeddedResource Include="Migrations\V0_0_0_1__init_tables.sql" />
+    <EmbeddedResource Include="Migrations\V0_0_0_2__init_constraints.sql" />
   </ItemGroup>
 
   <ItemGroup>

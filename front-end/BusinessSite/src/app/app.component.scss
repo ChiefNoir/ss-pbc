@@ -1,0 +1,23 @@
+@import 'variables';
+
+.mat-toolbar{
+    background: transparent !important;
+    min-height: 40px !important; 
+    height: 40px !important;
+  }
+  
+  
+.mat-toolbar a{
+  color: $color-text;
+  font-size: 25px;
+  height: 100%; 
+}
+
+.mat-toolbar a:hover{
+  color: $color-text-highlighted;
+  text-shadow: $shadow-text;
+  background-color: $color-container-transparent;
+}
+.active {
+    background-color: $color-container;
+  }

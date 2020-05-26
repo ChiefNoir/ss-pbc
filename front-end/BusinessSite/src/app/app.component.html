@@ -1,13 +1,30 @@
-<div flex fxLayout="row" fxLayout.lt-sm="column" ngClass.sm="class-for-small-devices">
-    <div fxFlex="10%"></div>
-    <div fxFlex="80%">
-        <div>
-            <app-header fxFlex="100%"></app-header>
-        </div>
+<div fxLayout="column" fxLayoutAlign="space-between stretch" ngClass.sm="class-for-small-devices">
+    <app-header fxFlex="100%"></app-header>
+
+    <div >
+        <mat-toolbar >
+            <mat-toolbar-row 
+                fxLayout="row" fxLayoutAlign="center stretch" 
+                fxShow="true" fxHide.lt-md="true">
+                <a routerLink="/" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    Home
+                  </a>
+                  <a routerLink="/projects/" mat-button routerLinkActive="active">
+                    Projects
+                  </a>
+            </mat-toolbar-row>
+            <mat-toolbar-row  fxShow="true" fxHide.gt-sm="true" class="active">
+                <a mat-button (click)="sidenav.toggle()" fxFlex="220%">
+                  Menu
+                </a>
+              </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+
+
+    <div>
         <router-outlet></router-outlet>
     </div>
+
     <app-footer></app-footer>
 </div>
-
-
-

@@ -1,3 +1,4 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 $color-container: #202225;
 
@@ -5,3 +6,7 @@ $color-text: #bebebe;
 $color-shadow-text-light: #7a7a7a;
 
 $font-header: Roboto, 'Helvetica Neue', sans-serif;
+$color-text-highlighted: #8e4e55;
+
+$shadow-text: 2px 2px 3px black;
+$color-container-transparent: rgba(32, 34, 37, 0.8);

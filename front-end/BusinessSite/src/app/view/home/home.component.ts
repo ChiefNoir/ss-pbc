@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, from } from 'rxjs';
+
+import { DataService } from 'src/app/service/data.service';
+import { RequestResult } from 'src/app/model/RequestResult';
+import { News } from 'src/app/model/News';
+
 
 @Component({
     selector: 'app-home',
@@ -6,7 +12,41 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./home.component.scss']
   })
 
-  export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
-    public ngOnInit(): void {}
+  private service: DataService;
+  private news$: BehaviorSubject<Array<News>> = new BehaviorSubject<Array<News>>(null);
+
+  public constructor(service: DataService) {
+    this.service = service;
+  }
+
+
+  public ngOnInit(): void {
+    this.service.getNews()
+                .subscribe
+                (
+                  result => this.handleRequestResult(result),
+                  error => this.handleError(error)
+                );
+  }
+
+  private handleRequestResult(result: RequestResult<Array<News>>): void {
+
+    if (result.IsSucceed)
+    {
+      this.news$.next(result.Data);
+    }
+    else
+    {
+      this.handleError(result.ErrorMessage);
+    }
+  }
+
+  private handleError(error: any): void {
+
+    // TODO: react properly
+    console.log(error);
+  }
+
 }

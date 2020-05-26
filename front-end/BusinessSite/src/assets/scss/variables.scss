@@ -1,10 +1,13 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
+$color-core: #000000;
+
 $color-container: #202225;
 
 $color-text: #bebebe;
 $color-shadow-text-light: #7a7a7a;
 
+$font-core: Roboto, 'Helvetica Neue', sans-serif;
 $font-header: Roboto, 'Helvetica Neue', sans-serif;
 $color-text-highlighted: #8e4e55;
 

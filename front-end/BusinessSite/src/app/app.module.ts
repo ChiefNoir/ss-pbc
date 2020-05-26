@@ -11,6 +11,8 @@ import { MaterialModules } from './#import/material';
 import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 
+import { DataService } from './service/data.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,7 @@ import { FooterComponent } from './component/footer/footer.component';
     FlexLayoutModule,
     MaterialModules
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

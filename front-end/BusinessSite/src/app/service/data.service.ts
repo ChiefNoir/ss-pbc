@@ -22,5 +22,4 @@ export class DataService {
           this.endpoint + 'news/all'
         );
       }
-
 }

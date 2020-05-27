@@ -13,7 +13,7 @@ import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 
 import { LoadingComponent } from './component/loading/loading.component';
-
+import { ErrorComponent } from './component/error/error.component';
 
 
 
@@ -28,6 +28,7 @@ import { DataService } from './service/data.service';
   declarations: [
     AppComponent,
     LoadingComponent,
+    ErrorComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,

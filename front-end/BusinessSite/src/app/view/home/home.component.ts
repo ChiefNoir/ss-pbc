@@ -15,7 +15,7 @@ import { News } from 'src/app/model/News';
 export class HomeComponent implements OnInit {
 
   private service: DataService;
-  private news$: BehaviorSubject<Array<News>> = new BehaviorSubject<Array<News>>(null);
+  public news$: BehaviorSubject<Array<News>> = new BehaviorSubject<Array<News>>(null);
 
   public constructor(service: DataService) {
     this.service = service;

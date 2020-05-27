@@ -1,1 +1,17 @@
-INDEX PAGE
+<div flex fxLayout="row" class="container">
+  
+    <div fxFlex="100%">  
+    <div class="content" fxFlex="75%">
+      <span *ngIf="news$ | async as news; else loading">
+      {{ news }}
+    </span>
+    </div>
+
+  </div>
+</div>
+
+ <ng-template #loading>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <app-loading></app-loading>
+   </div>
+</ng-template> 

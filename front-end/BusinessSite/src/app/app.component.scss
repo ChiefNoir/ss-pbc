@@ -26,3 +26,15 @@
 .active {
     background-color: $color-container;
   }
+
+  .content-conteiner {
+    background-color: $color-container;
+    display: flex;
+    height: auto;
+  }
+
+  .content-main {
+    width: 90%;
+    height: auto;
+    margin: auto;
+  }

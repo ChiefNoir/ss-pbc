@@ -14,7 +14,12 @@ import { FooterComponent } from './component/footer/footer.component';
 
 import { LoadingComponent } from './component/loading/loading.component';
 
+
+
+
 import { HomeComponent } from './view/home/home.component';
+import { NotFoundComponent } from './view/notfound/notfound.component';
+
 
 import { DataService } from './service/data.service';
 
@@ -25,7 +30,8 @@ import { DataService } from './service/data.service';
     LoadingComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

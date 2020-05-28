@@ -1,6 +1,8 @@
 
 export class RequestResult<T> {
-    public Data: T;
-    public IsSucceed: boolean;
-    public ErrorMessage: string;
-  }
+    public data: T;
+
+    public isSucceed: boolean;
+
+    public errorMessage: string;
+}

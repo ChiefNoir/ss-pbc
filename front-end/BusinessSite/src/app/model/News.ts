@@ -1,9 +1,9 @@
 export class News {
     public id: number;
 
-    public Title: string;
-    public Text: string;
-    public ImageUrl: string;
+    public title: string;
+    public text: string;
+    public imageUrl: string;
 
-    public Version: number;
+    public version: number;
   }

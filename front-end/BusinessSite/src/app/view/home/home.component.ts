@@ -33,13 +33,13 @@ export class HomeComponent implements OnInit {
 
   private handleRequestResult(result: RequestResult<Array<News>>): void {
 
-    if (result.IsSucceed)
+    if (result.isSucceed)
     {
-      this.news$.next(result.Data);
+      this.news$.next(result.data);
     }
     else
     {
-      this.handleError(result.ErrorMessage);
+      this.handleError(result.errorMessage);
     }
   }
 
@@ -48,5 +48,4 @@ export class HomeComponent implements OnInit {
     // TODO: react properly
     console.log(error);
   }
-
 }

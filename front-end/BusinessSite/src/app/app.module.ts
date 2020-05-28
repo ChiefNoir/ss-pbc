@@ -14,6 +14,7 @@ import { FooterComponent } from './component/footer/footer.component';
 
 import { LoadingComponent } from './component/loading/loading.component';
 import { ErrorComponent } from './component/error/error.component';
+import { NewsComponent } from './component/news/news.component';
 
 
 
@@ -29,6 +30,7 @@ import { DataService } from './service/data.service';
     AppComponent,
     LoadingComponent,
     ErrorComponent,
+    NewsComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,

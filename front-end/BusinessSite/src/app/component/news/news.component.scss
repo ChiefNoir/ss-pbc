@@ -1,0 +1,38 @@
+@import 'variables';
+@import 'mixins';
+
+.container {
+  // filter: gray;
+	// filter: grayscale(100%);
+  background-image: url('https://i.imgur.com/pCD3UjJ.png');
+  background-size:     cover;  
+  background-repeat:   no-repeat;
+  background-position: top center; 
+
+  margin: 2%;
+  min-height: 300px;
+
+  
+  @include flat-shadow($color-core);
+}
+
+.content{
+  background-color: $color-content;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.headline {
+  color: $color-text;
+  margin-left: 20px;
+  font-family: $font-core;
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.text {
+  color: $color-text;
+  font-family: $font-core;
+  margin-left: 20px;
+  font-size: large;
+}

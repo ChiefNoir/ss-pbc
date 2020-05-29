@@ -4,33 +4,45 @@
 .container {
   margin-bottom: 2%;
   @include flat-shadow($color-core);
+  
+  display: inline-block;
+  position: relative;
 }
 
 .content-image {
-  // filter: gray;
-	// filter: grayscale(100%);
+  //filter: gray;
+	//filter: grayscale(100%);
   object-fit: cover;
-  object-position: 100% 10%;
+  object-position: 100% 0%;
   width: 100%;
-  height: 250px;
+  height: 370px;
 
-  
+  left: 0px;
+  top: 0px;
 }
 
 .content{
-
+  background-color: $color-container-transparent;
   color: $color-text;
   font-family: $font-core;
-  margin-left: 20px;
+
   padding-top: 10px;
   padding-bottom: 10px;
+
+  position: absolute;
+  bottom: 0%;
 }
 
 .headline {
+  margin-left: 20px;
   font-size: x-large;
   font-weight: 500;
 }
 
 .text {
+  margin-left: 20px;
+  margin-right: 20px;
   font-size: large;
+  overflow:hidden;
+  max-height: 300px;
 }

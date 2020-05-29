@@ -12,6 +12,4 @@ export class NewsComponent {
 
   @Input()
   public news: News;
-
-
 }

@@ -1,15 +1,8 @@
-
-
-<!-- TODO: image will come from the model-->
-
 <div class="container" fxLayout="column" fxLayoutAlign="end stretch">
-  
-  
-    <img class="content-image" src="https://i.imgur.com/pCD3UjJ.png" />
+  <img class="content-image" src="{{news.imageUrl}}" />
 
-    <div class="content">
-    <h1 class="headline">{{ news.title }}</h1>  
+  <div class="content">
+    <h1 class="headline">{{ news.title }}</h1>
     <div class="text">{{news.text}}</div>   
   </div>
-
 </div>

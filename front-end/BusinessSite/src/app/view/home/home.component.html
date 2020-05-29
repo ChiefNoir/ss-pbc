@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 <div flex fxLayout="row" class="container">
   <div fxFlex="100%">  
     <div *ngIf="news$ | async as news; else loading">
@@ -16,9 +8,6 @@
     </div>
   </div>
 </div>
-
-
-
 
 <ng-template #loading>
   <app-loading></app-loading>

@@ -1,11 +1,4 @@
-﻿create table ExternalUrl (
-	Id serial primary key,
-	Url varchar(256),
-	DisplayName varchar(64) not null,
-	Version int not null default 0
-);
-
-create table Category 
+﻿create table Category 
 (
 	Id serial primary key,
 	Code varchar(126) not null unique,
@@ -35,15 +28,17 @@ create table Project (
 	Version int not null default 0
 );
 
-create table Project2ExternalUrl (
-	Id serial primary key,
-	ProjectId int not null REFERENCES Project (Id),
-	ExternalUrlId int not null REFERENCES ExternalUrl (Id)
-);
-
 create table ServerSetting (
 	Key varchar(64) primary key,
 	DisplayName varchar(64) not null,
 	Value varchar(64),
+	Version int not null default 0
+);
+
+create table ExternalUrl (
+	Id serial primary key,
+	ProjectId int REFERENCES Project (Id),
+	Url varchar(256),
+	DisplayName varchar(64) not null,
 	Version int not null default 0
 );

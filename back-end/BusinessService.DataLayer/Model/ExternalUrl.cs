@@ -12,6 +12,9 @@ namespace BusinessService.DataLayer.Model
         [Column("id")]
         public int Id { get; set; }
 
+        [Column("projectid")]
+        public int ProjectId { get; set; }
+
         [Required]
         [Column("url")]
         public string Url { get; set; }

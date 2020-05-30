@@ -3,7 +3,7 @@
 	Id serial primary key,
 	Code varchar(126) not null unique,
 	DisplayName varchar(64) not null,
-	ImageUrl varchar(126),
+	ImageUrl varchar(512),
 	IsEverything boolean not null default false,
 	Version int not null default 0
 );
@@ -12,7 +12,7 @@ create table News (
 	Id serial primary key,
 	Title varchar(64) not null,
 	Text text,
-	ImageUrl varchar(64) not null,
+	ImageUrl varchar(512) not null,
 	Version int not null default 0
 );
 
@@ -21,7 +21,7 @@ create table Project (
 	Code varchar(126) not null unique,
 	DisplayName varchar(64) not null,
 	ReleaseDate date, 
-	ImageUrl varchar(126),
+	ImageUrl varchar(512),
 	CategoryId int not null REFERENCES Category (Id),
 	DescriptionShort text,
 	Description text,

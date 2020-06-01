@@ -61,7 +61,7 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
-        [HttpGet("projects/count/{categoryCode}")]
+        [HttpGet("projects/{categoryCode}/count")]
         public JsonResult GetProjectsTotal(string categoryCode)
         {
             var result = Supervisor.SafeExecute(() =>
@@ -97,7 +97,7 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
-        [HttpGet("projects/{code}")]
+        [HttpGet("project/{code}")]
         public JsonResult GetProject(string code)
         {
             var result = Supervisor.SafeExecute(() =>

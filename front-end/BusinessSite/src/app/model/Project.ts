@@ -9,7 +9,7 @@ export class Project {
     public releaseDate: Date;
     public imageUrl: string;
     public categoryId: number;
-    public Category: Category;
+    public category: Category;
     public descriptionShort: string;
     public description: string;
 

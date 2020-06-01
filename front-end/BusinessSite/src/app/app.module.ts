@@ -15,10 +15,12 @@ import { FooterComponent } from './component/footer/footer.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { ErrorComponent } from './component/error/error.component';
 import { NewsComponent } from './component/news/news.component';
+import { ProjectPreviewComponent } from './component/project-preview/project-preview.component';
 
 
 
 import { HomeComponent } from './view/home/home.component';
+import { ProjectsListComponent } from './view/projects-list/projects-list.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
 
 
@@ -31,9 +33,11 @@ import { DataService } from './service/data.service';
     LoadingComponent,
     ErrorComponent,
     NewsComponent,
+    ProjectPreviewComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,
+    ProjectsListComponent,
     NotFoundComponent
   ],
   imports: [

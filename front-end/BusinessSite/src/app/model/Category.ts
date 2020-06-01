@@ -1,4 +1,4 @@
-export class Category {
+export class Category implements INavigation {
     public id: number;
 
     public code: string;
@@ -8,4 +8,7 @@ export class Category {
     public isEverything: boolean;
 
     public version: number;
+
+    // [only-front], url for nagivation
+    public url: string;
   }

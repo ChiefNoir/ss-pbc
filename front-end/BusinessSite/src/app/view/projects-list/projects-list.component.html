@@ -1,0 +1,14 @@
+<div flex fxLayout="row" class="container">
+  <div fxFlex="100%">  
+    <div *ngIf="projects$ | async as projects; else loading">
+      <app-project-preview *ngFor="let item of projects$ | async"
+                role="list"
+                [project]="item">
+      </app-project-preview>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template> 

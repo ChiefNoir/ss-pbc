@@ -30,7 +30,7 @@ export class DataService {
       public getProjects(start: number, length: number, categoryCode: string): Observable<RequestResult<Array<Project>>> {
         return this.httpClient.get<RequestResult<Array<Project>>>
         (
-          this.endpoint + 'projects/' + categoryCode + '/' + start + '/' + length + '/'
+          this.endpoint + 'projects/' + categoryCode + '/' + start + '/' + length + '/' 
         );
       }
 
@@ -41,4 +41,19 @@ export class DataService {
           this.endpoint + 'categories/all'
         );
       }
+
+      public getTotalProjects(categoryCode: string): Observable<RequestResult<number>>
+      {
+        let param = 'projects/';
+
+        if (typeof categoryCode !== 'undefined' && categoryCode) {
+          param += categoryCode + '/';
+        }
+
+        return this.httpClient.get<RequestResult<number>>
+        (
+          this.endpoint + param + 'count'
+        );
+      }
+
 }

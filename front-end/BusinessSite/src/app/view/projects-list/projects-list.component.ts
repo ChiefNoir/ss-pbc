@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { Project } from 'src/app/model/Project';
+import { PagingInfo } from 'src/app/model/PagingInfo';
 
 
 @Component({
@@ -16,6 +17,8 @@ export class ProjectsListComponent implements OnInit {
 
   private service: DataService;
   public projects$: BehaviorSubject<Array<Project>> = new BehaviorSubject<Array<Project>>(null);
+  public pagingInfo$: BehaviorSubject<PagingInfo> = new BehaviorSubject<PagingInfo>(null);
+
 
   public constructor(service: DataService) {
     this.service = service;
@@ -36,11 +39,31 @@ export class ProjectsListComponent implements OnInit {
     if (result.isSucceed)
     {
       this.projects$.next(result.data);
+
+      const pgInfo: PagingInfo = {
+        minPage: 0,
+        maxPage: this.calcMaxPageNumber(10),
+        currentPage: 0,
+  
+        previousPageUrl: '',
+        nextPageUrl: '',
+  
+        navigateCallback: this.changePage.bind(this)
+      };
+
+      this.pagingInfo$.next(pgInfo);
+
     }
     else
     {
       this.handleError(result.errorMessage);
     }
+  }
+
+  private changePage(value: number): void {}
+
+  private calcMaxPageNumber(totalProjects: number): number {
+    return 101;
   }
 
   private handleError(error: any): void {

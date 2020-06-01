@@ -13,11 +13,12 @@ import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 
 import { LoadingComponent } from './component/loading/loading.component';
+import { PaginatorComponent } from './component/paginator/paginator.component';
 import { ErrorComponent } from './component/error/error.component';
 import { NewsComponent } from './component/news/news.component';
 import { ProjectPreviewComponent } from './component/project-preview/project-preview.component';
 
-
+import { OnlyIntModule } from './directive/onlyInt/onlyInt.module';
 
 import { HomeComponent } from './view/home/home.component';
 import { ProjectsListComponent } from './view/projects-list/projects-list.component';
@@ -33,6 +34,7 @@ import { DataService } from './service/data.service';
     LoadingComponent,
     ErrorComponent,
     NewsComponent,
+    PaginatorComponent,
     ProjectPreviewComponent,
     HeaderComponent,
     FooterComponent,
@@ -46,7 +48,9 @@ import { DataService } from './service/data.service';
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModules,
-    HttpClientModule
+    HttpClientModule,
+
+    OnlyIntModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

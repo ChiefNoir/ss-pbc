@@ -1,0 +1,52 @@
+@import 'variables';
+
+.container {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.button {
+  background-color: $color-control;
+  border: none;
+  color: $color-text;
+  padding: 15px 32px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button:hover {
+  background-color: $color-control-highlighted;
+  cursor: pointer;
+}
+
+input {
+  font-size: 16px;
+  color: $color-text;
+
+  display: inline;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  border: 0px solid;
+  background: transparent;
+
+  text-align: right;
+}
+
+input:read-only {
+  text-align: left;
+
+  cursor: default;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}

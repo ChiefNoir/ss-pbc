@@ -1,0 +1,27 @@
+<div *ngIf="maxPage > 0" class="container"
+  flex fxLayout="row" ngClass.sm="class-for-small-devices">
+<div fxFlex="35%">
+ <a *ngIf="currentPage > minPage" class="button"
+     fxFlex="100%"
+     [routerLink]="previousPageUrl">
+   Previous
+ </a>
+</div>
+<div fxFlex="30%">
+ <input value="{{ currentPage }}" #boxCurrentPage
+       type="text"
+       fxFlex="50%"
+       (keyup.enter)="navigateCallback(boxCurrentPage.value)"
+       inputmode="numeric"
+       pattern="[0-9]*"
+       appOnlyInt/>
+ <input value="/{{ maxPage }}" fxFlex="50%" readonly="true"/>
+</div>
+<div fxFlex="35%">
+ <a *ngIf="currentPage < maxPage" class="button"
+     fxFlex="100%"
+     [routerLink]="nextPageUrl">
+   Next
+ </a>
+</div>
+</div>

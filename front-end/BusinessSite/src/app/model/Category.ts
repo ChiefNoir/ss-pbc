@@ -1,3 +1,5 @@
+import { INavigation } from '../interface/INavigation';
+
 export class Category implements INavigation {
     public id: number;
 

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { INavigation } from 'src/app/interface/INavigation';
 
 @Component({
   selector: 'app-filter-category',

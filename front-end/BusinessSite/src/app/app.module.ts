@@ -13,6 +13,7 @@ import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 
 import { ButtonCategoryComponent } from './component/button-category/button-category.component';
+import { FilterCategoryComponent } from './component/filter-category/filter-category.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { PaginatorComponent } from './component/paginator/paginator.component';
 import { ErrorComponent } from './component/error/error.component';
@@ -33,6 +34,7 @@ import { DataService } from './service/data.service';
   declarations: [
     AppComponent,
     ButtonCategoryComponent,
+    FilterCategoryComponent,
     LoadingComponent,
     ErrorComponent,
     NewsComponent,

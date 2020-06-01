@@ -1,3 +1,7 @@
+<div *ngIf="categories$ | async as categories; else loading">
+  <app-filter-category [navigations]="categories"> </app-filter-category>
+</div>
+
 <div flex fxLayout="row" class="container">
   <div fxFlex="100%">  
     <div *ngIf="projects$ | async as projects; else loading">

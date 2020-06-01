@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { RequestResult } from '../model/RequestResult';
-import { Project } from '../model/Project';
 
+import { Project } from '../model/Project';
 import { News } from '../model/News';
+import { Category } from '../model/Category';
 
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+
 
 @Injectable()
 export class DataService {
@@ -29,6 +31,14 @@ export class DataService {
         return this.httpClient.get<RequestResult<Array<Project>>>
         (
           this.endpoint + 'projects/' + categoryCode + '/' + start + '/' + length + '/'
+        );
+      }
+
+      public getCategories(): Observable<RequestResult<Array<Category>>>
+      {
+        return this.httpClient.get<RequestResult<Array<Category>>>
+        (
+          this.endpoint + 'categories/all'
         );
       }
 }

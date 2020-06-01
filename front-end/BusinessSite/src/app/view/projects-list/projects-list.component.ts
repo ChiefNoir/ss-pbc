@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { Project } from 'src/app/model/Project';
+import { Category } from 'src/app/model/Category';
 import { PagingInfo } from 'src/app/model/PagingInfo';
 
 
@@ -16,12 +18,15 @@ import { PagingInfo } from 'src/app/model/PagingInfo';
 export class ProjectsListComponent implements OnInit {
 
   private service: DataService;
+  private router: Router;
+
   public projects$: BehaviorSubject<Array<Project>> = new BehaviorSubject<Array<Project>>(null);
   public pagingInfo$: BehaviorSubject<PagingInfo> = new BehaviorSubject<PagingInfo>(null);
+  public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
 
-
-  public constructor(service: DataService) {
+  public constructor(service: DataService, router: Router) {
     this.service = service;
+    this.router = router;
   }
 
 
@@ -32,6 +37,30 @@ export class ProjectsListComponent implements OnInit {
                   result => this.handleRequestResult(result),
                   error => this.handleError(error)
                 );
+
+    this.service.getCategories()
+                .subscribe
+                (
+                  result => this.handleCategories(result),
+                  error => this.handleError(error)
+                );
+  }
+
+  private handleCategories(result: RequestResult<Array<Category>>): void {
+
+    if (result.isSucceed)
+    {
+    const router = this.router;
+    result.data.forEach((value) => {
+      value.url = router.createUrlTree(['/projects', value.code]).toString();
+    });
+
+    this.categories$.next(result.data);
+  }
+  else
+  {
+    this.handleError(result.errorMessage);
+  }
   }
 
   private handleRequestResult(result: RequestResult<Array<Project>>): void {

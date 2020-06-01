@@ -47,20 +47,21 @@ export class ProjectsListComponent implements OnInit {
   }
 
   private handleCategories(result: RequestResult<Array<Category>>): void {
-
     if (result.isSucceed)
     {
-    const router = this.router;
-    result.data.forEach((value) => {
-      value.url = router.createUrlTree(['/projects', value.code]).toString();
-    });
+      const router = this.router;
 
-    this.categories$.next(result.data);
-  }
-  else
-  {
-    this.handleError(result.errorMessage);
-  }
+      result.data.forEach((value) =>
+      {
+        value.url = router.createUrlTree(['/projects', value.code]).toString();
+      });
+
+      this.categories$.next(result.data);
+    }
+    else
+    {
+      this.handleError(result.errorMessage);
+    }
   }
 
   private handleRequestResult(result: RequestResult<Array<Project>>): void {

@@ -12,6 +12,7 @@ import { MaterialModules } from './#import/material';
 import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 
+import { ButtonCategoryComponent } from './component/button-category/button-category.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { PaginatorComponent } from './component/paginator/paginator.component';
 import { ErrorComponent } from './component/error/error.component';
@@ -31,6 +32,7 @@ import { DataService } from './service/data.service';
 @NgModule({
   declarations: [
     AppComponent,
+    ButtonCategoryComponent,
     LoadingComponent,
     ErrorComponent,
     NewsComponent,

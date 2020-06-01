@@ -1,0 +1,7 @@
+<a class="{{ rla.isActive ? 'active' : 'nonactive' }}"
+  [routerLink]="route"
+  routerLinkActive
+  #rla="routerLinkActive"
+  [routerLinkActiveOptions]="{ exact: false }">
+  <ng-content></ng-content>
+</a>

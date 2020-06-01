@@ -8,6 +8,8 @@ import { NotFoundComponent } from './view/notfound/notfound.component';
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'projects', component: ProjectsListComponent },
+  { path: 'projects/:category', component: ProjectsListComponent },
+  { path: 'projects/:category/:page', component: ProjectsListComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

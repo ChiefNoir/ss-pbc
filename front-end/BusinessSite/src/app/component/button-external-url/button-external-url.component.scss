@@ -1,0 +1,29 @@
+@import 'variables';
+
+a:hover,
+a:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em $color-control-active;
+  color: $color-control-active;
+  transform: translateY(-0.3em);
+  -webkit-transform: translateY(-0.3em);
+  -moz-transform: translateY(-0.3em);
+  -ms-transform: translateY(-0.3em);
+  -o-transform: translateY(-0.3em);
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.25s;
+  background: none;
+  border: 2px solid;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 10px 10px;
+  text-align: center;
+  min-width: 100px;
+}
+
+.active {
+  color: $color-control-active;
+}

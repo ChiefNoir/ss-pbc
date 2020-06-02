@@ -13,12 +13,14 @@ import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 
 import { ButtonCategoryComponent } from './component/button-category/button-category.component';
+import { ButtonExternalUrlComponent } from './component/button-external-url/button-external-url.component';
 import { FilterCategoryComponent } from './component/filter-category/filter-category.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { PaginatorComponent } from './component/paginator/paginator.component';
 import { ErrorComponent } from './component/error/error.component';
 import { NewsComponent } from './component/news/news.component';
 import { ProjectPreviewComponent } from './component/project-preview/project-preview.component';
+import { ProjectFullComponent } from './component/project-full/project-full.component';
 
 import { OnlyIntModule } from './directive/onlyInt/onlyInt.module';
 
@@ -35,12 +37,14 @@ import { DataService } from './service/data.service';
   declarations: [
     AppComponent,
     ButtonCategoryComponent,
+    ButtonExternalUrlComponent,
     FilterCategoryComponent,
     LoadingComponent,
     ErrorComponent,
     NewsComponent,
     PaginatorComponent,
     ProjectPreviewComponent,
+    ProjectFullComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,

@@ -12,4 +12,8 @@ export class ProjectPreviewComponent {
 
   @Input()
   public project: Project;
+
+  private createRouterLink(): string {
+    return '/project/' + this.project.code;
+  }
 }

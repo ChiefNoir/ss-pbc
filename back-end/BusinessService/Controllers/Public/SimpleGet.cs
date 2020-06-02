@@ -2,6 +2,9 @@
 using BusinessService.DataLayer.Model;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessService.Controllers.Public
 {
@@ -16,34 +19,46 @@ namespace BusinessService.Controllers.Public
             _repository = repository;
         }
 
-        [HttpGet("news/all")]
-        public JsonResult GetNews()
+        [HttpGet("test")]
+        public async Task<IActionResult> Get()
         {
-            var result = Supervisor.SafeExecute(() =>
+            var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _repository.Get<News>();
+                return _repository.GetAsync<News>();
+            });
+
+            return new JsonResult(result);
+        }
+
+
+        [HttpGet("news/all")]
+        public async Task<IActionResult> GetNews()
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _repository.GetAsync<News>();
             });
 
             return new JsonResult(result);
         }
 
         [HttpGet("categories/all")]
-        public JsonResult GetCategories()
+        public async Task<IActionResult> GetCategories()
         {
-            var result = Supervisor.SafeExecute(() =>
+            var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _repository.Get<Category>();
+                return _repository.GetAsync<Category>();
             });
 
             return new JsonResult(result);
         }
 
         [HttpGet("settings/all")]
-        public JsonResult GetSettings()
+        public async Task<IActionResult> GetSettings()
         {
-            var result = Supervisor.SafeExecute(() =>
+            var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _repository.Get<ServerSetting>();
+                return _repository.GetAsync<ServerSetting>();
             });
 
             return new JsonResult(result);
@@ -51,26 +66,26 @@ namespace BusinessService.Controllers.Public
 
 
         [HttpGet("projects/count")]
-        public JsonResult GetProjectsTotal()
+        public async Task<IActionResult> GetProjectsTotal()
         {
-            var result = Supervisor.SafeExecute(() =>
+            var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _repository.Count<Project>();
+                return _repository.CountAsync<Project>();
             });
 
             return new JsonResult(result);
         }
 
         [HttpGet("projects/{categoryCode}/count")]
-        public JsonResult GetProjectsTotal(string categoryCode)
+        public async Task<IActionResult> GetProjectsTotal(string categoryCode)
         {
-            var result = Supervisor.SafeExecute(() =>
+            var result = await Supervisor.SafeExecuteAsync(() =>
             {
                 var defaultCode = _repository.FirstOrDefault<Category>(x => x.IsEverything)?.Code;
 
-                return _repository.Count<Project>
+                return _repository.CountAsync<Project>
                 (
-                    //todo: fixit
+                    //TODO: fixit
                     f => defaultCode == categoryCode || string.IsNullOrEmpty(categoryCode) || f.Category.Code == categoryCode
                 );
             });
@@ -79,13 +94,13 @@ namespace BusinessService.Controllers.Public
         }
 
         [HttpGet("projects/{categoryCode}/{start}/{length}/")]
-        public JsonResult GetProjects(int start, int length, string categoryCode)
+        public async Task<IActionResult> GetProjects(int start, int length, string categoryCode)
         {
-            var result = Supervisor.SafeExecute(() =>
+            var result = await Supervisor.SafeExecuteAsync(() =>
             {
                 var defaultCode = _repository.FirstOrDefault<Category>(x => x.IsEverything)?.Code;
 
-                return _repository.Get<Project>
+                return _repository.GetAsync<Project>
                 (
                     start,
                     length,
@@ -98,11 +113,11 @@ namespace BusinessService.Controllers.Public
         }
 
         [HttpGet("project/{code}")]
-        public JsonResult GetProject(string code)
+        public async Task<IActionResult> GetProject(string code)
         {
-            var result = Supervisor.SafeExecute(() =>
+            var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _repository.FirstOrDefault<Project>(x => x.Code == code, x => x.Category, x => x.ExternalUrls);
+                return _repository.FirstOrDefaultAsync<Project>(x => x.Code == code, x => x.Category, x => x.ExternalUrls);
             });
 
             return new JsonResult(result);

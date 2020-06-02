@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace BusinessService.Logic.Supervision
 {
@@ -10,13 +11,13 @@ namespace BusinessService.Logic.Supervision
         /// <typeparam name="T">Type of returning result</typeparam>
         /// <param name="func"><seealso cref="Func"/> to execute</param>
         /// <returns>Result of execution or ErrorMessage will have message </returns>
-        public static ExecutionResult<T> SafeExecute<T>(Func<T> func)
+        public static async Task<ExecutionResult<T>> SafeExecuteAsync<T>(Func<Task<T>> func)
         {
             var result = new ExecutionResult<T>();
 
             try
             {
-                result.Data = func();
+                result.Data = await func();
                 result.IsSucceed = true;
             }
             catch (Exception ee)
@@ -32,24 +33,23 @@ namespace BusinessService.Logic.Supervision
         /// <summary> Execute function </summary>
         /// <param name="action"><seealso cref="Action"/> to execute</param>
         /// <returns>Result of execution or ErrorMessage will have message </returns>
-        public static ExecutionResult SafeExecute(Action action)
-        {
-            var result = new ExecutionResult();
+        //public static ExecutionResult SafeExecute(Action action)
+        //{
+        //    var result = new ExecutionResult();
 
-            try
-            {
-                action();
-                result.IsSucceed = true;
-            }
-            catch (Exception ee)
-            {
-                //TODO: log error
-                result.IsSucceed = false;
-                result.ErrorMessage = ee.Message;
-            }
+        //    try
+        //    {
+        //        action();
+        //        result.IsSucceed = true;
+        //    }
+        //    catch (Exception ee)
+        //    {
+        //        //TODO: log error
+        //        result.IsSucceed = false;
+        //        result.ErrorMessage = ee.Message;
+        //    }
 
-            return result;
-        }
-
+        //    return result;
+        //}
     }
 }

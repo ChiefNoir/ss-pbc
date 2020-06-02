@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace BusinessService.DataLayer.Repositories
 {
@@ -17,22 +18,38 @@ namespace BusinessService.DataLayer.Repositories
             _context = context;
         }
 
-        public int Count<T>() where T : class
+        public Task<int> CountAsync<T>() where T : class
         {
             return _context.Set<T>()
                             .AsNoTracking()
-                            .Count();
+                            .CountAsync();
         }
 
-        public int Count<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
+        public Task<int> CountAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
             return _context.Set<T>()
                            .IncludeMultiple(includes)
                            .Where(predicate)
                            .AsNoTracking()
-                           .Count();
+                           .CountAsync();
         }
 
+
+        public Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
+        {
+            return _context.Set<T>()
+                           .IncludeMultiple(includes)
+                           .AsNoTracking()
+                           .FirstOrDefaultAsync(predicate);
+        }
+
+        public Task<T> FirstOrDefaultAsync<T>(params Expression<Func<T, object>>[] includes) where T : class
+        {
+            return _context.Set<T>()
+                           .IncludeMultiple(includes)
+                           .AsNoTracking()
+                           .FirstOrDefaultAsync();
+        }
 
         public T FirstOrDefault<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
@@ -51,34 +68,34 @@ namespace BusinessService.DataLayer.Repositories
         }
 
 
-        public IEnumerable<T> Get<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
+        public Task<List<T>> GetAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
             return _context.Set<T>()
-                           .IncludeMultiple(includes)                           
+                           .IncludeMultiple(includes)
                            .Where(predicate)
                            .AsNoTracking()
-                           .ToList();
+                           .ToListAsync();
         }
 
-        public IEnumerable<T> Get<T>(params Expression<Func<T, object>>[] includes) where T : class
+        public Task<List<T>> GetAsync<T>(params Expression<Func<T, object>>[] includes) where T : class
         {
             return _context.Set<T>()
                            .IncludeMultiple(includes)
                            .AsNoTracking()
-                           .ToList();
+                           .ToListAsync();
         }
 
-        public IEnumerable<T> Get<T>(int start, int length, params Expression<Func<T, object>>[] includes) where T : class
+        public Task<List<T>> GetAsync<T>(int start, int length, params Expression<Func<T, object>>[] includes) where T : class
         {
             return _context.Set<T>()
                            .IncludeMultiple(includes)
                            .Skip(start)
                            .Take(length)
                            .AsNoTracking()
-                           .ToList();
+                           .ToListAsync();
         }
 
-        public IEnumerable<T> Get<T>(int start, int length, Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
+        public Task<List<T>> GetAsync<T>(int start, int length, Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
             return _context.Set<T>()
                            .IncludeMultiple(includes)
@@ -86,7 +103,8 @@ namespace BusinessService.DataLayer.Repositories
                            .Skip(start)
                            .Take(length)
                            .AsNoTracking()
-                           .ToList();
+                           .ToListAsync();
         }
+
     }
 }

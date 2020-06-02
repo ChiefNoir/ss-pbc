@@ -18,92 +18,92 @@ namespace BusinessService.DataLayer.Repositories
             _context = context;
         }
 
-        public Task<int> CountAsync<T>() where T : class
+        public async Task<int> CountAsync<T>() where T : class
         {
-            return _context.Set<T>()
-                            .AsNoTracking()
-                            .CountAsync();
+            return await _context.Set<T>()
+                                 .AsNoTracking()
+                                 .CountAsync();
         }
 
-        public Task<int> CountAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
+        public async Task<int> CountAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>()
-                           .IncludeMultiple(includes)
-                           .Where(predicate)
-                           .AsNoTracking()
-                           .CountAsync();
+            return await _context.Set<T>()
+                                 .AsNoTracking()
+                                 .IncludeMultiple(includes)
+                                 .Where(predicate)                           
+                                 .CountAsync();
         }
 
 
-        public Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
+        public async Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>()
-                           .IncludeMultiple(includes)
-                           .AsNoTracking()
-                           .FirstOrDefaultAsync(predicate);
+            return await _context.Set<T>()
+                                 .AsNoTracking()
+                                 .IncludeMultiple(includes)
+                                 .FirstOrDefaultAsync(predicate);
         }
 
-        public Task<T> FirstOrDefaultAsync<T>(params Expression<Func<T, object>>[] includes) where T : class
+        public async Task<T> FirstOrDefaultAsync<T>(params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>()
-                           .IncludeMultiple(includes)
-                           .AsNoTracking()
-                           .FirstOrDefaultAsync();
+            return await _context.Set<T>()
+                                 .AsNoTracking()
+                                 .IncludeMultiple(includes)
+                                 .FirstOrDefaultAsync();
         }
 
         public T FirstOrDefault<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
             return _context.Set<T>()
-                           .IncludeMultiple(includes)
                            .AsNoTracking()
+                           .IncludeMultiple(includes)
                            .FirstOrDefault(predicate);
         }
 
         public T FirstOrDefault<T>(params Expression<Func<T, object>>[] includes) where T : class
         {
             return _context.Set<T>()
-                           .IncludeMultiple(includes)
                            .AsNoTracking()
+                           .IncludeMultiple(includes)
                            .FirstOrDefault();
         }
 
 
-        public Task<List<T>> GetAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
+        public async Task<List<T>> GetAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>()
-                           .IncludeMultiple(includes)
-                           .Where(predicate)
-                           .AsNoTracking()
-                           .ToListAsync();
+            return await _context.Set<T>()
+                                 .AsNoTracking()
+                                 .IncludeMultiple(includes)
+                                 .Where(predicate)
+                                 .ToListAsync();
         }
 
-        public Task<List<T>> GetAsync<T>(params Expression<Func<T, object>>[] includes) where T : class
+        public async Task<List<T>> GetAsync<T>(params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>()
-                           .IncludeMultiple(includes)
-                           .AsNoTracking()
-                           .ToListAsync();
+            return await _context.Set<T>()
+                                 .AsNoTracking()
+                                 .IncludeMultiple(includes)
+                                 .ToListAsync();
         }
 
-        public Task<List<T>> GetAsync<T>(int start, int length, params Expression<Func<T, object>>[] includes) where T : class
+        public async Task<List<T>> GetAsync<T>(int start, int length, params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>()
-                           .IncludeMultiple(includes)
-                           .Skip(start)
-                           .Take(length)
-                           .AsNoTracking()
-                           .ToListAsync();
+            return await _context.Set<T>()
+                                 .AsNoTracking()
+                                 .IncludeMultiple(includes)
+                                 .Skip(start)
+                                 .Take(length)
+                                 .ToListAsync();
         }
 
-        public Task<List<T>> GetAsync<T>(int start, int length, Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
+        public async Task<List<T>> GetAsync<T>(int start, int length, Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
-            return _context.Set<T>()
-                           .IncludeMultiple(includes)
-                           .Where(predicate)
-                           .Skip(start)
-                           .Take(length)
-                           .AsNoTracking()
-                           .ToListAsync();
+            return await _context.Set<T>()
+                                 .AsNoTracking()
+                                 .IncludeMultiple(includes)
+                                 .Where(predicate)
+                                 .Skip(start)
+                                 .Take(length)
+                                 .ToListAsync();
         }
 
     }

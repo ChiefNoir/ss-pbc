@@ -19,18 +19,6 @@ namespace BusinessService.Controllers.Public
             _repository = repository;
         }
 
-        [HttpGet("test")]
-        public async Task<IActionResult> Get()
-        {
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return _repository.GetAsync<News>();
-            });
-
-            return new JsonResult(result);
-        }
-
-
         [HttpGet("news/all")]
         public async Task<IActionResult> GetNews()
         {

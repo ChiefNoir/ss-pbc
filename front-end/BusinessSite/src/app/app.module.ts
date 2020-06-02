@@ -25,6 +25,7 @@ import { OnlyIntModule } from './directive/onlyInt/onlyInt.module';
 import { HomeComponent } from './view/home/home.component';
 import { ProjectsListComponent } from './view/projects-list/projects-list.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
+import { ProjectComponent } from './view/project/project.component';
 
 
 import { DataService } from './service/data.service';
@@ -44,7 +45,8 @@ import { DataService } from './service/data.service';
     FooterComponent,
     HomeComponent,
     ProjectsListComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,

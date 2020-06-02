@@ -1,0 +1,12 @@
+
+  <div fxFlex="100%">  
+    <div *ngIf="(project$ | async) as project; else loading">
+      <app-project-preview [project]="project">
+      </app-project-preview>
+    </div>
+  </div>
+
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template> 

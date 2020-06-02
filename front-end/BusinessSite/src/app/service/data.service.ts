@@ -30,7 +30,14 @@ export class DataService {
       public getProjects(start: number, length: number, categoryCode: string): Observable<RequestResult<Array<Project>>> {
         return this.httpClient.get<RequestResult<Array<Project>>>
         (
-          this.endpoint + 'projects/' + categoryCode + '/' + start + '/' + length + '/' 
+          this.endpoint + 'projects/' + categoryCode + '/' + start + '/' + length
+        );
+      }
+
+      public getProject(code: string): Observable<RequestResult<Project>> {
+        return this.httpClient.get<RequestResult<Project>>
+        (
+          this.endpoint + 'project/' + code
         );
       }
 

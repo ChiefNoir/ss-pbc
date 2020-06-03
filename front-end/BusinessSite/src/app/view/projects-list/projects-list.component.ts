@@ -49,27 +49,24 @@ export class ProjectsListComponent {
     if (this.categories$.value == null)
     {
       this.service.getCategories()
-                  .subscribe
+                  .then
                   (
-                    result => this.handleCategories(result),
-                    error => this.handleError(error)
+                    data =>{this.handleCategories(data)}
                   );
     }
 
     const currentPage = + this.activeRoute.snapshot.paramMap.get('page');
 
     this.service.getProjects(currentPage * this.projectsPerPage, this.projectsPerPage, categoryCode)
-                .subscribe
-                (
-                  result => this.handleProjects(result),
-                  error => this.handleError(error)
-                );
+                  .then
+                  (
+                    data =>{this.handleProjects(data)}
+                  );;
 
     this.service.getTotalProjects(categoryCode)
-                .subscribe
+                .then
                 (
-                  result => this.handleTotalProjects(result),
-                  error => this.handleError(error)
+                  data => { this.handleTotalProjects(data) }
                 );
   }
 

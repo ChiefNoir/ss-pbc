@@ -24,10 +24,8 @@ export class HomeComponent implements OnInit {
 
   public ngOnInit(): void {
     this.service.getNews()
-                .subscribe
-                (
-                  result => this.handleRequestResult(result),
-                  error => this.handleError(error)
+                .then(
+                  data => {this.handleRequestResult(data)}
                 );
   }
 

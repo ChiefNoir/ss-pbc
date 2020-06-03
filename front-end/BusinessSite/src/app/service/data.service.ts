@@ -20,36 +20,36 @@ export class DataService {
         this.httpClient = http;
       }
 
-      public getNews(): Observable<RequestResult<Array<News>>> {
+      public getNews(): Promise<RequestResult<Array<News>>> {
         return this.httpClient.get<RequestResult<Array<News>>>
         (
           this.endpoint + 'news/all'
-        );
+        ).toPromise();
       }
 
-      public getProjects(start: number, length: number, categoryCode: string): Observable<RequestResult<Array<Project>>> {
+      public getProjects(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<Project>>> {
         return this.httpClient.get<RequestResult<Array<Project>>>
         (
           this.endpoint + 'projects/' + categoryCode + '/' + start + '/' + length
-        );
+        ).toPromise();
       }
 
-      public getProject(code: string): Observable<RequestResult<Project>> {
+      public getProject(code: string): Promise<RequestResult<Project>> {
         return this.httpClient.get<RequestResult<Project>>
         (
           this.endpoint + 'project/' + code
-        );
+        ).toPromise();
       }
 
-      public getCategories(): Observable<RequestResult<Array<Category>>>
+      public getCategories(): Promise<RequestResult<Array<Category>>>
       {
         return this.httpClient.get<RequestResult<Array<Category>>>
         (
           this.endpoint + 'categories/all'
-        );
+        ).toPromise();
       }
 
-      public getTotalProjects(categoryCode: string): Observable<RequestResult<number>>
+      public getTotalProjects(categoryCode: string): Promise<RequestResult<number>>
       {
         let param = 'projects/';
 
@@ -60,7 +60,7 @@ export class DataService {
         return this.httpClient.get<RequestResult<number>>
         (
           this.endpoint + param + 'count'
-        );
+        ).toPromise();
       }
 
 }

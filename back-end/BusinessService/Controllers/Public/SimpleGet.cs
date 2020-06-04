@@ -1,5 +1,4 @@
-﻿using BusinessService.DataLayer.Interfaces;
-using BusinessService.DataLayer.Model;
+﻿using Abstractions.IRepository;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,11 +11,15 @@ namespace BusinessService.Controllers.Public
     [Route("api/v1/")]
     public class SimpleGet : ControllerBase
     {
-        private readonly IGenericRepository _repository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IProjectRepository _projectRepository;
+        private readonly INewsRepository _newsRepository;
 
-        public SimpleGet(IGenericRepository repository)
+        public SimpleGet(ICategoryRepository categoryRepository, IProjectRepository projectRepository, INewsRepository newsRepository)
         {
-            _repository = repository;
+            _categoryRepository = categoryRepository;
+            _projectRepository = projectRepository;
+            _newsRepository = newsRepository;
         }
 
         [HttpGet("news/all")]
@@ -24,7 +27,7 @@ namespace BusinessService.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _repository.GetAsync<News>();
+                return _newsRepository.GetNews();
             });
 
             return new JsonResult(result);
@@ -35,30 +38,18 @@ namespace BusinessService.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _repository.GetAsync<Category>();
+                return _categoryRepository.GetCategories();
             });
 
             return new JsonResult(result);
         }
-
-        [HttpGet("settings/all")]
-        public async Task<IActionResult> GetSettings()
-        {
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return _repository.GetAsync<ServerSetting>();
-            });
-
-            return new JsonResult(result);
-        }
-
 
         [HttpGet("projects/count")]
         public async Task<IActionResult> GetProjectsTotal()
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _repository.CountAsync<Project>();
+                return _projectRepository.Count();
             });
 
             return new JsonResult(result);
@@ -69,13 +60,7 @@ namespace BusinessService.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                var defaultCode = _repository.FirstOrDefault<Category>(x => x.IsEverything)?.Code;
-
-                return _repository.CountAsync<Project>
-                (
-                    //TODO: fixit
-                    f => defaultCode == categoryCode || string.IsNullOrEmpty(categoryCode) || f.Category.Code == categoryCode
-                );
+                return _projectRepository.Count(categoryCode);
             });
 
             return new JsonResult(result);
@@ -86,15 +71,8 @@ namespace BusinessService.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                var defaultCode = _repository.FirstOrDefault<Category>(x => x.IsEverything)?.Code;
+                return _projectRepository.GetProjects(start, length, categoryCode);
 
-                return _repository.GetAsync<Project>
-                (
-                    start,
-                    length,
-                    f => defaultCode == categoryCode || string.IsNullOrEmpty(categoryCode) || f.Category.Code == categoryCode,
-                    x => x.Category, x => x.ExternalUrls
-                );
             });
 
             return new JsonResult(result);
@@ -105,7 +83,7 @@ namespace BusinessService.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _repository.FirstOrDefaultAsync<Project>(x => x.Code == code, x => x.Category, x => x.ExternalUrls);
+                return _projectRepository.GetProject(code);
             });
 
             return new JsonResult(result);

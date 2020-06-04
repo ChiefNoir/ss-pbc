@@ -7,10 +7,8 @@ export class Project {
     public code: string;
     public displayName: string;
     public releaseDate: Date;
-    public imageUrl: string;
-    public categoryId: number;
+    public posterUrl: string;
     public category: Category;
-    public descriptionShort: string;
     public description: string;
 
     public externalUrls: Array<ExternalUrl>;

@@ -1,8 +1,8 @@
 <div class="container" fxLayout="column" fxLayoutAlign="end stretch">
-  <img class="content-image" src="{{project.imageUrl}}" />
+  <img class="content-image" src="{{project.posterUrl}}" />
 
   <div class="content">
     <a class="headline" [routerLink]="createRouterLink()">[{{project.category?.displayName}}] {{ project.displayName }}</a>
-    <div class="text">{{project.descriptionShort}}</div>   
+    <div class="text">{{project.description}}</div>   
   </div>
 </div>

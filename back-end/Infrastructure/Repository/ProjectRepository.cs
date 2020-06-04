@@ -1,7 +1,6 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,7 +28,7 @@ namespace Infrastructure.Repository
             if (string.IsNullOrEmpty(categoryCode))
                 return Count();
 
-            if (_categoryRepository.IsEverything(categoryCode))
+            if (_categoryRepository.CheckIsEverything(categoryCode))
                 return Count();
             
             return _context.Projects.CountAsync(x => x.CategoryCode == categoryCode);
@@ -62,7 +61,7 @@ namespace Infrastructure.Repository
 
         public Task<ProjectPreview[]> GetProjects(int start, int length, string categoryCode)
         {
-            if(_categoryRepository.IsEverything(categoryCode))
+            if(_categoryRepository.CheckIsEverything(categoryCode))
                 return _context.Projects
                     .Include(x => x.Category)
                     .Select(x => new ProjectPreview

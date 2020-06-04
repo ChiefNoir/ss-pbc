@@ -7,6 +7,7 @@ using System.Reflection;
 
 namespace Infrastructure
 {
+    /// <summary>Entity framework data context </summary>
     public class DataContext : DbContext
     {
         internal DbSet<Category> Categories { get; set; }

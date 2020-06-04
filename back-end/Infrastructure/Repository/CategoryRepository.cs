@@ -27,10 +27,9 @@ namespace Infrastructure.Repository
                                Version = x.Version
                            })
                            .ToArrayAsync();
-
         }
 
-        public bool IsEverything(string code)
+        public bool CheckIsEverything(string code)
         {
             return _context.Categories
                             .Any(x => x.Code == code && x.IsEverything);

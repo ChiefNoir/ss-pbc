@@ -1,5 +1,8 @@
 using Abstractions.IRepository;
+using Abstractions.MemoryCache;
+using Abstractions.Model;
 using Infrastructure;
+using Infrastructure.Cache;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +34,8 @@ namespace BusinessService
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();
+
+            services.AddSingleton<IMemoryCache<string, Category>, CategoryCache>();
         }
 
 

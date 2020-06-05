@@ -11,6 +11,7 @@
     <Authors>Stanislav "Chief" Shevtsov</Authors>
     <NeutralLanguage>en</NeutralLanguage>
     <StartupObject>BusinessService.Program</StartupObject>
+    <UserSecretsId>3426c725-01eb-41b1-9dfa-b3619149ebc0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

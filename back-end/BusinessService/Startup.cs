@@ -25,6 +25,7 @@ namespace BusinessService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
             services.AddTransient<ICategoryRepository, CategoryRepository>();
@@ -44,10 +45,13 @@ namespace BusinessService
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(builder => builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader());
+            app.UseCors
+                (
+                    options => options.SetIsOriginAllowed(x => _ = true)
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader()
+                                      .AllowCredentials()
+                );
 
             app.UseAuthorization();
 

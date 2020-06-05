@@ -3,6 +3,7 @@ using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace BusinessService.Controllers.Public

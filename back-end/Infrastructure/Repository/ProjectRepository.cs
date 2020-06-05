@@ -64,6 +64,8 @@ namespace Infrastructure.Repository
             if(_categoryRepository.CheckIsEverything(categoryCode))
                 return _context.Projects
                     .Include(x => x.Category)
+                    .Skip(start)
+                .Take(length)
                     .Select(x => new ProjectPreview
                     {
                         Code = x.Code,
@@ -83,6 +85,8 @@ namespace Infrastructure.Repository
 
             return _context.Projects
                 .Where(x => x.CategoryCode == categoryCode)
+                .Skip(start)
+                .Take(length)
                 .Include(x => x.Category)
                 .Select(x => new ProjectPreview
                 {

@@ -23,15 +23,15 @@ namespace Infrastructure.Repository
             return _context.Projects.CountAsync();
         }
 
-        public Task<int> Count(string categoryCode)
+        public async Task<int> Count(string categoryCode)
         {
             if (string.IsNullOrEmpty(categoryCode))
-                return Count();
+                return await Count();
 
-            if (_categoryRepository.CheckIsEverything(categoryCode))
-                return Count();
+            if (await _categoryRepository.CheckIsEverything(categoryCode))
+                return await Count();
             
-            return _context.Projects.CountAsync(x => x.CategoryCode == categoryCode);
+            return await _context.Projects.CountAsync(x => x.CategoryCode == categoryCode);
         }
 
         public Task<Project> GetProject(string code)
@@ -59,13 +59,13 @@ namespace Infrastructure.Repository
                 }).FirstOrDefaultAsync();
         }
 
-        public Task<ProjectPreview[]> GetProjects(int start, int length, string categoryCode)
+        public async Task<ProjectPreview[]> GetProjects(int start, int length, string categoryCode)
         {
-            if(_categoryRepository.CheckIsEverything(categoryCode))
-                return _context.Projects
+            if(await _categoryRepository.CheckIsEverything(categoryCode))
+                return await _context.Projects
                     .Include(x => x.Category)
                     .Skip(start)
-                .Take(length)
+                    .Take(length)
                     .Select(x => new ProjectPreview
                     {
                         Code = x.Code,
@@ -83,7 +83,7 @@ namespace Infrastructure.Repository
                     }).ToArrayAsync();
 
 
-            return _context.Projects
+            return await _context.Projects
                 .Where(x => x.CategoryCode == categoryCode)
                 .Skip(start)
                 .Take(length)

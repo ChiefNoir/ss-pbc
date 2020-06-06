@@ -18,17 +18,19 @@ namespace Infrastructure.Repository
             _cache = cache;
         }
 
-        public async Task<Category[]> GetCategories()
+        public Task<Category[]> GetCategories()
         {
-            return await _cache.GetAllOrCreateAsync(Dodo);
+            return Task.Run(() => { return _cache.GetAll(LoadAllCategories); });
         }
 
-        public Task<Category[]> GetCategoriesOld()
+        public async Task<bool> CheckIsEverything(string code)
         {
-            return Dodo();
+            var item = await _cache.GetOrCreateAsync(code, () => { return GetCategory(code); });
+
+            return item?.IsEverything == true;
         }
 
-        public Task<Category[]> Dodo()
+        private Task<Category[]> LoadAllCategories()
         {
             return _context.Categories
                            .AsNoTracking()
@@ -42,10 +44,23 @@ namespace Infrastructure.Repository
                            .ToArrayAsync();
         }
 
-        public bool CheckIsEverything(string code)
+        private Task<Category> GetCategory(string code)
         {
+            if (string.IsNullOrEmpty(code))
+                return null;
+
             return _context.Categories
-                            .Any(x => x.Code == code && x.IsEverything);
+               .AsNoTracking()
+               .Where(x => x.Code == code)
+               .Select(x => new Category
+               {
+                   Code = x.Code,
+                   DisplayName = x.DisplayName,
+                   IsEverything = x.IsEverything,
+                   Version = x.Version
+               })
+               .FirstOrDefaultAsync();
         }
+
     }
 }

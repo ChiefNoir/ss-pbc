@@ -49,18 +49,4 @@ export class DataService {
         ).toPromise();
       }
 
-      public getTotalProjects(categoryCode: string): Promise<RequestResult<number>>
-      {
-        let param = 'projects/';
-
-        if (typeof categoryCode !== 'undefined' && categoryCode) {
-          param += categoryCode + '/';
-        }
-
-        return this.httpClient.get<RequestResult<number>>
-        (
-          this.endpoint + param + 'count'
-        ).toPromise();
-      }
-
 }

@@ -42,28 +42,6 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
-        [HttpGet("projects/count")]
-        public async Task<IActionResult> GetProjectsTotal()
-        {
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return _projectRepository.Count();
-            });
-
-            return new JsonResult(result);
-        }
-
-        [HttpGet("projects/{categoryCode}/count")]
-        public async Task<IActionResult> GetProjectsTotal(string categoryCode)
-        {
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return _projectRepository.Count(categoryCode);
-            });
-
-            return new JsonResult(result);
-        }
-
         [HttpGet("projects/{categoryCode}/{start}/{length}/")]
         public async Task<IActionResult> GetProjects(int start, int length, string categoryCode)
         {

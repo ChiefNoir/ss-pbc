@@ -17,13 +17,5 @@ namespace Abstractions.IRepository
         /// <param name="code">Project code</param>
         /// <returns>Full specific <seealso cref="Project"/></returns>
         Task<Project> GetProject(string code);
-
-        /// <summary> Count all projects</summary>
-        /// <returns> Number of projects </returns>
-        Task<int> Count();
-
-        /// <summary> Count all projects with specific category</summary>
-        /// <returns> Number of projects with specific category</returns>
-        Task<int> Count(string categoryCode);
     }
 }

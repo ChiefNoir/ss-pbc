@@ -18,22 +18,6 @@ namespace Infrastructure.Repository
         }
 
 
-        public Task<int> Count()
-        {
-            return _context.Projects.CountAsync();
-        }
-
-        public async Task<int> Count(string categoryCode)
-        {
-            if (string.IsNullOrEmpty(categoryCode))
-                return await Count();
-
-            if (await _categoryRepository.CheckIsEverything(categoryCode))
-                return await Count();
-            
-            return await _context.Projects.CountAsync(x => x.CategoryCode == categoryCode);
-        }
-
         public Task<Project> GetProject(string code)
         {
             return _context.Projects

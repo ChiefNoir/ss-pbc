@@ -61,56 +61,44 @@ export class ProjectsListComponent {
                   .then
                   (
                     data =>{this.handleProjects(data)}
-                  );;
-
-    this.service.getTotalProjects(categoryCode)
-                .then
-                (
-                  data => { this.handleTotalProjects(data) }
-                );
+                  );
   }
 
-  private handleTotalProjects(data: RequestResult<number>): void 
+  private handleTotalProjects(data: number, categoryCode: string): void
   {
-    if (data.isSucceed)
+    const pgInfo: PagingInfo =
     {
-      const pgInfo: PagingInfo =
-      {
-        minPage: 0,
-        maxPage: this.calcMaxPageNumber(data.data),
-        currentPage: 0,
-        previousPageUrl: '',
-        nextPageUrl: '',
-        navigateCallback: this.changePage.bind(this)
-      };
+      minPage: 0,
+      maxPage: this.calcMaxPageNumber(data),
+      currentPage: 0,
+      previousPageUrl: '',
+      nextPageUrl: '',
+      navigateCallback: this.changePage.bind(this)
+    };
 
-      pgInfo.currentPage = +this.activeRoute.snapshot.paramMap.get('page');
+    pgInfo.currentPage = +this.activeRoute.snapshot.paramMap.get('page');
 
-      if (pgInfo.currentPage > pgInfo.maxPage) {
+    if (pgInfo.currentPage > pgInfo.maxPage) {
         pgInfo.currentPage = pgInfo.maxPage;
       }
 
-      if (pgInfo.currentPage < pgInfo.minPage) {
-        pgInfo.currentPage = pgInfo.minPage;
+    if (pgInfo.currentPage < pgInfo.minPage) {
+      pgInfo.currentPage = pgInfo.minPage;
       }
 
-      const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
+    
 
-      pgInfo.nextPageUrl = this.router.createUrlTree
-      (
-        ['/projects', categoryCode, pgInfo.currentPage + 1]
-      ).toString();
+    pgInfo.nextPageUrl = this.router.createUrlTree
+    (
+      ['/projects', categoryCode, pgInfo.currentPage + 1]
+    ).toString();
 
-      pgInfo.previousPageUrl = this.router.createUrlTree
-      (
-        ['/projects', categoryCode, pgInfo.currentPage - 1]
-      ).toString();
+    pgInfo.previousPageUrl = this.router.createUrlTree
+    (
+      ['/projects', categoryCode, pgInfo.currentPage - 1]
+    ).toString();
 
-      this.pagingInfo$.next(pgInfo);
-    }
-    else{
-      this.handleError(data.errorMessage);
-    }
+    this.pagingInfo$.next(pgInfo);
   }
 
   private handleProjects(data: RequestResult<Array<Project>>): void {
@@ -132,7 +120,12 @@ export class ProjectsListComponent {
         value.url = router.createUrlTree(['/projects', value.code]).toString();
       });
 
-      this.categories$.next(result.data);
+      this.categories$.next(result.data.filter(x=>x.totalProjects > 0).sort((a, b) => b.totalProjects - a.totalProjects));
+
+      const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
+
+      const totalProjects = !result.data? 0:  result.data.find(x=>x.code == categoryCode).totalProjects;
+      this.handleTotalProjects(totalProjects, categoryCode);
     }
     else
     {

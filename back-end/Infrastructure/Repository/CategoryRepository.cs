@@ -32,13 +32,14 @@ namespace Infrastructure.Repository
 
         private Task<Category[]> LoadAllCategories()
         {
-            return _context.Categories
+            return _context.CategoriesWithTotalProjects
                            .AsNoTracking()
                            .Select(x => new Category
                            {
                                Code = x.Code,
                                DisplayName = x.DisplayName,
                                IsEverything = x.IsEverything,
+                               TotalProjects = x.TotalProjects,
                                Version = x.Version
                            })
                            .ToArrayAsync();
@@ -49,7 +50,7 @@ namespace Infrastructure.Repository
             if (string.IsNullOrEmpty(code))
                 return null;
 
-            return _context.Categories
+            return _context.CategoriesWithTotalProjects
                .AsNoTracking()
                .Where(x => x.Code == code)
                .Select(x => new Category
@@ -57,6 +58,7 @@ namespace Infrastructure.Repository
                    Code = x.Code,
                    DisplayName = x.DisplayName,
                    IsEverything = x.IsEverything,
+                   TotalProjects = x.TotalProjects,
                    Version = x.Version
                })
                .FirstOrDefaultAsync();

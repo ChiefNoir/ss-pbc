@@ -15,6 +15,9 @@ namespace Abstractions.Model
         /// <summary> Is category technical for filtering by all</summary>
         public bool IsEverything { get; set; }
 
+        /// <summary> Get total projects in this category </summary>
+        public int TotalProjects { get; set; }
+
         /// <summary> Version </summary>
         public long Version { get; set; }
     }

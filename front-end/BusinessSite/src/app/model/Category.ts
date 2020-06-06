@@ -9,6 +9,8 @@ export class Category implements INavigation {
 
     public isEverything: boolean;
 
+    public totalProjects: number;
+
     public version: number;
 
     // [only-front], url for nagivation

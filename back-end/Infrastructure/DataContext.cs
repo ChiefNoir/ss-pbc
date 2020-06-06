@@ -13,6 +13,7 @@ namespace Infrastructure
         internal DbSet<Category> Categories { get; set; }
         internal DbSet<News> News { get; set; }
         internal DbSet<Project> Projects { get; set; }
+        internal DbSet<CategoryWithTotalProjects> CategoriesWithTotalProjects { get; set; }
 
         public DataContext(DbContextOptions options) : base(options)
         {

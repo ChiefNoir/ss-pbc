@@ -20,6 +20,7 @@ namespace Infrastructure.Cache
                 {
                     if (!_wasInit)
                     {
+                        _cache.Clear();
                         foreach (var item in await initAll())
                         {
                             _cache.TryAdd(item.Code, item);

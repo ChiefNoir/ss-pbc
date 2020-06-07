@@ -5,11 +5,11 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
+
 export class AppComponent {
-  public constructor(titleService: Title)
-  {
+  public constructor(titleService: Title) {
     titleService.setTitle(environment.siteName);
   }
 }

@@ -1,16 +1,18 @@
-@import 'variables';
+@import "variables";
 
-.loading-text {
+.container {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
-  span {
-    display: inline-block;
-    margin: 0 5px;
-    color: $color-text;
-    @for $i from 0 through 6 {
-      &:nth-child(#{$i + 1}) {
-        filter: blur(0px);
-        animation: blur-text 1.9s (#{$i/5}) + s infinite linear alternate;
-      }
+span {
+  display: inline-block;
+  margin: 0 5px;
+  color: $color-text;
+  @for $i from 0 through 6 {
+    &:nth-child(#{$i + 1}) {
+      filter: blur(0px);
+      animation: blur-text 1.9s (#{$i/5}) + s infinite linear alternate;
     }
   }
 }

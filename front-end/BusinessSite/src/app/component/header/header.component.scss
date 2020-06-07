@@ -3,13 +3,14 @@
 
 .header {
   text-align: center;
-  padding-top: 25px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .header a {
   font-family: $font-header;
   color: $color-text;
+  line-height: 1;
   font-size: 400%;
   font-weight: bold;
   text-decoration: none;

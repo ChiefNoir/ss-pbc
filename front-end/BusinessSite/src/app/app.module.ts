@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -62,7 +62,7 @@ import { DataService } from './service/data.service';
 
     OnlyIntModule
   ],
-  providers: [DataService],
+  providers: [DataService, Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

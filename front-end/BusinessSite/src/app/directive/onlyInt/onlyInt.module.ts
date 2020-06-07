@@ -3,7 +3,7 @@ import { OnlyIntDirective } from './onlyInt.directive';
 
 @NgModule({
   declarations: [OnlyIntDirective],
-  exports: [OnlyIntDirective]
+  exports: [OnlyIntDirective],
 })
-
+  
 export class OnlyIntModule {}

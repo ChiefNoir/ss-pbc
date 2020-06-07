@@ -1,9 +1,9 @@
 import { Directive, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[appOnlyInt]'
+  selector: '[appOnlyInt]',
 })
-
+  
 export class OnlyIntDirective {
   private navigationKeys = [
     'Backspace',
@@ -17,7 +17,7 @@ export class OnlyIntDirective {
     'ArrowRight',
     'Clear',
     'Copy',
-    'Paste'
+    'Paste',
   ];
 
   private numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];

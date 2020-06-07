@@ -4,6 +4,8 @@ import { BehaviorSubject, from } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { News } from 'src/app/model/News';
+import { Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -17,8 +19,10 @@ export class HomeComponent implements OnInit {
   private service: DataService;
   public news$: BehaviorSubject<Array<News>> = new BehaviorSubject<Array<News>>(null);
 
-  public constructor(service: DataService) {
+  public constructor(service: DataService, titleService: Title) {
     this.service = service;
+
+    titleService.setTitle(environment.siteName);
   }
 
 

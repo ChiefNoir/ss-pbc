@@ -10,6 +10,6 @@ import { environment } from 'src/environments/environment';
 export class AppComponent {
   public constructor(titleService: Title)
   {
-    titleService.setTitle(environment.siteName)
+    titleService.setTitle(environment.siteName);
   }
 }

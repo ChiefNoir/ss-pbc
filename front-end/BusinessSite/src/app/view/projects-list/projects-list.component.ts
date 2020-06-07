@@ -7,6 +7,8 @@ import { RequestResult } from 'src/app/model/RequestResult';
 import { Project } from 'src/app/model/Project';
 import { Category } from 'src/app/model/Category';
 import { PagingInfo } from 'src/app/model/PagingInfo';
+import { Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-projects-list',
@@ -25,10 +27,12 @@ export class ProjectsListComponent {
   public pagingInfo$: BehaviorSubject<PagingInfo> = new BehaviorSubject<PagingInfo>(null);
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
 
-  public constructor(service: DataService, router: Router, activeRoute: ActivatedRoute) {
+  public constructor(service: DataService, router: Router, activeRoute: ActivatedRoute, titleService: Title) {
     this.service = service;
     this.router = router;
     this.activeRoute = activeRoute;
+
+    titleService.setTitle(environment.siteName + ' - Projects');
 
     this.activeRoute.params.subscribe(() => {
       this.refreshPage();

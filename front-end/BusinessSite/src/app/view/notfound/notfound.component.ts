@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-not-found',
@@ -6,4 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./notfound.component.scss']
 })
 
-export class NotFoundComponent {}
+export class NotFoundComponent {
+
+  public constructor(titleService: Title){
+    titleService.setTitle(environment.siteName);
+  }
+
+}

@@ -1,8 +1,8 @@
 export class ExternalUrl {
-    public id: number;
+  public id: number;
 
-    public url: string;
-    public displayName: string;
+  public url: string;
+  public displayName: string;
 
-    public version: number;
-  }
+  public version: number;
+}

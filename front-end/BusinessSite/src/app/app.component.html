@@ -1,27 +1,28 @@
 <app-header></app-header>
 
 <mat-toolbar>
-  <mat-toolbar-row
-      fxLayout="row" fxLayoutAlign="center stretch" 
-      fxShow="true" fxHide.lt-md="true">
-      <a routerLink="/" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          Home
-        </a>
-        <a routerLink="/projects/" mat-button routerLinkActive="active">
-          Projects
-        </a>
+  <mat-toolbar-row 
+        fxLayout="row" fxLayoutAlign="center stretch" 
+        fxShow="true" fxHide.lt-md="true">
+      <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        Home
+      </a>
+      <a mat-button routerLink="/projects/" routerLinkActive="active">
+        Projects
+      </a>
   </mat-toolbar-row>
-  <mat-toolbar-row  fxShow="true" fxHide.gt-sm="true" class="active">
-      <!-- <a mat-button (click)="sidenav.toggle()" fxFlex="220%"> -->
+
+  <mat-toolbar-row 
+        fxShow="true" fxHide.gt-sm="true" class="active">
+   <!-- <a mat-button (click)="sidenav.toggle()" fxFlex="220%"> -->
         <a mat-button fxFlex="220%">
           Menu
         </a>
     </mat-toolbar-row>
-</mat-toolbar>
-
+  </mat-toolbar>
 
 <div class="content-conteiner">
-  <div class="content-main">
+  <div class="content">
     <router-outlet></router-outlet>
   </div>
 </div>

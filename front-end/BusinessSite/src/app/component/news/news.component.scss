@@ -1,17 +1,17 @@
-@import 'variables';
-@import 'mixins';
+@import "variables";
+@import "mixins";
 
 .container {
   margin-bottom: 2%;
   @include flat-shadow($color-core);
-  
+
   display: inline-block;
   position: relative;
 }
 
-.content-image {
+.image {
   //filter: gray;
-	//filter: grayscale(100%);
+  //filter: grayscale(100%);
   object-fit: cover;
   object-position: 100% 0%;
   width: 100%;
@@ -21,10 +21,9 @@
   top: 0px;
 }
 
-.content{
+.content {
   background-color: $color-container-transparent;
   color: $color-text;
-  font-family: $font-core;
 
   padding-top: 10px;
   padding-bottom: 10px;
@@ -44,6 +43,6 @@
   margin-left: 20px;
   margin-right: 20px;
   font-size: large;
-  overflow:hidden;
+  overflow: hidden;
   max-height: 300px;
 }

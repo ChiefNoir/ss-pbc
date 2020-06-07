@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
   apiEndpoint: '',
-  siteName: 'Fireplace Of Despair'
+  siteName: 'Fireplace Of Despair',
+  maxProjectsPerPage: 3
 };

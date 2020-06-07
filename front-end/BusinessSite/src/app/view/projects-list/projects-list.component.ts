@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { BehaviorSubject } from 'rxjs';
 
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { Project } from 'src/app/model/Project';
 import { Category } from 'src/app/model/Category';
 import { PagingInfo } from 'src/app/model/PagingInfo';
-import { Title } from '@angular/platform-browser';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
-    selector: 'app-projects-list',
-    templateUrl: './projects-list.component.html',
-    styleUrls: ['./projects-list.component.scss']
-  })
+  selector: 'app-projects-list',
+  templateUrl: './projects-list.component.html',
+  styleUrls: ['./projects-list.component.scss'],
+})
 
 export class ProjectsListComponent {
-
   private service: DataService;
   private router: Router;
   private activeRoute: ActivatedRoute;
-  private projectsPerPage = 2;
+  private projectsPerPage = environment.maxProjectsPerPage;
 
   public projects$: BehaviorSubject<Array<Project>> = new BehaviorSubject<Array<Project>>(null);
   public pagingInfo$: BehaviorSubject<PagingInfo> = new BehaviorSubject<PagingInfo>(null);
@@ -34,115 +34,106 @@ export class ProjectsListComponent {
 
     titleService.setTitle(environment.siteName + ' - Projects');
 
-    this.activeRoute.params.subscribe(() => {
-      this.refreshPage();
-    });
+    this.activeRoute.params.subscribe(() => { this.refreshPage(); });
   }
 
-  private refreshPage(): void
-  {
+  private refreshPage(): void {
     this.projects$.next(null);
     this.pagingInfo$.next(null);
 
     const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
     if (!categoryCode) {
-      this.router.navigate(['/projects/all']);
+      this.router.navigate(['/projects/all']); // TODO: getting isEverything category
       return;
     }
 
-    if (this.categories$.value == null)
-    {
+    if (this.categories$.value == null) {
       this.service.getCategories()
                   .then
                   (
-                    data =>{this.handleCategories(data)}
+                    (data) => { this.handleCategories(data); }
                   );
     }
 
-    const currentPage = + this.activeRoute.snapshot.paramMap.get('page');
-
+    const currentPage = +this.activeRoute.snapshot.paramMap.get('page');
     this.service.getProjects(currentPage * this.projectsPerPage, this.projectsPerPage, categoryCode)
-                  .then
-                  (
-                    data =>{this.handleProjects(data)}
-                  );
-  }
-
-  private handleTotalProjects(data: number, categoryCode: string): void
-  {
-    const pgInfo: PagingInfo =
-    {
-      minPage: 0,
-      maxPage: this.calcMaxPageNumber(data),
-      currentPage: 0,
-      previousPageUrl: '',
-      nextPageUrl: '',
-      navigateCallback: this.changePage.bind(this)
-    };
-
-    pgInfo.currentPage = +this.activeRoute.snapshot.paramMap.get('page');
-
-    if (pgInfo.currentPage > pgInfo.maxPage) {
-        pgInfo.currentPage = pgInfo.maxPage;
-      }
-
-    if (pgInfo.currentPage < pgInfo.minPage) {
-      pgInfo.currentPage = pgInfo.minPage;
-      }
-
-    
-
-    pgInfo.nextPageUrl = this.router.createUrlTree
-    (
-      ['/projects', categoryCode, pgInfo.currentPage + 1]
-    ).toString();
-
-    pgInfo.previousPageUrl = this.router.createUrlTree
-    (
-      ['/projects', categoryCode, pgInfo.currentPage - 1]
-    ).toString();
-
-    this.pagingInfo$.next(pgInfo);
+                .then
+                (
+                  (data) => { this.handleProjects(data); }
+                );
   }
 
   private handleProjects(data: RequestResult<Array<Project>>): void {
-    if (data.isSucceed)
-    {
-      if(data.data == null || data.data.length === 0) {
+    if (data.isSucceed) {
+
+      if (data.data == null || data.data.length === 0) {
         this.router.navigate(['/404']);
       }
 
-    this.projects$.next(data.data);
-    } else{
+      this.projects$.next(data.data);
+    } else {
       this.handleError(data.errorMessage);
     }
   }
 
   private handleCategories(result: RequestResult<Array<Category>>): void {
-    if (result.isSucceed)
-    {
+    if (result.isSucceed) {
+
       const router = this.router;
+      result.data.forEach
+                  (
+                    (x) => { x.url = router.createUrlTree(['/projects', x.code]).toString(); }
+                  );
 
-      result.data.forEach((value) =>
-      {
-        value.url = router.createUrlTree(['/projects', value.code]).toString();
-      });
-
-      this.categories$.next(result.data.filter(x=>x.totalProjects > 0).sort((a, b) => b.totalProjects - a.totalProjects));
+      this.categories$.next
+                      (
+                        result.data
+                              .filter((x) => x.totalProjects > 0)
+                              .sort((a, b) => b.totalProjects - a.totalProjects)
+                      );
 
       const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
+      const totalProjects = !result.data ? 0 : result.data.find((x) => x.code === categoryCode)?.totalProjects;
 
-      const totalProjects = !result.data ? 0 :  result.data.find(x => x.code === categoryCode)?.totalProjects;
       this.handleTotalProjects(totalProjects, categoryCode);
-    }
-    else
-    {
+    } else {
       this.handleError(result.errorMessage);
     }
   }
 
+  private handleTotalProjects(totalProjects: number, categoryCode: string): void {
+    const pgInfo: PagingInfo = {
+      minPage: 0,
+      maxPage: this.calcMaxPageNumber(totalProjects),
+      currentPage: 0,
+      previousPageUrl: '',
+      nextPageUrl: '',
+      navigateCallback: this.changePage.bind(this),
+    };
+
+    pgInfo.currentPage = +this.activeRoute.snapshot.paramMap.get('page');
+
+    if (pgInfo.currentPage > pgInfo.maxPage) {
+      pgInfo.currentPage = pgInfo.maxPage;
+    }
+
+    if (pgInfo.currentPage < pgInfo.minPage) {
+      pgInfo.currentPage = pgInfo.minPage;
+    }
+
+    pgInfo.nextPageUrl = this.router
+      .createUrlTree(['/projects', categoryCode, pgInfo.currentPage + 1])
+      .toString();
+
+    pgInfo.previousPageUrl = this.router
+      .createUrlTree(['/projects', categoryCode, pgInfo.currentPage - 1])
+      .toString();
+
+    this.pagingInfo$.next(pgInfo);
+  }
+
   private changePage(value: number): void {
-    if (!this.pagingInfo$){
+    if (!this.pagingInfo$) {
       return;
     }
 

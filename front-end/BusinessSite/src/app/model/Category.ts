@@ -1,18 +1,16 @@
-import { INavigation } from '../interface/INavigation';
+export class Category {
+  public id: number;
 
-export class Category implements INavigation {
-    public id: number;
+  public code: string;
+  public displayName: string;
+  public imageUrl: string;
 
-    public code: string;
-    public displayName: string;
-    public imageUrl: string;
+  public isEverything: boolean;
 
-    public isEverything: boolean;
+  public totalProjects: number;
 
-    public totalProjects: number;
+  public version: number;
 
-    public version: number;
-
-    // [only-front], url for nagivation
-    public url: string;
-  }
+  // [only-front], url for nagivation
+  public url: string;
+}

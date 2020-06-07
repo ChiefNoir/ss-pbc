@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { INavigation } from 'src/app/interface/INavigation';
+import { Category } from 'src/app/model/Category';
 
 @Component({
   selector: 'app-filter-category',
@@ -9,5 +9,5 @@ import { INavigation } from 'src/app/interface/INavigation';
 
 export class FilterCategoryComponent {
   @Input()
-  public navigations: Array<INavigation>;
+  public categories: Array<Category>;
 }

@@ -8,7 +8,7 @@ a {
   border: 2px solid;
   line-height: 1;
   margin: 0.5em;
-  min-width: 100px;
+  min-width: 120px;
 }
 
 a:hover,
@@ -31,12 +31,12 @@ a:focus {
 
 .display-name{
   text-align: center;
-  padding-top: 8px;
+  padding-top: 7px;
 }
 
 .counter-container {
-  padding-top: 8px;
-  padding-bottom: 9px;
+  padding-top: 7px;
+  padding-bottom: 8px;
   background-color: $color-control-text;
 
   -webkit-transition: width .7s ease-in-out;

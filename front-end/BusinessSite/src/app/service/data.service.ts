@@ -1,6 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
 import { RequestResult } from '../model/RequestResult';
 
 import { Project } from '../model/Project';

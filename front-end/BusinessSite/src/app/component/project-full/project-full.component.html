@@ -1,31 +1,24 @@
-
-
-
-
 <div fxLayout="row" class="container">
-  
+  <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
 
-    <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
-      <h1 class="headline" >[{{project.category.displayName}}] {{ project.displayName }}</h1>
+    <h1 class="headline">[{{ project.category.displayName }}] {{ project.displayName }}</h1>    
+    <mat-divider></mat-divider>
+    
+    <div class="description">{{ project.description }}</div>
+
+    <div *ngIf="project.externalUrls.length > 0">
+      <h1 class="headline">External urls</h1>
       <mat-divider></mat-divider>
-      <div  class="text">{{project.description}}</div>
 
-      <div *ngIf="project.externalUrls.length > 0">
-        <h1 class="headline" >External urls</h1>
-        <mat-divider></mat-divider>
-
-        <div class="text">
-          <app-button-external-url 
+      <div class="text">
+        <app-button-external-url 
                 *ngFor="let item of project.externalUrls"
                 role="list"
                 [externalUrl]="item">
-          </app-button-external-url>
-        </div>
+        </app-button-external-url>
       </div>
-
     </div>
-    <img class="image" fxFlex="20" src="{{project.posterUrl}}" />
-    
-</div>
- 
+  </div>
 
+  <img class="image" fxFlex="20" src="{{ project.posterUrl }}" />
+</div>

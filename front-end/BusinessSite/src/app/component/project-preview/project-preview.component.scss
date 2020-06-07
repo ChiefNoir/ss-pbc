@@ -1,17 +1,17 @@
-@import 'variables';
-@import 'mixins';
+@import "variables";
+@import "mixins";
 
 .container {
   margin-bottom: 2%;
   @include flat-shadow($color-core);
-  
+
   display: inline-block;
   position: relative;
 }
 
-.content-image {
+.image {
   //filter: gray;
-	//filter: grayscale(100%);
+  //filter: grayscale(100%);
   object-fit: cover;
   object-position: 100% 0%;
   width: 100%;
@@ -23,19 +23,16 @@
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  border:5px solid $color-core;
+  border: 5px solid $color-core;
 }
 
-.content{
+.content {
   background-color: $color-container-transparent;
   color: $color-text;
-  font-family: $font-core;
 
   padding-top: 10px;
   padding-bottom: 10px;
   width: 100%;
-
-
 
   position: absolute;
   bottom: 0%;
@@ -50,15 +47,15 @@
   font-size: 25px;
 }
 
-.title:hover {
+.headline:hover {
   color: $color-text-highlighted;
 }
 
-.text {
+.description {
   margin-top: 10px;
   margin-left: 20px;
   margin-right: 20px;
   font-size: large;
-  overflow:hidden;
+  overflow: hidden;
   max-height: 300px;
 }

@@ -5,11 +5,10 @@ import { Project } from 'src/app/model/Project';
 @Component({
   selector: 'app-project-preview',
   templateUrl: './project-preview.component.html',
-  styleUrls: ['./project-preview.component.scss']
+  styleUrls: ['./project-preview.component.scss'],
 })
 
 export class ProjectPreviewComponent {
-
   @Input()
   public project: Project;
 

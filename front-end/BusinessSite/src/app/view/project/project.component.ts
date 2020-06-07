@@ -15,6 +15,7 @@ import { Project } from 'src/app/model/Project';
 export class ProjectComponent {
 
   private service: DataService;
+  private router: Router;
   private activeRoute: ActivatedRoute;
 
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
@@ -22,6 +23,7 @@ export class ProjectComponent {
   public constructor(service: DataService, router: Router, activeRoute: ActivatedRoute) {
     this.service = service;
     this.activeRoute = activeRoute;
+    this.router = router;
 
     this.activeRoute.params.subscribe(() => {
       this.refreshPage();
@@ -46,6 +48,11 @@ export class ProjectComponent {
   private handleProject(data: RequestResult<Project>): void {
     if (data.isSucceed)
     {
+      if(data.data == null) {
+        this.router.navigate(['/404']);
+      }
+
+
       this.project$.next(data.data);
     }
     else

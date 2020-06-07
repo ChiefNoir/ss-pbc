@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { BehaviorSubject } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
 
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { Project } from 'src/app/model/Project';
-import { Title } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment';
 
 @Component({
-    selector: 'app-project-list',
-    templateUrl: './project.component.html',
-    styleUrls: ['./project.component.scss']
-  })
+  selector: 'app-project-list',
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.scss'],
+})
 
 export class ProjectComponent {
-
   private service: DataService;
-  private router: Router;
   private activeRoute: ActivatedRoute;
+  private router: Router;
   private titleService: Title;
 
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
-  public constructor(service: DataService, router: Router, activeRoute: ActivatedRoute, titleService: Title) {
+  public constructor(service: DataService, activeRoute: ActivatedRoute, router: Router, titleService: Title) {
     this.service = service;
     this.activeRoute = activeRoute;
     this.router = router;
@@ -34,34 +34,27 @@ export class ProjectComponent {
     });
   }
 
-  private refreshPage(): void
-  {
+  private refreshPage(): void {
     this.project$.next(null);
 
     const code = this.activeRoute.snapshot.paramMap.get('code');
-
     this.service.getProject(code)
                 .then
                 (
-                  data => {this.handleProject(data); }
+                  (data) => { this.handleProjectRequest(data); }
                 );
   }
 
-
-
-  private handleProject(data: RequestResult<Project>): void {
-    if (data.isSucceed)
-    {
-      if (data.data == null) {
+  private handleProjectRequest(result: RequestResult<Project>): void {
+    if (result.isSucceed) {
+      if (result.data == null) {
         this.router.navigate(['/404']);
       }
 
-      this.titleService.setTitle(environment.siteName + ' - ' + data.data?.displayName);
-      this.project$.next(data.data);
-    }
-    else
-    {
-      this.handleError(data.errorMessage);
+      this.titleService.setTitle(environment.siteName + ' - ' + result.data?.displayName);
+      this.project$.next(result.data);
+    } else {
+      this.handleError(result.errorMessage);
     }
   }
 

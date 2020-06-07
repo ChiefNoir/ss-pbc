@@ -1,12 +1,9 @@
-
-  <div fxFlex="100%">  
-    <div *ngIf="(project$ | async) as project; else loading">
-      <app-project-full [project]="project">
-      </app-project-full>
-    </div>
+<div fxFlex="100%">
+  <div *ngIf="project$ | async as project; else loading">
+    <app-project-full [project]="project"> </app-project-full>
   </div>
-
+</div>
 
 <ng-template #loading>
   <app-loading></app-loading>
-</ng-template> 
+</ng-template>

@@ -1,34 +1,34 @@
-﻿create table News (
-	Id serial primary key,
-	Title varchar(64) not null,
-	Content text,
-	PosterUrl varchar(512) not null,
-	Version int not null default 0
+﻿create table news (
+	id serial primary key,
+	title varchar(64) not null,
+	content text,
+	poster_url varchar(512) not null,
+	version int not null default 0
 );
 
-create table Category 
+create table category 
 (
-	Code varchar(128) primary key,
-	DisplayName varchar(128) not null,
-	IsEverything boolean not null default false,
-	Version int not null default 0
+	code varchar(128) primary key,
+	display_name varchar(128) not null,
+	is_everything boolean not null default false,
+	version int not null default 0
 );
 
 create table Project (
-	Code varchar(128) primary key,
-	DisplayName varchar(128) not null,
-	ReleaseDate date, 
-	PosterUrl varchar(512),
-	CategoryCode varchar(128) REFERENCES Category (Code),
-	DescriptionShort text,
+	code varchar(128) primary key,
+	display_name varchar(128) not null,
+	release_date date, 
+	poster_url varchar(512),
+	category_code varchar(128) REFERENCES category (code),
+	description_short text,
 	Description text,
 	Version int not null default 0
 );
 
-create table ExternalUrl (
-	Id serial primary key,
-	ProjectCode varchar(128) REFERENCES Project (Code),
-	Url varchar(256),
-	DisplayName varchar(64) not null,
-	Version int not null default 0
+create table external_url (
+	id serial primary key,
+	project_code varchar(128) REFERENCES project (code),
+	url varchar(256),
+	display_name varchar(64) not null,
+	version int not null default 0
 );

@@ -10,16 +10,16 @@ namespace Infrastructure.DataModel
         [Column("code")]
         public string Code { get; private set; }
 
-        [Column("displayname")]
+        [Column("display_name")]
         public string DisplayName { get; private set; }
 
-        [Column("iseverything")]
+        [Column("is_everything")]
         public bool IsEverything { get; private set; }
 
         [Column("version")]
         public long Version { get; private set; }
 
-        [Column("totalprojects")]
+        [Column("total_projects")]
         public int TotalProjects { get; private set; }
     }
 }

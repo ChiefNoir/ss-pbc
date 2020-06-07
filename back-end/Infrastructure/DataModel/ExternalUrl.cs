@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infrastructure.DataModel
 {
-    [Table("externalurl")]
+    [Table("external_url")]
     class ExternalUrl
     {
         [Key]
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("projectcode")]
+        [Column("project_code")]
         public string ProjectCode { get; set; }
 
         [Required]
@@ -18,7 +18,7 @@ namespace Infrastructure.DataModel
         public string Url { get; set; }
 
         [Required]
-        [Column("displayname")]
+        [Column("display_name")]
         public string DisplayName { get; set; }
 
         [Required]

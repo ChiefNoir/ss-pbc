@@ -16,7 +16,7 @@ namespace Infrastructure.DataModel
         [Column("content")]
         public string Content { get; set; }
 
-        [Column("posterurl")]
+        [Column("poster_url")]
         public string PosterUrl { get; set; }
 
         [Column("version")]

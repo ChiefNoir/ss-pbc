@@ -10,10 +10,10 @@ namespace Infrastructure.DataModel
         [Column("code")]
         public string Code { get; set; }
 
-        [Column("displayname")]
+        [Column("display_name")]
         public string DisplayName { get; set; }
 
-        [Column("iseverything")]
+        [Column("is_everything")]
         public bool IsEverything { get; set; }
 
         [Column("version")]

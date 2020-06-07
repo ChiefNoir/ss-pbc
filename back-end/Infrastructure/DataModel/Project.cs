@@ -12,22 +12,22 @@ namespace Infrastructure.DataModel
         [Column("code")]
         public string Code { get; set; }
 
-        [Column("displayname")]
+        [Column("display_name")]
         public string DisplayName { get; set; }
 
         [Column("description")]
         public string Description { get; set; }
 
-        [Column("descriptionshort")]
+        [Column("description_short")]
         public string DescriptionShort { get; set; }
 
-        [Column("posterurl")]
+        [Column("poster_url")]
         public string PosterUrl { get; set; }
 
-        [Column("releasedate")]
+        [Column("release_date")]
         public DateTime? ReleaseDate { get; set; }
 
-        [Column("categorycode")]
+        [Column("category_code")]
         public string CategoryCode { get; set; }
 
         public Category Category { get; set; }

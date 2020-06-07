@@ -43,7 +43,7 @@ export class ProjectComponent {
     this.service.getProject(code)
                 .then
                 (
-                  data => {this.handleProject(data)}
+                  data => {this.handleProject(data); }
                 );
   }
 
@@ -52,7 +52,7 @@ export class ProjectComponent {
   private handleProject(data: RequestResult<Project>): void {
     if (data.isSucceed)
     {
-      if(data.data == null) {
+      if (data.data == null) {
         this.router.navigate(['/404']);
       }
 

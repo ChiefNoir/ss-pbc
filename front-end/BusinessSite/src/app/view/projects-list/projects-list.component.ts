@@ -104,6 +104,10 @@ export class ProjectsListComponent {
   private handleProjects(data: RequestResult<Array<Project>>): void {
     if (data.isSucceed)
     {
+      if(data.data == null || data.data.length === 0) {
+        this.router.navigate(['/404']);
+      }
+
     this.projects$.next(data.data);
     } else{
       this.handleError(data.errorMessage);
@@ -124,7 +128,7 @@ export class ProjectsListComponent {
 
       const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
 
-      const totalProjects = !result.data? 0:  result.data.find(x=>x.code == categoryCode).totalProjects;
+      const totalProjects = !result.data ? 0 :  result.data.find(x => x.code === categoryCode)?.totalProjects;
       this.handleTotalProjects(totalProjects, categoryCode);
     }
     else

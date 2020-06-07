@@ -3,5 +3,14 @@
   routerLinkActive
   #rla="routerLinkActive"
   [routerLinkActiveOptions]="{ exact: false }">
-  <ng-content></ng-content>
+
+  <div fxLayout="row">
+    <div fxFlex class="display-name">{{category.displayName}}</div>
+    <div class="counter-container" >
+      <div class="conter-content">
+        {{category.totalProjects}}
+      </div>
+    </div>
+  </div>
+
 </a>

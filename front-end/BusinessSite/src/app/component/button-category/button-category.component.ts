@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Category } from 'src/app/model/Category';
 
 @Component({
   selector: 'app-button-category',
@@ -9,4 +10,7 @@ import { Component, Input } from '@angular/core';
 export class ButtonCategoryComponent {
   @Input()
   public route: string;
+
+  @Input()
+  public category: Category;
 }

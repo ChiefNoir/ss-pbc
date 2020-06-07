@@ -1,5 +1,16 @@
 @import 'variables';
 
+a {
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.25s;
+  background: none;
+  border: 2px solid;
+  line-height: 1;
+  margin: 0.5em;
+  min-width: 100px;
+}
+
 a:hover,
 a:focus {
   box-shadow: 0 0.5em 0.5em -0.4em $color-control-active;
@@ -11,22 +22,63 @@ a:focus {
   -o-transform: translateY(-0.3em);
 }
 
-a {
-  text-decoration: none;
-  display: inline-block;
-  transition: 0.25s;
-  background: none;
-  border: 2px solid;
-  line-height: 1;
-  margin: 0.5em;
-  padding: 10px 10px;
-  text-align: center;
-  min-width: 100px;
-}
-
 .active {
   color: $color-control-active;
 }
 .nonactive {
+  color: $color-control-text;
+}
+
+.display-name{
+  text-align: center;
+  padding-top: 8px;
+}
+
+.counter-container {
+  padding-top: 8px;
+  padding-bottom: 9px;
+  background-color: $color-control-text;
+
+  -webkit-transition: width .7s ease-in-out;
+  -moz-transition: width .7s ease-in-out;
+  -o-transition: width .7s ease-in-out;
+  transition: width .7s ease-in-out;
+
+  width: 0px;
+}
+
+a:hover .counter-container,
+a:focus .counter-container{
+  background-color: $color-control-active;
+  
+  -webkit-transition: width .7s ease-in-out;
+  -moz-transition: width .7s ease-in-out;
+  -o-transition: width .7s ease-in-out;
+  transition: width .7s ease-in-out;
+
+  width:30px;
+}
+
+a.active .counter-container {
+  background-color: $color-control-active;
+  color: $color-control;  
+}
+
+.conter-content{
+  font-weight: 600;
+  text-align: center;
+  margin-left: 3px;
+  margin-right: 3px;
+  overflow: hidden;
+  color: $color-control;
+}
+
+a.active:hover .conter-content,
+a:focus:hover .conter-content{
+  color: $color-control;  
+}
+
+a:hover .conter-content,
+a:focus .conter-content{
   color: $color-control-text;
 }

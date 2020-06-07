@@ -1,6 +1,6 @@
 <div class="toggle-group">
   <app-button-category *ngFor="let item of navigations" 
-                  [route]="item.url">
-    {{ item.displayName }}
+                  [route]="item.url"
+                  [category]="item">
   </app-button-category>
 </div>

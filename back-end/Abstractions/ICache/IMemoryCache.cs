@@ -16,7 +16,7 @@ namespace Abstractions.MemoryCache
         /// <summary> Get item stored in cache or add it</summary>
         /// <param name="key">Unique key to identify item stored in cache</param>
         /// <param name="createItem">Function to create item</param>
-        /// <returns>Item stored in cache</returns>
+        /// <returns>Item stored in cache or <code>null</code></returns>
         Task<TEntity> GetOrCreateAsync(TKey key, Func<Task<TEntity>> createItem);
 
         /// <summary> Remove item from cache</summary>
@@ -27,5 +27,11 @@ namespace Abstractions.MemoryCache
         /// <param name="key">Unique key to identify item stored in cache</param>
         /// <param name="createItem">Function to create item</param>
         void UpdateOrCreateAsync(TKey key, Func<Task<TEntity>> createItem);
+
+        /// <summary>Find or add item in/to cache</summary>
+        /// <param name="predicate">Search predicate</param>
+        /// <param name="createItem">Function to create item</param>
+        /// <returns>Item stored in cache or <code>null</code></returns>
+        Task<TEntity> FindOrCreateAsync(Func<TEntity, bool> predicate, Func<Task<TEntity>> createItem);
     }
 }

@@ -12,6 +12,8 @@ namespace Infrastructure.Cache
         protected static readonly SemaphoreSlim _global = new SemaphoreSlim(1, 1);
         protected static readonly ConcurrentDictionary<TKey, SemaphoreSlim> _locks = new ConcurrentDictionary<TKey, SemaphoreSlim>();
 
+        public abstract Task<TEntity> FindOrCreateAsync(Func<TEntity, bool> predicate, Func<Task<TEntity>> createItem);
+
         public abstract Task<TEntity[]> GetAll(Func<Task<TEntity[]>> initAll);
 
         public virtual async Task<TEntity> GetOrCreateAsync(TKey key, Func<Task<TEntity>> createItem)

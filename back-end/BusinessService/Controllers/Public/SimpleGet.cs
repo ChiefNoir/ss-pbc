@@ -42,6 +42,17 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
+        [HttpGet("category/everything")]
+        public async Task<IActionResult> GetEverythingCategory()
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _categoryRepository.GetEverythingCategory();
+            });
+
+            return new JsonResult(result);
+        }
+
         [HttpGet("projects/{categoryCode}/{start}/{length}/")]
         public async Task<IActionResult> GetProjectsPreview(int start, int length, string categoryCode)
         {

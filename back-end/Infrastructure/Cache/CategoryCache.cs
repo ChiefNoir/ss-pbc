@@ -1,6 +1,7 @@
 ﻿using Abstractions.Model;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Cache
@@ -37,6 +38,33 @@ namespace Infrastructure.Cache
 
             return _cache.Values.ToArray();
 
+        }
+
+        public override async Task<Category> FindOrCreateAsync(Func<Category, bool> predicate, Func<Task<Category>> createItem)
+        {
+            var stored = _cache.Values.FirstOrDefault(predicate);
+            if (stored != null)
+                return stored;
+
+            var entity = await createItem();
+            if (entity == null)
+                return null;
+
+            var localLock = _locks.GetOrAdd(entity.Code, k => new SemaphoreSlim(1, 1));
+
+            await _global.WaitAsync();
+            await localLock.WaitAsync();
+            try
+            {
+                _cache[entity.Code] = entity;
+            }
+            finally
+            {
+                localLock.Release();
+                _global.Release();
+            }
+
+            return entity;
         }
 
     }

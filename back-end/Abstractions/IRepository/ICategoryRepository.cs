@@ -14,5 +14,9 @@ namespace Abstractions.IRepository
         /// <summary>Get all categories</summary>
         /// <returns>All categories</returns>
         Task<Category[]> GetCategories();
+
+        /// <summary>Get technical for filtering by everything</summary>
+        /// <returns>Everything category</returns>
+        Task<Category> GetEverythingCategory();
     }
 }

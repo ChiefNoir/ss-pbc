@@ -2,7 +2,9 @@
 using Abstractions.MemoryCache;
 using Abstractions.Model;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
@@ -25,7 +27,7 @@ namespace Infrastructure.Repository
 
         public async Task<bool> CheckIsEverything(string code)
         {
-            var item = await _cache.GetOrCreateAsync(code, () => { return GetCategory(code); });
+            var item = await _cache.GetOrCreateAsync(code, () => { return GetCategory(x => x.Code == code); });
 
             return item?.IsEverything == true;
         }
@@ -45,14 +47,11 @@ namespace Infrastructure.Repository
                            .ToArrayAsync();
         }
 
-        private Task<Category> GetCategory(string code)
+        private Task<Category> GetCategory(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)
         {
-            if (string.IsNullOrEmpty(code))
-                return null;
-
             return _context.CategoriesWithTotalProjects
                .AsNoTracking()
-               .Where(x => x.Code == code)
+               .Where(predicate)
                .Select(x => new Category
                {
                    Code = x.Code,
@@ -64,5 +63,9 @@ namespace Infrastructure.Repository
                .FirstOrDefaultAsync();
         }
 
+        public Task<Category> GetEverythingCategory()
+        {
+            return _cache.FindOrCreateAsync(x => x.IsEverything, () => { return GetCategory(x => x.IsEverything); });
+        }
     }
 }

@@ -3,10 +3,8 @@
 
 .container {
   background-color: $color-content;
-  color: $color-text;
-  margin: 1.5%;
-  padding-bottom: 25px;
-  font-size: 16px;
+  color: $color-text;  
+  
   align-content: center;
   text-align: center;
 
@@ -16,17 +14,19 @@
 .neon {
   font-family: $font-neon;
   color: $color-neon;
-  font-size: 15vh;
+  font-size: 90px;
+
   @include neon-sign($color-neon-glow, $color-neon-shadow);
 }
 
-.neon span {
-  animation: blink linear infinite 2s;
+.neon .blink3s {
+  display: inline-block;
+  animation: blink linear infinite 5s;
 }
 
-.neon .blink {
+.neon .blink5s {
   display: inline-block;
-  animation: blink linear infinite 4s;
+  animation: blink linear infinite 3s;
 }
 
 @keyframes blink {

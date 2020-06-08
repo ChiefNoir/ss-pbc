@@ -14,8 +14,9 @@
 }
 
 .neon {
-  font: $font-neon;
+  font-family: $font-neon;
   color: $color-neon;
+  font-size: 15vh;
   @include neon-sign($color-neon-glow, $color-neon-shadow);
 }
 

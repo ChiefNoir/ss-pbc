@@ -25,8 +25,7 @@
   margin-right: 20px;
   margin-bottom: 20px;
   font-size: large;
-  overflow:hidden;
-  max-height: 300px;
+
   color: $color-text;
 }
 
@@ -44,4 +43,11 @@
   border-top-color: $color-text;
   margin-left: 20px;
   margin-right: 20px;
+}
+
+.extension {
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }

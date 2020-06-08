@@ -3,6 +3,7 @@
 	title varchar(64) not null,
 	content text,
 	poster_url varchar(512) not null,
+	poster_description varchar(512),
 	version int not null default 0
 );
 
@@ -18,7 +19,8 @@ create table Project (
 	code varchar(128) primary key,
 	display_name varchar(128) not null,
 	release_date date, 
-	poster_url varchar(512),
+	poster_url varchar(512) not null,
+	poster_description varchar(512),
 	category_code varchar(128) REFERENCES category (code),
 	description_short text,
 	Description text,

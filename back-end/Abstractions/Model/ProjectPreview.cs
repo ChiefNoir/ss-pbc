@@ -22,5 +22,8 @@ namespace Abstractions.Model
 
         /// <summary> URL for the poster </summary>
         public string PosterUrl { get; set; }
+
+        /// <summary> </summary>
+        public string PosterDescription { get; set; }
     }
 }

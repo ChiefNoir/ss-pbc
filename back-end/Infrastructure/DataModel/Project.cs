@@ -24,6 +24,9 @@ namespace Infrastructure.DataModel
         [Column("poster_url")]
         public string PosterUrl { get; set; }
 
+        [Column("poster_description")]
+        public string PosterDescription { get; set; }
+
         [Column("release_date")]
         public DateTime? ReleaseDate { get; set; }
 

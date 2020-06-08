@@ -23,6 +23,7 @@ namespace Infrastructure.Repository
                     Content = x.Content,
                     Id = x.Id,
                     PosterUrl = x.PosterUrl,
+                    PosterDescription = x.PosterDescription,
                     Title = x.Title,
                     Version = x.Version
                 }

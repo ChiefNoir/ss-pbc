@@ -30,6 +30,7 @@ namespace Infrastructure.Repository
                     Description = x.Description,
                     DisplayName = x.DisplayName,
                     PosterUrl = x.PosterUrl,
+                    PosterDescription = x.PosterDescription,
                     ReleaseDate = x.ReleaseDate,
                     Version = x.Version,
                     Category = new Category 
@@ -56,6 +57,7 @@ namespace Infrastructure.Repository
                         Description = x.DescriptionShort,
                         DisplayName = x.DisplayName,
                         PosterUrl = x.PosterUrl,
+                        PosterDescription = x.PosterDescription,
                         ReleaseDate = x.ReleaseDate,
                         Category = new Category
                         {
@@ -78,6 +80,7 @@ namespace Infrastructure.Repository
                     Description = x.DescriptionShort,
                     DisplayName = x.DisplayName,
                     PosterUrl = x.PosterUrl,
+                    PosterDescription = x.PosterDescription,
                     ReleaseDate = x.ReleaseDate,
                     Category = new Category
                     {

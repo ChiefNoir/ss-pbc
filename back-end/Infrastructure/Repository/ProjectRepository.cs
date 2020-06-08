@@ -47,10 +47,11 @@ namespace Infrastructure.Repository
         public async Task<ProjectPreview[]> GetProjects(int start, int length, string categoryCode)
         {
             if(await _categoryRepository.CheckIsEverything(categoryCode))
-                return await _context.Projects
-                    .Include(x => x.Category)
+                return await _context.Projects                    
+                    .OrderByDescending(x=>x.ReleaseDate)
                     .Skip(start)
                     .Take(length)
+                    .Include(x => x.Category)
                     .Select(x => new ProjectPreview
                     {
                         Code = x.Code,
@@ -71,9 +72,10 @@ namespace Infrastructure.Repository
 
             return await _context.Projects
                 .Where(x => x.CategoryCode == categoryCode)
+                .OrderByDescending(x => x.ReleaseDate)
                 .Skip(start)
                 .Take(length)
-                .Include(x => x.Category)
+                .Include(x => x.Category)                
                 .Select(x => new ProjectPreview
                 {
                     Code = x.Code,

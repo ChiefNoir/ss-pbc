@@ -1,5 +1,5 @@
 <div class="container" fxLayout="column" fxLayoutAlign="end stretch">
-  <img class="image" src="{{project.posterUrl}}" />
+  <img class="image" src="{{project.posterUrl}}" alt="{{project.posterDescription}}" />
 
   <div class="content">
     <a class="headline" [routerLink]="createRouterLink()">[{{project.category?.displayName}}] {{ project.displayName }}</a>

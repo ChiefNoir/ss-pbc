@@ -8,6 +8,7 @@ export class Project {
   public displayName: string;
   public releaseDate: Date;
   public posterUrl: string;
+  public posterDescription: string;
   public category: Category;
   public description: string;
 

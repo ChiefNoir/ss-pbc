@@ -44,54 +44,32 @@ namespace Infrastructure.Repository
                 }).FirstOrDefaultAsync();
         }
 
-        public async Task<ProjectPreview[]> GetProjects(int start, int length, string categoryCode)
+        public async Task<ProjectPreview[]> GetProjectsPreview(int start, int length, string categoryCode)
         {
-            if(await _categoryRepository.CheckIsEverything(categoryCode))
-                return await _context.Projects                    
-                    .OrderByDescending(x=>x.ReleaseDate)
-                    .Skip(start)
-                    .Take(length)
-                    .Include(x => x.Category)
-                    .Select(x => new ProjectPreview
-                    {
-                        Code = x.Code,
-                        Description = x.DescriptionShort,
-                        DisplayName = x.DisplayName,
-                        PosterUrl = x.PosterUrl,
-                        PosterDescription = x.PosterDescription,
-                        ReleaseDate = x.ReleaseDate,
-                        Category = new Category
-                        {
-                            Code = x.Category.Code,
-                            DisplayName = x.Category.DisplayName,
-                            IsEverything = false,
-                            Version = x.Category.Version
-                        }
-                    }).ToArrayAsync();
-
+            var isEverything = await _categoryRepository.CheckIsEverything(categoryCode);
 
             return await _context.Projects
-                .Where(x => x.CategoryCode == categoryCode)
-                .OrderByDescending(x => x.ReleaseDate)
-                .Skip(start)
-                .Take(length)
-                .Include(x => x.Category)                
-                .Select(x => new ProjectPreview
-                {
-                    Code = x.Code,
-                    Description = x.DescriptionShort,
-                    DisplayName = x.DisplayName,
-                    PosterUrl = x.PosterUrl,
-                    PosterDescription = x.PosterDescription,
-                    ReleaseDate = x.ReleaseDate,
-                    Category = new Category
-                    {
-                        Code = x.Category.Code,
-                        DisplayName = x.Category.DisplayName,
-                        IsEverything = false,
-                        Version = x.Category.Version
-                    }
-                }).ToArrayAsync();
+                                 .Where(x => isEverything ? true : x.CategoryCode == categoryCode)
+                                 .OrderByDescending(x => x.ReleaseDate)
+                                 .Skip(start)
+                                 .Take(length)
+                                 .Include(x => x.Category)
+                                 .Select(x => new ProjectPreview
+                                 {
+                                     Code = x.Code,
+                                     Description = x.DescriptionShort,
+                                     DisplayName = x.DisplayName,
+                                     PosterUrl = x.PosterUrl,
+                                     PosterDescription = x.PosterDescription,
+                                     ReleaseDate = x.ReleaseDate,
+                                     Category = new Category
+                                     {
+                                         Code = x.Category.Code,
+                                         DisplayName = x.Category.DisplayName,
+                                         IsEverything = false,
+                                         Version = x.Category.Version
+                                     }
+                                 }).ToArrayAsync();
         }
 
 

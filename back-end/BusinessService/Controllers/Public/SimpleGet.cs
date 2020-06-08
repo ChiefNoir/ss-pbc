@@ -43,11 +43,11 @@ namespace BusinessService.Controllers.Public
         }
 
         [HttpGet("projects/{categoryCode}/{start}/{length}/")]
-        public async Task<IActionResult> GetProjects(int start, int length, string categoryCode)
+        public async Task<IActionResult> GetProjectsPreview(int start, int length, string categoryCode)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _projectRepository.GetProjects(start, length, categoryCode);
+                return _projectRepository.GetProjectsPreview(start, length, categoryCode);
 
             });
 

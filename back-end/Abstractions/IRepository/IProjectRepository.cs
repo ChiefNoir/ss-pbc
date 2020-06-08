@@ -11,7 +11,7 @@ namespace Abstractions.IRepository
         /// <param name="length">Length</param>
         /// <param name="categoryCode">Category code</param>
         /// <returns><seealso cref="ProjectPreview"/></returns>
-        Task<ProjectPreview[]> GetProjects(int start, int length, string categoryCode);
+        Task<ProjectPreview[]> GetProjectsPreview(int start, int length, string categoryCode);
 
         /// <summary> Get full specific <seealso cref="Project"/></summary>
         /// <param name="code">Project code</param>

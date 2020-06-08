@@ -10,6 +10,7 @@ import { Category } from 'src/app/model/Category';
 import { PagingInfo } from 'src/app/model/PagingInfo';
 
 import { environment } from 'src/environments/environment';
+import { ProjectPreview } from 'src/app/model/ProjectPreview';
 
 @Component({
   selector: 'app-projects-list',
@@ -23,7 +24,7 @@ export class ProjectsListComponent {
   private activeRoute: ActivatedRoute;
   private projectsPerPage = environment.maxProjectsPerPage;
 
-  public projects$: BehaviorSubject<Array<Project>> = new BehaviorSubject<Array<Project>>(null);
+  public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
   public pagingInfo$: BehaviorSubject<PagingInfo> = new BehaviorSubject<PagingInfo>(null);
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
 
@@ -63,7 +64,7 @@ export class ProjectsListComponent {
                 );
   }
 
-  private handleProjects(data: RequestResult<Array<Project>>): void {
+  private handleProjects(data: RequestResult<Array<ProjectPreview>>): void {
     if (data.isSucceed) {
 
       if (data.data == null || data.data.length === 0) {

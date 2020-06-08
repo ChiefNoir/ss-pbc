@@ -1,7 +1,6 @@
-import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { Category } from 'src/app/model/Category';
 
-export class Project {
+export class ProjectPreview {
   public code: string;
   public displayName: string;
   public releaseDate: Date;
@@ -9,8 +8,4 @@ export class Project {
   public posterDescription: string;
   public category: Category;
   public description: string;
-
-  public externalUrls: Array<ExternalUrl>;
-
-  public version: number;
 }

@@ -7,6 +7,7 @@ import { News } from '../model/News';
 import { Category } from '../model/Category';
 
 import { environment } from 'src/environments/environment';
+import { ProjectPreview } from '../model/ProjectPreview';
 
 @Injectable()
 export class DataService {
@@ -23,9 +24,9 @@ export class DataService {
                .toPromise();
   }
 
-  public getProjects(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<Project>>> {
+  public getProjects(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<ProjectPreview>>> {
     return this.httpClient
-               .get<RequestResult<Array<Project>>>
+               .get<RequestResult<Array<ProjectPreview>>>
                (
                  this.endpoint + 'projects/' + categoryCode + '/' + start + '/' + length
                )

@@ -40,7 +40,6 @@ export class ProjectsListComponent {
 
   private refreshPage(): void {
     this.projects$.next(null);
-    this.pagingInfo$.next(null);
 
     const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
     if (!categoryCode) {
@@ -54,6 +53,11 @@ export class ProjectsListComponent {
                   (
                     (data) => { this.handleCategories(data); }
                   );
+    }
+    else
+    {
+      const totalProjects = this.categories$.value.find(x => x.code === categoryCode)?.totalProjects;
+      this.handleTotalProjects(totalProjects, categoryCode);
     }
 
     const currentPage = +this.activeRoute.snapshot.paramMap.get('page');

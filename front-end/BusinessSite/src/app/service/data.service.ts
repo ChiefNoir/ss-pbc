@@ -8,6 +8,7 @@ import { Category } from '../model/Category';
 
 import { environment } from 'src/environments/environment';
 import { ProjectPreview } from '../model/ProjectPreview';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class DataService {
@@ -49,5 +50,13 @@ export class DataService {
                  this.endpoint + 'categories/all'
                )
                .toPromise();
+  }
+
+  public getEverythingCategory(): Promise<RequestResult<Category>> {
+    return this.httpClient
+               .get<RequestResult<Category>>
+               (
+                 this.endpoint + 'category/everything'
+               ).toPromise();
   }
 }

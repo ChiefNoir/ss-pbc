@@ -5,12 +5,11 @@ import { BehaviorSubject } from 'rxjs';
 
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
-import { Project } from 'src/app/model/Project';
+import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { Category } from 'src/app/model/Category';
 import { PagingInfo } from 'src/app/model/PagingInfo';
 
 import { environment } from 'src/environments/environment';
-import { ProjectPreview } from 'src/app/model/ProjectPreview';
 
 @Component({
   selector: 'app-projects-list',
@@ -42,30 +41,44 @@ export class ProjectsListComponent {
     this.projects$.next(null);
 
     const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
-    if (!categoryCode) {
-      this.router.navigate(['/projects/all']); // TODO: getting isEverything category
-      return;
-    }
 
-    if (this.categories$.value == null) {
-      this.service.getCategories()
+    if (!categoryCode) {
+      this.service.getEverythingCategory()
                   .then
                   (
-                    (data) => { this.handleCategories(data); }
+                    (x) => {
+                      if (x.isSucceed) {
+                        const something = x.data.code;
+                        this.router.navigate(['/projects/' + something]);
+                      } else {
+                        this.router.navigate(['/404/']);
+                      }
+                    }
                   );
-    }
-    else
-    {
-      const totalProjects = this.categories$.value.find(x => x.code === categoryCode)?.totalProjects;
-      this.handleTotalProjects(totalProjects, categoryCode);
+    } else {
+      if (this.categories$.value == null) {
+        this.service.getCategories()
+                    .then
+                    (
+                      (data) => { this.handleCategories(data); }
+                    );
+      }
+      else
+      {
+        const totalProjects = this.categories$.value.find(x => x.code === categoryCode)?.totalProjects;
+        this.handleTotalProjects(totalProjects, categoryCode);
+      }
+
+      const currentPage = +this.activeRoute.snapshot.paramMap.get('page');
+      this.service.getProjects(currentPage * this.projectsPerPage, this.projectsPerPage, categoryCode)
+                  .then
+                  (
+                    (data) => { this.handleProjects(data); }
+                  );
+
     }
 
-    const currentPage = +this.activeRoute.snapshot.paramMap.get('page');
-    this.service.getProjects(currentPage * this.projectsPerPage, this.projectsPerPage, categoryCode)
-                .then
-                (
-                  (data) => { this.handleProjects(data); }
-                );
+
   }
 
   private handleProjects(data: RequestResult<Array<ProjectPreview>>): void {

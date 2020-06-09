@@ -1,0 +1,26 @@
+@import 'variables';
+
+button {
+    background-color: transparent;
+    border: 2px solid;
+
+    width: 100%;
+    height: 30px;
+    transition: 0.25s;
+    padding-top: 5px;
+    padding-bottom: 25px;
+    
+    font-weight: 600;
+    font-size: 16px;
+
+    color: $color-control-text;
+}
+
+button:hover{
+    color: $color-control-active;
+    transform: translateY(-0.2em);
+    -webkit-transform: translateY(-0.2em);
+    -moz-transform: translateY(-0.2em);
+    -ms-transform: translateY(-0.2em);
+    -o-transform: translateY(-0.2em);
+}

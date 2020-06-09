@@ -8,7 +8,6 @@ import { Category } from '../model/Category';
 
 import { environment } from 'src/environments/environment';
 import { ProjectPreview } from '../model/ProjectPreview';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class DataService {

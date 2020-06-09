@@ -17,7 +17,7 @@ button {
 }
 
 button:hover{
-    color: $color-control-active;
+    background-color: $color-core;
     transform: translateY(-0.2em);
     -webkit-transform: translateY(-0.2em);
     -moz-transform: translateY(-0.2em);

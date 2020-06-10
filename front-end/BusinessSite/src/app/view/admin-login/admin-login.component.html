@@ -1,0 +1,27 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <form class="login-form">
+    <mat-form-field>
+      <input matInput placeholder="Login" [formControl]="login" required>
+      <mat-error *ngIf="login.invalid">{{this.getError(login)}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Password" [formControl]="password" required [type]="'password'">
+      <mat-error *ngIf="password.invalid">{{this.getError(password)}}</mat-error>
+    </mat-form-field>
+    <br/>
+
+    <app-button (Click)="doLogin()">
+      Login
+    </app-button>
+
+
+
+    <span *ngIf="serviceMessage$ | async as message" class="error">
+      <br/>
+      {{ message }}
+    </span>
+  </form>
+
+</div>
+

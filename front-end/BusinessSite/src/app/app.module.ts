@@ -14,6 +14,7 @@ import { MaterialModules } from './#import/material';
 // components
 import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
+import { ButtonComponent } from './component/button/button.component';
 import { ButtonCategoryComponent } from './component/button-category/button-category.component';
 import { ButtonExternalUrlComponent } from './component/button-external-url/button-external-url.component';
 import { FilterCategoryComponent } from './component/filter-category/filter-category.component';
@@ -33,16 +34,19 @@ import { HomeComponent } from './view/home/home.component';
 import { ProjectsListComponent } from './view/projects-list/projects-list.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
+import { AdminLoginComponent } from './view/admin-login/admin-login.component';
 // -----
 
 // services
 import { DataService } from './service/data.service';
+import { AuthService } from './service/auth.service';
 // -----
 
 @NgModule({
   declarations: [
     AppComponent,
     ButtonCategoryComponent,
+    ButtonComponent,
     ButtonExternalUrlComponent,
     FilterCategoryComponent,
     LoadingComponent,
@@ -56,7 +60,8 @@ import { DataService } from './service/data.service';
     HomeComponent,
     ProjectsListComponent,
     NotFoundComponent,
-    ProjectComponent
+    ProjectComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +74,7 @@ import { DataService } from './service/data.service';
   ],
   providers: [
     DataService,
+    AuthService,
     Title
   ],
   bootstrap: [AppComponent]

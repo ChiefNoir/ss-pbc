@@ -10,7 +10,6 @@ import { Title } from '@angular/platform-browser';
 
 import { environment } from 'src/environments/environment';
 import { Identity } from 'src/app/model/Identity';
-import { CookieService } from 'ngx-cookie-service';
 import { StorageService } from 'src/app/service/storage.service';
 
 
@@ -19,6 +18,7 @@ import { StorageService } from 'src/app/service/storage.service';
   templateUrl: './admin-login.component.html',
   styleUrls: ['./admin-login.component.scss'],
 })
+
 export class AdminLoginComponent {
   private router: Router;
   private storageService: StorageService;
@@ -69,23 +69,5 @@ export class AdminLoginComponent {
     if (control.hasError('required')) {
       return 'This field cannot be empty.';
     }
-  }
-
-  public pingdemo(): void{
-    this.authService.pingdemo()
-                    .then
-                    (
-                      (result) => alert(result.data),
-                      (error) => this.handleLoginError(error)
-                    );
-  }
-
-  public pingadmin(): void{
-    this.authService.pingadmin()
-    .then
-    (
-      (result) => alert(result.data),
-      (error) => this.handleLoginError(error)
-    );
   }
 }

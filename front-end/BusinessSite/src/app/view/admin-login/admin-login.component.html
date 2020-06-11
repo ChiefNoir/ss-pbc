@@ -11,16 +11,24 @@
     </mat-form-field>
     <br/>
 
+    <span *ngIf="serviceMessage$ | async as message" class="error">
+      {{ message }}   
+    </span>
+
     <app-button (Click)="doLogin()">
       Login
     </app-button>
 
+    <app-button (Click)="pingadmin()">
+      pingadmin
+    </app-button>
+
+    <app-button (Click)="pingdemo()">
+      pingdemo
+    </app-button>
 
 
-    <span *ngIf="serviceMessage$ | async as message" class="error">
-      <br/>
-      {{ message }}
-    </span>
+
   </form>
 
 </div>

@@ -9,6 +9,10 @@ import { AuthService } from 'src/app/service/auth.service';
 import { Title } from '@angular/platform-browser';
 
 import { environment } from 'src/environments/environment';
+import { Identity } from 'src/app/model/Identity';
+import { CookieService } from 'ngx-cookie-service';
+import { StorageService } from 'src/app/service/storage.service';
+
 
 @Component({
   selector: 'app-admin-login',
@@ -17,6 +21,8 @@ import { environment } from 'src/environments/environment';
 })
 export class AdminLoginComponent {
   private router: Router;
+  private storageService: StorageService;
+
 
   public serviceMessage$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private authService: AuthService;
@@ -24,9 +30,10 @@ export class AdminLoginComponent {
   public login: FormControl = new FormControl('', [Validators.required]);
   public password: FormControl = new FormControl('', [Validators.required]);
 
-  public constructor(authService: AuthService, router: Router, titleService: Title) {
+  public constructor(authService: AuthService, router: Router, titleService: Title, storageService: StorageService) {
     this.authService = authService;
     this.router = router;
+    this.storageService = storageService;
 
     titleService.setTitle(environment.siteName);
   }
@@ -44,8 +51,10 @@ export class AdminLoginComponent {
                     );
   }
 
-  private handleLoginResult(result: RequestResult<boolean>): void {
+  private handleLoginResult(result: RequestResult<Identity>): void {
     if (result.isSucceed) {
+      this.storageService.saveToken(result.data.token, result.data.tokenLifeTimeMinutes);
+      this.serviceMessage$.next(null);
     } else {
       this.handleLoginError(result?.errorMessage);
     }
@@ -53,18 +62,30 @@ export class AdminLoginComponent {
 
   private handleLoginError(error: string): void {
     console.log(error);
-    if(error){
-      
     this.serviceMessage$.next(error);
-    } else{
-      this.serviceMessage$.next('asdasd');
-      console.log(error);
-    }
   }
 
   public getError(control: FormControl): string {
     if (control.hasError('required')) {
       return 'This field cannot be empty.';
     }
+  }
+
+  public pingdemo(): void{
+    this.authService.pingdemo()
+                    .then
+                    (
+                      (result) => alert(result.data),
+                      (error) => this.handleLoginError(error)
+                    );
+  }
+
+  public pingadmin(): void{
+    this.authService.pingadmin()
+    .then
+    (
+      (result) => alert(result.data),
+      (error) => this.handleLoginError(error)
+    );
   }
 }

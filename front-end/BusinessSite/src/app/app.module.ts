@@ -40,6 +40,11 @@ import { AdminLoginComponent } from './view/admin-login/admin-login.component';
 // services
 import { DataService } from './service/data.service';
 import { AuthService } from './service/auth.service';
+import { StorageService } from './service/storage.service';
+// -----
+
+// providers
+import { CookieService } from 'ngx-cookie-service';
 // -----
 
 @NgModule({
@@ -75,6 +80,8 @@ import { AuthService } from './service/auth.service';
   providers: [
     DataService,
     AuthService,
+    StorageService,
+    CookieService,
     Title
   ],
   bootstrap: [AppComponent]

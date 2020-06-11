@@ -1,16 +1,17 @@
-using Abstractions.IRepository;
+﻿using Abstractions.IRepository;
 using Abstractions.MemoryCache;
 using Abstractions.Model;
+using API.Security;
 using Infrastructure;
 using Infrastructure.Cache;
 using Infrastructure.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace BusinessService
 {
@@ -34,8 +35,17 @@ namespace BusinessService
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddSingleton<IMemoryCache<string, Category>, CategoryCache>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = TokenManager.CreateTokenValidationParameters(Configuration);
+                    });
+
         }
 
 
@@ -58,6 +68,7 @@ namespace BusinessService
                                       .AllowCredentials()
                 );
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -65,5 +76,7 @@ namespace BusinessService
                 endpoints.MapControllers();
             });
         }
+
+        
     }
 }

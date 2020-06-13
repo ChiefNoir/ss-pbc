@@ -1,7 +1,9 @@
 ﻿using Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Data;
+using System.Linq;
 using System.Reflection;
 
 
@@ -13,11 +15,16 @@ namespace Infrastructure
         internal DbSet<Category> Categories { get; set; }
         internal DbSet<News> News { get; set; }
         internal DbSet<Project> Projects { get; set; }
+        internal DbSet<Account> Accounts { get; set; }
         internal DbSet<CategoryWithTotalProjects> CategoriesWithTotalProjects { get; set; }
+
+        /// <summary> Database has any accounts?</summary>
+        internal bool HasAccounts { get; set; }
 
         public DataContext(DbContextOptions options) : base(options)
         {
-            MigrateDatabase(Database.GetDbConnection());
+            MigrateDatabase(Database.GetDbConnection()); //TODO: not good
+            HasAccounts = Accounts.Any(); //TODO: not that good
         }
 
         private void MigrateDatabase(IDbConnection connection)

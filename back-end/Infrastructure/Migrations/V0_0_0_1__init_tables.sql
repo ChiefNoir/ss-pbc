@@ -34,3 +34,12 @@ create table external_url (
 	display_name varchar(64) not null,
 	version int not null default 0
 );
+
+create table account (
+	id serial primary key,
+	login varchar(256) not null UNIQUE,
+	password varchar(256) not null,	
+	salt varchar(256) not null,
+	role varchar(128) not null,
+	version int not null default 0
+);

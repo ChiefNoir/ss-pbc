@@ -17,9 +17,9 @@ namespace API.Controllers.Gateway
     public class Authentication : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly IUserRepository _userRepository;
+        private readonly IAccountRepository _userRepository;
 
-        public Authentication(IConfiguration configuration, IUserRepository userRepository)
+        public Authentication(IConfiguration configuration, IAccountRepository userRepository)
         {
             _configuration = configuration;
             _userRepository = userRepository;
@@ -29,84 +29,25 @@ namespace API.Controllers.Gateway
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Credentials credentials)
         {            
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(async() =>
             {
-                return Task<Identity>.Run(()=> 
+                var user = await _userRepository.Get(credentials.Login, credentials.Password);
+
+                if (user == null)
+                    throw new Exception("No");
+
+                return new Identity
                 {
-                    var user = _userRepository.GetUser(credentials.Login, credentials.Password);
-
-                    //var user = GetIdentity(credentials.Login, credentials.Password);
-                    if (user == null)
-                        throw new System.Exception("Wrong login or password");
-
-                    var ss = new Identity
-                    {
-                        Login = credentials.Login,
-                        Token = TokenManager.CreateToken(_configuration, CreateClaims(credentials.Login, user.Role)),
-                        TokenLifeTimeMinutes = _configuration.GetSection("Token").GetValue<int>("LifeTime")
-                    };
-
-                    return ss;
-                });
+                    Login = user.Login,
+                    Token = TokenManager.CreateToken(_configuration, credentials.Login, user.Role),
+                    TokenLifeTimeMinutes = _configuration.GetSection("Token").GetValue<int>("LifeTime")
+                };
             });
 
             return new JsonResult(result);
         }
 
-        [HttpGet("pingadmin")]
-        public async Task<IActionResult> Ping1()
-        {
-            var token = Request.Headers["Authorization"];
-            var principals = TokenManager.ValidateToken(_configuration, token);
-
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return Task<string>.Run(() => 
-                {
-                    if (!principals.IsInRole(RoleNames.Admin))
-                        throw new Exception("Denied");
-
-                    return "pong-admin"; 
-                });
-            });
-
-            return new JsonResult(result);
-        }
-
-        [HttpGet("pingdemo")]
-        public async Task<IActionResult> Ping2()
-        {
-            var token = Request.Headers["Authorization"];
-            var principals = TokenManager.ValidateToken(_configuration, token);
-
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return Task<string>.Run(() => 
-                {
-                    if (!principals.IsInRole(RoleNames.Demo))
-                        throw new Exception("Denied");
-
-                    return "pong-demo";                 
-                });
-            });
-
-            return new JsonResult(result);
-        }
-
-        private IEnumerable<Claim> CreateClaims(string login, params string[] roles)
-        {
-            var claims = new List<Claim>
-                    {
-                        new Claim(ClaimsIdentity.DefaultNameClaimType, login),
-                    };
-
-            foreach (var item in roles)
-            {
-                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, item));
-            }
-
-            return claims;
-        }
+        
 
     }
 

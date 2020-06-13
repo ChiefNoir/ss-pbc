@@ -1,18 +1,21 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace API.Security
 {
-    public class TokenManager
+    /// <summary> JWT Toke manager </summary>
+    public static class TokenManager
     {
+        /// <summary> Create <seea cref="TokenValidationParameters"/> parameters </summary>
+        /// <param name="configuration"> <see cref="IConfiguration"/> </param>
+        /// <returns> <seea cref="TokenValidationParameters"/> </returns>
         public static TokenValidationParameters CreateTokenValidationParameters(IConfiguration configuration)
         {
             return new TokenValidationParameters
@@ -28,8 +31,22 @@ namespace API.Security
             };
         }
 
-        public static string CreateToken(IConfiguration configuration, IEnumerable<Claim> claims)
+        /// <summary> Create JWT token </summary>
+        /// <param name="configuration"> <see cref="IConfiguration"/> </param>
+        /// <param name="login"> Login </param>
+        /// <param name="roles"> Roles </param>
+        /// <returns>JWT token</returns>
+        public static string CreateToken(IConfiguration configuration, string login, params string[] roles)
         {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, login)
+            };
+            foreach (var item in roles)
+            {
+                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, item));
+            }
+            
             var jwt = new JwtSecurityToken(
                     issuer: configuration.GetSection("Token").GetValue<string>("Issuer"),
                     audience: configuration.GetSection("Token").GetValue<string>("Audience"),
@@ -47,13 +64,15 @@ namespace API.Security
             return encodedJwt;
         }
 
-        public static IPrincipal ValidateToken(IConfiguration configuration, string authToken)
+        /// <summary> Validate JWT token </summary>
+        /// <param name="configuration"> <see cref="IConfiguration"/> </param>
+        /// <param name="token">Token to validate</param>
+        /// <returns> <see cref="IPrincipal"/></returns>
+        public static IPrincipal ValidateToken(IConfiguration configuration, string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = CreateTokenValidationParameters(configuration);
-
-            SecurityToken validatedToken;
-            return tokenHandler.ValidateToken(authToken, validationParameters, out validatedToken);
+            return tokenHandler.ValidateToken(token, validationParameters, out _);
         }
     }
 }

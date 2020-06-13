@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
     <ProjectReference Include="..\BusinessService.Logic\BusinessService.Logic.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Secutiry\Security.csproj" />
   </ItemGroup>
 
 

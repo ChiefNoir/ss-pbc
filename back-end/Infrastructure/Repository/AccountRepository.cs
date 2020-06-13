@@ -1,5 +1,5 @@
 ﻿using Abstractions.IRepository;
-using Abstractions.ISecutiry;
+using Abstractions.ISecurity;
 using Abstractions.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

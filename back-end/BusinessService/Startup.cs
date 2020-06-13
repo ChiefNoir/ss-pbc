@@ -1,4 +1,5 @@
 ﻿using Abstractions.IRepository;
+using Abstractions.ISecurity;
 using Abstractions.MemoryCache;
 using Abstractions.Model;
 using API.Security;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Secutiry;
 
 namespace BusinessService
 {
@@ -35,7 +37,8 @@ namespace BusinessService
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<IHashManager, HashManager>();
 
             services.AddSingleton<IMemoryCache<string, Category>, CategoryCache>();
 

@@ -14,6 +14,9 @@ namespace Abstractions.Model
         public string DisplayName { get; set; }
 
         /// <summary> Description </summary>
+        public string DescriptionShort { get; set; }
+
+        /// <summary> Description </summary>
         public string Description { get; set; }
 
         /// <summary> URL for the poster </summary>

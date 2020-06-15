@@ -1,0 +1,71 @@
+<h1 mat-dialog-title><b>{{code}}</b> Properties</h1>
+<mat-dialog-content class="conteiner">
+  <div *ngIf="project$ | async as project; else loading">
+  <mat-tab-group>
+    <mat-tab label="Project"> 
+      <form>
+        <div fxLayout="column" fxLayoutAlign="space-around center">
+        <mat-form-field>
+          <input matInput placeholder="code" value="{{ project.code }}" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="DisplayName" value="{{ project.displayName }}" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="ReleaseDate" value="{{ project.releaseDate }}" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="category" value="{{ project.category.code }}" />
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
+          cdkAutosizeMaxRows="10" placeholder="DescriptionShort">{{ project.descriptionShort}}</textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
+          cdkAutosizeMaxRows="10" placeholder="Description">{{ project.description}}</textarea>
+        </mat-form-field>
+
+      </div>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Poster">
+      <form>
+        <mat-form-field>
+          <input matInput placeholder="Poster" value="{{ project.posterUrl }}" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input matInput placeholder="Poster alt" value="{{ project.posterDescription }}" />
+        </mat-form-field>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Urls">
+      TODO
+    </mat-tab>
+
+
+      
+  </mat-tab-group>
+  
+
+
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

@@ -24,11 +24,20 @@ export class DataService {
                .toPromise();
   }
 
-  public getProjects(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<ProjectPreview>>> {
+  public getProjectsPreview(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<ProjectPreview>>> {
     return this.httpClient
                .get<RequestResult<Array<ProjectPreview>>>
                (
-                 this.endpoint + 'projects/' + categoryCode + '/' + start + '/' + length
+                 this.endpoint + 'projects/short/' + categoryCode + '/' + start + '/' + length
+               )
+               .toPromise();
+  }
+
+  public getProjects(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<Project>>> {
+    return this.httpClient
+               .get<RequestResult<Array<Project>>>
+               (
+                 this.endpoint + 'projects/full/' + categoryCode + '/' + start + '/' + length
                )
                .toPromise();
   }

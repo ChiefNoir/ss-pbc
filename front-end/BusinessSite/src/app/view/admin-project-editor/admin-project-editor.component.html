@@ -1,0 +1,26 @@
+
+<div *ngIf="projects$ | async as projects; else loading">
+  <table mat-table [dataSource]="projects">
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef> code </th>
+      <td mat-cell *matCellDef="let item"> {{item.code}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="displayName">
+      <th mat-header-cell *matHeaderCellDef> name </th>
+      <td mat-cell *matCellDef="let item"> {{item.displayName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> category </th>
+      <td mat-cell *matCellDef="let item"> {{item.category.code}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;" (click)="showRow(row.code)"></tr>
+  </table>
+</div>
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

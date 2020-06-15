@@ -24,6 +24,7 @@ import { ErrorComponent } from './component/error/error.component';
 import { NewsComponent } from './component/news/news.component';
 import { ProjectPreviewComponent } from './component/project-preview/project-preview.component';
 import { ProjectFullComponent } from './component/project-full/project-full.component';
+import { ProjectEditorComponent } from './component/project-editor/project-editor.component';
 // -----
 
 import { OnlyIntModule } from './directive/onlyInt/onlyInt.module';
@@ -35,6 +36,7 @@ import { ProjectsListComponent } from './view/projects-list/projects-list.compon
 import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';
+import { AdminProjectEditorComponent } from './view/admin-project-editor/admin-project-editor.component';
 // -----
 
 // services
@@ -60,13 +62,15 @@ import { CookieService } from 'ngx-cookie-service';
     PaginatorComponent,
     ProjectPreviewComponent,
     ProjectFullComponent,
+    ProjectEditorComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,
     ProjectsListComponent,
     NotFoundComponent,
     ProjectComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    AdminProjectEditorComponent
   ],
   imports: [
     BrowserModule,

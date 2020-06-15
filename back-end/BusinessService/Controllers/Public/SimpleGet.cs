@@ -53,7 +53,7 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
-        [HttpGet("projects/{categoryCode}/{start}/{length}/")]
+        [HttpGet("projects/short/{categoryCode}/{start}/{length}/")]
         public async Task<IActionResult> GetProjectsPreview(int start, int length, string categoryCode)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
@@ -64,6 +64,20 @@ namespace BusinessService.Controllers.Public
 
             return new JsonResult(result);
         }
+
+        [HttpGet("projects/full/{categoryCode}/{start}/{length}/")]
+        public async Task<IActionResult> GetProjects(int start, int length, string categoryCode)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _projectRepository.GetProjects(start, length, categoryCode);
+
+            });
+
+            return new JsonResult(result);
+        }
+
+
 
         [HttpGet("project/{code}")]
         public async Task<IActionResult> GetProject(string code)

@@ -70,7 +70,7 @@ export class ProjectsListComponent {
       }
 
       const currentPage = +this.activeRoute.snapshot.paramMap.get('page');
-      this.service.getProjects(currentPage * this.projectsPerPage, this.projectsPerPage, categoryCode)
+      this.service.getProjectsPreview(currentPage * this.projectsPerPage, this.projectsPerPage, categoryCode)
                   .then
                   (
                     (data) => { this.handleProjects(data); }

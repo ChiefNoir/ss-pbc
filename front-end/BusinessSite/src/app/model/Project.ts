@@ -9,6 +9,7 @@ export class Project {
   public posterDescription: string;
   public category: Category;
   public description: string;
+  public descriptionShort: string;
 
   public externalUrls: Array<ExternalUrl>;
 

@@ -28,6 +28,7 @@ namespace Infrastructure.Repository
                 {
                     Code = code,
                     Description = x.Description,
+                    DescriptionShort = x.DescriptionShort,
                     DisplayName = x.DisplayName,
                     PosterUrl = x.PosterUrl,
                     PosterDescription = x.PosterDescription,
@@ -58,6 +59,35 @@ namespace Infrastructure.Repository
                                  {
                                      Code = x.Code,
                                      Description = x.DescriptionShort,
+                                     DisplayName = x.DisplayName,
+                                     PosterUrl = x.PosterUrl,
+                                     PosterDescription = x.PosterDescription,
+                                     ReleaseDate = x.ReleaseDate,
+                                     Category = new Category
+                                     {
+                                         Code = x.Category.Code,
+                                         DisplayName = x.Category.DisplayName,
+                                         IsEverything = false,
+                                         Version = x.Category.Version
+                                     }
+                                 }).ToArrayAsync();
+        }
+
+        public async Task<Project[]> GetProjects(int start, int length, string categoryCode)
+        {
+            var isEverything = await _categoryRepository.CheckIsEverything(categoryCode);
+
+            return await _context.Projects
+                                 .Where(x => isEverything ? true : x.CategoryCode == categoryCode)
+                                 .OrderByDescending(x => x.ReleaseDate)
+                                 .Skip(start)
+                                 .Take(length)
+                                 .Include(x => x.Category)
+                                 .Select(x => new Project
+                                 {
+                                     Code = x.Code,
+                                     DescriptionShort = x.DescriptionShort,
+                                     Description = x.Description,
                                      DisplayName = x.DisplayName,
                                      PosterUrl = x.PosterUrl,
                                      PosterDescription = x.PosterDescription,

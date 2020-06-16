@@ -6,30 +6,34 @@
       <form>
         <div fxLayout="column" fxLayoutAlign="space-around center">
         <mat-form-field>
-          <input matInput placeholder="code" value="{{ project.code }}" />
+          <input matInput [(ngModel)]="project.code" name="code" placeholder="code" />
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="DisplayName" value="{{ project.displayName }}" />
+          <input matInput [(ngModel)]="project.displayName" name="displayName" placeholder="DisplayName" />
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="ReleaseDate" value="{{ project.releaseDate }}" />
+          <input matInput [(ngModel)]="project.releaseDate" name="releaseDate" placeholder="ReleaseDate" />
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="category" value="{{ project.category.code }}" />
+          <input matInput [(ngModel)]="project.category" name="category" placeholder="category" />
         </mat-form-field>
 
 
         <mat-form-field>
-          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
-          cdkAutosizeMaxRows="10" placeholder="DescriptionShort">{{ project.descriptionShort}}</textarea>
+          <textarea matInput
+          [(ngModel)]="project.descriptionShort" name="descriptionShort" 
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
+          cdkAutosizeMaxRows="10" placeholder="DescriptionShort"></textarea>
         </mat-form-field>
 
         <mat-form-field>
-          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
-          cdkAutosizeMaxRows="10" placeholder="Description">{{ project.description}}</textarea>
+          <textarea matInput 
+          [(ngModel)]="project.description" name="description" 
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
+          cdkAutosizeMaxRows="10" placeholder="Description" ></textarea>
         </mat-form-field>
 
       </div>
@@ -39,11 +43,11 @@
     <mat-tab label="Poster">
       <form>
         <mat-form-field>
-          <input matInput placeholder="Poster" value="{{ project.posterUrl }}" />
+          <input matInput [(ngModel)]="project.posterUrl" name="posterUrl"  placeholder="Poster" />
         </mat-form-field>
   
         <mat-form-field>
-          <input matInput placeholder="Poster alt" value="{{ project.posterDescription }}" />
+          <input matInput [(ngModel)]="project.posterDescription" name="posterDescription"  placeholder="Poster alt" />
         </mat-form-field>
       </form>
     </mat-tab>

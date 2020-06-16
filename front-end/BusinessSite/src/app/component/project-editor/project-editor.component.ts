@@ -16,7 +16,7 @@ export class ProjectEditorComponent implements AfterViewInit
   private service: DataService;
   @Input()
   public code: string;
-  
+
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
   constructor(service: DataService){

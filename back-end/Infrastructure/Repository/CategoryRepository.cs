@@ -67,5 +67,10 @@ namespace Infrastructure.Repository
         {
             return _cache.FindOrCreateAsync(x => x.IsEverything, () => { return GetCategory(x => x.IsEverything); });
         }
+
+        public Task<Category> GetCategory(string code)
+        {
+            return GetCategory(x => x.Code == code);
+        }
     }
 }

@@ -13,12 +13,29 @@
 
     <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef> category </th>
-      <td mat-cell *matCellDef="let item"> {{item.category.code}} </td>
+      <td mat-cell *matCellDef="let item"> {{item.category.displayName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="releaseDate">
+      <th mat-header-cell *matHeaderCellDef> releaseDate </th>
+      <td mat-cell *matCellDef="let item"> {{item.releaseDate}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
     <tr mat-row *matRowDef="let row; columns: columns;" (click)="showRow(row.code)"></tr>
   </table>
+
+  <div *ngIf="pagingInfo$ | async as pagingInfo; else loading">
+    <app-paginator
+          (changePage)="changePage($event)"
+          [maxPage]="pagingInfo.maxPage"
+          [currentPage]="pagingInfo.currentPage"
+          (nextPageClick)="nextPage()"
+          (previousPageClick)="backPage()"
+          [minPage]="pagingInfo.minPage">
+    </app-paginator>
+  </div>
+  
 </div>
 
 <ng-template #loading>

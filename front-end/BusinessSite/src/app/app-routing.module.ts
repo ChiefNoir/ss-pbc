@@ -15,7 +15,6 @@ const routes: Routes = [
   { path: 'admin/project_editor', component: AdminProjectEditorComponent },
   { path: 'project/:code', component: ProjectComponent },
   { path: 'projects/:category', component: ProjectsListComponent },
-  { path: 'projects/:category/:page', component: ProjectsListComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

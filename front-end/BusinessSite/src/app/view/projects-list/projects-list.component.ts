@@ -23,6 +23,10 @@ export class ProjectsListComponent {
   private activeRoute: ActivatedRoute;
   private projectsPerPage = environment.maxProjectsPerPage;
 
+  private currentPage: number = 0;
+  private maxPage: number = 0;
+  private minPage: number = 0;
+
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
   public pagingInfo$: BehaviorSubject<PagingInfo> = new BehaviorSubject<PagingInfo>(null);
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
@@ -39,64 +43,71 @@ export class ProjectsListComponent {
 
   private refreshPage(): void {
     this.projects$.next(null);
+    this.currentPage = 0;
+    this.maxPage = 1;
 
     const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
 
-    if (!categoryCode) {
+    if (!categoryCode)
+    {
       this.service.getEverythingCategory()
                   .then
                   (
                     (x) => {
                       if (x.isSucceed) {
-                        const something = x.data.code;
-                        this.router.navigate(['/projects/' + something]);
+                        this.router.navigate(['/projects/' + x.data.code]);
                       } else {
                         this.router.navigate(['/404/']);
                       }
                     }
                   );
-    } else {
-      if (this.categories$.value == null) {
-        this.service.getCategories()
-                    .then
-                    (
-                      (data) => { this.handleCategories(data); }
-                    );
-      }
-      else
-      {
-        const totalProjects = this.categories$.value.find(x => x.code === categoryCode)?.totalProjects;
-        this.handleTotalProjects(totalProjects, categoryCode);
-      }
+    }
 
-      const currentPage = +this.activeRoute.snapshot.paramMap.get('page');
-      this.service.getProjectsPreview(currentPage * this.projectsPerPage, this.projectsPerPage, categoryCode)
+    if (this.categories$.value == null) {
+      this.service.getCategories()
                   .then
+                  (
+                    (data) => { this.handleCategories(data); }
+                  );
+    }
+    else{
+      const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
+      const totalProjects = +this.categories$.value.find((x) => x.code === categoryCode)?.totalProjects;
+      this.handleTotalProjects(totalProjects);
+    }
+
+    
+
+    this.service.getProjectsPreview(this.currentPage * this.projectsPerPage, this.projectsPerPage, categoryCode)
+                .then
                   (
                     (data) => { this.handleProjects(data); }
                   );
 
-    }
-
-
   }
 
   private handleProjects(data: RequestResult<Array<ProjectPreview>>): void {
-    if (data.isSucceed) {
-
-      if (data.data == null || data.data.length === 0) {
-        this.router.navigate(['/404']);
+    if (data.isSucceed)
+    {
+      if (data.data == null || data.data.length === 0)
+      {
+        alert('?');
+        // this.router.navigate(['/404']);
       }
-
-      this.projects$.next(data.data);
-    } else {
+      else
+      {
+        this.projects$.next(data.data);
+      }
+    }
+    else
+    {
       this.handleError(data.errorMessage);
     }
   }
 
   private handleCategories(result: RequestResult<Array<Category>>): void {
-    if (result.isSucceed) {
-
+    if (result.isSucceed)
+    {
       const router = this.router;
       result.data.forEach
                   (
@@ -112,63 +123,73 @@ export class ProjectsListComponent {
 
       const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
       const totalProjects = !result.data ? 0 : result.data.find((x) => x.code === categoryCode)?.totalProjects;
-
-      this.handleTotalProjects(totalProjects, categoryCode);
-    } else {
+      this.handleTotalProjects(totalProjects);
+    } 
+    else 
+    {
       this.handleError(result.errorMessage);
     }
   }
 
-  private handleTotalProjects(totalProjects: number, categoryCode: string): void {
+  private handleTotalProjects(totalProjects: number): void {
+    this.currentPage = 0;
+    this.maxPage = Math.ceil(totalProjects / this.projectsPerPage) - 1;
+
     const pgInfo: PagingInfo = {
-      minPage: 0,
-      maxPage: this.calcMaxPageNumber(totalProjects),
-      currentPage: 0,
-      previousPageUrl: '',
-      nextPageUrl: '',
-      navigateCallback: this.changePage.bind(this),
+      minPage: this.minPage,
+      maxPage: this.maxPage,
+      currentPage: this.currentPage,
     };
-
-    pgInfo.currentPage = +this.activeRoute.snapshot.paramMap.get('page');
-
-    if (pgInfo.currentPage > pgInfo.maxPage) {
-      pgInfo.currentPage = pgInfo.maxPage;
-    }
-
-    if (pgInfo.currentPage < pgInfo.minPage) {
-      pgInfo.currentPage = pgInfo.minPage;
-    }
-
-    pgInfo.nextPageUrl = this.router
-      .createUrlTree(['/projects', categoryCode, pgInfo.currentPage + 1])
-      .toString();
-
-    pgInfo.previousPageUrl = this.router
-      .createUrlTree(['/projects', categoryCode, pgInfo.currentPage - 1])
-      .toString();
 
     this.pagingInfo$.next(pgInfo);
   }
 
-  private changePage(value: number): void {
-    if (!this.pagingInfo$) {
-      return;
+
+
+
+
+
+
+
+
+
+
+  public changePage(page: number): void {
+    if (!page) {
+      page = this.minPage;
+    }
+    if (page > this.maxPage) {
+      page = this.maxPage;
+    }
+    if (page < this.minPage) {
+      page = this.minPage;
     }
 
-    if (value >= this.pagingInfo$.value.maxPage) {
-      value = this.pagingInfo$.value.maxPage;
-    }
+    this.currentPage = page;
+    this.projects$.next(null);
 
-    if (value < this.pagingInfo$.value.minPage) {
-      value = this.pagingInfo$.value.minPage;
-    }
+    this.pagingInfo$.next
+    ({
+        minPage: this.minPage,
+        maxPage: this.maxPage,
+        currentPage: this.currentPage
+    });
 
     const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
-    this.router.navigate(['/projects', categoryCode, value]);
+    this.service.getProjectsPreview(this.currentPage * environment.maxProjectsPerPage, environment.maxProjectsPerPage, categoryCode)
+                .then
+                (
+                  (result) => this.handleProjects(result),
+                  (error) => this.handleError(error)
+                );
   }
 
-  private calcMaxPageNumber(totalProjects: number): number {
-    return Math.ceil(totalProjects / this.projectsPerPage) - 1;
+  public nextPage() {
+    this.changePage(this.currentPage + 1);
+  }
+
+  public backPage() {
+    this.changePage(this.currentPage - 1);
   }
 
   private handleError(error: any): void {

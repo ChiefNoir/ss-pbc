@@ -2,7 +2,7 @@
   <div fxFlex="35%">
     <a class="button" *ngIf="currentPage > minPage"
        fxFlex="100%"
-       [routerLink]="previousPageUrl">
+       (click)="btnPreviousClick()">
       Previous
     </a>
   </div>
@@ -12,7 +12,7 @@
           #boxCurrentPage
           type="text"
           fxFlex="50%"
-          (keyup.enter)="navigateCallback(boxCurrentPage.value)"
+          (keyup.enter)="changePageEnterPress(boxCurrentPage.value)"
           inputmode="numeric"
           pattern="[0-9]*"/>
     <input value="/{{ maxPage }}" fxFlex="50%" readonly="true" />
@@ -20,7 +20,7 @@
   <div fxFlex="35%">
     <a class="button" *ngIf="currentPage < maxPage"
        fxFlex="100%"
-       [routerLink]="nextPageUrl">
+       (click)="btnNextClick()">
       Next
     </a>
   </div>

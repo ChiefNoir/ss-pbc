@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-paginator',
@@ -7,8 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 
 export class PaginatorComponent {
-  @Input()
-  public navigateCallback: (value: number) => void;
 
   @Input()
   public maxPage: number;
@@ -19,9 +17,26 @@ export class PaginatorComponent {
   @Input()
   public currentPage: number;
 
-  @Input()
-  public nextPageUrl: string;
 
-  @Input()
-  public previousPageUrl: string;
+  @Output()
+  public changePage: EventEmitter<number> = new EventEmitter<number>();
+
+  @Output()
+  public nextPageClick = new EventEmitter();
+
+  @Output()
+  public previousPageClick = new EventEmitter();
+
+
+  public changePageEnterPress(pageNumber: number) {
+    this.changePage.emit(pageNumber);
+  }
+
+  public btnNextClick() {
+    this.nextPageClick.emit();
+  }
+
+  public btnPreviousClick() {
+    this.previousPageClick.emit();
+  }
 }

@@ -16,11 +16,11 @@
 
 <div *ngIf="pagingInfo$ | async as pagingInfo; else loading">
   <app-paginator
-        [nextPageUrl]="pagingInfo.nextPageUrl"
-        [previousPageUrl]="pagingInfo.previousPageUrl"
-        [navigateCallback]="pagingInfo.navigateCallback"
+        (changePage)="changePage($event)"
         [maxPage]="pagingInfo.maxPage"
         [currentPage]="pagingInfo.currentPage"
+        (nextPageClick)="nextPage()"
+        (previousPageClick)="backPage()"
         [minPage]="pagingInfo.minPage">
   </app-paginator>
 </div>

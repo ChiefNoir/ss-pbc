@@ -26,19 +26,14 @@ export class DataService {
 
   public getProjectsPreview(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<ProjectPreview>>> {
 
+    const categoryParam = typeof categoryCode !== 'undefined' && categoryCode ? '&categorycode=' + categoryCode : '';
+
     return this.httpClient
                .get<RequestResult<Array<ProjectPreview>>>
                (
-                 this.endpoint + 'projects/search?' + 'start='+ start + '&length=' + length + '&categorycode='+ categoryCode 
-               )
-               .toPromise();
-  }
-
-  public getProjects(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<Project>>> {
-    return this.httpClient
-               .get<RequestResult<Array<Project>>>
-               (
-                 this.endpoint + 'projects/full/' + categoryCode + '/' + start + '/' + length
+                 this.endpoint + 'projects/search?'
+                 + 'start=' + start + '&length=' + length
+                 + categoryParam
                )
                .toPromise();
   }

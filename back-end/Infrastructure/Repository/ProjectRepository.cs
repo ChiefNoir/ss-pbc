@@ -47,10 +47,10 @@ namespace Infrastructure.Repository
 
         public async Task<ProjectPreview[]> GetProjectsPreview(int start, int length, string categoryCode)
         {
-            var isEverything = await _categoryRepository.CheckIsEverything(categoryCode);
+            var isEverything = string.IsNullOrEmpty(categoryCode) || await _categoryRepository.CheckIsEverything(categoryCode);
 
             return await _context.Projects
-                                 .Where(x => isEverything ? true : x.CategoryCode == categoryCode)
+                                 .Where(x => isEverything || x.CategoryCode == categoryCode)
                                  .OrderByDescending(x => x.ReleaseDate)
                                  .Skip(start)
                                  .Take(length)

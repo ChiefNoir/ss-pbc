@@ -25,10 +25,11 @@ export class DataService {
   }
 
   public getProjectsPreview(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<ProjectPreview>>> {
+
     return this.httpClient
                .get<RequestResult<Array<ProjectPreview>>>
                (
-                 this.endpoint + 'projects/short/' + categoryCode + '/' + start + '/' + length
+                 this.endpoint + 'projects/search?' + 'start='+ start + '&length=' + length + '&categorycode='+ categoryCode 
                )
                .toPromise();
   }

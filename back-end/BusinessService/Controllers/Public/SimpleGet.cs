@@ -1,4 +1,6 @@
 ﻿using Abstractions.IRepository;
+using Abstractions.Model;
+using API.Queries;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -53,32 +55,6 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
-        [HttpGet("projects/short/{categoryCode}/{start}/{length}/")]
-        public async Task<IActionResult> GetProjectsPreview(int start, int length, string categoryCode)
-        {
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return _projectRepository.GetProjectsPreview(start, length, categoryCode);
-
-            });
-
-            return new JsonResult(result);
-        }
-
-        [HttpGet("projects/full/{categoryCode}/{start}/{length}/")]
-        public async Task<IActionResult> GetProjects(int start, int length, string categoryCode)
-        {
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return _projectRepository.GetProjects(start, length, categoryCode);
-
-            });
-
-            return new JsonResult(result);
-        }
-
-
-
         [HttpGet("project/{code}")]
         public async Task<IActionResult> GetProject(string code)
         {
@@ -89,5 +65,18 @@ namespace BusinessService.Controllers.Public
 
             return new JsonResult(result);
         }
+
+        [HttpGet("projects/search")]
+        public async Task<IActionResult> GetProjectsPreview([FromQuery] Paging paging, [FromQuery] ProjectSearch searchQuery)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _projectRepository.GetProjectsPreview(paging.Start, paging.Length, searchQuery.CategoryCode);
+
+            });
+
+            return new JsonResult(result);
+        }
+
     }
 }

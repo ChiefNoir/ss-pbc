@@ -7,6 +7,8 @@ For the change of pace, for the playing around and for the developing new skills
 - [Angular](https://angular.io/)
 - [Angular Material](https://material.angular.io/)
 - [ngx-cookie-service](https://github.com/stevermeister/ngx-cookie-service)
+- [flex-layout](https://github.com/angular/flex-layout)
+- [babel](https://babeljs.io/)
 
 ## Back-end
 - [.Net Core 3.1](https://dotnet.microsoft.com/download)

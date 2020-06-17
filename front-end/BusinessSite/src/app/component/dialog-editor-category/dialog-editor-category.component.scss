@@ -1,0 +1,70 @@
+@import "variables";
+
+mat-form-field {
+    width: 100%;
+  }
+
+form {
+  margin-top: 30px;
+}
+
+::ng-deep.mat-dialog-container {
+  background-color: $color-content;
+  color: $color-control-text !important;
+}
+
+
+.mat-form-field {
+  margin-bottom: 5px !important;
+  color: $color-text !important;
+}
+
+::ng-deep.mat-error,
+::ng-deep.mat-placeholder-required  {
+  color: $color-text-highlighted !important;
+}
+
+::ng-deep.mat-form-field-label {
+  /*color or text in the inputs*/
+ color: $color-text !important;
+}
+
+::ng-deep.mat-form-field-underline {
+ /*color of underline*/
+ background-color:  $color-control-active-text-highlighted !important;
+} 
+
+::ng-deep.mat-form-field-ripple {
+/*color of underline when focused*/
+background-color: $color-text !important;;
+}
+
+.mat-focused ::ng-deep.mat-form-field-label {
+  /*change color of focused placeholder*/
+  color: $color-text !important;
+}
+::ng-deep .mat-form-field-empty.mat-form-field-label {
+  /*change color of placeholder*/
+  color: $color-text !important;
+  font-style: italic;
+}
+
+
+button {
+  background-color: transparent;
+  border: 2px solid;
+
+  width: 100px;
+  transition: 0.25s;
+ 
+  color: $color-control-text;
+}
+
+button:hover{
+  background-color: $color-core;
+  transform: translateY(-0.2em);
+  -webkit-transform: translateY(-0.2em);
+  -moz-transform: translateY(-0.2em);
+  -ms-transform: translateY(-0.2em);
+  -o-transform: translateY(-0.2em);
+}

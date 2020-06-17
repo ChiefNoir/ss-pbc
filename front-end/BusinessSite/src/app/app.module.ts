@@ -25,6 +25,7 @@ import { NewsComponent } from './component/news/news.component';
 import { ProjectPreviewComponent } from './component/project-preview/project-preview.component';
 import { ProjectFullComponent } from './component/project-full/project-full.component';
 import { ProjectEditorComponent } from './component/project-editor/project-editor.component';
+import { DialogEditorCategoryComponent } from './component/dialog-editor-category/dialog-editor-category.component';
 // -----
 
 import { OnlyIntModule } from './directive/onlyInt/onlyInt.module';
@@ -63,6 +64,7 @@ import { CookieService } from 'ngx-cookie-service';
     ProjectPreviewComponent,
     ProjectFullComponent,
     ProjectEditorComponent,
+    DialogEditorCategoryComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,

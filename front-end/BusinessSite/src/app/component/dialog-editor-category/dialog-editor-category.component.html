@@ -1,0 +1,39 @@
+<h1 mat-dialog-title><b>{{code}}</b> Properties</h1>
+<mat-dialog-content class="conteiner">
+  <div *ngIf="category$ | async as category; else loading">
+  <mat-tab-group>
+    <mat-tab label="Category"> 
+      <form>
+        <div fxLayout="column" fxLayoutAlign="space-around center">
+        <mat-form-field>
+          <input matInput [(ngModel)]="category.code" name="code" placeholder="code" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="category.displayName" name="displayName" placeholder="Display name" />
+        </mat-form-field>
+
+        <span>
+          This is a technical category for filtering by everything.
+          You can not delete it.
+        </span>
+
+      </div>
+      </form>
+    </mat-tab>
+
+  </mat-tab-group>
+  
+
+
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

@@ -38,6 +38,7 @@ import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';
 import { AdminProjectEditorComponent } from './view/admin-project-editor/admin-project-editor.component';
+import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin-edit-categories.component';
 // -----
 
 // services
@@ -72,7 +73,8 @@ import { CookieService } from 'ngx-cookie-service';
     NotFoundComponent,
     ProjectComponent,
     AdminLoginComponent,
-    AdminProjectEditorComponent
+    AdminProjectEditorComponent,
+    AdminEditCategoriesComponent
   ],
   imports: [
     BrowserModule,

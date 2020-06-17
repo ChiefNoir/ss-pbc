@@ -63,4 +63,13 @@ export class DataService {
                  this.endpoint + 'category/everything'
                ).toPromise();
   }
+
+  public getCategory(code: string): Promise<RequestResult<Category>> {
+    return this.httpClient
+               .get<RequestResult<Category>>
+               (
+                 this.endpoint + 'category/' + code
+               )
+               .toPromise();
+  }
 }

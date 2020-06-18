@@ -26,10 +26,14 @@ import { ProjectPreviewComponent } from './component/project-preview/project-pre
 import { ProjectFullComponent } from './component/project-full/project-full.component';
 import { ProjectEditorComponent } from './component/project-editor/project-editor.component';
 import { DialogEditorCategoryComponent } from './component/dialog-editor-category/dialog-editor-category.component';
+import { SpinnerTextComponent } from './component/spinner-text/spinner-text.component';
 // -----
 
 import { OnlyIntModule } from './directive/onlyInt/onlyInt.module';
 // -----
+
+import { SplitPipe } from './pipe/SplitPipe';
+//
 
 // views
 import { HomeComponent } from './view/home/home.component';
@@ -74,7 +78,9 @@ import { CookieService } from 'ngx-cookie-service';
     ProjectComponent,
     AdminLoginComponent,
     AdminProjectEditorComponent,
-    AdminEditCategoriesComponent
+    AdminEditCategoriesComponent,
+    SpinnerTextComponent,
+    SplitPipe
   ],
   imports: [
     BrowserModule,

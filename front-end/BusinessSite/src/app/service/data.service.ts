@@ -72,4 +72,13 @@ export class DataService {
                )
                .toPromise();
   }
+
+
+  public save(category: Category): Promise<RequestResult<any>> {
+    return this.httpClient.post<RequestResult<any>>
+                          (
+                            this.endpoint + 'category', category
+                          )
+                          .toPromise();
+  }
 }

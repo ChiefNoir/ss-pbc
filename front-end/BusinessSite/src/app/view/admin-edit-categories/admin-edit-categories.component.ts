@@ -39,7 +39,7 @@ export class AdminEditCategoriesComponent implements AfterViewInit {
   }
 
   public showRow(data: any): void {
-    const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '70%',});
+    const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '50%'});
 
     dialogRef.componentInstance.code = data;
 

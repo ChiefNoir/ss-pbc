@@ -5,6 +5,8 @@ namespace Abstractions.Model
     /// <summary> Project category</summary>
     public class Category : IVersion
     {
+        public int? Id { get; set; }
+
         /// <summary> Unique category code</summary>
         public string Code { get; set; }
         

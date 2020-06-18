@@ -3,19 +3,20 @@
 	select 
 	c.*, coalesce(sm.total, 0) as total_projects
 from 
-	category c 
+	site.category c 
 left join
 	(
 		select
-			coalesce(category_code, (select code from category where is_everything = true limit 1) ) as code, 
+			coalesce(category_id, (select id from site.category where is_everything = true limit 1) ) as id, 
 			count(1) as total
 		from 
-			project 
+			site.project 
 		group by
-			rollup(category_code)
+			rollup(category_id)
 	) sm 
 on 
-	c.code = sm.code
+	c.id = sm.id
 order by 
 	total desc
+
 );

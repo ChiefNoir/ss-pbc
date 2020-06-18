@@ -9,19 +9,21 @@
 
 create table category 
 (
-	code varchar(128) primary key,
+	id serial primary key,
+	code varchar(128) not null UNIQUE,
 	display_name varchar(128) not null,
 	is_everything boolean not null default false,
 	version int not null default 0
 );
 
 create table Project (
-	code varchar(128) primary key,
+	id serial primary key,
+	code varchar(128) not null UNIQUE,
 	display_name varchar(128) not null,
 	release_date date, 
 	poster_url varchar(512) not null,
 	poster_description varchar(512),
-	category_code varchar(128) REFERENCES category (code),
+	category_id int REFERENCES category (id),
 	description_short text,
 	Description text,
 	Version int not null default 0
@@ -29,7 +31,7 @@ create table Project (
 
 create table external_url (
 	id serial primary key,
-	project_code varchar(128) REFERENCES project (code),
+	project_id int REFERENCES project (id),
 	url varchar(256),
 	display_name varchar(64) not null,
 	version int not null default 0

@@ -9,6 +9,9 @@ namespace Infrastructure.DataModel
     class Project
     {
         [Key]
+        [Column("id")]
+        public int Id { get; set; }
+
         [Column("code")]
         public string Code { get; set; }
 
@@ -30,8 +33,8 @@ namespace Infrastructure.DataModel
         [Column("release_date")]
         public DateTime? ReleaseDate { get; set; }
 
-        [Column("category_code")]
-        public string CategoryCode { get; set; }
+        [Column("category_id")]
+        public int CategoryId { get; set; }
 
         public Category Category { get; set; }
 

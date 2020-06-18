@@ -10,8 +10,8 @@ namespace Infrastructure.DataModel
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("project_code")]
-        public string ProjectCode { get; set; }
+        [Column("project_id")]
+        public int ProjectId { get; set; }
 
         [Required]
         [Column("url")]

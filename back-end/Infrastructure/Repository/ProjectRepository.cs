@@ -47,10 +47,11 @@ namespace Infrastructure.Repository
 
         public async Task<ProjectPreview[]> GetProjectsPreview(int start, int length, string categoryCode)
         {
-            var isEverything = string.IsNullOrEmpty(categoryCode) || await _categoryRepository.CheckIsEverything(categoryCode);
+            var category = string.IsNullOrEmpty(categoryCode)? null : await _categoryRepository.GetCategory(categoryCode);
+            var isEverything = category == null || category.IsEverything;
 
             return await _context.Projects
-                                 .Where(x => isEverything || x.CategoryCode == categoryCode)
+                                 .Where(x => isEverything || x.CategoryId == category.Id)
                                  .OrderByDescending(x => x.ReleaseDate)
                                  .Skip(start)
                                  .Take(length)
@@ -75,10 +76,11 @@ namespace Infrastructure.Repository
 
         public async Task<Project[]> GetProjects(int start, int length, string categoryCode)
         {
-            var isEverything = await _categoryRepository.CheckIsEverything(categoryCode);
+            var category = string.IsNullOrEmpty(categoryCode) ? null : await _categoryRepository.GetCategory(categoryCode);
+            var isEverything = category == null || category.IsEverything;
 
             return await _context.Projects
-                                 .Where(x => isEverything ? true : x.CategoryCode == categoryCode)
+                                 .Where(x => isEverything || x.CategoryId == category.Id)
                                  .OrderByDescending(x => x.ReleaseDate)
                                  .Skip(start)
                                  .Take(length)

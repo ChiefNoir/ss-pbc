@@ -7,6 +7,9 @@ namespace Infrastructure.DataModel
     class CategoryWithTotalProjects
     {
         [Key]
+        [Column("id")]
+        public int Id { get; private set; }
+
         [Column("code")]
         public string Code { get; private set; }
 

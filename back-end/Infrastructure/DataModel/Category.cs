@@ -7,6 +7,9 @@ namespace Infrastructure.DataModel
     class Category
     {
         [Key]
+        [Column("id")]
+        public int Id { get; set; }
+
         [Column("code")]
         public string Code { get; set; }
 

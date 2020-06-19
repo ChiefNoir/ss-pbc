@@ -30,5 +30,16 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
+        [HttpDelete("category")]
+        public async Task<IActionResult> Delete([FromBody] Category category)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _categoryRepository.DeleteCategory(category);
+            });
+
+            return new JsonResult(result);
+        }
+
     }
 }

@@ -85,40 +85,70 @@ namespace Infrastructure.Repository
 
 
 
-        public async Task<Task> SaveCategory(Category category)
+        public async Task<Category> SaveCategory(Category category)
         {
             if (string.IsNullOrEmpty(category.Code))
                 throw new Exception("Category code can not be null or empty");
 
-            var dbItem = await _cache.GetOrCreateAsync(category.Code, () => { return GetCategory(x => x.Code == category.Code); });
+            var dbItem = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
 
             if (category.Id == null && dbItem != null)
                 throw new Exception("Category code must be unique");
 
-            if(category.Id == null)
+            DataModel.Category cat = null;
+
+            if (category.Id == null)
             {
-                _context.Categories.Add(new DataModel.Category
+                cat = new DataModel.Category
                 {
                     Code = category.Code,
                     DisplayName = category.DisplayName
-                });
+                };
+
+                _context.Categories.Add(cat);
             }
             else
             {
                 // TODO inconsistancy
-                var something = _context.Categories.FirstOrDefault(x => x.Id == category.Id);
-                something.DisplayName = category.DisplayName;
-                something.Code = category.Code;
-                something.Version ++;
+                cat = _context.Categories.FirstOrDefault(x => x.Id == category.Id);
+                cat.DisplayName = category.DisplayName;
+                cat.Code = category.Code;
+                cat.Version ++;
             }
 
 
             await _context.SaveChangesAsync();
             _cache.UpdateOrCreateAsync(category.Code, () => { return GetCategory(x => x.Code == category.Code); });
-            
-            return Task.CompletedTask;
+
+            if (dbItem.Code != category.Code)
+                _cache.RemoveAsync(dbItem.Code);
+
+            return Convert(cat);
         }
 
+        public async Task<Category> DeleteCategory(Category category)
+        {
+            var dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
+
+            _context.Categories.Remove(dbCategory);
+            _cache.RemoveAsync(dbCategory.Code);
+
+            return null;
+        }
+
+
+        private Category Convert(DataModel.Category cat)
+        {
+            return new Category
+            {
+                Id = cat.Id,
+                Code = cat.Code,
+                DisplayName = cat.DisplayName,
+                IsEverything = cat.IsEverything,
+                TotalProjects = -1,
+                Version = cat.Version
+            };
+        }
 
     }
 }

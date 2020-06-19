@@ -24,6 +24,9 @@ namespace Abstractions.IRepository
         /// <returns>Everything category</returns>
         Task<Category> GetEverythingCategory();
 
-        Task<Task> SaveCategory(Category category);
+        Task<Category> SaveCategory(Category category);
+
+        Task<Category> DeleteCategory(Category category);
+
     }
 }

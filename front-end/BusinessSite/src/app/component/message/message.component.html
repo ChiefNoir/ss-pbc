@@ -1,0 +1,17 @@
+<div [ngSwitch]="type" class="container">
+  <div *ngSwitchCase="'info'" class="info">
+    {{message}}
+  </div>
+  <div *ngSwitchCase="'error'" class="error">
+    {{message}}
+  </div>
+  <div *ngSwitchCase="'loading'" class="loading">
+    <span *ngFor="let char of message | split message">
+      {{ char }}
+    </span>
+  </div>
+
+  <some-element *ngSwitchDefault>
+    {{message}}
+  </some-element>
+</div> 

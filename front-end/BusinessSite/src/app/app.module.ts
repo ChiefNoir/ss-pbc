@@ -28,6 +28,7 @@ import { ProjectEditorComponent } from './component/project-editor/project-edito
 import { DialogEditorCategoryComponent } from './component/dialog-editor-category/dialog-editor-category.component';
 import { SpinnerTextComponent } from './component/spinner-text/spinner-text.component';
 import { ErrorTextComponent } from './component/error-text/error-text.component';
+import { MessageComponent } from './component/message/message.component';
 // -----
 
 import { OnlyIntModule } from './directive/onlyInt/onlyInt.module';
@@ -82,6 +83,7 @@ import { CookieService } from 'ngx-cookie-service';
     AdminEditCategoriesComponent,
     SpinnerTextComponent,
     ErrorTextComponent,
+    MessageComponent,
     SplitPipe
   ],
   imports: [

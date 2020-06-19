@@ -52,6 +52,7 @@ namespace BusinessService.Controllers.Public
                 return _categoryRepository.GetCategory(code);
             });
 
+            //TODO: error on null
             return new JsonResult(result);
         }
 

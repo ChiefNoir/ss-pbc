@@ -81,4 +81,12 @@ export class DataService {
                           )
                           .toPromise();
   }
+
+  public delete(category: Category): Promise<RequestResult<any>>  {
+
+    return this.httpClient.request<RequestResult<any>>
+    ('delete', this.endpoint + 'category', { body: category })
+
+                          .toPromise();
+  }
 }

@@ -18,24 +18,23 @@
 .loading {
     color: $color-text;
     display: inline-block;
+
+    & span {    
+      margin: 0 2px;
+      @for $i from 0 through 12 {
+        &:nth-child(#{$i + 1}) {
+          filter: blur(0px);
+          animation: blur-text 2.9s (#{$i/5}) + s infinite linear alternate;
+        }
+      }
+    }    
 }
 
-span {    
-    margin: 0 5px;
-    @for $i from 0 through 12 {
-      &:nth-child(#{$i + 1}) {
-        filter: blur(0px);
-        animation: blur-text 2.9s (#{$i/5}) + s infinite linear alternate;
-      }
-    }
+@keyframes blur-text {
+  0% {
+    filter: blur(0px);
   }
-  
-  @keyframes blur-text {
-    0% {
-      filter: blur(0px);
-    }
-    100% {
-      filter: blur(1px);
-    }
+  100% {
+    filter: blur(1px);
   }
-  
+}

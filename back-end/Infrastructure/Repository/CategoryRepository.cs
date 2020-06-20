@@ -87,43 +87,39 @@ namespace Infrastructure.Repository
 
         public async Task<Category> SaveCategory(Category category)
         {
+            //TODO: should create dedicated SaveNew method
             if (string.IsNullOrEmpty(category.Code))
                 throw new Exception("Category code can not be null or empty");
 
             var dbItem = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
-
-            if (category.Id == null && dbItem != null)
-                throw new Exception("Category code must be unique");
-
-            DataModel.Category cat = null;
+            var oldCode = dbItem.Code;
 
             if (category.Id == null)
             {
-                cat = new DataModel.Category
+                dbItem = new DataModel.Category
                 {
                     Code = category.Code,
                     DisplayName = category.DisplayName
                 };
 
-                _context.Categories.Add(cat);
+                _context.Categories.Add(dbItem);
             }
             else
             {
                 // TODO inconsistancy
-                cat = _context.Categories.FirstOrDefault(x => x.Id == category.Id);
-                cat.DisplayName = category.DisplayName;
-                cat.Code = category.Code;
-                cat.Version ++;
+                dbItem.DisplayName = category.DisplayName;
+                dbItem.Code = category.Code;
+                dbItem.Version ++;
             }
 
 
             await _context.SaveChangesAsync();
             _cache.UpdateOrCreateAsync(category.Code, () => { return GetCategory(x => x.Code == category.Code); });
 
-            if (dbItem.Code != category.Code)
-                _cache.RemoveAsync(dbItem.Code);
+            if (oldCode != category.Code)
+                _cache.RemoveAsync(oldCode);
 
-            return Convert(cat);
+            return Convert(dbItem);
         }
 
         public async Task<Category> DeleteCategory(Category category)

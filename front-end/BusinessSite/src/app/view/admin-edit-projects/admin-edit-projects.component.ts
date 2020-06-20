@@ -13,12 +13,12 @@ import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { Project } from 'src/app/model/Project';
 
 @Component({
-  selector: 'app-admin-project-editor',
-  templateUrl: './admin-project-editor.component.html',
-  styleUrls: ['./admin-project-editor.component.scss'],
+  selector: 'app-admin-edit-projects',
+  templateUrl: './admin-edit-projects.component.html',
+  styleUrls: ['./admin-edit-projects.component.scss'],
 })
 
-export class AdminProjectEditorComponent implements AfterViewInit {
+export class AdminEditProjectsComponent implements AfterViewInit {
   private service: DataService;
   private currentPage: number = 0;
   private maxPage: number = 0;

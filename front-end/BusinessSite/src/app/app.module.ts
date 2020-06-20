@@ -43,7 +43,7 @@ import { ProjectsListComponent } from './view/projects-list/projects-list.compon
 import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';
-import { AdminProjectEditorComponent } from './view/admin-project-editor/admin-project-editor.component';
+import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edit-projects.component';
 import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin-edit-categories.component';
 // -----
 
@@ -52,7 +52,7 @@ import { DataService } from './service/data.service';
 import { AuthService } from './service/auth.service';
 import { StorageService } from './service/storage.service';
 // -----
-
+ 
 // providers
 import { CookieService } from 'ngx-cookie-service';
 // -----
@@ -79,7 +79,7 @@ import { CookieService } from 'ngx-cookie-service';
     NotFoundComponent,
     ProjectComponent,
     AdminLoginComponent,
-    AdminProjectEditorComponent,
+    AdminEditProjectsComponent,
     AdminEditCategoriesComponent,
     SpinnerTextComponent,
     ErrorTextComponent,

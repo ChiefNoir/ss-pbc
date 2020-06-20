@@ -36,7 +36,14 @@ table {
   font-size: 18px !important;
 }
 
-.mat-row:hover {
+.mat-footer-cell {
+  color: $color-control-text !important;
+  font-size: 18px !important;
+  font-style: italic;
+}
+
+.mat-row:hover,
+.mat-footer-row:hover {
   background-color: $color-control-highlighted;
   cursor: pointer;
 }

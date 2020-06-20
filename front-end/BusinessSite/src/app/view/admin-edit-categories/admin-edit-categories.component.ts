@@ -38,16 +38,24 @@ export class AdminEditCategoriesComponent implements AfterViewInit {
                 );
   }
 
-  public showRow(data: any): void {
+  public showRow(categoryCode: string): void {
     const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '50%'});
 
-    dialogRef.componentInstance.code = data;
-
+    if(categoryCode) {
+    dialogRef.componentInstance.code = categoryCode;
+    }
+    
     dialogRef.afterClosed()
              .subscribe
              (
                (result) =>
                {
+                this.service.getCategories()
+                .then
+                (
+                  (x) => this.handle(x, this.categories$),
+                  (error) => this.handleError(error)
+                );
                 }
             );
   }

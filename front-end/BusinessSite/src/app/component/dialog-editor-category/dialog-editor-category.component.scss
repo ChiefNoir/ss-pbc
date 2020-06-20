@@ -1,12 +1,29 @@
 @import "variables";
 
+
+::ng-deep.mat-form-field-disabled .mat-form-field-underline 
+{ 
+  background-image: linear-gradient( to right, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 0.42) 33%, #c2c7cc 0 ) !important; 
+  background-size: 1px 100% !important;
+   background-repeat: repeat-x !important; 
+}
+
+::ng-deep.mat-input-element:disabled {
+  color: $color-shadow-text-light !important;
+}
+
+
+
+.mat-divider {
+  border-top-width: 2px;
+  border-top-color: $color-text;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 mat-form-field {
     width: 100%;
   }
-
-form {
-  margin-top: 30px;
-}
 
 ::ng-deep.mat-dialog-container {
   background-color: $color-content;
@@ -58,13 +75,37 @@ button {
   transition: 0.25s;
  
   color: $color-control-text;
+
+  &:disabled{
+    color: $color-shadow-text-light !important;
+
+    &:hover{
+      transform: translateY(0);
+      background-color: transparent !important;
+    }
+  }
+  &:hover{
+    background-color: $color-core;
+    transform: translateY(-0.2em);
+    -webkit-transform: translateY(-0.2em);
+    -moz-transform: translateY(-0.2em);
+    -ms-transform: translateY(-0.2em);
+    -o-transform: translateY(-0.2em);
+  }
 }
 
-button:hover{
-  background-color: $color-core;
-  transform: translateY(-0.2em);
-  -webkit-transform: translateY(-0.2em);
-  -moz-transform: translateY(-0.2em);
-  -ms-transform: translateY(-0.2em);
-  -o-transform: translateY(-0.2em);
+
+
+.warning {
+  font-size: 18px;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  margin-right: 20px;
 }

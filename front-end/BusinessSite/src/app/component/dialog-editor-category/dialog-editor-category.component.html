@@ -1,39 +1,44 @@
-<h1 mat-dialog-title><b>{{code}}</b> Properties</h1>
-<mat-dialog-content class="conteiner">
+<h1 mat-dialog-title> Category [<b>{{ code }}</b>]</h1>
+
+<mat-dialog-content>
   <div *ngIf="category$ | async as category; else loading">
-  <mat-tab-group>
-    <mat-tab label="Category"> 
-      <form>
-        <div fxLayout="column" fxLayoutAlign="space-around center">
+    <form>
+      <div fxLayout="column" fxLayoutAlign="space-around center">
+        <div *ngIf="category.isEverything" class="warning">
+          This is a technical category for filtering by everything. You can not
+          delete it.
+        </div>
         <mat-form-field>
-          <input matInput [(ngModel)]="category.code" name="code" placeholder="code" />
+          <input [disabled]="disableInput$ | async" matInput [(ngModel)]="category.code" name="code" placeholder="code"/>
         </mat-form-field>
-
         <mat-form-field>
-          <input matInput [(ngModel)]="category.displayName" name="displayName" placeholder="Display name" />
+          <input [disabled]="disableInput$ | async" matInput [(ngModel)]="category.displayName" name="displayName" placeholder="Display name"/>
         </mat-form-field>
-
-        <span>
-          This is a technical category for filtering by everything.
-          You can not delete it.
-        </span>
-
       </div>
-      </form>
-    </mat-tab>
+    </form>
+    <br />
+  </div>
 
-  </mat-tab-group>
-  
+  <div *ngIf="message$ | async as msg">
+    <app-message [message]="msg"></app-message>
+  </div>
 
-
-</div>
+  <div *ngIf="category$ | async as category">
+    <div class="actions">
+      <button *ngIf="!category.isEverything" [disabled]="disableInput$ | async" mat-button (click)="delete()">
+        Delete
+      </button>
+      <div>
+        <button [disabled]="disableInput$ | async" mat-button (click)="save()">
+          Save
+        </button>
+        <button mat-button cdkFocusInitial (click)="close()">Close</button>
+      </div>
+    </div>
+  </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
-  <button mat-button mat-dialog-close>Cancel</button>
-</mat-dialog-actions>
-
+<br />
 
 <ng-template #loading>
-  <app-loading></app-loading>
+  <app-message [message]="loadingMessage"></app-message>
 </ng-template>

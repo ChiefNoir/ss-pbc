@@ -6,7 +6,7 @@ namespace Abstractions.Model
     public class ExternalUrl : IVersion
     {
         /// <summary> Unique Id </summary>
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary> Friendly name for URL </summary>
         public string DisplayName { get; set; }

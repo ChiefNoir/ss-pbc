@@ -24,5 +24,10 @@ namespace Abstractions.IRepository
         /// <param name="code">Project code</param>
         /// <returns>Full specific <seealso cref="Project"/></returns>
         Task<Project> GetProject(string code);
+
+        /// <summary> Save <see cref="Project"/> </summary>
+        /// <param name="project"><see cref="Project"/> to save </param>
+        /// <returns>Saved <see cref="Project"/> </returns>
+        Task<Project> Save(Project project);
     }
 }

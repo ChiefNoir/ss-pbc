@@ -13,9 +13,12 @@ namespace API.Controllers.Private
     {
         private readonly ICategoryRepository _categoryRepository;
 
-        public SimplePost(ICategoryRepository categoryRepository)
+        private readonly IProjectRepository _projectRepository;
+
+        public SimplePost(ICategoryRepository categoryRepository, IProjectRepository projectRepository)
         {
             _categoryRepository = categoryRepository;
+            _projectRepository = projectRepository;
         }
 
 
@@ -36,6 +39,17 @@ namespace API.Controllers.Private
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
                 return _categoryRepository.DeleteCategory(category);
+            });
+
+            return new JsonResult(result);
+        }
+
+        [HttpPost("project")]
+        public async Task<IActionResult> Save([FromBody] Project project)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _projectRepository.Save(project);
             });
 
             return new JsonResult(result);

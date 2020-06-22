@@ -26,7 +26,7 @@ namespace Infrastructure.Repository
                 .Include(x=>x.ExternalUrls)
                 .Select(x => new Project
                 {
-                    Code = code,
+                    Code = x.Code,
                     Description = x.Description,
                     DescriptionShort = x.DescriptionShort,
                     DisplayName = x.DisplayName,
@@ -113,6 +113,59 @@ namespace Infrastructure.Repository
                 Id = dbEntity.Id,
                 Url = dbEntity.Url,
                 Version = dbEntity.Version
+            };
+        }
+
+        public async Task<Project> Save(Project project)
+        {
+            var dbItem = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
+
+            dbItem.CategoryId = project.Category.Id.Value;
+            dbItem.Code = project.Code;
+            dbItem.Description = project.Description;
+            dbItem.DescriptionShort = project.DescriptionShort;
+            dbItem.DisplayName = project.DisplayName;
+            dbItem.ExternalUrls = project.ExternalUrls.Select(x => Convert(x)).ToList();
+            dbItem.PosterDescription = project.PosterDescription;
+            dbItem.PosterUrl = project.PosterUrl;
+            dbItem.ReleaseDate = project.ReleaseDate;
+            dbItem.Version++;
+
+            await _context.SaveChangesAsync();
+            return Convert(dbItem);
+        }
+
+
+        private static DataModel.ExternalUrl Convert(ExternalUrl item)
+        {
+            return new DataModel.ExternalUrl
+            {
+                DisplayName = item.DisplayName,
+                Id = item.Id.Value,
+                Url = item.Url
+            };
+        }
+
+        private static Project Convert(DataModel.Project project)
+        {
+            return new Project
+            {
+                Code = project.Code,
+                Description = project.Description,
+                DescriptionShort = project.DescriptionShort,
+                DisplayName = project.DisplayName,
+                PosterUrl = project.PosterUrl,
+                PosterDescription = project.PosterDescription,
+                ReleaseDate = project.ReleaseDate,
+                Version = project.Version,
+                Category = new Category
+                {
+                    Code = project.Category.Code,
+                    DisplayName = project.Category.DisplayName,
+                    IsEverything = false,
+                    Version = project.Category.Version
+                },
+                ExternalUrls = project.ExternalUrls.Select(e => Convert(e))
             };
         }
     }

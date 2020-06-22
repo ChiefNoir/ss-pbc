@@ -7,7 +7,7 @@ namespace Abstractions.Model
     /// <summary> Full project </summary>
     public class Project : IVersion
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary> Project unique code </summary>
         public string Code { get; set; }

@@ -11,6 +11,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatDialogModule} from '@angular/material/dialog';
 import {TextFieldModule} from '@angular/cdk/text-field';
+import {MatSelectModule} from '@angular/material/select';
 
 const Material = [
   MatSidenavModule,
@@ -24,6 +25,7 @@ const Material = [
   FormsModule,
   ReactiveFormsModule,
   MatTabsModule,
+  MatSelectModule,
   TextFieldModule
 ]; 
 

@@ -20,73 +20,75 @@ export class DataService {
 
   public getNews(): Promise<RequestResult<Array<News>>> {
     return this.httpClient
-               .get<RequestResult<Array<News>>>(this.endpoint + 'news/all')
-               .toPromise();
+      .get<RequestResult<Array<News>>>(this.endpoint + 'news/all')
+      .toPromise();
   }
 
-  public getProjectsPreview(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<ProjectPreview>>> {
-
-    const categoryParam = typeof categoryCode !== 'undefined' && categoryCode ? '&categorycode=' + categoryCode : '';
+  public getProjectsPreview(
+    start: number,
+    length: number,
+    categoryCode: string
+  ): Promise<RequestResult<Array<ProjectPreview>>> {
+    const categoryParam =
+      typeof categoryCode !== 'undefined' && categoryCode
+        ? '&categorycode=' + categoryCode
+        : '';
 
     return this.httpClient
-               .get<RequestResult<Array<ProjectPreview>>>
-               (
-                 this.endpoint + 'projects/search?'
-                 + 'start=' + start + '&length=' + length
-                 + categoryParam
-               )
-               .toPromise();
+      .get<RequestResult<Array<ProjectPreview>>>(
+        this.endpoint +
+          'projects/search?' +
+          'start=' +
+          start +
+          '&length=' +
+          length +
+          categoryParam
+      )
+      .toPromise();
   }
 
   public getProject(code: string): Promise<RequestResult<Project>> {
     return this.httpClient
-               .get<RequestResult<Project>>
-               (
-                 this.endpoint + 'project/' + code
-               )
-               .toPromise();
+      .get<RequestResult<Project>>(this.endpoint + 'project/' + code)
+      .toPromise();
   }
 
   public getCategories(): Promise<RequestResult<Array<Category>>> {
     return this.httpClient
-               .get<RequestResult<Array<Category>>>
-               (
-                 this.endpoint + 'categories/all'
-               )
-               .toPromise();
+      .get<RequestResult<Array<Category>>>(this.endpoint + 'categories/all')
+      .toPromise();
   }
 
   public getEverythingCategory(): Promise<RequestResult<Category>> {
     return this.httpClient
-               .get<RequestResult<Category>>
-               (
-                 this.endpoint + 'category/everything'
-               ).toPromise();
+      .get<RequestResult<Category>>(this.endpoint + 'category/everything')
+      .toPromise();
   }
 
   public getCategory(code: string): Promise<RequestResult<Category>> {
     return this.httpClient
-               .get<RequestResult<Category>>
-               (
-                 this.endpoint + 'category/' + code
-               )
-               .toPromise();
+      .get<RequestResult<Category>>(this.endpoint + 'category/' + code)
+      .toPromise();
   }
-
 
   public save(category: Category): Promise<RequestResult<any>> {
-    return this.httpClient.post<RequestResult<any>>
-                          (
-                            this.endpoint + 'category', category
-                          )
-                          .toPromise();
+    return this.httpClient
+      .post<RequestResult<any>>(this.endpoint + 'category', category)
+      .toPromise();
   }
 
-  public delete(category: Category): Promise<RequestResult<any>>  {
+  public delete(category: Category): Promise<RequestResult<any>> {
+    return this.httpClient
+      .request<RequestResult<any>>('delete', this.endpoint + 'category', {
+        body: category,
+      })
 
-    return this.httpClient.request<RequestResult<any>>
-    ('delete', this.endpoint + 'category', { body: category })
+      .toPromise();
+  }
 
-                          .toPromise();
+  public saveProject(project: Project): Promise<RequestResult<any>> {
+    return this.httpClient
+      .post<RequestResult<any>>(this.endpoint + 'project', project)
+      .toPromise();
   }
 }

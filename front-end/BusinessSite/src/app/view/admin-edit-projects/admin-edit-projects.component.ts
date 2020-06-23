@@ -44,7 +44,7 @@ export class AdminEditProjectsComponent implements AfterViewInit {
   }
 
   public showRow(data: any): void {
-    const dialogRef = this.dialog.open(ProjectEditorComponent, {width: '70%',});
+    const dialogRef = this.dialog.open(ProjectEditorComponent, {width: '90%', minHeight:'80%'});
 
     dialogRef.componentInstance.code = data;
 

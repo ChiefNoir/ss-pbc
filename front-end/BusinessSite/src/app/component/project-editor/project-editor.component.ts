@@ -7,6 +7,7 @@ import { Category } from 'src/app/model/Category';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { MatTable } from '@angular/material/table';
+import { MessageType, MessageDescription } from '../message/message.component';
 
 @Component({
   selector: 'app-project-editor',
@@ -17,7 +18,7 @@ import { MatTable } from '@angular/material/table';
 export class ProjectEditorComponent implements AfterContentInit, OnInit
 {
 
-  public columnsInner: string[] = [ 'name', 'url'];
+  public columnsInner: string[] = [ 'name', 'url', 'btn'];
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
   
   private service: DataService;
@@ -30,6 +31,10 @@ export class ProjectEditorComponent implements AfterContentInit, OnInit
   public defaultCategory: Category;
 
 
+  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
+
+  public loadingMessage: MessageDescription = {text: 'Loading', type: MessageType.Spinner };
   
   constructor(service: DataService){
     this.service = service;
@@ -93,6 +98,14 @@ export class ProjectEditorComponent implements AfterContentInit, OnInit
       this.project$.value.externalUrls = new Array<ExternalUrl>();
       this.project$.value.externalUrls.push(new ExternalUrl());
     }
+  }
+
+  public removeUrl(extUrl: ExternalUrl ): void {
+    const index = this.project$.value.externalUrls.indexOf(extUrl, 0);
+if (index > -1) {
+  this.project$.value.externalUrls.splice(index, 1);
+}
+this.externalUrlsTable.renderRows();
   }
 
   public close(): void {

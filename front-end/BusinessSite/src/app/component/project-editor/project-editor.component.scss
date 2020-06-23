@@ -73,28 +73,26 @@ button:hover{
 
 
 table {
-  margin: 2%;
   width: 100%;
-
   background-color: $table-row !important;
   @include flat-shadow($color-core);
 }
 
 .mat-header-cell {
   color: $color-control-text  !important;
-  font-size: 20px !important;
+  font-size: 18px !important;
   background-color: $table-header;
   text-transform: uppercase;
 }
 
 .mat-cell {
   color: $color-control-text !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
 }
 
 .mat-footer-cell {
   color: $color-control-text !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
   font-style: italic;
 }
 
@@ -163,4 +161,8 @@ table {
 }
 ::ng-deep.mat-calendar-body-selected{
   background-color: $color-content!important;
+}
+
+.actions {
+  margin-top: 30px;
 }

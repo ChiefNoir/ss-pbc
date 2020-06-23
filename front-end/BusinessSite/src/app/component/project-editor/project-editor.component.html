@@ -1,4 +1,4 @@
-<h1 mat-dialog-title><b>{{code}}</b> Properties</h1>
+
 <mat-dialog-content class="conteiner">
   <div *ngIf="project$ | async as project; else loading">
   <mat-tab-group>
@@ -67,7 +67,6 @@
               <input matInput placeholder="Name" [value]="element.displayName" [(ngModel)]="element.displayName" />
             </mat-form-field>
           </td>
-
           <td mat-footer-cell *matFooterCellDef> Create new </td>
         </ng-container>
 
@@ -80,6 +79,15 @@
           </td>
           <td mat-footer-cell *matFooterCellDef>  </td>
         </ng-container>
+
+        <ng-container matColumnDef="btn">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell  *matCellDef="let element"> <button mat-button (click)="removeUrl(element)">remove</button>  </td>
+    
+          <td mat-footer-cell *matFooterCellDef> </td>
+        </ng-container>
+
+
         <tr mat-header-row *matHeaderRowDef="columnsInner"></tr>
         <tr mat-row *matRowDef="let row; columns: columnsInner"></tr>
         <tr mat-footer-row *matFooterRowDef="columnsInner" (click)="add()"></tr>
@@ -99,9 +107,14 @@
 
 </mat-dialog-content>
 <div class="actions">
+  
+  <div *ngIf="message$ | async as msg">
+    <app-message [message]="msg"></app-message>
+  </div>
 
   <div>
     <button mat-button>Delete</button>
+    <button mat-button>Refresh</button>
 
     <button mat-button (click)="save()">
       Save
@@ -112,5 +125,5 @@
 
 
 <ng-template #loading>
-  <app-loading></app-loading>
+  <app-message [message]="loadingMessage"></app-message>
 </ng-template>

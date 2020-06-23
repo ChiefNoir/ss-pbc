@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 mat-form-field {
     width: 100%;
@@ -67,4 +68,99 @@ button:hover{
   -moz-transform: translateY(-0.2em);
   -ms-transform: translateY(-0.2em);
   -o-transform: translateY(-0.2em);
+}
+
+
+
+table {
+  margin: 2%;
+  width: 100%;
+
+  background-color: $table-row !important;
+  @include flat-shadow($color-core);
+}
+
+.mat-header-cell {
+  color: $color-control-text  !important;
+  font-size: 20px !important;
+  background-color: $table-header;
+  text-transform: uppercase;
+}
+
+.mat-cell {
+  color: $color-control-text !important;
+  font-size: 18px !important;
+}
+
+.mat-footer-cell {
+  color: $color-control-text !important;
+  font-size: 18px !important;
+  font-style: italic;
+}
+
+.mat-row:hover,
+.mat-footer-row:hover {
+  background-color: $color-control-highlighted;
+  cursor: pointer;
+}
+
+::ng-deep .mat-focused .mat-form-field-label
+{
+  /*color or focused hint text in the inputs*/
+  color: $color-text !important;
+}
+
+::ng-deep .mat-form-field-label {
+   /*color or text in the inputs*/
+  color: $color-control-highlighted !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*color of underline*/
+  background-color:  $color-control-active-text-highlighted !important;
+} 
+
+::ng-deep.mat-form-field-ripple {
+ /*color of underline when focused*/
+ background-color: $color-text !important;;
+}
+
+::ng-deep.mat-tab-label-content {
+  color: $color-text !important;
+}
+::ng-deep.mat-ink-bar{
+  background-color: $color-control-text !important;
+}
+
+
+::ng-deep.mat-select-value-text{
+  color: $color-text !important;
+}
+::ng-deep.mat-select-panel {
+  background: $color-control !important;
+}
+::ng-deep.mat-option-text{
+  color: $color-text !important;
+}
+::ng-deep.mat-select-arrow{
+  color: $color-text !important;
+}
+
+::ng-deep.mat-datepicker-toggle-default-icon{
+  color: $color-text !important;
+}
+
+::ng-deep.mat-calendar{
+  background: $color-control !important;
+  color: $color-text !important;
+}
+::ng-deep.mat-calendar-body-cell-content,
+::ng-deep.mat-calendar-body-label,
+::ng-deep.mat-calendar-table,
+::ng-deep.mat-calendar-table-header
+{
+  color: $color-text !important;
+}
+::ng-deep.mat-calendar-body-selected{
+  background-color: $color-content!important;
 }

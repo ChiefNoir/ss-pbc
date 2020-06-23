@@ -1,10 +1,12 @@
-import { Component, Input, AfterContentInit, OnInit } from '@angular/core';
+import { Component, Input, AfterContentInit, OnInit, ViewChild } from '@angular/core';
 import { Project } from 'src/app/model/Project';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { Category } from 'src/app/model/Category';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { ExternalUrl } from 'src/app/model/ExternalUrl';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-project-editor',
@@ -15,6 +17,9 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 export class ProjectEditorComponent implements AfterContentInit, OnInit
 {
 
+  public columnsInner: string[] = [ 'name', 'url'];
+  @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
+  
   private service: DataService;
 
   @Input()
@@ -77,6 +82,18 @@ export class ProjectEditorComponent implements AfterContentInit, OnInit
     content.next(data.data);
   }
 
+  public add(): void {
+
+    if(this.project$.value.externalUrls) {
+    this.project$.value.externalUrls.push(new ExternalUrl());
+
+    this.externalUrlsTable.renderRows();
+    }
+    else {
+      this.project$.value.externalUrls = new Array<ExternalUrl>();
+      this.project$.value.externalUrls.push(new ExternalUrl());
+    }
+  }
 
   public close(): void {
 

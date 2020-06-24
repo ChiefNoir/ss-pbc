@@ -143,9 +143,12 @@ namespace Infrastructure.Repository
             dbItem.ReleaseDate = project.ReleaseDate;
             dbItem.Version++;
 
+            project.Id = dbItem.Id;
+            project.Version = dbItem.Version;
+
 
             await _context.SaveChangesAsync();
-            return Convert(dbItem);
+            return project;
         }
 
 

@@ -135,7 +135,7 @@ namespace Infrastructure.Repository
             dbItem.Description = project.Description;
             dbItem.DescriptionShort = project.DescriptionShort;
             dbItem.DisplayName = project.DisplayName;
-            dbItem.ExternalUrls = project.ExternalUrls.Select(x => Convert(x)).ToList();
+            dbItem.ExternalUrls = project.ExternalUrls?.Select(x => Convert(x)).ToList();
             dbItem.PosterDescription = project.PosterDescription;
             dbItem.PosterUrl = project.PosterUrl;
             dbItem.ReleaseDate = project.ReleaseDate;
@@ -178,7 +178,7 @@ namespace Infrastructure.Repository
                     IsEverything = false,
                     Version = project.Category.Version
                 },
-                ExternalUrls = project.ExternalUrls.Select(e => Convert(e))
+                ExternalUrls = project.ExternalUrls?.Select(e => Convert(e))
             };
         }
     }

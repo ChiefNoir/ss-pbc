@@ -24,8 +24,9 @@ namespace Infrastructure.Repository
                 .Where(x => x.Code == code)
                 .Include(x=>x.Category)
                 .Include(x=>x.ExternalUrls)
-                .Select(x => new Project
+                .Select(x => new Project //TODO: move convert to one place
                 {
+                    Id = x.Id,
                     Code = x.Code,
                     Description = x.Description,
                     DescriptionShort = x.DescriptionShort,
@@ -36,6 +37,7 @@ namespace Infrastructure.Repository
                     Version = x.Version,
                     Category = new Category 
                     {
+                        Id = x.Category.Id,
                         Code = x.Category.Code,
                         DisplayName = x.Category.DisplayName,
                         IsEverything = false,

@@ -118,8 +118,18 @@ namespace Infrastructure.Repository
 
         public async Task<Project> Save(Project project)
         {
-            var dbItem = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
+            DataModel.Project dbItem = null;
 
+            if(project.Id != null)
+            {
+                dbItem = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
+            }
+            else
+            {
+                dbItem = new DataModel.Project();
+                _context.Projects.Add(dbItem);
+            }
+                
             dbItem.CategoryId = project.Category.Id.Value;
             dbItem.Code = project.Code;
             dbItem.Description = project.Description;
@@ -130,6 +140,7 @@ namespace Infrastructure.Repository
             dbItem.PosterUrl = project.PosterUrl;
             dbItem.ReleaseDate = project.ReleaseDate;
             dbItem.Version++;
+
 
             await _context.SaveChangesAsync();
             return Convert(dbItem);

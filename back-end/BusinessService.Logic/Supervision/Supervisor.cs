@@ -24,7 +24,7 @@ namespace BusinessService.Logic.Supervision
             {
                 //TODO: log error
                 result.IsSucceed = false;
-                result.ErrorMessage = ee.Message;
+                result.ErrorMessage = $"{ee.Message}{Environment.NewLine} {ee.InnerException?.Message}";
             }
 
             return result;

@@ -172,6 +172,7 @@ namespace Infrastructure.Repository
                 Version = project.Version,
                 Category = new Category
                 {
+                    Id = project.Category.Id,
                     Code = project.Category.Code,
                     DisplayName = project.Category.DisplayName,
                     IsEverything = false,

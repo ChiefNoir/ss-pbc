@@ -161,6 +161,7 @@ namespace Infrastructure.Repository
         {
             return new Project
             {
+                Id = project.Id,
                 Code = project.Code,
                 Description = project.Description,
                 DescriptionShort = project.DescriptionShort,

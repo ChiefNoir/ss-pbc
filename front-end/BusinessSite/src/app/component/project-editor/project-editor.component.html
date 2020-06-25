@@ -1,6 +1,6 @@
 
 <mat-dialog-content class="conteiner">
-  <div *ngIf="project$ | async as project; else loading">
+  <div *ngIf="project$ | async as project">
   <mat-tab-group>
     <mat-tab label="Project"> 
       <form>
@@ -14,10 +14,17 @@
         </mat-form-field>
 
         <mat-form-field>
+          <mat-label>releaseDate</mat-label>
+          <input matInput [matDatepicker]="dp3"  [(ngModel)]="project.releaseDate" name="releaseDate">
+          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+          <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
           <input matInput [(ngModel)]="project.releaseDate" name="releaseDate" placeholder="ReleaseDate" />
         </mat-form-field>
 
-        <mat-form-field *ngIf="categories$ | async as categories; else loading">
+        <mat-form-field *ngIf="categories$ | async as categories">
           <mat-label>category</mat-label>
           <mat-select [(ngModel)]="project.category" name="displayname">
             <mat-option *ngFor="let category of categories" [value]="category" >
@@ -47,13 +54,24 @@
 
     <mat-tab label="Poster">
       <form>
+        <div fxLayout="column" fxLayoutAlign="space-around center">
         <mat-form-field>
           <input matInput [(ngModel)]="project.posterUrl" name="posterUrl"  placeholder="Poster" />
         </mat-form-field>
+
+       
+        <div>
+          <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+          <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
+        </div>
+        <div>
+        </div>
+       
   
         <mat-form-field>
           <input matInput [(ngModel)]="project.posterDescription" name="posterDescription"  placeholder="Poster alt" />
         </mat-form-field>
+      </div>
       </form>
     </mat-tab>
 
@@ -82,7 +100,7 @@
 
         <ng-container matColumnDef="btn">
           <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell  *matCellDef="let element"> <button mat-button (click)="removeUrl(element)">remove</button>  </td>
+          <td mat-cell  *matCellDef="let element"> <button class="btn-table" mat-button (click)="removeUrl(element)">remove</button>  </td>
     
           <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
@@ -112,18 +130,18 @@
     <app-message [message]="msg"></app-message>
   </div>
 
-  <div>
-    <button mat-button>Delete</button>
-    <button mat-button>Refresh</button>
+  <div class="flexcontainer" >
+    <div class="itemleft" > 
+    <button mat-button (click)="delete()">Delete</button>
+  </div>
 
-    <button mat-button (click)="save()">
-      Save
-    </button>
-    <button mat-button cdkFocusInitial (click)="close()">Close</button>
+    <div class="itemright">
+    <button class="actbt" mat-button (click)="refresh()">Refresh</button>
+
+    <button class="actbt" mat-button (click)="save()">Save</button>
+    <button class="actbt" mat-button cdkFocusInitial (click)="close()">Close</button>
+  </div>
   </div>
 </div>
 
 
-<ng-template #loading>
-  <app-message [message]="loadingMessage"></app-message>
-</ng-template>

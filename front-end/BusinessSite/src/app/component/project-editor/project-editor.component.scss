@@ -2,7 +2,7 @@
 @import "mixins";
 
 mat-form-field {
-    width: 100%;
+    width: 90%;
   }
 
 form {
@@ -25,10 +25,6 @@ form {
   color: $color-text-highlighted !important;
 }
 
-::ng-deep.mat-form-field-label {
-  /*color or text in the inputs*/
- color: $color-text !important;
-}
 
 ::ng-deep.mat-form-field-underline {
  /*color of underline*/
@@ -40,12 +36,9 @@ form {
 background-color: $color-text !important;;
 }
 
-.mat-focused ::ng-deep.mat-form-field-label {
-  /*change color of focused placeholder*/
-  color: $color-text !important;
-}
+
 ::ng-deep .mat-form-field-empty.mat-form-field-label {
-  /*change color of placeholder*/
+  /* color of placeholder*/
   color: $color-text !important;
   font-style: italic;
 }
@@ -109,8 +102,8 @@ table {
 }
 
 ::ng-deep .mat-form-field-label {
-   /*color or text in the inputs*/
-  color: $color-control-highlighted !important;
+   /*color of the placeholder above input*/
+  color: $color-text !important;
 }
 
 ::ng-deep.mat-form-field-underline {
@@ -152,6 +145,7 @@ table {
   background: $color-control !important;
   color: $color-text !important;
 }
+
 ::ng-deep.mat-calendar-body-cell-content,
 ::ng-deep.mat-calendar-body-label,
 ::ng-deep.mat-calendar-table,
@@ -165,4 +159,31 @@ table {
 
 .actions {
   margin-top: 30px;
+}
+
+.flexcontainer {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+}
+
+
+.itemright {
+  flex: 0 1 auto;
+  margin-left: auto;
+}
+
+
+.itemleft {
+  flex: 0 1 auto;
+  margin-right: auto; 
+}
+
+.actbt {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.btn-table {
+  width: 100%;
 }

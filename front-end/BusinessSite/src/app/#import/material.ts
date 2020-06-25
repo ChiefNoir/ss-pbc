@@ -13,6 +13,14 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {MatSelectModule} from '@angular/material/select';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+const Providers =[
+  MatDatepickerModule,
+  MatNativeDateModule
+]
+
 const Material = [
   MatSidenavModule,
   MatToolbarModule,
@@ -26,12 +34,15 @@ const Material = [
   ReactiveFormsModule,
   MatTabsModule,
   MatSelectModule,
-  TextFieldModule
+  TextFieldModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 ]; 
 
 @NgModule({
   imports: Material,
   exports: Material,
+  providers: Providers
 })
 
 export class MaterialModules {}

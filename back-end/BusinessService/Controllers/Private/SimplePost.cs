@@ -3,6 +3,11 @@ using Abstractions.Model;
 using API.Queries;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
+using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Private
@@ -12,13 +17,17 @@ namespace API.Controllers.Private
     public class SimplePost : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;
-
         private readonly IProjectRepository _projectRepository;
+        private readonly IFileRepository _fileRepository;
+        private readonly IConfiguration _configuration;
 
-        public SimplePost(ICategoryRepository categoryRepository, IProjectRepository projectRepository)
+
+        public SimplePost(ICategoryRepository categoryRepository, IProjectRepository projectRepository, IConfiguration configuration, IFileRepository fileRepository)
         {
             _categoryRepository = categoryRepository;
             _projectRepository = projectRepository;
+            _fileRepository = fileRepository;
+            _configuration = configuration;
         }
 
 
@@ -55,5 +64,27 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
+        [HttpPost("upload"), DisableRequestSizeLimit]
+        public async Task<IActionResult> Upload()
+        {
+            var result = await Supervisor.SafeExecuteAsync(async () =>
+            {
+                var filename = await _fileRepository.Save(Request.Form.Files.FirstOrDefault());
+
+                return FormatToUrl(filename);
+            });
+
+            return new JsonResult(result);
+        }
+
+        private string FormatToUrl(string name)
+        {
+            return 
+            _configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>()
+            + "/" + 
+            _configuration.GetSection("Location:FileStorage").Get<string>()
+            + "/"
+            + name;
+        }
     }
 }

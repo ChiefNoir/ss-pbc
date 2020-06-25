@@ -20,7 +20,7 @@ namespace Infrastructure.Repository
 
         public async Task<string> Save(IFormFile file)
         {
-            if (file == null || file.Length == 0) //TODO: maxfilesize
+            if (file == null || file.Length == 0) //TODO: max file size
                 throw new Exception("Empty file"); //TODO: custom exception
 
             var folderName = _configuration.GetSection("Location").GetValue<string>("FileStorage");
@@ -30,7 +30,6 @@ namespace Infrastructure.Repository
             var filename = GenerateFileName() + Path.GetExtension(file.FileName);
 
             var fullPath = Path.Combine(pathToSave, filename);
-            var dbPath = Path.Combine(folderName, filename);
 
             using (var stream = new FileStream(fullPath, FileMode.Create))
             {
@@ -43,7 +42,7 @@ namespace Infrastructure.Repository
 
         private static string GenerateFileName()
         {
-            //TODO: temporary solution
+            //TODO: re-do
             return DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds.ToString();
         }
     }

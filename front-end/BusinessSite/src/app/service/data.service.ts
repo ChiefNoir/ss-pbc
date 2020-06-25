@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { RequestResult } from '../model/RequestResult';
@@ -8,6 +8,7 @@ import { Category } from '../model/Category';
 
 import { environment } from 'src/environments/environment';
 import { ProjectPreview } from '../model/ProjectPreview';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class DataService {
@@ -90,5 +91,22 @@ export class DataService {
     return this.httpClient
       .post<RequestResult<any>>(this.endpoint + 'project', project)
       .toPromise();
+  }
+
+  public deleteProject(project: Project): Promise<RequestResult<any>> {
+    return this.httpClient
+      .request<RequestResult<any>>('delete', this.endpoint + 'project', {
+        body: project,
+      })
+
+      .toPromise();
+  }
+
+
+  public uploadFile(fileToUpload: File): Promise<RequestResult<string>>{
+    const formData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+
+    return this.httpClient.post<RequestResult<string>>(this.endpoint + 'upload', formData).toPromise();
   }
 }

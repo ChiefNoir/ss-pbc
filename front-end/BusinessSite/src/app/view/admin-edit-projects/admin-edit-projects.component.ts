@@ -53,9 +53,7 @@ export class AdminEditProjectsComponent implements AfterViewInit {
              (
                (result) =>
                {
-                 if (result === true) {
-                   this.saveChages(dialogRef.componentInstance.project$.value);
-                  }
+                 this.changePage(this.currentPage);
                 }
             );
   }
@@ -101,7 +99,7 @@ export class AdminEditProjectsComponent implements AfterViewInit {
     if (result.isSucceed) {
       this.currentPage = 0;
       this.maxPage = Math.ceil(this.maxPage / environment.maxProjectsPerPage) - 1;
-      this.minPage = 1;
+      this.minPage = 0;
       this.changePage(this.currentPage);
     } else {
       this.handleError(result.errorMessage);
@@ -116,11 +114,10 @@ export class AdminEditProjectsComponent implements AfterViewInit {
     }
   }
 
-  private saveChages(project: Project) {
-    console.log('TODO');
-  }
+
 
   private handleError(error: any): void {
     console.log(error);
   }
+
 }

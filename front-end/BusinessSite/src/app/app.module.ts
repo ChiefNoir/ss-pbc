@@ -26,7 +26,6 @@ import { ProjectFullComponent } from './component/project-full/project-full.comp
 import { ProjectEditorComponent } from './component/project-editor/project-editor.component';
 import { DialogEditorCategoryComponent } from './component/dialog-editor-category/dialog-editor-category.component';
 import { SpinnerTextComponent } from './component/spinner-text/spinner-text.component';
-import { ErrorTextComponent } from './component/error-text/error-text.component';
 import { MessageComponent } from './component/message/message.component';
 // -----
 
@@ -80,7 +79,6 @@ import { CookieService } from 'ngx-cookie-service';
     AdminEditProjectsComponent,
     AdminEditCategoriesComponent,
     SpinnerTextComponent,
-    ErrorTextComponent,
     MessageComponent,
     SplitPipe
   ],

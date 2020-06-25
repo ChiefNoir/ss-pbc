@@ -20,7 +20,6 @@ import { ButtonExternalUrlComponent } from './component/button-external-url/butt
 import { FilterCategoryComponent } from './component/filter-category/filter-category.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { PaginatorComponent } from './component/paginator/paginator.component';
-import { ErrorComponent } from './component/error/error.component';
 import { NewsComponent } from './component/news/news.component';
 import { ProjectPreviewComponent } from './component/project-preview/project-preview.component';
 import { ProjectFullComponent } from './component/project-full/project-full.component';
@@ -65,7 +64,6 @@ import { CookieService } from 'ngx-cookie-service';
     ButtonExternalUrlComponent,
     FilterCategoryComponent,
     LoadingComponent,
-    ErrorComponent,
     NewsComponent,
     PaginatorComponent,
     ProjectPreviewComponent,

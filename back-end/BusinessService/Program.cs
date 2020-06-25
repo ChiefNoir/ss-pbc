@@ -16,6 +16,15 @@ namespace BusinessService
                        .ConfigureWebHostDefaults(webBuilder => 
                         {
                             webBuilder.UseStartup<Startup>();
+                            webBuilder.UseUrls();
+                            webBuilder.UseKestrel();
+                            webBuilder.ConfigureKestrel(serverOptions =>
+                            {                                
+                                serverOptions.ConfigureEndpointDefaults(listenOptions =>
+                                {
+                                    listenOptions.UseHttps();
+                                });
+                            });
                         });
         }
     }

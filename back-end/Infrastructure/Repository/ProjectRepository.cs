@@ -157,7 +157,7 @@ namespace Infrastructure.Repository
             return new DataModel.ExternalUrl
             {
                 DisplayName = item.DisplayName,
-                Id = item.Id.Value,
+                Id = item.Id ?? 0,
                 Url = item.Url
             };
         }

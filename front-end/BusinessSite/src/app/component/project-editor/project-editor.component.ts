@@ -173,20 +173,23 @@ this.externalUrlsTable.renderRows();
     if (files.length === 0) {
       return;
     }
- 
+
     this.service.uploadFile(files[0])
     .then
     (
       ok => {
-        console.log('Upload success.');
-        this.uploadFinished(ok.data);
+        this.project$.value.posterUrl = ok.data;
+
       },
       notok => this.handleError(notok)
     );
   }
 
-  public uploadFinished = (event) => {
-    console.log(event);
+  public deleteFile()
+  {
+    this.project$.value.posterUrl = '';
+    // this.filename = 'no';
   }
+
 
 }

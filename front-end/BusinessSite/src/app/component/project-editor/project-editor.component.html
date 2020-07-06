@@ -53,26 +53,27 @@
     </mat-tab>
 
     <mat-tab label="Poster">
-      <form>
-        <div fxLayout="column" fxLayoutAlign="space-around center">
+      <div fxLayout="row" class="container">
         <mat-form-field>
-          <input matInput [(ngModel)]="project.posterUrl" name="posterUrl"  placeholder="Poster" />
+          <textarea matInput 
+          [(ngModel)]="project.posterDescription" 
+          name="posterDescription"  
+          placeholder="Poster alt" 
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
+          cdkAutosizeMaxRows="10"></textarea>
         </mat-form-field>
 
-       
-        <div>
-          <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
-          <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
-        </div>
-        <div>
-        </div>
-       
-  
-        <mat-form-field>
-          <input matInput [(ngModel)]="project.posterDescription" name="posterDescription"  placeholder="Poster alt" />
-        </mat-form-field>
+ 
+        <app-file-uploader 
+                [filename] = "project.posterUrl"
+                (uploadFiles) = "uploadFile($event)"
+                (deleteFile) = "deleteFile()">
+        </app-file-uploader>
+
+
+        <img class="image" fxFlex="20" src="{{ project.posterUrl }}" />
       </div>
-      </form>
+
     </mat-tab>
 
     <mat-tab label="Urls">

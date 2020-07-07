@@ -90,7 +90,7 @@ namespace API.Controllers.Private
         }
 
 
-        [HttpGet("accounts")]
+        [HttpGet("accounts/search")]
         public async Task<IActionResult> GetUsers([FromQuery] Paging paging, [FromQuery] AccountSearch searchQuery)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>

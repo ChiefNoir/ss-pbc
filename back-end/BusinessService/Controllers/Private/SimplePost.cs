@@ -19,14 +19,16 @@ namespace API.Controllers.Private
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProjectRepository _projectRepository;
         private readonly IFileRepository _fileRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly IConfiguration _configuration;
 
 
-        public SimplePost(ICategoryRepository categoryRepository, IProjectRepository projectRepository, IConfiguration configuration, IFileRepository fileRepository)
+        public SimplePost(ICategoryRepository categoryRepository, IProjectRepository projectRepository, IConfiguration configuration, IFileRepository fileRepository, IAccountRepository accountRepository)
         {
             _categoryRepository = categoryRepository;
             _projectRepository = projectRepository;
             _fileRepository = fileRepository;
+            _accountRepository = accountRepository;
             _configuration = configuration;
         }
 
@@ -86,5 +88,51 @@ namespace API.Controllers.Private
             + "/"
             + name;
         }
+
+
+        [HttpGet("user")]
+        public async Task<IActionResult> GetUsers([FromQuery] Paging paging, [FromQuery] AccountSearch searchQuery)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _accountRepository.Search(paging.Start, paging.Length, searchQuery.Keyword);             
+            });
+
+            return new JsonResult(result);
+        }
+
+        [HttpPost("user")]
+        public async Task<IActionResult> AddUser([FromBody] Account account)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _accountRepository.Add(account);
+            });
+
+            return new JsonResult(result);
+        }
+
+        [HttpPatch("user")]
+        public async Task<IActionResult> UpdateUser([FromBody] Account account)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _accountRepository.Update(account);
+            });
+
+            return new JsonResult(result);
+        }
+
+        [HttpDelete("user")]
+        public async Task<IActionResult> DeleteUser([FromBody] Account account)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _accountRepository.Remove(account);
+            });
+
+            return new JsonResult(result);
+        }
+
     }
 }

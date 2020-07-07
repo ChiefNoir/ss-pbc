@@ -3,6 +3,8 @@ using Abstractions.ISecurity;
 using Abstractions.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
@@ -47,20 +49,9 @@ namespace Infrastructure.Repository
         /// <param name="plainTextPassword">Password as a plain text</param>
         /// <param name="role">Account role <see cref="RoleNames"/></param>
         /// <returns> </returns>
-        public Task<int> Add(string login, string plainTextPassword, string role)
+        public async Task<Account> Add(string login, string plainTextPassword, string role)
         {
-            var hashedPassword = _hashManager.Hash(plainTextPassword);
-
-            var user = new DataModel.Account
-            {
-                Login = login,
-                Password = hashedPassword.HexHash,
-                Salt = hashedPassword.HexSalt,
-                Role = role
-            };
-
-            _context.Accounts.AddAsync(user);
-            return _context.SaveChangesAsync(); // TODO: change int to something else
+            
         }
 
         /// <summary> Get account </summary>
@@ -87,5 +78,82 @@ namespace Infrastructure.Repository
             };
         }
 
+        public Task<Account[]> Search(int start, int length, string keyword)
+        {
+            return _context.Accounts
+                            .Where(x => x.Login.Contains(keyword))
+                            .Skip(start)
+                            .Take(length)
+                            .Select(x => Convert(x))
+                            .ToArrayAsync();
+        }
+
+        public Task<int> Count(string keyword)
+        {
+            return _context.Accounts.CountAsync(x => x.Login.Contains(keyword));
+        }
+
+        public async Task<Account> Update(Account account)
+        {
+            var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == account.Id);
+
+            if (acc == null)
+                throw new Exception("Not found");
+
+            acc.Login = account.Login;
+            acc.Version++;
+            acc.Role = account.Role;
+
+            if(!string.IsNullOrEmpty(account.Password))
+            {
+                var hashedPassword = _hashManager.Hash(account.Password);
+
+                acc.Password = hashedPassword.HexHash;
+                acc.Salt = hashedPassword.HexSalt;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Convert(acc);
+        }
+
+        public async Task<bool> Remove(Account account)
+        {
+            var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == account.Id);
+
+            _context.Accounts.Remove(acc);
+
+            return true;
+        }
+
+        private static Account Convert(DataModel.Account account)
+        {
+            return new Account
+            {
+                Id = account.Id,
+                Login = account.Login,
+                Role = account.Role,
+                Password = null,
+                Version = account.Version
+            };
+        }
+
+        public async Task<Account> Add(Account account)
+        {
+            var hashedPassword = _hashManager.Hash(account.Password);
+
+            var user = new DataModel.Account
+            {
+                Login = account.Login,
+                Password = hashedPassword.HexHash,
+                Salt = hashedPassword.HexSalt,
+                Role = account.Role
+            };
+
+            await _context.Accounts.AddAsync(user);
+            await _context.SaveChangesAsync();
+
+            return Convert(user);
+        }
     }
 }

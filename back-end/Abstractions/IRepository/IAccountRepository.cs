@@ -12,11 +12,25 @@ namespace Abstractions.IRepository
         /// <returns>Existing <see cref="Account"/> or <see cref="null"/> </returns>
         Task<Account> Get(string login, string plainTextPassword);
 
-        /// <summary> Add new <see cref="Account"/></summary>
-        /// <param name="login">Account login as plain text</param>
-        /// <param name="plainTextPassword">Account password as plaint text</param>
-        /// <param name="role">Account role</param>
-        /// <returns>Numbers of states in the db affected in db</returns>
-        Task<int> Add(string login, string plainTextPassword, string role);
+        Task<Account> Add(Account account);
+
+        /// <summary> Update existing <see cref="Account"/> </summary>
+        /// <param name="account"> Edited <see cref="Account"/></param>
+        /// <returns></returns>
+        Task<Account> Update(Account account);
+
+        Task<bool> Remove(Account account);
+
+        /// <summary> Search within <see cref="Account"/>, with paging </summary>
+        /// <param name="start">Start</param>
+        /// <param name="length">Length</param>
+        /// <param name="keyword">Keyword to search, allows nulls and empty</param>
+        /// <returns> Array of <see cref="Account"/>, containing keyword </returns>
+        Task<Account[]> Search(int start, int length, string keyword);
+
+        /// <summary> Count <see cref="Account"/></summary>
+        /// <param name="keyword">Keyword to search, allows nulls and empty</param>
+        /// <returns>Total of the accounts, containing keyword </returns>
+        Task<int> Count(string keyword);
     }
 }

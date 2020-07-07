@@ -71,7 +71,7 @@ namespace Infrastructure.Repository
         public Task<Account[]> Search(int start, int length, string keyword)
         {
             return _context.Accounts
-                            .Where(x => x.Login.Contains(keyword))
+                            .Where(x => string.IsNullOrEmpty(keyword) || x.Login.Contains(keyword))
                             .Skip(start)
                             .Take(length)
                             .Select(x => Convert(x))
@@ -80,7 +80,7 @@ namespace Infrastructure.Repository
 
         public Task<int> Count(string keyword)
         {
-            return _context.Accounts.CountAsync(x => x.Login.Contains(keyword));
+            return _context.Accounts.CountAsync(x => string.IsNullOrEmpty(keyword) || x.Login.Contains(keyword));
         }
 
         public async Task<Account> Update(Account account)

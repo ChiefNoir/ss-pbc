@@ -90,6 +90,17 @@ namespace API.Controllers.Private
         }
 
 
+        [HttpGet("accounts")]
+        public async Task<IActionResult> CountAccounts([FromQuery] AccountSearch searchQuery)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _accountRepository.Count(searchQuery?.Keyword);
+            });
+
+            return new JsonResult(result);
+        }
+
         [HttpGet("accounts/search")]
         public async Task<IActionResult> GetUsers([FromQuery] Paging paging, [FromQuery] AccountSearch searchQuery)
         {

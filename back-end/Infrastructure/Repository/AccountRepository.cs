@@ -34,7 +34,7 @@ namespace Infrastructure.Repository
                     var login = _configuration.GetSection("Default")?.GetSection("Admin")?.GetValue<string>("Login");
                     var pass = _configuration.GetSection("Default")?.GetSection("Admin")?.GetValue<string>("Password");
 
-                    await Add(login, pass, RoleNames.Admin);
+                    await Add( new Account { Login = login, Password = pass, Role = RoleNames.Admin });
                     _context.HasAccounts = true;
                 }
                 catch
@@ -42,16 +42,6 @@ namespace Infrastructure.Repository
                     //TODO: log
                 }
             }
-        }
-
-        /// <summary> Add new account </summary>
-        /// <param name="login">Login as plain text</param>
-        /// <param name="plainTextPassword">Password as a plain text</param>
-        /// <param name="role">Account role <see cref="RoleNames"/></param>
-        /// <returns> </returns>
-        public async Task<Account> Add(string login, string plainTextPassword, string role)
-        {
-            
         }
 
         /// <summary> Get account </summary>

@@ -90,7 +90,7 @@ namespace API.Controllers.Private
         }
 
 
-        [HttpGet("user")]
+        [HttpGet("accounts")]
         public async Task<IActionResult> GetUsers([FromQuery] Paging paging, [FromQuery] AccountSearch searchQuery)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
@@ -101,7 +101,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        [HttpPost("user")]
+        [HttpPost("accounts")]
         public async Task<IActionResult> AddUser([FromBody] Account account)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
@@ -112,7 +112,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        [HttpPatch("user")]
+        [HttpPatch("accounts")]
         public async Task<IActionResult> UpdateUser([FromBody] Account account)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
@@ -123,7 +123,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        [HttpDelete("user")]
+        [HttpDelete("accounts")]
         public async Task<IActionResult> DeleteUser([FromBody] Account account)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>

@@ -112,6 +112,17 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
+        [HttpGet("accounts/{id}")]
+        public async Task<IActionResult> GetUser(int id)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _accountRepository.Get(id);
+            });
+
+            return new JsonResult(result);
+        }
+
         [HttpPost("accounts")]
         public async Task<IActionResult> AddUser([FromBody] Account account)
         {

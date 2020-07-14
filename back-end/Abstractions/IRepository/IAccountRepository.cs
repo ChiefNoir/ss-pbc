@@ -6,11 +6,16 @@ namespace Abstractions.IRepository
     /// <summary> Account repository </summary>
     public interface IAccountRepository
     {
-        /// <summary> Get existing <see cref="Account"/> or <see cref="null"/> </summary>
+        /// <summary> Get existing <see cref="Account"/> </summary>
         /// <param name="login">Account login as plain text</param>
         /// <param name="plainTextPassword">Account password as plaint text</param>
         /// <returns>Existing <see cref="Account"/> or <see cref="null"/> </returns>
         Task<Account> Get(string login, string plainTextPassword);
+
+        /// <summary>  Get existing <see cref="Account"/> </summary>
+        /// <param name="id">Account id</param>
+        /// <returns>Existing <see cref="Account"/> or <see cref="null"/> </returns>
+        Task<Account> Get(int id);
 
         Task<Account> Add(Account account);
 

@@ -145,5 +145,14 @@ namespace Infrastructure.Repository
 
             return Convert(user);
         }
+
+        public async Task<Account> Get(int id)
+        {
+            var account = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == id);
+            if (account == null)
+                return null;
+
+            return Convert(account);
+        }
     }
 }

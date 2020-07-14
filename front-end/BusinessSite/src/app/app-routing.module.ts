@@ -8,6 +8,7 @@ import { NotFoundComponent } from './view/notfound/notfound.component';
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';
 import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edit-projects.component';
 import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin-edit-categories.component';
+import { AdminEditAccountsComponent } from './view/admin-edit-accounts/admin-edit-accounts.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'login', component: AdminLoginComponent },
   { path: 'admin/project_editor', component: AdminEditProjectsComponent },
   { path: 'admin/category_editor', component: AdminEditCategoriesComponent },
+  { path: 'admin/accounts_editor', component: AdminEditAccountsComponent },
   { path: 'project/:code', component: ProjectComponent },
   { path: 'projects/:category', component: ProjectsListComponent },
   { path: '**', component: NotFoundComponent },

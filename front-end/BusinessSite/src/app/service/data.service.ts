@@ -5,6 +5,7 @@ import { RequestResult } from '../model/RequestResult';
 import { Project } from '../model/Project';
 import { News } from '../model/News';
 import { Category } from '../model/Category';
+import { Account } from '../model/Account';
 
 import { environment } from 'src/environments/environment';
 import { ProjectPreview } from '../model/ProjectPreview';
@@ -108,5 +109,53 @@ export class DataService {
     formData.append('file', fileToUpload, fileToUpload.name);
 
     return this.httpClient.post<RequestResult<string>>(this.endpoint + 'upload', formData).toPromise();
+  }
+
+
+  public countAccount(keyword: string): Promise<RequestResult<number>> {
+    const searchParam =
+    typeof keyword !== 'undefined' && keyword
+      ? '/?keyword=' + keyword
+      : '';
+
+    return this.httpClient
+      .get<RequestResult<number>>(this.endpoint + 'accounts' + keyword)
+      .toPromise();
+  }
+
+  public getAccount(id: number): Promise<RequestResult<Account>>
+  {
+    return this.httpClient
+    .get<RequestResult<Account>>(
+      this.endpoint +
+        'accounts/' + id
+    )
+    .toPromise();
+  }
+
+  public getAccounts(start: number, length: number, keyword: string): Promise<RequestResult<Account[]>>
+  {
+    const searchParam =
+    typeof keyword !== 'undefined' && keyword
+      ? '&keyword=' + keyword
+      : '';
+
+    return this.httpClient
+    .get<RequestResult<Account[]>>(
+      this.endpoint +
+        'accounts/search?' +
+        'start=' +
+        start +
+        '&length=' +
+        length +
+        searchParam
+    )
+    .toPromise();
+  }
+
+  public saveAccount(account: Account): Promise<RequestResult<Account>> {
+    return this.httpClient
+      .post<RequestResult<Account>>(this.endpoint + 'account', account)
+      .toPromise();
   }
 }

@@ -25,6 +25,7 @@ import { ProjectPreviewComponent } from './component/project-preview/project-pre
 import { ProjectFullComponent } from './component/project-full/project-full.component';
 import { ProjectEditorComponent } from './component/project-editor/project-editor.component';
 import { DialogEditorCategoryComponent } from './component/dialog-editor-category/dialog-editor-category.component';
+import { DialogEditAccountComponent } from './component/dialog-edit-account/dialog-edit-account.component';
 import { SpinnerTextComponent } from './component/spinner-text/spinner-text.component';
 import { MessageComponent } from './component/message/message.component';
 import { FileUploaderComponent } from './component/file-uploader/file-uploader.component';
@@ -44,6 +45,7 @@ import { ProjectComponent } from './view/project/project.component';
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';
 import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edit-projects.component';
 import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin-edit-categories.component';
+import { AdminEditAccountsComponent } from './view/admin-edit-accounts/admin-edit-accounts.component';
 // -----
 
 // services
@@ -51,7 +53,7 @@ import { DataService } from './service/data.service';
 import { AuthService } from './service/auth.service';
 import { StorageService } from './service/storage.service';
 // -----
- 
+
 // providers
 import { CookieService } from 'ngx-cookie-service';
 // -----
@@ -70,6 +72,7 @@ import { CookieService } from 'ngx-cookie-service';
     ProjectFullComponent,
     ProjectEditorComponent,
     DialogEditorCategoryComponent,
+    DialogEditAccountComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,
@@ -79,6 +82,7 @@ import { CookieService } from 'ngx-cookie-service';
     AdminLoginComponent,
     AdminEditProjectsComponent,
     AdminEditCategoriesComponent,
+    AdminEditAccountsComponent,
     SpinnerTextComponent,
     MessageComponent,
     FileUploaderComponent,

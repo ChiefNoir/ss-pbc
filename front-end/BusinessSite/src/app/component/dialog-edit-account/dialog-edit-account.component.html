@@ -1,0 +1,43 @@
+<h1 mat-dialog-title> <b> Account </b></h1>
+ 
+<mat-dialog-content>
+  <div *ngIf="account$ | async as account; else loading">
+    <form>
+      <div fxLayout="column" fxLayoutAlign="space-around center">
+        <mat-form-field>
+          <input [disabled]="disableInput$ | async" matInput [(ngModel)]="account.login" name="login" placeholder="login"/>
+        </mat-form-field>
+        <mat-form-field>
+          <input [disabled]="disableInput$ | async" matInput [(ngModel)]="account.role" name="role" placeholder="role"/>
+        </mat-form-field>
+        <mat-form-field>
+          <input [disabled]="disableInput$ | async" matInput [(ngModel)]="account.password" name="password" placeholder="password"/>
+        </mat-form-field>
+      </div>
+    </form>
+    <br />
+  </div>
+
+  <div *ngIf="message$ | async as msg">
+    <app-message [message]="msg"></app-message>
+  </div>
+
+  <div *ngIf="account$ | async as account">
+    <div class="actions">
+      <button [disabled]="disableInput$ | async" mat-button (click)="delete()">
+        Delete
+      </button>
+      <div>
+        <button [disabled]="disableInput$ | async" mat-button (click)="save()">
+          Save
+        </button>
+        <button mat-button cdkFocusInitial (click)="close()">Close</button>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<br />
+
+<ng-template #loading>
+  <app-message [message]="loadingMessage"></app-message>
+</ng-template>

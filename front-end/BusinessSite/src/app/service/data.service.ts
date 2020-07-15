@@ -9,6 +9,7 @@ import { Account } from '../model/Account';
 
 import { environment } from 'src/environments/environment';
 import { ProjectPreview } from '../model/ProjectPreview';
+import { share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -112,14 +113,9 @@ export class DataService {
   }
 
 
-  public countAccount(keyword: string): Promise<RequestResult<number>> {
-    const searchParam =
-    typeof keyword !== 'undefined' && keyword
-      ? '/?keyword=' + keyword
-      : '';
-
+  public countAccount(): Promise<RequestResult<number>> {
     return this.httpClient
-      .get<RequestResult<number>>(this.endpoint + 'accounts' + keyword)
+      .get<RequestResult<number>>(this.endpoint + 'accounts')
       .toPromise();
   }
 
@@ -133,13 +129,8 @@ export class DataService {
     .toPromise();
   }
 
-  public getAccounts(start: number, length: number, keyword: string): Promise<RequestResult<Account[]>>
+  public getAccounts(start: number, length: number): Promise<RequestResult<Account[]>>
   {
-    const searchParam =
-    typeof keyword !== 'undefined' && keyword
-      ? '&keyword=' + keyword
-      : '';
-
     return this.httpClient
     .get<RequestResult<Account[]>>(
       this.endpoint +
@@ -147,8 +138,7 @@ export class DataService {
         'start=' +
         start +
         '&length=' +
-        length +
-        searchParam
+        length
     )
     .toPromise();
   }

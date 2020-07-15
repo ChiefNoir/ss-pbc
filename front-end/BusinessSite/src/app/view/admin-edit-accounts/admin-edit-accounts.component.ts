@@ -1,6 +1,6 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, forkJoin  } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/service/data.service';
@@ -8,8 +8,8 @@ import { RequestResult } from 'src/app/model/RequestResult';
 import { MatDialog } from '@angular/material/dialog';
 import { Account } from 'src/app/model/Account';
 
-import { DialogEditorCategoryComponent } from 'src/app/component/dialog-editor-category/dialog-editor-category.component';
 import { DialogEditAccountComponent } from 'src/app/component/dialog-edit-account/dialog-edit-account.component';
+import { Paging } from 'src/app/model/PagingInfo';
 
 @Component({
   selector: 'app-admin-edit-accounts',
@@ -17,66 +17,94 @@ import { DialogEditAccountComponent } from 'src/app/component/dialog-edit-accoun
   styleUrls: ['./admin-edit-accounts.component.scss'],
 })
 
-export class AdminEditAccountsComponent implements AfterViewInit {
+export class AdminEditAccountsComponent implements AfterViewInit, OnDestroy {
   private service: DataService;
+
   public accounts$: BehaviorSubject<Array<Account>> = new BehaviorSubject<Array<Account>>(null);
+  public paging$: BehaviorSubject<Paging> = new BehaviorSubject<Paging>(null);
   public dialog: MatDialog;
-
   public columns: string[] = ['login', 'role'];
-
 
   public constructor(service: DataService, titleService: Title, dialog: MatDialog) {
     this.service = service;
     this.dialog = dialog;
 
     titleService.setTitle(environment.siteName);
+    this.paging$.subscribe(value => this.refreshProjects(value));
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit(): void
+  {
+    this.refreshProjects(null);
+  }
 
-    this.service.countAccount('')
+  ngOnDestroy(): void
+  {
+    this.paging$.unsubscribe();
+  }
+
+  private refreshPaging(): void
+  {
+    this.service.countAccount()
                 .then
                 (
-                  result =>
-                  {
-                    this.loadAccount(result.data);
-                  },
-                  error => this.handleError(error)
+                  response => this.hanlePaging(response, this.paging$),
+                  reject => this.handleError(reject)
                 );
   }
 
-
-  private loadAccount(max: number) : void
+  private refreshProjects(paging: Paging): void
   {
-this.service.getAccounts(0, 1, '')
-                        .then
-                        (
-                          (x) => this.handle(x, this.accounts$),
-                          (error) =>  this.handleError(error)
+    if (!paging)
+    {
+      this.refreshPaging();
+      return;
+    }
+
+    this.service.getAccounts(paging.getCurrentPage() * environment.paging.maxUsers, environment.paging.maxUsers)
+                .then
+                (
+                  response => this.handle(response, this.accounts$),
+                  reject =>  this.handleError(reject)
                 );
   }
 
+  public changePage(page: number): void
+  {
+    this.paging$.next(new Paging(page, environment.paging.maxUsers, this.paging$.value.getMaxItems()));
+  }
+
+  public nextPage(): void
+  {
+    this.changePage(this.paging$.value.getCurrentPage() + 1);
+  }
+
+  public backPage(): void
+  {
+    this.changePage(this.paging$.value.getCurrentPage() - 1);
+  }
 
   public showRow(id: number): void {
     const dialogRef = this.dialog.open(DialogEditAccountComponent, {width: '50%'});
 
-    if(id) {
-    dialogRef.componentInstance.id = id;
-    }
-
     dialogRef.afterClosed()
              .subscribe
              (
-               (result) =>
-               {
-                this.service.getAccounts(0, 1, '')
-                .then
-                (
-                  (x) => this.handle(x, this.accounts$),
-                  (error) => this.handleError(error)
-                );
-                }
-            );
+               () => this.changePage(this.paging$.value.getCurrentPage())
+             );
+  }
+
+  private hanlePaging(result: RequestResult<number>, content: BehaviorSubject<Paging>): void
+  {
+    if (result.isSucceed)
+    {
+      const currentPage = content?.value?.getCurrentPage() ?? 0;
+      content.next(new Paging(currentPage, environment.paging.maxUsers, result.data));
+    }
+    else
+    {
+      this.handleError(result.errorMessage);
+    }
   }
 
   private handle<T>(result: RequestResult<T>, content: BehaviorSubject<T>): void {
@@ -86,7 +114,7 @@ this.service.getAccounts(0, 1, '')
       this.handleError(result.errorMessage);
     }
   }
-  
+
   private handleError(error: any): void {
     // TODO: react properly
     console.log(error);

@@ -68,19 +68,18 @@ namespace Infrastructure.Repository
             };
         }
 
-        public Task<Account[]> Search(int start, int length, string keyword)
+        public Task<Account[]> Search(int start, int length)
         {
             return _context.Accounts
-                            .Where(x => string.IsNullOrEmpty(keyword) || x.Login.Contains(keyword))
                             .Skip(start)
                             .Take(length)
                             .Select(x => Convert(x))
                             .ToArrayAsync();
         }
 
-        public Task<int> Count(string keyword)
+        public Task<int> Count()
         {
-            return _context.Accounts.CountAsync(x => string.IsNullOrEmpty(keyword) || x.Login.Contains(keyword));
+            return _context.Accounts.CountAsync();
         }
 
         public async Task<Account> Update(Account account)

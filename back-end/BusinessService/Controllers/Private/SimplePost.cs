@@ -91,22 +91,22 @@ namespace API.Controllers.Private
 
 
         [HttpGet("accounts")]
-        public async Task<IActionResult> CountAccounts([FromQuery] AccountSearch searchQuery)
+        public async Task<IActionResult> CountAccounts()
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _accountRepository.Count(searchQuery?.Keyword);
+                return _accountRepository.Count();
             });
 
             return new JsonResult(result);
         }
 
         [HttpGet("accounts/search")]
-        public async Task<IActionResult> GetUsers([FromQuery] Paging paging, [FromQuery] AccountSearch searchQuery)
+        public async Task<IActionResult> GetUsers([FromQuery] Paging paging)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _accountRepository.Search(paging.Start, paging.Length, searchQuery.Keyword);             
+                return _accountRepository.Search(paging.Start, paging.Length);             
             });
 
             return new JsonResult(result);

@@ -29,13 +29,11 @@ namespace Abstractions.IRepository
         /// <summary> Search within <see cref="Account"/>, with paging </summary>
         /// <param name="start">Start</param>
         /// <param name="length">Length</param>
-        /// <param name="keyword">Keyword to search, allows nulls and empty</param>
         /// <returns> Array of <see cref="Account"/>, containing keyword </returns>
-        Task<Account[]> Search(int start, int length, string keyword);
+        Task<Account[]> Search(int start, int length);
 
         /// <summary> Count <see cref="Account"/></summary>
-        /// <param name="keyword">Keyword to search, allows nulls and empty</param>
         /// <returns>Total of the accounts, containing keyword </returns>
-        Task<int> Count(string keyword);
+        Task<int> Count();
     }
 }

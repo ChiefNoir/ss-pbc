@@ -111,6 +111,7 @@ namespace Infrastructure.Repository
             var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == account.Id);
 
             _context.Accounts.Remove(acc);
+            await _context.SaveChangesAsync();
 
             return true;
         }

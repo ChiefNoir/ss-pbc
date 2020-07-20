@@ -74,18 +74,17 @@ export class AdminEditAccountsComponent implements AfterViewInit, OnDestroy {
     this.paging$.next(new Paging(page, environment.paging.maxUsers, this.paging$.value.getMaxItems()));
   }
 
-  public nextPage(): void
+  public skipPage(amount: number): void
   {
-    this.changePage(this.paging$.value.getCurrentPage() + 1);
+    this.changePage(this.paging$.value.getCurrentPage() + amount);
   }
 
-  public backPage(): void
-  {
-    this.changePage(this.paging$.value.getCurrentPage() - 1);
-  }
-
-  public showRow(id: number): void {
+  public showDialog(id?: number): void {
     const dialogRef = this.dialog.open(DialogEditAccountComponent, {width: '50%'});
+
+    if (id) {
+    dialogRef.componentInstance.id = id;
+    }
 
     dialogRef.afterClosed()
              .subscribe

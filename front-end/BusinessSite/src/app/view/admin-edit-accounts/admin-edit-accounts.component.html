@@ -16,8 +16,8 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
-    <tr mat-row *matRowDef="let row; columns: columns;" (click)="showRow(row.id)"></tr>
-    <tr mat-footer-row *matFooterRowDef="columns" (click)="showRow()"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;" (click)="showDialog(row.id)"></tr>
+    <tr mat-footer-row *matFooterRowDef="columns" (click)="showDialog()"></tr>
   </table>
 
   <div *ngIf="paging$ | async as paging; else loading">
@@ -25,8 +25,8 @@
           (changePage)="changePage($event)"
           [maxPage]="paging.getMaxPage()"
           [currentPage]="paging.getCurrentPage()"
-          (nextPageClick)="nextPage()"
-          (previousPageClick)="backPage()"
+          (nextPageClick)="skipPage(1)"
+          (previousPageClick)="skipPage(-1)"
           [minPage]="paging.getMinPage()">
     </app-paginator>
   </div>

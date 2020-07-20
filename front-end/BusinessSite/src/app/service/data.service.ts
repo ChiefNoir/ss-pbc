@@ -148,4 +148,14 @@ export class DataService {
       .post<RequestResult<Account>>(this.endpoint + 'account', account)
       .toPromise();
   }
+
+  public deleteAccount(account: Account): Promise<RequestResult<any>> {
+    return this.httpClient
+      .request<RequestResult<boolean>>('delete', this.endpoint + 'accounts', {
+        body: account,
+      })
+
+      .toPromise();
+  }
+
 }

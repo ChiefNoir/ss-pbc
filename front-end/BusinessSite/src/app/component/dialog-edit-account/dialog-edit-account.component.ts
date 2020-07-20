@@ -68,12 +68,12 @@ export class DialogEditAccountComponent implements AfterViewInit
     this.message$.next({text: 'Deleting in progress', type: MessageType.Spinner  });
     this.disableInput$.next(true);
 
-    // this.service.delete(this.category$.value)
-    //             .then
-    //             (
-    //               succeeded => this.close(),
-    //               rejected => this.handleError(rejected.message)
-    //             );
+    this.service.deleteAccount(this.account$.value)
+                .then
+                (
+                  () => this.close(),
+                  rejected => this.handleError(rejected.message)
+                );
   }
 
   public close(): void

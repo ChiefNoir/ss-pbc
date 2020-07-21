@@ -16,7 +16,15 @@ namespace Infrastructure
         internal DbSet<News> News { get; set; }
         internal DbSet<Project> Projects { get; set; }
         internal DbSet<Account> Accounts { get; set; }
+
+        internal DbSet<Introduction> Introductions { get; set; }
+
         internal DbSet<CategoryWithTotalProjects> CategoriesWithTotalProjects { get; set; }
+
+        internal DbSet<ProjectExternalUrl> ProjectExternalUrls { get; set; }
+        internal DbSet<IntroductionExternalUrl> IntroductionExternalUrls { get; set; }
+
+        internal DbSet<ExternalUrl> ExternalUrls { get; set; }
 
         /// <summary> Database has any accounts?</summary>
         internal bool HasAccounts { get; set; }
@@ -26,6 +34,20 @@ namespace Infrastructure
             MigrateDatabase(Database.GetDbConnection()); //TODO: not good
             HasAccounts = Accounts.Any(); //TODO: not that good
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProjectExternalUrl>().HasKey(sc => new { sc.ProjectId, sc.ExternalUrlId});
+            modelBuilder.Entity<IntroductionExternalUrl>().HasKey(sc => new { sc.IntroductionId, sc.ExternalUrlId });
+
+
+    //        modelBuilder.Entity<ProjectExternalUrl>()
+    //.HasOne<Project>(sc => sc.Project)
+    //.WithMany(s => s.ExternalUrls)
+    //.HasForeignKey(sc => sc.ProjectId);
+
+        }
+
 
         private void MigrateDatabase(IDbConnection connection)
         {

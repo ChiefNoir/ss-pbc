@@ -7,6 +7,15 @@
 	version int not null default 0
 );
 
+create table introduction 
+(
+	id serial primary key,
+	poster_url varchar(512) not null,	
+	poster_description varchar(512),
+	content text,
+	version int not null default 0
+);
+
 create table category 
 (
 	id serial primary key,
@@ -16,7 +25,7 @@ create table category
 	version int not null default 0
 );
 
-create table Project (
+create table project (
 	id serial primary key,
 	code varchar(128) not null UNIQUE,
 	display_name varchar(128) not null,
@@ -31,10 +40,21 @@ create table Project (
 
 create table external_url (
 	id serial primary key,
-	project_id int REFERENCES project (id),
 	url varchar(256),
 	display_name varchar(64) not null,
 	version int not null default 0
+);
+
+create table project_to_external_url (
+	project_id int REFERENCES project (id),
+	external_url_id int REFERENCES external_url (id),
+	PRIMARY KEY(project_id, external_url_id)
+);
+
+create table introduction_to_external_url (
+	introduction_id int REFERENCES introduction (id),
+	external_url_id int REFERENCES external_url (id),
+	PRIMARY KEY(introduction_id, external_url_id)
 );
 
 create table account (

@@ -1,6 +1,9 @@
 ﻿using Abstractions.IRepository;
-using Abstractions.Model;
+using Infrastructure.Converters;
+using Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,37 +20,18 @@ namespace Infrastructure.Repository
             _categoryRepository = categoryRepository;
         }
 
-
-        public Task<Project> GetProject(string code)
+        public Task<Abstractions.Model.Project> Read(string code)
         {
             return _context.Projects
                 .Where(x => x.Code == code)
-                .Include(x=>x.Category)
-                .Include(x=>x.ExternalUrls)
-                .Select(x => new Project //TODO: move convert to one place
-                {
-                    Id = x.Id,
-                    Code = x.Code,
-                    Description = x.Description,
-                    DescriptionShort = x.DescriptionShort,
-                    DisplayName = x.DisplayName,
-                    PosterUrl = x.PosterUrl,
-                    PosterDescription = x.PosterDescription,
-                    ReleaseDate = x.ReleaseDate,
-                    Version = x.Version,
-                    Category = new Category 
-                    {
-                        Id = x.Category.Id,
-                        Code = x.Category.Code,
-                        DisplayName = x.Category.DisplayName,
-                        IsEverything = false,
-                        Version = x.Category.Version
-                    },
-                    ExternalUrls = x.ExternalUrls.Select(e => Convert(e))
-                }).FirstOrDefaultAsync();
+                .Include(x => x.Category)
+                .Include(x => x.ExternalUrls)
+                .ThenInclude(x => x.ExternalUrl)
+                .Select(x => DataConverter.ToProject(x))
+                .FirstOrDefaultAsync();
         }
 
-        public async Task<ProjectPreview[]> GetProjectsPreview(int start, int length, string categoryCode)
+        public async Task<Abstractions.Model.ProjectPreview[]> GetProjectsPreview(int start, int length, string categoryCode)
         {
             var category = string.IsNullOrEmpty(categoryCode)? null : await _categoryRepository.GetCategory(categoryCode);
             var isEverything = category == null || category.IsEverything;
@@ -58,133 +42,84 @@ namespace Infrastructure.Repository
                                  .Skip(start)
                                  .Take(length)
                                  .Include(x => x.Category)
-                                 .Select(x => new ProjectPreview
-                                 {
-                                     Code = x.Code,
-                                     Description = x.DescriptionShort,
-                                     DisplayName = x.DisplayName,
-                                     PosterUrl = x.PosterUrl,
-                                     PosterDescription = x.PosterDescription,
-                                     ReleaseDate = x.ReleaseDate,
-                                     Category = new Category
-                                     {
-                                         Code = x.Category.Code,
-                                         DisplayName = x.Category.DisplayName,
-                                         IsEverything = false,
-                                         Version = x.Category.Version
-                                     }
-                                 }).ToArrayAsync();
+                                 .Select(x => DataConverter.ToProjectPreview(x))
+                                 .ToArrayAsync();
         }
 
-        public async Task<Project[]> GetProjects(int start, int length, string categoryCode)
+        public Task<int> Delete(Abstractions.Model.Project project)
         {
-            var category = string.IsNullOrEmpty(categoryCode) ? null : await _categoryRepository.GetCategory(categoryCode);
-            var isEverything = category == null || category.IsEverything;
+            var dbItem = _context.Projects.FirstOrDefault(x => x.Id == project.Id);
 
-            return await _context.Projects
-                                 .Where(x => isEverything || x.CategoryId == category.Id)
-                                 .OrderByDescending(x => x.ReleaseDate)
-                                 .Skip(start)
-                                 .Take(length)
-                                 .Include(x => x.Category)
-                                 .Select(x => new Project
-                                 {
-                                     Code = x.Code,
-                                     DescriptionShort = x.DescriptionShort,
-                                     Description = x.Description,
-                                     DisplayName = x.DisplayName,
-                                     PosterUrl = x.PosterUrl,
-                                     PosterDescription = x.PosterDescription,
-                                     ReleaseDate = x.ReleaseDate,
-                                     Category = new Category
-                                     {
-                                         Code = x.Category.Code,
-                                         DisplayName = x.Category.DisplayName,
-                                         IsEverything = false,
-                                         Version = x.Category.Version
-                                     }
-                                 }).ToArrayAsync();
+            _context.Projects.Remove(dbItem);
+            return _context.SaveChangesAsync();
         }
 
-
-        private static ExternalUrl Convert(DataModel.ExternalUrl dbEntity)
+        public async Task<Abstractions.Model.Project> Create(Abstractions.Model.Project project)
         {
-            return new ExternalUrl
-            {
-                DisplayName = dbEntity.DisplayName,
-                Id = dbEntity.Id,
-                Url = dbEntity.Url,
-                Version = dbEntity.Version
-            };
-        }
+            if (project.Id != null)
+                throw new Exception("Can't create with not empty id");
 
-        public async Task<Project> Save(Project project)
-        {
-            DataModel.Project dbItem = null;
+            var byCode = await _context.Projects.AnyAsync(x => x.Code == project.Code);
+            if (byCode)
+                throw new Exception("Code duplicate"); //TODO: move to the supervision
 
-            if(project.Id != null)
-            {
-                dbItem = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
-            }
-            else
-            {
-                dbItem = new DataModel.Project();
-                _context.Projects.Add(dbItem);
-            }
-                
-            dbItem.CategoryId = project.Category.Id.Value;
-            dbItem.Code = project.Code;
-            dbItem.Description = project.Description;
-            dbItem.DescriptionShort = project.DescriptionShort;
-            dbItem.DisplayName = project.DisplayName;
-            dbItem.ExternalUrls = project.ExternalUrls?.Select(x => Convert(x)).ToList();
-            dbItem.PosterDescription = project.PosterDescription;
-            dbItem.PosterUrl = project.PosterUrl;
-            dbItem.ReleaseDate = project.ReleaseDate;
-            dbItem.Version++;
-
-            project.Id = dbItem.Id;
-            project.Version = dbItem.Version;
-
+            DataModel.Project dbItem = AbstractionsConverter.ToProject(project);
+            _context.Projects.Add(dbItem);
 
             await _context.SaveChangesAsync();
             return project;
         }
 
-
-        private static DataModel.ExternalUrl Convert(ExternalUrl item)
+        public async Task<Abstractions.Model.Project> Update(Abstractions.Model.Project project)
         {
-            return new DataModel.ExternalUrl
-            {
-                DisplayName = item.DisplayName,
-                Id = item.Id ?? 0,
-                Url = item.Url
-            };
+            var dbItem = _context.Projects.FirstOrDefault(x => x.Id == project.Id);
+
+            if(dbItem == null)
+                throw new Exception($"There is no project with Id:{project.Id}");
+
+
+
+            await _context.SaveChangesAsync();
+            return DataConverter.ToProject(dbItem);
         }
 
-        private static Project Convert(DataModel.Project project)
+
+        private void Merge(Project localProject, Abstractions.Model.Project project)
         {
-            return new Project
+            localProject.CategoryId = project.Category.Id.Value;
+            localProject.Code = project.Code;
+            localProject.Description = project.Description;
+            localProject.DescriptionShort = project.DescriptionShort;
+            localProject.DisplayName = project.DisplayName;            
+            localProject.PosterDescription = project.PosterDescription;
+            localProject.PosterUrl = project.PosterUrl;
+            localProject.ReleaseDate = project.ReleaseDate;
+            localProject.Version++;
+
+            Merge(localProject, project.ExternalUrls);
+        }
+
+        private void Merge(Project localProject, IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
+        {
+            foreach (var item in localProject.ExternalUrls)
             {
-                Id = project.Id,
-                Code = project.Code,
-                Description = project.Description,
-                DescriptionShort = project.DescriptionShort,
-                DisplayName = project.DisplayName,
-                PosterUrl = project.PosterUrl,
-                PosterDescription = project.PosterDescription,
-                ReleaseDate = project.ReleaseDate,
-                Version = project.Version,
-                Category = new Category
+                var ss = externalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
+
+                if (ss == null)
                 {
-                    Id = project.Category.Id,
-                    Code = project.Category.Code,
-                    DisplayName = project.Category.DisplayName,
-                    IsEverything = false,
-                    Version = project.Category.Version
-                },
-                ExternalUrls = project.ExternalUrls?.Select(e => Convert(e))
-            };
+                    _context.ExternalUrls.Remove(item.ExternalUrl);
+                }
+                else
+                {
+                    item.ExternalUrl.DisplayName = ss.DisplayName;
+                    item.ExternalUrl.Url = ss.Url;
+                }
+            }
+
+            foreach (var item in externalUrls.Where(x => x.Id == null))
+            {
+                localProject.ExternalUrls.Add(AbstractionsConverter.ToProjectExternalUrl(item));
+            }
         }
     }
 }

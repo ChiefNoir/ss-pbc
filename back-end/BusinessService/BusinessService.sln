@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "..\Infras
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abstractions", "..\Abstractions\Abstractions.csproj", "{AC4E00C0-6EC9-4266-8208-1F9CA5CE95CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "..\Secutiry\Security.csproj", "{655C7092-C8D0-401C-8863-EB18B4125305}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Security", "..\Secutiry\Security.csproj", "{655C7092-C8D0-401C-8863-EB18B4125305}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

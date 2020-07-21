@@ -41,7 +41,7 @@ namespace Infrastructure.DataModel
         [Column("version")]
         public long Version { get; set; }
 
-        public ICollection<ExternalUrl> ExternalUrls { get; set; }
+        public ICollection<ProjectExternalUrl> ExternalUrls { get; set; }
 
     }
 }

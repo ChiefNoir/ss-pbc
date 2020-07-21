@@ -22,7 +22,7 @@ namespace Infrastructure.DataModel
 
         [Required]
         [Column("version")]
-        public int Version { get; set; }
+        public long Version { get; set; }
     }
 
     [Table("project_to_external_url")]

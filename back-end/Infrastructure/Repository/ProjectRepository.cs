@@ -63,7 +63,7 @@ namespace Infrastructure.Repository
             if (byCode)
                 throw new Exception("Code duplicate"); //TODO: move to the supervision
 
-            DataModel.Project dbItem = AbstractionsConverter.ToProject(project);
+            Project dbItem = AbstractionsConverter.ToProject(project);
             _context.Projects.Add(dbItem);
 
             await _context.SaveChangesAsync();

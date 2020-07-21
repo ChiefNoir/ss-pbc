@@ -77,7 +77,7 @@ namespace Infrastructure.Repository
             if(dbItem == null)
                 throw new Exception($"There is no project with Id:{project.Id}");
 
-
+            Merge(dbItem, project);
 
             await _context.SaveChangesAsync();
             return DataConverter.ToProject(dbItem);

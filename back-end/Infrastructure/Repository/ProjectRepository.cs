@@ -103,16 +103,17 @@ namespace Infrastructure.Repository
         {
             foreach (var item in localProject.ExternalUrls)
             {
-                var ss = externalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
+                var localExternalUrl = externalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
 
-                if (ss == null)
+                if (localExternalUrl == null)
                 {
                     _context.ExternalUrls.Remove(item.ExternalUrl);
                 }
                 else
                 {
-                    item.ExternalUrl.DisplayName = ss.DisplayName;
-                    item.ExternalUrl.Url = ss.Url;
+                    item.ExternalUrl.DisplayName = localExternalUrl.DisplayName;
+                    item.ExternalUrl.Url = localExternalUrl.Url;
+                    item.ExternalUrl.Version++;
                 }
             }
 

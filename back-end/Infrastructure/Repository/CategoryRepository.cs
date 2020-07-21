@@ -92,7 +92,7 @@ namespace Infrastructure.Repository
                 throw new Exception("Category code can not be null or empty");
 
             var dbItem = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
-            var oldCode = dbItem.Code;
+            var oldCode = dbItem?.Code;
 
             if (category.Id == null)
             {
@@ -116,7 +116,7 @@ namespace Infrastructure.Repository
             await _context.SaveChangesAsync();
             _cache.UpdateOrCreateAsync(category.Code, () => { return GetCategory(x => x.Code == category.Code); });
 
-            if (oldCode != category.Code)
+            if (!string.IsNullOrEmpty(oldCode) && oldCode != category.Code)
                 _cache.RemoveAsync(oldCode);
 
             return Convert(dbItem);

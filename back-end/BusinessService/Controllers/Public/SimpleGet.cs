@@ -14,12 +14,14 @@ namespace BusinessService.Controllers.Public
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProjectRepository _projectRepository;
         private readonly INewsRepository _newsRepository;
+        private readonly IIntroductionRepository _introductionRepository;
 
-        public SimpleGet(ICategoryRepository categoryRepository, IProjectRepository projectRepository, INewsRepository newsRepository)
+        public SimpleGet(ICategoryRepository categoryRepository, IProjectRepository projectRepository, INewsRepository newsRepository, IIntroductionRepository introductionRepository)
         {
             _categoryRepository = categoryRepository;
             _projectRepository = projectRepository;
             _newsRepository = newsRepository;
+            _introductionRepository = introductionRepository;
         }
 
         [HttpGet("news/all")]
@@ -50,6 +52,18 @@ namespace BusinessService.Controllers.Public
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
                 return _categoryRepository.GetCategory(code);
+            });
+
+            //TODO: error on null
+            return new JsonResult(result);
+        }
+
+        [HttpGet("introduction")]
+        public async Task<IActionResult> GetIntroduction()
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _introductionRepository.GetIntroduction();
             });
 
             //TODO: error on null

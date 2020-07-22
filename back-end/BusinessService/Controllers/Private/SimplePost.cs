@@ -2,6 +2,7 @@
 using Abstractions.Model;
 using API.Queries;
 using BusinessService.Logic.Supervision;
+using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -21,14 +22,16 @@ namespace API.Controllers.Private
         private readonly IFileRepository _fileRepository;
         private readonly IAccountRepository _accountRepository;
         private readonly IConfiguration _configuration;
+        private readonly IIntroductionRepository _introductionRepository;
 
 
-        public SimplePost(ICategoryRepository categoryRepository, IProjectRepository projectRepository, IConfiguration configuration, IFileRepository fileRepository, IAccountRepository accountRepository)
+        public SimplePost(ICategoryRepository categoryRepository, IProjectRepository projectRepository, IConfiguration configuration, IFileRepository fileRepository, IAccountRepository accountRepository, IIntroductionRepository introductionRepository)
         {
             _categoryRepository = categoryRepository;
             _projectRepository = projectRepository;
             _fileRepository = fileRepository;
             _accountRepository = accountRepository;
+            _introductionRepository = introductionRepository;
             _configuration = configuration;
         }
 
@@ -156,5 +159,27 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
+
+        [HttpPatch("introduction")]
+        public async Task<IActionResult> UpdateIntroduction([FromBody] Introduction introduction)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _introductionRepository.UpdateIntroduction(introduction);
+            });
+
+            return new JsonResult(result);
+        }
+
+        [HttpDelete("introduction")]
+        public async Task<IActionResult> DeleteIntroduction([FromBody] Introduction introduction)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _introductionRepository.DeleteIntroduction(introduction);
+            });
+
+            return new JsonResult(result);
+        }
     }
 }

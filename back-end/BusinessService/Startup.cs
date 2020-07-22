@@ -42,6 +42,7 @@ namespace BusinessService
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<IIntroductionRepository, IntroductionRepository>();
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IHashManager, HashManager>();
 

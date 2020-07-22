@@ -60,7 +60,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _projectRepository.Save(project);
+                return _projectRepository.Create(project);
             });
 
             return new JsonResult(result);

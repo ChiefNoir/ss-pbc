@@ -74,7 +74,7 @@ namespace BusinessService.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _projectRepository.GetProject(code);
+                return _projectRepository.Read(code);
             });
 
             return new JsonResult(result);

@@ -49,8 +49,10 @@ namespace Infrastructure.Repository
         public Task<Abstractions.Model.Introduction> GetIntroduction()
         {
             return _context.Introductions
-                           .Select(x => DataConverter.ToIntroduction(x))
+                           .Include(x => x.ExternalUrls)
+                           .ThenInclude(x => x.ExternalUrl)
                            .AsNoTracking()
+                           .Select(x => DataConverter.ToIntroduction(x))                           
                            .FirstOrDefaultAsync();
         }
 

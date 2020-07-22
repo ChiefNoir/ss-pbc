@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { Introduction } from 'src/app/model/Introduction';
+import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 
 @Component({
   selector: 'app-introduction',
@@ -17,6 +18,7 @@ export class IntroductionComponent implements AfterViewInit {
   private service: DataService;
 
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: 'Loading', type: MessageType.Spinner  });
 
   public constructor(service: DataService, titleService: Title) {
     this.service = service;
@@ -32,10 +34,23 @@ export class IntroductionComponent implements AfterViewInit {
                 );
   }
 
-  private handle<T>(result: RequestResult<T>, content: BehaviorSubject<T>): void {
-    if (result.isSucceed) {
-    content.next(result.data);
-    } else{
+  private handle<T>(result: RequestResult<T>, content: BehaviorSubject<T>): void 
+  {
+    if (result.isSucceed)
+    {
+      content.next(result.data);
+
+      if(!result.data)
+      {
+        this.message$.next({text: 'Nothing was found', type: MessageType.Spinner  });
+      }
+      else
+      {
+        this.message$.next(null);
+      }
+    }
+    else
+    {
       this.handleError(result.errorMessage);
     }
   }

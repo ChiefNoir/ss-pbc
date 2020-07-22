@@ -30,7 +30,10 @@
   </div>
 </div>
 
-
 <ng-template #loading>
-  <app-loading></app-loading>
+  
+  <div *ngIf="message$ | async as msg">
+    <app-message [message]="msg"></app-message>
+  </div>
+
 </ng-template>

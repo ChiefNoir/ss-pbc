@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 
 import { RequestResult } from '../model/RequestResult';
 import { Project } from '../model/Project';
-import { News } from '../model/News';
 import { Category } from '../model/Category';
 import { Account } from '../model/Account';
 
@@ -11,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { ProjectPreview } from '../model/ProjectPreview';
 import { share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Introduction } from '../model/Introduction';
 
 @Injectable()
 export class DataService {
@@ -21,9 +21,9 @@ export class DataService {
     this.httpClient = http;
   }
 
-  public getNews(): Promise<RequestResult<Array<News>>> {
+  public getIntroduction(): Promise<RequestResult<Introduction>> {
     return this.httpClient
-      .get<RequestResult<Array<News>>>(this.endpoint + 'news/all')
+      .get<RequestResult<Introduction>>(this.endpoint + 'introduction')
       .toPromise();
   }
 

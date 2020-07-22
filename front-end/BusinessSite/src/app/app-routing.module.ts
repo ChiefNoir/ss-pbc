@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './view/home/home.component';
+import { IntroductionComponent } from './view/introduction/introduction.component';
 import { ProjectsListComponent } from './view/projects-list/projects-list.component';
 import { ProjectComponent } from './view/project/project.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
@@ -11,7 +11,7 @@ import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin
 import { AdminEditAccountsComponent } from './view/admin-edit-accounts/admin-edit-accounts.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', component: IntroductionComponent, pathMatch: 'full' },
   { path: 'projects', component: ProjectsListComponent },
   { path: 'login', component: AdminLoginComponent },
   { path: 'admin/project_editor', component: AdminEditProjectsComponent },

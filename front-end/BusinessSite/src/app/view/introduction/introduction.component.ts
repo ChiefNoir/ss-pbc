@@ -1,22 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
-import { News } from 'src/app/model/News';
+import { Introduction } from 'src/app/model/Introduction';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-introduction',
+  templateUrl: './introduction.component.html',
+  styleUrls: ['./introduction.component.scss'],
 })
 
-export class HomeComponent implements OnInit {
+export class IntroductionComponent implements AfterViewInit {
   private service: DataService;
 
-  public news$: BehaviorSubject<Array<News>> = new BehaviorSubject<Array<News>>(null);
+  public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
 
   public constructor(service: DataService, titleService: Title) {
     this.service = service;
@@ -24,18 +24,18 @@ export class HomeComponent implements OnInit {
     titleService.setTitle(environment.siteName);
   }
 
-  public ngOnInit(): void {
-    this.service.getNews()
+  ngAfterViewInit(): void {
+    this.service.getIntroduction()
                 .then
                 (
-                  (result) => { this.handleNewsRequest(result); }
+                  (result) => { this.handle(result, this.introduction$); }
                 );
   }
 
-  private handleNewsRequest(result: RequestResult<Array<News>>): void {
+  private handle<T>(result: RequestResult<T>, content: BehaviorSubject<T>): void {
     if (result.isSucceed) {
-      this.news$.next(result.data);
-    } else {
+    content.next(result.data);
+    } else{
       this.handleError(result.errorMessage);
     }
   }

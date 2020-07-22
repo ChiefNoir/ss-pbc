@@ -1,0 +1,36 @@
+<div fxFlex="100%">
+  <div *ngIf="introduction$ | async as introduction; else loading">
+
+    <div fxLayout="row" class="container">
+      <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+    
+        <h1 class="headline"> {{ introduction.title }} </h1>    
+        <mat-divider></mat-divider>
+        
+        <div class="description">{{ introduction.content }}</div>
+    
+        <div *ngIf="introduction.externalUrls.length > 0">
+          <h1 class="headline">External urls</h1>
+          <mat-divider></mat-divider>
+    
+          <div class="extension">
+            <app-button-external-url 
+                    *ngFor="let item of introduction.externalUrls"
+                    role="list"
+                    [externalUrl]="item">
+            </app-button-external-url>
+          </div>
+        </div>
+      </div>
+    
+      <img class="image" alt="{{ introduction.posterDescription}}" fxFlex="30" src="{{ introduction.posterUrl }}" />
+    </div>
+    
+
+  </div>
+</div>
+
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

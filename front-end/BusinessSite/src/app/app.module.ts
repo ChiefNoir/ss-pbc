@@ -20,7 +20,6 @@ import { ButtonExternalUrlComponent } from './component/button-external-url/butt
 import { FilterCategoryComponent } from './component/filter-category/filter-category.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { PaginatorComponent } from './component/paginator/paginator.component';
-import { NewsComponent } from './component/news/news.component';
 import { ProjectPreviewComponent } from './component/project-preview/project-preview.component';
 import { ProjectFullComponent } from './component/project-full/project-full.component';
 import { ProjectEditorComponent } from './component/project-editor/project-editor.component';
@@ -38,7 +37,7 @@ import { SplitPipe } from './pipe/SplitPipe';
 //
 
 // views
-import { HomeComponent } from './view/home/home.component';
+import { IntroductionComponent } from './view/introduction/introduction.component';
 import { ProjectsListComponent } from './view/projects-list/projects-list.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
@@ -66,7 +65,6 @@ import { CookieService } from 'ngx-cookie-service';
     ButtonExternalUrlComponent,
     FilterCategoryComponent,
     LoadingComponent,
-    NewsComponent,
     PaginatorComponent,
     ProjectPreviewComponent,
     ProjectFullComponent,
@@ -75,7 +73,7 @@ import { CookieService } from 'ngx-cookie-service';
     DialogEditAccountComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent,
+    IntroductionComponent,
     ProjectsListComponent,
     NotFoundComponent,
     ProjectComponent,

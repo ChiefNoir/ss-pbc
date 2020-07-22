@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace Abstractions.IRepository
 {
-    interface IIntroductionRepository
+    public interface IIntroductionRepository
     {
         Task<Introduction> GetIntroduction();
         Task<Introduction> CreateIntroduction(Introduction item);
         Task<Introduction> UpdateIntroduction(Introduction item);
-        Task<bool> DeleteIntroduction(Introduction item);
+        Task<int> DeleteIntroduction(Introduction item);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Infrastructure.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -73,5 +74,32 @@ namespace Infrastructure.Converters
             return externalUrls.Select(x => ToExternalUrl(x));
         }
 
+        public static Abstractions.Model.Introduction ToIntroduction(Introduction item)
+        {
+            return new Abstractions.Model.Introduction
+            {
+                Content = item.Content,
+                PosterDescription = item.PosterDescription,
+                PosterUrl = item.PosterUrl,
+                Version = item.Version,
+                ExternalUrls = ToExternalUrl(item.ExternalUrls)
+            };
+        }
+
+        private static IEnumerable<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<IntroductionExternalUrl> items)
+        {
+            return items.Select(x => ToExternalUrl(x));
+        }
+
+        private static Abstractions.Model.ExternalUrl ToExternalUrl(IntroductionExternalUrl item)
+        {
+            return new Abstractions.Model.ExternalUrl
+            {
+                Id = item.ExternalUrl.Id,
+                DisplayName = item.ExternalUrl.DisplayName,
+                Url = item.ExternalUrl.Url,
+                Version = item.ExternalUrl.Version
+            };
+        }
     }
 }

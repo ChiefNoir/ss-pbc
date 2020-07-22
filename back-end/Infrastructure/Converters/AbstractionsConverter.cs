@@ -77,6 +77,7 @@ namespace Infrastructure.Converters
         {
             var result = new Introduction
             {
+                Title = introduction.Title,
                 Content = introduction.Content,
                 PosterDescription = introduction.PosterDescription,
                 PosterUrl = introduction.PosterUrl,

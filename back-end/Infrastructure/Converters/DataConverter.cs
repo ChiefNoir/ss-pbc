@@ -79,6 +79,7 @@ namespace Infrastructure.Converters
             return new Abstractions.Model.Introduction
             {
                 Content = item.Content,
+                Title = item.Title,
                 PosterDescription = item.PosterDescription,
                 PosterUrl = item.PosterUrl,
                 Version = item.Version,

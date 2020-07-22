@@ -7,6 +7,8 @@ namespace Abstractions.Model
     {        
         public string Content { get; set; }
 
+        public string Title { get; set; }
+
         public string PosterUrl { get; set; }
 
         public string PosterDescription { get; set; }

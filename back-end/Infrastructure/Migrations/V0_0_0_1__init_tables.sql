@@ -1,6 +1,7 @@
 ﻿create table introduction 
 (
 	id serial primary key,
+	title text,
 	poster_url varchar(512) not null,	
 	poster_description varchar(512),
 	content text,

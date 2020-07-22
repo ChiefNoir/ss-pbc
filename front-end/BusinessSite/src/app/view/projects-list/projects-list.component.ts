@@ -91,8 +91,7 @@ export class ProjectsListComponent {
     {
       if (data.data == null || data.data.length === 0)
       {
-        alert('?');
-        // this.router.navigate(['/404']);
+        this.router.navigate(['/404']);
       }
       else
       {

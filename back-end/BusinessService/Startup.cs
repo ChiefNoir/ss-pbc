@@ -39,7 +39,6 @@ namespace BusinessService
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
             services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IIntroductionRepository, IntroductionRepository>();

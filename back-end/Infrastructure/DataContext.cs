@@ -13,7 +13,6 @@ namespace Infrastructure
     public class DataContext : DbContext
     {
         internal DbSet<Category> Categories { get; set; }
-        internal DbSet<News> News { get; set; }
         internal DbSet<Project> Projects { get; set; }
         internal DbSet<Account> Accounts { get; set; }
 
@@ -39,13 +38,6 @@ namespace Infrastructure
         {
             modelBuilder.Entity<ProjectExternalUrl>().HasKey(sc => new { sc.ProjectId, sc.ExternalUrlId});
             modelBuilder.Entity<IntroductionExternalUrl>().HasKey(sc => new { sc.IntroductionId, sc.ExternalUrlId });
-
-
-    //        modelBuilder.Entity<ProjectExternalUrl>()
-    //.HasOne<Project>(sc => sc.Project)
-    //.WithMany(s => s.ExternalUrls)
-    //.HasForeignKey(sc => sc.ProjectId);
-
         }
 
 

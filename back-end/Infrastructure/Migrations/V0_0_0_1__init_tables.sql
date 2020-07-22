@@ -1,13 +1,4 @@
-﻿create table news (
-	id serial primary key,
-	title varchar(64) not null,
-	content text,
-	poster_url varchar(512) not null,
-	poster_description varchar(512),
-	version int not null default 0
-);
-
-create table introduction 
+﻿create table introduction 
 (
 	id serial primary key,
 	poster_url varchar(512) not null,	

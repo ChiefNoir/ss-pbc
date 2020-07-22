@@ -13,26 +13,13 @@ namespace BusinessService.Controllers.Public
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProjectRepository _projectRepository;
-        private readonly INewsRepository _newsRepository;
         private readonly IIntroductionRepository _introductionRepository;
 
-        public SimpleGet(ICategoryRepository categoryRepository, IProjectRepository projectRepository, INewsRepository newsRepository, IIntroductionRepository introductionRepository)
+        public SimpleGet(ICategoryRepository categoryRepository, IProjectRepository projectRepository, IIntroductionRepository introductionRepository)
         {
             _categoryRepository = categoryRepository;
             _projectRepository = projectRepository;
-            _newsRepository = newsRepository;
             _introductionRepository = introductionRepository;
-        }
-
-        [HttpGet("news/all")]
-        public async Task<IActionResult> GetNews()
-        {
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return _newsRepository.GetNews();
-            });
-
-            return new JsonResult(result);
         }
 
         [HttpGet("categories/all")]

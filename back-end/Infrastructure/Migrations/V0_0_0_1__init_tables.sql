@@ -2,7 +2,7 @@
 (
 	id serial primary key,
 	title text,
-	poster_url varchar(512) not null,	
+	poster_url varchar(512),	
 	poster_description varchar(512),
 	content text,
 	version int not null default 0

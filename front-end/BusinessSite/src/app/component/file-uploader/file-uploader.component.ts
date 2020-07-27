@@ -17,6 +17,9 @@ export class FileUploaderComponent {
   @Input()
   filename: string;
 
+  @Input()
+  disabled: boolean;
+
   public upload(files: File[])
   {
     this.uploadFiles.emit(files);

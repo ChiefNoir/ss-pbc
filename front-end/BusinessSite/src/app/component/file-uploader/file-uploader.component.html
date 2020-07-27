@@ -2,6 +2,6 @@
 <div fxLayout="row"> 
    <input matInput [(ngModel)]="filename" name="posterUrl" fxFlex="grow" hidden/>
    <input type="file" #file placeholder="Choose file" (change)="upload(file.files)" style="display:none;">
-   <button fxFlex="noshrink" type="button" (click)="file.click()">Upload File</button>
-   <button fxFlex="noshrink" type="button" (click)="delete()">Delete File</button>
+   <button [disabled]="disabled" fxFlex="noshrink" type="button" (click)="file.click()">Upload File</button>
+   <button [disabled]="disabled" fxFlex="noshrink" type="button" (click)="delete()">Delete File</button>
  </div>

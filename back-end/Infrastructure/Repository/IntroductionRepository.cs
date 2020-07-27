@@ -58,7 +58,8 @@ namespace Infrastructure.Repository
 
         public async Task<Abstractions.Model.Introduction> UpdateIntroduction(Abstractions.Model.Introduction item)
         {
-            var dbItem = await _context.Introductions.FirstOrDefaultAsync();
+            var dbItem = await _context.Introductions.Include(x => x.ExternalUrls)
+                           .ThenInclude(x => x.ExternalUrl).FirstOrDefaultAsync();
             if (dbItem == null)
                 throw new Exception("Introduction is not found");
 

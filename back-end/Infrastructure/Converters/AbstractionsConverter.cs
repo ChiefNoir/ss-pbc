@@ -20,9 +20,7 @@ namespace Infrastructure.Converters
                 PosterUrl = project.PosterUrl,
                 ReleaseDate = project.ReleaseDate,
                 Version = project.Version,
-                CategoryId = project.Category.Id.Value,
-                 
-                Category = ToCategory(project.Category)
+                CategoryId = project.Category.Id.Value
             };
 
             foreach (var item in ToProjectExternalUrls(project.ExternalUrls))
@@ -32,7 +30,6 @@ namespace Infrastructure.Converters
 
                 dbProject.ExternalUrls.Add(item);
             }
-
 
             return dbProject;
         }
@@ -50,11 +47,17 @@ namespace Infrastructure.Converters
 
         private static IEnumerable<ProjectExternalUrl> ToProjectExternalUrls(IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
         {
+            if (externalUrls == null)
+                return new List<ProjectExternalUrl>();
+
             return externalUrls.Select(x => ToProjectExternalUrl(x));
         }
 
         public static ProjectExternalUrl ToProjectExternalUrl(Abstractions.Model.ExternalUrl externalUrl)
         {
+            if (externalUrl == null)
+                return null;
+
             return new ProjectExternalUrl
             {
                 ExternalUrl = ToExternalUrl(externalUrl),
@@ -97,6 +100,9 @@ namespace Infrastructure.Converters
 
         private static IEnumerable<IntroductionExternalUrl> ToExternalUrls(IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
         {
+            if (externalUrls == null)
+                return new List<IntroductionExternalUrl>();
+
             return externalUrls.Select(x=> ToIntroductionExternalUrl(x));
         }
 

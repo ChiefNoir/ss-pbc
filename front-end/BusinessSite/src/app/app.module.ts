@@ -45,6 +45,7 @@ import { AdminLoginComponent } from './view/admin-login/admin-login.component';
 import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edit-projects.component';
 import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin-edit-categories.component';
 import { AdminEditAccountsComponent } from './view/admin-edit-accounts/admin-edit-accounts.component';
+import { AdminEditIntroductionComponent } from './view/admin-edit-introduction/admin-edit-introduction.component';
 // -----
 
 // services
@@ -81,6 +82,7 @@ import { CookieService } from 'ngx-cookie-service';
     AdminEditProjectsComponent,
     AdminEditCategoriesComponent,
     AdminEditAccountsComponent,
+    AdminEditIntroductionComponent,
     SpinnerTextComponent,
     MessageComponent,
     FileUploaderComponent,

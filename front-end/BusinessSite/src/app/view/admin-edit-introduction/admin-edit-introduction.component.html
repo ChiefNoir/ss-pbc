@@ -1,0 +1,103 @@
+<div fxFlex="100%" class="container">
+  <div *ngIf="introduction$ | async as introduction">
+
+    <mat-tab-group>
+      <mat-tab label="Introduction"> 
+        <div fxLayout="column" fxLayoutAlign="space-around stretch" class="content">
+          <form>
+            <mat-form-field>
+              <input [disabled]="isDisabled" matInput [(ngModel)]="introduction.title" name="title" placeholder="title" />
+            </mat-form-field>
+            <mat-form-field>
+              <textarea [disabled]="isDisabled" matInput [(ngModel)]="introduction.content" name="descriptionShort" 
+              cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
+              cdkAutosizeMaxRows="10" placeholder="content"></textarea>
+            </mat-form-field>
+          </form>        
+        </div>
+      </mat-tab>
+
+      <mat-tab label="External urls"> 
+        <div fxLayout="column" fxLayoutAlign="space-around stretch">
+          <table #externalUrlsTable mat-table [dataSource]="introduction.externalUrls">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>name</th>
+              <td mat-cell *matCellDef="let element">
+                <mat-form-field floatLabel="never">
+                  <input [disabled]="isDisabled" matInput placeholder="Name" [value]="element.displayName" [(ngModel)]="element.displayName" />
+                </mat-form-field>
+              </td>
+
+              <td mat-footer-cell *matFooterCellDef>Create new </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="url">
+              <th mat-header-cell *matHeaderCellDef>url</th>
+              <td mat-cell *matCellDef="let element">
+                <mat-form-field floatLabel="never">
+                  <input [disabled]="isDisabled" matInput placeholder="url" [value]="element.url" [(ngModel)]="element.url" />
+                </mat-form-field>
+              </td>
+              <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="btn">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element"> <button [disabled]="isDisabled" class="btn-table" mat-button (click)="removeUrl(element)">remove</button>  </td>
+        
+              <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
+    
+    
+            <tr mat-header-row *matHeaderRowDef="columnsInner"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsInner"></tr>
+
+            <tr [hidden]="isDisabled" mat-footer-row *matFooterRowDef="columnsInner" (click)="add()"></tr>
+            
+            </table>
+
+        </div>
+      </mat-tab>
+      
+      <mat-tab label="Poster">
+        <div fxLayout="column" fxLayoutAlign="space-around stretch" class="content">
+          <form>
+            
+            <div fxLayout="row" fxLayoutAlign="center center" >
+              <img [ngClass]="{'disabled': isDisabled }" class="image" src="{{ imageSrc }}" />
+            </div>
+            
+            <mat-form-field>
+              <input matInput [disabled]="isDisabled" 
+               [(ngModel)]="introduction.posterDescription" name="titposterDescriptionle" placeholder="posterDescription" />
+            </mat-form-field>
+
+            <div class="wide-position">
+            <app-file-uploader 
+                  [disabled] = "isDisabled"
+                  [filename] = "introduction.posterUrl"
+                  (uploadFiles) = "uploadFile($event)"
+                  (deleteFile) = "deleteFile()">
+            </app-file-uploader>
+          </div>
+            
+          </form>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+
+  </div>
+
+  <div *ngIf="message$ | async as msg" class="msgBlock">
+    <app-message [message]="msg"></app-message>
+  </div>
+
+  <br/>
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <button [disabled]="isDisabled" class="action-button" mat-button (click)="refresh()">Refresh</button>
+    <button [disabled]="isDisabled" class="action-button" mat-button (click)="save()">Save</button>
+  </div>
+</div>
+
+

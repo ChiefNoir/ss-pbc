@@ -17,6 +17,8 @@ namespace Abstractions.IRepository
 
         Task<Project> Read(string code);
 
+        Task<Project> Read(int id);
+
         Task<Project> Update(Project project);
 
         Task<int> Delete(Project project);

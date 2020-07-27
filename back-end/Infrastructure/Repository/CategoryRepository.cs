@@ -49,9 +49,9 @@ namespace Infrastructure.Repository
                            .ToArrayAsync();
         }
 
-        private Task<Category> GetCategory(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)
+        private async Task<Category> GetCategory(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)
         {
-            return _context.CategoriesWithTotalProjects
+            var result = await _context.CategoriesWithTotalProjects
                .AsNoTracking()
                .Where(predicate)
                .Select(x => new Category
@@ -64,6 +64,11 @@ namespace Infrastructure.Repository
                    Version = x.Version
                })
                .FirstOrDefaultAsync();
+
+            if (result == null)
+                throw new Exception("Not found");
+
+            return result;
         }
 
         public Task<Category> GetEverythingCategory()
@@ -75,8 +80,11 @@ namespace Infrastructure.Repository
         {
             return GetCategory(x => x.Code == code);
         }
-        
 
+        public Task<Category> GetCategory(int id)
+        {
+            return GetCategory(x => x.Id == id);
+        }
 
 
 
@@ -146,5 +154,6 @@ namespace Infrastructure.Repository
             };
         }
 
+        
     }
 }

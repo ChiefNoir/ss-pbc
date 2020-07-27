@@ -16,6 +16,11 @@ namespace Abstractions.IRepository
         Task<Category[]> GetCategories();
 
         /// <summary> Get <see cref="Category"/> by code </summary>
+        /// <param name="id">Category id</param>
+        /// <returns><see cref="Category"/>  or <b>null</b> </returns>
+        Task<Category> GetCategory(int id);
+
+        /// <summary> Get <see cref="Category"/> by code </summary>
         /// <param name="code">Category code</param>
         /// <returns><see cref="Category"/>  or <b>null</b> </returns>
         Task<Category> GetCategory(string code);

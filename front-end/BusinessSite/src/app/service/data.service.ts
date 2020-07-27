@@ -1,4 +1,4 @@
-import { HttpClient, HttpEvent } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { RequestResult } from '../model/RequestResult';
@@ -8,24 +8,76 @@ import { Account } from '../model/Account';
 
 import { environment } from 'src/environments/environment';
 import { ProjectPreview } from '../model/ProjectPreview';
-import { share } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { Introduction } from '../model/Introduction';
 
 @Injectable()
-export class DataService {
+export class DataService
+{
   private httpClient: HttpClient;
   private endpoint = environment.apiEndpoint;
 
-  public constructor(http: HttpClient) {
+  public constructor(http: HttpClient)
+  {
     this.httpClient = http;
   }
 
-  public getIntroduction(): Promise<RequestResult<Introduction>> {
+  public getIntroduction(): Promise<RequestResult<Introduction>>
+  {
     return this.httpClient
-      .get<RequestResult<Introduction>>(this.endpoint + 'introduction')
-      .toPromise();
+               .get<RequestResult<Introduction>>(this.endpoint + 'introduction')
+               .toPromise();
   }
+
+  public getCategories(): Promise<RequestResult<Array<Category>>>
+  {
+    return this.httpClient
+               .get<RequestResult<Array<Category>>>(this.endpoint + 'categories')
+               .toPromise();
+  }
+
+  public getEverythingCategory(): Promise<RequestResult<Category>>
+  {
+    return this.httpClient
+               .get<RequestResult<Category>>(this.endpoint + 'categories/everything')
+               .toPromise();
+  }
+
+  public getCategory(id: number): Promise<RequestResult<Category>>
+  {
+    return this.httpClient
+               .get<RequestResult<Category>>(this.endpoint + 'categories/' + id)
+               .toPromise();
+  }
+
+  public getProject(code: string): Promise<RequestResult<Project>>
+  {
+    // well, it's way easy and faster to parse code from url, so it will be this way
+    return this.httpClient
+               .get<RequestResult<Project>>(this.endpoint + 'projects/' + code)
+               .toPromise();
+  }
+
+  public getProjectsPreview(start: number, length: number, categoryCode: string): Promise<RequestResult<Array<ProjectPreview>>>
+  {
+    const categoryParam = typeof categoryCode !== 'undefined' && categoryCode ? '&categorycode=' + categoryCode : '';
+
+    return this.httpClient
+               .get<RequestResult<Array<ProjectPreview>>>
+               (
+                 this.endpoint + 'projects/search?'
+                 + 'start=' + start
+                 + '&length=' + length
+                 + categoryParam
+               )
+               .toPromise();
+  }
+
+// --------------------------------------------------------------------
+
+
+
+
+
 
   public updateIntroduction(introdcution: Introduction): Promise<RequestResult<Introduction>> {
     return this.httpClient
@@ -35,52 +87,15 @@ export class DataService {
       .toPromise();
   }
 
-  public getProjectsPreview(
-    start: number,
-    length: number,
-    categoryCode: string
-  ): Promise<RequestResult<Array<ProjectPreview>>> {
-    const categoryParam =
-      typeof categoryCode !== 'undefined' && categoryCode
-        ? '&categorycode=' + categoryCode
-        : '';
 
-    return this.httpClient
-      .get<RequestResult<Array<ProjectPreview>>>(
-        this.endpoint +
-          'projects/search?' +
-          'start=' +
-          start +
-          '&length=' +
-          length +
-          categoryParam
-      )
-      .toPromise();
-  }
 
-  public getProject(code: string): Promise<RequestResult<Project>> {
-    return this.httpClient
-      .get<RequestResult<Project>>(this.endpoint + 'project/' + code)
-      .toPromise();
-  }
 
-  public getCategories(): Promise<RequestResult<Array<Category>>> {
-    return this.httpClient
-      .get<RequestResult<Array<Category>>>(this.endpoint + 'categories/all')
-      .toPromise();
-  }
 
-  public getEverythingCategory(): Promise<RequestResult<Category>> {
-    return this.httpClient
-      .get<RequestResult<Category>>(this.endpoint + 'category/everything')
-      .toPromise();
-  }
 
-  public getCategory(code: string): Promise<RequestResult<Category>> {
-    return this.httpClient
-      .get<RequestResult<Category>>(this.endpoint + 'category/' + code)
-      .toPromise();
-  }
+
+
+
+
 
   public save(category: Category): Promise<RequestResult<any>> {
     return this.httpClient

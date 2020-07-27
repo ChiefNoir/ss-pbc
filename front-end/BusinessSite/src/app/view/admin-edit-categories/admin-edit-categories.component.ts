@@ -20,7 +20,13 @@ export class AdminEditCategoriesComponent implements AfterViewInit {
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
   public dialog: MatDialog;
 
-  public columns: string[] = ['code', 'displayName', 'isEverything'];
+  //public columns: string[] = ['code', 'displayName', 'isEverything'];
+  private columnDefinitions = [
+    { def: 'id', show: false },
+    { def: 'code', show: true },
+    { def: 'displayName', show: true },
+    { def: 'isEverything', show: true },
+  ];
 
   public constructor(service: DataService, titleService: Title, dialog: MatDialog) {
     this.service = service;
@@ -38,11 +44,35 @@ export class AdminEditCategoriesComponent implements AfterViewInit {
                 );
   }
 
-  public showRow(categoryCode: string): void {
+  public showCreator(): void
+  {
+    const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '50%'});
+    dialogRef.afterClosed()
+             .subscribe
+             (
+               (result) =>
+               {
+                this.service.getCategories()
+                .then
+                (
+                  (x) => this.handle(x, this.categories$),
+                  (error) => this.handleError(error)
+                );
+                }
+            );
+  }
+
+  public getDisplayedColumns(): string[] {
+    return this.columnDefinitions
+      .filter(cd => cd.show)
+      .map(cd => cd.def);
+  }
+
+  public showEditor(categoryId: number): void {
     const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '50%'});
 
-    if(categoryCode) {
-    dialogRef.componentInstance.code = categoryCode;
+    if(categoryId) {
+    dialogRef.componentInstance.categoryId = categoryId;
     }
     
     dialogRef.afterClosed()
@@ -53,7 +83,9 @@ export class AdminEditCategoriesComponent implements AfterViewInit {
                 this.service.getCategories()
                 .then
                 (
-                  (x) => this.handle(x, this.categories$),
+                  (x) => {
+                    this.handle(x, this.categories$)
+                  },
                   (error) => this.handleError(error)
                 );
                 }

@@ -22,7 +22,7 @@ namespace BusinessService.Controllers.Public
             _introductionRepository = introductionRepository;
         }
 
-        [HttpGet("categories/all")]
+        [HttpGet("categories")]
         public async Task<IActionResult> GetCategories()
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
@@ -33,33 +33,7 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
-        [HttpGet("category/{code}")]
-        public async Task<IActionResult> GetCategory(string code)
-        {
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return _categoryRepository.GetCategory(code);
-            });
-
-            //TODO: error on null
-            return new JsonResult(result);
-        }
-
-        [HttpGet("introduction")]
-        public async Task<IActionResult> GetIntroduction()
-        {
-            var result = await Supervisor.SafeExecuteAsync(() =>
-            {
-                return _introductionRepository.GetIntroduction();
-            });
-
-            //TODO: error on null
-            return new JsonResult(result);
-        }
-
-
-
-        [HttpGet("category/everything")]
+        [HttpGet("categories/everything")]
         public async Task<IActionResult> GetEverythingCategory()
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
@@ -70,7 +44,31 @@ namespace BusinessService.Controllers.Public
             return new JsonResult(result);
         }
 
-        [HttpGet("project/{code}")]
+        [HttpGet("categories/{id}")]
+        public async Task<IActionResult> GetCategory(int id)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _categoryRepository.GetCategory(id);
+            });
+
+            return new JsonResult(result);
+        }
+
+
+        [HttpGet("introduction")]
+        public async Task<IActionResult> GetIntroduction()
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _introductionRepository.GetIntroduction();
+            });
+
+            return new JsonResult(result);
+        }
+
+
+        [HttpGet("projects/{code}")]
         public async Task<IActionResult> GetProject(string code)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>

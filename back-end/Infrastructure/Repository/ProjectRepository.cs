@@ -20,15 +20,36 @@ namespace Infrastructure.Repository
             _categoryRepository = categoryRepository;
         }
 
-        public Task<Abstractions.Model.Project> Read(string code)
+        public async Task<Abstractions.Model.Project> Read(int id)
         {
-            return _context.Projects
+            var result = await _context.Projects
+                .Where(x => x.Id == id)
+                .Include(x => x.Category)
+                .Include(x => x.ExternalUrls)
+                .ThenInclude(x => x.ExternalUrl)
+                .Select(x => DataConverter.ToProject(x))
+                .FirstOrDefaultAsync();
+
+            if (result == null)
+                throw new Exception("Not found");
+
+            return result;
+        }
+
+        public async Task<Abstractions.Model.Project> Read(string code)
+        {
+            var result = await _context.Projects
                 .Where(x => x.Code == code)
                 .Include(x => x.Category)
                 .Include(x => x.ExternalUrls)
                 .ThenInclude(x => x.ExternalUrl)
                 .Select(x => DataConverter.ToProject(x))
                 .FirstOrDefaultAsync();
+
+            if (result == null)
+                throw new Exception("Not found");
+
+            return result;
         }
 
         public async Task<Abstractions.Model.ProjectPreview[]> GetProjectsPreview(int start, int length, string categoryCode)

@@ -15,7 +15,7 @@ import { MessageDescription, MessageType } from '../message/message.component';
 export class DialogEditorCategoryComponent implements AfterViewInit
 {
   @Input()
-  public code: string;
+  public categoryId: number;
 
   private service: DataService;
   private dialog: MatDialogRef<DialogEditorCategoryComponent>;
@@ -32,8 +32,9 @@ export class DialogEditorCategoryComponent implements AfterViewInit
 
   public ngAfterViewInit(): void
   {
-    if(this.code) {
-    this.service.getCategory(this.code)
+    if (this.categoryId)
+    {
+    this.service.getCategory(this.categoryId)
                 .then
                 (
                   succeeded => this.handle(this.category$, succeeded),

@@ -27,6 +27,14 @@ export class DataService {
       .toPromise();
   }
 
+  public updateIntroduction(introdcution: Introduction): Promise<RequestResult<Introduction>> {
+    return this.httpClient
+      .request<RequestResult<Introduction>>('patch', this.endpoint + 'introduction', {
+        body: introdcution,
+      })
+      .toPromise();
+  }
+
   public getProjectsPreview(
     start: number,
     length: number,

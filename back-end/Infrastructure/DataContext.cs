@@ -6,24 +6,19 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 
-
 namespace Infrastructure
 {
     /// <summary>Entity framework data context </summary>
     public class DataContext : DbContext
     {
-        internal DbSet<Category> Categories { get; set; }
-        internal DbSet<Project> Projects { get; set; }
         internal DbSet<Account> Accounts { get; set; }
-
-        internal DbSet<Introduction> Introductions { get; set; }
-
+        internal DbSet<Category> Categories { get; set; }
         internal DbSet<CategoryWithTotalProjects> CategoriesWithTotalProjects { get; set; }
-
-        internal DbSet<ProjectExternalUrl> ProjectExternalUrls { get; set; }
-        internal DbSet<IntroductionExternalUrl> IntroductionExternalUrls { get; set; }
-
         internal DbSet<ExternalUrl> ExternalUrls { get; set; }
+        internal DbSet<IntroductionExternalUrl> IntroductionExternalUrls { get; set; }
+        internal DbSet<Introduction> Introductions { get; set; }
+        internal DbSet<ProjectExternalUrl> ProjectExternalUrls { get; set; }
+        internal DbSet<Project> Projects { get; set; }
 
         /// <summary> Database has any accounts?</summary>
         internal bool HasAccounts { get; set; }
@@ -36,10 +31,9 @@ namespace Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProjectExternalUrl>().HasKey(sc => new { sc.ProjectId, sc.ExternalUrlId});
+            modelBuilder.Entity<ProjectExternalUrl>().HasKey(sc => new { sc.ProjectId, sc.ExternalUrlId });
             modelBuilder.Entity<IntroductionExternalUrl>().HasKey(sc => new { sc.IntroductionId, sc.ExternalUrlId });
         }
-
 
         private void MigrateDatabase(IDbConnection connection)
         {

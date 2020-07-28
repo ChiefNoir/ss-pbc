@@ -7,7 +7,8 @@ import { ExternalUrl } from 'src/app/model/ExternalUrl';
   styleUrls: ['./button-external-url.component.scss']
 })
 
-export class ButtonExternalUrlComponent {
+export class ButtonExternalUrlComponent
+{
   @Input()
   public externalUrl: ExternalUrl;
 }

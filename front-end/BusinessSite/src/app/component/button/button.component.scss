@@ -3,26 +3,21 @@
 button {
     background-color: transparent;
     border: 2px solid;
-    
-    cursor: pointer;
-
-    width: 100px;
-    height: 30px;
-    transition: 0.25s;
-
-    margin-top: 15px;
-    margin-right: 20px;
-    
-    margin-bottom: 20px;
-    
-    font-weight: 500;
-    font-size: 16px;
-
     color: $color-control-text;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    height: 30px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-top: 15px;
+    transition: 0.25s;
+    width: 100px;
 }
 
-button:hover{
+button:hover {
     background-color: $color-core;
+
     transform: translateY(-0.2em);
     -webkit-transform: translateY(-0.2em);
     -moz-transform: translateY(-0.2em);
@@ -31,9 +26,9 @@ button:hover{
 }
 
 button:disabled {
-    cursor: default;
-    transform: none;
-    opacity: 60%;
     background-color: $color-core !important;
     color: $color-control-text !important;
-  }
+    cursor: default;
+    opacity: 60%;
+    transform: none;
+}

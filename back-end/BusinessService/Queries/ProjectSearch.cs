@@ -6,6 +6,5 @@ namespace API.Queries
     {
         [FromQuery(Name = "categorycode")]
         public string CategoryCode { get; set; }
-
     }
 }

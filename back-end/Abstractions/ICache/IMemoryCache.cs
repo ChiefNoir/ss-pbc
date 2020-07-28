@@ -8,6 +8,12 @@ namespace Abstractions.MemoryCache
     /// <typeparam name="TEntity">Item to store in cache</typeparam>
     public interface IMemoryCache<TKey, TEntity>
     {
+        /// <summary>Find or add item in/to cache</summary>
+        /// <param name="predicate">Search predicate</param>
+        /// <param name="createItem">Function to create item</param>
+        /// <returns>Item stored in cache or <code>null</code></returns>
+        Task<TEntity> FindOrCreateAsync(Func<TEntity, bool> predicate, Func<Task<TEntity>> createItem);
+
         /// <summary> Get all items int cache</summary>
         /// <param name="initAll">Function to initialize all items in cache</param>
         /// <returns>All items in cache</returns>
@@ -27,11 +33,5 @@ namespace Abstractions.MemoryCache
         /// <param name="key">Unique key to identify item stored in cache</param>
         /// <param name="createItem">Function to create item</param>
         void UpdateOrCreateAsync(TKey key, Func<Task<TEntity>> createItem);
-
-        /// <summary>Find or add item in/to cache</summary>
-        /// <param name="predicate">Search predicate</param>
-        /// <param name="createItem">Function to create item</param>
-        /// <returns>Item stored in cache or <code>null</code></returns>
-        Task<TEntity> FindOrCreateAsync(Func<TEntity, bool> predicate, Func<Task<TEntity>> createItem);
     }
 }

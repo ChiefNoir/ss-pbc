@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
 })
 
-export class FooterComponent {
+export class FooterComponent
+{
   public currentYear: number = new Date().getFullYear();
   public copyright = 'Chief';
 }

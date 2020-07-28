@@ -1,9 +1,8 @@
 @import "variables";
-@import "mixins";
 
 footer {
   background-color: $color-container;
   color: $color-text;
-  text-align: center;
   padding: 15px;
+  text-align: center;
 }

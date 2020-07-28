@@ -13,22 +13,21 @@ button {
     margin-top: 15px;
     transition: 0.25s;
     width: 100px;
-}
 
-button:hover {
-    background-color: $color-core;
+    &:hover {
+        background-color: $color-core;
 
-    transform: translateY(-0.2em);
-    -webkit-transform: translateY(-0.2em);
-    -moz-transform: translateY(-0.2em);
-    -ms-transform: translateY(-0.2em);
-    -o-transform: translateY(-0.2em);
-}
-
-button:disabled {
-    background-color: $color-core !important;
-    color: $color-control-text !important;
-    cursor: default;
-    opacity: 60%;
-    transform: none;
+        transform: translateY(-0.2em);
+        -webkit-transform: translateY(-0.2em);
+        -moz-transform: translateY(-0.2em);
+        -ms-transform: translateY(-0.2em);
+        -o-transform: translateY(-0.2em);
+    }
+    &:disabled {
+        background-color: $color-core !important;
+        color: $color-control-text !important;
+        cursor: default;
+        opacity: 60%;
+        transform: none;
+    }
 }

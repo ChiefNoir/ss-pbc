@@ -30,7 +30,6 @@ namespace BusinessService
             Configuration = configuration;
         }
 
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -54,15 +53,14 @@ namespace BusinessService
                         options.TokenValidationParameters = TokenManager.CreateTokenValidationParameters(Configuration);
                     });
 
-            //MultiPartBodyLength 
-            services.Configure<FormOptions>(o => {
+            //MultiPartBodyLength
+            services.Configure<FormOptions>(o =>
+            {
                 o.ValueLengthLimit = int.MaxValue;
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
             });
-
         }
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfiguration configuration)
@@ -73,7 +71,6 @@ namespace BusinessService
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
             app.UseCors
                 (
@@ -83,18 +80,14 @@ namespace BusinessService
                                       .AllowCredentials()
                 );
 
-            var str = configuration.GetSection("Location:FileStorage").Get<string>();
+            var path = configuration.GetSection("Location:FileStorage").Get<string>();
+            CheckFileStorageDirectory(path);
+
             app.UseStaticFiles();
-
-            if( !Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), str)))
-            {
-                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), str));
-            }
-
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), str)),
-                RequestPath = new PathString("/"+str)
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), path)),
+                RequestPath = new PathString("/" + path)
             });
 
             //TODO: UseKestrel
@@ -107,6 +100,12 @@ namespace BusinessService
             });
         }
 
-        
+        private static void CheckFileStorageDirectory(string path)
+        {
+            if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), path)))
+                return;
+
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), path));
+        }
     }
 }

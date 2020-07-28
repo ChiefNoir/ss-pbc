@@ -83,7 +83,7 @@ namespace BusinessService
                                       .AllowCredentials()
                 );
 
-            var str = configuration.GetSection("Location").GetValue<string>("FileStorage");
+            var str = configuration.GetSection("Location:FileStorage").Get<string>();
             app.UseStaticFiles();
 
             if( !Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), str)))

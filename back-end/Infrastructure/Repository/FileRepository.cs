@@ -23,7 +23,7 @@ namespace Infrastructure.Repository
             if (file == null || file.Length == 0) //TODO: max file size
                 throw new Exception("Empty file"); //TODO: custom exception
 
-            var folderName = _configuration.GetSection("Location").GetValue<string>("FileStorage");
+            var folderName = _configuration.GetSection("Location:FileStorage").Get<string>();
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
 

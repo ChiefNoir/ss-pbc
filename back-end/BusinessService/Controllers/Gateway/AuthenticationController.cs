@@ -36,7 +36,7 @@ namespace API.Controllers.Gateway
                 {
                     Login = user.Login,
                     Token = TokenManager.CreateToken(_configuration, credentials.Login, user.Role),
-                    TokenLifeTimeMinutes = _configuration.GetSection("Token").GetValue<int>("LifeTime")
+                    TokenLifeTimeMinutes = _configuration.GetSection("Token:LifeTime").Get<int>()
                 };
             });
 

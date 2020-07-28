@@ -31,8 +31,8 @@ namespace Infrastructure.Repository
             {
                 try
                 {
-                    var login = _configuration.GetSection("Default")?.GetSection("Admin")?.GetValue<string>("Login");
-                    var pass = _configuration.GetSection("Default")?.GetSection("Admin")?.GetValue<string>("Password");
+                    var login = _configuration.GetSection("Default:Admin:Login").Get<string>();
+                    var pass = _configuration.GetSection("Default:Admin:Password").Get<string>();
 
                     await Add( new Account { Login = login, Password = pass, Role = RoleNames.Admin });
                     _context.HasAccounts = true;

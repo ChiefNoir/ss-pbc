@@ -23,22 +23,25 @@ namespace API.Security
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, login)
             };
+
             foreach (var item in roles)
             {
                 claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, item));
             }
 
-            var jwt = new JwtSecurityToken(
-                    issuer: configuration.GetSection("Token").GetValue<string>("Issuer"),
-                    audience: configuration.GetSection("Token").GetValue<string>("Audience"),
+            var jwt = new JwtSecurityToken
+                (
+                    issuer: configuration.GetSection("Token:Issuer").Get<string>(),
+                    audience: configuration.GetSection("Token:Audience").Get<string>(),
                     notBefore: DateTime.UtcNow,
                     claims: claims,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(configuration.GetSection("Token").GetValue<int>("LifeTime"))),
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(configuration.GetSection("Token:LifeTime").Get<int>())),
                     signingCredentials: new SigningCredentials
                     (
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Token").GetValue<string>("Key"))),
-                        configuration.GetSection("Token").GetValue<string>("SecurityAlgorithms")
-                    ));
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Token:Key").Get<string>())),
+                        configuration.GetSection("Token:SecurityAlgorithms").Get<string>()
+                    )
+                );
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
@@ -53,11 +56,11 @@ namespace API.Security
             return new TokenValidationParameters
             {
                 ValidateIssuer = true,
-                ValidIssuer = configuration.GetSection("Token").GetValue<string>("Issuer"),
+                ValidIssuer = configuration.GetSection("Token:Issuer").Get<string>(),
                 ValidateAudience = true,
-                ValidAudience = configuration.GetSection("Token").GetValue<string>("Audience"),
+                ValidAudience = configuration.GetSection("Token:Audience").Get<string>(),
                 ValidateLifetime = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Token").GetValue<string>("Key"))),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Token:Key").Get<string>())),
                 ValidateIssuerSigningKey = true,
                 RequireExpirationTime = true
             };

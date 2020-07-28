@@ -1,13 +1,25 @@
 ﻿using Infrastructure.DataModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Infrastructure.Converters
 {
-    static class DataConverter
+    internal static class DataConverter
     {
-        public static Abstractions.Model.Project ToProject(Project project)
+        internal static Abstractions.Model.Introduction ToIntroduction(Introduction item)
+        {
+            return new Abstractions.Model.Introduction
+            {
+                Content = item.Content,
+                Title = item.Title,
+                PosterDescription = item.PosterDescription,
+                PosterUrl = item.PosterUrl,
+                Version = item.Version,
+                ExternalUrls = ToExternalUrl(item.ExternalUrls)
+            };
+        }
+
+        internal static Abstractions.Model.Project ToProject(Project project)
         {
             return new Abstractions.Model.Project
             {
@@ -25,7 +37,7 @@ namespace Infrastructure.Converters
             };
         }
 
-        public static Abstractions.Model.ProjectPreview ToProjectPreview(Project project)
+        internal static Abstractions.Model.ProjectPreview ToProjectPreview(Project project)
         {
             return new Abstractions.Model.ProjectPreview
             {
@@ -38,7 +50,6 @@ namespace Infrastructure.Converters
                 Category = ToCategory(project.Category)
             };
         }
-
 
         private static Abstractions.Model.Category ToCategory(Category category)
         {
@@ -73,20 +84,7 @@ namespace Infrastructure.Converters
 
             return externalUrls.Select(x => ToExternalUrl(x));
         }
-
-        public static Abstractions.Model.Introduction ToIntroduction(Introduction item)
-        {
-            return new Abstractions.Model.Introduction
-            {
-                Content = item.Content,
-                Title = item.Title,
-                PosterDescription = item.PosterDescription,
-                PosterUrl = item.PosterUrl,
-                Version = item.Version,
-                ExternalUrls = ToExternalUrl(item.ExternalUrls)
-            };
-        }
-
+        
         private static IEnumerable<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<IntroductionExternalUrl> items)
         {
             return items.Select(x => ToExternalUrl(x));

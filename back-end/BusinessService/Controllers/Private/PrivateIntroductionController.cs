@@ -3,6 +3,7 @@ using Abstractions.Model;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+
 namespace API.Controllers.Private
 {
     [ApiController]
@@ -26,6 +27,5 @@ namespace API.Controllers.Private
 
             return new JsonResult(result);
         }
-
     }
 }

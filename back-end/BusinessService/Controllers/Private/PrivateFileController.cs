@@ -1,14 +1,8 @@
 ﻿using Abstractions.IRepository;
-using Abstractions.Model;
-using API.Queries;
 using BusinessService.Logic.Supervision;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Private
@@ -17,8 +11,8 @@ namespace API.Controllers.Private
     [Route("api/v1/")]
     public class PrivateFileController : ControllerBase
     {
-        private readonly IFileRepository _fileRepository;
         private readonly IConfiguration _configuration;
+        private readonly IFileRepository _fileRepository;
 
         public PrivateFileController(IFileRepository fileRepository, IConfiguration configuration)
         {
@@ -33,21 +27,17 @@ namespace API.Controllers.Private
             {
                 var filename = await _fileRepository.Save(Request.Form.Files.FirstOrDefault());
 
-                return FormatToUrl(filename);
+                return AppendUrlToName(filename);
             });
 
             return new JsonResult(result);
         }
 
-        private string FormatToUrl(string name)
+        private string AppendUrlToName(string name)
         {
-            return
-            _configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>()
-            + "/" +
-            _configuration.GetSection("Location:FileStorage").Get<string>()
-            + "/"
-            + name;
+            return _configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>()
+                  + "/" + _configuration.GetSection("Location:FileStorage").Get<string>()
+                  + "/" + name;
         }
-
     }
 }

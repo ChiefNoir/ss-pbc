@@ -1,14 +1,7 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
-using API.Queries;
 using BusinessService.Logic.Supervision;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Private
@@ -45,6 +38,5 @@ namespace API.Controllers.Private
 
             return new JsonResult(result);
         }
-
     }
 }

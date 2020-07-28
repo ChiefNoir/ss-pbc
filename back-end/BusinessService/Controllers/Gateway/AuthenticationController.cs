@@ -24,8 +24,8 @@ namespace API.Controllers.Gateway
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Credentials credentials)
-        {            
-            var result = await Supervisor.SafeExecuteAsync(async() =>
+        {
+            var result = await Supervisor.SafeExecuteAsync(async () =>
             {
                 var user = await _userRepository.Get(credentials.Login, credentials.Password);
 
@@ -42,6 +42,5 @@ namespace API.Controllers.Gateway
 
             return new JsonResult(result);
         }
-
     }
 }

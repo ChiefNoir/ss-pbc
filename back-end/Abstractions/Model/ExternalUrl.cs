@@ -5,7 +5,7 @@ namespace Abstractions.Model
     /// <summary> URL to the external recourses </summary>
     public class ExternalUrl : IVersion
     {
-        /// <summary> Unique Id </summary>
+        /// <summary> Unique id or <c>null</c> if external url is brand new </summary>
         public int? Id { get; set; }
 
         /// <summary> Friendly name for URL </summary>
@@ -14,7 +14,7 @@ namespace Abstractions.Model
         /// <summary> URL to the external recourse </summary>
         public string Url { get; set; }
 
-        /// <summary> Version </summary>
+        /// <summary> Entity version </summary>
         public long Version { get; set; }
     }
 }

@@ -5,6 +5,7 @@ namespace Abstractions.Model
     /// <summary> Account </summary>
     public class Account : IVersion
     {
+        /// <summary> Unique id or <c>null</c> if account is brand new </summary>
         public int? Id { get; set; }
 
         /// <summary> Login </summary>
@@ -12,10 +13,11 @@ namespace Abstractions.Model
 
         /// <summary> Password as a hex string </summary>
         public string Password { get; set; }
-        
+
         /// <summary> Role <seealso cref="RoleNames"/></summary>
         public string Role { get; set; }
 
+        /// <summary> Entity version </summary>
         public long Version { get; set; }
     }
 }

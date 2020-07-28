@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./header.component.scss'],
 })
 
-export class HeaderComponent {
+export class HeaderComponent
+{
   public name: string = environment.siteName;
 }

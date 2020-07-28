@@ -2,17 +2,17 @@
 @import "mixins";
 
 .header {
+  padding-bottom: 15px;  
+  padding-top: 15px;
   text-align: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
 }
 
 .header a {
-  font-family: $font-header;
   color: $color-text;
-  line-height: 1;
-  font-size: 400%;
+  font-family: $font-header;
+  font-size: 360%;
   font-weight: bold;
+  line-height: 1;
   text-decoration: none;
   text-transform: uppercase;
 

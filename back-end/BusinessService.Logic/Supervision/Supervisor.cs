@@ -30,26 +30,5 @@ namespace BusinessService.Logic.Supervision
             return result;
         }
 
-        /// <summary> Execute function </summary>
-        /// <param name="action"><seealso cref="Action"/> to execute</param>
-        /// <returns>Result of execution or ErrorMessage will have message </returns>
-        //public static ExecutionResult SafeExecute(Action action)
-        //{
-        //    var result = new ExecutionResult();
-
-        //    try
-        //    {
-        //        action();
-        //        result.IsSucceed = true;
-        //    }
-        //    catch (Exception ee)
-        //    {
-        //        //TODO: log error
-        //        result.IsSucceed = false;
-        //        result.ErrorMessage = ee.Message;
-        //    }
-
-        //    return result;
-        //}
     }
 }

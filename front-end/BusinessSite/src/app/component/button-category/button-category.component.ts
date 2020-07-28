@@ -7,7 +7,8 @@ import { Category } from 'src/app/model/Category';
   styleUrls: ['./button-category.component.scss']
 })
 
-export class ButtonCategoryComponent {
+export class ButtonCategoryComponent
+{
   @Input()
   public route: string;
 

@@ -1,12 +1,12 @@
 <a class="{{ rla.isActive ? 'active' : 'nonactive' }}"
-  [routerLink]="route"
-  routerLinkActive
-  #rla="routerLinkActive"
-  [routerLinkActiveOptions]="{ exact: false }">
+   [routerLink]="route"
+   #rla="routerLinkActive"
+   routerLinkActive
+   [routerLinkActiveOptions]="{ exact: false }">
 
   <div fxLayout="row">
     <div fxFlex class="display-name">{{category.displayName}}</div>
-    <div class="counter-container" >
+    <div class="counter-container">
       <div class="conter-content">
         {{category.totalProjects}}
       </div>

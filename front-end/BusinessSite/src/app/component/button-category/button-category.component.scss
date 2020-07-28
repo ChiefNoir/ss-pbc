@@ -1,27 +1,5 @@
 @import 'variables';
 
-a {
-  text-decoration: none;
-  display: inline-block;
-  transition: 0.25s;
-  background: none;
-  border: 2px solid;
-  line-height: 1;
-  margin: 0.5em;
-  min-width: 120px;
-}
-
-a:hover,
-a:focus {
-  box-shadow: 0 0.5em 0.5em -0.4em $color-control-active;
-  color: $color-control-active;
-  transform: translateY(-0.3em);
-  -webkit-transform: translateY(-0.3em);
-  -moz-transform: translateY(-0.3em);
-  -ms-transform: translateY(-0.3em);
-  -o-transform: translateY(-0.3em);
-}
-
 .active {
   color: $color-control-active;
 }
@@ -29,48 +7,70 @@ a:focus {
   color: $color-control-text;
 }
 
-.display-name{
-  text-align: center;
+.display-name {
   padding-top: 7px;
+  text-align: center;
 }
 
 .counter-container {
-  padding-top: 7px;
-  padding-bottom: 8px;
   background-color: $color-control-text;
+  padding-bottom: 8px;
+  padding-top: 7px;
+  width: 0px;
 
+  transition: width .7s ease-in-out;
   -webkit-transition: width .7s ease-in-out;
   -moz-transition: width .7s ease-in-out;
   -o-transition: width .7s ease-in-out;
-  transition: width .7s ease-in-out;
-
-  width: 0px;
 }
+
+.conter-content {
+  color: $color-control;
+  margin-left: 3px;
+  margin-right: 3px;
+  overflow: hidden;
+  text-align: center;
+}
+
+a {
+  background: none;
+  border: 2px solid;
+  display: inline-block;
+  line-height: 1;
+  margin: 0.5em;
+  min-width: 120px;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+a:hover,
+a:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em $color-control-active;
+  color: $color-control-active;
+
+  transform: translateY(-0.3em);
+  -webkit-transform: translateY(-0.3em);
+  -moz-transform: translateY(-0.3em);
+  -ms-transform: translateY(-0.3em);
+  -o-transform: translateY(-0.3em);
+}
+
+
 
 a:hover .counter-container,
 a:focus .counter-container{
   background-color: $color-control-active;
-  
-  -webkit-transition: width .7s ease-in-out;
-  -moz-transition: width .7s ease-in-out;
-  -o-transition: width .7s ease-in-out;
-  transition: width .7s ease-in-out;
-
   width:30px;
+  
+  transition: width .5s ease-in-out;
+  -webkit-transition: width .5s ease-in-out;
+  -moz-transition: width .5s ease-in-out;
+  -o-transition: width .5s ease-in-out;
 }
 
 a.active .counter-container {
   background-color: $color-control-active;
   color: $color-control;  
-}
-
-.conter-content{
-  font-weight: 600;
-  text-align: center;
-  margin-left: 3px;
-  margin-right: 3px;
-  overflow: hidden;
-  color: $color-control;
 }
 
 a.active:hover .conter-content,

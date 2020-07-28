@@ -12,34 +12,6 @@ namespace Infrastructure.Cache
         /// <summary> The <see cref="GetAll"/> initialization can run only once </summary>
         private static bool _wasInit = false;
 
-        public override async Task<Category[]> GetAll(Func<Task<Category[]>> initAll)
-        {
-            if(!_wasInit)
-            {
-                await _global.WaitAsync();                
-                try
-                {
-                    if (!_wasInit)
-                    {
-                        _cache.Clear();
-                        foreach (var item in await initAll())
-                        {
-                            _cache.TryAdd(item.Code, item);
-                        }
-
-                        _wasInit = true;
-                    }
-                }
-                finally
-                {
-                    _global.Release();
-                }
-            }
-
-            return _cache.Values.ToArray();
-
-        }
-
         public override async Task<Category> FindOrCreateAsync(Func<Category, bool> predicate, Func<Task<Category>> createItem)
         {
             var stored = _cache.Values.FirstOrDefault(predicate);
@@ -67,5 +39,31 @@ namespace Infrastructure.Cache
             return entity;
         }
 
+        public override async Task<Category[]> GetAll(Func<Task<Category[]>> initAll)
+        {
+            if (!_wasInit)
+            {
+                await _global.WaitAsync();
+                try
+                {
+                    if (!_wasInit)
+                    {
+                        _cache.Clear();
+                        foreach (var item in await initAll())
+                        {
+                            _cache.TryAdd(item.Code, item);
+                        }
+
+                        _wasInit = true;
+                    }
+                }
+                finally
+                {
+                    _global.Release();
+                }
+            }
+
+            return _cache.Values.ToArray();
+        }
     }
 }

@@ -24,14 +24,11 @@
 
   <div *ngIf="account$ | async as account">
     <div class="actions">
-      <button [disabled]="disableInput$ | async" mat-button (click)="delete()">
-        Delete
-      </button>
+      <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">delete</app-button>
+
       <div>
-        <button [disabled]="disableInput$ | async" mat-button (click)="save()">
-          Save
-        </button>
-        <button mat-button cdkFocusInitial (click)="close()">Close</button>
+        <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">Save</app-button>
+        <app-button cdkFocusInitial (OnClick)="close()">close</app-button>
       </div>
     </div>
   </div>

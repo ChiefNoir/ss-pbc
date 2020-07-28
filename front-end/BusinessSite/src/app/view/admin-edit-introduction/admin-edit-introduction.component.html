@@ -43,7 +43,9 @@
     
             <ng-container matColumnDef="btn">
               <th mat-header-cell *matHeaderCellDef> </th>
-              <td mat-cell *matCellDef="let element"> <button [disabled]="isDisabled" class="btn-table" mat-button (click)="removeUrl(element)">remove</button>  </td>
+              <td mat-cell *matCellDef="let element"> 
+                <app-button [isDisabled]="isDisabled" (OnClick)="removeUrl(element)">remove</app-button>
+              </td>
         
               <td mat-footer-cell *matFooterCellDef> </td>
             </ng-container>
@@ -93,11 +95,12 @@
     <app-message [message]="msg"></app-message>
   </div>
 
-  <br/>
+
   <div fxLayout="row" fxLayoutAlign="end center">
-    <button [disabled]="isDisabled" class="action-button" mat-button (click)="refresh()">Refresh</button>
-    <button [disabled]="isDisabled" class="action-button" mat-button (click)="save()">Save</button>
+    <app-button [isDisabled]="isDisabled" (OnClick)="refresh()">Refresh</app-button>
+    <app-button [isDisabled]="isDisabled" (OnClick)="save()">Save</app-button>
   </div>
+
 </div>
 
 

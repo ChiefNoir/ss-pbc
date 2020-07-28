@@ -3,14 +3,19 @@
 button {
     background-color: transparent;
     border: 2px solid;
+    
+    cursor: pointer;
 
-    width: 100%;
+    width: 100px;
     height: 30px;
     transition: 0.25s;
-    padding-top: 5px;
-    padding-bottom: 25px;
+
+    margin-top: 15px;
+    margin-right: 20px;
     
-    font-weight: 600;
+    margin-bottom: 20px;
+    
+    font-weight: 500;
     font-size: 16px;
 
     color: $color-control-text;
@@ -24,3 +29,11 @@ button:hover{
     -ms-transform: translateY(-0.2em);
     -o-transform: translateY(-0.2em);
 }
+
+button:disabled {
+    cursor: default;
+    transform: none;
+    opacity: 60%;
+    background-color: $color-core !important;
+    color: $color-control-text !important;
+  }

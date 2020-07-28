@@ -13,19 +13,19 @@ namespace BusinessService
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                       .ConfigureWebHostDefaults(webBuilder => 
-                        {
-                            webBuilder.UseStartup<Startup>();
-                            webBuilder.UseUrls();
-                            webBuilder.UseKestrel();
-                            webBuilder.ConfigureKestrel(serverOptions =>
-                            {                                
-                                serverOptions.ConfigureEndpointDefaults(listenOptions =>
-                                {
-                                    listenOptions.UseHttps();
-                                });
-                            });
-                        });
+                       .ConfigureWebHostDefaults(webBuilder =>
+                       {
+                           webBuilder.UseStartup<Startup>();
+                           webBuilder.UseUrls();
+                           webBuilder.UseKestrel();
+                           webBuilder.ConfigureKestrel(serverOptions =>
+                           {
+                               serverOptions.ConfigureEndpointDefaults(listenOptions =>
+                               {
+                                   listenOptions.UseHttps();
+                               });
+                           });
+                       });
         }
     }
 }

@@ -11,6 +11,11 @@ namespace Abstractions.IRepository
         /// <returns><b>true</b> if category is technical for select without filter</returns>
         Task<bool> CheckIsEverything(string code);
 
+        /// <summary> Delete existing <seealso cref="Category"/> </summary>
+        /// <param name="category">Category to delete</param>
+        /// <returns>TODO: remove</returns>
+        Task<Category> DeleteCategory(Category category);
+
         /// <summary>Get all categories</summary>
         /// <returns>All categories</returns>
         Task<Category[]> GetCategories();
@@ -30,8 +35,5 @@ namespace Abstractions.IRepository
         Task<Category> GetEverythingCategory();
 
         Task<Category> SaveCategory(Category category);
-
-        Task<Category> DeleteCategory(Category category);
-
     }
 }

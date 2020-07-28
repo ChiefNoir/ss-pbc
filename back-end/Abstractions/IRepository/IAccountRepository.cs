@@ -6,6 +6,15 @@ namespace Abstractions.IRepository
     /// <summary> Account repository </summary>
     public interface IAccountRepository
     {
+        /// <summary>Add new <see cref="Account"/></summary>
+        /// <param name="account">New account</param>
+        /// <returns>Created <see cref="Account"/> </returns>
+        Task<Account> Add(Account account);
+
+        /// <summary> Count <see cref="Account"/></summary>
+        /// <returns>Total of the accounts, containing keyword </returns>
+        Task<int> Count();
+
         /// <summary> Get existing <see cref="Account"/> </summary>
         /// <param name="login">Account login as plain text</param>
         /// <param name="plainTextPassword">Account password as plaint text</param>
@@ -16,14 +25,6 @@ namespace Abstractions.IRepository
         /// <param name="id">Account id</param>
         /// <returns>Existing <see cref="Account"/> or <see cref="null"/> </returns>
         Task<Account> Get(int id);
-
-        Task<Account> Add(Account account);
-
-        /// <summary> Update existing <see cref="Account"/> </summary>
-        /// <param name="account"> Edited <see cref="Account"/></param>
-        /// <returns></returns>
-        Task<Account> Update(Account account);
-
         Task<bool> Remove(Account account);
 
         /// <summary> Search within <see cref="Account"/>, with paging </summary>
@@ -32,8 +33,9 @@ namespace Abstractions.IRepository
         /// <returns> Array of <see cref="Account"/>, containing keyword </returns>
         Task<Account[]> Search(int start, int length);
 
-        /// <summary> Count <see cref="Account"/></summary>
-        /// <returns>Total of the accounts, containing keyword </returns>
-        Task<int> Count();
+        /// <summary> Update existing <see cref="Account"/> </summary>
+        /// <param name="account"> Edited <see cref="Account"/></param>
+        /// <returns></returns>
+        Task<Account> Update(Account account);
     }
 }

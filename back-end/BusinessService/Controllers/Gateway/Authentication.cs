@@ -1,13 +1,10 @@
 ﻿using Abstractions.IRepository;
-using Abstractions.Model;
 using API.Model;
 using API.Security;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Gateway
@@ -25,7 +22,6 @@ namespace API.Controllers.Gateway
             _userRepository = userRepository;
         }
 
-
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Credentials credentials)
         {            
@@ -34,7 +30,7 @@ namespace API.Controllers.Gateway
                 var user = await _userRepository.Get(credentials.Login, credentials.Password);
 
                 if (user == null)
-                    throw new Exception("No");
+                    throw new Exception("Wrong user or password");
 
                 return new Identity
                 {
@@ -47,9 +43,5 @@ namespace API.Controllers.Gateway
             return new JsonResult(result);
         }
 
-        
-
     }
-
-
 }

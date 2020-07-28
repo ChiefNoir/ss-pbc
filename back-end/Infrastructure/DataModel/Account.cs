@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Infrastructure.DataModel
 {
     [Table("account")]
-    class Account
+    internal class Account
     {
         [Key]
         [Column("id")]
@@ -16,11 +16,11 @@ namespace Infrastructure.DataModel
         [Column("password")]
         public string Password { get; set; }
 
-        [Column("salt")]
-        public string Salt { get; set; }
-
         [Column("role")]
         public string Role { get; set; }
+
+        [Column("salt")]
+        public string Salt { get; set; }
 
         [Column("version")]
         public long Version { get; set; }

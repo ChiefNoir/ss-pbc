@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Infrastructure.DataModel
 {
     [Table("project_to_external_url")]
-    class IntroductionToExternalUrl
+    internal class IntroductionToExternalUrl
     {
         [Key]
         [Column("id")]

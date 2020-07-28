@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Infrastructure.DataModel
 {
     [Table("categories_with_projects_total_v")]
-    class CategoryWithTotalProjects
+    internal class CategoryWithTotalProjects
     {
         [Key]
         [Column("id")]
@@ -19,10 +19,10 @@ namespace Infrastructure.DataModel
         [Column("is_everything")]
         public bool IsEverything { get; private set; }
 
-        [Column("version")]
-        public long Version { get; private set; }
-
         [Column("total_projects")]
         public int TotalProjects { get; private set; }
+
+        [Column("version")]
+        public long Version { get; private set; }
     }
 }

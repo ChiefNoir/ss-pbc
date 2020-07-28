@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Infrastructure.DataModel
 {
     [Table("category")]
-    class Category
+    internal class Category
     {
         [Key]
         [Column("id")]

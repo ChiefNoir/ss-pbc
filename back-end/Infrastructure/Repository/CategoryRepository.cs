@@ -5,25 +5,19 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly DataContext _context;
         private readonly IMemoryCache<string, Category> _cache;
+        private readonly DataContext _context;
 
         public CategoryRepository(DataContext context, IMemoryCache<string, Category> cache)
         {
             _context = context;
             _cache = cache;
-        }
-
-        public Task<Category[]> GetCategories()
-        {
-            return Task.Run(() => { return _cache.GetAll(LoadAllCategories); });
         }
 
         public async Task<bool> CheckIsEverything(string code)
@@ -33,49 +27,21 @@ namespace Infrastructure.Repository
             return item?.IsEverything == true;
         }
 
-        private Task<Category[]> LoadAllCategories()
+        public async Task<Category> DeleteCategory(Category category)
         {
-            return _context.CategoriesWithTotalProjects
-                           .AsNoTracking()
-                           .Select(x => new Category
-                           {
-                               Id = x.Id,
-                               Code = x.Code,
-                               DisplayName = x.DisplayName,
-                               IsEverything = x.IsEverything,
-                               TotalProjects = x.TotalProjects,
-                               Version = x.Version
-                           })
-                           .ToArrayAsync();
+            var dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
+
+            _context.Categories.Remove(dbCategory);
+            _cache.RemoveAsync(dbCategory.Code);
+
+            return null;
         }
 
-        private async Task<Category> GetCategory(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)
+        public Task<Category[]> GetCategories()
         {
-            var result = await _context.CategoriesWithTotalProjects
-               .AsNoTracking()
-               .Where(predicate)
-               .Select(x => new Category
-               {
-                   Id = x.Id,
-                   Code = x.Code,
-                   DisplayName = x.DisplayName,
-                   IsEverything = x.IsEverything,
-                   TotalProjects = x.TotalProjects,
-                   Version = x.Version
-               })
-               .FirstOrDefaultAsync();
-
-            if (result == null)
-                throw new Exception("Not found");
-
-            return result;
+            return Task.Run(() => { return _cache.GetAll(LoadAllCategories); });
         }
-
-        public Task<Category> GetEverythingCategory()
-        {
-            return _cache.FindOrCreateAsync(x => x.IsEverything, () => { return GetCategory(x => x.IsEverything); });
-        }
-
+        
         public Task<Category> GetCategory(string code)
         {
             return GetCategory(x => x.Code == code);
@@ -86,12 +52,10 @@ namespace Infrastructure.Repository
             return GetCategory(x => x.Id == id);
         }
 
-
-
-
-
-
-
+        public Task<Category> GetEverythingCategory()
+        {
+            return _cache.FindOrCreateAsync(x => x.IsEverything, () => { return GetCategory(x => x.IsEverything); });
+        }
 
         public async Task<Category> SaveCategory(Category category)
         {
@@ -117,9 +81,8 @@ namespace Infrastructure.Repository
                 // TODO inconsistancy
                 dbItem.DisplayName = category.DisplayName;
                 dbItem.Code = category.Code;
-                dbItem.Version ++;
+                dbItem.Version++;
             }
-
 
             await _context.SaveChangesAsync();
             _cache.UpdateOrCreateAsync(category.Code, () => { return GetCategory(x => x.Code == category.Code); });
@@ -129,17 +92,6 @@ namespace Infrastructure.Repository
 
             return Convert(dbItem);
         }
-
-        public async Task<Category> DeleteCategory(Category category)
-        {
-            var dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
-
-            _context.Categories.Remove(dbCategory);
-            _cache.RemoveAsync(dbCategory.Code);
-
-            return null;
-        }
-
 
         private Category Convert(DataModel.Category cat)
         {
@@ -154,6 +106,42 @@ namespace Infrastructure.Repository
             };
         }
 
-        
+        private async Task<Category> GetCategory(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)
+        {
+            var result = await _context.CategoriesWithTotalProjects
+               .AsNoTracking()
+               .Where(predicate)
+               .Select(x => new Category
+               {
+                   Id = x.Id,
+                   Code = x.Code,
+                   DisplayName = x.DisplayName,
+                   IsEverything = x.IsEverything,
+                   TotalProjects = x.TotalProjects,
+                   Version = x.Version
+               })
+               .FirstOrDefaultAsync();
+
+            if (result == null)
+                throw new Exception("Not found");
+
+            return result;
+        }
+
+        private Task<Category[]> LoadAllCategories()
+        {
+            return _context.CategoriesWithTotalProjects
+                           .AsNoTracking()
+                           .Select(x => new Category
+                           {
+                               Id = x.Id,
+                               Code = x.Code,
+                               DisplayName = x.DisplayName,
+                               IsEverything = x.IsEverything,
+                               TotalProjects = x.TotalProjects,
+                               Version = x.Version
+                           })
+                           .ToArrayAsync();
+        }
     }
 }

@@ -11,9 +11,9 @@ namespace Infrastructure.Repository
 {
     public class AccountRepository : IAccountRepository
     {
+        private readonly IConfiguration _configuration;
         private readonly DataContext _context;
         private readonly IHashManager _hashManager;
-        private readonly IConfiguration _configuration;
 
         public AccountRepository(DataContext context, IConfiguration configuration, IHashManager hashManager)
         {
@@ -24,24 +24,27 @@ namespace Infrastructure.Repository
             InitDefaults(); // TODO: doesn't look good.
         }
 
-        /// <summary> Initialize default user </summary>
-        private async void InitDefaults()
+        public async Task<Account> Add(Account account)
         {
-            if (!_context.HasAccounts)
-            {
-                try
-                {
-                    var login = _configuration.GetSection("Default:Admin:Login").Get<string>();
-                    var pass = _configuration.GetSection("Default:Admin:Password").Get<string>();
+            var hashedPassword = _hashManager.Hash(account.Password);
 
-                    await Add( new Account { Login = login, Password = pass, Role = RoleNames.Admin });
-                    _context.HasAccounts = true;
-                }
-                catch
-                {
-                    //TODO: log
-                }
-            }
+            var user = new DataModel.Account
+            {
+                Login = account.Login,
+                Password = hashedPassword.HexHash,
+                Salt = hashedPassword.HexSalt,
+                Role = account.Role
+            };
+
+            await _context.Accounts.AddAsync(user);
+            await _context.SaveChangesAsync();
+
+            return Convert(user);
+        }
+
+        public Task<int> Count()
+        {
+            return _context.Accounts.CountAsync();
         }
 
         /// <summary> Get account </summary>
@@ -68,6 +71,25 @@ namespace Infrastructure.Repository
             };
         }
 
+        public async Task<Account> Get(int id)
+        {
+            var account = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == id);
+            if (account == null)
+                return null;
+
+            return Convert(account);
+        }
+
+        public async Task<bool> Remove(Account account)
+        {
+            var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == account.Id);
+
+            _context.Accounts.Remove(acc);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
         public Task<Account[]> Search(int start, int length)
         {
             return _context.Accounts
@@ -75,11 +97,6 @@ namespace Infrastructure.Repository
                             .Take(length)
                             .Select(x => Convert(x))
                             .ToArrayAsync();
-        }
-
-        public Task<int> Count()
-        {
-            return _context.Accounts.CountAsync();
         }
 
         public async Task<Account> Update(Account account)
@@ -93,7 +110,7 @@ namespace Infrastructure.Repository
             acc.Version++;
             acc.Role = account.Role;
 
-            if(!string.IsNullOrEmpty(account.Password))
+            if (!string.IsNullOrEmpty(account.Password))
             {
                 var hashedPassword = _hashManager.Hash(account.Password);
 
@@ -104,16 +121,6 @@ namespace Infrastructure.Repository
             await _context.SaveChangesAsync();
 
             return Convert(acc);
-        }
-
-        public async Task<bool> Remove(Account account)
-        {
-            var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == account.Id);
-
-            _context.Accounts.Remove(acc);
-            await _context.SaveChangesAsync();
-
-            return true;
         }
 
         private static Account Convert(DataModel.Account account)
@@ -128,31 +135,24 @@ namespace Infrastructure.Repository
             };
         }
 
-        public async Task<Account> Add(Account account)
+        /// <summary> Initialize default user </summary>
+        private async void InitDefaults()
         {
-            var hashedPassword = _hashManager.Hash(account.Password);
-
-            var user = new DataModel.Account
+            if (!_context.HasAccounts)
             {
-                Login = account.Login,
-                Password = hashedPassword.HexHash,
-                Salt = hashedPassword.HexSalt,
-                Role = account.Role
-            };
+                try
+                {
+                    var login = _configuration.GetSection("Default:Admin:Login").Get<string>();
+                    var pass = _configuration.GetSection("Default:Admin:Password").Get<string>();
 
-            await _context.Accounts.AddAsync(user);
-            await _context.SaveChangesAsync();
-
-            return Convert(user);
-        }
-
-        public async Task<Account> Get(int id)
-        {
-            var account = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == id);
-            if (account == null)
-                return null;
-
-            return Convert(account);
+                    await Add(new Account { Login = login, Password = pass, Role = RoleNames.Admin });
+                    _context.HasAccounts = true;
+                }
+                catch
+                {
+                    //TODO: log
+                }
+            }
         }
     }
 }

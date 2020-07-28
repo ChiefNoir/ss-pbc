@@ -52,7 +52,7 @@ namespace Infrastructure.Repository
                            .Include(x => x.ExternalUrls)
                            .ThenInclude(x => x.ExternalUrl)
                            .AsNoTracking()
-                           .Select(x => DataConverter.ToIntroduction(x))                           
+                           .Select(x => DataConverter.ToIntroduction(x))
                            .FirstOrDefaultAsync();
         }
 

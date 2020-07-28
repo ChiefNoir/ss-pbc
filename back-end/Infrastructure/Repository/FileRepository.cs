@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
@@ -26,7 +24,6 @@ namespace Infrastructure.Repository
             var folderName = _configuration.GetSection("Location:FileStorage").Get<string>();
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
-
             var filename = GenerateFileName() + Path.GetExtension(file.FileName);
 
             var fullPath = Path.Combine(pathToSave, filename);
@@ -38,7 +35,6 @@ namespace Infrastructure.Repository
 
             return filename;
         }
-
 
         private static string GenerateFileName()
         {

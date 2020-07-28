@@ -11,12 +11,12 @@ namespace API.Controllers.Gateway
 {
     [ApiController]
     [Route("api/v1/")]
-    public class Authentication : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly IAccountRepository _userRepository;
 
-        public Authentication(IConfiguration configuration, IAccountRepository userRepository)
+        public AuthenticationController(IConfiguration configuration, IAccountRepository userRepository)
         {
             _configuration = configuration;
             _userRepository = userRepository;

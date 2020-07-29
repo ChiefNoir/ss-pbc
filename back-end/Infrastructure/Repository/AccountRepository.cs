@@ -26,6 +26,12 @@ namespace Infrastructure.Repository
 
         public async Task<Account> Add(Account account)
         {
+            if (string.IsNullOrEmpty(account.Login))
+                throw new Exception("Login can't be empty");
+
+            if (string.IsNullOrEmpty(account.Password))
+                throw new Exception("Password can't be empty");
+
             var hashedPassword = _hashManager.Hash(account.Password);
 
             var user = new DataModel.Account
@@ -105,6 +111,9 @@ namespace Infrastructure.Repository
 
             if (acc == null)
                 throw new Exception("Not found");
+
+            if(string.IsNullOrEmpty(account.Login))
+                throw new Exception("Login can't be empty");
 
             acc.Login = account.Login;
             acc.Version++;

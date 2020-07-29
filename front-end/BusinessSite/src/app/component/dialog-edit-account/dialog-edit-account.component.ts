@@ -86,8 +86,7 @@ export class DialogEditAccountComponent implements OnInit
 
   public close(): void
   {
-    this.disableInput$.next(true);
-    //this.dialog.close();
+    this.dialog.close();
   }
 
   private handleAccount(result: RequestResult<Account>): void

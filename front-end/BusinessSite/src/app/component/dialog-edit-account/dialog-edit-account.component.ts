@@ -18,7 +18,7 @@ export class DialogEditAccountComponent implements OnInit
   public account$: BehaviorSubject<Account> = new BehaviorSubject<Account>(null);
   public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
-  public title$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Account properties');
 
   private accountId: number;
   private service: DataService;
@@ -35,6 +35,7 @@ export class DialogEditAccountComponent implements OnInit
   {
     if (this.accountId)
     {
+      this.message$.next({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
       this.service.getAccount(this.accountId)
                   .then
                   (
@@ -97,6 +98,7 @@ export class DialogEditAccountComponent implements OnInit
     {
       this.account$.next(result.data);
       this.title$.next('Edit "' + result.data.login + '" account');
+      this.message$.next({text: StaticNames.LoadComplete, type: MessageType.Info });
     }
     else
     {

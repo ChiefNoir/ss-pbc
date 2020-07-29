@@ -1,4 +1,6 @@
-<div [ngSwitch]="message.type" class="container">
+<mat-divider></mat-divider>
+
+<div [ngSwitch]="message.type" class="container">  
   <div *ngSwitchCase="0" class="info">
     {{ message.text }}
   </div>
@@ -17,3 +19,4 @@
     {{ message.text }}
   </div>
 </div>
+<mat-divider></mat-divider>

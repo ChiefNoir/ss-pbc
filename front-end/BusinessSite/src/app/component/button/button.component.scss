@@ -8,11 +8,12 @@ button {
     font-size: 16px;
     font-weight: 500;
     height: 30px;
-    margin-bottom: 20px;
-    margin-right: 20px;
-    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
     transition: 0.25s;
-    width: 100px;
+    min-width: 100px;
 
     &:hover {
         background-color: $color-core;

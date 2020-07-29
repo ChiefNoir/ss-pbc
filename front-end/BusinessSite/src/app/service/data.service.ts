@@ -74,6 +74,41 @@ export class DataService
 
 // --------------------------------------------------------------------
 
+  public saveAccount(account: Account): Promise<RequestResult<Account>>
+  {
+    if (account.id)
+    {
+      return this.updateAccount(account);
+    }
+    else
+    {
+      return this.createAccount(account);
+    }
+  }
+
+  private createAccount(account: Account): Promise<RequestResult<Account>>
+  {
+    return this.httpClient
+               .post<RequestResult<Account>>(this.endpoint + 'accounts', account)
+               .toPromise();
+  }
+
+  private updateAccount(account: Account): Promise<RequestResult<Account>>
+  {
+    return this.httpClient
+               .patch<RequestResult<Account>>(this.endpoint + 'accounts', account)
+               .toPromise();
+  }
+
+  public deleteAccount(account: Account): Promise<RequestResult<any>>
+  {
+    return this.httpClient
+               .request<RequestResult<boolean>>('delete', this.endpoint + 'accounts', { body: account,})
+               .toPromise();
+  }
+
+// --------------------------------------------------------------------
+
 
 
 
@@ -166,19 +201,6 @@ export class DataService
     .toPromise();
   }
 
-  public saveAccount(account: Account): Promise<RequestResult<Account>> {
-    return this.httpClient
-      .post<RequestResult<Account>>(this.endpoint + 'account', account)
-      .toPromise();
-  }
 
-  public deleteAccount(account: Account): Promise<RequestResult<any>> {
-    return this.httpClient
-      .request<RequestResult<boolean>>('delete', this.endpoint + 'accounts', {
-        body: account,
-      })
-
-      .toPromise();
-  }
 
 }

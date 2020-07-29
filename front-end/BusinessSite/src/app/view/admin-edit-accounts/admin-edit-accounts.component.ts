@@ -80,11 +80,11 @@ export class AdminEditAccountsComponent implements AfterViewInit, OnDestroy {
   }
 
   public showDialog(id?: number): void {
-    const dialogRef = this.dialog.open(DialogEditAccountComponent, {width: '50%'});
 
-    if (id) {
-      dialogRef.componentInstance.id = id;
-    }
+    const dialogRef = this.dialog.open
+    (
+      DialogEditAccountComponent, {width: '50%', data: id},
+    );
 
     dialogRef.afterClosed()
              .subscribe

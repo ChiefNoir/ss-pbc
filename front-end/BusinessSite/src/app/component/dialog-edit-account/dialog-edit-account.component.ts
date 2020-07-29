@@ -1,9 +1,10 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MessageDescription, MessageType } from '../message/message.component';
+import { StaticNames } from 'src/app/common/StaticNames';
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
-import { MatDialogRef } from '@angular/material/dialog';
-import { MessageDescription, MessageType } from '../message/message.component';
 import { Account } from 'src/app/model/Account';
 
 @Component({
@@ -12,36 +13,38 @@ import { Account } from 'src/app/model/Account';
   styleUrls: ['./dialog-edit-account.component.scss']
 })
 
-export class DialogEditAccountComponent implements AfterViewInit
+export class DialogEditAccountComponent implements OnInit
 {
-  @Input()
-  public id: number;
+  public account$: BehaviorSubject<Account> = new BehaviorSubject<Account>(null);
+  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
+  public title$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
+  private accountId: number;
   private service: DataService;
   private dialog: MatDialogRef<DialogEditAccountComponent>;
 
-  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
-  public account$: BehaviorSubject<Account> = new BehaviorSubject<Account>(null);
-  public loadingMessage: MessageDescription = {text: 'Loading', type: MessageType.Spinner };
-
-  constructor(service: DataService, dialogRef: MatDialogRef<DialogEditAccountComponent>){
+  constructor(service: DataService, dialogRef: MatDialogRef<DialogEditAccountComponent>, @Inject(MAT_DIALOG_DATA) data: number)
+  {
     this.service = service;
     this.dialog = dialogRef;
+    this.accountId = data;
   }
 
-  public ngAfterViewInit(): void
+  ngOnInit(): void
   {
-    if(this.id) {
-    this.service.getAccount(this.id)
-                .then
-                (
-                  succeeded => this.handle(this.account$, succeeded),
-                  rejected => this.handleError(rejected.message)
-                );
+    if (this.accountId)
+    {
+      this.service.getAccount(this.accountId)
+                  .then
+                  (
+                    succeeded => this.handleAccount(succeeded),
+                    rejected => this.handleError(rejected.message)
+                  );
     }
     else
     {
+      this.title$.next('Create new account');
       this.account$.next(new Account());
     }
   }
@@ -49,15 +52,15 @@ export class DialogEditAccountComponent implements AfterViewInit
   public save(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: 'Saving in progress', type: MessageType.Spinner  });
+    this.message$.next({text: StaticNames.SaveInProgress, type: MessageType.Spinner });
 
     this.service.saveAccount(this.account$.value)
                 .then
                 (
                   succeeded =>
                   {
-                    this.message$.next({text: 'Saving complete', type: MessageType.Info  }); 
-                    this.handle(this.account$, succeeded);
+                    this.message$.next({text: StaticNames.SaveComplete, type: MessageType.Info });
+                    this.handleAccount(succeeded);
                   },
                   rejected => this.handleError(rejected.message)
                 );
@@ -65,29 +68,36 @@ export class DialogEditAccountComponent implements AfterViewInit
 
   public delete(): void
   {
-    this.message$.next({text: 'Deleting in progress', type: MessageType.Spinner  });
     this.disableInput$.next(true);
+    this.message$.next({text: StaticNames.DeleteInProgress, type: MessageType.Spinner });
 
     this.service.deleteAccount(this.account$.value)
                 .then
                 (
-                  () => this.close(),
+                  () =>
+                  {
+                    this.account$.next(null);
+                    this.title$.next('Delete account');
+                    this.message$.next({text: StaticNames.DeleteComplete, type: MessageType.Info });
+                  },
                   rejected => this.handleError(rejected.message)
                 );
   }
 
   public close(): void
   {
-    this.dialog.close();
+    this.disableInput$.next(true);
+    //this.dialog.close();
   }
 
-  private handle<T>(content: BehaviorSubject<T>, result: RequestResult<T>): void
+  private handleAccount(result: RequestResult<Account>): void
   {
     this.disableInput$.next(false);
 
     if (result.isSucceed)
     {
-      content.next(result.data);
+      this.account$.next(result.data);
+      this.title$.next('Edit "' + result.data.login + '" account');
     }
     else
     {
@@ -98,7 +108,7 @@ export class DialogEditAccountComponent implements AfterViewInit
   private handleError(error: string): void
   {
     this.disableInput$.next(false);
-    this.message$.next({text: error, type: MessageType.Error  });
-    console.log(error);
+    this.message$.next({text: error, type: MessageType.Error });
   }
+
 }

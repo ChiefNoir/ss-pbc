@@ -6,8 +6,8 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./file-uploader.component.scss']
 })
 
-export class FileUploaderComponent {
-
+export class FileUploaderComponent
+{
   @Output()
   uploadFiles = new EventEmitter<File[]>();
 

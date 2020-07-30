@@ -20,7 +20,6 @@ export class AdminEditCategoriesComponent implements AfterViewInit {
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
   public dialog: MatDialog;
 
-  //public columns: string[] = ['code', 'displayName', 'isEverything'];
   private columnDefinitions = [
     { def: 'id', show: false },
     { def: 'code', show: true },
@@ -69,12 +68,9 @@ export class AdminEditCategoriesComponent implements AfterViewInit {
   }
 
   public showEditor(categoryId: number): void {
-    const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '50%'});
+    const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '50%', data: categoryId});
 
-    if(categoryId) {
-    dialogRef.componentInstance.categoryId = categoryId;
-    }
-    
+
     dialogRef.afterClosed()
              .subscribe
              (
@@ -99,7 +95,7 @@ export class AdminEditCategoriesComponent implements AfterViewInit {
       this.handleError(result.errorMessage);
     }
   }
-  
+
   private handleError(error: any): void {
     // TODO: react properly
     console.log(error);

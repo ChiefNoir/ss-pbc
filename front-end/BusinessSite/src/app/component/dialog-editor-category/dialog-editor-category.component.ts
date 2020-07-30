@@ -1,9 +1,10 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
+import { StaticNames } from 'src/app/common/StaticNames';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { Category } from 'src/app/model/Category';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from '../message/message.component';
 
 @Component({
@@ -12,40 +13,42 @@ import { MessageDescription, MessageType } from '../message/message.component';
   styleUrls: ['./dialog-editor-category.component.scss']
 })
 
-export class DialogEditorCategoryComponent implements AfterViewInit
+export class DialogEditorCategoryComponent implements OnInit
 {
-  @Input()
-  public categoryId: number;
+  public category$: BehaviorSubject<Category> = new BehaviorSubject<Category>(null);
+  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
+  public systemCategoryMessage: MessageDescription = {text: 'You can\'t delete system category', type: MessageType.Info };
+  public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Category properties');
 
+  private categoryId: number;
   private service: DataService;
   private dialog: MatDialogRef<DialogEditorCategoryComponent>;
 
-  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
-  public category$: BehaviorSubject<Category> = new BehaviorSubject<Category>(null);
-  public loadingMessage: MessageDescription = {text: 'Loading', type: MessageType.Spinner };
-
-  constructor(service: DataService, dialogRef: MatDialogRef<DialogEditorCategoryComponent>){
+  constructor(service: DataService, dialogRef: MatDialogRef<DialogEditorCategoryComponent>, @Inject(MAT_DIALOG_DATA) categoryId: number)
+  {
     this.service = service;
     this.dialog = dialogRef;
+    this.categoryId = categoryId;
   }
 
-  public ngAfterViewInit(): void
+  public ngOnInit(): void
   {
     if (this.categoryId)
     {
-    this.service.getCategory(this.categoryId)
-                .then
-                (
-                  succeeded => this.handle(this.category$, succeeded),
-                  rejected => this.handleError(rejected.message)
-                );
+      this.service.getCategory(this.categoryId)
+                  .then
+                  (
+                    succeeded => this.handleCategory(succeeded),
+                    rejected => this.handleError(rejected.message)
+                  );
     }
     else
     {
       this.category$.next(new Category());
     }
   }
+
 
   public save(): void
   {
@@ -57,8 +60,8 @@ export class DialogEditorCategoryComponent implements AfterViewInit
                 (
                   succeeded =>
                   {
-                    this.message$.next({text: 'Saving complete', type: MessageType.Info  }); 
-                    this.handle(this.category$, succeeded);
+                    this.message$.next({text: 'Saving complete', type: MessageType.Info  });
+                    this.handleCategory(succeeded);
                   },
                   rejected => this.handleError(rejected.message)
                 );
@@ -82,13 +85,15 @@ export class DialogEditorCategoryComponent implements AfterViewInit
     this.dialog.close();
   }
 
-  private handle<T>(content: BehaviorSubject<T>, result: RequestResult<T>): void
+  private handleCategory(result: RequestResult<Category>): void
   {
     this.disableInput$.next(false);
 
     if (result.isSucceed)
     {
-      content.next(result.data);
+      this.category$.next(result.data);
+      this.title$.next('Edit "' + result.data.code + '" category');
+      this.message$.next({text: StaticNames.LoadComplete, type: MessageType.Info });
     }
     else
     {
@@ -99,7 +104,7 @@ export class DialogEditorCategoryComponent implements AfterViewInit
   private handleError(error: string): void
   {
     this.disableInput$.next(false);
-    this.message$.next({text: error, type: MessageType.Error  });
-    console.log(error);
+    this.message$.next({text: error, type: MessageType.Error });
   }
+
 }

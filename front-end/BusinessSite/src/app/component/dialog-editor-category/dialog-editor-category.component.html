@@ -1,40 +1,42 @@
-<h1 mat-dialog-title> Category </h1>
-
 <mat-dialog-content>
-  <div *ngIf="category$ | async as category; else loading">
-    <form>
-      <div fxLayout="column" fxLayoutAlign="space-around center">
-        <div *ngIf="category.isEverything" class="warning">
-          This is a technical category for filtering by everything. You can not
-          delete it.
-        </div>
-        <mat-form-field>
-          <input [disabled]="disableInput$ | async" matInput [(ngModel)]="category.code" name="code" placeholder="code"/>
-        </mat-form-field>
-        <mat-form-field>
-          <input [disabled]="disableInput$ | async" matInput [(ngModel)]="category.displayName" name="displayName" placeholder="Display name"/>
-        </mat-form-field>
-      </div>
-    </form>
-    <br />
+  <h2 *ngIf="title$ | async as title" class="title"> {{title}} </h2>
+
+  <div class="content" *ngIf="category$ | async as category">
+    <div fxLayout="column" fxLayoutAlign="space-around center">
+      <mat-form-field>
+        <input [disabled]="disableInput$ | async" matInput [(ngModel)]="category.code" name="code" placeholder="code"/>
+      </mat-form-field>
+      <mat-form-field>
+        <input [disabled]="disableInput$ | async" matInput [(ngModel)]="category.displayName" name="displayName" placeholder="Display name"/>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div *ngIf="category$ | async as category">
+    <div *ngIf="category.isEverything">
+      <app-message [message]="systemCategoryMessage"></app-message>
+    </div>
   </div>
 
   <div *ngIf="message$ | async as msg">
     <app-message [message]="msg"></app-message>
   </div>
 
-  <div *ngIf="category$ | async as category">
-    <div class="actions">
-      <app-button *ngIf="!category.isEverything" [isDisabled]="disableInput$ | async" (OnClick)="delete()">delete</app-button>
-      <div>
-        <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">save</app-button>
-        <app-button cdkFocusInitial (OnClick)="close()">close</app-button>
-      </div>
+  <div class="actions" fxHide.lt-md="true">
+    <div *ngIf="category$ | async as category" class="actions-left">
+      <app-button *ngIf="!category.isEverything" [isDisabled]="disableInput$ | async" (OnClick)="delete()">Delete</app-button>
+    </div>
+
+    <div class="actions-right">
+      <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">Save</app-button>
+      <app-button (OnClick)="close()">Close</app-button>
     </div>
   </div>
-</mat-dialog-content>
-<br />
 
-<ng-template #loading>
-  <app-message [message]="loadingMessage"></app-message>
-</ng-template>
+  <div fxLayout="column" fxLayoutAlign="space-evenly center" fxHide.gt-sm="true">
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">Delete</app-button>
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">Save</app-button>
+    <app-button (OnClick)="close()">Close</app-button>
+  </div>
+
+</mat-dialog-content>

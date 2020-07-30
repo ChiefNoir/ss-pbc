@@ -16,7 +16,7 @@ import { Account } from 'src/app/model/Account';
 export class DialogEditAccountComponent implements OnInit
 {
   public account$: BehaviorSubject<Account> = new BehaviorSubject<Account>(null);
-  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Account properties');
 
@@ -31,7 +31,7 @@ export class DialogEditAccountComponent implements OnInit
     this.accountId = data;
   }
 
-  ngOnInit(): void
+  public ngOnInit(): void
   {
     if (this.accountId)
     {

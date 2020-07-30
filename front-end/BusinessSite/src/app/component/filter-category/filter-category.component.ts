@@ -7,7 +7,8 @@ import { Category } from 'src/app/model/Category';
   styleUrls: ['./filter-category.component.scss']
 })
 
-export class FilterCategoryComponent {
+export class FilterCategoryComponent
+{
   @Input()
   public categories: Array<Category>;
 }

@@ -8,6 +8,8 @@ import { RequestResult } from 'src/app/model/RequestResult';
 import { Category } from 'src/app/model/Category';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorCategoryComponent } from 'src/app/component/dialog-editor-category/dialog-editor-category.component';
+import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
+import { StaticNames } from 'src/app/common/StaticNames';
 
 @Component({
   selector: 'app-admin-edit-categories',
@@ -18,6 +20,7 @@ import { DialogEditorCategoryComponent } from 'src/app/component/dialog-editor-c
 export class AdminEditCategoriesComponent implements AfterViewInit {
   private service: DataService;
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   public dialog: MatDialog;
 
   private columnDefinitions = [

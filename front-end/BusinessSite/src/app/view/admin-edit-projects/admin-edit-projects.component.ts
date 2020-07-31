@@ -11,6 +11,8 @@ import { PagingInfo } from 'src/app/model/PagingInfo';
 import { Category } from 'src/app/model/Category';
 import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { Project } from 'src/app/model/Project';
+import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
+import { StaticNames } from 'src/app/common/StaticNames';
 
 @Component({
   selector: 'app-admin-edit-projects',
@@ -27,6 +29,7 @@ export class AdminEditProjectsComponent implements AfterViewInit {
 
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
   public pagingInfo$: BehaviorSubject<PagingInfo> = new BehaviorSubject<PagingInfo>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   public dialog: MatDialog;
 
   public constructor(service: DataService, dialog: MatDialog) {

@@ -7,6 +7,7 @@ import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { Introduction } from 'src/app/model/Introduction';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
+import { StaticNames } from 'src/app/common/StaticNames';
 
 @Component({
   selector: 'app-introduction',
@@ -18,8 +19,7 @@ export class IntroductionComponent implements AfterViewInit {
   private service: DataService;
 
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: 'Loading', type: MessageType.Spinner  });
-
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   public constructor(service: DataService, titleService: Title) {
     this.service = service;
 

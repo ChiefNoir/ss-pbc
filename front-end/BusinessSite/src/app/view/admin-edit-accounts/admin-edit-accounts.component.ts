@@ -10,6 +10,8 @@ import { Account } from 'src/app/model/Account';
 
 import { DialogEditAccountComponent } from 'src/app/component/dialog-edit-account/dialog-edit-account.component';
 import { Paging } from 'src/app/model/PagingInfo';
+import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
+import { StaticNames } from 'src/app/common/StaticNames';
 
 @Component({
   selector: 'app-admin-edit-accounts',
@@ -21,6 +23,7 @@ export class AdminEditAccountsComponent implements AfterViewInit, OnDestroy {
   private service: DataService;
 
   public accounts$: BehaviorSubject<Array<Account>> = new BehaviorSubject<Array<Account>>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   public paging$: BehaviorSubject<Paging> = new BehaviorSubject<Paging>(null);
   public dialog: MatDialog;
   public columns: string[] = ['login', 'role'];

@@ -10,6 +10,8 @@ import { Category } from 'src/app/model/Category';
 import { PagingInfo } from 'src/app/model/PagingInfo';
 
 import { environment } from 'src/environments/environment';
+import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
+import { StaticNames } from 'src/app/common/StaticNames';
 
 @Component({
   selector: 'app-projects-list',
@@ -30,6 +32,7 @@ export class ProjectsListComponent {
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
   public pagingInfo$: BehaviorSubject<PagingInfo> = new BehaviorSubject<PagingInfo>(null);
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
 
   public constructor(service: DataService, router: Router, activeRoute: ActivatedRoute, titleService: Title) {
     this.service = service;

@@ -4,33 +4,33 @@
   <mat-toolbar-row 
         fxLayout="row" fxLayoutAlign="center stretch" 
         fxShow="true" fxHide.lt-md="true">
-      <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         Home
       </a>
-      <a mat-button routerLink="/projects/" routerLinkActive="active">
+      <a routerLink="/projects/" routerLinkActive="active">
         Projects
       </a>
-      <a mat-button routerLink="/login/" routerLinkActive="active">
+      <a routerLink="/login/" routerLinkActive="active">
         login
       </a>
-      <a mat-button routerLink="/admin/project_editor/" routerLinkActive="active">
+      <a routerLink="/admin/project_editor/" routerLinkActive="active">
         prj
       </a>
-      <a mat-button routerLink="/admin/category_editor/" routerLinkActive="active">
+      <a routerLink="/admin/category_editor/" routerLinkActive="active">
         ctg
       </a>
-      <a mat-button routerLink="/admin/accounts_editor/" routerLinkActive="active">
+      <a routerLink="/admin/accounts_editor/" routerLinkActive="active">
         acc
       </a>
-      <a mat-button routerLink="/admin/introduction_editor/" routerLinkActive="active">
+      <a routerLink="/admin/introduction_editor/" routerLinkActive="active">
         intr
       </a>
   </mat-toolbar-row>
 
   <mat-toolbar-row 
         fxShow="true" fxHide.gt-sm="true" class="active">
-   <!-- <a mat-button (click)="sidenav.toggle()" fxFlex="220%"> -->
-        <a mat-button fxFlex="220%">
+   <!-- <a (click)="sidenav.toggle()" fxFlex="220%"> -->
+        <a fxFlex="220%">
           Menu
         </a>
     </mat-toolbar-row>

@@ -6,8 +6,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./paginator.component.scss'],
 })
 
-export class PaginatorComponent {
-
+export class PaginatorComponent
+{
   @Input()
   public maxPage: number;
 
@@ -28,15 +28,18 @@ export class PaginatorComponent {
   public previousPageClick = new EventEmitter();
 
 
-  public changePageEnterPress(pageNumber: number) {
+  public changePageEnterPress(pageNumber: number)
+  {
     this.changePage.emit(pageNumber);
   }
 
-  public btnNextClick() {
+  public btnNextClick()
+  {
     this.nextPageClick.emit();
   }
 
-  public btnPreviousClick() {
+  public btnPreviousClick()
+  {
     this.previousPageClick.emit();
   }
 }

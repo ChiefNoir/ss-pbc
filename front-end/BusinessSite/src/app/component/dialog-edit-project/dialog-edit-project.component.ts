@@ -1,10 +1,9 @@
-import { Component, Input, AfterContentInit, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Project } from 'src/app/model/Project';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { Category } from 'src/app/model/Category';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { MatTable } from '@angular/material/table';
 import { MessageType, MessageDescription } from '../message/message.component';
@@ -13,30 +12,24 @@ import { StaticNames } from 'src/app/common/StaticNames';
 
 @Component({
   selector: 'app-dialog-edit-project.',
-  templateUrl: './dialog-edit-project..component.html',
-  styleUrls: ['./dialog-edit-project..component.scss']
+  templateUrl: './dialog-edit-project.component.html',
+  styleUrls: ['./dialog-edit-project.component.scss']
 })
 
 export class DialogEditProjectComponent implements OnInit
 {
   public columnsInner: string[] = [ 'name', 'url', 'btn'];
+
+  private code: string;
+  private service: DataService;
+  public categories$: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>(null);
+  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loadingMessage: MessageDescription = {text: 'Loading', type: MessageType.Spinner };
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
+  public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
+
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
   private dialog: MatDialogRef<DialogEditProjectComponent>;
-
-  private service: DataService;
-
-  @Input()
-  public code: string;
-
-  public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
-  public categories$: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>(null);
-
-
-
-  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
-
-  public loadingMessage: MessageDescription = {text: 'Loading', type: MessageType.Spinner };
 
   constructor(service: DataService, dialog: MatDialogRef<DialogEditProjectComponent>, @Inject(MAT_DIALOG_DATA) projectCode: string)
   {
@@ -124,17 +117,6 @@ export class DialogEditProjectComponent implements OnInit
                 );
   }
 
-
-
-
-
-  public close(): void
-  {
-    this.dialog.close();
-  }
-
-
-
   public delete(): void
   {
     this.disableInput$.next(true);
@@ -151,14 +133,10 @@ export class DialogEditProjectComponent implements OnInit
     );
   }
 
-
-
-  private handleError(error: string): void
+  public close(): void
   {
-    this.disableInput$.next(false);
-    this.message$.next({text: error, type: MessageType.Error  });
+    this.dialog.close();
   }
-
 
   public uploadFile (files : File[]) {
     if (files.length === 0) {
@@ -180,6 +158,13 @@ export class DialogEditProjectComponent implements OnInit
   {
     this.project$.value.posterUrl = '';
     // this.filename = 'no';
+  }
+
+
+  private handleError(error: string): void
+  {
+    this.disableInput$.next(false);
+    this.message$.next({text: error, type: MessageType.Error  });
   }
 
   private handleProject(result: RequestResult<Project>): void

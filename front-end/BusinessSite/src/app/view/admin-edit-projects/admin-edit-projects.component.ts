@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { MatDialog } from '@angular/material/dialog';
-import { ProjectEditorComponent } from 'src/app/component/project-editor/project-editor.component';
+import { DialogEditProjectComponent } from 'src/app/component/dialog-edit-project/dialog-edit-project.component';
 import { PagingInfo } from 'src/app/model/PagingInfo';
 import { Category } from 'src/app/model/Category';
 import { ProjectPreview } from 'src/app/model/ProjectPreview';
@@ -46,10 +46,12 @@ export class AdminEditProjectsComponent implements AfterViewInit {
                 );
   }
 
-  public showRow(data: any): void {
-    const dialogRef = this.dialog.open(ProjectEditorComponent, {width: '90%', minHeight:'80%'});
-
-    dialogRef.componentInstance.code = data;
+  public showRow(projectCode: any): void {
+    const dialogRef = this.dialog.open
+    (
+      DialogEditProjectComponent, 
+      {width: '90%', minHeight:'80%', data: projectCode}
+    );
 
     dialogRef.afterClosed()
              .subscribe

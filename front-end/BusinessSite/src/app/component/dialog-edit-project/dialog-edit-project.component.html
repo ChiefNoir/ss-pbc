@@ -117,8 +117,8 @@
 
         <tr mat-header-row *matHeaderRowDef="columnsInner"></tr>
         <tr mat-row *matRowDef="let row; columns: columnsInner"></tr>
-        <tr mat-footer-row *matFooterRowDef="columnsInner" (click)="add()"></tr>
-
+        <tr mat-footer-row *matFooterRowDef="columnsInner" (click)="addUrl()"></tr>
+ 
         </table>
 
     </mat-tab>

@@ -21,7 +21,7 @@ import { FilterCategoryComponent } from './component/filter-category/filter-cate
 import { PaginatorComponent } from './component/paginator/paginator.component';
 import { ProjectPreviewComponent } from './component/project-preview/project-preview.component';
 import { ProjectFullComponent } from './component/project-full/project-full.component';
-import { ProjectEditorComponent } from './component/project-editor/project-editor.component';
+import { DialogEditProjectComponent } from './component/dialog-edit-project/dialog-edit-project.component';
 import { DialogEditorCategoryComponent } from './component/dialog-editor-category/dialog-editor-category.component';
 import { DialogEditAccountComponent } from './component/dialog-edit-account/dialog-edit-account.component';
 import { SpinnerTextComponent } from './component/spinner-text/spinner-text.component';
@@ -67,7 +67,7 @@ import { CookieService } from 'ngx-cookie-service';
     PaginatorComponent,
     ProjectPreviewComponent,
     ProjectFullComponent,
-    ProjectEditorComponent,
+    DialogEditProjectComponent,
     DialogEditorCategoryComponent,
     DialogEditAccountComponent,
     HeaderComponent,

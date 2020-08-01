@@ -24,8 +24,7 @@ export class StorageService {
           expires,
           this.path,
           window.location.hostname,
-          true, 
-          false,
+          true,
           'Strict'
         );
   }

@@ -121,9 +121,9 @@ namespace Infrastructure.Repository
 
         private void Merge(Project localProject, IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
         {
-            foreach (var item in localProject.ExternalUrls)
+            foreach (var item in localProject?.ExternalUrls ?? new List<ProjectExternalUrl>())
             {
-                var localExternalUrl = externalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
+                var localExternalUrl = externalUrls?.FirstOrDefault(x => x.Id == item.ExternalUrlId);
 
                 if (localExternalUrl == null)
                 {
@@ -137,7 +137,7 @@ namespace Infrastructure.Repository
                 }
             }
 
-            foreach (var item in externalUrls.Where(x => x.Id == null))
+            foreach (var item in externalUrls?.Where(x => x.Id == null) ?? new List<Abstractions.Model.ExternalUrl>())
             {
                 localProject.ExternalUrls.Add(AbstractionsConverter.ToProjectExternalUrl(item));
             }

@@ -72,32 +72,6 @@ background-color: $color-text !important;;
 }
 
 
-button {
-  /* background-color: transparent; */
-  border: 2px solid;
-
-  width: 100px;
-  transition: 0.25s;
- 
-  color: $color-control-text;
-}
-
-button:hover{
-  background-color: $color-core;
-  transform: translateY(-0.2em);
-  -webkit-transform: translateY(-0.2em);
-  -moz-transform: translateY(-0.2em);
-  -ms-transform: translateY(-0.2em);
-  -o-transform: translateY(-0.2em);
-}
-
-button:disabled {
-  transform: none;
-  opacity: 60%;
-  background-color: $color-core !important;
-  color: $color-control-text !important;
-}
-
 
 
 table {

@@ -18,7 +18,7 @@ namespace API.Controllers.Private
         }
 
         [HttpPost("project")]
-        public async Task<IActionResult> Save([FromBody] Project project)
+        public async Task<IActionResult> Add([FromBody] Project project)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
@@ -27,5 +27,29 @@ namespace API.Controllers.Private
 
             return new JsonResult(result);
         }
+
+        [HttpPatch("project")]
+        public async Task<IActionResult> Update([FromBody] Project project)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _projectRepository.Update(project);
+            });
+
+            return new JsonResult(result);
+        }
+
+        [HttpDelete("project")]
+        public async Task<IActionResult> Delete([FromBody] Project project)
+        {
+            var result = await Supervisor.SafeExecuteAsync(() =>
+            {
+                return _projectRepository.Delete(project);
+            });
+
+            return new JsonResult(result);
+        }
+
+
     }
 }

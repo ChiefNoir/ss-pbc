@@ -21,6 +21,92 @@ export class DataService
     this.httpClient = http;
   }
 
+// --------------------------------------------------------------------
+  public saveAccount(account: Account): Promise<RequestResult<Account>>
+  {
+    if (account.id)
+    {
+      return this.updateAccount(account);
+    }
+    else
+    {
+      return this.createAccount(account);
+    }
+  }
+
+  private createAccount(account: Account): Promise<RequestResult<Account>>
+  {
+    return this.httpClient
+              .post<RequestResult<Account>>(this.endpoint + 'accounts', account)
+              .toPromise();
+  }
+
+  private updateAccount(account: Account): Promise<RequestResult<Account>>
+  {
+    return this.httpClient
+              .patch<RequestResult<Account>>(this.endpoint + 'accounts', account)
+              .toPromise();
+  }
+
+  public deleteAccount(account: Account): Promise<RequestResult<any>>
+  {
+    return this.httpClient
+              .request<RequestResult<boolean>>('delete', this.endpoint + 'accounts', { body: account,})
+              .toPromise();
+  }
+
+
+  public saveProject(project: Project): Promise<RequestResult<Project>>
+  {
+    if (project.id)
+    {
+      return this.updateProject(project);
+    }
+    else
+    {
+      return this.createProject(project);
+    }
+  }
+
+  public deleteProject(project: Project): Promise<RequestResult<any>>
+  {
+    return this.httpClient
+              .request<RequestResult<boolean>>('delete', this.endpoint + 'project', { body: project,})
+              .toPromise();
+  }
+
+  private updateProject(project: Project): Promise<RequestResult<Project>>
+  {
+    return this.httpClient
+               .patch<RequestResult<any>>(this.endpoint + 'project', project)
+               .toPromise();
+  }
+
+  private createProject(project: Project): Promise<RequestResult<Project>>
+  {
+    return this.httpClient
+               .post<RequestResult<any>>(this.endpoint + 'project', project)
+               .toPromise();
+  }
+
+// --------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   public getIntroduction(): Promise<RequestResult<Introduction>>
   {
     return this.httpClient
@@ -72,42 +158,7 @@ export class DataService
                .toPromise();
   }
 
-// --------------------------------------------------------------------
 
-  public saveAccount(account: Account): Promise<RequestResult<Account>>
-  {
-    if (account.id)
-    {
-      return this.updateAccount(account);
-    }
-    else
-    {
-      return this.createAccount(account);
-    }
-  }
-
-  private createAccount(account: Account): Promise<RequestResult<Account>>
-  {
-    return this.httpClient
-               .post<RequestResult<Account>>(this.endpoint + 'accounts', account)
-               .toPromise();
-  }
-
-  private updateAccount(account: Account): Promise<RequestResult<Account>>
-  {
-    return this.httpClient
-               .patch<RequestResult<Account>>(this.endpoint + 'accounts', account)
-               .toPromise();
-  }
-
-  public deleteAccount(account: Account): Promise<RequestResult<any>>
-  {
-    return this.httpClient
-               .request<RequestResult<boolean>>('delete', this.endpoint + 'accounts', { body: account,})
-               .toPromise();
-  }
-
-// --------------------------------------------------------------------
 
 
 
@@ -147,20 +198,6 @@ export class DataService
       .toPromise();
   }
 
-  public saveProject(project: Project): Promise<RequestResult<any>> {
-    return this.httpClient
-      .post<RequestResult<any>>(this.endpoint + 'project', project)
-      .toPromise();
-  }
-
-  public deleteProject(project: Project): Promise<RequestResult<any>> {
-    return this.httpClient
-      .request<RequestResult<any>>('delete', this.endpoint + 'project', {
-        body: project,
-      })
-
-      .toPromise();
-  }
 
 
   public uploadFile(fileToUpload: File): Promise<RequestResult<string>>{

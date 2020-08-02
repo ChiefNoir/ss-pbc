@@ -27,6 +27,8 @@ export class DialogEditProjectComponent implements OnInit
   public loadingMessage: MessageDescription = {text: 'Loading', type: MessageType.Spinner };
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
+  public localPosterUrl: string;
+  public localFile: File;
 
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
   private dialog: MatDialogRef<DialogEditProjectComponent>;
@@ -59,7 +61,7 @@ export class DialogEditProjectComponent implements OnInit
           this.service.getProject(this.code)
                       .then
                       (
-                        succeeded => this.handleProject(succeeded),
+                        succeeded => this.handleProject(succeeded, {text: StaticNames.LoadComplete, type: MessageType.Info }),
                         rejected => this.handleError(rejected.message)
                       );
         }
@@ -103,30 +105,49 @@ export class DialogEditProjectComponent implements OnInit
   public save(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: 'Saving', type: MessageType.Spinner  });
+    this.message$.next({text: StaticNames.SaveInProgress, type: MessageType.Spinner  });
 
-    this.service.saveProject(this.project$.value)
-                .then
-                (
-                  succeeded =>
-                  {
-                    this.message$.next({text: StaticNames.SaveComplete, type: MessageType.Info  });
-                    this.handleProject(succeeded);
-                  },
-                  rejected => this.handleError(rejected.message)
-                );
+    if (this.project$.value.posterUrl !== this.localPosterUrl && this.localFile)
+    {
+      this.service.uploadFile(this.localFile)
+                  .then
+                  (
+                    succeeded =>
+                    {
+                      this.project$.value.posterUrl = succeeded.data;
+                      this.service.saveProject(this.project$.value)
+                                  .then
+                                  (
+                                    ok => this.handleProject(ok, {text: StaticNames.SaveComplete, type: MessageType.Info }),
+                                    notok => this.handleError(notok)
+                                  );
+                    },
+                    rejected => this.handleError(rejected.message)
+                  );
+    }
+    else
+    {
+      this.service.saveProject(this.project$.value).then
+        (
+          kk => {
+            this.handleProject(kk, {text: StaticNames.SaveComplete, type: MessageType.Info });
+          },
+          notok2 => this.handleError(notok2)
+        );
+    }
   }
 
   public delete(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: 'Deleting', type: MessageType.Spinner  });
+    this.message$.next({text: StaticNames.DeleteInProgress, type: MessageType.Info });
 
     this.service.deleteProject(this.project$.value)
                 .then
                 (
                   succeeded =>
                   {
+                    this.project$.next(null);
                     this.message$.next({text: StaticNames.DeleteComplete, type: MessageType.Info });
                   },
                   rejected => this.handleError(rejected.message)
@@ -138,26 +159,28 @@ export class DialogEditProjectComponent implements OnInit
     this.dialog.close();
   }
 
-  public uploadFile (files : File[]) {
-    if (files.length === 0) {
-      return;
+  public selectFile(files: File[])
+  {
+    if (files.length === 0) { return; }
+
+    if (files && files[0])
+    {
+      const file = files[0];
+
+      const reader = new FileReader();
+      reader.onload = e => this.localPosterUrl = reader.result as string;
+
+      this.localFile = files[0];
+      reader.readAsDataURL(file);
     }
-
-    this.service.uploadFile(files[0])
-    .then
-    (
-      ok => {
-        this.project$.value.posterUrl = ok.data;
-
-      },
-      notok => this.handleError(notok)
-    );
   }
+
 
   public deleteFile()
   {
     this.project$.value.posterUrl = '';
-    // this.filename = 'no';
+    this.localPosterUrl = '';
+    this.localFile = null;
   }
 
 
@@ -167,13 +190,15 @@ export class DialogEditProjectComponent implements OnInit
     this.message$.next({text: error, type: MessageType.Error  });
   }
 
-  private handleProject(result: RequestResult<Project>): void
+  private handleProject(result: RequestResult<Project>, msg: MessageDescription): void
   {
     if (result.isSucceed)
     {
       this.disableInput$.next(false);
       this.project$.next(result.data);
-      this.message$.next({text: StaticNames.LoadComplete, type: MessageType.Info });
+      this.message$.next(msg);
+      this.localPosterUrl = result.data.posterUrl;
+      this.localFile = null;
     }
     else
     {

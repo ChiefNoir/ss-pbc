@@ -93,7 +93,10 @@ namespace Infrastructure.Repository
         
         public async Task<Abstractions.Model.Project> Update(Abstractions.Model.Project project)
         {
-            var dbItem = _context.Projects.FirstOrDefault(x => x.Id == project.Id);
+            var dbItem = _context.Projects
+                                .Include(x => x.Category)
+                                .Include(x => x.ExternalUrls)
+                                .FirstOrDefault(x => x.Id == project.Id);
 
             if (dbItem == null)
                 throw new Exception($"There is no project with Id:{project.Id}");

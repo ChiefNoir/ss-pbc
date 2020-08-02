@@ -19,7 +19,7 @@ namespace API.Controllers.Private
         }
 
         [HttpPost("accounts")]
-        public async Task<IActionResult> AddUser([FromBody] Account account)
+        public async Task<IActionResult> AddAccount([FromBody] Account account)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
@@ -52,7 +52,7 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("accounts/{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetAccount(int id)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
@@ -63,7 +63,7 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("accounts/search")]
-        public async Task<IActionResult> GetUsers([FromQuery] Paging paging)
+        public async Task<IActionResult> GetAccounts([FromQuery] Paging paging)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
@@ -74,7 +74,7 @@ namespace API.Controllers.Private
         }
 
         [HttpPatch("accounts")]
-        public async Task<IActionResult> UpdateUser([FromBody] Account account)
+        public async Task<IActionResult> UpdateAccount([FromBody] Account account)
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {

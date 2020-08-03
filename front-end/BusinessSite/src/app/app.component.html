@@ -1,9 +1,8 @@
 <app-header></app-header>
 
 <mat-toolbar>
-  <mat-toolbar-row 
-        fxLayout="row" fxLayoutAlign="center stretch" 
-        fxShow="true" fxHide.lt-md="true">
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="center stretch" 
+                   fxShow="true" fxHide.lt-md="true">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         Home
       </a>
@@ -35,25 +34,16 @@
 <mat-drawer-container autosize>
   <mat-drawer #drawer mode="over" fxHide.gt-sm="true" >
     <div fxLayout="column" fxLayoutAlign=" none">
-    <a routerLink="/">
-      Home
-    </a>
-    <a routerLink="/projects/">
-      Projects
-    </a>
-  </div>
+      <a routerLink="/"> Home </a>
+      <a routerLink="/projects/"> Projects </a>
+    </div>
   </mat-drawer>
-
+  
   <div class="container">
     <div class="content">
       <router-outlet></router-outlet>
     </div>
   </div>
-
 </mat-drawer-container>
-
-
-
-
 
 <app-footer></app-footer>

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
@@ -15,7 +15,7 @@ import { StaticNames } from 'src/app/common/StaticNames';
   styleUrls: ['./introduction.component.scss'],
 })
 
-export class IntroductionComponent implements AfterViewInit {
+export class IntroductionComponent implements OnInit {
   private service: DataService;
 
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
@@ -26,7 +26,8 @@ export class IntroductionComponent implements AfterViewInit {
     titleService.setTitle(environment.siteName);
   }
 
-  ngAfterViewInit(): void {
+  public ngOnInit(): void
+  {
     this.service.getIntroduction()
                 .then
                 (

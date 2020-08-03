@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -16,7 +16,7 @@ import { Paging } from 'src/app/model/PagingInfo';
   styleUrls: ['./admin-edit-projects.component.scss'],
 })
 
-export class AdminEditProjectsComponent implements OnDestroy
+export class AdminEditProjectsComponent implements OnInit, OnDestroy
 {
   private service: DataService;
   public columns: string[] = ['code', 'displayName', 'category', 'releaseDate'];
@@ -30,7 +30,10 @@ export class AdminEditProjectsComponent implements OnDestroy
   {
     this.service = service;
     this.dialog = dialog;
+  }
 
+  public ngOnInit(): void
+  {
     this.paging$.subscribe(value => this.refreshProjects(value));
   }
 

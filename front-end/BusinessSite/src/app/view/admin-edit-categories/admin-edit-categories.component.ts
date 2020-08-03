@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
@@ -17,7 +17,7 @@ import { StaticNames } from 'src/app/common/StaticNames';
   styleUrls: ['./admin-edit-categories.component.scss'],
 })
 
-export class AdminEditCategoriesComponent implements AfterViewInit {
+export class AdminEditCategoriesComponent implements OnInit {
   private service: DataService;
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
@@ -37,7 +37,7 @@ export class AdminEditCategoriesComponent implements AfterViewInit {
     titleService.setTitle(environment.siteName);
   }
 
-  ngAfterViewInit(): void {
+  public ngOnInit(): void {
     this.service.getCategories()
                 .then
                 (

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject  } from 'rxjs';
 
@@ -19,7 +19,7 @@ import { StaticNames } from 'src/app/common/StaticNames';
   styleUrls: ['./admin-edit-accounts.component.scss'],
 })
 
-export class AdminEditAccountsComponent implements AfterViewInit, OnDestroy {
+export class AdminEditAccountsComponent implements OnInit, OnDestroy {
   private service: DataService;
 
   public accounts$: BehaviorSubject<Array<Account>> = new BehaviorSubject<Array<Account>>(null);
@@ -33,12 +33,12 @@ export class AdminEditAccountsComponent implements AfterViewInit, OnDestroy {
     this.dialog = dialog;
 
     titleService.setTitle(environment.siteName);
-    this.paging$.subscribe(value => this.refreshProjects(value));
   }
 
-  ngAfterViewInit(): void
+  public ngOnInit(): void
   {
     this.refreshProjects(null);
+    this.paging$.subscribe(value => this.refreshProjects(value));
   }
 
   ngOnDestroy(): void

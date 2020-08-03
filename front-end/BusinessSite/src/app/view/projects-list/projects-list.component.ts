@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
@@ -18,7 +18,7 @@ import { Paging } from 'src/app/model/PagingInfo';
   styleUrls: ['./projects-list.component.scss'],
 })
 
-export class ProjectsListComponent implements OnDestroy
+export class ProjectsListComponent implements OnDestroy, OnInit
 {
   private service: DataService;
   private router: Router;
@@ -36,7 +36,10 @@ export class ProjectsListComponent implements OnDestroy
     this.activeRoute = activeRoute;
 
     titleService.setTitle(environment.siteName + ' - Projects');
+  }
 
+  public ngOnInit(): void
+  {
     this.activeRoute.params.subscribe(() => { this.refreshPage(); });
     this.paging$.subscribe(value => this.refreshProjects(value));
   }

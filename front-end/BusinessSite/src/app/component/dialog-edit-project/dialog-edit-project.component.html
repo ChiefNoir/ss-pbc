@@ -1,92 +1,78 @@
+<h2 *ngIf="title$ | async as title" class="title"> {{title}} </h2>
 
-<mat-dialog-content class="conteiner">
+<mat-dialog-content class="content">
   <div *ngIf="project$ | async as project">
-  <mat-tab-group>
-    <mat-tab label="Project"> 
-      <form>
+    <mat-tab-group>
+      <mat-tab label="Project">
         <div fxLayout="column" fxLayoutAlign="space-around center">
-        <mat-form-field>
-          <input matInput [(ngModel)]="project.code" name="code" placeholder="code" />
-        </mat-form-field>
+          <mat-form-field>
+            <input matInput [disabled]="disableInput$ | async" [(ngModel)]="project.code" name="Code" placeholder="Code" />
+          </mat-form-field>
+          
+          <mat-form-field>
+            <input matInput [disabled]="disableInput$ | async" [(ngModel)]="project.displayName" name="Name" placeholder="Name" />
+          </mat-form-field>
 
-        <mat-form-field>
-          <input matInput [(ngModel)]="project.displayName" name="displayName" placeholder="displayName" />
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Release date</mat-label>
+            <input matInput 
+            [disabled]="disableInput$ | async" 
+            [matDatepicker]="dp3"  [(ngModel)]="project.releaseDate" name="releaseDate">
+            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>releaseDate</mat-label>
-          <input matInput [matDatepicker]="dp3"  [(ngModel)]="project.releaseDate" name="releaseDate">
-          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-          <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select [(ngModel)]="project.category.id"
+                        [disabled]="disableInput$ | async">
+              <mat-option *ngFor="let ctg of categories$.value" [value]="ctg.id" >
+                {{ctg.displayName}} 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field>
-          <input matInput [(ngModel)]="project.releaseDate" name="releaseDate" placeholder="ReleaseDate" />
-        </mat-form-field>
+          <mat-form-field>
+            <textarea matInput [disabled]="disableInput$ | async" 
+            [(ngModel)]="project.descriptionShort" name="descriptionShort" 
+            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
+            cdkAutosizeMaxRows="10" placeholder="Description short"></textarea>
+          </mat-form-field>
 
-        <mat-form-field *ngIf="categories$ | async as categories">
-          <mat-label>category</mat-label>
-          <mat-select [(ngModel)]="project.category" name="displayname">
-            <mat-option *ngFor="let category of categories" [value]="category" >
-              {{category.displayName}} 
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-
-        <mat-form-field>
-          <textarea matInput
-          [(ngModel)]="project.descriptionShort" name="descriptionShort" 
-          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
-          cdkAutosizeMaxRows="10" placeholder="DescriptionShort"></textarea>
-        </mat-form-field>
-
-        <mat-form-field>
-          <textarea matInput 
-          [(ngModel)]="project.description" name="description" 
-          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
-          cdkAutosizeMaxRows="10" placeholder="Description" ></textarea>
-        </mat-form-field>
-
+          <mat-form-field>
+            <textarea matInput [disabled]="disableInput$ | async" 
+            [(ngModel)]="project.description" name="description" 
+            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
+            cdkAutosizeMaxRows="10" placeholder="Description full" ></textarea>
+          </mat-form-field>
       </div>
-      </form>
     </mat-tab>
 
     <mat-tab label="Poster">
-      <form>
-        <div fxLayout="column" fxLayoutAlign="space-around center">
-
-          <mat-form-field>
-            <textarea matInput 
-            [(ngModel)]="project.posterDescription" 
-            name="posterDescription"  
-            placeholder="Poster alt" 
-            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
-            cdkAutosizeMaxRows="10"></textarea>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput [(ngModel)]="project.posterUrl" name="posterUrl" placeholder="posterUrl" />
-          </mat-form-field>
-
-          <app-file-uploader 
-            [filename] = "localPosterUrl"
-            (uploadFiles) = "selectFile($event)"
-            (deleteFile) = "deleteFile()">
-          </app-file-uploader> 
-
-          <img class="image" src="{{ localPosterUrl }}" /> 
-        
+      <div fxLayout="column" fxLayoutAlign="space-around center">
+        <div fxLayout="row" fxLayoutAlign="center center" >
+          <img [ngClass]="{'disabled': disableInput$ | async }" class="posterImage" src="{{ localPosterUrl }}" />
         </div>
-    </form>
+          
+        <mat-form-field>
+          <input matInput [disabled]="disableInput$ | async" 
+             [(ngModel)]="project.posterDescription" name="posterDescriptionle" placeholder="Poster description" />
+        </mat-form-field>
 
+        <div class="wide-position">
+          <app-file-uploader 
+                [disabled] = "disableInput$ | async"
+                [filename] = "project.posterUrl"
+                (uploadFiles) = "selectFile($event)"
+                (deleteFile) = "deleteFile()">
+          </app-file-uploader>
+        </div>
 
-
+      </div>
     </mat-tab>
 
     <mat-tab label="Urls">
-
-      <table #externalUrlsTable mat-table [dataSource]="project.externalUrls">
+      <table class="dialogTable" #externalUrlsTable mat-table [dataSource]="project.externalUrls">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>name</th>
           <td mat-cell *matCellDef="let element">
@@ -109,7 +95,9 @@
 
         <ng-container matColumnDef="btn">
           <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell  *matCellDef="let element"> <button class="btn-table" mat-button (click)="removeUrl(element)">remove</button>  </td>
+          <td mat-cell  *matCellDef="let element"> 
+            <app-button [isDisabled]="disableInput$ | async" (click)="removeUrl(element)">Delete</app-button>
+          </td>
     
           <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
@@ -118,39 +106,30 @@
         <tr mat-header-row *matHeaderRowDef="columnsInner"></tr>
         <tr mat-row *matRowDef="let row; columns: columnsInner"></tr>
         <tr mat-footer-row *matFooterRowDef="columnsInner" (click)="addUrl()"></tr>
- 
-        </table>
+      </table>
 
     </mat-tab>
-
-
-      
   </mat-tab-group>
-  
-
-
-</div>
-
+  </div>
 
 </mat-dialog-content>
-<div class="actions">
-  
-  <div *ngIf="message$ | async as msg">
-    <app-message [message]="msg"></app-message>
+
+<div *ngIf="message$ | async as msg">
+  <app-message [message]="msg"></app-message>
+</div>
+
+<div class="actions" fxHide.lt-md="true">
+  <div class="actions-left">
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">Delete</app-button>
   </div>
-
-  <div class="flexcontainer" >
-    <div class="itemleft">
-      <app-button (OnClick)="delete()">delete</app-button>    
-    </div>
-
-    <div class="itemright">
-      <app-button (OnClick)="refresh()">refresh</app-button>    
-
-      <app-button (OnClick)="save()">Save</app-button>
-      <app-button cdkFocusInitial (OnClick)="close()">close</app-button>
-  </div>
+  <div class="actions-right">
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">Save</app-button>
+    <app-button (OnClick)="close()">Close</app-button>
   </div>
 </div>
 
-
+<div fxLayout="column" fxLayoutAlign="space-evenly center" fxHide.gt-sm="true">
+  <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">Delete</app-button>
+  <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">Save</app-button>
+  <app-button (OnClick)="close()">Close</app-button>
+</div>

@@ -27,6 +27,7 @@ export class DialogEditProjectComponent implements OnInit
   public loadingMessage: MessageDescription = {text: 'Loading', type: MessageType.Spinner };
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
+  public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Project properties');
   public localPosterUrl: string;
   public localFile: File;
 
@@ -70,7 +71,8 @@ export class DialogEditProjectComponent implements OnInit
           const prj = new Project();
           prj.category = categorySucceeded.data.filter(category => category.isEverything === false)[0];
           this.project$.next(prj);
-          this.message$.next({text: StaticNames.LoadComplete, type: MessageType.Info });
+          this.message$.next({text: StaticNames.InitializationComplete, type: MessageType.Info });
+          this.disableInput$.next(false);
         }
       },
       categoryRejected => this.handleError(categoryRejected.message)

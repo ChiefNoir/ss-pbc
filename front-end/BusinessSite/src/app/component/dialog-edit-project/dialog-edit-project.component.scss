@@ -1,129 +1,118 @@
 @import "variables";
 @import "mixins";
 
-mat-form-field {
-    width: 90%;
-  }
-
-form {
-  margin-top: 30px;
+// [Dialog action buttons]  
+.actions {
+  display: flex;
+  height: 50px;
 }
 
+.actions-left {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.actions-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+// end of [Dialog action buttons]  
+
+// [Dialog title]
+.title {
+  color: $color-text;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+// end of [Dialog title]
+
+//[Content container]
 ::ng-deep.mat-dialog-container {
-  background-color: $color-content;
-  color: $color-control-text !important;
-}
+  background-color: $color-control;
+  padding: 0px;
 
-
-.mat-form-field {
-  margin-bottom: 5px !important;
-  color: $color-text !important;
-}
-
-::ng-deep.mat-error,
-::ng-deep.mat-placeholder-required  {
-  color: $color-text-highlighted !important;
-}
-
-
-::ng-deep.mat-form-field-underline {
- /*color of underline*/
- background-color:  $color-control-active-text-highlighted !important;
-} 
-
-::ng-deep.mat-form-field-ripple {
-/*color of underline when focused*/
-background-color: $color-text !important;;
-}
-
-
-::ng-deep .mat-form-field-empty.mat-form-field-label {
-  /* color of placeholder*/
-  color: $color-text !important;
-  font-style: italic;
-}
-
-
-button {
-  background-color: transparent;
-  border: 2px solid;
-
-  width: 100px;
-  transition: 0.25s;
- 
-  color: $color-control-text;
-}
-
-button:hover{
-  background-color: $color-core;
-  transform: translateY(-0.2em);
-  -webkit-transform: translateY(-0.2em);
-  -moz-transform: translateY(-0.2em);
-  -ms-transform: translateY(-0.2em);
-  -o-transform: translateY(-0.2em);
-}
-
-
-
-table {
-  width: 100%;
-  background-color: $table-row !important;
   @include flat-shadow($color-core);
 }
+// end of [Content container]
 
-.mat-header-cell {
-  color: $color-control-text  !important;
-  font-size: 18px !important;
-  background-color: $table-header;
-  text-transform: uppercase;
-}
-
-.mat-cell {
-  color: $color-control-text !important;
-  font-size: 16px !important;
-}
-
-.mat-footer-cell {
-  color: $color-control-text !important;
-  font-size: 16px !important;
-  font-style: italic;
-}
-
-.mat-row:hover,
-.mat-footer-row:hover {
-  background-color: $color-control-highlighted;
-  cursor: pointer;
-}
-
-::ng-deep .mat-focused .mat-form-field-label
-{
-  /*color or focused hint text in the inputs*/
+// [Content] 
+.content {
+  background-color: $table-row !important;
   color: $color-text !important;
 }
+// end of [Content] 
 
-::ng-deep .mat-form-field-label {
-   /*color of the placeholder above input*/
+// [Mat-dialog]
+::ng-deep.mat-dialog-content {
+  margin: 0px;
+  padding: 0px;
+}
+// end of [Mat-dialog]
+
+// [Mat-form-field]
+mat-form-field {
+  width: 90%;
+}
+// End of [Mat-form-field]
+
+// disabled mat-form-field
+::ng-deep.mat-input-element:disabled {
+  color: $color-shadow-text-light !important;
+}
+
+::ng-deep.mat-form-field-disabled .mat-form-field-underline {
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 0,
+    rgba(0, 0, 0, 0.42) 33%,
+    #c2c7cc 0
+  ) !important;
+  background-size: 1px 100% !important;
+  background-repeat: repeat-x !important;
+}
+// end of [disabled mat-form-field]
+
+// [Mat-form-field]
+::ng-deep.mat-form-field-label {
+  /*color or text in the inputs*/
   color: $color-text !important;
 }
 
 ::ng-deep.mat-form-field-underline {
   /*color of underline*/
-  background-color:  $color-control-active-text-highlighted !important;
-} 
+  background-color: $color-control-active-text-highlighted !important;
+}
 
 ::ng-deep.mat-form-field-ripple {
- /*color of underline when focused*/
- background-color: $color-text !important;;
+  /*color of underline when focused*/
+  background-color: $color-text !important;
 }
 
-::ng-deep.mat-tab-label-content {
+.mat-focused ::ng-deep.mat-form-field-label {
+  /*change color of focused placeholder*/
   color: $color-text !important;
 }
-::ng-deep.mat-ink-bar{
-  background-color: $color-control-text !important;
+
+::ng-deep .mat-form-field-empty.mat-form-field-label {
+  /*change color of placeholder*/
+  color: $color-text !important;
+  font-style: italic;
 }
+// End of [Mat-form-field]
 
-
+// [Mat-select]
 ::ng-deep.mat-select-value-text{
   color: $color-text !important;
 }
@@ -136,11 +125,15 @@ table {
 ::ng-deep.mat-select-arrow{
   color: $color-text !important;
 }
+// End of [Mat-select]
 
+// [Mat-date-pick]
 ::ng-deep.mat-datepicker-toggle-default-icon{
   color: $color-text !important;
 }
+// End of [Mat-date-pick]
 
+// [Mat-calendar]
 ::ng-deep.mat-calendar{
   background: $color-control !important;
   color: $color-text !important;
@@ -156,53 +149,54 @@ table {
 ::ng-deep.mat-calendar-body-selected{
   background-color: $color-content!important;
 }
+// End of [Mat-calendar]
 
-.actions {
-  margin-top: 30px;
-}
-
-.flexcontainer {
-  display: flex;
-  justify-content: flex-start;
-  position: relative;
-}
-
-
-.itemright {
-  flex: 0 1 auto;
-  margin-left: auto;
-}
-
-
-.itemleft {
-  flex: 0 1 auto;
-  margin-right: auto; 
-}
-
-.actbt {
-  margin-left: 10px;
-  margin-bottom: 10px;
-}
-
-.btn-table {
+// [Table]
+.dialogTable {
   width: 100%;
+
+  background-color: $table-row !important;
+  @include flat-shadow($color-core);
 }
 
-.image {
+.mat-header-cell {
+  color: $color-control-text  !important;
+  font-size: 20px !important;
+  background-color: $table-header;
+  text-transform: uppercase;
+}
+
+.mat-cell {
+  color: $color-control-text !important;
+  font-size: 18px !important;
+}
+
+.mat-footer-cell {
+  color: $color-control-text !important;
+  font-size: 18px !important;
+  font-style: italic;
+}
+
+.mat-row:hover,
+.mat-footer-row:hover {
+  background-color: $color-control-highlighted;
+  cursor: pointer;
+}
+// End of [Table]
+
+::ng-deep.mat-tab-body-wrapper
+{
   margin-top: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-
-  object-fit: cover;
-
-  object-fit: cover;
-  object-position: 90% 0%;
-  width: 90%;
-  height: 370px;
-
-  left: 0px;
-  top: 0px;
-
-  box-sizing: border-box;
 }
+
+// [Poster image]
+.posterImage {
+  display: block;
+  max-height:440px;
+  width: auto;
+  height: auto;
+}
+.posterImage:disabled {
+  opacity: 60%;
+}
+// End of [Poster image]

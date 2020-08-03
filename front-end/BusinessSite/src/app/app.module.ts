@@ -24,7 +24,6 @@ import { ProjectFullComponent } from './component/project-full/project-full.comp
 import { DialogEditProjectComponent } from './component/dialog-edit-project/dialog-edit-project.component';
 import { DialogEditorCategoryComponent } from './component/dialog-editor-category/dialog-editor-category.component';
 import { DialogEditAccountComponent } from './component/dialog-edit-account/dialog-edit-account.component';
-import { SpinnerTextComponent } from './component/spinner-text/spinner-text.component';
 import { MessageComponent } from './component/message/message.component';
 import { FileUploaderComponent } from './component/file-uploader/file-uploader.component';
 // -----
@@ -81,7 +80,6 @@ import { CookieService } from 'ngx-cookie-service';
     AdminEditCategoriesComponent,
     AdminEditAccountsComponent,
     AdminEditIntroductionComponent,
-    SpinnerTextComponent,
     MessageComponent,
     FileUploaderComponent,
     SplitPipe

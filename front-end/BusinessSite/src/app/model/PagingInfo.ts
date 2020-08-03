@@ -1,11 +1,3 @@
-import { environment } from 'src/environments/environment';
-
-export class PagingInfo {
-  public maxPage: number;
-  public minPage: number;
-  public currentPage: number;
-}
-
 export class Paging {
   private minPage: number = 0;
   private currentPage: number;

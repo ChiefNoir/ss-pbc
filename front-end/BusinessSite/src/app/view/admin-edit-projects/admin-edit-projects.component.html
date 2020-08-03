@@ -1,5 +1,4 @@
-
-<div *ngIf="projects$ | async as projects; else loading">
+<div *ngIf="projects$ | async as projects">
   <table mat-table [dataSource]="projects">
     <ng-container matColumnDef="code">
       <th mat-header-cell *matHeaderCellDef> code </th>
@@ -30,25 +29,22 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
-    <tr mat-row *matRowDef="let row; columns: columns;" (click)="showRow(row.code)"></tr>
-    <tr mat-footer-row *matFooterRowDef="columns" (click)="showRow('')"></tr>
-  </table>
-
-  <div *ngIf="pagingInfo$ | async as pagingInfo; else loading">
-    <app-paginator
-          (changePage)="changePage($event)"
-          [maxPage]="pagingInfo.maxPage"
-          [currentPage]="pagingInfo.currentPage"
-          (nextPageClick)="nextPage()"
-          (previousPageClick)="backPage()"
-          [minPage]="pagingInfo.minPage">
-    </app-paginator>
-  </div>
-  
+    <tr mat-row *matRowDef="let row; columns: columns;" (click)="showProject(row.code)"></tr>
+    <tr mat-footer-row *matFooterRowDef="columns" (click)="showProject('')"></tr>
+  </table>  
 </div>
 
-<ng-template #loading>
-  <div *ngIf="message$ | async as msg">
-    <app-message [message]="msg"></app-message>
-  </div>
-</ng-template>
+<div *ngIf="message$ | async as msg">
+  <app-message [message]="msg"></app-message>
+</div>
+
+<div *ngIf="projects$ | async as projects">
+  <app-paginator *ngIf="paging$ | async as paging"
+        (changePage)="skipPage($event)"
+        [maxPage]="paging.getMaxPage()"
+        [currentPage]="paging.getCurrentPage()"
+        (nextPageClick)="skipPage(1)"
+        (previousPageClick)="skipPage(-1)"
+        [minPage]="paging.getMinPage()">
+  </app-paginator>
+</div>

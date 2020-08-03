@@ -1,18 +1,14 @@
 import { Component } from '@angular/core';
-import { AfterViewInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/service/data.service';
-import { RequestResult } from 'src/app/model/RequestResult';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditProjectComponent } from 'src/app/component/dialog-edit-project/dialog-edit-project.component';
-import { PagingInfo } from 'src/app/model/PagingInfo';
-import { Category } from 'src/app/model/Category';
 import { ProjectPreview } from 'src/app/model/ProjectPreview';
-import { Project } from 'src/app/model/Project';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
+import { Paging } from 'src/app/model/PagingInfo';
 
 @Component({
   selector: 'app-admin-edit-projects',
@@ -20,37 +16,30 @@ import { StaticNames } from 'src/app/common/StaticNames';
   styleUrls: ['./admin-edit-projects.component.scss'],
 })
 
-export class AdminEditProjectsComponent implements AfterViewInit {
+export class AdminEditProjectsComponent
+{
   private service: DataService;
-  private currentPage: number = 0;
-  private maxPage: number = 0;
-  private minPage: number = 0;
   public columns: string[] = ['code', 'displayName', 'category', 'releaseDate'];
 
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
-  public pagingInfo$: BehaviorSubject<PagingInfo> = new BehaviorSubject<PagingInfo>(null);
+  public paging$: BehaviorSubject<Paging> = new BehaviorSubject<Paging>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   public dialog: MatDialog;
 
-  public constructor(service: DataService, dialog: MatDialog) {
+  public constructor(service: DataService, dialog: MatDialog)
+  {
     this.service = service;
     this.dialog = dialog;
+
+    this.paging$.subscribe(value => this.refreshProjects(value));
   }
 
-  ngAfterViewInit() {
-    this.service.getEverythingCategory()
-                .then
-                (
-                  (result) => this.hadleCategory(result),
-                  (error) => this.handleError(error)
-                );
-  }
-
-  public showRow(projectCode: any): void {
+  public showProject(projectCode: any): void
+  {
     const dialogRef = this.dialog.open
     (
-      DialogEditProjectComponent, 
-      {width: '90%', minHeight:'80%', data: projectCode}
+      DialogEditProjectComponent,
+      {width: '90%', minHeight: '80%', data: projectCode}
     );
 
     dialogRef.afterClosed()
@@ -58,70 +47,60 @@ export class AdminEditProjectsComponent implements AfterViewInit {
              (
                (result) =>
                {
-                 this.changePage(this.currentPage);
+                 this.changePage(this.paging$.value.getCurrentPage());
                 }
             );
   }
 
-  public nextPage() {
-    this.changePage(this.currentPage + 1);
+  public skipPage(amount: number): void
+  {
+    this.changePage(this.paging$.value.getCurrentPage() + amount);
   }
 
-  public backPage() {
-    this.changePage(this.currentPage - 1);
+  public changePage(page: number): void
+  {
+    this.paging$.next(new Paging(page, environment.paging.maxProjects, this.paging$.value.getMaxItems()));
   }
 
-  public changePage(page: number): void {
-    if (!page) {
-      page = this.minPage;
-    }
-    if (page > this.maxPage) {
-      page = this.maxPage;
-    }
-    if (page < this.minPage) {
-      page = this.minPage;
-    }
-
-    this.currentPage = page;
+  private refreshProjects(paging: Paging): void
+  {
     this.projects$.next(null);
+    this.message$.next({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
 
-    this.pagingInfo$.next
-    ({
-        minPage: this.minPage,
-        maxPage: Math.ceil(this.maxPage / environment.maxProjectsPerPage) - 1,
-        currentPage: this.currentPage
-    });
-
-    this.service.getProjectsPreview(this.currentPage * environment.maxProjectsPerPage, environment.maxProjectsPerPage, '')
-                .then
-                (
-                  (result) => this.handle(result, this.projects$),
-                  (error) => this.handleError(error)
-                );
-  }
-
-  private hadleCategory(result: RequestResult<Category>) {
-    if (result.isSucceed) {
-      this.currentPage = 0;
-      this.maxPage = Math.ceil(this.maxPage / environment.maxProjectsPerPage) - 1;
-      this.minPage = 0;
-      this.changePage(this.currentPage);
-    } else {
-      this.handleError(result.errorMessage);
+    if (!paging)
+    {
+      this.service.getEverythingCategory()
+                  .then
+                  (
+                    response =>
+                    {
+                      this.paging$.next(new Paging(0, environment.paging.maxProjects, response.data.totalProjects))
+                    },
+                    reject => this.handleError(reject)
+                  );
+    }
+    else
+    {
+      this.service.getProjectsPreview
+      (
+        paging.getCurrentPage() * environment.paging.maxProjects,
+        environment.paging.maxProjects,
+        'all'
+      )
+      .then
+      (
+        response => {
+          this.message$.next(null);
+          this.projects$.next(response.data);
+        },
+        reject =>  this.handleError(reject)
+      );
     }
   }
 
-  private handle<T>(result: RequestResult<T>, content: BehaviorSubject<T>): void {
-    if (result.isSucceed) {
-    content.next(result.data);
-    } else{
-      this.handleError(result.errorMessage);
-    }
-  }
-
-
-
-  private handleError(error: any): void {
+  private handleError(error: any): void
+  {
+    this.message$.next({text: error, type: MessageType.Error});
     console.log(error);
   }
 

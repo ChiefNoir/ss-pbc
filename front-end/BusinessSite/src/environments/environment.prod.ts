@@ -3,5 +3,5 @@ export const environment = {
   apiEndpoint: '',
   authEndpoint: '',
   siteName: 'Fireplace Of Despair',
-  maxProjectsPerPage: 3
+
 };

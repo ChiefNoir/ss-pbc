@@ -14,14 +14,14 @@
   </div>
 </div>
 
-<div *ngIf="pagingInfo$ | async as pagingInfo; else loading">
+<div *ngIf="paging$ | async as paging; else loading">
   <app-paginator
         (changePage)="changePage($event)"
-        [maxPage]="pagingInfo.maxPage"
-        [currentPage]="pagingInfo.currentPage"
+        [maxPage]="paging.maxPage"
+        [currentPage]="paging.currentPage"
         (nextPageClick)="nextPage()"
         (previousPageClick)="backPage()"
-        [minPage]="pagingInfo.minPage">
+        [minPage]="paging.minPage">
   </app-paginator>
 </div>
 

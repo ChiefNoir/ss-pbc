@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { BehaviorSubject, forkJoin  } from 'rxjs';
+import { BehaviorSubject  } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/service/data.service';

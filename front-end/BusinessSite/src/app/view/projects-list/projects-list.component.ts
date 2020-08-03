@@ -7,11 +7,11 @@ import { DataService } from 'src/app/service/data.service';
 import { RequestResult } from 'src/app/model/RequestResult';
 import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { Category } from 'src/app/model/Category';
-import { PagingInfo } from 'src/app/model/PagingInfo';
 
 import { environment } from 'src/environments/environment';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
+import { Paging } from 'src/app/model/PagingInfo';
 
 @Component({
   selector: 'app-projects-list',
@@ -23,14 +23,13 @@ export class ProjectsListComponent {
   private service: DataService;
   private router: Router;
   private activeRoute: ActivatedRoute;
-  private projectsPerPage = environment.maxProjectsPerPage;
 
   private currentPage: number = 0;
   private maxPage: number = 0;
   private minPage: number = 0;
 
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
-  public pagingInfo$: BehaviorSubject<PagingInfo> = new BehaviorSubject<PagingInfo>(null);
+  public paging$: BehaviorSubject<Paging> = new BehaviorSubject<Paging>(null);
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
 
@@ -81,7 +80,7 @@ export class ProjectsListComponent {
 
     
 
-    this.service.getProjectsPreview(this.currentPage * this.projectsPerPage, this.projectsPerPage, categoryCode)
+    this.service.getProjectsPreview(this.currentPage * environment.paging.maxProjects, environment.paging.maxProjects, categoryCode)
                 .then
                   (
                     (data) => { this.handleProjects(data); }
@@ -135,15 +134,15 @@ export class ProjectsListComponent {
 
   private handleTotalProjects(totalProjects: number): void {
     this.currentPage = 0;
-    this.maxPage = Math.ceil(totalProjects / this.projectsPerPage) - 1;
+    this.maxPage = Math.ceil(totalProjects / environment.paging.maxProjects) - 1;
 
-    const pgInfo: PagingInfo = {
-      minPage: this.minPage,
-      maxPage: this.maxPage,
-      currentPage: this.currentPage,
-    };
+    // const pgInfo: PagingInfo = {
+    //   minPage: this.minPage,
+    //   maxPage: this.maxPage,
+    //   currentPage: this.currentPage,
+    // };
 
-    this.pagingInfo$.next(pgInfo);
+    //this.pagingInfo$.next(pgInfo);
   }
 
 
@@ -170,15 +169,15 @@ export class ProjectsListComponent {
     this.currentPage = page;
     this.projects$.next(null);
 
-    this.pagingInfo$.next
-    ({
-        minPage: this.minPage,
-        maxPage: this.maxPage,
-        currentPage: this.currentPage
-    });
+    // this.pagingInfo$.next
+    // ({
+    //     minPage: this.minPage,
+    //     maxPage: this.maxPage,
+    //     currentPage: this.currentPage
+    // });
 
     const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
-    this.service.getProjectsPreview(this.currentPage * environment.maxProjectsPerPage, environment.maxProjectsPerPage, categoryCode)
+    this.service.getProjectsPreview(this.currentPage * environment.paging.maxProjects, environment.paging.maxProjects, categoryCode)
                 .then
                 (
                   (result) => this.handleProjects(result),

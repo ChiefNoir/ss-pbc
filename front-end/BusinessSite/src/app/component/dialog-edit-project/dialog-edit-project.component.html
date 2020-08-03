@@ -80,7 +80,7 @@
               <input matInput placeholder="Name" [value]="element.displayName" [(ngModel)]="element.displayName" />
             </mat-form-field>
           </td>
-          <td mat-footer-cell *matFooterCellDef> Create new </td>
+          <td mat-footer-cell *matFooterCellDef> Add new external url </td>
         </ng-container>
 
         <ng-container matColumnDef="url">
@@ -103,7 +103,7 @@
         </ng-container>
 
 
-        <tr mat-header-row *matHeaderRowDef="columnsInner"></tr>
+        <tr mat-header-row *matHeaderRowDef="columnsInner" style="display: none;"></tr>
         <tr mat-row *matRowDef="let row; columns: columnsInner"></tr>
         <tr mat-footer-row *matFooterRowDef="columnsInner" (click)="addUrl()"></tr>
       </table>

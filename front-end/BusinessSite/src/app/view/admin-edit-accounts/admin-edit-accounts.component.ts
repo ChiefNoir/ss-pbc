@@ -24,7 +24,7 @@ export class AdminEditAccountsComponent implements AfterViewInit, OnDestroy {
 
   public accounts$: BehaviorSubject<Array<Account>> = new BehaviorSubject<Array<Account>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
-  public paging$: BehaviorSubject<Paging> = new BehaviorSubject<Paging>(null);
+  public paging$: BehaviorSubject<Paging<null>> = new BehaviorSubject<Paging<null>>(null);
   public dialog: MatDialog;
   public columns: string[] = ['login', 'role'];
 
@@ -56,7 +56,7 @@ export class AdminEditAccountsComponent implements AfterViewInit, OnDestroy {
                 );
   }
 
-  private refreshProjects(paging: Paging): void
+  private refreshProjects(paging: Paging<null>): void
   {
     if (!paging)
     {
@@ -96,7 +96,7 @@ export class AdminEditAccountsComponent implements AfterViewInit, OnDestroy {
              );
   }
 
-  private hanlePaging(result: RequestResult<number>, content: BehaviorSubject<Paging>): void
+  private hanlePaging(result: RequestResult<number>, content: BehaviorSubject<Paging<null>>): void
   {
     if (result.isSucceed)
     {

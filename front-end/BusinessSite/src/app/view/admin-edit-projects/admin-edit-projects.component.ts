@@ -22,7 +22,7 @@ export class AdminEditProjectsComponent
   public columns: string[] = ['code', 'displayName', 'category', 'releaseDate'];
 
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
-  public paging$: BehaviorSubject<Paging> = new BehaviorSubject<Paging>(null);
+  public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   public dialog: MatDialog;
 
@@ -59,10 +59,10 @@ export class AdminEditProjectsComponent
 
   public changePage(page: number): void
   {
-    this.paging$.next(new Paging(page, environment.paging.maxProjects, this.paging$.value.getMaxItems()));
+    this.paging$.next(new Paging(page, environment.paging.maxProjects, this.paging$.value.getMaxItems(), this.paging$.value.getSearchParam()));
   }
 
-  private refreshProjects(paging: Paging): void
+  private refreshProjects(paging: Paging<string>): void
   {
     this.projects$.next(null);
     this.message$.next({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
@@ -74,7 +74,7 @@ export class AdminEditProjectsComponent
                   (
                     response =>
                     {
-                      this.paging$.next(new Paging(0, environment.paging.maxProjects, response.data.totalProjects))
+                      this.paging$.next(new Paging(0, environment.paging.maxProjects, response.data.totalProjects, response.data.code));
                     },
                     reject => this.handleError(reject)
                   );
@@ -85,7 +85,7 @@ export class AdminEditProjectsComponent
       (
         paging.getCurrentPage() * environment.paging.maxProjects,
         environment.paging.maxProjects,
-        'all'
+        paging.getSearchParam()
       )
       .then
       (

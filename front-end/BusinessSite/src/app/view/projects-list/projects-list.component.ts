@@ -29,7 +29,7 @@ export class ProjectsListComponent {
   private minPage: number = 0;
 
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
-  public paging$: BehaviorSubject<Paging> = new BehaviorSubject<Paging>(null);
+  public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
 

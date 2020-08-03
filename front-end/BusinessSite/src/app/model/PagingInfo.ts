@@ -1,39 +1,54 @@
-export class Paging {
-  private minPage: number = 0;
+export class Paging<T>
+{
   private currentPage: number;
-
-
   private maxItems: number;
   private maxItemsPerPage: number;
+  private minPage: number;
+  private searchParam: T;
 
-  constructor(currentPage: number, maxItemsPerPage: number, maxItems: number)
+  constructor(currentPage: number, maxItemsPerPage: number, maxItems: number, searchParam: T = null)
   {
-
+    this.minPage = 0;
     this.maxItems = maxItems;
     this.maxItemsPerPage = maxItemsPerPage;
+    this.searchParam = searchParam;
 
-    if (currentPage > this.getMaxPage()) {
+    if (currentPage > this.getMaxPage())
+    {
       this.currentPage = this.getMaxPage();
-    } else if (currentPage < this.getMinPage()) {
+    }
+    else if (currentPage < this.getMinPage())
+    {
       this.currentPage = this.getMinPage();
-    } else {
+    }
+    else
+    {
       this.currentPage = currentPage;
     }
   }
 
-  public getMaxItems(): number {
+  public getSearchParam(): T
+  {
+    return this.searchParam;
+  }
+
+  public getMaxItems(): number
+  {
     return this.maxItems;
   }
 
-  public getMaxPage(): number {
+  public getMaxPage(): number
+  {
     return Math.ceil(this.maxItems / this.maxItemsPerPage) - 1;
   }
 
-  public getMinPage(): number {
+  public getMinPage(): number
+  {
     return this.minPage;
   }
 
-  public getCurrentPage(): number {
+  public getCurrentPage(): number
+  {
     return this.currentPage;
   }
 }

@@ -17,6 +17,32 @@
         </div>
       </mat-tab>
 
+      <mat-tab label="Poster">
+        <div fxLayout="column" fxLayoutAlign="space-around stretch" class="content">
+          <form>
+            
+            <div fxLayout="row" fxLayoutAlign="center center" >
+              <img [ngClass]="{'disabled': isDisabled }" class="image" src="{{ imageSrc }}" />
+            </div>
+            
+            <mat-form-field>
+              <input matInput [disabled]="isDisabled" 
+               [(ngModel)]="introduction.posterDescription" name="titposterDescriptionle" placeholder="posterDescription" />
+            </mat-form-field>
+
+            <div class="wide-position">
+            <app-file-uploader 
+                  [disabled] = "isDisabled"
+                  [filename] = "introduction.posterUrl"
+                  (uploadFiles) = "uploadFile($event)"
+                  (deleteFile) = "deleteFile()">
+            </app-file-uploader>
+          </div>
+            
+          </form>
+        </div>
+      </mat-tab>
+            
       <mat-tab label="External urls"> 
         <div fxLayout="column" fxLayoutAlign="space-around stretch">
           <table #externalUrlsTable mat-table [dataSource]="introduction.externalUrls">
@@ -61,31 +87,7 @@
         </div>
       </mat-tab>
       
-      <mat-tab label="Poster">
-        <div fxLayout="column" fxLayoutAlign="space-around stretch" class="content">
-          <form>
-            
-            <div fxLayout="row" fxLayoutAlign="center center" >
-              <img [ngClass]="{'disabled': isDisabled }" class="image" src="{{ imageSrc }}" />
-            </div>
-            
-            <mat-form-field>
-              <input matInput [disabled]="isDisabled" 
-               [(ngModel)]="introduction.posterDescription" name="titposterDescriptionle" placeholder="posterDescription" />
-            </mat-form-field>
 
-            <div class="wide-position">
-            <app-file-uploader 
-                  [disabled] = "isDisabled"
-                  [filename] = "introduction.posterUrl"
-                  (uploadFiles) = "uploadFile($event)"
-                  (deleteFile) = "deleteFile()">
-            </app-file-uploader>
-          </div>
-            
-          </form>
-        </div>
-      </mat-tab>
     </mat-tab-group>
 
 

@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
 import { DataService } from 'src/app/service/data.service';
-import { RequestResult } from 'src/app/model/RequestResult';
 import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { Category } from 'src/app/model/Category';
 
@@ -19,21 +18,19 @@ import { Paging } from 'src/app/model/PagingInfo';
   styleUrls: ['./projects-list.component.scss'],
 })
 
-export class ProjectsListComponent {
+export class ProjectsListComponent implements OnDestroy
+{
   private service: DataService;
   private router: Router;
   private activeRoute: ActivatedRoute;
-
-  private currentPage: number = 0;
-  private maxPage: number = 0;
-  private minPage: number = 0;
 
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
   public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
 
-  public constructor(service: DataService, router: Router, activeRoute: ActivatedRoute, titleService: Title) {
+  public constructor(service: DataService, router: Router, activeRoute: ActivatedRoute, titleService: Title)
+  {
     this.service = service;
     this.router = router;
     this.activeRoute = activeRoute;
@@ -41,160 +38,97 @@ export class ProjectsListComponent {
     titleService.setTitle(environment.siteName + ' - Projects');
 
     this.activeRoute.params.subscribe(() => { this.refreshPage(); });
+    this.paging$.subscribe(value => this.refreshProjects(value));
   }
 
-  private refreshPage(): void {
+  public ngOnDestroy(): void
+  {
+    this.paging$.unsubscribe();
+  }
+
+
+  private refreshPage(): void
+  {
     this.projects$.next(null);
-    this.currentPage = 0;
-    this.maxPage = 1;
+    this.categories$.next(null);
 
-    const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
-
-    if (!categoryCode)
-    {
-      this.service.getEverythingCategory()
-                  .then
-                  (
-                    (x) => {
-                      if (x.isSucceed) {
-                        this.router.navigate(['/projects/' + x.data.code]);
-                      } else {
-                        this.router.navigate(['/404/']);
-                      }
-                    }
-                  );
-    }
-
-    if (this.categories$.value == null) {
-      this.service.getCategories()
-                  .then
-                  (
-                    (data) => { this.handleCategories(data); }
-                  );
-    }
-    else{
-      const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
-      const totalProjects = +this.categories$.value.find((x) => x.code === categoryCode)?.totalProjects;
-      this.handleTotalProjects(totalProjects);
-    }
-
-    
-
-    this.service.getProjectsPreview(this.currentPage * environment.paging.maxProjects, environment.paging.maxProjects, categoryCode)
-                .then
-                  (
-                    (data) => { this.handleProjects(data); }
-                  );
-
-  }
-
-  private handleProjects(data: RequestResult<Array<ProjectPreview>>): void {
-    if (data.isSucceed)
-    {
-      if (data.data == null || data.data.length === 0)
-      {
-        this.router.navigate(['/404']);
-      }
-      else
-      {
-        this.projects$.next(data.data);
-      }
-    }
-    else
-    {
-      this.handleError(data.errorMessage);
-    }
-  }
-
-  private handleCategories(result: RequestResult<Array<Category>>): void {
-    if (result.isSucceed)
-    {
-      const router = this.router;
-      result.data.forEach
-                  (
-                    (x) => { x.url = router.createUrlTree(['/projects', x.code]).toString(); }
-                  );
-
-      this.categories$.next
-                      (
-                        result.data
-                              .filter((x) => x.totalProjects > 0)
-                              .sort((a, b) => b.totalProjects - a.totalProjects)
-                      );
-
-      const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
-      const totalProjects = !result.data ? 0 : result.data.find((x) => x.code === categoryCode)?.totalProjects;
-      this.handleTotalProjects(totalProjects);
-    } 
-    else 
-    {
-      this.handleError(result.errorMessage);
-    }
-  }
-
-  private handleTotalProjects(totalProjects: number): void {
-    this.currentPage = 0;
-    this.maxPage = Math.ceil(totalProjects / environment.paging.maxProjects) - 1;
-
-    // const pgInfo: PagingInfo = {
-    //   minPage: this.minPage,
-    //   maxPage: this.maxPage,
-    //   currentPage: this.currentPage,
-    // };
-
-    //this.pagingInfo$.next(pgInfo);
-  }
-
-
-
-
-
-
-
-
-
-
-
-  public changePage(page: number): void {
-    if (!page) {
-      page = this.minPage;
-    }
-    if (page > this.maxPage) {
-      page = this.maxPage;
-    }
-    if (page < this.minPage) {
-      page = this.minPage;
-    }
-
-    this.currentPage = page;
-    this.projects$.next(null);
-
-    // this.pagingInfo$.next
-    // ({
-    //     minPage: this.minPage,
-    //     maxPage: this.maxPage,
-    //     currentPage: this.currentPage
-    // });
-
-    const categoryCode = this.activeRoute.snapshot.paramMap.get('category');
-    this.service.getProjectsPreview(this.currentPage * environment.paging.maxProjects, environment.paging.maxProjects, categoryCode)
+    this.service.getCategories()
                 .then
                 (
-                  (result) => this.handleProjects(result),
-                  (error) => this.handleError(error)
+                  response => this.refreshCategories(response.data),
+                  reject => this.handleError(reject)
                 );
   }
 
-  public nextPage() {
-    this.changePage(this.currentPage + 1);
+  private refreshCategories(categories: Category[])
+  {
+    const routeCategory = this.activeRoute.snapshot.paramMap.get('category');
+
+    const selectedCategory = categories.find((x) => x.code === routeCategory);
+    const everythingCategory = categories.find((x) => x.isEverything === true);
+
+    if (!routeCategory)
+    {
+      this.router.navigate(['/projects/' + everythingCategory.code]);
+      return;
+    }
+
+    if (!selectedCategory)
+    {
+      this.router.navigate(['/404/']);
+      return;
+    }
+
+    this.categories$.next(categories);
+    this.paging$.next(new Paging(0, environment.paging.maxProjects, selectedCategory.totalProjects, selectedCategory.code));
   }
 
-  public backPage() {
-    this.changePage(this.currentPage - 1);
+  private refreshProjects(paging: Paging<string>): void
+  {
+    if (!paging) { return; }
+
+    this.service.getProjectsPreview
+                (
+                  paging.getCurrentPage() * environment.paging.maxProjects,
+                  environment.paging.maxProjects,
+                  paging.getSearchParam()
+                )
+                .then
+                (
+                  response =>
+                  {
+                    this.message$.next(null);
+                    this.projects$.next(response.data);
+                  },
+                  reject => this.handleError(reject)
+                );
   }
 
-  private handleError(error: any): void {
-    // TODO: react properly
+
+  public skipPage(amount: number): void
+  {
+    this.changePage(this.paging$.value.getCurrentPage() + amount);
+  }
+
+  public changePage(page: number): void
+  {
+    this.paging$.next
+        (
+          new Paging
+              (
+                page,
+                environment.paging.maxProjects,
+                this.paging$.value.getMaxItems(),
+                this.paging$.value.getSearchParam()
+              )
+        );
+  }
+
+  private handleError(error: any): void
+  {
+    this.message$.next({text: error, type: MessageType.Error});
     console.log(error);
   }
+
+
 }

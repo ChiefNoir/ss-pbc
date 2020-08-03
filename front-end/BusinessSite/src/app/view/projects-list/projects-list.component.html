@@ -1,32 +1,41 @@
-<div *ngIf="categories$ | async as categories; else loading">
-  <app-filter-category [categories]="categories"> </app-filter-category>
-</div>
+<div *ngIf="projects$">
 
-<div flex fxLayout="row" class="container">
-  <div fxFlex="100%">
-    <div *ngIf="projects$ | async as projects; else loading">
+  <div *ngIf="categories$ | async as categories">
+    <app-filter-category [categories]="categories"> </app-filter-category>
+  </div>
+
+  <div flex fxLayout="row" class="container">
+    <div fxFlex="100%">
       <app-project-preview 
-            *ngFor="let item of projects$ | async"
-            role="list"
-            [project]="item">
-      </app-project-preview>
+              *ngFor="let item of projects$ | async"
+              role="list"
+              [project]="item">
+        </app-project-preview>
     </div>
   </div>
 </div>
 
-<div *ngIf="paging$ | async as paging; else loading">
-  <app-paginator
-        (changePage)="changePage($event)"
-        [maxPage]="paging.maxPage"
-        [currentPage]="paging.currentPage"
-        (nextPageClick)="nextPage()"
-        (previousPageClick)="backPage()"
-        [minPage]="paging.minPage">
-  </app-paginator>
+<div *ngIf="message$ | async as msg">
+  <app-message [message]="msg"></app-message>
 </div>
 
-<ng-template #loading>
-  <div *ngIf="message$ | async as msg">
-    <app-message [message]="msg"></app-message>
+<div *ngIf="projects$">
+  <div *ngIf="paging$ | async as paging">
+    <app-paginator
+          (changePage)="skipPage($event)"
+          [maxPage]="paging.getMaxPage()"
+          [currentPage]="paging.getCurrentPage()"
+          (nextPageClick)="skipPage(1)"
+          (previousPageClick)="skipPage(-1)"
+          [minPage]="paging.getMinPage()">
+    </app-paginator>
   </div>
+</div>
+
+
+
+
+
+<ng-template #loading>
+
 </ng-template>

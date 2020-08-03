@@ -1,5 +1,22 @@
 @import "variables";
 
+// [App content]
+.container {
+  background-color: $color-container;
+  display: flex;
+  height: auto;
+}
+
+.content {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 90%;
+  height: auto;
+  margin: auto;
+}
+// End of [App content]
+
+// [mat-toolbar] 
 .mat-toolbar {
   background: transparent !important;
   min-height: 40px !important;
@@ -25,20 +42,31 @@
   background-color: $color-container;
 }
 
-.mat-button {
-  border-radius: 0px !important;
-}
-
-.content-conteiner {
+.mobile {
   background-color: $color-container;
-  display: flex;
-  height: auto;
+  cursor: pointer;
+}
+// End of [mat-toolbar] 
+
+// [mat-drawer]
+.mat-drawer {
+  background-color: $color-container;
+}
+.mat-drawer a {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  color: $color-text;
+  font-size: 25px;
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: none;
 }
 
-.content {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  width: 90%;
-  height: auto;
-  margin: auto;
+.mat-drawer a:hover {
+  color: $color-text-highlighted;
+  text-shadow: $shadow-text;
+  background-color: $color-container-transparent;
 }
+// End of [mat-drawer]

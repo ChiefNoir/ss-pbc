@@ -27,19 +27,33 @@
       </a>
   </mat-toolbar-row>
 
-  <mat-toolbar-row 
-        fxShow="true" fxHide.gt-sm="true" class="active">
-   <!-- <a (click)="sidenav.toggle()" fxFlex="220%"> -->
-        <a fxFlex="220%">
-          Menu
-        </a>
-    </mat-toolbar-row>
-  </mat-toolbar>
+  <mat-toolbar-row fxShow="true" fxHide.gt-sm="true" class="mobile" fxLayout="row" fxLayoutAlign="center stretch" >
+        <a (click)="drawer.toggle()"> Menu </a>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-<div class="content-conteiner">
-  <div class="content">
-    <router-outlet></router-outlet>
+<mat-drawer-container autosize>
+  <mat-drawer #drawer mode="over" fxHide.gt-sm="true" >
+    <div fxLayout="column" fxLayoutAlign=" none">
+    <a routerLink="/">
+      Home
+    </a>
+    <a routerLink="/projects/">
+      Projects
+    </a>
   </div>
-</div>
+  </mat-drawer>
+
+  <div class="container">
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</mat-drawer-container>
+
+
+
+
 
 <app-footer></app-footer>

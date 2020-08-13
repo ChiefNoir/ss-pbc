@@ -9,7 +9,7 @@ namespace API.Controllers.Private
 {
     [ApiController]
     [Route("api/v1/")]
-    public class PrivateAccountController
+    public class PrivateAccountController : ControllerBase
     {
         private readonly IAccountRepository _accountRepository;
 

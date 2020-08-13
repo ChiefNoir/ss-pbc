@@ -4,4 +4,6 @@ export class RequestResult<T> {
   public isSucceed: boolean;
 
   public errorMessage: string;
+
+  public errorCode: number;
 }

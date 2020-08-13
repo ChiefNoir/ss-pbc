@@ -12,7 +12,8 @@ export class StorageService {
     this.cookieService = cookieService;
   }
 
-  public getToken(): string {
+  public getToken(): string
+  {
     return this.cookieService.get(this.tokenName);
   }
 

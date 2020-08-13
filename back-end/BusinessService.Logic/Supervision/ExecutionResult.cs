@@ -8,6 +8,9 @@
 
         /// <summary> Is execution succeed?</summary>
         public bool IsSucceed { get; set; } = false;
+
+        /// <summary> Custom error code </summary>
+        public int? ErrorCode { get; set; } = null;
     }
 
     /// <summary> Result of the function execution</summary>

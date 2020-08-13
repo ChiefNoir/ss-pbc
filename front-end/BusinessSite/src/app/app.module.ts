@@ -44,6 +44,7 @@ import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edi
 import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin-edit-categories.component';
 import { AdminEditAccountsComponent } from './view/admin-edit-accounts/admin-edit-accounts.component';
 import { AdminEditIntroductionComponent } from './view/admin-edit-introduction/admin-edit-introduction.component';
+import { AdminComponent } from './view/admin/admin.component';
 // -----
 
 // services
@@ -51,6 +52,8 @@ import { DataService } from './service/data.service';
 import { AuthService } from './service/auth.service';
 import { StorageService } from './service/storage.service';
 // -----
+
+import { AuthGuard } from './guards/authGuard';
 
 // providers
 import { CookieService } from 'ngx-cookie-service';
@@ -75,6 +78,7 @@ import { CookieService } from 'ngx-cookie-service';
     ProjectsListComponent,
     NotFoundComponent,
     ProjectComponent,
+    AdminComponent,
     AdminLoginComponent,
     AdminEditProjectsComponent,
     AdminEditCategoriesComponent,
@@ -98,6 +102,7 @@ import { CookieService } from 'ngx-cookie-service';
     AuthService,
     StorageService,
     CookieService,
+    AuthGuard,
     Title
   ],
   bootstrap: [AppComponent]

@@ -72,6 +72,9 @@ namespace API.Security
         /// <returns> <see cref="IPrincipal"/></returns>
         public static IPrincipal ValidateToken(IConfiguration configuration, string token)
         {
+            if (string.IsNullOrEmpty(token))
+                return null;
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = CreateTokenValidationParameters(configuration);
             return tokenHandler.ValidateToken(token, validationParameters, out _);

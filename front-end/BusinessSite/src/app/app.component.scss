@@ -3,7 +3,7 @@
 // [App content]
 .container {
   background-color: $color-container;
-  display: flex;
+
   height: auto;
 }
 
@@ -70,3 +70,41 @@
   background-color: $color-container-transparent;
 }
 // End of [mat-drawer]
+
+.admin-menu {
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+}
+
+.admin-menu a {
+  background: none;
+  border: 2px solid;
+  display: inline-block;
+  line-height: 1;
+  margin: 0.5em;
+  min-width: 120px;
+  text-decoration: none;
+  transition: 0.25s;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  text-align: center;
+  color: $color-control-text;
+}
+
+.admin-menu a:hover {
+  box-shadow: 0 0.5em 0.5em -0.4em $color-control-active;
+  color: $color-control-active;
+
+  transform: translateY(-0.3em);
+  -webkit-transform: translateY(-0.3em);
+  -moz-transform: translateY(-0.3em);
+  -ms-transform: translateY(-0.3em);
+  -o-transform: translateY(-0.3em);
+}
+
+.admin-menu a.active {
+  color: $color-control-active;
+} 

@@ -8,7 +8,7 @@ namespace API.Controllers.Private
 {
     [ApiController]
     [Route("api/v1/")]
-    public class PrivateIntroductionController
+    public class PrivateIntroductionController : ControllerBase
     {
         private readonly IIntroductionRepository _introductionRepository;
 

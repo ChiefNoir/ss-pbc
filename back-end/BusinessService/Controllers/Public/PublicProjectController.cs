@@ -8,7 +8,7 @@ namespace API.Controllers.Public
 {
     [ApiController]
     [Route("api/v1/")]
-    public class PublicProjectController
+    public class PublicProjectController : ControllerBase
     {
         private readonly IProjectRepository _projectRepository;
 

@@ -34,10 +34,21 @@ namespace API.Controllers.Gateway
 
                 return new Identity
                 {
-                    Login = user.Login,
+                    Account = user,
                     Token = TokenManager.CreateToken(_configuration, credentials.Login, user.Role),
                     TokenLifeTimeMinutes = _configuration.GetSection("Token:LifeTime").Get<int>()
                 };
+            });
+
+            return new JsonResult(result);
+        }
+
+        [HttpPost("token")]
+        public async Task<IActionResult> Validate([FromHeader] string token)
+        {
+            var result = await Supervisor.SafeExecuteAsync(async () =>
+            {
+                return TokenManager.ValidateToken(_configuration, token);
             });
 
             return new JsonResult(result);

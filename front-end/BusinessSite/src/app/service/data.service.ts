@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { RequestResult } from '../model/RequestResult';
@@ -9,6 +9,7 @@ import { Account } from '../model/Account';
 import { environment } from 'src/environments/environment';
 import { ProjectPreview } from '../model/ProjectPreview';
 import { Introduction } from '../model/Introduction';
+import { Information } from '../model/Information';
 
 @Injectable()
 export class DataService
@@ -91,6 +92,17 @@ export class DataService
 
 // --------------------------------------------------------------------
 
+  public getInformation(token: string): Promise<RequestResult<Information>>
+  {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Token': token });
+      let options = { headers: headers };
+
+    return this.httpClient
+               .get<RequestResult<Information>>(this.endpoint + 'information',options)
+               .toPromise();
+  }
 
 
 

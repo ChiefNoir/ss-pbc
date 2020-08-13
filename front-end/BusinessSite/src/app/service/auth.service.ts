@@ -5,21 +5,41 @@ import { RequestResult } from '../model/RequestResult';
 import { Identity } from '../model/Identity';
 
 @Injectable()
-export class AuthService {
+export class AuthService
+{
   private httpClient: HttpClient;
   private endpoint = environment.authEndpoint;
 
-  public constructor(http: HttpClient) {
+  public constructor(http: HttpClient)
+  {
     this.httpClient = http;
   }
 
-  public login(login: string, password: string): Promise<RequestResult<Identity>> {
+  public login(login: string, password: string): Promise<RequestResult<Identity>>
+  {
     const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+
     return this.httpClient.post<RequestResult<Identity>>
                           (
-                            this.endpoint + 'login',
-                            { login, password },
-                            config
+                              this.endpoint + 'login',
+                              { login, password },
+                              config
+                          )
+                          .toPromise();
+  }
+
+  public validate(token: string): Promise<RequestResult<boolean>>
+  {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Token': token });
+  let options = { headers: headers };
+
+    return this.httpClient.post<RequestResult<boolean>>
+                          (
+                              this.endpoint + 'token',
+                              null,
+                              options
                           )
                           .toPromise();
   }

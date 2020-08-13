@@ -1,5 +1,7 @@
+import { Account } from 'src/app/model/Account';
+
 export class Identity {
-    public login: string;
+    public account: Account;
     public token: string;
     public tokenLifeTimeMinutes: number;
 }

@@ -11,6 +11,7 @@ import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { Identity } from 'src/app/model/Identity';
 import { StorageService } from 'src/app/service/storage.service';
+import { AuthGuard } from 'src/app/guards/authGuard';
 
 
 @Component({
@@ -21,6 +22,7 @@ import { StorageService } from 'src/app/service/storage.service';
 
 export class AdminLoginComponent {
   private router: Router;
+  private authGuard: AuthGuard;
   private storageService: StorageService;
 
 
@@ -30,10 +32,11 @@ export class AdminLoginComponent {
   public login: FormControl = new FormControl('', [Validators.required]);
   public password: FormControl = new FormControl('', [Validators.required]);
 
-  public constructor(authService: AuthService, router: Router, titleService: Title, storageService: StorageService) {
+  public constructor(authService: AuthService, authGuard: AuthGuard, router: Router, titleService: Title, storageService: StorageService) {
     this.authService = authService;
     this.router = router;
     this.storageService = storageService;
+    this.authGuard = authGuard;
 
     titleService.setTitle(environment.siteName);
   }
@@ -51,11 +54,17 @@ export class AdminLoginComponent {
                     );
   }
 
-  private handleLoginResult(result: RequestResult<Identity>): void {
-    if (result.isSucceed) {
+  private handleLoginResult(result: RequestResult<Identity>): void
+  {
+    if (result.isSucceed)
+    {
       this.storageService.saveToken(result.data.token, result.data.tokenLifeTimeMinutes);
+
+      this.authGuard.loginComplete(result.data.account);
       this.serviceMessage$.next(null);
-    } else {
+    }
+    else
+    {
       this.handleLoginError(result?.errorMessage);
     }
   }

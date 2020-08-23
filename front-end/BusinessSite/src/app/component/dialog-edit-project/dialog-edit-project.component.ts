@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Project } from 'src/app/model/Project';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
-import { RequestResult } from 'src/app/model/RequestResult';
+import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Category } from 'src/app/model/Category';
 import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { MatTable } from '@angular/material/table';
@@ -185,13 +185,6 @@ export class DialogEditProjectComponent implements OnInit
     this.localFile = null;
   }
 
-
-  private handleError(error: string): void
-  {
-    this.disableInput$.next(false);
-    this.message$.next({text: error, type: MessageType.Error  });
-  }
-
   private handleProject(result: RequestResult<Project>, msg: MessageDescription): void
   {
     if (result.isSucceed)
@@ -204,7 +197,20 @@ export class DialogEditProjectComponent implements OnInit
     }
     else
     {
-      this.handleError(result.errorMessage);
+      this.handleError(result.error);
     }
+  }
+
+  private handleError(error: any): void
+  {
+    this.disableInput$.next(false);
+
+    if (error instanceof Incident)
+    {
+      this.message$.next({text: error.code + '<br/>' + error.detail + '<br/>' + error.message, type: MessageType.Error });
+      return;
+    }
+
+    this.message$.next({text: error, type: MessageType.Error });
   }
 }

@@ -1,9 +1,13 @@
-export class RequestResult<T> {
+export class RequestResult<T>
+{
   public data: T;
-
   public isSucceed: boolean;
+  public error: Incident;
+}
 
-  public errorMessage: string;
-
-  public errorCode: number;
+export class Incident
+{
+  public code: number;
+  public message: string;
+  public detail: string;
 }

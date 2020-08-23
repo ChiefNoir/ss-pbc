@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/service/data.service';
-import { RequestResult } from 'src/app/model/RequestResult';
+import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Introduction } from 'src/app/model/Introduction';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
@@ -31,17 +31,18 @@ export class IntroductionComponent implements OnInit {
     this.service.getIntroduction()
                 .then
                 (
-                  (result) => { this.handle(result, this.introduction$); }
+                  result =>  this.handle(result),
+                  reject => this.handleError(reject)
                 );
   }
 
-  private handle<T>(result: RequestResult<T>, content: BehaviorSubject<T>): void 
+  private handle(result: RequestResult<Introduction>): void
   {
     if (result.isSucceed)
     {
-      content.next(result.data);
+      this.introduction$.next(result.data);
 
-      if(!result.data)
+      if (!result.data)
       {
         this.message$.next({text: 'Nothing was found', type: MessageType.Spinner  });
       }
@@ -52,12 +53,27 @@ export class IntroductionComponent implements OnInit {
     }
     else
     {
-      this.handleError(result.errorMessage);
+      this.handleIncident(result.error);
     }
   }
 
-  private handleError(error: any): void {
-    // TODO: react properly
-    console.log(error);
+  private handleIncident(error: Incident): void
+  {
+    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
   }
+
+  private handleError(error: any): void
+  {
+    console.log(error);
+
+    if (error.name !== undefined)
+    {
+      this.message$.next({text: error.name, type: MessageType.Error });
+    }
+    else
+    {
+      this.message$.next({text: error, type: MessageType.Error });
+    }
+  }
+
 }

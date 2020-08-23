@@ -1,16 +1,14 @@
-﻿namespace BusinessService.Logic.Supervision
+﻿using Abstractions.Model.System;
+
+namespace BusinessService.Logic.Supervision
 {
     /// <summary> Result of the function execution</summary>
     public class ExecutionResult
     {
-        /// <summary> Error message or null </summary>
-        public string ErrorMessage { get; set; } = null;
-
         /// <summary> Is execution succeed?</summary>
         public bool IsSucceed { get; set; } = false;
-
-        /// <summary> Custom error code </summary>
-        public int? ErrorCode { get; set; } = null;
+        
+        public Incident Error { get; set; } = null;
     }
 
     /// <summary> Result of the function execution</summary>

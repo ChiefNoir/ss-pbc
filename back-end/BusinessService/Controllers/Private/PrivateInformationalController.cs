@@ -1,11 +1,12 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
+using Abstractions.Model.System;
 using API.Model;
 using API.Queries;
-using API.Security;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Security;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -28,10 +29,9 @@ namespace API.Controllers.Private
         [HttpGet("information")]
         public async Task<IActionResult> GetIntroduction([FromHeader] string token)
         {
-            var result = await Supervisor.SafeExecuteAsync(async () =>
+            var result = await Supervisor.SafeExecuteAsync(token, async() =>
             {
                 var claims = TokenManager.ValidateToken(_config, token);
-
                 if (claims == null)
                     throw new Exception("No");
 

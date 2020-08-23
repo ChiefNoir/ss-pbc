@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 
-namespace API.Security
+namespace Security
 {
     /// <summary> JWT Toke manager </summary>
     public static class TokenManager
@@ -65,7 +65,7 @@ namespace API.Security
                 RequireExpirationTime = true
             };
         }
-        
+
         /// <summary> Validate JWT token </summary>
         /// <param name="configuration"> <see cref="IConfiguration"/> </param>
         /// <param name="token">Token to validate</param>

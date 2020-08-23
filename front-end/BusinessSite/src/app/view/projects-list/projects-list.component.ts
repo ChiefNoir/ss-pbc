@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
 import { Paging } from 'src/app/model/PagingInfo';
+import { Incident } from 'src/app/model/RequestResult';
 
 @Component({
   selector: 'app-projects-list',
@@ -55,10 +56,21 @@ export class ProjectsListComponent implements OnDestroy, OnInit
     this.projects$.next(null);
     this.categories$.next(null);
 
+    // TODO: something is not right
     this.service.getCategories()
                 .then
                 (
-                  response => this.refreshCategories(response.data),
+                  response =>
+                  {
+                    if (response.isSucceed)
+                    {
+                      this.refreshCategories(response.data);
+                    }
+                    else
+                    {
+                      this.handleIncident(response.error);
+                    }
+                  },
                   reject => this.handleError(reject)
                 );
   }
@@ -100,8 +112,15 @@ export class ProjectsListComponent implements OnDestroy, OnInit
                 (
                   response =>
                   {
-                    this.message$.next(null);
-                    this.projects$.next(response.data);
+                    if (response.isSucceed)
+                    {
+                      this.message$.next(null);
+                      this.projects$.next(response.data);
+                    }
+                    else
+                    {
+                      this.handleIncident(response.error);
+                    }
                   },
                   reject => this.handleError(reject)
                 );
@@ -127,10 +146,23 @@ export class ProjectsListComponent implements OnDestroy, OnInit
         );
   }
 
+  private handleIncident(error: Incident): void
+  {
+    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+  }
+
   private handleError(error: any): void
   {
-    this.message$.next({text: error, type: MessageType.Error});
     console.log(error);
+
+    if (error.name !== undefined)
+    {
+      this.message$.next({text: error.name, type: MessageType.Error });
+    }
+    else
+    {
+      this.message$.next({text: error, type: MessageType.Error });
+    }
   }
 
 

@@ -11,9 +11,9 @@
     </mat-form-field>
     <br/>
 
-    <span *ngIf="serviceMessage$ | async as message" class="error">
-      {{ message }}   
-    </span>
+    <div *ngIf="message$ | async as msg">
+      <app-message [message]="msg"></app-message>
+    </div>
 
     <app-button (OnClick)="doLogin()">
       Login

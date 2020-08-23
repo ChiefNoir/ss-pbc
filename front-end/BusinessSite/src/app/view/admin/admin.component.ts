@@ -9,7 +9,7 @@ import { StaticNames } from 'src/app/common/StaticNames';
 import { DataService } from 'src/app/service/data.service';
 import { Information } from 'src/app/model/Information';
 import { environment } from 'src/environments/environment';
-import { RequestResult } from 'src/app/model/RequestResult';
+import { RequestResult, Incident } from 'src/app/model/RequestResult';
 
 @Component({
   selector: 'app-admin',
@@ -32,19 +32,17 @@ export class AdminComponent implements OnInit
     this.dataService = dataService;
     this.storage = storage;
 
-
     titleService.setTitle(environment.siteName);
   }
 
   public ngOnInit(): void
   {
-
-    this.dataService.getInformation(this.storage .getToken())
-    .then
-    (
-      ok => this.handleInformation(ok),
-      fail => this.handleError(fail)
-    );
+    this.dataService.getInformation(this.storage.getToken())
+                    .then
+                    (
+                      result => this.handleRequestResult(result),
+                      reject => this.handleError(reject)
+                    );
   }
 
   public logout(): void
@@ -52,23 +50,37 @@ export class AdminComponent implements OnInit
 
   }
 
-  private handleInformation(result: RequestResult<Information>): void
+  private handleRequestResult(result: RequestResult<Information>): void
   {
+    this.message$.next(null);
+
     if (result.isSucceed)
     {
-      this.message$.next(null);
       this.information$.next(result.data);
     }
     else
     {
-      this.handleError(result.errorMessage);
+      this.handleIncident(result.error);
     }
+  }
+
+  private handleIncident(error: Incident): void
+  {
+    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
   }
 
   private handleError(error: any): void
   {
-    this.message$.next({text: error, type: MessageType.Error  });
     console.log(error);
+
+    if (error.name !== undefined)
+    {
+      this.message$.next({text: error.name, type: MessageType.Error });
+    }
+    else
+    {
+      this.message$.next({text: error, type: MessageType.Error });
+    }
   }
 
 }

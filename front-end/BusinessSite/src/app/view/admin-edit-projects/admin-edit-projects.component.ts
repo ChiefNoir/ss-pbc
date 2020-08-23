@@ -9,6 +9,7 @@ import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
 import { Paging } from 'src/app/model/PagingInfo';
+import { Incident } from 'src/app/model/RequestResult';
 
 @Component({
   selector: 'app-admin-edit-projects',
@@ -82,7 +83,14 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
                   (
                     response =>
                     {
-                      this.paging$.next(new Paging(0, environment.paging.maxProjects, response.data.totalProjects, response.data.code));
+                      if (response.isSucceed)
+                      {
+                        this.paging$.next(new Paging(0, environment.paging.maxProjects, response.data.totalProjects, response.data.code));
+                      }
+                      else
+                      {
+                        this.handleIncident(response.error);
+                      }
                     },
                     reject => this.handleError(reject)
                   );
@@ -95,21 +103,35 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
         environment.paging.maxProjects,
         paging.getSearchParam()
       )
-      .then
-      (
-        response => {
-          this.message$.next(null);
-          this.projects$.next(response.data);
-        },
-        reject =>  this.handleError(reject)
-      );
+        .then
+        (
+          response =>
+          {
+            this.message$.next(null);
+            this.projects$.next(response.data);
+          },
+          reject =>  this.handleError(reject)
+        );
     }
+  }
+
+  private handleIncident(error: Incident): void
+  {
+    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
   }
 
   private handleError(error: any): void
   {
-    this.message$.next({text: error, type: MessageType.Error});
     console.log(error);
+
+    if (error.name !== undefined)
+    {
+      this.message$.next({text: error.name, type: MessageType.Error });
+    }
+    else
+    {
+      this.message$.next({text: error, type: MessageType.Error });
+    }
   }
 
 }

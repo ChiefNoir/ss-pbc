@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { DataService } from 'src/app/service/data.service';
-import { RequestResult } from 'src/app/model/RequestResult';
+import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Project } from 'src/app/model/Project';
 import { StaticNames } from 'src/app/common/StaticNames';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
@@ -44,25 +44,46 @@ export class ProjectComponent {
     this.service.getProject(code)
                 .then
                 (
-                  (data) => { this.handleProjectRequest(data); }
+                  result => this.handleProjectRequest(result),
+                  reject => this.handleError(reject)
                 );
   }
 
-  private handleProjectRequest(result: RequestResult<Project>): void {
-    if (result.isSucceed) {
-      if (result.data == null) {
+  private handleProjectRequest(result: RequestResult<Project>): void
+  {
+    if (result.isSucceed)
+    {
+      if (result.data == null)
+      {
         this.router.navigate(['/404']);
       }
 
       this.titleService.setTitle(environment.siteName + ' - ' + result.data?.displayName);
       this.project$.next(result.data);
-    } else {
-      this.handleError(result.errorMessage);
+    }
+    else
+    {
+      this.handleIncident(result.error);
     }
   }
 
-  private handleError(error: any): void {
-    // TODO: react properly
-    console.log(error);
+  private handleIncident(error: Incident): void
+  {
+    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
   }
+
+  private handleError(error: any): void
+  {
+    console.log(error);
+
+    if (error.name !== undefined)
+    {
+      this.message$.next({text: error.name, type: MessageType.Error });
+    }
+    else
+    {
+      this.message$.next({text: error, type: MessageType.Error });
+    }
+  }
+
 }

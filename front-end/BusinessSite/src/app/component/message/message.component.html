@@ -1,12 +1,10 @@
 <mat-divider></mat-divider>
 
 <div [ngSwitch]="message.type" class="container">  
-  <div *ngSwitchCase="0" class="info">
-    {{ message.text }}
+  <div *ngSwitchCase="0" class="info" [innerHtml]="message.text">
   </div>
 
-  <div *ngSwitchCase="1" class="error">
-    {{ message.text }}
+  <div *ngSwitchCase="1" class="error" [innerHtml]="message.text">
   </div>
 
   <div *ngSwitchCase="2" class="loading">
@@ -15,8 +13,7 @@
     </span>
   </div>
 
-  <div *ngSwitchDefault class="info">
-    {{ message.text }}
+  <div *ngSwitchDefault class="info" [innerHtml]="message.text">
   </div>
 </div>
 <mat-divider></mat-divider>

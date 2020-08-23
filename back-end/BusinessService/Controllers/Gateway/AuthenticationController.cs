@@ -1,9 +1,9 @@
 ﻿using Abstractions.IRepository;
 using API.Model;
-using API.Security;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Security;
 using System;
 using System.Threading.Tasks;
 

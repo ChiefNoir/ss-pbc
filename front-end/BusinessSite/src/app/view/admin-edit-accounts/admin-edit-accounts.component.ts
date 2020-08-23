@@ -4,7 +4,7 @@ import { BehaviorSubject  } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/service/data.service';
-import { RequestResult } from 'src/app/model/RequestResult';
+import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { MatDialog } from '@angular/material/dialog';
 import { Account } from 'src/app/model/Account';
 
@@ -37,8 +37,8 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void
   {
-    this.refreshProjects(null);
-    this.paging$.subscribe(value => this.refreshProjects(value));
+    this.refreshAccounts(null);
+    this.paging$.subscribe(value => this.refreshAccounts(value));
   }
 
   ngOnDestroy(): void
@@ -51,12 +51,12 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
     this.service.countAccount()
                 .then
                 (
-                  response => this.hanlePaging(response, this.paging$),
+                  result => this.hanlePaging(result, this.paging$),
                   reject => this.handleError(reject)
                 );
   }
 
-  private refreshProjects(paging: Paging<null>): void
+  private refreshAccounts(paging: Paging<null>): void
   {
     if (!paging)
     {
@@ -67,7 +67,7 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
     this.service.getAccounts(paging.getCurrentPage() * environment.paging.maxUsers, environment.paging.maxUsers)
                 .then
                 (
-                  response => this.handle(response, this.accounts$),
+                  result => this.handleAccounts(result),
                   reject =>  this.handleError(reject)
                 );
   }
@@ -82,8 +82,8 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
     this.changePage(this.paging$.value.getCurrentPage() + amount);
   }
 
-  public showDialog(id?: number): void {
-
+  public showDialog(id?: number): void
+  {
     const dialogRef = this.dialog.open
     (
       DialogEditAccountComponent, {width: '50%', data: id},
@@ -105,20 +105,39 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
     }
     else
     {
-      this.handleError(result.errorMessage);
+      this.handleIncident(result.error);
     }
   }
 
-  private handle<T>(result: RequestResult<T>, content: BehaviorSubject<T>): void {
-    if (result.isSucceed) {
-    content.next(result.data);
-    } else{
-      this.handleError(result.errorMessage);
+  private handleAccounts(result: RequestResult<Account[]>): void
+  {
+    this.message$.next(null);
+    if (result.isSucceed)
+    {
+      this.accounts$.next(result.data);
+    }
+    else
+    {
+      this.handleIncident(result.error);
     }
   }
 
-  private handleError(error: any): void {
-    // TODO: react properly
+  private handleIncident(error: Incident): void
+  {
+    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+  }
+
+  private handleError(error: any): void
+  {
     console.log(error);
+
+    if (error.name !== undefined)
+    {
+      this.message$.next({text: error.name, type: MessageType.Error });
+    }
+    else
+    {
+      this.message$.next({text: error, type: MessageType.Error });
+    }
   }
 }

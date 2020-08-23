@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from '../message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
 import { DataService } from 'src/app/service/data.service';
-import { RequestResult } from 'src/app/model/RequestResult';
+import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Account } from 'src/app/model/Account';
 
 @Component({
@@ -102,14 +102,20 @@ export class DialogEditAccountComponent implements OnInit
     }
     else
     {
-      this.handleError(result.errorMessage);
+      this.handleError(result.error);
     }
   }
 
-  private handleError(error: string): void
+  private handleError(error: any): void
   {
     this.disableInput$.next(false);
+
+    if (error instanceof Incident)
+    {
+      this.message$.next({text: error.code + '<br/>' + error.detail + '<br/>' + error.message, type: MessageType.Error });
+      return;
+    }
+
     this.message$.next({text: error, type: MessageType.Error });
   }
-
 }

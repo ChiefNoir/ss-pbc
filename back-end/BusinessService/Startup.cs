@@ -2,7 +2,7 @@
 using Abstractions.ISecurity;
 using Abstractions.MemoryCache;
 using Abstractions.Model;
-using API.Security;
+using BusinessService.Logic.Supervision;
 using Infrastructure;
 using Infrastructure.Cache;
 using Infrastructure.Repository;
@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Security;
 using Secutiry;
 using System.IO;
 
@@ -52,6 +53,8 @@ namespace BusinessService
                         options.RequireHttpsMetadata = false;
                         options.TokenValidationParameters = TokenManager.CreateTokenValidationParameters(Configuration);
                     });
+
+            Supervisor.init(Configuration);
 
             //MultiPartBodyLength
             services.Configure<FormOptions>(o =>

@@ -15,4 +15,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
+    <ProjectReference Include="..\Secutiry\Security.csproj" />
+  </ItemGroup>
+
 </Project>

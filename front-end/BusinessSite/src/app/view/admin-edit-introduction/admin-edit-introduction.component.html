@@ -80,7 +80,7 @@
             <tr mat-header-row *matHeaderRowDef="columnsInner" style="display: none;"></tr>
             <tr mat-row *matRowDef="let row; columns: columnsInner"></tr>
 
-            <tr [hidden]="isDisabled" mat-footer-row *matFooterRowDef="columnsInner" (click)="add()"></tr>
+            <tr [hidden]="isDisabled" mat-footer-row *matFooterRowDef="columnsInner" (click)="addExternalUrl()"></tr>
             
             </table>
 

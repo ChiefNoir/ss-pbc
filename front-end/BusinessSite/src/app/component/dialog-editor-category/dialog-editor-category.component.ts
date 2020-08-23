@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { StaticNames } from 'src/app/common/StaticNames';
-import { RequestResult } from 'src/app/model/RequestResult';
+import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Category } from 'src/app/model/Category';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from '../message/message.component';
@@ -97,13 +97,20 @@ export class DialogEditorCategoryComponent implements OnInit
     }
     else
     {
-      this.handleError(result.errorMessage);
+      this.handleError(result.error);
     }
   }
 
-  private handleError(error: string): void
+  private handleError(error: any): void
   {
     this.disableInput$.next(false);
+
+    if (error instanceof Incident)
+    {
+      this.message$.next({text: error.code + '<br/>' + error.detail + '<br/>' + error.message, type: MessageType.Error });
+      return;
+    }
+
     this.message$.next({text: error, type: MessageType.Error });
   }
 

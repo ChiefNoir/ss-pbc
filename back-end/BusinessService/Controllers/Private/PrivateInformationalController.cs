@@ -32,8 +32,6 @@ namespace API.Controllers.Private
             var result = await Supervisor.SafeExecuteAsync(token, async() =>
             {
                 var claims = TokenManager.ValidateToken(_config, token);
-                if (claims == null)
-                    throw new Exception("No");
 
                 return new Information
                 {

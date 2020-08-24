@@ -19,9 +19,9 @@ namespace API.Controllers.Private
         }
 
         [HttpPost("accounts")]
-        public async Task<IActionResult> AddAccount([FromBody] Account account)
+        public async Task<IActionResult> AddAccount([FromHeader] string token, [FromBody] Account account)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[]{ RoleNames.Admin }, () =>
             {
                 return _accountRepository.Add(account);
             });
@@ -30,9 +30,9 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("accounts")]
-        public async Task<IActionResult> CountAccounts()
+        public async Task<IActionResult> CountAccounts([FromHeader] string token)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.Count();
             });
@@ -41,9 +41,9 @@ namespace API.Controllers.Private
         }
 
         [HttpDelete("accounts")]
-        public async Task<IActionResult> DeleteUser([FromBody] Account account)
+        public async Task<IActionResult> DeleteUser([FromHeader] string token, [FromBody] Account account)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.Remove(account);
             });
@@ -52,9 +52,9 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("accounts/{id}")]
-        public async Task<IActionResult> GetAccount(int id)
+        public async Task<IActionResult> GetAccount([FromHeader] string token, int id)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.Get(id);
             });
@@ -63,9 +63,9 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("accounts/search")]
-        public async Task<IActionResult> GetAccounts([FromQuery] Paging paging)
+        public async Task<IActionResult> GetAccounts([FromHeader] string token, [FromQuery] Paging paging)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.Search(paging.Start, paging.Length);
             });
@@ -74,9 +74,9 @@ namespace API.Controllers.Private
         }
 
         [HttpPatch("accounts")]
-        public async Task<IActionResult> UpdateAccount([FromBody] Account account)
+        public async Task<IActionResult> UpdateAccount([FromHeader] string token, [FromBody] Account account)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.Update(account);
             });

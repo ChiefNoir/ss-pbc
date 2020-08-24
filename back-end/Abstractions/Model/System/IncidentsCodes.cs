@@ -6,6 +6,8 @@
         AuthenticationFailed = 101,
         BadToken = 102,
 
+        NotEnoughRights = 103,
+
         AccessDenied = 200,
 
         

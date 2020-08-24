@@ -18,9 +18,9 @@ namespace API.Controllers.Private
         }
 
         [HttpPatch("introduction")]
-        public async Task<IActionResult> UpdateIntroduction([FromBody] Introduction introduction)
+        public async Task<IActionResult> UpdateIntroduction([FromHeader] string token, [FromBody] Introduction introduction)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _introductionRepository.UpdateIntroduction(introduction);
             });

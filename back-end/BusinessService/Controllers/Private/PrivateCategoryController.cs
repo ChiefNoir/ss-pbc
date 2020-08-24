@@ -18,9 +18,9 @@ namespace API.Controllers.Private
         }
 
         [HttpPost("category")]
-        public async Task<IActionResult> Save([FromBody] Category category)
+        public async Task<IActionResult> Save([FromHeader] string token, [FromBody] Category category)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _categoryRepository.SaveCategory(category);
             });
@@ -29,9 +29,9 @@ namespace API.Controllers.Private
         }
 
         [HttpDelete("category")]
-        public async Task<IActionResult> Delete([FromBody] Category category)
+        public async Task<IActionResult> Delete([FromHeader] string token, [FromBody] Category category)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _categoryRepository.DeleteCategory(category);
             });

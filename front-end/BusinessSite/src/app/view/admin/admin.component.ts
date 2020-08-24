@@ -24,20 +24,19 @@ export class AdminComponent implements OnInit
 
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   private dataService: DataService;
-  private storage: StorageService;
+  
 
-  public constructor(router: Router, titleService: Title, dataService: DataService, storage: StorageService)
+  public constructor(router: Router, titleService: Title, dataService: DataService)
   {
     this.router = router;
     this.dataService = dataService;
-    this.storage = storage;
 
     titleService.setTitle(environment.siteName);
   }
 
   public ngOnInit(): void
   {
-    this.dataService.getInformation(this.storage.getToken())
+    this.dataService.getInformation()
                     .then
                     (
                       result => this.handleRequestResult(result),

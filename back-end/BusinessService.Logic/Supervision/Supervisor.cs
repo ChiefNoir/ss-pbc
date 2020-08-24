@@ -1,5 +1,7 @@
 ﻿using Abstractions.IFactory;
+using Abstractions.Model;
 using Abstractions.Model.System;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using Security;
 using System;
@@ -43,35 +45,23 @@ namespace BusinessService.Logic.Supervision
             return result;
         }
 
-        public static async Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, Func<Task<T>> func)
+        public static async Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, string[] roles, Func<Task<T>> func)
         {
-            var result = new ExecutionResult<T>();
+            var incident = CheckToken(token, roles);
 
-            try
+            if (incident != null)
             {
-                var incident = CheckToken(token);
-
-                if (incident != null)
+                return new ExecutionResult<T>
                 {
-                    result.Error = incident;
-                    return result;
-                }
-
-                result.Data = await func();
-                result.IsSucceed = true;
-            }
-            catch (Exception ee)
-            {
-                //TODO: log error
-                result.IsSucceed = false;
-                result.Error = IncidentFactory.Create(IncidentsCodes.InternalError);
-                result.Error.Detail = $"{ee.Message}{Environment.NewLine} {ee.InnerException?.Message}";
+                    IsSucceed = false,
+                    Error = incident
+                };
             }
 
-            return result;
+            return await SafeExecuteAsync(func);
         }
 
-        private static Incident CheckToken(string token, params string[] roles)
+        private static Incident CheckToken(string token, string[] roles)
         {
             if (string.IsNullOrEmpty(token))
             {
@@ -84,7 +74,20 @@ namespace BusinessService.Logic.Supervision
                 return IncidentFactory.Create(IncidentsCodes.BadToken);
             }
 
-            return null;
+            if (roles == null || roles.Length == 0)
+            {
+                return null;
+            }
+
+            foreach (var item in roles)
+            {
+                if (principal.IsInRole(item))
+                {
+                    return null;
+                }
+            }
+
+            return IncidentFactory.Create(IncidentsCodes.NotEnoughRights);
         }
     }
 }

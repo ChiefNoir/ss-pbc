@@ -18,9 +18,9 @@ namespace API.Controllers.Private
         }
 
         [HttpPost("project")]
-        public async Task<IActionResult> Add([FromBody] Project project)
+        public async Task<IActionResult> Add([FromHeader] string token, [FromBody] Project project)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _projectRepository.Create(project);
             });
@@ -29,9 +29,9 @@ namespace API.Controllers.Private
         }
 
         [HttpPatch("project")]
-        public async Task<IActionResult> Update([FromBody] Project project)
+        public async Task<IActionResult> Update([FromHeader] string token, [FromBody] Project project)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _projectRepository.Update(project);
             });
@@ -40,9 +40,9 @@ namespace API.Controllers.Private
         }
 
         [HttpDelete("project")]
-        public async Task<IActionResult> Delete([FromBody] Project project)
+        public async Task<IActionResult> Delete([FromHeader] string token, [FromBody] Project project)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _projectRepository.Delete(project);
             });

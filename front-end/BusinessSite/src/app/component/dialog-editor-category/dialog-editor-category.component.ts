@@ -55,7 +55,7 @@ export class DialogEditorCategoryComponent implements OnInit
     this.disableInput$.next(true);
     this.message$.next({text: 'Saving in progress', type: MessageType.Spinner  });
 
-    this.service.save(this.category$.value)
+    this.service.saveCategory(this.category$.value)
                 .then
                 (
                   succeeded =>
@@ -72,7 +72,7 @@ export class DialogEditorCategoryComponent implements OnInit
     this.message$.next({text: 'Deleting in progress', type: MessageType.Spinner  });
     this.disableInput$.next(true);
 
-    this.service.delete(this.category$.value)
+    this.service.deleteCategory(this.category$.value)
                 .then
                 (
                   succeeded => this.close(),

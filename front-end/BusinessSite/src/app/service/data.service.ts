@@ -5,24 +5,29 @@ import { RequestResult } from '../model/RequestResult';
 import { Project } from '../model/Project';
 import { Category } from '../model/Category';
 import { Account } from '../model/Account';
-
-import { environment } from 'src/environments/environment';
 import { ProjectPreview } from '../model/ProjectPreview';
 import { Introduction } from '../model/Introduction';
 import { Information } from '../model/Information';
+
+import { StorageService } from './storage.service';
+
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class DataService
 {
   private httpClient: HttpClient;
+  private storage: StorageService;
   private endpoint = environment.apiEndpoint;
 
-  public constructor(http: HttpClient)
+  public constructor(http: HttpClient, storage: StorageService)
   {
     this.httpClient = http;
+    this.storage = storage;
   }
 
 // --------------------------------------------------------------------
+// SWITCH METHODS
   public saveAccount(account: Account): Promise<RequestResult<Account>>
   {
     if (account.id)
@@ -35,28 +40,6 @@ export class DataService
     }
   }
 
-  private createAccount(account: Account): Promise<RequestResult<Account>>
-  {
-    return this.httpClient
-              .post<RequestResult<Account>>(this.endpoint + 'accounts', account)
-              .toPromise();
-  }
-
-  private updateAccount(account: Account): Promise<RequestResult<Account>>
-  {
-    return this.httpClient
-              .patch<RequestResult<Account>>(this.endpoint + 'accounts', account)
-              .toPromise();
-  }
-
-  public deleteAccount(account: Account): Promise<RequestResult<any>>
-  {
-    return this.httpClient
-              .request<RequestResult<boolean>>('delete', this.endpoint + 'accounts', { body: account,})
-              .toPromise();
-  }
-
-
   public saveProject(project: Project): Promise<RequestResult<Project>>
   {
     if (project.id)
@@ -68,82 +51,299 @@ export class DataService
       return this.createProject(project);
     }
   }
+// [END OF] SWITCH METHODS
+// --------------------------------------------------------------------
+
+// --------------------------------------------------------------------
+// Restricted methods
+  public getInformation(): Promise<RequestResult<Information>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .get<RequestResult<Information>>
+               (
+                 this.endpoint + 'information',
+                 { headers }
+               )
+               .toPromise();
+  }
+
+  public updateIntroduction(introdcution: Introduction): Promise<RequestResult<Introduction>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .request<RequestResult<Introduction>>
+               (
+                 'patch',
+                 this.endpoint + 'introduction',
+                 { body: introdcution, headers }
+               )
+               .toPromise();
+  }
+
+  public uploadFile(fileToUpload: File): Promise<RequestResult<string>>
+  {
+    const formData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .post<RequestResult<string>>
+               (
+                 this.endpoint + 'upload',
+                 formData,
+                 { headers }
+               )
+               .toPromise();
+  }
+
+  public saveCategory(category: Category): Promise<RequestResult<any>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .post<RequestResult<any>>
+               (
+                 this.endpoint + 'category',
+                 category,
+                 { headers }
+               )
+               .toPromise();
+  }
+
+  public deleteCategory(category: Category): Promise<RequestResult<any>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .request<RequestResult<any>>
+               (
+                 'delete',
+                 this.endpoint + 'category',
+                 { body: category, headers}
+               )
+               .toPromise();
+  }
+
+  public countAccount(): Promise<RequestResult<number>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .get<RequestResult<number>>
+               (
+                 this.endpoint + 'accounts',
+                 {headers}
+               )
+               .toPromise();
+  }
+
+  public getAccount(id: number): Promise<RequestResult<Account>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .get<RequestResult<Account>>
+               (
+                 this.endpoint + 'accounts/' + id,
+                 {headers}
+               )
+               .toPromise();
+  }
+
+  public getAccounts(start: number, length: number): Promise<RequestResult<Account[]>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .get<RequestResult<Account[]>>
+               (
+                 this.endpoint + 'accounts/search?start=' + start + '&length=' + length,
+                 {headers}
+               )
+               .toPromise();
+  }
+
+  private createAccount(account: Account): Promise<RequestResult<Account>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .post<RequestResult<Account>>
+               (
+                 this.endpoint + 'accounts',
+                 {body: account, headers}
+               )
+               .toPromise();
+  }
+
+  private updateAccount(account: Account): Promise<RequestResult<Account>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .patch<RequestResult<Account>>
+               (
+                 this.endpoint + 'accounts',
+                 {body: account, headers}
+               )
+               .toPromise();
+  }
+
+  public deleteAccount(account: Account): Promise<RequestResult<any>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .request<RequestResult<boolean>>
+               (
+                 'delete',
+                 this.endpoint + 'accounts',
+                 { body: account, headers}
+               )
+               .toPromise();
+  }
 
   public deleteProject(project: Project): Promise<RequestResult<any>>
   {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
     return this.httpClient
-              .request<RequestResult<boolean>>('delete', this.endpoint + 'project', { body: project,})
-              .toPromise();
+               .request<RequestResult<boolean>>
+               (
+                 'delete',
+                 this.endpoint + 'project',
+                 { body: project, headers}
+               )
+               .toPromise();
   }
 
   private updateProject(project: Project): Promise<RequestResult<Project>>
   {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
     return this.httpClient
-               .patch<RequestResult<any>>(this.endpoint + 'project', project)
+               .patch<RequestResult<Project>>
+               (
+                 this.endpoint + 'project',
+                 {body: project, headers}
+               )
                .toPromise();
   }
 
   private createProject(project: Project): Promise<RequestResult<Project>>
   {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
     return this.httpClient
-               .post<RequestResult<any>>(this.endpoint + 'project', project)
+               .post<RequestResult<Project>>
+               (
+                 this.endpoint + 'project',
+                 {body: project, headers}
+               )
                .toPromise();
   }
-
+// [END OF] Restricted methods
 // --------------------------------------------------------------------
 
-  public getInformation(token: string): Promise<RequestResult<Information>>
-  {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Token': token });
-      let options = { headers: headers };
-
-    return this.httpClient
-               .get<RequestResult<Information>>(this.endpoint + 'information',options)
-               .toPromise();
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// --------------------------------------------------------------------
+// Public methods
   public getIntroduction(): Promise<RequestResult<Introduction>>
   {
     return this.httpClient
-               .get<RequestResult<Introduction>>(this.endpoint + 'introduction')
+               .get<RequestResult<Introduction>>
+               (
+                 this.endpoint + 'introduction'
+               )
                .toPromise();
   }
 
   public getCategories(): Promise<RequestResult<Array<Category>>>
   {
     return this.httpClient
-               .get<RequestResult<Array<Category>>>(this.endpoint + 'categories')
-               .toPromise();
+              .get<RequestResult<Array<Category>>>
+              (
+                this.endpoint + 'categories'
+              )
+              .toPromise();
   }
 
   public getEverythingCategory(): Promise<RequestResult<Category>>
   {
     return this.httpClient
-               .get<RequestResult<Category>>(this.endpoint + 'categories/everything')
-               .toPromise();
+                .get<RequestResult<Category>>
+                (
+                  this.endpoint + 'categories/everything'
+                )
+                .toPromise();
   }
 
   public getCategory(id: number): Promise<RequestResult<Category>>
   {
     return this.httpClient
-               .get<RequestResult<Category>>(this.endpoint + 'categories/' + id)
+               .get<RequestResult<Category>>
+               (
+                 this.endpoint + 'categories/' + id
+               )
                .toPromise();
   }
 
@@ -151,7 +351,10 @@ export class DataService
   {
     // well, it's way easy and faster to parse code from url, so it will be this way
     return this.httpClient
-               .get<RequestResult<Project>>(this.endpoint + 'projects/' + code)
+               .get<RequestResult<Project>>
+               (
+                 this.endpoint + 'projects/' + code
+               )
                .toPromise();
   }
 
@@ -160,96 +363,13 @@ export class DataService
     const categoryParam = typeof categoryCode !== 'undefined' && categoryCode ? '&categorycode=' + categoryCode : '';
 
     return this.httpClient
-               .get<RequestResult<Array<ProjectPreview>>>
-               (
-                 this.endpoint + 'projects/search?'
-                 + 'start=' + start
-                 + '&length=' + length
-                 + categoryParam
-               )
-               .toPromise();
+              .get<RequestResult<Array<ProjectPreview>>>
+              (
+                this.endpoint + 'projects/search?start=' + start + '&length=' + length + categoryParam
+              )
+              .toPromise();
   }
 
-
-
-
-
-
-
-
-  public updateIntroduction(introdcution: Introduction): Promise<RequestResult<Introduction>> {
-    return this.httpClient
-      .request<RequestResult<Introduction>>('patch', this.endpoint + 'introduction', {
-        body: introdcution,
-      })
-      .toPromise();
-  }
-
-
-
-
-
-
-
-
-
-
-
-  public save(category: Category): Promise<RequestResult<any>> {
-    return this.httpClient
-      .post<RequestResult<any>>(this.endpoint + 'category', category)
-      .toPromise();
-  }
-
-  public delete(category: Category): Promise<RequestResult<any>> {
-    return this.httpClient
-      .request<RequestResult<any>>('delete', this.endpoint + 'category', {
-        body: category,
-      })
-
-      .toPromise();
-  }
-
-
-
-  public uploadFile(fileToUpload: File): Promise<RequestResult<string>>{
-    const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-
-    return this.httpClient.post<RequestResult<string>>(this.endpoint + 'upload', formData).toPromise();
-  }
-
-
-  public countAccount(): Promise<RequestResult<number>> {
-    return this.httpClient
-      .get<RequestResult<number>>(this.endpoint + 'accounts')
-      .toPromise();
-  }
-
-  public getAccount(id: number): Promise<RequestResult<Account>>
-  {
-    return this.httpClient
-    .get<RequestResult<Account>>(
-      this.endpoint +
-        'accounts/' + id
-    )
-    .toPromise();
-  }
-
-  public getAccounts(start: number, length: number): Promise<RequestResult<Account[]>>
-  {
-    return this.httpClient
-    .get<RequestResult<Account[]>>(
-      this.endpoint +
-        'accounts/search?' +
-        'start=' +
-        start +
-        '&length=' +
-        length
-    )
-    .toPromise();
-  }
-
-
-
+// [END OF] Public methods
+// --------------------------------------------------------------------
 }

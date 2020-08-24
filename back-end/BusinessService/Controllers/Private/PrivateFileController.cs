@@ -1,4 +1,5 @@
 ﻿using Abstractions.IRepository;
+using Abstractions.Model;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -21,9 +22,9 @@ namespace API.Controllers.Private
         }
 
         [HttpPost("upload"), DisableRequestSizeLimit]
-        public async Task<IActionResult> Upload()
+        public async Task<IActionResult> Upload([FromHeader] string token)
         {
-            var result = await Supervisor.SafeExecuteAsync(async () =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, async () =>
             {
                 var filename = await _fileRepository.Save(Request.Form.Files.FirstOrDefault());
 

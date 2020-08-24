@@ -4,7 +4,7 @@
     {
         AuthenticationNotProvided = 100,
         AuthenticationFailed = 101,
-        BadToken = 102,
+        InvalidToken = 102,
 
         NotEnoughRights = 103,
 

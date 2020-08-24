@@ -63,7 +63,7 @@ export class DialogEditProjectComponent implements OnInit
                       .then
                       (
                         succeeded => this.handleProject(succeeded, {text: StaticNames.LoadComplete, type: MessageType.Info }),
-                        rejected => this.handleError(rejected.message)
+                        rejected => this.handleError(rejected)
                       );
         }
         else
@@ -75,7 +75,7 @@ export class DialogEditProjectComponent implements OnInit
           this.disableInput$.next(false);
         }
       },
-      categoryRejected => this.handleError(categoryRejected.message)
+      categoryRejected => this.handleError(categoryRejected)
     );
   }
 
@@ -124,7 +124,7 @@ export class DialogEditProjectComponent implements OnInit
                                     notok => this.handleError(notok)
                                   );
                     },
-                    rejected => this.handleError(rejected.message)
+                    rejected => this.handleError(rejected)
                   );
     }
     else
@@ -152,7 +152,7 @@ export class DialogEditProjectComponent implements OnInit
                     this.project$.next(null);
                     this.message$.next({text: StaticNames.DeleteComplete, type: MessageType.Info });
                   },
-                  rejected => this.handleError(rejected.message)
+                  rejected => this.handleError(rejected)
     );
   }
 
@@ -197,20 +197,28 @@ export class DialogEditProjectComponent implements OnInit
     }
     else
     {
-      this.handleError(result.error);
+      this.handleIncident(result.error);
     }
+  }
+
+  private handleIncident(error: Incident): void
+  {
+    this.disableInput$.next(false);
+    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
   }
 
   private handleError(error: any): void
   {
     this.disableInput$.next(false);
+    console.log(error);
 
-    if (error instanceof Incident)
+    if (error.name !== undefined)
     {
-      this.message$.next({text: error.code + '<br/>' + error.detail + '<br/>' + error.message, type: MessageType.Error });
-      return;
+      this.message$.next({text: error.name, type: MessageType.Error });
     }
-
-    this.message$.next({text: error, type: MessageType.Error });
+    else
+    {
+      this.message$.next({text: error, type: MessageType.Error });
+    }
   }
 }

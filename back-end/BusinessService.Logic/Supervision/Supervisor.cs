@@ -3,8 +3,10 @@ using Abstractions.Model;
 using Abstractions.Model.System;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Security;
 using System;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace BusinessService.Logic.Supervision
@@ -47,15 +49,22 @@ namespace BusinessService.Logic.Supervision
 
         public static async Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, string[] roles, Func<Task<T>> func)
         {
-            var incident = CheckToken(token, roles);
-
-            if (incident != null)
+            try
             {
-                return new ExecutionResult<T>
+                var incident = CheckToken(token, roles);
+
+                if (incident != null)
                 {
-                    IsSucceed = false,
-                    Error = incident
-                };
+                    return new ExecutionResult<T>
+                    {
+                        IsSucceed = false,
+                        Error = incident
+                    };
+                }
+            }
+            catch(Exception ee)
+            {
+
             }
 
             return await SafeExecuteAsync(func);
@@ -68,10 +77,20 @@ namespace BusinessService.Logic.Supervision
                 return IncidentFactory.Create(IncidentsCodes.AuthenticationNotProvided);
             }
 
-            var principal = TokenManager.ValidateToken(_configuration, token);
+            IPrincipal principal = null;
+            try
+            {
+                principal = TokenManager.ValidateToken(_configuration, token);
+            }
+            catch(SecurityTokenException stee)
+            {
+                // TODO: Need refactoring
+                return IncidentFactory.Create(IncidentsCodes.InvalidToken);
+            }
+
             if (principal == null || principal.Identity == null)
             {
-                return IncidentFactory.Create(IncidentsCodes.BadToken);
+                return IncidentFactory.Create(IncidentsCodes.InvalidToken);
             }
 
             if (roles == null || roles.Length == 0)

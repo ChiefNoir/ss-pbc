@@ -157,11 +157,13 @@ export class AdminEditIntroductionComponent implements OnInit
 
   private handleIncident(error: Incident): void
   {
+    this.isDisabled = false;
     this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
   }
 
   private handleError(error: any): void
   {
+    this.isDisabled = false;
     console.log(error);
 
     if (error.name !== undefined)

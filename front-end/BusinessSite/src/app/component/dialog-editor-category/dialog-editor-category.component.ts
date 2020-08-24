@@ -75,7 +75,7 @@ export class DialogEditorCategoryComponent implements OnInit
     this.service.deleteCategory(this.category$.value)
                 .then
                 (
-                  succeeded => this.close(),
+                  succeeded => this.handleCategory(succeeded),
                   rejected => this.handleError(rejected.message)
                 );
   }
@@ -97,21 +97,29 @@ export class DialogEditorCategoryComponent implements OnInit
     }
     else
     {
-      this.handleError(result.error);
+      this.handleIncident(result.error);
     }
+  }
+
+  private handleIncident(error: Incident): void
+  {
+    this.disableInput$.next(false);
+    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
   }
 
   private handleError(error: any): void
   {
     this.disableInput$.next(false);
+    console.log(error);
 
-    if (error instanceof Incident)
+    if (error.name !== undefined)
     {
-      this.message$.next({text: error.code + '<br/>' + error.detail + '<br/>' + error.message, type: MessageType.Error });
-      return;
+      this.message$.next({text: error.name, type: MessageType.Error });
     }
-
-    this.message$.next({text: error, type: MessageType.Error });
+    else
+    {
+      this.message$.next({text: error, type: MessageType.Error });
+    }
   }
 
 }

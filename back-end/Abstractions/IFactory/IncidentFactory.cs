@@ -36,9 +36,9 @@ namespace Abstractions.IFactory
                         result.Message = "VersionInconsistency";
                         break;
                     }
-                case IncidentsCodes.BadToken:
+                case IncidentsCodes.InvalidToken:
                     {
-                        result.Message = "BadToken";
+                        result.Message = "InvalidToken";
                         break;
                     }
                 default:

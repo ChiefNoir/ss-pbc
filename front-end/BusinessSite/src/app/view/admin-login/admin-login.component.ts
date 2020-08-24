@@ -28,7 +28,7 @@ export class AdminLoginComponent {
   private storageService: StorageService;
 
 
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   private authService: AuthService;
 
   public login: FormControl = new FormControl('', [Validators.required]);

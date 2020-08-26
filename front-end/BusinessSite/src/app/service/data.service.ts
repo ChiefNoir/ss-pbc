@@ -225,8 +225,9 @@ export class DataService
     });
 
     return this.httpClient
-               .patch<RequestResult<Account>>
+               .request<RequestResult<Account>>
                (
+                'patch',
                  this.endpoint + 'accounts',
                  {body: account, headers}
                )
@@ -276,10 +277,12 @@ export class DataService
       'Content-Type': 'application/json',
       Token: this.storage.getToken()
     });
+    const f = this.storage.getToken();
 
     return this.httpClient
-               .patch<RequestResult<Project>>
+               .request<RequestResult<Project>>
                (
+                'patch',
                  this.endpoint + 'project',
                  {body: project, headers}
                )

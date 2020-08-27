@@ -39,7 +39,7 @@ export class DialogEditorCategoryComponent implements OnInit
       this.service.getCategory(this.categoryId)
                   .then
                   (
-                    succeeded => this.handleCategory(succeeded),
+                    succeeded => this.handleCategory(succeeded, {text: StaticNames.LoadComplete, type: MessageType.Info }),
                     rejected => this.handleError(rejected.message)
                   );
     }
@@ -61,8 +61,8 @@ export class DialogEditorCategoryComponent implements OnInit
                 (
                   succeeded =>
                   {
-                    this.message$.next({text: 'Saving complete', type: MessageType.Info  });
-                    this.handleCategory(succeeded);
+                    this.message$.next({text: StaticNames.SaveInProgress, type: MessageType.Info });
+                    this.handleCategory(succeeded, {text: StaticNames.SaveComplete, type: MessageType.Info });
                   },
                   rejected => this.handleError(rejected.message)
                 );
@@ -76,7 +76,7 @@ export class DialogEditorCategoryComponent implements OnInit
     this.service.deleteCategory(this.category$.value)
                 .then
                 (
-                  succeeded => this.handleCategory(succeeded),
+                  succeeded => this.handleCategory(succeeded, {text: StaticNames.DeleteComplete, type: MessageType.Info }),
                   rejected => this.handleError(rejected.message)
                 );
   }
@@ -86,7 +86,7 @@ export class DialogEditorCategoryComponent implements OnInit
     this.dialog.close();
   }
 
-  private handleCategory(result: RequestResult<Category>): void
+  private handleCategory(result: RequestResult<Category>, description: MessageDescription): void
   {
     this.disableInput$.next(false);
 
@@ -94,7 +94,7 @@ export class DialogEditorCategoryComponent implements OnInit
     {
       this.category$.next(result.data);
       this.title$.next('Edit "' + result.data.code + '" category');
-      this.message$.next({text: StaticNames.LoadComplete, type: MessageType.Info });
+      this.message$.next(description);
     }
     else
     {

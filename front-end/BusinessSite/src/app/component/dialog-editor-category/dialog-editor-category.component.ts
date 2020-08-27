@@ -45,6 +45,7 @@ export class DialogEditorCategoryComponent implements OnInit
     }
     else
     {
+      this.disableInput$.next(false);
       this.category$.next(new Category());
     }
   }

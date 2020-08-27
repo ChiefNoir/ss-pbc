@@ -9,7 +9,7 @@ import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
 import { Paging } from 'src/app/model/PagingInfo';
-import { Incident } from 'src/app/model/RequestResult';
+import { Incident, RequestResult } from 'src/app/model/RequestResult';
 
 @Component({
   selector: 'app-admin-edit-projects',
@@ -99,7 +99,7 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
     {
       this.service.getProjectsPreview
       (
-        paging.getCurrentPage() * environment.paging.maxProjects,
+        0,
         environment.paging.maxProjects,
         paging.getSearchParam()
       )
@@ -108,10 +108,22 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
           response =>
           {
             this.message$.next(null);
-            this.projects$.next(response.data);
+            this.handleProjects(response);
           },
           reject =>  this.handleError(reject)
         );
+    }
+  }
+
+  private handleProjects(result: RequestResult<ProjectPreview[]>): void
+  {
+    if (result.isSucceed)
+    {
+      this.projects$.next(result.data);
+    }
+    else
+    {
+      this.handleIncident(result.error);
     }
   }
 

@@ -46,6 +46,7 @@ export class DialogEditAccountComponent implements OnInit
     else
     {
       this.title$.next('Create new account');
+      this.disableInput$.next(false);
       this.account$.next(new Account());
     }
   }

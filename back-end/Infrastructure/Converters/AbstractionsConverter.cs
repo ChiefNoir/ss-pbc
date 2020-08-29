@@ -41,7 +41,8 @@ namespace Infrastructure.Converters
                 PosterUrl = project.PosterUrl,
                 ReleaseDate = project.ReleaseDate,
                 Version = project.Version,
-                CategoryId = project.Category.Id.Value
+                CategoryId = project.Category.Id.Value,
+                ExternalUrls = new List<ProjectExternalUrl>()
             };
 
             foreach (var item in ToProjectExternalUrls(project.ExternalUrls))

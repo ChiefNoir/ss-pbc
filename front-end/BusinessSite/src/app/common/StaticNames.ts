@@ -9,4 +9,6 @@ export class StaticNames
 
   public static DeleteComplete = 'Deleting complete';
   public static DeleteInProgress = 'Delete in progress';
+
+  public static ProjectsNotFound = 'Nothing was found';
 }

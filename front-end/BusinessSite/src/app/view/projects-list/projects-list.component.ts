@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
 import { Paging } from 'src/app/model/PagingInfo';
-import { Incident } from 'src/app/model/RequestResult';
+import { Incident, RequestResult } from 'src/app/model/RequestResult';
 
 @Component({
   selector: 'app-projects-list',
@@ -112,15 +112,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit
                 (
                   response =>
                   {
-                    if (response.isSucceed)
-                    {
-                      this.message$.next(null);
-                      this.projects$.next(response.data);
-                    }
-                    else
-                    {
-                      this.handleIncident(response.error);
-                    }
+                    this.handleProjects(response);
                   },
                   reject => this.handleError(reject)
                 );
@@ -144,6 +136,24 @@ export class ProjectsListComponent implements OnDestroy, OnInit
                 this.paging$.value.getSearchParam()
               )
         );
+  }
+
+  private handleProjects(response: RequestResult<ProjectPreview[]>): void
+  {
+    if (response.isSucceed)
+    {
+      this.message$.next(null);
+      this.projects$.next(response.data);
+
+      if (response.data.length === 0)
+      {
+        this.message$.next({text: StaticNames.ProjectsNotFound, type: MessageType.Info });
+      }
+    }
+    else
+    {
+      this.handleIncident(response.error);
+    }
   }
 
   private handleIncident(error: Incident): void

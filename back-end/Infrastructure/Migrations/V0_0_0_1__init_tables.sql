@@ -22,7 +22,7 @@ create table project (
 	code varchar(128) not null UNIQUE,
 	display_name varchar(128) not null,
 	release_date date, 
-	poster_url varchar(512) not null,
+	poster_url varchar(512),
 	poster_description varchar(512),
 	category_id int REFERENCES category (id),
 	description_short text,
@@ -38,14 +38,14 @@ create table external_url (
 );
 
 create table project_to_external_url (
-	project_id int REFERENCES project (id),
-	external_url_id int REFERENCES external_url (id),
+	project_id int REFERENCES project (id) on delete cascade,
+	external_url_id int REFERENCES external_url (id) on delete cascade,
 	PRIMARY KEY(project_id, external_url_id)
 );
 
 create table introduction_to_external_url (
-	introduction_id int REFERENCES introduction (id),
-	external_url_id int REFERENCES external_url (id),
+	introduction_id int REFERENCES introduction (id) on delete cascade,
+	external_url_id int REFERENCES external_url (id) on delete cascade,
 	PRIMARY KEY(introduction_id, external_url_id)
 );
 

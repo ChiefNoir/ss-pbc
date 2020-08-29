@@ -39,11 +39,14 @@ export class Paging<T>
 
   public getMaxPage(): number
   {
-    return Math.ceil(this.maxItems / this.maxItemsPerPage) - 1;
+    const val = Math.ceil(this.maxItems / this.maxItemsPerPage) - 1;
+    return val < 0 ? 0 : val;
   }
 
   public getMinPage(): number
   {
+    if (this.minPage < 0) { return 0; }
+
     return this.minPage;
   }
 

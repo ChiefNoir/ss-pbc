@@ -112,7 +112,7 @@ export class DataService
                .toPromise();
   }
 
-  public saveCategory(category: Category): Promise<RequestResult<any>>
+  public saveCategory(category: Category): Promise<RequestResult<Category>>
   {
     const headers = new HttpHeaders
     ({
@@ -121,7 +121,7 @@ export class DataService
     });
 
     return this.httpClient
-               .post<RequestResult<any>>
+               .post<RequestResult<Category>>
                (
                  this.endpoint + 'category',
                  category,
@@ -194,7 +194,7 @@ export class DataService
                .get<RequestResult<Account[]>>
                (
                  this.endpoint + 'accounts/search?start=' + start + '&length=' + length,
-                 {headers}
+                 { headers }
                )
                .toPromise();
   }
@@ -211,7 +211,8 @@ export class DataService
                .post<RequestResult<Account>>
                (
                  this.endpoint + 'accounts',
-                 {body: account, headers}
+                 account,
+                 { headers }
                )
                .toPromise();
   }
@@ -277,7 +278,6 @@ export class DataService
       'Content-Type': 'application/json',
       Token: this.storage.getToken()
     });
-    const f = this.storage.getToken();
 
     return this.httpClient
                .request<RequestResult<Project>>
@@ -301,7 +301,8 @@ export class DataService
                .post<RequestResult<Project>>
                (
                  this.endpoint + 'project',
-                 {body: project, headers}
+                 project,
+                 {headers}
                )
                .toPromise();
   }

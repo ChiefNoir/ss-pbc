@@ -4,7 +4,7 @@
     <h1 class="headline">[{{ project.category.displayName }}] {{ project.displayName }}</h1>    
     <mat-divider></mat-divider>
     
-    <div class="description">{{ project.description }}</div>
+    <div class="description" [innerHtml]="project.description"></div>
 
     <div *ngIf="project.externalUrls.length > 0">
       <h1 class="headline">External urls</h1>

@@ -3,6 +3,6 @@
 
   <div class="content">
     <a class="headline" [routerLink]="createRouterLink()">[{{project.category?.displayName}}] {{ project.displayName }}</a>
-    <div class="description">{{project.description}}</div>   
+    <div class="description" [innerHtml]="project.description"></div>   
   </div>
 </div>

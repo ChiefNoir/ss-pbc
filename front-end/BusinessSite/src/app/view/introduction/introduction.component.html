@@ -7,7 +7,7 @@
         <h1 class="headline"> {{ introduction.title }} </h1>    
         <mat-divider></mat-divider>
         
-        <div class="description">{{ introduction.content }}</div>
+        <div class="description" [innerHtml]="introduction.content"></div>
     
         <div *ngIf="introduction.externalUrls.length > 0">
           <h1 class="headline">External urls</h1>

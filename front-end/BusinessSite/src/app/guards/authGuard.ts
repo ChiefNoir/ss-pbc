@@ -52,9 +52,8 @@ export class AuthGuard implements CanActivate
 
   public canSee(routerLink: string): boolean
   {
-    return true;
 
-    if( !this.deepCheck()) return false;
+    if (!this.deepCheck()) { return false; }
 
     if (routerLink === '/admin/editor/projects/') { return this.account.role === 'admin' || this.account.role === 'demo' ; }
     if (routerLink === '/admin/editor/categories/') { return this.account.role === 'admin' || this.account.role === 'demo' ; }

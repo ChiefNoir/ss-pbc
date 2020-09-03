@@ -12,6 +12,8 @@ import { DialogEditAccountComponent } from 'src/app/component/dialog-edit-accoun
 import { Paging } from 'src/app/model/PagingInfo';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
+import { AuthGuard } from 'src/app/guards/authGuard';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-edit-accounts',
@@ -26,19 +28,32 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   public paging$: BehaviorSubject<Paging<null>> = new BehaviorSubject<Paging<null>>(null);
   public dialog: MatDialog;
+  private authGuard: AuthGuard;
+  private router: Router;
   public columns: string[] = ['login', 'role'];
 
-  public constructor(service: DataService, titleService: Title, dialog: MatDialog) {
+  public constructor(service: DataService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
+  {
     this.service = service;
     this.dialog = dialog;
+    this.authGuard = authGuard;
+    this.router = router;
 
     titleService.setTitle(environment.siteName);
   }
 
-  public ngOnInit(): void
+  public async ngOnInit(): Promise<void>
   {
-    this.refreshAccounts(null);
-    this.paging$.subscribe(value => this.refreshAccounts(value));
+    await this.authGuard.checkIsLogged();
+    if (this.authGuard.isLoggedIn$.value)
+    {
+      this.refreshAccounts(null);
+      this.paging$.subscribe(value => this.refreshAccounts(value));
+    }
+    else
+    {
+      this.router.navigate(['/login']);
+    }
   }
 
   ngOnDestroy(): void

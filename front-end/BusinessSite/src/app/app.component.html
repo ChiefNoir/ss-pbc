@@ -9,15 +9,26 @@
       <a routerLink="/projects/" routerLinkActive="active">
         Projects
       </a>
-      <ng-container *ngIf="authGuard.isLoggedIn$ | async; else login">
-        <a [routerLink]="['/admin/']" routerLinkActive="active">Admin</a>
+
+      <ng-container *ngIf="authGuard.validating$ | async; else adminLink">
+          <div class="revolver">
+            <section class="revolver__part"></section>
+            <section class="revolver__part"></section>
+            <section class="revolver__part"></section>
+            <section class="revolver__part"></section>
+            <section class="revolver__part"></section>
+            <section class="revolver__part"></section>
+          </div>
       </ng-container>
-      <ng-template #login>
-        <a routerLink="/login/" routerLinkActive="active">
-          login
-        </a>
+      <ng-template #adminLink>
+        <ng-container *ngIf="authGuard.isLoggedIn$ | async; else login">
+          <a [routerLink]="['/admin/']" routerLinkActive="active">Admin</a>
+        </ng-container>
+        <ng-template #login>
+          <a routerLink="/login/" routerLinkActive="active">Login</a>
         </ng-template>
-       
+      </ng-template>
+
   </mat-toolbar-row>
 
   <mat-toolbar-row fxShow="true" fxHide.gt-sm="true" class="mobile" fxLayout="row" fxLayoutAlign="center stretch" >
@@ -38,19 +49,19 @@
         fxLayout="row" fxLayoutAlign="center center"
         *ngIf="router.isActive('/admin', false) && (authGuard.isLoggedIn$ | async)">
      <a *ngIf="authGuard.canSee('/admin')"
-     [routerLink]="['/admin/']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">admin</a>
+     [routerLink]="['/admin']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">admin</a>
 
-      <a *ngIf="authGuard.canSee('/admin/editor/projects/')"
-       [routerLink]="['/admin/editor/projects/']" routerLinkActive="active">projects</a>
+      <a *ngIf="authGuard.canSee('/admin/editor/projects')"
+       [routerLink]="['/admin/editor/projects']" routerLinkActive="active">projects</a>
       
       <a *ngIf="authGuard.canSee('/admin/editor/categories/')" 
-      [routerLink]="['/admin/editor/categories/']" routerLinkActive="active">categories</a>
+      [routerLink]="['/admin/editor/categories']" routerLinkActive="active">categories</a>
       
-      <a *ngIf="authGuard.canSee('/admin/editor/introduction/')"
-      [routerLink]="['/admin/editor/introduction/']" routerLinkActive="active">introduction</a>
+      <a *ngIf="authGuard.canSee('/admin/editor/introduction')"
+      [routerLink]="['/admin/editor/introduction']" routerLinkActive="active">introduction</a>
       
-      <a *ngIf="authGuard.canSee('/admin/editor/accounts/')"
-      [routerLink]="['/admin/editor/accounts/']" routerLinkActive="active">accounts</a>
+      <a *ngIf="authGuard.canSee('/admin/editor/accounts')"
+      [routerLink]="['/admin/editor/accounts']" routerLinkActive="active">accounts</a>
     </div>
 
     <div class="content" fxFlex>

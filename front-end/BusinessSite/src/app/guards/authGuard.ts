@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { StorageService } from '../service/storage.service';
 import { BehaviorSubject } from 'rxjs';
 import {Account} from 'src/app/model/Account';
+import { Identity } from '../model/Identity';
+import { RequestResult } from '../model/RequestResult';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,7 @@ import {Account} from 'src/app/model/Account';
 export class AuthGuard implements CanActivate
 {
   private authService: AuthService;
-  private storage: StorageService;
+  private storageService: StorageService;
   private router: Router;
 
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -20,75 +22,90 @@ export class AuthGuard implements CanActivate
 
   public account: Account;
 
+  public validating$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
   public constructor(authService: AuthService, storage: StorageService, router: Router)
   {
-    console.log('AuthGuard: constructor');
-
     this.authService = authService;
-    this.storage = storage;
+    this.storageService = storage;
     this.router = router;
 
-    this.isLoggedIn$.next(true);
-    //this.deepCheck();
+    this.checkIsLogged();
+  }
+
+  public async checkIsLogged(): Promise<void>
+  {
+    this.validating$.next(true);
+
+    const token = this.storageService.getToken();
+    
+
+    if (!token)
+    {
+      this.logoutComplete();
+    }
+    else
+    {
+      await this.authService.validate(token)
+                      .then
+                      (
+                        ok => 
+                        {
+                          if (ok.isSucceed)
+    {
+      this.loginComplete(ok.data);
+    }
+    else
+    {
+      this.logoutComplete();
+    }
+                        },
+                        fail => {console.log(fail); this.logoutComplete();  }
+      )
+    }
   }
 
   public canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<UrlTree | boolean> | UrlTree
   {
-    if (!this.storage.getToken()) { return this.router.parseUrl('/login'); }
+    if (!this.canSee('/' + next.routeConfig.path))
+    {
+      return this.router.parseUrl('/login');
+    }
 
-    return this.authService
-               .validate(this.storage.getToken())
-               .then
-               (
-                 ok =>
-                 {
-                   if(ok.data) return true;
-                   return this.router.parseUrl('/login');
-                },
-                notok => false
-      );
+    return new Promise(resolve => {
+      resolve(true);
+    });
   }
 
-
-  public canSee(routerLink: string): boolean
+  public async canSee(routerLink: string): Promise<boolean>
   {
+    if (!this.account) { await this.checkIsLogged(); }
+    if (this.account == null || this.validating$.value === true) { return false; }
 
-    if (!this.deepCheck()) { return false; }
+    if (routerLink === '/admin/editor/projects') { return this.account.role === 'admin' || this.account.role === 'demo' ; }
+    if (routerLink === '/admin/editor/categories') { return this.account.role === 'admin' || this.account.role === 'demo' ; }
+    if (routerLink === '/admin/editor/introduction') { return this.account.role === 'admin' || this.account.role === 'demo' ; }
+    if (routerLink === '/admin') { return this.account.role === 'admin' || this.account.role === 'demo' ; }
 
-    if (routerLink === '/admin/editor/projects/') { return this.account.role === 'admin' || this.account.role === 'demo' ; }
-    if (routerLink === '/admin/editor/categories/') { return this.account.role === 'admin' || this.account.role === 'demo' ; }
-    if (routerLink === '/admin/editor/introduction/') { return this.account.role === 'admin' || this.account.role === 'demo' ; }
-    if (routerLink === '/admin/') { return this.account.role === 'admin' || this.account.role === 'demo' ; }
-
-    if (routerLink === '/admin/editor/accounts/') { return this.account.role === 'admin'; }
+    if (routerLink === '/admin/editor/accounts') { return this.account.role === 'admin'; }
 
     return false;
   }
 
-  public loginComplete(account: Account): void
+  public loginComplete(identety: Identity): void
   {
-    console.log(account);
-
+    this.storageService.saveToken(identety.token, identety.tokenLifeTimeMinutes);
     this.isLoggedIn$.next(true);
-    this.account = account;
+    this.validating$.next(false);
+    this.account = identety.account;
   }
 
   public logoutComplete(): void
   {
-    this.isLoggedIn$.next(false);
     this.account = null;
+    this.isLoggedIn$.next(false);
+    this.validating$.next(false);
+    this.storageService.removeToken();
   }
 
-  private deepCheck(): boolean
-  {
-    if(this.isLoggedIn$.value) return true;
-    if(this.storage.getToken()) 
-    {
-      this.isLoggedIn$.next(true);
-      return true;
-    }
-
-
-    return false;
-  }
 }

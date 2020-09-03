@@ -10,6 +10,8 @@ import { MessageType, MessageDescription } from 'src/app/component/message/messa
 import { StaticNames } from 'src/app/common/StaticNames';
 import { Paging } from 'src/app/model/PagingInfo';
 import { Incident, RequestResult } from 'src/app/model/RequestResult';
+import { AuthGuard } from 'src/app/guards/authGuard';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-edit-projects',
@@ -26,16 +28,28 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
   public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   public dialog: MatDialog;
+  private authGuard: AuthGuard;
+  private router: Router;
 
-  public constructor(service: DataService, dialog: MatDialog)
+  public constructor(service: DataService, dialog: MatDialog, authGuard: AuthGuard, router: Router)
   {
     this.service = service;
     this.dialog = dialog;
+    this.authGuard = authGuard;
+    this.router = router;
   }
 
-  public ngOnInit(): void
+  public async ngOnInit(): Promise<void>
   {
-    this.paging$.subscribe(value => this.refreshProjects(value));
+    await this.authGuard.checkIsLogged();
+    if (this.authGuard.isLoggedIn$.value)
+    {
+      this.paging$.subscribe(value => this.refreshProjects(value));
+    }
+    else
+    {
+      this.router.navigate(['/login']);
+    }
   }
 
   public ngOnDestroy(): void

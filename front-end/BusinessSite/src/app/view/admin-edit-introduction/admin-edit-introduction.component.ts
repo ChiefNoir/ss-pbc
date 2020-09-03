@@ -7,6 +7,8 @@ import { Introduction } from 'src/app/model/Introduction';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { MatTable } from '@angular/material/table';
+import { AuthGuard } from 'src/app/guards/authGuard';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-edit-introduction',
@@ -26,22 +28,34 @@ export class AdminEditIntroductionComponent implements OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: 'Loading', type: MessageType.Spinner  });
   public isDisabled: boolean = false;
   public imageSrc: string;
+  private authGuard: AuthGuard;
+  private router: Router;
 
-  public constructor(service: DataService)
+  public constructor(service: DataService, authGuard: AuthGuard, router: Router)
   {
     this.service = service;
+    this.authGuard = authGuard;
+    this.router = router;
   }
 
-  public ngOnInit()
+  public async ngOnInit(): Promise<void>
   {
-    this.introduction$.next(null);
+    await this.authGuard.checkIsLogged();
+    if (this.authGuard.isLoggedIn$.value)
+    {
+      this.introduction$.next(null);
 
-    this.service.getIntroduction()
-                .then
-                (
-                  result => this.handle(result, {text: 'Load complete', type: MessageType.Info }),
-                  error => this.handleError(error)
-                );
+      this.service.getIntroduction()
+                  .then
+                  (
+                    result => this.handle(result, {text: 'Load complete', type: MessageType.Info }),
+                    error => this.handleError(error)
+                  );
+    }
+    else
+    {
+      this.router.navigate(['/login']);
+    }
   }
 
   public addExternalUrl(): void

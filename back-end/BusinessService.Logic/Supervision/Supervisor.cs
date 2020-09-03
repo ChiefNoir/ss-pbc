@@ -64,7 +64,11 @@ namespace BusinessService.Logic.Supervision
             }
             catch(Exception ee)
             {
-
+                return new ExecutionResult<T>
+                {
+                    IsSucceed = false,
+                    Error = IncidentFactory.Create(IncidentsCodes.InternalError, ee.Message),
+            };
             }
 
             return await SafeExecuteAsync(func);

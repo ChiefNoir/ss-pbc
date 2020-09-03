@@ -10,6 +10,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorCategoryComponent } from 'src/app/component/dialog-editor-category/dialog-editor-category.component';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
+import { AuthGuard } from 'src/app/guards/authGuard';
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-edit-categories',
@@ -23,6 +26,8 @@ export class AdminEditCategoriesComponent implements OnInit
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   public dialog: MatDialog;
+  private authGuard: AuthGuard;
+  private router: Router;
 
   private columnDefinitions = [
     { def: 'id', show: false },
@@ -31,22 +36,32 @@ export class AdminEditCategoriesComponent implements OnInit
     { def: 'isEverything', show: true },
   ];
 
-  public constructor(service: DataService, titleService: Title, dialog: MatDialog)
+  public constructor(service: DataService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
   {
     this.service = service;
     this.dialog = dialog;
+    this.authGuard = authGuard;
+    this.router = router;
 
     titleService.setTitle(environment.siteName);
   }
 
-  public ngOnInit(): void
+  public async ngOnInit(): Promise<void>
   {
-    this.service.getCategories()
+    await this.authGuard.checkIsLogged();
+    if (this.authGuard.isLoggedIn$.value)
+    {
+      this.service.getCategories()
                 .then
                 (
                   (result) => this.handleCategories(result),
                   (error) => this.handleError(error)
                 );
+    }
+    else
+    {
+      this.router.navigate(['/login']);
+    }
   }
 
   public showCreator(): void

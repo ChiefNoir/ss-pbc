@@ -5,9 +5,10 @@ namespace Abstractions.IFactory
 {
     public static class IncidentFactory
     {
-        public static Incident Create(IncidentsCodes code)
+        public static Incident Create(IncidentsCodes code, string details = null)
         {
             var result = new Incident(code);
+            result.Detail = details;
 
             switch (code)
             {

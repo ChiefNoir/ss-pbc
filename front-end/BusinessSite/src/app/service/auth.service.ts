@@ -28,20 +28,22 @@ export class AuthService
                           .toPromise();
   }
 
-  public validate(token: string): Promise<RequestResult<boolean>>
+  public async validate(token: string): Promise<RequestResult<Identity>>
   {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders
+    ({
       'Content-Type': 'application/json',
-      'Token': token });
-  let options = { headers: headers };
+      'Token': token
+    });
 
-    return this.httpClient.post<RequestResult<boolean>>
+    return this.httpClient.post<RequestResult<Identity>>
                           (
                               this.endpoint + 'token',
                               null,
-                              options
+                              { headers }
                           )
                           .toPromise();
   }
+
 
 }

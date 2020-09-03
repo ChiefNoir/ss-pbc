@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -22,7 +22,8 @@ import { StaticNames } from 'src/app/common/StaticNames';
   styleUrls: ['./admin-login.component.scss'],
 })
 
-export class AdminLoginComponent {
+export class AdminLoginComponent implements OnInit
+{
   private router: Router;
   private authGuard: AuthGuard;
   private storageService: StorageService;
@@ -44,6 +45,15 @@ export class AdminLoginComponent {
     titleService.setTitle(environment.siteName);
   }
 
+  public async ngOnInit(): Promise<void>
+  {
+    await this.authGuard.checkIsLogged();
+    if (this.authGuard.isLoggedIn$.value)
+    {
+      this.router.navigate(['/admin']);
+    }
+  }
+
   public doLogin(): void
   {
     if (!this.login.valid || !this.password.valid) { return; }
@@ -60,10 +70,10 @@ export class AdminLoginComponent {
   {
     if (result.isSucceed)
     {
-      this.storageService.saveToken(result.data.token, result.data.tokenLifeTimeMinutes);
-
-      this.authGuard.loginComplete(result.data.account);
+      this.authGuard.loginComplete(result.data);
       this.message$.next(null);
+
+      this.router.navigate(['/admin']);
     }
     else
     {

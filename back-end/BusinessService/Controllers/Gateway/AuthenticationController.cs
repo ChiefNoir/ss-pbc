@@ -1,10 +1,14 @@
 ﻿using Abstractions.IRepository;
+using Abstractions.Model;
 using API.Model;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Security;
+using Security.Extensions;
 using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Gateway
@@ -48,7 +52,21 @@ namespace API.Controllers.Gateway
         {
             var result = await Supervisor.SafeExecuteAsync(async () =>
             {
-                return TokenManager.ValidateToken(_configuration, token);
+                var principal = TokenManager.ValidateToken(_configuration, token);
+
+                if (principal == null)
+                    throw new Exception("Validate failed");
+
+                return new Identity
+                {
+                    Account = principal == null ? null : new Account
+                    {
+                        Login = principal?.Identity.Name,
+                        Role = principal.GetRoles().FirstOrDefault(),
+                    },
+                    Token = token,
+                    TokenLifeTimeMinutes = _configuration.GetSection("Token:LifeTime").Get<int>()
+                };
             });
 
             return new JsonResult(result);

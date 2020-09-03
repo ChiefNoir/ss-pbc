@@ -10,6 +10,7 @@ import { DataService } from 'src/app/service/data.service';
 import { Information } from 'src/app/model/Information';
 import { environment } from 'src/environments/environment';
 import { RequestResult, Incident } from 'src/app/model/RequestResult';
+import { AuthGuard } from 'src/app/guards/authGuard';
 
 @Component({
   selector: 'app-admin',
@@ -20,33 +21,44 @@ import { RequestResult, Incident } from 'src/app/model/RequestResult';
 export class AdminComponent implements OnInit
 {
   private router: Router;
+  private authGuard: AuthGuard;
   public information$: BehaviorSubject<Information> = new BehaviorSubject<Information> (null);
 
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
   private dataService: DataService;
   
 
-  public constructor(router: Router, titleService: Title, dataService: DataService)
+  public constructor(router: Router, titleService: Title, dataService: DataService, authGuard: AuthGuard)
   {
     this.router = router;
     this.dataService = dataService;
+    this.authGuard = authGuard;
 
     titleService.setTitle(environment.siteName);
   }
 
-  public ngOnInit(): void
+  public async ngOnInit(): Promise<void>
   {
-    this.dataService.getInformation()
-                    .then
-                    (
-                      result => this.handleRequestResult(result),
-                      reject => this.handleError(reject)
-                    );
+    await this.authGuard.checkIsLogged();
+    if (this.authGuard.isLoggedIn$.value)
+    {
+      this.dataService.getInformation()
+                      .then
+                      (
+                        result => this.handleRequestResult(result),
+                        reject => this.handleError(reject)
+                      );
+    }
+    else
+    {
+      this.router.navigate(['/login']);
+    }
   }
 
   public logout(): void
   {
-
+    this.authGuard.logoutComplete();
+    this.router.navigate(['']);
   }
 
   private handleRequestResult(result: RequestResult<Information>): void

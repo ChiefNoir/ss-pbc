@@ -18,6 +18,7 @@ export class DialogEditAccountComponent implements OnInit
   public account$: BehaviorSubject<Account> = new BehaviorSubject<Account>(null);
   public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
+  public roles$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(null);
   public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Account properties');
 
   private accountId: number;
@@ -33,6 +34,13 @@ export class DialogEditAccountComponent implements OnInit
 
   public ngOnInit(): void
   {
+    this.service.getRoles()
+                .then
+                (
+                  succeeded => this.handleRoles(succeeded),
+                  rejected => this.handleError(rejected.message)
+                );
+
     if (this.accountId)
     {
       this.message$.next({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
@@ -100,6 +108,18 @@ export class DialogEditAccountComponent implements OnInit
       this.account$.next(result.data);
       this.title$.next('Edit "' + result.data.login + '" account');
       this.message$.next({text: StaticNames.LoadComplete, type: MessageType.Info });
+    }
+    else
+    {
+      this.handleIncident(result.error);
+    }
+  }
+
+  private handleRoles(result: RequestResult<string[]>): void
+  {
+    if (result.isSucceed)
+    {
+      this.roles$.next(result.data);
     }
     else
     {

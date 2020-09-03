@@ -182,6 +182,23 @@ export class DataService
                .toPromise();
   }
 
+  public getRoles(): Promise<RequestResult<string[]>>
+  {
+    const headers = new HttpHeaders
+    ({
+      'Content-Type': 'application/json',
+      Token: this.storage.getToken()
+    });
+
+    return this.httpClient
+               .get<RequestResult<string[]>>
+               (
+                 this.endpoint + 'roles',
+                 { headers }
+               )
+               .toPromise();
+  }
+
   public getAccounts(start: number, length: number): Promise<RequestResult<Account[]>>
   {
     const headers = new HttpHeaders
@@ -306,6 +323,8 @@ export class DataService
                )
                .toPromise();
   }
+
+
 // [END OF] Restricted methods
 // --------------------------------------------------------------------
 

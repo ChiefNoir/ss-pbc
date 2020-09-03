@@ -3,6 +3,7 @@ using Abstractions.Model;
 using API.Queries;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Private
@@ -68,6 +69,24 @@ namespace API.Controllers.Private
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.Search(paging.Start, paging.Length);
+            });
+
+            return new JsonResult(result);
+        }
+
+        [HttpGet("roles")]
+        public async Task<IActionResult> GetRoles([FromHeader] string token)
+        {
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, async () =>
+            {
+                var lst = new List<string>();
+                var type = typeof(RoleNames); 
+                foreach (var p in type.GetProperties())
+                {
+                    lst.Add(p.GetValue(null, null)?.ToString());
+                }
+
+                return lst;
             });
 
             return new JsonResult(result);

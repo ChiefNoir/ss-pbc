@@ -23,7 +23,10 @@
         </div>
       </div>
     
-      <img class="image" alt="{{ introduction.posterDescription}}" fxFlex="30" src="{{ introduction.posterUrl }}" />
+      <img class="image" 
+           alt="{{ introduction.posterDescription}}" 
+           fxFlex="30" 
+           src="{{(introduction.posterUrl || '\\assets\\images\\placeholder-tall.png')}}"/>
     </div>
     
 

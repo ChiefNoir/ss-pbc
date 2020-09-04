@@ -20,5 +20,7 @@
     </div>
   </div>
 
-  <img class="image" fxFlex="20" src="{{ project.posterUrl }}" />
+  <img class="image" 
+       fxFlex="20" 
+       src="{{(project.posterUrl || '\\assets\\images\\placeholder-wide.png')}}"/>
 </div>

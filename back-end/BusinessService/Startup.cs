@@ -1,10 +1,8 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.ISecurity;
-using Abstractions.MemoryCache;
 using Abstractions.Model;
 using BusinessService.Logic.Supervision;
 using Infrastructure;
-using Infrastructure.Cache;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -44,8 +42,6 @@ namespace BusinessService
             services.AddTransient<IIntroductionRepository, IntroductionRepository>();
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IHashManager, HashManager>();
-
-            services.AddSingleton<IMemoryCache<string, Category>, CategoryCache>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>

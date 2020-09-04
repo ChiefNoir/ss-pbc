@@ -1,6 +1,6 @@
 ﻿using Abstractions.IRepository;
-using Abstractions.MemoryCache;
 using Abstractions.Model;
+using Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -11,20 +11,19 @@ namespace Infrastructure.Repository
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly IMemoryCache<string, Category> _cache;
+
         private readonly DataContext _context;
 
-        public CategoryRepository(DataContext context, IMemoryCache<string, Category> cache)
+        public CategoryRepository(DataContext context)
         {
             _context = context;
-            _cache = cache;
         }
 
         public async Task<bool> CheckIsEverything(string code)
         {
-            var item = await _cache.GetOrCreateAsync(code, () => { return GetCategory(x => x.Code == code); });
+            var item = await GetEverythingCategory();
 
-            return item?.IsEverything == true;
+            return item?.Code == code;
         }
 
         public async Task<Category> DeleteCategory(Category category)
@@ -32,14 +31,19 @@ namespace Infrastructure.Repository
             var dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
 
             _context.Categories.Remove(dbCategory);
-            _cache.RemoveAsync(dbCategory.Code);
 
-            return null;
+            category.Id = null;
+            category.Version = 0;
+
+            return category;
         }
 
         public Task<Category[]> GetCategories()
         {
-            return Task.Run(() => { return _cache.GetAll(LoadAllCategories); });
+            return _context.CategoriesWithTotalProjects
+                           .AsNoTracking()
+                           .Select(x => DataConverter.ToCategory(x))
+                           .ToArrayAsync();
         }
         
         public Task<Category> GetCategory(string code)
@@ -54,7 +58,11 @@ namespace Infrastructure.Repository
 
         public Task<Category> GetEverythingCategory()
         {
-            return _cache.FindOrCreateAsync(x => x.IsEverything, () => { return GetCategory(x => x.IsEverything); });
+            return _context.CategoriesWithTotalProjects
+                           .AsNoTracking()
+                           .Where(x=>x.IsEverything)
+                           .Select(x => DataConverter.ToCategory(x))
+                           .FirstOrDefaultAsync();
         }
 
         public async Task<Category> SaveCategory(Category category)
@@ -85,41 +93,16 @@ namespace Infrastructure.Repository
             }
 
             await _context.SaveChangesAsync();
-            _cache.UpdateOrCreateAsync(category.Code, () => { return GetCategory(x => x.Code == category.Code); });
-
-            if (!string.IsNullOrEmpty(oldCode) && oldCode != category.Code)
-                _cache.RemoveAsync(oldCode);
-
-            return Convert(dbItem);
+            return DataConverter.ToCategory(dbItem);
         }
 
-        private Category Convert(DataModel.Category cat)
-        {
-            return new Category
-            {
-                Id = cat.Id,
-                Code = cat.Code,
-                DisplayName = cat.DisplayName,
-                IsEverything = cat.IsEverything,
-                TotalProjects = -1,
-                Version = cat.Version
-            };
-        }
 
         private async Task<Category> GetCategory(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)
         {
             var result = await _context.CategoriesWithTotalProjects
                .AsNoTracking()
                .Where(predicate)
-               .Select(x => new Category
-               {
-                   Id = x.Id,
-                   Code = x.Code,
-                   DisplayName = x.DisplayName,
-                   IsEverything = x.IsEverything,
-                   TotalProjects = x.TotalProjects,
-                   Version = x.Version
-               })
+               .Select(x => DataConverter.ToCategory(x))
                .FirstOrDefaultAsync();
 
             if (result == null)
@@ -128,20 +111,5 @@ namespace Infrastructure.Repository
             return result;
         }
 
-        private Task<Category[]> LoadAllCategories()
-        {
-            return _context.CategoriesWithTotalProjects
-                           .AsNoTracking()
-                           .Select(x => new Category
-                           {
-                               Id = x.Id,
-                               Code = x.Code,
-                               DisplayName = x.DisplayName,
-                               IsEverything = x.IsEverything,
-                               TotalProjects = x.TotalProjects,
-                               Version = x.Version
-                           })
-                           .ToArrayAsync();
-        }
     }
 }

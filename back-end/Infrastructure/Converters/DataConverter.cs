@@ -1,4 +1,5 @@
 ﻿using Infrastructure.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,6 +38,19 @@ namespace Infrastructure.Converters
             };
         }
 
+        internal static Abstractions.Model.Category ToCategory(CategoryWithTotalProjects category)
+        {
+            return new Abstractions.Model.Category
+            {
+                Id = category.Id,
+                Code = category.Code,
+                DisplayName = category.DisplayName,
+                IsEverything = category.IsEverything,
+                TotalProjects = category.TotalProjects,
+                Version = category.Version
+            };
+        }
+
         internal static Abstractions.Model.ProjectPreview ToProjectPreview(Project project)
         {
             return new Abstractions.Model.ProjectPreview
@@ -51,7 +65,7 @@ namespace Infrastructure.Converters
             };
         }
 
-        private static Abstractions.Model.Category ToCategory(Category category)
+        internal static Abstractions.Model.Category ToCategory(Category category)
         {
             return new Abstractions.Model.Category
             {

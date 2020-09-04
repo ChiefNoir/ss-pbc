@@ -9,9 +9,21 @@
   position: relative;
 }
 
+.image-gray {
+  -webkit-filter: grayscale(100%);
+   -moz-filter: grayscale(100%);
+   filter: grayscale(100%);
+   transition: all 0.5s ease;
+
+  &:hover
+  {
+    -webkit-filter: grayscale(40%);
+   -moz-filter: grayscale(40%);
+   filter: grayscale(40%);
+  }
+}
+
 .image {
-  //filter: gray;
-  //filter: grayscale(100%);
   object-fit: cover;
   object-position: 100% 0%;
   width: 100%;

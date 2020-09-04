@@ -1,5 +1,6 @@
 <div class="container" fxLayout="column" fxLayoutAlign="end stretch">
-  <img class="image"
+  <img 
+  [className]="project.releaseDate ? 'image' : 'image image-gray'"
        src="{{(project.posterUrl || '\\assets\\images\\placeholder-wide.png')}}"
        alt="{{project.posterDescription}}" />
 

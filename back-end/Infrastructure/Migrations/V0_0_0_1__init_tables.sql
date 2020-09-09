@@ -30,6 +30,16 @@ create table project (
 	Version int not null default 0
 );
 
+create table gallery_image (
+	id serial primary key,
+
+	extra_url varchar(256),
+	image_url varchar(256) not null,
+
+	project_id int REFERENCES project (id) on delete cascade,
+	version int not null default 0
+);
+
 create table external_url (
 	id serial primary key,
 	url varchar(256),

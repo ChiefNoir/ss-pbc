@@ -1,4 +1,5 @@
 ﻿using Infrastructure.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -51,6 +52,14 @@ namespace Infrastructure.Converters
                 item.ProjectId = dbProject.Id;
 
                 dbProject.ExternalUrls.Add(item);
+            }
+
+            foreach (var item in ToGalleryImage(project.GalleryImages))
+            {
+                item.Project = dbProject;
+                item.ProjectId = dbProject.Id;
+
+                dbProject.GalleryImages.Add(item);
             }
 
             return dbProject;
@@ -113,6 +122,25 @@ namespace Infrastructure.Converters
                 return new List<ProjectExternalUrl>();
 
             return externalUrls.Select(x => ToProjectExternalUrl(x));
+        }
+
+        private static IEnumerable<GalleryImage> ToGalleryImage(IEnumerable<Abstractions.Model.GalleryImage> items)
+        {
+            if (items == null)
+                return new List<GalleryImage>();
+
+            return items.Select(x => ToGalleryImage(x));
+        }
+
+        private static GalleryImage ToGalleryImage(Abstractions.Model.GalleryImage item)
+        {
+            return new GalleryImage
+            {
+                Id = item.Id ?? 0,
+                ExtraUrl = item.ExtraUrl,
+                ImageUrl = item.ImageUrl,
+                Version = item.Version
+            };
         }
     }
 }

@@ -64,6 +64,7 @@ namespace Infrastructure.Repository
             var result = await _context.Projects
                 .Where(x => x.Id == id)
                 .Include(x => x.Category)
+                .Include(x => x.GalleryImages)
                 .Include(x => x.ExternalUrls)
                 .ThenInclude(x => x.ExternalUrl)
                 .Select(x => DataConverter.ToProject(x))
@@ -80,6 +81,7 @@ namespace Infrastructure.Repository
             var result = await _context.Projects
                 .Where(x => x.Code == code)
                 .Include(x => x.Category)
+                .Include(x=>x.GalleryImages)
                 .Include(x => x.ExternalUrls)
                 .ThenInclude(x => x.ExternalUrl)
                 .Select(x => DataConverter.ToProject(x))

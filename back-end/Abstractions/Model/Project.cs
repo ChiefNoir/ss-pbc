@@ -28,6 +28,9 @@ namespace Abstractions.Model
         /// <summary> URL for the external recourses for the project </summary>
         public IEnumerable<ExternalUrl> ExternalUrls { get; set; }
 
+        /// <summary> Projects gallery </summary>
+        public IEnumerable<GalleryImage> GalleryImages { get; set; }
+
         /// <summary> Short description for the poster (mostly for the image alt-text) </summary>
         public string PosterDescription { get; set; }
 

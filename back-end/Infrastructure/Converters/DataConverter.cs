@@ -34,7 +34,8 @@ namespace Infrastructure.Converters
                 ReleaseDate = project.ReleaseDate,
                 Version = project.Version,
                 Category = ToCategory(project.Category),
-                ExternalUrls = ToExternalUrl(project.ExternalUrls)
+                ExternalUrls = ToExternalUrl(project.ExternalUrls),
+                GalleryImages = ToGalleryImage(project.GalleryImages)
             };
         }
 
@@ -56,7 +57,7 @@ namespace Infrastructure.Converters
             return new Abstractions.Model.ProjectPreview
             {
                 Code = project.Code,
-                Description = project.Description,
+                Description = project.DescriptionShort,
                 DisplayName = project.DisplayName,
                 PosterDescription = project.PosterDescription,
                 PosterUrl = project.PosterUrl,
@@ -114,5 +115,28 @@ namespace Infrastructure.Converters
                 Version = item.ExternalUrl.Version
             };
         }
+
+
+        private static IEnumerable<Abstractions.Model.GalleryImage> ToGalleryImage(ICollection<GalleryImage> items)
+        {
+            var result = new List<Abstractions.Model.GalleryImage>();
+
+            if (items == null || !items.Any())
+                return result;
+
+            return items.Select(x => ToGalleryImage(x));
+        }
+
+        private static Abstractions.Model.GalleryImage ToGalleryImage(GalleryImage item)
+        {
+            return new Abstractions.Model.GalleryImage
+            {
+                Id = item.Id,
+                ExtraUrl = item.ExtraUrl,
+                ImageUrl = item.ImageUrl,
+                Version = item.Version
+            };
+        }
+
     }
 }

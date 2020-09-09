@@ -43,5 +43,7 @@ namespace Infrastructure.DataModel
 
         public ICollection<ProjectExternalUrl> ExternalUrls { get; set; }
 
+        public ICollection<GalleryImage> GalleryImages { get; set; }
+
     }
 }

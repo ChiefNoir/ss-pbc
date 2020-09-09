@@ -1,12 +1,26 @@
-<div fxLayout="row" class="container">
-  <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+<div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
 
-    <h1 class="headline">[{{ project.category.displayName }}] {{ project.displayName }}</h1>    
-    <mat-divider></mat-divider>
+    <div>
+      <h1 class="headline">[{{ project.category.displayName }}] {{ project.displayName }}</h1>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div class="content">
+      <div class="description" [innerHtml]="project.description"></div>
+
+      <img class="image"
+           fxFlex="20"
+           src="{{(project.posterUrl || '\\assets\\images\\placeholder-wide.png')}}"/>
+    </div>
     
-    <div class="description" [innerHtml]="project.description"></div>
+    <div *ngIf="project.galleryImages.length > 0" class="content">
+      <h1 class="headline">Gallery</h1>
+      <mat-divider></mat-divider>
+      
+      <app-carousel class="description" [images]="project.galleryImages"></app-carousel>
+    </div>
 
-    <div *ngIf="project.externalUrls.length > 0">
+    <div *ngIf="project.externalUrls.length > 0" class="content">
       <h1 class="headline">External urls</h1>
       <mat-divider></mat-divider>
 
@@ -19,8 +33,3 @@
       </div>
     </div>
   </div>
-
-  <img class="image" 
-       fxFlex="20" 
-       src="{{(project.posterUrl || '\\assets\\images\\placeholder-wide.png')}}"/>
-</div>

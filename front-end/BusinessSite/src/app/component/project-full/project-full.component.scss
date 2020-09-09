@@ -1,6 +1,11 @@
 @import 'variables';
 @import 'mixins';
 
+.content 
+{
+  margin-bottom: 50px;
+}
+
 .container {
   @include flat-shadow($color-core);
   background-color: $color-control;
@@ -30,12 +35,11 @@
 }
 
 .image {
-  margin-top: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-
-  object-fit: cover;
+  max-width:100%;
+  height:auto;
+  margin-top: 20px;
+  object-fit: contain; 
+  align-self: flex-start;
 }
 
 .mat-divider {

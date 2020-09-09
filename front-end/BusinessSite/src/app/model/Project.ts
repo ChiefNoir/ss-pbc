@@ -1,5 +1,6 @@
 import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { Category } from 'src/app/model/Category';
+import { GalleryImage } from 'src/app/model/GalleryImage';
 
 export class Project {
   public id: number;
@@ -13,6 +14,7 @@ export class Project {
   public descriptionShort: string;
 
   public externalUrls: Array<ExternalUrl>;
+  public galleryImages: Array<GalleryImage>;
 
   public version: number;
 }

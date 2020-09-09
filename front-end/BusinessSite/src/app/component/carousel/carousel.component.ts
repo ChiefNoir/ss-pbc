@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { StaticNames } from 'src/app/common/StaticNames';
 import { MessageDescription, MessageType } from '../message/message.component';
+import { GalleryImage } from 'src/app/model/GalleryImage';
 
 @Component({
   selector: 'app-carousel',
@@ -11,9 +12,9 @@ import { MessageDescription, MessageType } from '../message/message.component';
 export class CarouselComponent implements OnInit
 {
   @Input()
-  public images: string[];
+  public images: Array<GalleryImage>;
 
-  public selectedImage: string;
+  public selectedImage: GalleryImage;
   public currentImageIndex: number = 0;
 
   public loading: boolean = true;

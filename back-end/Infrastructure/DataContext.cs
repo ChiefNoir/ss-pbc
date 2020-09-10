@@ -15,6 +15,7 @@ namespace Infrastructure
         internal DbSet<Category> Categories { get; set; }
         internal DbSet<CategoryWithTotalProjects> CategoriesWithTotalProjects { get; set; }
         internal DbSet<ExternalUrl> ExternalUrls { get; set; }
+        internal DbSet<GalleryImage> GalleryImages { get; set; }
         internal DbSet<IntroductionExternalUrl> IntroductionExternalUrls { get; set; }
         internal DbSet<Introduction> Introductions { get; set; }
         internal DbSet<ProjectExternalUrl> ProjectExternalUrls { get; set; }

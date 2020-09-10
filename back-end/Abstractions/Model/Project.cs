@@ -29,7 +29,7 @@ namespace Abstractions.Model
         public IEnumerable<ExternalUrl> ExternalUrls { get; set; }
 
         /// <summary> Projects gallery </summary>
-        public IEnumerable<GalleryImage> GalleryImages { get; set; }
+        public IList<GalleryImage> GalleryImages { get; set; }
 
         /// <summary> Short description for the poster (mostly for the image alt-text) </summary>
         public string PosterDescription { get; set; }
@@ -39,7 +39,7 @@ namespace Abstractions.Model
         
         /// <summary> Release date </summary>
         public DateTime? ReleaseDate { get; set; }
-        
+
         /// <summary> Version </summary>
         public long Version { get; set; }
     }

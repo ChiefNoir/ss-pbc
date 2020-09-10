@@ -124,7 +124,7 @@ namespace Infrastructure.Converters
             return externalUrls.Select(x => ToProjectExternalUrl(x));
         }
 
-        private static IEnumerable<GalleryImage> ToGalleryImage(IEnumerable<Abstractions.Model.GalleryImage> items)
+        internal static IEnumerable<GalleryImage> ToGalleryImage(IEnumerable<Abstractions.Model.GalleryImage> items)
         {
             if (items == null)
                 return new List<GalleryImage>();
@@ -132,7 +132,7 @@ namespace Infrastructure.Converters
             return items.Select(x => ToGalleryImage(x));
         }
 
-        private static GalleryImage ToGalleryImage(Abstractions.Model.GalleryImage item)
+        internal static GalleryImage ToGalleryImage(Abstractions.Model.GalleryImage item)
         {
             return new GalleryImage
             {

@@ -9,6 +9,7 @@ import { MatTable } from '@angular/material/table';
 import { MessageType, MessageDescription } from '../message/message.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { StaticNames } from 'src/app/common/StaticNames';
+import { GalleryImage } from 'src/app/model/GalleryImage';
 
 @Component({
   selector: 'app-dialog-edit-project.',
@@ -19,6 +20,7 @@ import { StaticNames } from 'src/app/common/StaticNames';
 export class DialogEditProjectComponent implements OnInit
 {
   public columnsInner: string[] = [ 'name', 'url', 'btn'];
+  public columnsGallery: string[] = [ 'imageUrl', 'extraUrl', 'btn'];
 
   private code: string;
   private service: DataService;
@@ -28,10 +30,9 @@ export class DialogEditProjectComponent implements OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
   public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Project properties');
-  public localPosterUrl: string;
-  public localFile: File;
 
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
+  @ViewChild('galleryImagesTable') galleryImagesTable: MatTable<any>;
   private dialog: MatDialogRef<DialogEditProjectComponent>;
 
   constructor(service: DataService, dialog: MatDialogRef<DialogEditProjectComponent>, @Inject(MAT_DIALOG_DATA) projectCode: string)
@@ -109,34 +110,14 @@ export class DialogEditProjectComponent implements OnInit
     this.disableInput$.next(true);
     this.message$.next({text: StaticNames.SaveInProgress, type: MessageType.Spinner  });
 
-    if (this.project$.value.posterUrl !== this.localPosterUrl && this.localFile)
-    {
-      this.service.uploadFile(this.localFile)
-                  .then
-                  (
-                    succeeded =>
-                    {
-                      this.project$.value.posterUrl = succeeded.data;
-                      this.service.saveProject(this.project$.value)
-                                  .then
-                                  (
-                                    ok => this.handleProject(ok, {text: StaticNames.SaveComplete, type: MessageType.Info }),
-                                    notok => this.handleError(notok)
-                                  );
-                    },
-                    rejected => this.handleError(rejected)
-                  );
-    }
-    else
-    {
-      this.service.saveProject(this.project$.value).then
-        (
-          kk => {
-            this.handleProject(kk, {text: StaticNames.SaveComplete, type: MessageType.Info });
-          },
-          notok2 => this.handleError(notok2)
-        );
-    }
+    this.service.saveProject(this.project$.value).then
+    (
+      kk =>
+      {
+        this.handleProject(kk, {text: StaticNames.SaveComplete, type: MessageType.Info });
+      },
+      notok2 => this.handleError(notok2)
+    );
   }
 
   public delete(): void
@@ -170,19 +151,34 @@ export class DialogEditProjectComponent implements OnInit
       const file = files[0];
 
       const reader = new FileReader();
-      reader.onload = e => this.localPosterUrl = reader.result as string;
+      reader.onload = e => this.project$.value.posterPreview = reader.result as string;
 
-      this.localFile = files[0];
+      this.project$.value.posterToUpload = files[0];
       reader.readAsDataURL(file);
     }
   }
 
+  public selectGalleryFile(files: File[], galleryImage: GalleryImage)
+  {
+    if (files.length === 0) { return; }
+
+    if (files && files[0])
+    {
+      const file = files[0];
+
+      const reader = new FileReader();
+      reader.onload = e => galleryImage.localPreview = reader.result as string;
+
+      galleryImage.readyToUpload = files[0];
+      reader.readAsDataURL(file);
+    }
+  }
 
   public deleteFile()
   {
     this.project$.value.posterUrl = '';
-    this.localPosterUrl = '';
-    this.localFile = null;
+    this.project$.value.posterPreview = '';
+    this.project$.value.posterToUpload = null;
   }
 
   private handleProject(result: RequestResult<Project>, msg: MessageDescription): void
@@ -192,12 +188,41 @@ export class DialogEditProjectComponent implements OnInit
       this.disableInput$.next(false);
       this.project$.next(result.data);
       this.message$.next(msg);
-      this.localPosterUrl = result.data.posterUrl;
-      this.localFile = null;
     }
     else
     {
       this.handleIncident(result.error);
+    }
+  }
+
+
+
+  public addGalleryImage(): void
+  {
+    // hack for the times, when there is only img
+    const newItem = new GalleryImage();
+    newItem.version = 0;
+
+    if (this.project$.value.galleryImages)
+    {
+      this.project$.value.galleryImages.push(newItem);
+      this.galleryImagesTable.renderRows();
+    }
+    else
+    {
+      this.project$.value.galleryImages = new Array<GalleryImage>();
+      this.project$.value.galleryImages.push(newItem);
+    }
+  }
+
+  public removeGalleryImage(item: GalleryImage): void
+  {
+    const index = this.project$.value.galleryImages.indexOf(item, 0);
+
+    if (index > -1)
+    {
+      this.project$.value.galleryImages.splice(index, 1);
+      this.galleryImagesTable.renderRows();
     }
   }
 

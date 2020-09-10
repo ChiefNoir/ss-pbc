@@ -117,14 +117,14 @@ namespace Infrastructure.Converters
         }
 
 
-        private static IEnumerable<Abstractions.Model.GalleryImage> ToGalleryImage(ICollection<GalleryImage> items)
+        private static IList<Abstractions.Model.GalleryImage> ToGalleryImage(ICollection<GalleryImage> items)
         {
             var result = new List<Abstractions.Model.GalleryImage>();
 
             if (items == null || !items.Any())
                 return result;
 
-            return items.Select(x => ToGalleryImage(x));
+            return items.Select(x => ToGalleryImage(x)).ToList();
         }
 
         private static Abstractions.Model.GalleryImage ToGalleryImage(GalleryImage item)

@@ -91,27 +91,6 @@ export class DataService
                .toPromise();
   }
 
-  public uploadFile(fileToUpload: File): Promise<RequestResult<string>>
-  {
-    const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
-
-    return this.httpClient
-               .post<RequestResult<string>>
-               (
-                 this.endpoint + 'upload',
-                 formData,
-                 { headers }
-               )
-               .toPromise();
-  }
-
   public saveCategory(category: Category): Promise<RequestResult<Category>>
   {
     const headers = new HttpHeaders
@@ -292,16 +271,18 @@ export class DataService
   {
     const headers = new HttpHeaders
     ({
-      'Content-Type': 'application/json',
       Token: this.storage.getToken()
     });
 
+    const formData = new FormData();
+    this.fillFormData(formData, 'project', project);
+
     return this.httpClient
-               .request<RequestResult<Project>>
+               .patch<RequestResult<Project>>
                (
-                'patch',
                  this.endpoint + 'project',
-                 {body: project, headers}
+                 formData,
+                 {headers}
                )
                .toPromise();
   }
@@ -310,15 +291,17 @@ export class DataService
   {
     const headers = new HttpHeaders
     ({
-      'Content-Type': 'application/json',
       Token: this.storage.getToken()
     });
+
+    const formData = new FormData();
+    this.fillFormData(formData, 'project', project);
 
     return this.httpClient
                .post<RequestResult<Project>>
                (
                  this.endpoint + 'project',
-                 project,
+                 formData,
                  {headers}
                )
                .toPromise();
@@ -395,4 +378,41 @@ export class DataService
 
 // [END OF] Public methods
 // --------------------------------------------------------------------
+
+// --------------------------------------------------------------------
+// Helpers methods
+  // Usage: this.fillFormData(formData, 'project', project);
+  private fillFormData(form: FormData, namespace: string, item: any): void
+  {
+    for (const property in item)
+    {
+      if (typeof(item[property]) === 'object')
+      {
+        if (Array.isArray(item[property]))
+        {
+          let index = 0;
+          item[property].forEach((element: any) => {
+            this.fillFormData(form, `${namespace}[${property}][${index}]`, element);
+            index++;
+          });
+        }
+        // W3.org: 'A File object is a Blob object with a name attribute, which is a string;'
+        else if (item[property] && typeof item[property].name === 'string')
+        {
+          form.append(`${namespace}[${property}]`, item[property], item[property].name);
+        }
+        else
+        {
+          this.fillFormData(form, namespace + `[${property}]`, item[property]);
+        }
+      }
+      else
+      {
+        form.append(namespace + `[${property}]` , item[property]);
+      }
+    }
+  }
+
+//
+
 }

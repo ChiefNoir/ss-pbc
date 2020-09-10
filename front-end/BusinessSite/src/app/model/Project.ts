@@ -16,5 +16,8 @@ export class Project {
   public externalUrls: Array<ExternalUrl>;
   public galleryImages: Array<GalleryImage>;
 
+  public posterToUpload: File;
+  public posterPreview: string;
+
   public version: number;
 }

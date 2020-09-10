@@ -97,7 +97,9 @@ namespace Infrastructure.Repository
         {
             var dbItem = _context.Projects
                                 .Include(x => x.Category)
+                                .Include(x => x.GalleryImages)
                                 .Include(x => x.ExternalUrls)
+                                .ThenInclude(x => x.ExternalUrl)
                                 .FirstOrDefault(x => x.Id == project.Id);
 
             if (dbItem == null)
@@ -122,22 +124,23 @@ namespace Infrastructure.Repository
             localProject.Version++;
 
             Merge(localProject, project.ExternalUrls);
+            Merge(localProject, project.GalleryImages);
         }
 
         private void Merge(Project localProject, IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
         {
             foreach (var item in localProject?.ExternalUrls ?? new List<ProjectExternalUrl>())
             {
-                var localExternalUrl = externalUrls?.FirstOrDefault(x => x.Id == item.ExternalUrlId);
+                var remoteItem = externalUrls?.FirstOrDefault(x => x.Id.HasValue && x.Id == item.ExternalUrlId);
 
-                if (localExternalUrl == null)
+                if (remoteItem == null)
                 {
                     _context.ExternalUrls.Remove(item.ExternalUrl);
                 }
                 else
                 {
-                    item.ExternalUrl.DisplayName = localExternalUrl.DisplayName;
-                    item.ExternalUrl.Url = localExternalUrl.Url;
+                    item.ExternalUrl.DisplayName = remoteItem.DisplayName;
+                    item.ExternalUrl.Url = remoteItem.Url;
                     item.ExternalUrl.Version++;
                 }
             }
@@ -145,6 +148,30 @@ namespace Infrastructure.Repository
             foreach (var item in externalUrls?.Where(x => x.Id == null) ?? new List<Abstractions.Model.ExternalUrl>())
             {
                 localProject.ExternalUrls.Add(AbstractionsConverter.ToProjectExternalUrl(item));
+            }
+        }
+
+        private void Merge(Project localProject, IEnumerable<Abstractions.Model.GalleryImage> galleryImages)
+        {
+            foreach (var item in localProject?.GalleryImages ?? new List<GalleryImage>())
+            {
+                var remoteItem = galleryImages?.FirstOrDefault(x => x.Id.HasValue && x.Id == item.Id);
+
+                if (remoteItem == null)
+                {
+                    _context.GalleryImages.Remove(item);
+                }
+                else
+                {
+                    item.ExtraUrl = remoteItem.ExtraUrl;
+                    item.ImageUrl = remoteItem.ImageUrl;
+                    item.Version++;
+                }
+            }
+
+            foreach (var item in galleryImages?.Where(x => x.Id == null) ?? new List<Abstractions.Model.GalleryImage>())
+            {
+                localProject.GalleryImages.Add(AbstractionsConverter.ToGalleryImage(item));
             }
         }
     }

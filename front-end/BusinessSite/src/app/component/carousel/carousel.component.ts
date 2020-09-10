@@ -34,6 +34,8 @@ export class CarouselComponent implements OnInit
 
    public changeImage(value: number): void
    {
+     const lastIndex = this.currentImageIndex;
+
      this.currentImageIndex = this.currentImageIndex + value;
 
      if (this.currentImageIndex === -1)
@@ -44,6 +46,8 @@ export class CarouselComponent implements OnInit
      {
        this.currentImageIndex = 0;
      }
+
+     if (lastIndex === this.currentImageIndex) { return; }
 
      this.loading = true;
      this.selectedImage = this.images[this.currentImageIndex];

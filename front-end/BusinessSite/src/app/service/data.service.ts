@@ -73,20 +73,22 @@ export class DataService
                .toPromise();
   }
 
-  public updateIntroduction(introdcution: Introduction): Promise<RequestResult<Introduction>>
+  public updateIntroduction(introduction: Introduction): Promise<RequestResult<Introduction>>
   {
     const headers = new HttpHeaders
     ({
-      'Content-Type': 'application/json',
       Token: this.storage.getToken()
     });
 
+    const formData = new FormData();
+    this.fillFormData(formData, 'project', introduction);
+
     return this.httpClient
-               .request<RequestResult<Introduction>>
+               .patch<RequestResult<Introduction>>
                (
-                 'patch',
                  this.endpoint + 'introduction',
-                 { body: introdcution, headers }
+                 formData,
+                 { headers }
                )
                .toPromise();
   }

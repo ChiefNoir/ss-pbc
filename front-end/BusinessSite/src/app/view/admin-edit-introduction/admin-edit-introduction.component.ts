@@ -19,7 +19,6 @@ import { Router } from '@angular/router';
 export class AdminEditIntroductionComponent implements OnInit
 {
   private service: DataService;
-  private file: File;
 
   public columnsInner: string[] = [ 'name', 'url', 'btn'];
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
@@ -27,7 +26,6 @@ export class AdminEditIntroductionComponent implements OnInit
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: 'Loading', type: MessageType.Spinner  });
   public isDisabled: boolean = false;
-  public imageSrc: string;
   private authGuard: AuthGuard;
   private router: Router;
 
@@ -77,40 +75,11 @@ export class AdminEditIntroductionComponent implements OnInit
     this.message$.next({text: 'Saving', type: MessageType.Spinner });
     this.isDisabled = true;
 
-    if (this.introduction$.value.posterUrl !== this.imageSrc)
-    {
-      this.service
-          .uploadFile(this.file)
-          .then
-          (
-            resultImage =>
-            {
-              if (resultImage.isSucceed)
-              {
-                this.introduction$.value.posterUrl = resultImage.data;
-                this.service.updateIntroduction(this.introduction$.value)
-                            .then(
-                              resultIntroduction => this.handle(resultIntroduction, {text: 'Saving complete', type: MessageType.Info }),
-                              rejectIntroduction => this.handleError(rejectIntroduction)
-                                );
-              }
-              else
-              {
-                this.handleIncident(resultImage.error);
-                return;
-              }
-            },
-            rejectImage => this.handleError(rejectImage)
-          );
-    }
-    else
-    {
-      this.service.updateIntroduction(this.introduction$.value).then
-        (
-          result => this.handle(result, {text: 'Saving complete', type: MessageType.Info }),
-          reject => this.handleError(reject)
-        );
-    }
+    this.service.updateIntroduction(this.introduction$.value).then
+    (
+      result => this.handle(result, {text: 'Saving complete', type: MessageType.Info }),
+      reject => this.handleError(reject)
+    );
   }
 
   public refresh(): void
@@ -132,15 +101,16 @@ export class AdminEditIntroductionComponent implements OnInit
     const file = files[0];
     const reader = new FileReader();
 
-    reader.onload = e => this.imageSrc = reader.result as string;
+    reader.onload = e => this.introduction$.value.posterPreview = reader.result as string;
 
-    this.file = files[0];
+    this.introduction$.value.posterToUpload = files[0];
     reader.readAsDataURL(file);
   }
 
   public deleteFile()
   {
-    this.imageSrc = '';
+    this.introduction$.value.posterPreview = '';
+    this.introduction$.value.posterToUpload = null;
     this.introduction$.value.posterUrl = '';
   }
 
@@ -158,7 +128,6 @@ export class AdminEditIntroductionComponent implements OnInit
     if (result.isSucceed)
     {
       this.introduction$.next(result.data);
-      this.imageSrc = result.data.posterUrl;
       this.message$.next(description);
       this.isDisabled = false;
     }

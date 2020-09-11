@@ -22,7 +22,8 @@
           <form>
             
             <div fxLayout="row" fxLayoutAlign="center center" >
-              <img [ngClass]="{'disabled': isDisabled }" class="image" src="{{ imageSrc }}" />
+              <img [ngClass]="{'disabled': isDisabled }" class="image" 
+              src="{{(introduction.posterPreview || introduction.posterUrl)}}" />
             </div>
             
             <mat-form-field>

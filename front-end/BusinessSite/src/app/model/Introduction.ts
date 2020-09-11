@@ -7,5 +7,8 @@ export class Introduction {
     public posterDescription: string;
     public version: number;
 
+    public posterToUpload: File;
+    public posterPreview: string;
+
     public externalUrls: Array<ExternalUrl>;
 }

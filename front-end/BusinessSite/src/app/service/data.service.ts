@@ -81,7 +81,7 @@ export class DataService
     });
 
     const formData = new FormData();
-    this.fillFormData(formData, 'project', introduction);
+    this.fillFormData(formData, 'introduction', introduction);
 
     return this.httpClient
                .patch<RequestResult<Introduction>>

@@ -1,35 +1,39 @@
-<div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
-
-    <div>
-      <h1 class="headline">[{{ project.category.displayName }}] {{ project.displayName }}</h1>
-      <mat-divider></mat-divider>
-    </div>
-
-    <div class="content">
-      <div class="description" [innerHtml]="project.description"></div>
-
-      <img class="image"
-           fxFlex="20"
-           src="{{(project.posterUrl || '\\assets\\images\\placeholder-wide.png')}}"/>
-    </div>
-    
-    <div *ngIf="project.galleryImages.length > 0" class="content">
-      <h1 class="headline">Gallery</h1>
-      <mat-divider></mat-divider>
-      
-      <app-carousel class="description" [images]="project.galleryImages"></app-carousel>
-    </div>
-
-    <div *ngIf="project.externalUrls.length > 0" class="content">
-      <h1 class="headline">External urls</h1>
+<div class="container">
+  <div fxLayout="row" fxLayoutAlign="center stretch">
+    <!-- left panel-->
+    <div class="left-panel">
+      <img class="poster" 
+      src="{{(project.posterUrl || '\\assets\\images\\placeholder-wide.png')}}"/>
       <mat-divider></mat-divider>
 
-      <div class="extension">
+      <div *ngIf="project.externalUrls.length > 0">
         <app-button-external-url 
-                *ngFor="let item of project.externalUrls"
-                role="list"
-                [externalUrl]="item">
-        </app-button-external-url>
+                  *ngFor="let item of project.externalUrls"
+                  role="list"
+                  [externalUrl]="item">
+          </app-button-external-url>
       </div>
     </div>
+
+    <!-- right panel-->
+    <div class="right-panel" fxFlex>
+      <div>
+        <h1 class="title">{{ project.displayName }}</h1>
+        <div class="subtitle">{{ project.category.displayName }} | {{ project.releaseDate }}</div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div class="content">
+        <h1 class="title">Description</h1>    
+        <div [innerHtml]="project.description"></div>
+      </div>
+
+      <div class="content" *ngIf="project.galleryImages.length > 0">
+        <h1 class="title">Gallery</h1>        
+        <app-carousel [images]="project.galleryImages"></app-carousel>
+      </div>
+
+    </div>
+
   </div>
+</div>

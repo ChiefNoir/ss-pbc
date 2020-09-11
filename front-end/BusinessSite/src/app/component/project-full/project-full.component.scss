@@ -1,46 +1,60 @@
 @import 'variables';
 @import 'mixins';
 
-.content 
+.container
 {
-  margin-bottom: 50px;
-}
-
-.container {
   @include flat-shadow($color-core);
   background-color: $color-control;
 
-  display: inline-block;
-  position: relative;
+  width: 100%;
 }
 
-.headline {
-  margin-top: 10px;
+.left-panel
+{
   margin-left: 20px;
-  font-size: x-large;
-  font-weight: 500;
-
-  color: $color-text;
-  font-size: 25px;
-}
-
-.description {
-  margin-top: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-  font-size: large;
-
-  color: $color-text;
-}
-
-.image {
-  max-width:100%;
-  height:auto;
+  margin-right: 10px;
   margin-top: 20px;
-  object-fit: contain; 
-  align-self: flex-start;
+  margin-bottom: 20px;
+  height: 100%;
+  width: 300px;
+  color: $color-text;
 }
+
+.right-panel
+{
+  margin-left: 10px;
+  margin-right: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 100%;
+  color: $color-text;
+  font-size: large;
+}
+
+.poster
+{
+  height: 100%;
+  width: 300px;
+}
+
+.title
+{
+
+  font-size: xx-large;
+  font-weight: 500px;
+  margin-top: 0; 
+  margin-bottom: 3px;
+}
+.subtitle
+{
+  
+  font-size: x-large;
+  font-weight: 300px;
+  margin-bottom: 3px; 
+}
+
+
+
 
 .mat-divider {
   border-top-width: 2px;
@@ -49,9 +63,6 @@
   margin-right: 0px;
 }
 
-.extension {
-  margin-top: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+.content {
+  margin-top: 20px;
 }

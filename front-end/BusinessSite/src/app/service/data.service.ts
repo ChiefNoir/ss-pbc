@@ -12,18 +12,21 @@ import { Information } from '../model/Information';
 import { StorageService } from './storage.service';
 
 import { environment } from 'src/environments/environment';
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class DataService
 {
   private httpClient: HttpClient;
   private storage: StorageService;
+  private datepipe: DatePipe;
   private endpoint = environment.apiEndpoint;
 
-  public constructor(http: HttpClient, storage: StorageService)
+  public constructor(http: HttpClient, storage: StorageService, datepipe: DatePipe)
   {
     this.httpClient = http;
     this.storage = storage;
+    this.datepipe = datepipe;
   }
 
 // --------------------------------------------------------------------
@@ -390,7 +393,11 @@ export class DataService
     {
       if (typeof(item[property]) === 'object')
       {
-        if (Array.isArray(item[property]))
+        if (item[property] instanceof Date)
+        {
+          form.append(namespace + `[${property}]`, this.datepipe.transform(item[property], 'yyyy/MM/dd'));
+        }
+        else if (Array.isArray(item[property]))
         {
           let index = 0;
           item[property].forEach((element: any) => {

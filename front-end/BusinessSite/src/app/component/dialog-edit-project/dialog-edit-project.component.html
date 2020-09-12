@@ -17,7 +17,7 @@
             <mat-label>Release date</mat-label>
             <input matInput 
             [disabled]="disableInput$ | async" 
-            [matDatepicker]="dp3"  [(ngModel)]="project.releaseDate" name="releaseDate">
+            [matDatepicker]="dp3" [(ngModel)]="project.releaseDate" name="releaseDate">
             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
           </mat-form-field>

@@ -108,6 +108,7 @@ export class DialogEditProjectComponent implements OnInit
   public save(): void
   {
     this.disableInput$.next(true);
+
     this.message$.next({text: StaticNames.SaveInProgress, type: MessageType.Spinner  });
 
     this.service.saveProject(this.project$.value).then

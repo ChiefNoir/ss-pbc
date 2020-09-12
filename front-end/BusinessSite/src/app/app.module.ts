@@ -3,6 +3,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common'
 // -----
 
 import { AppComponent } from './app.component';
@@ -102,6 +103,7 @@ import { CookieService } from 'ngx-cookie-service';
     OnlyIntModule
   ],
   providers: [
+    DatePipe,
     DataService,
     AuthService,
     StorageService,

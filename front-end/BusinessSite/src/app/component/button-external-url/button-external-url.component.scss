@@ -1,30 +1,51 @@
 @import 'variables';
 
-a {
-  background-color: transparent;
-  border: 2px solid;
-  color: inherit;
-  display: inline-block;
+$border-color: $color-text;
+$highlighted: $color-text-highlighted;
+$highlighted-text: #fff;
 
-  margin-top: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-
-  min-width: 100px;
+.link-slider {
+  margin-top: 5px;
+  font-family: inherit;
+  
+  font-size: 22px;
+  height: 40px;
   width: 100%;
-  text-align: center;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  border: 2px solid $border-color;
+  z-index: 1;
   text-decoration: none;
-  transition: 0.30s;
-}
-
-a:hover,
-a:focus {
-  box-shadow: inset 0 0 0 16px $color-external-highlighted;
+  text-align: center;
   color: inherit;
 
-  transform: translateY(-0.1em);
-  -webkit-transform: translateY(-0.1em);
-  -moz-transform: translateY(-0.1em);
-  -ms-transform: translateY(-0.1em);
-  -o-transform: translateY(-0.1em);
+  &::after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    background: $highlighted;
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    color: $highlighted-text;
+  }
+  &:hover::after{
+    left: 0;
+    width: 100%;
+  }
+  &:active{
+    top: 2px;
+  }
+
+  span {
+    vertical-align: middle;
+  }
 }

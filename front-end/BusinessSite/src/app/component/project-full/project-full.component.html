@@ -19,7 +19,7 @@
     <div class="right-panel" fxFlex>
       <div>
         <h1 class="title">{{ project.displayName }}</h1>
-        <div class="subtitle">{{ project.category.displayName }} | {{ project.releaseDate }}</div>
+        <div class="subtitle">{{ project.category.displayName }} | Release date: {{ project.releaseDate || 'Soon' }}</div>
         <mat-divider></mat-divider>
       </div>
 

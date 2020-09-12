@@ -13,13 +13,15 @@
           <h1 class="headline">External urls</h1>
           <mat-divider></mat-divider>
     
-          <div class="extension">
-            <app-button-external-url 
+          <div class="extension"  fxLayout="row" fxLayoutAlign="space-evenly center">
+            <app-button-contact
                     *ngFor="let item of introduction.externalUrls"
                     role="list"
                     [externalUrl]="item">
-            </app-button-external-url>
+            </app-button-contact>
           </div>
+
+
         </div>
       </div>
     

@@ -15,6 +15,7 @@ import { MaterialModules } from './#import/material';
 import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { ButtonComponent } from './component/button/button.component';
+import { ButtonContactComponent } from './component/button-contact/button-contact.component';
 import { CarouselComponent } from './component/carousel/carousel.component';
 import { ButtonCategoryComponent } from './component/button-category/button-category.component';
 import { ButtonExternalUrlComponent } from './component/button-external-url/button-external-url.component';
@@ -65,6 +66,7 @@ import { CookieService } from 'ngx-cookie-service';
     AppComponent,
     ButtonCategoryComponent,
     ButtonComponent,
+    ButtonContactComponent,
     CarouselComponent,
     ButtonExternalUrlComponent,
     FilterCategoryComponent,

@@ -43,7 +43,7 @@ namespace API.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _categoryRepository.GetEverythingCategory();
+                return _categoryRepository.GetTechnicalAsync();
             });
 
             return new JsonResult(result);

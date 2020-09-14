@@ -6,11 +6,9 @@ namespace Abstractions.IRepository
     /// <summary> Category repository</summary>
     public interface ICategoryRepository
     {
-        /// <summary>Save to the storage </summary>
-        /// <param name="item">New account</param>
-        /// <returns>Created or updated <see cref="Category"/> </returns>
-        Task<Category> SaveAsync(Category item);
-
+        /// <summary> Count items in the storage</summary>
+        /// <returns> Total of the items in the storage</returns>
+        Task<int> CountAsync();
 
         /// <summary> Delete <see cref="Category"/>  from storage </summary>
         /// <param name="category"><see cref="Category"/> to delete</param>
@@ -31,14 +29,13 @@ namespace Abstractions.IRepository
         /// <returns><see cref="Category"/>  or <b>null</b> </returns>
         Task<Category> GetAsync(string code);
 
-        /// <summary>Check is category is technical for select without filter</summary>
-        /// <param name="code">Category code</param>
-        /// <returns><b>true</b> if category is technical for select without filter</returns>
-        Task<bool> CheckIsEverything(string code);
+        /// <summary>Get technical <see cref="Category"/> for filtering by everything</summary>
+        /// <returns>Everything <see cref="Category"/> </returns>
+        Task<Category> GetTechnicalAsync();
 
-        /// <summary>Get technical category for filtering by everything</summary>
-        /// <returns>Everything category</returns>
-        Task<Category> GetEverythingCategory();
-
+        /// <summary>Save item to the storage </summary>
+        /// <param name="item">New or updated <see cref="Category"/> </param>
+        /// <returns>Created or updated <see cref="Category"/> </returns>
+        Task<Category> SaveAsync(Category item);
     }
 }

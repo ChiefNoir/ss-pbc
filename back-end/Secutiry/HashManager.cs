@@ -37,7 +37,7 @@ namespace Secutiry
         /// <param name="salt">Salt</param>
         /// <returns>Hash of the plain text with salt</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static byte[] CalcSaltedHash(byte[] plainText, byte[] salt)
+        private static byte[] CalcSaltedHash(byte[] plainText, byte[] salt)
         {
             if (plainText == null || plainText.Length == 0)
                 throw new ArgumentNullException("Can't calculate hash: input text is empty.");

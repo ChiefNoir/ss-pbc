@@ -21,7 +21,7 @@ namespace API.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _introductionRepository.GetIntroduction();
+                return _introductionRepository.GetAsync();
             });
 
             return new JsonResult(result);

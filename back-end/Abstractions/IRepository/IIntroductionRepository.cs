@@ -3,15 +3,16 @@ using System.Threading.Tasks;
 
 namespace Abstractions.IRepository
 {
+    /// <summary> <see cref="Introduction"/> repository </summary>
     public interface IIntroductionRepository
     {
-        /// <summary> Get <seealso cref="Introduction"/> </summary>
-        /// <returns> Introduction </returns>
-        Task<Introduction> GetIntroduction();
+        /// <summary> Get <see cref="Introduction"/> from storage </summary>
+        /// <returns> <see cref="Introduction"/> from storage </returns>
+        Task<Introduction> GetAsync();
 
-        /// <summary> Update <seealso cref="Introduction"/> </summary>
-        /// <param name="item"> Updated <seealso cref="Introduction"/> </param>
-        /// <returns> Updated <seealso cref="Introduction"/> </returns>
-        Task<Introduction> UpdateIntroduction(Introduction item);
+        /// <summary> Update <see cref="Introduction"/>  </summary>
+        /// <param name="item"> Updated <see cref="Introduction"/>  </param>
+        /// <returns> Updated <see cref="Introduction"/>  </returns>
+        Task<Introduction> SaveAsync(Introduction item);
     }
 }

@@ -46,7 +46,7 @@ namespace Infrastructure.Repository
             return await _context.SaveChangesAsync();
         }
 
-        public Task<Abstractions.Model.Introduction> GetIntroduction()
+        public Task<Abstractions.Model.Introduction> GetAsync()
         {
             return _context.Introductions
                            .Include(x => x.ExternalUrls)
@@ -56,7 +56,7 @@ namespace Infrastructure.Repository
                            .FirstOrDefaultAsync();
         }
 
-        public async Task<Abstractions.Model.Introduction> UpdateIntroduction(Abstractions.Model.Introduction item)
+        public async Task<Abstractions.Model.Introduction> SaveAsync(Abstractions.Model.Introduction item)
         {
             var dbItem = await _context.Introductions.Include(x => x.ExternalUrls)
                            .ThenInclude(x => x.ExternalUrl).FirstOrDefaultAsync();

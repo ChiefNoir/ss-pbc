@@ -30,7 +30,7 @@ namespace API.Controllers.Private
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 HandleFiles(introduction, Request.Form.Files);
-                return _introductionRepository.UpdateIntroduction(introduction);
+                return _introductionRepository.SaveAsync(introduction);
             });
 
             return new JsonResult(result);

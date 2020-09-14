@@ -1,7 +1,5 @@
 ﻿using Abstractions.IFactory;
-using Abstractions.Model;
 using Abstractions.Model.System;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Security;
@@ -17,11 +15,11 @@ namespace BusinessService.Logic.Supervision
     {
         private static IConfiguration _configuration;
 
-        public static void init(IConfiguration configuration)
+        public static void InitConfiguration(IConfiguration configuration)
         {
+            //for Token validation
             _configuration = configuration;
         }
-
 
         /// <summary> Execute function and return its result if everything goes right </summary>
         /// <typeparam name="T">Type of returning result</typeparam>
@@ -47,6 +45,12 @@ namespace BusinessService.Logic.Supervision
             return result;
         }
 
+        /// <summary> Execute function and return its result if everything goes right </summary>
+        /// <typeparam name="T">Type of returning result</typeparam>
+        /// <param name="token">JWT token to validate</param>
+        /// <param name="roles">Roles who have rights to execute function</param>
+        /// <param name="func">Function to execute</param>
+        /// <returns>Result of execution or ErrorMessage will have message </returns>
         public static async Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, string[] roles, Func<Task<T>> func)
         {
             try
@@ -62,18 +66,23 @@ namespace BusinessService.Logic.Supervision
                     };
                 }
             }
-            catch(Exception ee)
+            catch (Exception ee)
             {
+                //TODO: log error
                 return new ExecutionResult<T>
                 {
                     IsSucceed = false,
                     Error = IncidentFactory.Create(IncidentsCodes.InternalError, ee.Message),
-            };
+                };
             }
 
             return await SafeExecuteAsync(func);
         }
 
+        /// <summary> Check JWT token</summary>
+        /// <param name="token">Token to validate</param>
+        /// <param name="roles">Roles who have rights to execute function</param>
+        /// <returns> <c>null</c> if everything is good </returns>
         private static Incident CheckToken(string token, string[] roles)
         {
             if (string.IsNullOrEmpty(token))
@@ -86,7 +95,7 @@ namespace BusinessService.Logic.Supervision
             {
                 principal = TokenManager.ValidateToken(_configuration, token);
             }
-            catch(SecurityTokenException stee)
+            catch (SecurityTokenException stee)
             {
                 // TODO: Need refactoring
                 return IncidentFactory.Create(IncidentsCodes.InvalidToken);

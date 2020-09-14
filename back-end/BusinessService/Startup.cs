@@ -1,6 +1,5 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.ISecurity;
-using Abstractions.Model;
 using BusinessService.Logic.Supervision;
 using Infrastructure;
 using Infrastructure.Repository;
@@ -29,7 +28,6 @@ namespace BusinessService
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -50,7 +48,7 @@ namespace BusinessService
                         options.TokenValidationParameters = TokenManager.CreateTokenValidationParameters(Configuration);
                     });
 
-            Supervisor.init(Configuration);
+            Supervisor.InitConfiguration(Configuration);
 
             //MultiPartBodyLength
             services.Configure<FormOptions>(o =>
@@ -61,7 +59,6 @@ namespace BusinessService
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfiguration configuration)
         {
             if (env.IsDevelopment())
@@ -78,6 +75,7 @@ namespace BusinessService
                                       .AllowAnyHeader()
                                       .AllowCredentials()
                 );
+
 
             var path = configuration.GetSection("Location:FileStorage").Get<string>();
             CheckFileStorageDirectory(path);

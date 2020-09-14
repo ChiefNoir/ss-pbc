@@ -7,6 +7,8 @@
     <Company>Fireplace of Despair</Company>
     <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
+    <Version>0.0.0.1</Version>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

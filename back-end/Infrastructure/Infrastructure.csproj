@@ -16,10 +16,12 @@
     <None Remove="Migrations\V0_0_0_2__init_constraints.sql" />
     <None Remove="Migrations\V0_0_0_3__init_view.sql" />
     <None Remove="Migrations\V0_0_0_4__init_default.sql" />
+    <None Remove="Migrations\V0_0_0_5__indexes.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Migrations\V0_0_0_1__init_tables.sql" />
+    <EmbeddedResource Include="Migrations\V0_0_0_5__indexes.sql" />
     <EmbeddedResource Include="Migrations\V0_0_0_4__init_default.sql" />
     <EmbeddedResource Include="Migrations\V0_0_0_3__init_view.sql" />
     <EmbeddedResource Include="Migrations\V0_0_0_2__init_constraints.sql" />

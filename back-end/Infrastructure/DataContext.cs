@@ -1,6 +1,5 @@
 ﻿using Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Data;
 using System.Linq;
@@ -11,23 +10,25 @@ namespace Infrastructure
     /// <summary>Entity framework data context </summary>
     public class DataContext : DbContext
     {
+        private static bool _isMigrationsDone = false;
+
         internal DbSet<Account> Accounts { get; set; }
         internal DbSet<Category> Categories { get; set; }
         internal DbSet<CategoryWithTotalProjects> CategoriesWithTotalProjects { get; set; }
         internal DbSet<ExternalUrl> ExternalUrls { get; set; }
         internal DbSet<GalleryImage> GalleryImages { get; set; }
-        internal DbSet<IntroductionExternalUrl> IntroductionExternalUrls { get; set; }
         internal DbSet<Introduction> Introductions { get; set; }
-        internal DbSet<ProjectExternalUrl> ProjectExternalUrls { get; set; }
+        internal DbSet<IntroductionExternalUrl> IntroductionExternalUrls { get; set; }
         internal DbSet<Project> Projects { get; set; }
-
-        /// <summary> Database has any accounts?</summary>
-        internal bool HasAccounts { get; set; }
+        internal DbSet<ProjectExternalUrl> ProjectExternalUrls { get; set; }
 
         public DataContext(DbContextOptions options) : base(options)
         {
-            MigrateDatabase(Database.GetDbConnection()); //TODO: not good
-            HasAccounts = Accounts.Any(); //TODO: not that good
+            if (!_isMigrationsDone)
+            {
+                MigrateDatabase(Database.GetDbConnection());
+                _isMigrationsDone = true;
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

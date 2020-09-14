@@ -1,18 +1,20 @@
 ﻿using Abstractions.IRepository;
+using Abstractions.Model;
 using Infrastructure.Converters;
-using Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
     public class ProjectRepository : IProjectRepository
     {
-        private readonly ICategoryRepository _categoryRepository;
         private readonly DataContext _context;
+        private readonly ICategoryRepository _categoryRepository;
+        
 
         public ProjectRepository(DataContext context, ICategoryRepository categoryRepository)
         {
@@ -20,31 +22,28 @@ namespace Infrastructure.Repository
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<Abstractions.Model.Project> Create(Abstractions.Model.Project project)
+
+        public async Task<bool> DeleteAsync(Project project)
         {
-            if (project.Id != null)
-                throw new Exception("Can't create with not empty id");
-
-            var byCode = await _context.Projects.AnyAsync(x => x.Code == project.Code);
-            if (byCode)
-                throw new Exception("Code duplicate"); //TODO: move to the supervision
-
-            Project dbItem = AbstractionsConverter.ToProject(project);
-            _context.Projects.Add(dbItem);
-
-            await _context.SaveChangesAsync();
-            return project;
-        }
-
-        public Task<int> Delete(Abstractions.Model.Project project)
-        {
-            var dbItem = _context.Projects.FirstOrDefault(x => x.Id == project.Id);
+            var dbItem = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
 
             _context.Projects.Remove(dbItem);
-            return _context.SaveChangesAsync();
+            var rows = await _context.SaveChangesAsync();
+            return rows == 1;
         }
 
-        public async Task<Abstractions.Model.ProjectPreview[]> GetProjectsPreview(int start, int length, string categoryCode)
+
+        public Task<Project> GetAsync(string code)
+        {
+            return FirstOrDefaultAsync(x => x.Code == code);
+        }
+
+        public Task<Project> GetAsync(int id)
+        {
+            return FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<ProjectPreview[]> GetPreviewAsync(int start, int length, string categoryCode)
         {
             var category = string.IsNullOrEmpty(categoryCode) ? null : await _categoryRepository.GetAsync(categoryCode);
             var isEverything = category == null || category.IsEverything;
@@ -59,41 +58,35 @@ namespace Infrastructure.Repository
                                  .ToArrayAsync();
         }
 
-        public async Task<Abstractions.Model.Project> Read(int id)
+
+        public Task<Project> SaveAsync(Project project)
         {
-            var result = await _context.Projects
-                .Where(x => x.Id == id)
-                .Include(x => x.Category)
-                .Include(x => x.GalleryImages)
-                .Include(x => x.ExternalUrls)
-                .ThenInclude(x => x.ExternalUrl)
-                .Select(x => DataConverter.ToProject(x))
-                .FirstOrDefaultAsync();
-
-            if (result == null)
-                throw new Exception("Not found");
-
-            return result;
+            if (project.Id == null)
+            {
+                return CreateAsync(project);
+            }
+            else
+            {
+                return UpdateAsync(project);
+            }
         }
 
-        public async Task<Abstractions.Model.Project> Read(string code)
-        {
-            var result = await _context.Projects
-                .Where(x => x.Code == code)
-                .Include(x => x.Category)
-                .Include(x=>x.GalleryImages)
-                .Include(x => x.ExternalUrls)
-                .ThenInclude(x => x.ExternalUrl)
-                .Select(x => DataConverter.ToProject(x))
-                .FirstOrDefaultAsync();
-
-            if (result == null)
-                throw new Exception("Not found");
-
-            return result;
-        }
         
-        public async Task<Abstractions.Model.Project> Update(Abstractions.Model.Project project)
+        
+        private async Task<Project> CreateAsync(Project project)
+        {
+            var byCode = await _context.Projects.AnyAsync(x => x.Code == project.Code);
+            if (byCode)
+                throw new Exception("Code duplicate"); //TODO: move to the supervision
+
+            var dbItem = AbstractionsConverter.ToProject(project);
+            _context.Projects.Add(dbItem);
+
+            await _context.SaveChangesAsync();
+            return project;
+        }
+
+        private async Task<Project> UpdateAsync(Project project)
         {
             var dbItem = _context.Projects
                                 .Include(x => x.Category)
@@ -103,7 +96,7 @@ namespace Infrastructure.Repository
                                 .FirstOrDefault(x => x.Id == project.Id);
 
             if (dbItem == null)
-                throw new Exception($"There is no project with Id:{project.Id}");
+                throw new Exception($"Can't find project with id: {project.Id}");
 
             Merge(dbItem, project);
 
@@ -111,25 +104,26 @@ namespace Infrastructure.Repository
             return DataConverter.ToProject(dbItem);
         }
 
-        private void Merge(Project localProject, Abstractions.Model.Project project)
-        {
-            localProject.CategoryId = project.Category.Id.Value;
-            localProject.Code = project.Code;
-            localProject.Description = project.Description;
-            localProject.DescriptionShort = project.DescriptionShort;
-            localProject.DisplayName = project.DisplayName;
-            localProject.PosterDescription = project.PosterDescription;
-            localProject.PosterUrl = project.PosterUrl;
-            localProject.ReleaseDate = project.ReleaseDate;
-            localProject.Version++;
 
-            Merge(localProject, project.ExternalUrls);
-            Merge(localProject, project.GalleryImages);
+        private void Merge(DataModel.Project dbProject, Project project)
+        {
+            dbProject.CategoryId = project.Category.Id.Value;
+            dbProject.Code = project.Code;
+            dbProject.Description = project.Description;
+            dbProject.DescriptionShort = project.DescriptionShort;
+            dbProject.DisplayName = project.DisplayName;
+            dbProject.PosterDescription = project.PosterDescription;
+            dbProject.PosterUrl = project.PosterUrl;
+            dbProject.ReleaseDate = project.ReleaseDate;
+            dbProject.Version++;
+
+            Merge(dbProject, project.ExternalUrls);
+            Merge(dbProject, project.GalleryImages);
         }
 
-        private void Merge(Project localProject, IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
+        private void Merge(DataModel.Project dbProject, IEnumerable<ExternalUrl> externalUrls)
         {
-            foreach (var item in localProject?.ExternalUrls ?? new List<ProjectExternalUrl>())
+            foreach (var item in dbProject?.ExternalUrls ?? new List<DataModel.ProjectExternalUrl>())
             {
                 var remoteItem = externalUrls?.FirstOrDefault(x => x.Id.HasValue && x.Id == item.ExternalUrlId);
 
@@ -145,15 +139,15 @@ namespace Infrastructure.Repository
                 }
             }
 
-            foreach (var item in externalUrls?.Where(x => x.Id == null) ?? new List<Abstractions.Model.ExternalUrl>())
+            foreach (var item in externalUrls?.Where(x => x.Id == null) ?? new List<ExternalUrl>())
             {
-                localProject.ExternalUrls.Add(AbstractionsConverter.ToProjectExternalUrl(item));
+                dbProject.ExternalUrls.Add(AbstractionsConverter.ToProjectExternalUrl(item));
             }
         }
 
-        private void Merge(Project localProject, IEnumerable<Abstractions.Model.GalleryImage> galleryImages)
+        private void Merge(DataModel.Project dbProject, IEnumerable<GalleryImage> galleryImages)
         {
-            foreach (var item in localProject?.GalleryImages ?? new List<GalleryImage>())
+            foreach (var item in dbProject?.GalleryImages ?? new List<DataModel.GalleryImage>())
             {
                 var remoteItem = galleryImages?.FirstOrDefault(x => x.Id.HasValue && x.Id == item.Id);
 
@@ -169,10 +163,23 @@ namespace Infrastructure.Repository
                 }
             }
 
-            foreach (var item in galleryImages?.Where(x => x.Id == null) ?? new List<Abstractions.Model.GalleryImage>())
+            foreach (var item in galleryImages?.Where(x => x.Id == null) ?? new List<GalleryImage>())
             {
-                localProject.GalleryImages.Add(AbstractionsConverter.ToGalleryImage(item));
+                dbProject.GalleryImages.Add(AbstractionsConverter.ToGalleryImage(item));
             }
         }
+
+
+        private async Task<Project> FirstOrDefaultAsync(Expression<Func<DataModel.Project, bool>> predicate)
+        {
+            var result = await _context.Projects
+               .AsNoTracking()
+               .Where(predicate)
+               .Select(x => DataConverter.ToProject(x))
+               .FirstOrDefaultAsync();
+
+            return result;
+        }
+
     }
 }

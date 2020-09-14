@@ -22,7 +22,7 @@ namespace API.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _projectRepository.Read(code);
+                return _projectRepository.GetAsync(code);
             });
 
             return new JsonResult(result);
@@ -33,7 +33,7 @@ namespace API.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _projectRepository.GetProjectsPreview(paging.Start, paging.Length, searchQuery.CategoryCode);
+                return _projectRepository.GetPreviewAsync(paging.Start, paging.Length, searchQuery.CategoryCode);
 
             });
 

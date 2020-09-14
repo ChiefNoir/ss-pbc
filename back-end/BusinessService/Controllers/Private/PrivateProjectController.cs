@@ -34,7 +34,7 @@ namespace API.Controllers.Private
             {
 
                 HandleFiles(project, Request.Form.Files);
-                return _projectRepository.Create(project);
+                return _projectRepository.SaveAsync(project);
             });
 
             return new JsonResult(result);
@@ -46,7 +46,7 @@ namespace API.Controllers.Private
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 HandleFiles(project, Request.Form.Files);
-                return _projectRepository.Update(project);
+                return _projectRepository.SaveAsync(project);
             });
 
             return new JsonResult(result);
@@ -57,7 +57,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, async () =>
             {
-                return _projectRepository.Delete(project);
+                return _projectRepository.DeleteAsync(project);
             });
 
             return new JsonResult(result);

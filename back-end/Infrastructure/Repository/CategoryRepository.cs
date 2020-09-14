@@ -52,17 +52,17 @@ namespace Infrastructure.Repository
 
         public Task<Category> GetAsync(int id)
         {
-            return GetCategory(x => x.Id == id);
+            return FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<Category> GetAsync(string code)
         {
-            return GetCategory(x => x.Code == code);
+            return FirstOrDefaultAsync(x => x.Code == code);
         }
 
         public Task<Category> GetTechnicalAsync()
         {
-            return GetCategory(x => x.IsEverything);
+            return FirstOrDefaultAsync(x => x.IsEverything);
         }
 
 
@@ -127,7 +127,7 @@ namespace Infrastructure.Repository
             return DataConverter.ToCategory(dbItem);
         }
 
-        private async Task<Category> GetCategory(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)
+        private async Task<Category> FirstOrDefaultAsync(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)
         {
             var result = await _context.CategoriesWithTotalProjects
                .AsNoTracking()

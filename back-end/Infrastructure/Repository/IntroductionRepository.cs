@@ -1,6 +1,6 @@
 ﻿using Abstractions.IRepository;
+using Abstractions.Model;
 using Infrastructure.Converters;
-using Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,40 +13,14 @@ namespace Infrastructure.Repository
     {
         private readonly DataContext _context;
 
+
         public IntroductionRepository(DataContext context)
         {
             _context = context;
         }
 
-        public async Task<Abstractions.Model.Introduction> CreateIntroduction(Abstractions.Model.Introduction item)
-        {
-            var hasDbItem = await _context.Introductions
-                                          .AsNoTracking()
-                                          .AnyAsync();
 
-            if (hasDbItem)
-                throw new Exception("Introduction is already created");
-
-            var dbItem = AbstractionsConverter.ToIntroduction(item);
-            _context.Introductions.Add(dbItem);
-
-            await _context.SaveChangesAsync();
-
-            return DataConverter.ToIntroduction(dbItem);
-        }
-
-        public async Task<int> DeleteIntroduction(Abstractions.Model.Introduction item)
-        {
-            var dbItem = await _context.Introductions.FirstOrDefaultAsync();
-            if (dbItem == null)
-                throw new Exception("Introduction is not found");
-
-            _context.Remove(dbItem);
-
-            return await _context.SaveChangesAsync();
-        }
-
-        public Task<Abstractions.Model.Introduction> GetAsync()
+        public Task<Introduction> GetAsync()
         {
             return _context.Introductions
                            .Include(x => x.ExternalUrls)
@@ -56,10 +30,14 @@ namespace Infrastructure.Repository
                            .FirstOrDefaultAsync();
         }
 
-        public async Task<Abstractions.Model.Introduction> SaveAsync(Abstractions.Model.Introduction item)
+
+        public async Task<Introduction> SaveAsync(Introduction item)
         {
-            var dbItem = await _context.Introductions.Include(x => x.ExternalUrls)
-                           .ThenInclude(x => x.ExternalUrl).FirstOrDefaultAsync();
+            var dbItem = await _context.Introductions
+                                       .Include(x => x.ExternalUrls)
+                                       .ThenInclude(x => x.ExternalUrl)
+                                       .FirstOrDefaultAsync();
+
             if (dbItem == null)
                 throw new Exception("Introduction is not found");
 
@@ -69,16 +47,19 @@ namespace Infrastructure.Repository
             return DataConverter.ToIntroduction(dbItem);
         }
 
-        private void Merge(Introduction dbItem, Abstractions.Model.Introduction newItem)
+
+        private void Merge(DataModel.Introduction dbItem, Introduction newItem)
         {
             dbItem.Content = newItem.Content;
             dbItem.PosterDescription = newItem.PosterDescription;
             dbItem.PosterUrl = newItem.PosterUrl;
-            Merge(dbItem, newItem.ExternalUrls);
             dbItem.Version++;
+
+
+            Merge(dbItem, newItem.ExternalUrls);
         }
 
-        private void Merge(Introduction dbItem, IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
+        private void Merge(DataModel.Introduction dbItem, IEnumerable<ExternalUrl> externalUrls)
         {
             foreach (var item in dbItem.ExternalUrls)
             {

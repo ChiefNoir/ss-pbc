@@ -24,7 +24,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[]{ RoleNames.Admin }, () =>
             {
-                return _accountRepository.Add(account);
+                return _accountRepository.AddAsync(account);
             });
 
             return new JsonResult(result);
@@ -35,7 +35,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-                return _accountRepository.Count();
+                return _accountRepository.CountAsync();
             });
 
             return new JsonResult(result);
@@ -46,7 +46,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-                return _accountRepository.Remove(account);
+                return _accountRepository.DeleteAsync(account);
             });
 
             return new JsonResult(result);
@@ -57,7 +57,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-                return _accountRepository.Get(id);
+                return _accountRepository.GetAsync(id);
             });
 
             return new JsonResult(result);
@@ -68,7 +68,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-                return _accountRepository.Search(paging.Start, paging.Length);
+                return _accountRepository.SearchAsync(paging.Start, paging.Length);
             });
 
             return new JsonResult(result);
@@ -97,7 +97,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-                return _accountRepository.Update(account);
+                return _accountRepository.UpdateAsync(account);
             });
 
             return new JsonResult(result);

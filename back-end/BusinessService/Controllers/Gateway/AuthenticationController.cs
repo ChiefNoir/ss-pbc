@@ -31,7 +31,7 @@ namespace API.Controllers.Gateway
         {
             var result = await Supervisor.SafeExecuteAsync(async () =>
             {
-                var user = await _userRepository.Get(credentials.Login, credentials.Password);
+                var user = await _userRepository.GetAsync(credentials.Login, credentials.Password);
 
                 if (user == null)
                     throw new Exception("Wrong user or password");

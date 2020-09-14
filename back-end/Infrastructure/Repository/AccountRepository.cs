@@ -24,7 +24,7 @@ namespace Infrastructure.Repository
             InitDefaults(); // TODO: doesn't look good.
         }
 
-        public async Task<Account> Add(Account account)
+        public async Task<Account> AddAsync(Account account)
         {
             if (string.IsNullOrEmpty(account.Login))
                 throw new Exception("Login can't be empty");
@@ -48,7 +48,7 @@ namespace Infrastructure.Repository
             return Convert(user);
         }
 
-        public Task<int> Count()
+        public Task<int> CountAsync()
         {
             return _context.Accounts.CountAsync();
         }
@@ -57,7 +57,7 @@ namespace Infrastructure.Repository
         /// <param name="login">Login as plain text</param>
         /// <param name="password">Password as plain text</param>
         /// <returns> <see cref="Account"/> or <code>null</code> if account is not found </returns>
-        public async Task<Account> Get(string login, string password)
+        public async Task<Account> GetAsync(string login, string password)
         {
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                 return null;
@@ -77,7 +77,7 @@ namespace Infrastructure.Repository
             };
         }
 
-        public async Task<Account> Get(int id)
+        public async Task<Account> GetAsync(int id)
         {
             var account = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == id);
             if (account == null)
@@ -86,17 +86,17 @@ namespace Infrastructure.Repository
             return Convert(account);
         }
 
-        public async Task<bool> Remove(Account account)
+        public async Task<bool> DeleteAsync(Account account)
         {
             var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == account.Id);
 
             _context.Accounts.Remove(acc);
-            await _context.SaveChangesAsync();
-
-            return true;
+            var rows = await _context.SaveChangesAsync();
+            
+            return rows == 1;
         }
 
-        public Task<Account[]> Search(int start, int length)
+        public Task<Account[]> SearchAsync(int start, int length)
         {
             return _context.Accounts
                             .Skip(start)
@@ -105,7 +105,7 @@ namespace Infrastructure.Repository
                             .ToArrayAsync();
         }
 
-        public async Task<Account> Update(Account account)
+        public async Task<Account> UpdateAsync(Account account)
         {
             var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == account.Id);
 
@@ -154,7 +154,7 @@ namespace Infrastructure.Repository
                     var login = _configuration.GetSection("Default:Admin:Login").Get<string>();
                     var pass = _configuration.GetSection("Default:Admin:Password").Get<string>();
 
-                    await Add(new Account { Login = login, Password = pass, Role = RoleNames.Admin });
+                    await AddAsync(new Account { Login = login, Password = pass, Role = RoleNames.Admin });
                     _context.HasAccounts = true;
                 }
                 catch

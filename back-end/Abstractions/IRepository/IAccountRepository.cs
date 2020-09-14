@@ -6,36 +6,41 @@ namespace Abstractions.IRepository
     /// <summary> Account repository </summary>
     public interface IAccountRepository
     {
-        /// <summary>Add new <see cref="Account"/></summary>
+        /// <summary>Add new <see cref="Account"/> to the storage </summary>
         /// <param name="account">New account</param>
         /// <returns>Created <see cref="Account"/> </returns>
-        Task<Account> Add(Account account);
+        Task<Account> AddAsync(Account account);
 
-        /// <summary> Count <see cref="Account"/></summary>
-        /// <returns>Total of the accounts, containing keyword </returns>
-        Task<int> Count();
+        /// <summary> Count <see cref="Account"/> in the storage</summary>
+        /// <returns> Total of the accounts </returns>
+        Task<int> CountAsync();
+
+        /// <summary> Delete <see cref="Account"/>  from storage </summary>
+        /// <param name="account"><see cref="Account"/> to delete</param>
+        /// <returns> <c>true</c> if deleting was successful </returns>
+        Task<bool> DeleteAsync(Account account);
+
+        /// <summary>  Get existing <see cref="Account"/> </summary>
+        /// <param name="id">Account id</param>
+        /// <returns>Existing <see cref="Account"/> or <see cref="null"/> </returns>
+        Task<Account> GetAsync(int id);
 
         /// <summary> Get existing <see cref="Account"/> </summary>
         /// <param name="login">Account login as plain text</param>
         /// <param name="plainTextPassword">Account password as plaint text</param>
         /// <returns>Existing <see cref="Account"/> or <see cref="null"/> </returns>
-        Task<Account> Get(string login, string plainTextPassword);
+        Task<Account> GetAsync(string login, string plainTextPassword);
 
-        /// <summary>  Get existing <see cref="Account"/> </summary>
-        /// <param name="id">Account id</param>
-        /// <returns>Existing <see cref="Account"/> or <see cref="null"/> </returns>
-        Task<Account> Get(int id);
-        Task<bool> Remove(Account account);
-
+        
         /// <summary> Search within <see cref="Account"/>, with paging </summary>
         /// <param name="start">Start</param>
         /// <param name="length">Length</param>
         /// <returns> Array of <see cref="Account"/>, containing keyword </returns>
-        Task<Account[]> Search(int start, int length);
+        Task<Account[]> SearchAsync(int start, int length);
 
         /// <summary> Update existing <see cref="Account"/> </summary>
         /// <param name="account"> Edited <see cref="Account"/></param>
-        /// <returns></returns>
-        Task<Account> Update(Account account);
+        /// <returns>Updated <see cref="Account"/> </returns>
+        Task<Account> UpdateAsync(Account account);
     }
 }

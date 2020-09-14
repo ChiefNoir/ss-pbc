@@ -21,8 +21,6 @@ namespace Infrastructure.Repository
             _context = context;
             _configuration = configuration;
             _hashManager = hashManager;
-
-            InitDefaults(); // TODO: doesn't look good.
         }
 
 
@@ -61,6 +59,17 @@ namespace Infrastructure.Repository
 
         public async Task<Account> GetAsync(string login, string password)
         {
+            // This is the primary method for user verification
+            // so, if there is no users in the db, we must create new one:
+            if(await _context.Accounts.AnyAsync())
+            {
+                var newLogin = _configuration.GetSection("Default:Admin:Login").Get<string>();
+                var newPass = _configuration.GetSection("Default:Admin:Password").Get<string>();
+                
+                await SaveAsync(new Account { Login = newLogin, Password = newPass, Role = RoleNames.Admin });
+            }
+
+
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                 throw new Exception($"Login or password is empty");
 
@@ -116,19 +125,6 @@ namespace Infrastructure.Repository
             await _context.SaveChangesAsync();
 
             return DataConverter.ToAccount(account);
-        }
-
-        /// <summary> Initialize default user </summary>
-        private async void InitDefaults()
-        {
-            if (!_context.HasAccounts)
-            {
-                var login = _configuration.GetSection("Default:Admin:Login").Get<string>();
-                var pass = _configuration.GetSection("Default:Admin:Password").Get<string>();
-
-                await SaveAsync(new Account { Login = login, Password = pass, Role = RoleNames.Admin });
-                _context.HasAccounts = true;
-            }
         }
         
         private async Task<Account> UpdateAsync(Account item)

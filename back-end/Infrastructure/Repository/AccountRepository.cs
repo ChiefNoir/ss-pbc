@@ -1,6 +1,7 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.ISecurity;
 using Abstractions.Model;
+using Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -11,64 +12,65 @@ namespace Infrastructure.Repository
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly IConfiguration _configuration;
         private readonly DataContext _context;
+        private readonly IConfiguration _configuration;
         private readonly IHashManager _hashManager;
 
         public AccountRepository(DataContext context, IConfiguration configuration, IHashManager hashManager)
         {
             _context = context;
-            _hashManager = hashManager;
             _configuration = configuration;
+            _hashManager = hashManager;
 
             InitDefaults(); // TODO: doesn't look good.
         }
 
-        public async Task<Account> AddAsync(Account account)
-        {
-            if (string.IsNullOrEmpty(account.Login))
-                throw new Exception("Login can't be empty");
 
-            if (string.IsNullOrEmpty(account.Password))
-                throw new Exception("Password can't be empty");
-
-            var hashedPassword = _hashManager.Hash(account.Password);
-
-            var user = new DataModel.Account
-            {
-                Login = account.Login,
-                Password = hashedPassword.HexHash,
-                Salt = hashedPassword.HexSalt,
-                Role = account.Role
-            };
-
-            await _context.Accounts.AddAsync(user);
-            await _context.SaveChangesAsync();
-
-            return Convert(user);
-        }
 
         public Task<int> CountAsync()
         {
             return _context.Accounts.CountAsync();
         }
 
-        /// <summary> Get account </summary>
-        /// <param name="login">Login as plain text</param>
-        /// <param name="password">Password as plain text</param>
-        /// <returns> <see cref="Account"/> or <code>null</code> if account is not found </returns>
+
+        public async Task<bool> DeleteAsync(Account item)
+        {
+            if (item.Id == null)
+                throw new Exception($"Can't delete new account {item.Login}");
+
+            var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == item.Id);
+
+            if (item.Id == null)
+                throw new Exception($"Can't find account {item.Login}");
+
+            _context.Accounts.Remove(acc);
+            var rows = await _context.SaveChangesAsync();
+
+            return rows == 1;
+        }
+
+
+        public async Task<Account> GetAsync(int id)
+        {
+            var account = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == id);
+            if (account == null)
+                throw new Exception($"Can't find account with id: {id}");
+
+            return DataConverter.ToAccount(account);
+        }
+
         public async Task<Account> GetAsync(string login, string password)
         {
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-                return null;
+                throw new Exception($"Login or password is empty");
 
             var account = await _context.Accounts.FirstOrDefaultAsync(x => x.Login == login);
             if (account == null)
-                return null;
+                throw new Exception($"Can't delete new account {login}");
 
             var hashedPassword = _hashManager.Hash(password, account.Salt);
             if (hashedPassword.HexHash != account.Password)
-                return null;
+                throw new Exception($"Password mismatch");
 
             return new Account
             {
@@ -77,71 +79,43 @@ namespace Infrastructure.Repository
             };
         }
 
-        public async Task<Account> GetAsync(int id)
+
+        public Task<Account> SaveAsync(Account item)
         {
-            var account = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == id);
-            if (account == null)
-                return null;
+            if (item.Id == null)
+                return CreateAsync(item);
 
-            return Convert(account);
+            return UpdateAsync(item);
         }
-
-        public async Task<bool> DeleteAsync(Account account)
-        {
-            var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == account.Id);
-
-            _context.Accounts.Remove(acc);
-            var rows = await _context.SaveChangesAsync();
-            
-            return rows == 1;
-        }
+        
 
         public Task<Account[]> SearchAsync(int start, int length)
         {
             return _context.Accounts
-                            .Skip(start)
-                            .Take(length)
-                            .Select(x => Convert(x))
-                            .ToArrayAsync();
+                           .Skip(start)
+                           .Take(length)
+                           .Select(x => DataConverter.ToAccount(x))
+                           .ToArrayAsync();
         }
 
-        public async Task<Account> UpdateAsync(Account account)
+
+
+        private async Task<Account> CreateAsync(Account item)
         {
-            var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == account.Id);
-
-            if (acc == null)
-                throw new Exception("Not found");
-
-            if(string.IsNullOrEmpty(account.Login))
+            if (string.IsNullOrEmpty(item.Login))
                 throw new Exception("Login can't be empty");
 
-            acc.Login = account.Login;
-            acc.Version++;
-            acc.Role = account.Role;
+            if (string.IsNullOrEmpty(item.Password))
+                throw new Exception("Password can't be empty");
 
-            if (!string.IsNullOrEmpty(account.Password))
-            {
-                var hashedPassword = _hashManager.Hash(account.Password);
+            var hashedPassword = _hashManager.Hash(item.Password);
 
-                acc.Password = hashedPassword.HexHash;
-                acc.Salt = hashedPassword.HexSalt;
-            }
+            var account = AbstractionsConverter.ToAccount(item, hashedPassword);
 
+            await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();
 
-            return Convert(acc);
-        }
-
-        private static Account Convert(DataModel.Account account)
-        {
-            return new Account
-            {
-                Id = account.Id,
-                Login = account.Login,
-                Role = account.Role,
-                Password = null,
-                Version = account.Version
-            };
+            return DataConverter.ToAccount(account);
         }
 
         /// <summary> Initialize default user </summary>
@@ -154,7 +128,7 @@ namespace Infrastructure.Repository
                     var login = _configuration.GetSection("Default:Admin:Login").Get<string>();
                     var pass = _configuration.GetSection("Default:Admin:Password").Get<string>();
 
-                    await AddAsync(new Account { Login = login, Password = pass, Role = RoleNames.Admin });
+                    await SaveAsync(new Account { Login = login, Password = pass, Role = RoleNames.Admin });
                     _context.HasAccounts = true;
                 }
                 catch
@@ -162,6 +136,32 @@ namespace Infrastructure.Repository
                     //TODO: log
                 }
             }
+        }
+        
+        private async Task<Account> UpdateAsync(Account item)
+        {
+            if (string.IsNullOrEmpty(item.Login))
+                throw new Exception("Login can't be empty");
+
+            var dbAccount = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == item.Id);
+            if (dbAccount == null)
+                throw new Exception($"Can't find account with id: {item.Id}");
+
+            dbAccount.Login = item.Login;
+            dbAccount.Role = item.Role;
+            dbAccount.Version++;
+
+            if (!string.IsNullOrEmpty(item.Password))
+            {
+                var hashedPassword = _hashManager.Hash(item.Password);
+
+                dbAccount.Password = hashedPassword.HexHash;
+                dbAccount.Salt = hashedPassword.HexSalt;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return DataConverter.ToAccount(dbAccount);
         }
     }
 }

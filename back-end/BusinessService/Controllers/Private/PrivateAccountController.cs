@@ -24,7 +24,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[]{ RoleNames.Admin }, () =>
             {
-                return _accountRepository.AddAsync(account);
+                return _accountRepository.SaveAsync(account);
             });
 
             return new JsonResult(result);
@@ -97,7 +97,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-                return _accountRepository.UpdateAsync(account);
+                return _accountRepository.SaveAsync(account);
             });
 
             return new JsonResult(result);

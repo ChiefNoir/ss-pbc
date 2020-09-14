@@ -64,7 +64,15 @@ namespace Infrastructure.Repository
                            .FirstOrDefaultAsync();
         }
 
-        public async Task<Category> AddAsync(Category category)
+        public Task<Category> SaveAsync(Category item)
+        {
+            if (item.Id == null)
+                return CreateAsync(item);
+
+            return UpdateAsync(item);
+        }
+
+        public async Task<Category> CreateAsync(Category category)
         {
             //TODO: should create dedicated SaveNew method
             if (string.IsNullOrEmpty(category.Code))

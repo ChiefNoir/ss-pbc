@@ -7,6 +7,18 @@ namespace Infrastructure.Converters
 {
     internal static class AbstractionsConverter
     {
+        internal static Account ToAccount(Abstractions.Model.Account account, Abstractions.Model.HashResult hashedPassword)
+        {
+            return new Account
+            {
+                Login = account.Login,
+                Password = hashedPassword.HexHash,
+                Salt = hashedPassword.HexSalt,
+                Role = account.Role
+            };
+        }
+
+
         internal static Introduction ToIntroduction(Abstractions.Model.Introduction introduction)
         {
             var result = new Introduction

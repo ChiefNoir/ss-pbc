@@ -7,6 +7,19 @@ namespace Infrastructure.Converters
 {
     internal static class DataConverter
     {
+        internal static Abstractions.Model.Account ToAccount(Account item)
+        {
+            return new Abstractions.Model.Account
+            {
+                Id = item.Id,
+                Login = item.Login,
+                Role = item.Role,
+                Password = null,
+                Version = item.Version
+            };
+        }
+
+
         internal static Abstractions.Model.Introduction ToIntroduction(Introduction item)
         {
             return new Abstractions.Model.Introduction

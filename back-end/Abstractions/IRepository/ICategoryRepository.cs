@@ -6,10 +6,11 @@ namespace Abstractions.IRepository
     /// <summary> Category repository</summary>
     public interface ICategoryRepository
     {
-        /// <summary>Add new <see cref="Category"/> to the storage </summary>
-        /// <param name="category">New category</param>
-        /// <returns>Created <see cref="Category"/> </returns>
-        Task<Category> AddAsync(Category category);
+        /// <summary>Save to the storage </summary>
+        /// <param name="item">New account</param>
+        /// <returns>Created or updated <see cref="Category"/> </returns>
+        Task<Category> SaveAsync(Category item);
+
 
         /// <summary> Delete <see cref="Category"/>  from storage </summary>
         /// <param name="category"><see cref="Category"/> to delete</param>
@@ -38,11 +39,6 @@ namespace Abstractions.IRepository
         /// <summary>Get technical category for filtering by everything</summary>
         /// <returns>Everything category</returns>
         Task<Category> GetEverythingCategory();
-
-        /// <summary> Update existing <see cref="Category"/> </summary>
-        /// <param name="category"> Edited <see cref="Category"/></param>
-        /// <returns>Updated <see cref="Category"/> </returns>
-        Task<Category> UpdateAsync(Category category);
 
     }
 }

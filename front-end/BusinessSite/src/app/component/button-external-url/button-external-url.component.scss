@@ -2,50 +2,102 @@
 
 $border-color: $color-text;
 $highlighted: $color-text-highlighted;
-$highlighted-text: #fff;
 
-.link-slider {
-  margin-top: 5px;
-  font-family: inherit;
-  
-  font-size: 22px;
-  height: 40px;
-  width: 100%;
+.flat-link
+{
   background: transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  border: 2px solid $border-color;
-  z-index: 1;
-  text-decoration: none;
-  text-align: center;
+  border: none;
   color: inherit;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-weight: 500;
+  height: 40px;
+  line-height: 42px;
+  margin: 5px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
 
-  &::after {
-    position: absolute;
+  &:before
+  {
+    background: $border-color;
     content: "";
-    width: 0;
-    height: 100%;
-    top: 0;
+    position: absolute;
     right: 0;
-    z-index: -1;
-    background: $highlighted;
+    top: 0;
     transition: all 0.3s ease;
+
+    height: 50%;
+    width: 2px;
+  }
+  &:after {
+    background: $border-color;
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: all 0.3s ease;
+
+    width: 20px;
+    height: 2px;
   }
 
   &:hover {
-    color: $highlighted-text;
-  }
-  &:hover::after{
-    left: 0;
-    width: 100%;
-  }
-  &:active{
-    top: 2px;
+    &::before{
+      //background: $highlighted;
+      height: 100%;
+    }
+    &::after {
+      //background: $highlighted;
+      width: 100%;
+    }
   }
 
-  span {
-    vertical-align: middle;
+  span
+  {
+    display: block;
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    &:before {
+      background: $border-color;
+      bottom: 0;
+      content: "";
+      left: 0;
+      position: absolute;
+      transition: all 0.3s ease;
+  
+      width: 2px;
+      height: 50%;
+    }
+    &:after {
+      background: $border-color;
+      bottom: 0;
+      content: "";
+      left: 0;
+      position: absolute;
+      transition: all 0.3s ease;
+  
+      width: 20px;
+      height: 2px;
+    }
+
+    &:hover
+    {
+      //color: $highlighted;
+      &::before {
+        //background: $highlighted;
+        height: 100%;
+      }
+      &::after {
+       //background: $highlighted;
+        width: 100%;
+      } 
+    }
   }
+
 }

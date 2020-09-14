@@ -2,6 +2,7 @@
 
 namespace Abstractions.IRepository
 {
+    /// <summary> File repository</summary>
     public interface IFileRepository
     {
         /// <summary> Save <see cref="IFormFile"/> to local storage</summary>

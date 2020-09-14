@@ -123,18 +123,11 @@ namespace Infrastructure.Repository
         {
             if (!_context.HasAccounts)
             {
-                try
-                {
-                    var login = _configuration.GetSection("Default:Admin:Login").Get<string>();
-                    var pass = _configuration.GetSection("Default:Admin:Password").Get<string>();
+                var login = _configuration.GetSection("Default:Admin:Login").Get<string>();
+                var pass = _configuration.GetSection("Default:Admin:Password").Get<string>();
 
-                    await SaveAsync(new Account { Login = login, Password = pass, Role = RoleNames.Admin });
-                    _context.HasAccounts = true;
-                }
-                catch
-                {
-                    //TODO: log
-                }
+                await SaveAsync(new Account { Login = login, Password = pass, Role = RoleNames.Admin });
+                _context.HasAccounts = true;
             }
         }
         

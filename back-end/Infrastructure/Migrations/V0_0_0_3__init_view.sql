@@ -1,4 +1,5 @@
-﻿CREATE VIEW categories_with_projects_total_v AS
+﻿-- Category with total projects in thaat category
+CREATE VIEW categories_with_projects_total_v AS
 (
 	select 
 		c.*, coalesce(sm.total, 0) as total_projects
@@ -19,3 +20,4 @@
 	order by 
 		total desc
 );
+-- --------------------------------------------------------------

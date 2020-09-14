@@ -1,84 +1,147 @@
 @import 'variables';
 
+$main-color: $color-text;
+
 .active {
-  color: $color-control-active;
-}
-.nonactive {
-  color: $color-control-text;
-}
-
-.display-name {
-  padding-top: 7px;
-  text-align: center;
-}
-
-.counter-container {
-  background-color: $color-control-text;
-  padding-bottom: 8px;
-  padding-top: 7px;
-  width: 0px;
-
-  transition: width .7s ease-in-out;
-  -webkit-transition: width .7s ease-in-out;
-  -moz-transition: width .7s ease-in-out;
-  -o-transition: width .7s ease-in-out;
+  &::before
+  {
+    height: 100% !important ;
+  }
+  &::after
+  {
+    height: 100% !important ;
+  }
+  .content
+  {
+    &::before{
+      width: 100% !important ;
+    }
+  }
 }
 
-.conter-content {
-  color: $color-control;
-  margin-left: 3px;
-  margin-right: 3px;
-  overflow: hidden;
-  text-align: center;
-}
-
-a {
-  background: none;
-  border: 2px solid;
+.flat-button {
+  margin-top: 10px;
+  padding: 10px 25px;
+  margin-left: 10px;
+  font-family: inherit;
+  color: inherit;
+  font-weight: 500;
+  background: transparent;
+  outline: none !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
   display: inline-block;
-  line-height: 1;
-  margin: 0.5em;
-  min-width: 120px;
   text-decoration: none;
-  transition: 0.25s;
-}
-
-a:hover,
-a:focus {
-  box-shadow: 0 0.5em 0.5em -0.4em $color-control-active;
-  color: $color-control-active;
-
-  transform: translateY(-0.3em);
-  -webkit-transform: translateY(-0.3em);
-  -moz-transform: translateY(-0.3em);
-  -ms-transform: translateY(-0.3em);
-  -o-transform: translateY(-0.3em);
-}
-
-
-
-a:hover .counter-container,
-a:focus .counter-container{
-  background-color: $color-control-active;
-  width:30px;
   
+
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+
+  &::before
+  {
+    position: absolute;
+    content: "";
+    height: 0%;
+    width: 2px;
+    background: $main-color;
+
+    right: 0;
+    top: 0;
+    transition: all 0.1s ease;
+  }
+  &:hover::before
+  {
+    transition: all 0.1s 0.2s ease;
+    height: 100%;
+  }
+  &:hover::after
+  {
+    transition: all 0.1s ease;
+    height: 100%;
+  }
+
+  &::after
+  {
+    position: absolute;
+    content: "";
+    height: 0%;
+    width: 2px;
+    background: $main-color;   
+
+    left: 0;
+    bottom: 0;
+    transition: all 0.1s 0.2s ease;
+  }
+
+  
+  .content
+  {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  
+    &::before
+    {
+      position: absolute;
+      content: "";
+      background: $main-color;
+
+      left: 0;
+      top: 0;
+      width: 0%;
+      height: 2px;
+      transition: all 0.1s 0.1s ease;
+    }
+    &::after
+    {
+      position: absolute;
+      content: "";
+      background: $main-color;
+
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+    }
+
+    &:hover::before{
+      width: 100%;
+    }
+
+    .counter-container {
+      background-color: $color-control-text;
+      
+      width: 0px;
+    
+      transition: width .6s ease-in-out;
+      -webkit-transition: width .6s ease-in-out;
+      -moz-transition: width .6s ease-in-out;
+      -o-transition: width .6s ease-in-out;
+
+      .conter-content {
+        color: $color-control;
+        margin-left: 3px;
+        margin-right: 3px;
+        overflow: hidden;
+        text-align: center;
+
+        
+      }
+    }
+  }
+}
+
+a:hover .content .counter-container{
+  width:30px;
+
   transition: width .5s ease-in-out;
   -webkit-transition: width .5s ease-in-out;
   -moz-transition: width .5s ease-in-out;
   -o-transition: width .5s ease-in-out;
-}
-
-a.active .counter-container {
-  background-color: $color-control-active;
-  color: $color-control;  
-}
-
-a.active:hover .conter-content,
-a:focus:hover .conter-content{
-  color: $color-control;  
-}
-
-a:hover .conter-content,
-a:focus .conter-content{
-  color: $color-control-text;
 }

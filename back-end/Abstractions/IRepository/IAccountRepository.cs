@@ -11,30 +11,30 @@ namespace Abstractions.IRepository
         Task<int> CountAsync();
 
         /// <summary> Delete item from storage </summary>
-        /// <param name="item"><see cref="Account"/> to delete</param>
-        /// <returns> <c>true</c> if deleting was successful </returns>
+        /// <param name="item"><seealso cref="Account"/> to delete</param>
+        /// <returns> <c>true</c> if delete was successful </returns>
         Task<bool> DeleteAsync(Account item);
 
-        /// <summary> Get existing <see cref="Account"/> </summary>
+        /// <summary> Get existing <seealso cref="Account"/> </summary>
         /// <param name="id">Account id</param>
-        /// <returns>Existing <see cref="Account"/> or <see cref="null"/> </returns>
+        /// <returns>Existing <seealso cref="Account"/> or <seealso cref="null"/> </returns>
         Task<Account> GetAsync(int id);
 
-        /// <summary> Get existing <see cref="Account"/> </summary>
+        /// <summary> Get existing <seealso cref="Account"/> </summary>
         /// <param name="login">Account login as plain text</param>
         /// <param name="plainTextPassword">Account password as plaint text</param>
-        /// <returns>Existing <see cref="Account"/> or <see cref="null"/> </returns>
+        /// <returns>Existing <seealso cref="Account"/> or <seealso cref="null"/> </returns>
         Task<Account> GetAsync(string login, string plainTextPassword);
 
-        /// <summary>Save <see cref="Account"/> to the storage </summary>
+        /// <summary>Save <seealso cref="Account"/> to the storage </summary>
         /// <param name="item">New or updated account</param>
-        /// <returns>Created or updated <see cref="Account"/> </returns>
+        /// <returns>Created or updated <seealso cref="Account"/> </returns>
         Task<Account> SaveAsync(Account item);
 
-        /// <summary> Search within <see cref="Account"/>, with paging </summary>
+        /// <summary> Search within <seealso cref="Account"/>, with paging </summary>
         /// <param name="start">Start</param>
         /// <param name="length">Length</param>
-        /// <returns> Array of <see cref="Account"/> </returns>
+        /// <returns> Array of <seealso cref="Account"/> </returns>
         Task<Account[]> SearchAsync(int start, int length);
     }
 }

@@ -1,34 +1,125 @@
 @import 'variables';
 
 button {
-    background-color: transparent;
-    border: 2px solid;
-    color: $color-control-text;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    height: 30px;
-    margin-bottom: 10px;
-    margin-left: 10px;
+    margin-left: 5px;
     margin-right: 10px;
     margin-top: 10px;
-    transition: 0.25s;
-    min-width: 100px;
+    margin-bottom: 10px;
+    font-family: inherit;
+    font-weight: 500;
+    background: transparent;
+    outline: none !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    color: $color-control-text;
 
-    &:hover {
-        background-color: $color-core;
+    width: 150px;
+    min-width: 150px;
+    height: 40px;
+    line-height: 42px;
+    padding: 0;
+    border: none;
 
-        transform: translateY(-0.2em);
-        -webkit-transform: translateY(-0.2em);
-        -moz-transform: translateY(-0.2em);
-        -ms-transform: translateY(-0.2em);
-        -o-transform: translateY(-0.2em);
-    }
     &:disabled {
         background-color: $color-core !important;
         color: $color-control-text !important;
         cursor: default;
         opacity: 60%;
         transform: none;
+
+        &:hover::before{
+            height: 50%;
+        }
+        &:hover::after{
+            width: 20%;
+        }
+        span 
+        {
+            &:hover::before
+            {
+                height: 50%;
+            }
+            &:hover::after
+            {
+                width: 20%;
+            }
+        }
     }
-}
+
+
+    &::before
+    {
+        position: absolute;
+        content: "";
+        right: 0;
+        bottom: 0;
+        background: $color-control-text;
+        transition: all 0.3s ease;
+
+        height: 50%;
+        width: 2px;
+    }
+    &::after
+    {
+        position: absolute;
+        content: "";
+        right: 0;
+        bottom: 0;
+        background: $color-control-text;
+        transition: all 0.3s ease;
+
+        width: 20%;
+        height: 2px;
+    }
+
+    &:hover::before{
+        height: 100%;
+    }
+    &:hover::after{
+        width: 100%;
+    }
+
+    span {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        &::before
+        {
+            position: absolute;
+            content: "";
+            left: 0;
+            top: 0;
+            background: $color-control-text;
+            transition: all 0.3s ease;
+
+            width: 2px;
+            height: 50%;
+        }
+        &::after
+        {
+            position: absolute;
+            content: "";
+            left: 0;
+            top: 0;
+            background: $color-control-text;
+            transition: all 0.3s ease;
+
+            width: 20%;
+            height: 2px;
+        }
+
+        &:hover::before
+        {
+            height: 100%;
+        }
+        &:hover::after
+        {
+            width: 100%;
+        }
+    }
+  }
+

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Abstractions.Model
 {
+    /// <summary> Introduction for the index page </summary>
     public class Introduction : IVersion
     {
         /// <summary> Content </summary>
@@ -17,10 +18,11 @@ namespace Abstractions.Model
         /// <summary> Introduction title </summary>
         public string Title { get; set; }
 
-        /// <summary> External URLs </summary>
-        public IEnumerable<ExternalUrl> ExternalUrls { get; set; }
-
         /// <summary> Entity version </summary>
         public long Version { get; set; }
+
+
+        /// <summary> External URLs </summary>
+        public IEnumerable<ExternalUrl> ExternalUrls { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Abstractions.Model
 {
+    /// <summary> Gallery for the <seealso cref="Project"/> </summary>
     public class GalleryImage : IVersion
     {
         /// <summary> Unique id or <c>null</c> if image is brand new </summary>

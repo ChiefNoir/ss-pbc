@@ -13,7 +13,7 @@ namespace Abstractions.Model
 
         /// <summary> Friendly category name </summary>
         public string DisplayName { get; set; }
-
+        
         /// <summary> Is category technical for filtering by all</summary>
         public bool IsEverything { get; set; }
 

@@ -25,22 +25,24 @@ namespace Abstractions.Model
         /// <summary> Friendly name</summary>
         public string DisplayName { get; set; }
 
+        /// <summary> Short description for the poster (mostly for the image alt-text) </summary>
+        public string PosterDescription { get; set; }
+
+        /// <summary> URL for the poster </summary>
+        public string PosterUrl { get; set; }
+
+        /// <summary> Release date </summary>
+        public DateTime? ReleaseDate { get; set; }
+
+        /// <summary> Version </summary>
+        public long Version { get; set; }
+
+
         /// <summary> URL for the external recourses for the project </summary>
         public IEnumerable<ExternalUrl> ExternalUrls { get; set; }
 
         /// <summary> Projects gallery </summary>
         public IList<GalleryImage> GalleryImages { get; set; }
 
-        /// <summary> Short description for the poster (mostly for the image alt-text) </summary>
-        public string PosterDescription { get; set; }
-
-        /// <summary> URL for the poster </summary>
-        public string PosterUrl { get; set; }
-        
-        /// <summary> Release date </summary>
-        public DateTime? ReleaseDate { get; set; }
-
-        /// <summary> Version </summary>
-        public long Version { get; set; }
     }
 }

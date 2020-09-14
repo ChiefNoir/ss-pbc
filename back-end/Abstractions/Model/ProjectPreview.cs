@@ -5,11 +5,11 @@ namespace Abstractions.Model
     /// <summary> Short version of project </summary>
     public class ProjectPreview
     {
-        /// <summary> Project category </summary>
-        public Category Category { get; set; }
-
         /// <summary> Project unique code </summary>
         public string Code { get; set; }
+
+        /// <summary> Project category </summary>
+        public Category Category { get; set; }
 
         /// <summary> Short description </summary>
         public string Description { get; set; }

@@ -10,6 +10,28 @@ namespace Secutiry
     /// <summary> Hash manager </summary>
     public class HashManager : IHashManager
     {
+        /// <summary> Hash plaint text</summary>
+        /// <param name="plainText"> Plain text </param>
+        /// <param name="hexSalt"> Salt as hex string. If hexSalt is null, the new salt will be created</param>
+        /// <returns>Hash as hex string and hashed string</returns>
+        public HashResult Hash(string plainText, string hexSalt = null)
+        {
+            byte[] salt;
+            if (string.IsNullOrEmpty(hexSalt))
+                salt = GenerateRandomArray(128);
+            else
+                salt = Converter.ToByteArray(hexSalt);
+
+            var result = CalcSaltedHash(Encoding.UTF8.GetBytes(plainText), salt);
+
+            return new HashResult
+            {
+                HexHash = Converter.ToHexString(result),
+                HexSalt = hexSalt ?? Converter.ToHexString(salt)
+            };
+        }
+
+
         /// <summary> Calculate hash of the plain text with salt</summary>
         /// <param name="plainText">Plain text </param>
         /// <param name="salt">Salt</param>
@@ -38,27 +60,6 @@ namespace Secutiry
 
                 return algorithm.ComputeHash(plainTextWithSaltBytes);
             }
-        }
-
-        /// <summary> Hash plaint text</summary>
-        /// <param name="plainText"> Plain text </param>
-        /// <param name="hexSalt"> Salt as hex string. If hexSalt is null, the new salt will be created</param>
-        /// <returns>Hash as hex string and hashed string</returns>
-        public HashResult Hash(string plainText, string hexSalt = null)
-        {
-            byte[] salt;
-            if (string.IsNullOrEmpty(hexSalt))
-                salt = GenerateRandomArray(128);
-            else
-                salt = Converter.ToByteArray(hexSalt);
-
-            var result = CalcSaltedHash(Encoding.UTF8.GetBytes(plainText), salt);
-
-            return new HashResult
-            {
-                HexHash = Converter.ToHexString(result),
-                HexSalt = hexSalt ?? Converter.ToHexString(salt)
-            };
         }
 
         /// <summary>Create <see cref="byte[]"/> filled with random numbers </summary>

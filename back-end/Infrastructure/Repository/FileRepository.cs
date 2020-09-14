@@ -16,7 +16,7 @@ namespace Infrastructure.Repository
             _configuration = configuration;
         }
 
-        public async Task<string> Save(IFormFile file)
+        public string Save(IFormFile file)
         {
             if (file == null || file.Length == 0) //TODO: max file size
                 throw new Exception("Empty file"); //TODO: custom exception
@@ -30,7 +30,7 @@ namespace Infrastructure.Repository
 
             using (var stream = new FileStream(fullPath, FileMode.Create))
             {
-                await file.CopyToAsync(stream);
+                file.CopyTo(stream);
             }
 
             return filename;

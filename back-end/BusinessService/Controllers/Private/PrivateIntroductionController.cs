@@ -36,12 +36,12 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        private async void HandleFiles(Introduction introduction, IFormFileCollection files)
+        private void HandleFiles(Introduction introduction, IFormFileCollection files)
         {
             var poster = files.FirstOrDefault(x => x.Name == "introduction[posterToUpload]");
             if (poster != null)
             {
-                var filename = await _fileRepository.Save(Request.Form.Files.FirstOrDefault());
+                var filename = _fileRepository.Save(Request.Form.Files.FirstOrDefault());
                 introduction.PosterUrl = AppendUrlToName(filename);
             }
         }

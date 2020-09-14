@@ -55,7 +55,7 @@ namespace API.Controllers.Private
         [HttpDelete("project"), DisableRequestSizeLimit]
         public async Task<IActionResult> Delete([FromHeader] string token, [FromBody] Project project)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, async () =>
             {
                 return _projectRepository.Delete(project);
             });
@@ -63,19 +63,19 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        private async void HandleFiles(Project project, IFormFileCollection files)
+        private void HandleFiles(Project project, IFormFileCollection files)
         {
             var poster = files.FirstOrDefault(x => x.Name == "project[posterToUpload]");
             if (poster != null)
             {
-                var filename = await _fileRepository.Save(Request.Form.Files.FirstOrDefault());
+                var filename = _fileRepository.Save(Request.Form.Files.FirstOrDefault());
                 project.PosterUrl = AppendUrlToName(filename);
             }
 
             var gallery = files.Where(x => x.Name.StartsWith("project[galleryImages]")).OrderBy(x => x.Name);
             foreach (var item in gallery)
             {
-                var filename = await _fileRepository.Save(Request.Form.Files.FirstOrDefault());
+                var filename = _fileRepository.Save(Request.Form.Files.FirstOrDefault());
                 var index = ParseIndex(item.Name);
                 if (index == -1)
                     continue;
@@ -99,7 +99,7 @@ namespace API.Controllers.Private
             if(matches.Success)
             {
                 var match = matches.Captures.FirstOrDefault()?.Value;
-                if (match != null)
+                if (match == null)
                     return -1;
 
 

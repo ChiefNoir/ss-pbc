@@ -8,6 +8,6 @@ namespace Abstractions.IRepository
         /// <summary> Save <see cref="IFormFile"/></summary>
         /// <param name="file">File to save</param>
         /// <returns>Relative path to file</returns>
-        Task<string> Save(IFormFile file);
+        string Save(IFormFile file);
     }
 }

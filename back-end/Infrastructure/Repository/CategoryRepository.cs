@@ -26,19 +26,18 @@ namespace Infrastructure.Repository
             return item?.Code == code;
         }
 
-        public async Task<Category> DeleteCategory(Category category)
+        public async Task<bool> DeleteAsync(Category category)
         {
             var dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
 
             _context.Categories.Remove(dbCategory);
+            var rows = await _context.SaveChangesAsync();
 
-            category.Id = null;
-            category.Version = 0;
 
-            return category;
+            return rows == 1;
         }
 
-        public Task<Category[]> GetCategories()
+        public Task<Category[]> GetAsync()
         {
             return _context.CategoriesWithTotalProjects
                            .AsNoTracking()
@@ -46,12 +45,12 @@ namespace Infrastructure.Repository
                            .ToArrayAsync();
         }
         
-        public Task<Category> GetCategory(string code)
+        public Task<Category> GetAsync(string code)
         {
             return GetCategory(x => x.Code == code);
         }
 
-        public Task<Category> GetCategory(int id)
+        public Task<Category> GetAsync(int id)
         {
             return GetCategory(x => x.Id == id);
         }
@@ -65,7 +64,7 @@ namespace Infrastructure.Repository
                            .FirstOrDefaultAsync();
         }
 
-        public async Task<Category> SaveCategory(Category category)
+        public async Task<Category> AddAsync(Category category)
         {
             //TODO: should create dedicated SaveNew method
             if (string.IsNullOrEmpty(category.Code))
@@ -86,13 +85,34 @@ namespace Infrastructure.Repository
             }
             else
             {
-                // TODO inconsistancy
+                // TODO inconsistency
                 dbItem.DisplayName = category.DisplayName;
                 dbItem.Code = category.Code;
                 dbItem.Version++;
             }
 
             await _context.SaveChangesAsync();
+            return DataConverter.ToCategory(dbItem);
+        }
+
+        public async Task<Category> UpdateAsync(Category category)
+        {
+            if (category.Id != null)
+                throw new Exception("Inconsistency");
+
+            var hasOldDb = await _context.Categories.AnyAsync(x => x.Code == category.Code);
+            if(hasOldDb)
+                throw new Exception("Inconsistency");
+
+            var dbItem = new DataModel.Category
+            {
+                Code = category.Code,
+                DisplayName = category.DisplayName
+            };
+
+            _context.Categories.Add(dbItem);
+            await _context.SaveChangesAsync();
+
             return DataConverter.ToCategory(dbItem);
         }
 
@@ -111,5 +131,7 @@ namespace Infrastructure.Repository
             return result;
         }
 
+
+       
     }
 }

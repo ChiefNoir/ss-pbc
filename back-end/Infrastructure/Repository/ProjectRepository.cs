@@ -46,7 +46,7 @@ namespace Infrastructure.Repository
 
         public async Task<Abstractions.Model.ProjectPreview[]> GetProjectsPreview(int start, int length, string categoryCode)
         {
-            var category = string.IsNullOrEmpty(categoryCode) ? null : await _categoryRepository.GetCategory(categoryCode);
+            var category = string.IsNullOrEmpty(categoryCode) ? null : await _categoryRepository.GetAsync(categoryCode);
             var isEverything = category == null || category.IsEverything;
 
             return await _context.Projects

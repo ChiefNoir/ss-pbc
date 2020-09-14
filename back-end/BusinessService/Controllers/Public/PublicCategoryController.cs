@@ -21,7 +21,7 @@ namespace API.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _categoryRepository.GetCategories();
+                return _categoryRepository.GetAsync();
             });
 
             return new JsonResult(result);
@@ -32,7 +32,7 @@ namespace API.Controllers.Public
         {
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
-                return _categoryRepository.GetCategory(id);
+                return _categoryRepository.GetAsync(id);
             });
 
             return new JsonResult(result);

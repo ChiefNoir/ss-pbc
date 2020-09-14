@@ -22,7 +22,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-                return _categoryRepository.SaveCategory(category);
+                return _categoryRepository.AddAsync(category);
             });
 
             return new JsonResult(result);
@@ -33,7 +33,7 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-                return _categoryRepository.DeleteCategory(category);
+                return _categoryRepository.DeleteAsync(category);
             });
 
             return new JsonResult(result);

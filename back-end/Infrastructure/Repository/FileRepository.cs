@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
     public class FileRepository : IFileRepository
     {
         private readonly IConfiguration _configuration;
+
 
         public FileRepository(IConfiguration configuration)
         {
@@ -35,6 +35,7 @@ namespace Infrastructure.Repository
 
             return filename;
         }
+
 
         private static string GenerateFileName()
         {

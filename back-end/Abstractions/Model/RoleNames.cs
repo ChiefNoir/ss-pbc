@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace Abstractions.Model
+﻿namespace Abstractions.Model
 {
     public static class RoleNames
     {

@@ -1,6 +1,6 @@
 <div class="wrapper">
   <div (click)="changeImage(-1)" class="navigation left" fxLayout="column" fxLayoutAlign="center center">
-    <i>back</i>
+    <b><</b>
   </div>
 
   <div fxFlex class="content" >
@@ -11,9 +11,10 @@
     </a>
 
     <div *ngIf="!loading" class="info"> {{currentImageIndex + 1}} / {{ images.length }}</div>
+
   </div>
 
   <div (click)="changeImage(1)" class="navigation right" fxLayout="column" fxLayoutAlign="center center">
-      <i>next</i>
+      <b>></b>
   </div>
 </div>

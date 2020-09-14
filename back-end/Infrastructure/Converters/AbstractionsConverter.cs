@@ -1,5 +1,4 @@
 ﻿using Infrastructure.DataModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,6 +17,24 @@ namespace Infrastructure.Converters
             };
         }
 
+        internal static IEnumerable<GalleryImage> ToGalleryImage(IEnumerable<Abstractions.Model.GalleryImage> items)
+        {
+            if (items == null)
+                return new List<GalleryImage>();
+
+            return items.Select(x => ToGalleryImage(x));
+        }
+
+        internal static GalleryImage ToGalleryImage(Abstractions.Model.GalleryImage item)
+        {
+            return new GalleryImage
+            {
+                Id = item.Id ?? 0,
+                ExtraUrl = item.ExtraUrl,
+                ImageUrl = item.ImageUrl,
+                Version = item.Version
+            };
+        }
 
         internal static Introduction ToIntroduction(Abstractions.Model.Introduction introduction)
         {
@@ -39,6 +56,15 @@ namespace Infrastructure.Converters
             }
 
             return result;
+        }
+
+        internal static IntroductionExternalUrl ToIntroductionExternalUrl(Abstractions.Model.ExternalUrl item)
+        {
+            return new IntroductionExternalUrl
+            {
+                ExternalUrl = ToExternalUrl(item),
+                ExternalUrlId = item.Id ?? 0
+            };
         }
 
         internal static Project ToProject(Abstractions.Model.Project project)
@@ -88,27 +114,7 @@ namespace Infrastructure.Converters
                 ExternalUrlId = externalUrl.Id ?? 0
             };
         }
-
-        internal static IntroductionExternalUrl ToIntroductionExternalUrl(Abstractions.Model.ExternalUrl item)
-        {
-            return new IntroductionExternalUrl
-            {
-                ExternalUrl = ToExternalUrl(item),
-                ExternalUrlId = item.Id ?? 0
-            };
-        }
-
-        private static Category ToCategory(Abstractions.Model.Category category)
-        {
-            return new Category
-            {
-                Code = category.Code,
-                DisplayName = category.DisplayName,
-                Version = category.Version,
-                Id = category.Id ?? 0
-            };
-        }
-
+        
         private static ExternalUrl ToExternalUrl(Abstractions.Model.ExternalUrl externalUrl)
         {
             return new ExternalUrl
@@ -134,25 +140,6 @@ namespace Infrastructure.Converters
                 return new List<ProjectExternalUrl>();
 
             return externalUrls.Select(x => ToProjectExternalUrl(x));
-        }
-
-        internal static IEnumerable<GalleryImage> ToGalleryImage(IEnumerable<Abstractions.Model.GalleryImage> items)
-        {
-            if (items == null)
-                return new List<GalleryImage>();
-
-            return items.Select(x => ToGalleryImage(x));
-        }
-
-        internal static GalleryImage ToGalleryImage(Abstractions.Model.GalleryImage item)
-        {
-            return new GalleryImage
-            {
-                Id = item.Id ?? 0,
-                ExtraUrl = item.ExtraUrl,
-                ImageUrl = item.ImageUrl,
-                Version = item.Version
-            };
         }
     }
 }

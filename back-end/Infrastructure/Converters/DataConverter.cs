@@ -1,5 +1,4 @@
 ﻿using Infrastructure.DataModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +18,31 @@ namespace Infrastructure.Converters
             };
         }
 
+        internal static Abstractions.Model.Category ToCategory(CategoryWithTotalProjects category)
+        {
+            return new Abstractions.Model.Category
+            {
+                Id = category.Id,
+                Code = category.Code,
+                DisplayName = category.DisplayName,
+                IsEverything = category.IsEverything,
+                TotalProjects = category.TotalProjects,
+                Version = category.Version
+            };
+        }
+
+        internal static Abstractions.Model.Category ToCategory(Category category)
+        {
+            return new Abstractions.Model.Category
+            {
+                Id = category.Id,
+                Code = category.Code,
+                DisplayName = category.DisplayName,
+                IsEverything = category.IsEverything,
+                TotalProjects = -1,
+                Version = category.Version
+            };
+        }
 
         internal static Abstractions.Model.Introduction ToIntroduction(Introduction item)
         {
@@ -51,20 +75,7 @@ namespace Infrastructure.Converters
                 GalleryImages = ToGalleryImage(project.GalleryImages)
             };
         }
-
-        internal static Abstractions.Model.Category ToCategory(CategoryWithTotalProjects category)
-        {
-            return new Abstractions.Model.Category
-            {
-                Id = category.Id,
-                Code = category.Code,
-                DisplayName = category.DisplayName,
-                IsEverything = category.IsEverything,
-                TotalProjects = category.TotalProjects,
-                Version = category.Version
-            };
-        }
-
+        
         internal static Abstractions.Model.ProjectPreview ToProjectPreview(Project project)
         {
             return new Abstractions.Model.ProjectPreview
@@ -78,20 +89,7 @@ namespace Infrastructure.Converters
                 Category = ToCategory(project.Category)
             };
         }
-
-        internal static Abstractions.Model.Category ToCategory(Category category)
-        {
-            return new Abstractions.Model.Category
-            {
-                Id = category.Id,
-                Code = category.Code,
-                DisplayName = category.DisplayName,
-                IsEverything = category.IsEverything,
-                TotalProjects = -1,
-                Version = category.Version
-            };
-        }
-
+        
         private static Abstractions.Model.ExternalUrl ToExternalUrl(ProjectExternalUrl dbEntity)
         {
             return new Abstractions.Model.ExternalUrl
@@ -112,7 +110,7 @@ namespace Infrastructure.Converters
 
             return externalUrls.Select(x => ToExternalUrl(x));
         }
-        
+
         private static IEnumerable<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<IntroductionExternalUrl> items)
         {
             return items.Select(x => ToExternalUrl(x));
@@ -128,7 +126,6 @@ namespace Infrastructure.Converters
                 Version = item.ExternalUrl.Version
             };
         }
-
 
         private static IList<Abstractions.Model.GalleryImage> ToGalleryImage(ICollection<GalleryImage> items)
         {
@@ -150,6 +147,5 @@ namespace Infrastructure.Converters
                 Version = item.Version
             };
         }
-
     }
 }

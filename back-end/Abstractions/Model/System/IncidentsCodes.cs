@@ -1,5 +1,6 @@
 ﻿namespace Abstractions.Model.System
 {
+    /// <summary> Exceptional situation codes</summary>
     public enum IncidentsCodes
     {
         AuthenticationNotProvided = 100,

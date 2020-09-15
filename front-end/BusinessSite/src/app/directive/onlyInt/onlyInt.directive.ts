@@ -3,8 +3,9 @@ import { Directive, HostListener } from '@angular/core';
 @Directive({
   selector: '[appOnlyInt]',
 })
-  
-export class OnlyIntDirective {
+
+export class OnlyIntDirective
+{
   private navigationKeys = [
     'Backspace',
     'Delete',
@@ -25,25 +26,24 @@ export class OnlyIntDirective {
   constructor() {}
 
   @HostListener('keydown', ['$event'])
-  onKeyDown(e: KeyboardEvent) {
-    if (this.navigationKeys.indexOf(e.key) > -1) {
-      return;
-    }
+  onKeyDown(e: KeyboardEvent)
+  {
+    if (this.navigationKeys.indexOf(e.key) > -1) { return; }
 
-    if (this.numberKeys.indexOf(e.key) > -1) {
-      return;
-    }
+    if (this.numberKeys.indexOf(e.key) > -1) { return; }
 
     e.preventDefault();
   }
 
   @HostListener('paste', ['$event'])
-  onPaste(event: ClipboardEvent) {
+  onPaste(event: ClipboardEvent)
+  {
     event.preventDefault();
   }
 
   @HostListener('drop', ['$event'])
-  onDrop(event: DragEvent) {
+  onDrop(event: DragEvent)
+  {
     event.preventDefault();
   }
 }

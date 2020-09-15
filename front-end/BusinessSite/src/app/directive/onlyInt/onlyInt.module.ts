@@ -5,5 +5,5 @@ import { OnlyIntDirective } from './onlyInt.directive';
   declarations: [OnlyIntDirective],
   exports: [OnlyIntDirective],
 })
-  
+
 export class OnlyIntModule {}

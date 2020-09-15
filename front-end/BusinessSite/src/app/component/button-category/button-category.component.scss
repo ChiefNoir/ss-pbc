@@ -1,128 +1,118 @@
-@import 'variables';
+@import "variables";
 
 $main-color: $color-text;
 
-.active {
-  &::before
-  {
-    height: 100% !important ;
-  }
-  &::after
-  {
-    height: 100% !important ;
-  }
-  .content
-  {
-    &::before{
-      width: 100% !important ;
-    }
-  }
-}
-
 .flat-button {
-  margin-top: 10px;
-  padding: 10px 25px;
-  margin-left: 10px;
-  font-family: inherit;
-  color: inherit;
-  font-weight: 500;
   background: transparent;
-  outline: none !important;
+  border: none;
+  color: inherit;
   cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
   display: inline-block;
-  text-decoration: none;
-  
-
-  width: 130px;
+  font-family: inherit;
+  font-weight: 500;
   height: 40px;
   line-height: 42px;
+  margin-left: 10px;
+  margin-top: 10px;
+  outline: none !important;
   padding: 0;
-  border: none;
+  position: relative;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  width: 130px;
 
-  &::before
-  {
-    position: absolute;
+  &::before {
+    background: $main-color;
     content: "";
     height: 0%;
-    width: 2px;
-    background: $main-color;
-
+    position: absolute;
     right: 0;
     top: 0;
-    transition: all 0.1s ease;
-  }
-  &:hover::before
-  {
-    transition: all 0.1s 0.2s ease;
-    height: 100%;
-  }
-  &:hover::after
-  {
-    transition: all 0.1s ease;
-    height: 100%;
-  }
+    width: 2px;
 
-  &::after
-  {
-    position: absolute;
+    transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -webkit-transition: all 0.1s ease;
+  }
+  &::after {
+    background: $main-color;
+    bottom: 0;
     content: "";
     height: 0%;
-    width: 2px;
-    background: $main-color;   
-
     left: 0;
-    bottom: 0;
+    position: absolute;
+    width: 2px;
+
     transition: all 0.1s 0.2s ease;
+    -moz-transition: all 0.1s 0.2s ease;
+    -o-transition: all 0.1s 0.2s ease;
+    -webkit-transition: all 0.1s 0.2s ease;
   }
 
-  
-  .content
-  {
-    position: relative;
-    display: block;
-    width: 100%;
+  &:hover::before {
     height: 100%;
-    text-align: center;
-  
-    &::before
-    {
-      position: absolute;
-      content: "";
-      background: $main-color;
 
+    transition: all 0.1s 0.2s ease;
+    -moz-transition: all 0.1s 0.2s ease;
+    -o-transition: all 0.1s 0.2s ease;
+    -webkit-transition: all 0.1s 0.2s ease;
+  }
+  &:hover::after {
+    height: 100%;
+
+    transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -webkit-transition: all 0.1s ease;
+  }
+
+  .content {
+    display: block;
+    height: 100%;
+    position: relative;
+    text-align: center;
+    width: 100%;
+
+    &::before {
+      background: $main-color;
+      content: "";
+      height: 2px;
       left: 0;
+      position: absolute;
       top: 0;
       width: 0%;
-      height: 2px;
+
       transition: all 0.1s 0.1s ease;
+      -moz-transition: all 0.1s 0.1s ease;
+      -o-transition: all 0.1s 0.1s ease;
+      -webkit-transition: all 0.1s 0.1s ease;
     }
-    &::after
-    {
-      position: absolute;
-      content: "";
+    &::after {
       background: $main-color;
-
-      left: 0;
       bottom: 0;
-      width: 100%;
+      content: "";
       height: 2px;
+      left: 0;
+      position: absolute;
+      width: 100%;
     }
 
-    &:hover::before{
+    &:hover::before {
       width: 100%;
     }
 
     .counter-container {
       background-color: $color-control-text;
-      
       width: 0px;
-    
-      transition: width .6s ease-in-out;
-      -webkit-transition: width .6s ease-in-out;
-      -moz-transition: width .6s ease-in-out;
-      -o-transition: width .6s ease-in-out;
+
+      transition: width 0.6s ease-in-out;
+      -webkit-transition: width 0.6s ease-in-out;
+      -moz-transition: width 0.6s ease-in-out;
+      -o-transition: width 0.6s ease-in-out;
 
       .conter-content {
         color: $color-control;
@@ -130,18 +120,30 @@ $main-color: $color-text;
         margin-right: 3px;
         overflow: hidden;
         text-align: center;
-
-        
       }
     }
   }
 }
 
-a:hover .content .counter-container{
-  width:30px;
+.active {
+  &::before {
+    height: 100% !important ;
+  }
+  &::after {
+    height: 100% !important ;
+  }
+  .content {
+    &::before {
+      width: 100% !important ;
+    }
+  }
+}
 
-  transition: width .5s ease-in-out;
-  -webkit-transition: width .5s ease-in-out;
-  -moz-transition: width .5s ease-in-out;
-  -o-transition: width .5s ease-in-out;
+a:hover .content .counter-container {
+  width: 30px;
+
+  transition: width 0.5s ease-in-out;
+  -webkit-transition: width 0.5s ease-in-out;
+  -moz-transition: width 0.5s ease-in-out;
+  -o-transition: width 0.5s ease-in-out;
 }

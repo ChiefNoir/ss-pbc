@@ -34,11 +34,9 @@ namespace API.Controllers.Public
             var result = await Supervisor.SafeExecuteAsync(() =>
             {
                 return _projectRepository.GetPreviewAsync(paging.Start, paging.Length, searchQuery.CategoryCode);
-
             });
 
             return new JsonResult(result);
         }
-
     }
 }

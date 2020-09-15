@@ -1,10 +1,8 @@
-@import 'variables';
+@import "variables";
 
 $border-color: $color-text;
-$highlighted: $color-text-highlighted;
 
-.flat-link
-{
+.flat-button {
   background: transparent;
   border: none;
   color: inherit;
@@ -15,23 +13,29 @@ $highlighted: $color-text-highlighted;
   height: 40px;
   line-height: 42px;
   margin: 5px;
-  width: 100%;
   position: relative;
   text-align: center;
   text-decoration: none;
-  transition: all 0.3s ease;
+  width: 100%;
 
-  &:before
-  {
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+
+  &:before {
     background: $border-color;
     content: "";
     position: absolute;
     right: 0;
     top: 0;
-    transition: all 0.3s ease;
-
     height: 50%;
     width: 2px;
+
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
   }
   &:after {
     background: $border-color;
@@ -39,25 +43,25 @@ $highlighted: $color-text-highlighted;
     position: absolute;
     right: 0;
     top: 0;
-    transition: all 0.3s ease;
-
     width: 20px;
     height: 2px;
+
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
   }
 
   &:hover {
-    &::before{
-      //background: $highlighted;
+    &::before {
       height: 100%;
     }
     &::after {
-      //background: $highlighted;
       width: 100%;
     }
   }
 
-  span
-  {
+  span {
     display: block;
     height: 100%;
     position: relative;
@@ -67,12 +71,15 @@ $highlighted: $color-text-highlighted;
       background: $border-color;
       bottom: 0;
       content: "";
+      height: 50%;
       left: 0;
       position: absolute;
-      transition: all 0.3s ease;
-  
       width: 2px;
-      height: 50%;
+
+      transition: all 0.3s ease;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
     }
     &:after {
       background: $border-color;
@@ -80,24 +87,22 @@ $highlighted: $color-text-highlighted;
       content: "";
       left: 0;
       position: absolute;
-      transition: all 0.3s ease;
-  
       width: 20px;
       height: 2px;
+
+      transition: all 0.3s ease;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
     }
 
-    &:hover
-    {
-      //color: $highlighted;
+    &:hover {
       &::before {
-        //background: $highlighted;
         height: 100%;
       }
       &::after {
-       //background: $highlighted;
         width: 100%;
-      } 
+      }
     }
   }
-
 }

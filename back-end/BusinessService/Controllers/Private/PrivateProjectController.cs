@@ -4,11 +4,10 @@ using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System;
 
 namespace API.Controllers.Private
 {
@@ -16,15 +15,15 @@ namespace API.Controllers.Private
     [Route("api/v1/")]
     public class PrivateProjectController : ControllerBase
     {
-        private readonly IProjectRepository _projectRepository;
-        private readonly IFileRepository _fileRepository;
         private readonly IConfiguration _configuration;
+        private readonly IFileRepository _fileRepository;
+        private readonly IProjectRepository _projectRepository;
 
-        public PrivateProjectController(IProjectRepository projectRepository, IFileRepository fileRepository, IConfiguration configuration)
+        public PrivateProjectController(IConfiguration configuration, IFileRepository fileRepository, IProjectRepository projectRepository)
         {
-            _projectRepository = projectRepository;
-            _fileRepository = fileRepository;
             _configuration = configuration;
+            _fileRepository = fileRepository;
+            _projectRepository = projectRepository;
         }
 
         [HttpPost("project"), DisableRequestSizeLimit]
@@ -32,7 +31,6 @@ namespace API.Controllers.Private
         {
             var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-
                 HandleFiles(project, Request.Form.Files);
                 return _projectRepository.SaveAsync(project);
             });
@@ -96,18 +94,16 @@ namespace API.Controllers.Private
             // project[galleryImages][0][readyToUpload]
             var matches = Regex.Match(galleryImagesName, @"(?<=\[)[0-9].*?(?=\])");
 
-            if(matches.Success)
+            if (matches.Success)
             {
                 var match = matches.Captures.FirstOrDefault()?.Value;
                 if (match == null)
                     return -1;
-
 
                 return Convert.ToInt32(match);
             }
 
             return -1;
         }
-
     }
 }

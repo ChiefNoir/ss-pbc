@@ -61,7 +61,7 @@ namespace Infrastructure.Repository
         {
             // This is the primary method for user verification
             // so, if there is no users in the db, we must create new one:
-            if(await _context.Accounts.AnyAsync())
+            if(!await _context.Accounts.AnyAsync())
             {
                 var newLogin = _configuration.GetSection("Default:Admin:Login").Get<string>();
                 var newPass = _configuration.GetSection("Default:Admin:Password").Get<string>();

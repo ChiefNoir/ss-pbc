@@ -46,7 +46,7 @@ namespace API.Controllers.Gateway
         [HttpPost("token")]
         public IActionResult Validate([FromHeader] string token)
         {
-            var result = Supervisor.SafeExecuteAsync(() =>
+            var result = Supervisor.SafeExecute(() =>
             {
                 var principal = TokenManager.ValidateToken(_configuration, token);
 

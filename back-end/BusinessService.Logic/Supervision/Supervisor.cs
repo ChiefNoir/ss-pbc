@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Security;
 using System;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
@@ -49,13 +50,13 @@ namespace BusinessService.Logic.Supervision
         /// <typeparam name="T">Type of returning result</typeparam>
         /// <param name="func"><seealso cref="Func"/> to execute</param>
         /// <returns>Result of execution or ErrorMessage will have message </returns>
-        public static async Task<ExecutionResult<T>> SafeExecuteAsync<T>(Func<T> func)
+        public static ExecutionResult<T> SafeExecute<T>(Func<T> func)
         {
             var result = new ExecutionResult<T>();
 
             try
             {
-                result.Data = await Task.Run(func);
+                result.Data = func();
                 result.IsSucceed = true;
             }
             catch (Exception ee)
@@ -68,7 +69,6 @@ namespace BusinessService.Logic.Supervision
 
             return result;
         }
-
 
         /// <summary> Execute function and return its result if everything goes right </summary>
         /// <typeparam name="T">Type of returning result</typeparam>
@@ -110,7 +110,7 @@ namespace BusinessService.Logic.Supervision
         /// <param name="roles">Roles who have rights to execute function</param>
         /// <param name="func">Function to execute</param>
         /// <returns>Result of execution or ErrorMessage will have message </returns>
-        public static async Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, string[] roles, Func<T> func)
+        public static ExecutionResult<T> SafeExecute<T>(string token, string[] roles, Func<T> func)
         {
             try
             {
@@ -135,7 +135,7 @@ namespace BusinessService.Logic.Supervision
                 };
             }
 
-            return await SafeExecuteAsync(func);
+            return SafeExecute(func);
         }
 
 

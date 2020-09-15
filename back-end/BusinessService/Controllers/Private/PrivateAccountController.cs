@@ -75,9 +75,9 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("roles")]
-        public async Task<IActionResult> GetRoles([FromHeader] string token)
+        public IActionResult GetRoles([FromHeader] string token)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = Supervisor.SafeExecute(token, new[] { RoleNames.Admin }, () =>
             {
                 var lst = new List<string>();
                 foreach (var property in typeof(RoleNames).GetProperties())

@@ -22,9 +22,9 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("information")]
-        public async Task<IActionResult> GetIntroduction([FromHeader] string token)
+        public IActionResult GetIntroduction([FromHeader] string token)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin, RoleNames.Demo }, () =>
+            var result = Supervisor.SafeExecute(token, new[] { RoleNames.Admin, RoleNames.Demo }, () =>
             {
                 var claims = TokenManager.ValidateToken(_config, token);
 

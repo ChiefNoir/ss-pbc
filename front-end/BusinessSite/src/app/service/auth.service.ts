@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { RequestResult } from '../model/RequestResult';
 import { Identity } from '../model/Identity';
+import { RequestResult } from '../model/RequestResult';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthService
 {
-  private httpClient: HttpClient;
   private endpoint = environment.authEndpoint;
+  private httpClient: HttpClient;
 
   public constructor(http: HttpClient)
   {
@@ -17,33 +17,25 @@ export class AuthService
 
   public login(login: string, password: string): Promise<RequestResult<Identity>>
   {
-    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-
     return this.httpClient.post<RequestResult<Identity>>
                           (
                               this.endpoint + 'login',
-                              { login, password },
-                              config
+                              { login, password }
                           )
                           .toPromise();
   }
 
   public async validate(token: string): Promise<RequestResult<Identity>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      'Token': token
-    });
+    const headers = new HttpHeaders({'Token': token});
 
-    return this.httpClient.post<RequestResult<Identity>>
-                          (
-                              this.endpoint + 'token',
-                              null,
-                              { headers }
-                          )
-                          .toPromise();
+    return this.httpClient
+               .post<RequestResult<Identity>>
+               (
+                 this.endpoint + 'token',
+                 null,
+                 { headers }
+               )
+               .toPromise();
   }
-
-
 }

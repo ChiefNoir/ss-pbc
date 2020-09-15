@@ -40,10 +40,10 @@ namespace Secutiry
         private static byte[] CalcSaltedHash(byte[] plainText, byte[] salt)
         {
             if (plainText == null || plainText.Length == 0)
-                throw new ArgumentNullException("Can't calculate hash: input text is empty.");
+                throw new ArgumentNullException(nameof(plainText), "Can't calculate hash: input text is empty.");
 
             if (salt == null || salt.Length == 0)
-                throw new ArgumentNullException("Can't calculate hash: input salt is empty.");
+                throw new ArgumentNullException(nameof(salt), "Can't calculate hash: input salt is empty.");
 
             using (var algorithm = new SHA384CryptoServiceProvider())
             {

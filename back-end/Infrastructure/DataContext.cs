@@ -51,7 +51,7 @@ namespace Infrastructure
             }
             catch (Exception)
             {
-                //TODO: _logger.LogCritical("Database migration failed.", ex);
+                //TODO: log error, Database migration failed.
                 throw;
             }
         }

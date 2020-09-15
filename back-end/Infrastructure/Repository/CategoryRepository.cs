@@ -77,7 +77,6 @@ namespace Infrastructure.Repository
 
         private async Task<Category> CreateAsync(Category category)
         {
-            //TODO: should create dedicated SaveNew method
             if (string.IsNullOrEmpty(category.Code))
                 throw new Exception("Category code can not be null or empty");
 

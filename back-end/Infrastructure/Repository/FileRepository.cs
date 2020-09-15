@@ -39,7 +39,6 @@ namespace Infrastructure.Repository
 
         private static string GenerateFileName()
         {
-            //TODO: re-do
             return DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds.ToString();
         }
     }

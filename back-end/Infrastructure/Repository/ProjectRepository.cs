@@ -77,7 +77,7 @@ namespace Infrastructure.Repository
         {
             var byCode = await _context.Projects.AnyAsync(x => x.Code == project.Code);
             if (byCode)
-                throw new Exception("Code duplicate"); //TODO: move to the supervision
+                throw new Exception("Code duplicate"); //TODO: move to the supervision?
 
             var dbItem = AbstractionsConverter.ToProject(project);
             _context.Projects.Add(dbItem);

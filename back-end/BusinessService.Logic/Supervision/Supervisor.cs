@@ -157,7 +157,7 @@ namespace BusinessService.Logic.Supervision
             }
             catch (SecurityTokenException ee)
             {
-                return IncidentFactory.Create(IncidentsCodes.InvalidToken); //, ee.Message);
+                return IncidentFactory.Create(IncidentsCodes.InvalidToken, ee.Message);
             }
 
             if (principal == null || principal.Identity == null)

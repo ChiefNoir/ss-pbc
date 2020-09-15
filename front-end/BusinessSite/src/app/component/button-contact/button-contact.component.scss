@@ -1,10 +1,9 @@
-@import 'variables';
+@import "variables";
 
 $border-color: $color-text;
 $highlighted: $color-text;
 
-.flat-link
-{
+.flat-button {
   background: transparent;
   border: none;
   color: inherit;
@@ -19,10 +18,13 @@ $highlighted: $color-text;
   position: relative;
   text-align: center;
   text-decoration: none;
-  transition: all 0.3s ease;
 
-  &:before
-  {
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+
+  &:before {
     background: $border-color;
     content: "";
     position: absolute;
@@ -46,7 +48,7 @@ $highlighted: $color-text;
   }
 
   &:hover {
-    &::before{
+    &::before {
       background: $highlighted;
       height: 100%;
     }
@@ -56,8 +58,7 @@ $highlighted: $color-text;
     }
   }
 
-  span
-  {
+  span {
     display: block;
     height: 100%;
     position: relative;
@@ -70,7 +71,7 @@ $highlighted: $color-text;
       left: 0;
       position: absolute;
       transition: all 0.3s ease;
-  
+
       width: 2px;
       height: 50%;
     }
@@ -81,13 +82,12 @@ $highlighted: $color-text;
       left: 0;
       position: absolute;
       transition: all 0.3s ease;
-  
+
       width: 20%;
       height: 2px;
     }
 
-    &:hover
-    {
+    &:hover {
       color: $highlighted;
       &::before {
         background: $highlighted;
@@ -96,8 +96,7 @@ $highlighted: $color-text;
       &::after {
         background: $highlighted;
         width: 100%;
-      } 
+      }
     }
   }
-
 }

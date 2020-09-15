@@ -16,7 +16,7 @@ export class CarouselComponent implements OnInit
 
   public currentImageIndex: number = 0;
   public loading: boolean = true;
-  public message: MessageDescription = {text: StaticNames.LoadInProgress, type: MessageType.Spinner };
+  public message: MessageDescription = {type: MessageType.Spinner };
   public selectedImage: GalleryImage;
 
   public ngOnInit(): void

@@ -43,7 +43,7 @@ export class DialogEditAccountComponent implements OnInit
 
     if (this.accountId)
     {
-      this.message$.next({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
+      this.message$.next({type: MessageType.Spinner });
       this.service.getAccount(this.accountId)
                   .then
                   (

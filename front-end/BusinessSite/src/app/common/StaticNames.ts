@@ -1,6 +1,5 @@
 export class StaticNames
 {
-  public static LoadInProgress = 'Loading';
   public static LoadComplete = 'Load complete';
 
   public static InitializationComplete = 'Initialization complete';

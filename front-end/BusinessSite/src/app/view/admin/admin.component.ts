@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit
   private authGuard: AuthGuard;
   public information$: BehaviorSubject<Information> = new BehaviorSubject<Information> (null);
 
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   private dataService: DataService;
   
 

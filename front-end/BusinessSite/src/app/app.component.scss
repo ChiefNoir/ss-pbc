@@ -1,75 +1,66 @@
 @import "variables";
 
-// [App content]
+
 .container {
   background-color: $color-container;
-
   height: auto;
+
+  .content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 80%;
+    height: auto;
+    margin: auto;
+  }
 }
 
-.content {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  width: 90%;
-  height: auto;
-  margin: auto;
-}
-// End of [App content]
-
-// [mat-toolbar] 
 .mat-toolbar {
   background: transparent !important;
   min-height: 40px !important;
   height: 40px !important;
+
+  a {
+    color: $color-text;
+    font-size: 25px;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+  }
+  a:hover {
+    color: $color-text-highlighted;
+    text-shadow: $shadow-text;
+    background-color: $color-container-transparent;
+  }
+  .active {
+    background-color: $color-container;
+  }
+  .mobile {
+    background-color: $color-container;
+    cursor: pointer;
+  }
 }
 
-.mat-toolbar a {
-  color: $color-text;
-  font-size: 25px;
-  height: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
-  text-decoration: none;
-}
-
-.mat-toolbar a:hover {
-  color: $color-text-highlighted;
-  text-shadow: $shadow-text;
-  background-color: $color-container-transparent;
-}
-
-.active {
-  background-color: $color-container;
-}
-
-.mobile {
-  background-color: $color-container;
-  cursor: pointer;
-}
-// End of [mat-toolbar] 
-
-// [mat-drawer]
 .mat-drawer {
-  background-color: $color-container;
-}
-.mat-drawer a {
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 10px;
-  color: $color-text;
-  font-size: 25px;
-  height: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
-  text-decoration: none;
-}
+  background-color:  $color-container;
 
-.mat-drawer a:hover {
-  color: $color-text-highlighted;
-  text-shadow: $shadow-text;
-  background-color: $color-container-transparent;
+  a {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    color: $color-text;
+    font-size: 25px;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+  }
+  a:hover {
+    color: $color-text-highlighted;
+    text-shadow: $shadow-text;
+    background-color: $color-container-transparent;
+  }
 }
-// End of [mat-drawer]
 
 .admin-menu {
   margin-top: 5px;
@@ -77,37 +68,35 @@
   align-items: center;
   justify-content: center;
   flex-flow: row wrap;
+
+  a {
+    background: none;
+    border: 2px solid;
+    display: inline-block;
+    line-height: 1;
+    margin: 0.5em;
+    min-width: 120px;
+    text-decoration: none;
+    transition: 0.25s;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    text-align: center;
+    color: $color-control-text;
+  }
+  a:hover {
+    box-shadow: 0 0.5em 0.5em -0.4em $color-control-active;
+    color: $color-control-active;
+  
+    transform: translateY(-0.3em);
+    -webkit-transform: translateY(-0.3em);
+    -moz-transform: translateY(-0.3em);
+    -ms-transform: translateY(-0.3em);
+    -o-transform: translateY(-0.3em);
+  }
+  a.active {
+    color: $color-control-active;
+  } 
 }
-
-.admin-menu a {
-  background: none;
-  border: 2px solid;
-  display: inline-block;
-  line-height: 1;
-  margin: 0.5em;
-  min-width: 120px;
-  text-decoration: none;
-  transition: 0.25s;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  text-align: center;
-  color: $color-control-text;
-}
-
-.admin-menu a:hover {
-  box-shadow: 0 0.5em 0.5em -0.4em $color-control-active;
-  color: $color-control-active;
-
-  transform: translateY(-0.3em);
-  -webkit-transform: translateY(-0.3em);
-  -moz-transform: translateY(-0.3em);
-  -ms-transform: translateY(-0.3em);
-  -o-transform: translateY(-0.3em);
-}
-
-.admin-menu a.active {
-  color: $color-control-active;
-} 
 
 .revolver {
   height: 80px;

@@ -25,7 +25,7 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
   private service: DataService;
 
   public accounts$: BehaviorSubject<Array<Account>> = new BehaviorSubject<Array<Account>>(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   public paging$: BehaviorSubject<Paging<null>> = new BehaviorSubject<Paging<null>>(null);
   public dialog: MatDialog;
   private authGuard: AuthGuard;

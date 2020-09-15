@@ -50,7 +50,7 @@ export class DialogEditProjectComponent implements OnInit
   public refresh(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: StaticNames.LoadInProgress, type: MessageType.Spinner  });
+    this.message$.next({ type: MessageType.Spinner  });
 
     this.service.getCategories().then
     (

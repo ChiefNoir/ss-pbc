@@ -26,7 +26,7 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
 
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
   public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   public dialog: MatDialog;
   private authGuard: AuthGuard;
   private router: Router;
@@ -88,7 +88,7 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
   private refreshProjects(paging: Paging<string>): void
   {
     this.projects$.next(null);
-    this.message$.next({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
+    this.message$.next({type: MessageType.Spinner });
 
     if (!paging)
     {

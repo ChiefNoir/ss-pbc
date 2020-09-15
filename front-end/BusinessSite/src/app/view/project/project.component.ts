@@ -23,7 +23,7 @@ export class ProjectComponent {
   private router: Router;
   private titleService: Title;
 
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({type: MessageType.Spinner });
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
   public constructor(service: DataService, activeRoute: ActivatedRoute, router: Router, titleService: Title) {

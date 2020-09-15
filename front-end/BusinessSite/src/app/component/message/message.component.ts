@@ -18,6 +18,6 @@ export enum MessageType {
 }
 
 export class MessageDescription {
-  public text: string;
+  public text?: string;
   public type: MessageType;
 }

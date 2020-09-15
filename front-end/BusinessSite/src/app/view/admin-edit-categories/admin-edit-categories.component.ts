@@ -24,7 +24,7 @@ export class AdminEditCategoriesComponent implements OnInit
 {
   private service: DataService;
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   public dialog: MatDialog;
   private authGuard: AuthGuard;
   private router: Router;

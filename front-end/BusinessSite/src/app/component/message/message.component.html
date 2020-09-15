@@ -8,9 +8,7 @@
   </div>
 
   <div *ngSwitchCase="2" class="loading">
-    <span *ngFor="let char of message.text | split">
-      {{ char }}
-    </span>
+    <img src="\assets\images\revolver.png" />
   </div>
 
   <div *ngSwitchDefault class="info" [innerHtml]="message.text">

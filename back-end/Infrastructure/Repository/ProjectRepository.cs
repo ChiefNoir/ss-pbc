@@ -174,6 +174,10 @@ namespace Infrastructure.Repository
         {
             var result = await _context.Projects
                .AsNoTracking()
+               .Include(x=>x.Category)
+               .Include(x=>x.GalleryImages)
+               .Include(x=>x.ExternalUrls)
+               .ThenInclude(x=>x.ExternalUrl)
                .Where(predicate)
                .Select(x => DataConverter.ToProject(x))
                .FirstOrDefaultAsync();

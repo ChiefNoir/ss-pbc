@@ -9,7 +9,7 @@ namespace Infrastructure
     /// <summary>Entity framework data context </summary>
     public class DataContext : DbContext
     {
-        private static bool _isMigrationsDone = false;
+        private static bool _isMigrationsDone;
 
         internal DbSet<Account> Accounts { get; set; }
         internal DbSet<Category> Categories { get; set; }

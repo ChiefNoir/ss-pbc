@@ -87,7 +87,6 @@ namespace BusinessService
                 RequestPath = new PathString("/" + path)
             });
 
-            //TODO: UseKestrel
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -8,7 +8,6 @@ using Security;
 using Security.Extensions;
 using System;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Gateway
@@ -17,13 +16,13 @@ namespace API.Controllers.Gateway
     [Route("api/v1/")]
     public class AuthenticationController : ControllerBase
     {
+        private readonly IAccountRepository _accountRepository;
         private readonly IConfiguration _configuration;
-        private readonly IAccountRepository _userRepository;
 
         public AuthenticationController(IConfiguration configuration, IAccountRepository userRepository)
         {
             _configuration = configuration;
-            _userRepository = userRepository;
+            _accountRepository = userRepository;
         }
 
         [HttpPost("login")]
@@ -31,10 +30,7 @@ namespace API.Controllers.Gateway
         {
             var result = await Supervisor.SafeExecuteAsync(async () =>
             {
-                var user = await _userRepository.GetAsync(credentials.Login, credentials.Password);
-
-                if (user == null)
-                    throw new Exception("Wrong user or password");
+                var user = await _accountRepository.GetAsync(credentials.Login, credentials.Password);
 
                 return new Identity
                 {
@@ -48,14 +44,14 @@ namespace API.Controllers.Gateway
         }
 
         [HttpPost("token")]
-        public async Task<IActionResult> Validate([FromHeader] string token)
+        public IActionResult Validate([FromHeader] string token)
         {
-            var result = await Supervisor.SafeExecuteAsync(async () =>
+            var result = Supervisor.SafeExecuteAsync(() =>
             {
                 var principal = TokenManager.ValidateToken(_configuration, token);
 
                 if (principal == null)
-                    throw new Exception("Validate failed");
+                    throw new Exception("Validation failed");
 
                 return new Identity
                 {

@@ -104,6 +104,41 @@ namespace BusinessService.Logic.Supervision
             return await SafeExecuteAsync(func);
         }
 
+        /// <summary> Execute function and return its result if everything goes right </summary>
+        /// <typeparam name="T">Type of returning result</typeparam>
+        /// <param name="token">JWT token to validate</param>
+        /// <param name="roles">Roles who have rights to execute function</param>
+        /// <param name="func">Function to execute</param>
+        /// <returns>Result of execution or ErrorMessage will have message </returns>
+        public static async Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, string[] roles, Func<T> func)
+        {
+            try
+            {
+                var incident = CheckToken(token, roles);
+
+                if (incident != null)
+                {
+                    return new ExecutionResult<T>
+                    {
+                        IsSucceed = false,
+                        Error = incident
+                    };
+                }
+            }
+            catch (Exception ee)
+            {
+                //TODO: log error
+                return new ExecutionResult<T>
+                {
+                    IsSucceed = false,
+                    Error = IncidentFactory.Create(IncidentsCodes.InternalError, ee.Message),
+                };
+            }
+
+            return await SafeExecuteAsync(func);
+        }
+
+
         /// <summary> Check JWT token</summary>
         /// <param name="token">Token to validate</param>
         /// <param name="roles">Roles who have rights to execute function</param>

@@ -22,10 +22,10 @@ namespace API.Controllers.Private
         [HttpPost("accounts")]
         public async Task<IActionResult> AddAccount([FromHeader] string token, [FromBody] Account account)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[]{ RoleNames.Admin }, () =>
-            {
-                return _accountRepository.SaveAsync(account);
-            });
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+             {
+                 return _accountRepository.SaveAsync(account);
+             });
 
             return new JsonResult(result);
         }
@@ -77,13 +77,12 @@ namespace API.Controllers.Private
         [HttpGet("roles")]
         public async Task<IActionResult> GetRoles([FromHeader] string token)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, async () =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 var lst = new List<string>();
-                var type = typeof(RoleNames); 
-                foreach (var p in type.GetProperties())
+                foreach (var property in typeof(RoleNames).GetProperties())
                 {
-                    lst.Add(p.GetValue(null, null)?.ToString());
+                    lst.Add(property.GetValue(null, null)?.ToString());
                 }
 
                 return lst;

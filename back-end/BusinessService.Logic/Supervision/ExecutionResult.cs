@@ -6,9 +6,9 @@ namespace BusinessService.Logic.Supervision
     public class ExecutionResult
     {
         /// <summary> Is execution succeed?</summary>
-        public bool IsSucceed { get; set; } = false;
+        public bool IsSucceed { get; set; }
         
-        public Incident Error { get; set; } = null;
+        public Incident Error { get; set; }
     }
 
     /// <summary> Result of the function execution</summary>
@@ -16,6 +16,6 @@ namespace BusinessService.Logic.Supervision
     public class ExecutionResult<T> : ExecutionResult
     {
         /// <summary>Result </summary>
-        public T Data { get; set; } = default;
+        public T Data { get; set; }
     }
 }

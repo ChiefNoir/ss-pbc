@@ -27,7 +27,7 @@ export class AuthService
 
   public async validate(token: string): Promise<RequestResult<Identity>>
   {
-    const headers = new HttpHeaders({'Token': token});
+    const headers = new HttpHeaders({Token: token});
 
     return this.httpClient
                .post<RequestResult<Identity>>

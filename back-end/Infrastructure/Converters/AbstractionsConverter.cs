@@ -81,7 +81,8 @@ namespace Infrastructure.Converters
                 ReleaseDate = project.ReleaseDate,
                 Version = project.Version,
                 CategoryId = project.Category.Id.Value,
-                ExternalUrls = new List<ProjectExternalUrl>()
+                ExternalUrls = new List<ProjectExternalUrl>(),
+                GalleryImages = new List<GalleryImage>()
             };
 
             foreach (var item in ToProjectExternalUrls(project.ExternalUrls))

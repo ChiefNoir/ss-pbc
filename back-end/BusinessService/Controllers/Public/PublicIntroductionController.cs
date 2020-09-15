@@ -26,6 +26,5 @@ namespace API.Controllers.Public
 
             return new JsonResult(result);
         }
-
     }
 }

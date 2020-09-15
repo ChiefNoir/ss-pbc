@@ -155,10 +155,9 @@ namespace BusinessService.Logic.Supervision
             {
                 principal = TokenManager.ValidateToken(_configuration, token);
             }
-            catch (SecurityTokenException stee)
+            catch (SecurityTokenException ee)
             {
-                // TODO: Need refactoring
-                return IncidentFactory.Create(IncidentsCodes.InvalidToken);
+                return IncidentFactory.Create(IncidentsCodes.InvalidToken); //, ee.Message);
             }
 
             if (principal == null || principal.Identity == null)

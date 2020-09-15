@@ -1,6 +1,7 @@
 import { Category } from 'src/app/model/Category';
 
-export class ProjectPreview {
+export class ProjectPreview
+{
   public id: number;
   public code: string;
   public displayName: string;

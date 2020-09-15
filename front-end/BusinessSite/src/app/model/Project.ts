@@ -2,7 +2,8 @@ import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { Category } from 'src/app/model/Category';
 import { GalleryImage } from 'src/app/model/GalleryImage';
 
-export class Project {
+export class Project
+{
   public id: number;
   public code: string;
   public displayName: string;
@@ -17,6 +18,8 @@ export class Project {
   public galleryImages: Array<GalleryImage>;
 
   public posterToUpload: File;
+
+  // [front-only]
   public posterPreview: string;
 
   public version: number;

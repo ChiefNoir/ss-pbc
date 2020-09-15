@@ -41,7 +41,7 @@ namespace API.Controllers.Private
             var poster = files.FirstOrDefault(x => x.Name == "introduction[posterToUpload]");
             if (poster != null)
             {
-                var filename = _fileRepository.Save(Request.Form.Files.FirstOrDefault());
+                var filename = _fileRepository.Save(poster);
                 introduction.PosterUrl = AppendUrlToName(filename);
             }
         }

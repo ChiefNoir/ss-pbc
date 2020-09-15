@@ -66,14 +66,14 @@ namespace API.Controllers.Private
             var poster = files.FirstOrDefault(x => x.Name == "project[posterToUpload]");
             if (poster != null)
             {
-                var filename = _fileRepository.Save(Request.Form.Files.FirstOrDefault());
+                var filename = _fileRepository.Save(poster);
                 project.PosterUrl = AppendUrlToName(filename);
             }
 
             var gallery = files.Where(x => x.Name.StartsWith("project[galleryImages]")).OrderBy(x => x.Name);
             foreach (var item in gallery)
             {
-                var filename = _fileRepository.Save(Request.Form.Files.FirstOrDefault());
+                var filename = _fileRepository.Save(item);
                 var index = ParseIndex(item.Name);
                 if (index == -1)
                     continue;

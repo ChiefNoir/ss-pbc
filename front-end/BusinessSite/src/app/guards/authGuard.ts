@@ -1,10 +1,10 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
+import { Injectable} from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Identity } from '../model/Identity';
 import { AuthService } from '../service/auth.service';
 import { StorageService } from '../service/storage.service';
-import { BehaviorSubject } from 'rxjs';
-import {Account} from 'src/app/model/Account';
-import { Identity } from '../model/Identity';
+import { Account } from 'src/app/model/Account';
 import { RequestResult } from '../model/RequestResult';
 
 @Injectable({
@@ -14,21 +14,18 @@ import { RequestResult } from '../model/RequestResult';
 export class AuthGuard implements CanActivate
 {
   private authService: AuthService;
-  private storageService: StorageService;
   private router: Router;
-
-  public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
+  private storageService: StorageService;
 
   public account: Account;
-
+  public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public validating$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  public constructor(authService: AuthService, storage: StorageService, router: Router)
+  public constructor(authService: AuthService, router: Router, storage: StorageService)
   {
     this.authService = authService;
-    this.storageService = storage;
     this.router = router;
+    this.storageService = storage;
 
     this.checkIsLogged();
   }
@@ -38,31 +35,19 @@ export class AuthGuard implements CanActivate
     this.validating$.next(true);
 
     const token = this.storageService.getToken();
-    
-
     if (!token)
     {
       this.logoutComplete();
+      return;
     }
-    else
-    {
-      await this.authService.validate(token)
-                      .then
-                      (
-                        ok => 
-                        {
-                          if (ok.isSucceed)
-    {
-      this.loginComplete(ok.data);
-    }
-    else
-    {
-      this.logoutComplete();
-    }
-                        },
-                        fail => {console.log(fail); this.logoutComplete();  }
-      )
-    }
+
+    await this.authService
+              .validate(token)
+              .then
+              (
+                win => this.handleIdentity(win),
+                fail => this.handleError(fail)
+              );
   }
 
   public canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<UrlTree | boolean> | UrlTree
@@ -106,6 +91,24 @@ export class AuthGuard implements CanActivate
     this.isLoggedIn$.next(false);
     this.validating$.next(false);
     this.storageService.removeToken();
+  }
+
+  private handleIdentity(result: RequestResult<Identity>): void
+  {
+    if (result.isSucceed)
+    {
+      this.loginComplete(result.data);
+    }
+    else
+    {
+      this.handleError(result.error);
+    }
+  }
+
+  private handleError(error: any): void
+  {
+    console.log(error);
+    this.logoutComplete();
   }
 
 }

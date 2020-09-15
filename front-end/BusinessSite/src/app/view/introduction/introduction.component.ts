@@ -1,13 +1,13 @@
+
+import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
-
-import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/service/data.service';
-import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Introduction } from 'src/app/model/Introduction';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
+import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { StaticNames } from 'src/app/common/StaticNames';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-introduction',
@@ -15,12 +15,15 @@ import { StaticNames } from 'src/app/common/StaticNames';
   styleUrls: ['./introduction.component.scss'],
 })
 
-export class IntroductionComponent implements OnInit {
+export class IntroductionComponent implements OnInit
+{
   private service: DataService;
 
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({text: StaticNames.LoadInProgress, type: MessageType.Spinner });
-  public constructor(service: DataService, titleService: Title) {
+
+  public constructor(service: DataService, titleService: Title)
+  {
     this.service = service;
 
     titleService.setTitle(environment.siteName);
@@ -41,15 +44,7 @@ export class IntroductionComponent implements OnInit {
     if (result.isSucceed)
     {
       this.introduction$.next(result.data);
-
-      if (!result.data)
-      {
-        this.message$.next({text: 'Nothing was found', type: MessageType.Spinner  });
-      }
-      else
-      {
-        this.message$.next(null);
-      }
+      this.message$.next(null);
     }
     else
     {

@@ -1,4 +1,4 @@
-<div fxFlex="100%">
+
   <div *ngIf="information$ | async as introduction; else loading">
 
     <div fxLayout="row" class="container">
@@ -26,7 +26,7 @@
     
 
   </div>
-</div>
+
 
 <ng-template #loading>
   <div *ngIf="message$ | async as msg">

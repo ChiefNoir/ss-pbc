@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { AuthGuard } from './guards/authGuard';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',

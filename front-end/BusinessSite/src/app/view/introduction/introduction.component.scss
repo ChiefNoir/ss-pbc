@@ -1,13 +1,16 @@
 @import 'variables';
 @import 'mixins';
 
-.container {
+.container
+{
     @include flat-shadow($color-core);
     background-color: $color-control;
   
     display: inline-block;
     position: relative;
     min-height: 600px;
+
+    
   }
   
   .headline {

@@ -1,4 +1,4 @@
-<div fxFlex="100%">
+
   <div *ngIf="introduction$ | async as introduction; else loading">
 
     <div fxLayout="row" class="container">
@@ -10,7 +10,7 @@
         <div class="description" [innerHtml]="introduction.content"></div>
     
         <div *ngIf="introduction.externalUrls.length > 0">
-          <h1 class="headline">External urls</h1>
+          <h1 class="headline">Other places</h1>
           <mat-divider></mat-divider>
     
           <div class="extension"  fxLayout="row" fxLayoutAlign="space-evenly center">
@@ -20,9 +20,8 @@
                     [externalUrl]="item">
             </app-button-contact>
           </div>
-
-
         </div>
+
       </div>
     
       <img class="image" 
@@ -30,15 +29,11 @@
            fxFlex="30" 
            src="{{(introduction.posterUrl || '\\assets\\images\\placeholder-tall.png')}}"/>
     </div>
-    
-
   </div>
-</div>
+
 
 <ng-template #loading>
-  
   <div *ngIf="message$ | async as msg">
     <app-message [message]="msg"></app-message>
   </div>
-
 </ng-template>

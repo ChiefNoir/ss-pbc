@@ -2,20 +2,20 @@
 insert into category(code, display_name, is_everything)
 	values ('all', 'Everything', true);
 
-insert into category(code, display_name, is_everything)
-	values ('vg', 'Games', true);
+insert into category(code, display_name)
+	values ('vg', 'Games');
 
-insert into category(code, display_name, is_everything)
-	values ('ma', 'Comics', true);
+insert into category(code, display_name)
+	values ('ma', 'Comics');
 
-insert into category(code, display_name, is_everything)
-	values ('lit', 'Stories', true);
+insert into category(code, display_name)
+	values ('lit', 'Stories');
 
-insert into category(code, display_name, is_everything)
-	values ('bg', 'Tabletop', true);
+insert into category(code, display_name)
+	values ('bg', 'Tabletop');
 
-insert into category(code, display_name, is_everything)
-	values ('s', 'Software', true);
+insert into category(code, display_name)
+	values ('s', 'Software');
 -- --------------------------------------------------------------
 
 -- Introduction

@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
     <NeutralLanguage>en</NeutralLanguage>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

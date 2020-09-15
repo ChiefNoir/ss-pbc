@@ -9,6 +9,7 @@
     <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
     <Company>Fireplace of Despair</Company>
     <Authors>Stanislav "Chief" Shevtsov</Authors>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

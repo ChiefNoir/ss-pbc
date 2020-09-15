@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { RequestResult } from '../model/RequestResult';
-import { Project } from '../model/Project';
-import { Category } from '../model/Category';
 import { Account } from '../model/Account';
-import { ProjectPreview } from '../model/ProjectPreview';
-import { Introduction } from '../model/Introduction';
+import { Category } from '../model/Category';
 import { Information } from '../model/Information';
+import { Introduction } from '../model/Introduction';
+import { Project } from '../model/Project';
+import { ProjectPreview } from '../model/ProjectPreview';
+import { RequestResult } from '../model/RequestResult';
 
 import { StorageService } from './storage.service';
 
@@ -78,10 +78,7 @@ export class DataService
 
   public updateIntroduction(introduction: Introduction): Promise<RequestResult<Introduction>>
   {
-    const headers = new HttpHeaders
-    ({
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken()});
 
     const formData = new FormData();
     this.fillFormData(formData, 'introduction', introduction);
@@ -98,11 +95,7 @@ export class DataService
 
   public saveCategory(category: Category): Promise<RequestResult<Category>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken()});
 
     return this.httpClient
                .post<RequestResult<Category>>
@@ -116,11 +109,7 @@ export class DataService
 
   public deleteCategory(category: Category): Promise<RequestResult<any>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     return this.httpClient
                .request<RequestResult<any>>
@@ -134,11 +123,7 @@ export class DataService
 
   public countAccount(): Promise<RequestResult<number>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     return this.httpClient
                .get<RequestResult<number>>
@@ -151,11 +136,7 @@ export class DataService
 
   public getAccount(id: number): Promise<RequestResult<Account>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     return this.httpClient
                .get<RequestResult<Account>>
@@ -168,11 +149,7 @@ export class DataService
 
   public getRoles(): Promise<RequestResult<string[]>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     return this.httpClient
                .get<RequestResult<string[]>>
@@ -185,11 +162,7 @@ export class DataService
 
   public getAccounts(start: number, length: number): Promise<RequestResult<Account[]>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     return this.httpClient
                .get<RequestResult<Account[]>>
@@ -202,11 +175,7 @@ export class DataService
 
   private createAccount(account: Account): Promise<RequestResult<Account>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     return this.httpClient
                .post<RequestResult<Account>>
@@ -220,11 +189,7 @@ export class DataService
 
   private updateAccount(account: Account): Promise<RequestResult<Account>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     return this.httpClient
                .request<RequestResult<Account>>
@@ -238,11 +203,7 @@ export class DataService
 
   public deleteAccount(account: Account): Promise<RequestResult<any>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     return this.httpClient
                .request<RequestResult<boolean>>
@@ -256,11 +217,7 @@ export class DataService
 
   public deleteProject(project: Project): Promise<RequestResult<any>>
   {
-    const headers = new HttpHeaders
-    ({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     return this.httpClient
                .request<RequestResult<boolean>>
@@ -274,10 +231,7 @@ export class DataService
 
   private updateProject(project: Project): Promise<RequestResult<Project>>
   {
-    const headers = new HttpHeaders
-    ({
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     const formData = new FormData();
     this.fillFormData(formData, 'project', project);
@@ -294,10 +248,7 @@ export class DataService
 
   private createProject(project: Project): Promise<RequestResult<Project>>
   {
-    const headers = new HttpHeaders
-    ({
-      Token: this.storage.getToken()
-    });
+    const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     const formData = new FormData();
     this.fillFormData(formData, 'project', project);
@@ -331,21 +282,21 @@ export class DataService
   public getCategories(): Promise<RequestResult<Array<Category>>>
   {
     return this.httpClient
-              .get<RequestResult<Array<Category>>>
-              (
-                this.endpoint + 'categories'
-              )
-              .toPromise();
+               .get<RequestResult<Array<Category>>>
+               (
+                 this.endpoint + 'categories'
+               )
+               .toPromise();
   }
 
   public getEverythingCategory(): Promise<RequestResult<Category>>
   {
     return this.httpClient
-                .get<RequestResult<Category>>
-                (
-                  this.endpoint + 'categories/everything'
-                )
-                .toPromise();
+               .get<RequestResult<Category>>
+               (
+                 this.endpoint + 'categories/everything'
+               )
+               .toPromise();
   }
 
   public getCategory(id: number): Promise<RequestResult<Category>>
@@ -386,7 +337,8 @@ export class DataService
 
 // --------------------------------------------------------------------
 // Helpers methods
-  // Usage: this.fillFormData(formData, 'project', project);
+
+// Usage: this.fillFormData(formData, 'project', project);
   private fillFormData(form: FormData, namespace: string, item: any): void
   {
     for (const property in item)
@@ -421,7 +373,7 @@ export class DataService
       }
     }
   }
-
-//
+// [END OF] Helpers methods
+// --------------------------------------------------------------------
 
 }

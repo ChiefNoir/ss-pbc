@@ -150,7 +150,7 @@ namespace BusinessService.Logic.Supervision
                 return IncidentFactory.Create(IncidentsCodes.AuthenticationNotProvided);
             }
 
-            IPrincipal principal = null;
+            IPrincipal principal;
             try
             {
                 principal = TokenManager.ValidateToken(_configuration, token);

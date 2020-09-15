@@ -36,7 +36,7 @@ namespace Infrastructure
             modelBuilder.Entity<IntroductionExternalUrl>().HasKey(sc => new { sc.IntroductionId, sc.ExternalUrlId });
         }
 
-        private void MigrateDatabase(IDbConnection connection)
+        private static void MigrateDatabase(IDbConnection connection)
         {
             try
             {

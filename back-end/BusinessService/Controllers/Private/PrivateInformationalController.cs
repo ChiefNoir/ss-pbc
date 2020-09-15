@@ -1,13 +1,10 @@
-﻿using Abstractions.IRepository;
-using Abstractions.Model;
-using Abstractions.Model.System;
+﻿using Abstractions.Model;
 using API.Model;
-using API.Queries;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Security;
-using System;
+using Security.Extensions;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -17,26 +14,24 @@ namespace API.Controllers.Private
     [Route("api/v1/")]
     public class PrivateInformationalController : ControllerBase
     {
-        private readonly IAccountRepository _accountRepository;
         private readonly IConfiguration _config;
 
-        public PrivateInformationalController(IAccountRepository accountRepository, IConfiguration config)
+        public PrivateInformationalController(IConfiguration config)
         {
-            _accountRepository = accountRepository;
             _config = config;
         }
 
         [HttpGet("information")]
         public async Task<IActionResult> GetIntroduction([FromHeader] string token)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin, RoleNames.Demo }, async() =>
+            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin, RoleNames.Demo }, async () =>
             {
                 var claims = TokenManager.ValidateToken(_config, token);
 
                 return new Information
                 {
                     Login = claims.Identity.Name,
-                    Role = "TODO",
+                    Role = string.Join(';', claims.GetRoles()),
                     APIVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
                 };
             });

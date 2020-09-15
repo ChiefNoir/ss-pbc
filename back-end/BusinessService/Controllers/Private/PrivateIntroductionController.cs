@@ -13,15 +13,15 @@ namespace API.Controllers.Private
     [Route("api/v1/")]
     public class PrivateIntroductionController : ControllerBase
     {
-        private readonly IIntroductionRepository _introductionRepository;
-        private readonly IFileRepository _fileRepository;
         private readonly IConfiguration _configuration;
+        private readonly IFileRepository _fileRepository;
+        private readonly IIntroductionRepository _introductionRepository;
 
-        public PrivateIntroductionController(IIntroductionRepository introductionRepository, IFileRepository fileRepository, IConfiguration configuration)
+        public PrivateIntroductionController(IFileRepository fileRepository, IConfiguration configuration, IIntroductionRepository introductionRepository)
         {
-            _introductionRepository = introductionRepository;
-            _fileRepository = fileRepository;
             _configuration = configuration;
+            _fileRepository = fileRepository;
+            _introductionRepository = introductionRepository;
         }
 
         [HttpPatch("introduction"), DisableRequestSizeLimit]
@@ -52,6 +52,5 @@ namespace API.Controllers.Private
                   + "/" + _configuration.GetSection("Location:FileStorage").Get<string>()
                   + "/" + name;
         }
-
     }
 }

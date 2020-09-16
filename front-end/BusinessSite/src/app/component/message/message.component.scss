@@ -1,4 +1,4 @@
-@import 'variables';
+@import "variables";
 
 .container {
   background-color: $table-row;
@@ -15,53 +15,81 @@
     font-weight: bold;
   }
 
-  .loading
-  {
+  .loading {
     align-items: center;
 
     img {
-
       width: 120px;
       height: 120px;
 
-      -webkit-animation:spin 11s linear infinite;
-      -moz-animation:spin 11s linear infinite;
-      animation:spin 11s linear infinite;
-      
-      @keyframes spin 
-      {
-        0% { transform: rotate(0deg) }
-        
-        1% { transform: rotate(45deg)}
-        10% {transform: rotate(45deg)}
-        
-        11% {transform: rotate(90deg)}
-        24% {transform: rotate(90deg)}
+      -webkit-animation: spin 11s linear infinite;
+      -moz-animation: spin 11s linear infinite;
+      animation: spin 11s linear infinite;
 
-        25% {transform: rotate(135deg)}
-        36% {transform: rotate(135deg)}
-        
-        37% {transform: rotate(180deg)}
-        48% {transform: rotate(180deg)}
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
 
-        49% {transform: rotate(225deg)}
-        60% {transform: rotate(225deg)}
+        1% {
+          transform: rotate(45deg);
+        }
+        10% {
+          transform: rotate(45deg);
+        }
 
-        61% {transform: rotate(270deg)}
-        72% {transform: rotate(270deg)}
+        11% {
+          transform: rotate(90deg);
+        }
+        24% {
+          transform: rotate(90deg);
+        }
 
-        73% {transform: rotate(315deg)}
-        84% {transform: rotate(315deg)}
+        25% {
+          transform: rotate(135deg);
+        }
+        36% {
+          transform: rotate(135deg);
+        }
 
-        85% {transform: rotate(360deg)}
-        100% {transform: rotate(360deg)}
+        37% {
+          transform: rotate(180deg);
+        }
+        48% {
+          transform: rotate(180deg);
+        }
+
+        49% {
+          transform: rotate(225deg);
+        }
+        60% {
+          transform: rotate(225deg);
+        }
+
+        61% {
+          transform: rotate(270deg);
+        }
+        72% {
+          transform: rotate(270deg);
+        }
+
+        73% {
+          transform: rotate(315deg);
+        }
+        84% {
+          transform: rotate(315deg);
+        }
+
+        85% {
+          transform: rotate(360deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
-    } 
+    }
   }
-
-
 }
-
 
 .mat-divider {
   border-top-width: 2px;
@@ -69,4 +97,3 @@
   margin-left: 0px;
   margin-right: 0px;
 }
-

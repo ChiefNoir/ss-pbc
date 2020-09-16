@@ -1,20 +1,26 @@
 @import "variables";
 @import "mixins";
+@import "animations";
 
 .header {
   padding-bottom: 15px;  
   padding-top: 15px;
   text-align: center;
-}
 
-.header a {
-  color: $color-text;
-  font-family: $font-header;
-  font-size: 360%;
-  font-weight: bold;
-  line-height: 1;
-  text-decoration: none;
-  text-transform: uppercase;
+  &:hover
+  {
+    animation: delayed-onetime-flicker 2s linear 2s ;
+  }
 
-  @include text-reto-shadow($color-shadow-text-light);
+  a {
+    color: $color-text;
+    font-family: $font-header;
+    font-size: 70px;
+    font-weight: bold;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: uppercase;
+  
+    @include text-reto-shadow($color-shadow-text-light);
+  }
 }

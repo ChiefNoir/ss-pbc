@@ -10,5 +10,5 @@ import { environment } from 'src/environments/environment';
 export class FooterComponent
 {
   public currentYear: number = new Date().getFullYear();
-  public copyright  = environment.footerCopyright;
+  public copyright: string  = environment.footerCopyright;
 }

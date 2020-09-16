@@ -8,6 +8,7 @@ export const environment =
   apiEndpoint: 'https://localhost:44386/api/v1/',
   authEndpoint: 'https://localhost:44386/api/v1/',
   siteName: 'Fireplace Of Despair (dev)',
+  footerCopyright: 'Chief',
   paging:
   {
     maxUsers: 3,

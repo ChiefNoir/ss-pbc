@@ -1,12 +1,13 @@
 export const environment =
 {
-  production: false,
+  production: true,
   apiEndpoint: '',
   authEndpoint: '',
   siteName: 'Fireplace Of Despair',
+  footerCopyright: 'Chief',
   paging:
   {
-    maxUsers: 10,
-    maxProjects: 5
+    maxUsers: 3,
+    maxProjects: 3
   }
 };

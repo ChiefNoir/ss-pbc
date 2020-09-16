@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
@@ -107,6 +108,9 @@ namespace Infrastructure.Repository
 
         private void Merge(DataModel.Project dbProject, Project project)
         {
+            //TODO: change it later
+            dbProject.Category = _context.Categories.FirstOrDefault(x => x.Id == project.Category.Id);
+
             dbProject.CategoryId = project.Category.Id.Value;
             dbProject.Code = project.Code;
             dbProject.Description = project.Description;

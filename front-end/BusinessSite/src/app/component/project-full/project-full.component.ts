@@ -8,7 +8,8 @@ import { Project } from 'src/app/model/Project';
   styleUrls: ['./project-full.component.scss'],
 })
 
-export class ProjectFullComponent {
+export class ProjectFullComponent
+{
   @Input()
   public project: Project;
 }

@@ -97,75 +97,40 @@
     color: $color-control-active;
   } 
 }
-
-.revolver {
-  height: 80px;
+.loading
+{
   width: 80px;
-  margin-left: 15px;
+  height: 80px;
 
-  border-radius: 50px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  background: $color-text;
-  transform: rotate(30deg);
-  animation: rotate 6.5s cubic-bezier(0.74, 0.61, 0, 1.33) infinite;
-  &__part {
-    height: 40px;
-    width: 30px;
-    border-radius: 5px;
-    transform-origin: bottom center;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-  }
-  &__part:after,
-  &__part:before {
-    content: " ";
-    display: block;
-    background: $color-core;
-    height: 26px;
-    width: 26px;
-    border-radius: 13px;
-    margin-top: -18px;
-  }
-  &__part:before {
-    position: absolute;
-    height: 12px;
-    width: 12px;
-    margin-top: 11px;
-    right: -5px;
-    background: $color-core;
-    border: 2px solid $color-core;
-  }
-}
+  animation:spin 11s linear infinite;
+      
+      @keyframes spin 
+      {
+        0% { transform: rotate(0deg) }
+        
+        1% { transform: rotate(45deg)}
+        10% {transform: rotate(45deg)}
+        
+        11% {transform: rotate(90deg)}
+        24% {transform: rotate(90deg)}
 
-@for $i from 1 through 6 {
-  section:nth-of-type(#{$i}) {
-    transform: rotateZ(calc(60deg * #{$i}));
-  }
-}
+        25% {transform: rotate(135deg)}
+        36% {transform: rotate(135deg)}
+        
+        37% {transform: rotate(180deg)}
+        48% {transform: rotate(180deg)}
 
-@keyframes rotate {
-  0% {
-    transform: rotate(30deg);
-  }
-  16% {
-    transform: rotate(90deg);
-  }
-  32% {
-    transform: rotate(150deg);
-  }
-  48% {
-    transform: rotate(210deg);
-  }
-  64% {
-    transform: rotate(270deg);
-  }
-  82% {
-    transform: rotate(330deg);
-  }
-  100% {
-    transform: rotate(390deg);
-  }
+        49% {transform: rotate(225deg)}
+        60% {transform: rotate(225deg)}
+
+        61% {transform: rotate(270deg)}
+        72% {transform: rotate(270deg)}
+
+        73% {transform: rotate(315deg)}
+        84% {transform: rotate(315deg)}
+
+        85% {transform: rotate(360deg)}
+        100% {transform: rotate(360deg)}
+      }
+    
 }

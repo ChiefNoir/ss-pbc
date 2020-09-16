@@ -9,20 +9,13 @@
       <a routerLink="/projects/" routerLinkActive="active">
         Projects
       </a>
-
+      
       <ng-container *ngIf="authGuard.validating$ | async; else adminLink">
-          <div class="revolver">
-            <section class="revolver__part"></section>
-            <section class="revolver__part"></section>
-            <section class="revolver__part"></section>
-            <section class="revolver__part"></section>
-            <section class="revolver__part"></section>
-            <section class="revolver__part"></section>
-          </div>
+        <img class="loading" src="\assets\images\revolver.png" /> 
       </ng-container>
       <ng-template #adminLink>
         <ng-container *ngIf="authGuard.isLoggedIn$ | async; else login">
-          <a [routerLink]="['/admin/']" routerLinkActive="active">Admin</a>
+          <a routerLink="/admin/" routerLinkActive="active">Admin</a>
         </ng-container>
         <ng-template #login>
           <a routerLink="/login/" routerLinkActive="active">Login</a>

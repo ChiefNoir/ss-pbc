@@ -42,3 +42,64 @@
     }
   }
   
+  @keyframes neonblink {
+    78% {
+      color: inherit;
+      text-shadow: inherit;
+    }
+    79% {
+      color: $color-neon-blink;
+    }
+    80% {
+      text-shadow: none;
+    }
+    81% {
+      color: inherit;
+      text-shadow: inherit;
+    }
+    82% {
+      color: $color-neon-blink;
+      text-shadow: none;
+    }
+    83% {
+      color: inherit;
+      text-shadow: inherit;
+    }
+    92% {
+      color: $color-neon-blink;
+      text-shadow: none;
+    }
+    93% {
+      color: inherit;
+      text-shadow: inherit;
+    }
+  }
+  
+  @keyframes spin-with-click
+      {
+        0% { transform: rotate(0deg) }
+        
+        1% { transform: rotate(45deg)}
+        10% {transform: rotate(45deg)}
+        
+        11% {transform: rotate(90deg)}
+        24% {transform: rotate(90deg)}
+
+        25% {transform: rotate(135deg)}
+        36% {transform: rotate(135deg)}
+        
+        37% {transform: rotate(180deg)}
+        48% {transform: rotate(180deg)}
+
+        49% {transform: rotate(225deg)}
+        60% {transform: rotate(225deg)}
+
+        61% {transform: rotate(270deg)}
+        72% {transform: rotate(270deg)}
+
+        73% {transform: rotate(315deg)}
+        84% {transform: rotate(315deg)}
+
+        85% {transform: rotate(360deg)}
+        100% {transform: rotate(360deg)}
+      }

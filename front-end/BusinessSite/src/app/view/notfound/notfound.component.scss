@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "animations";
 
 .container {
   background-color: $color-content;
@@ -21,43 +22,10 @@
 
 .neon .blink3s {
   display: inline-block;
-  animation: blink linear infinite 5s;
+  animation: neonblink linear infinite 5s;
 }
 
 .neon .blink5s {
   display: inline-block;
-  animation: blink linear infinite 3s;
-}
-
-@keyframes blink {
-  78% {
-    color: inherit;
-    text-shadow: inherit;
-  }
-  79% {
-    color: $color-neon-blink;
-  }
-  80% {
-    text-shadow: none;
-  }
-  81% {
-    color: inherit;
-    text-shadow: inherit;
-  }
-  82% {
-    color: $color-neon-blink;
-    text-shadow: none;
-  }
-  83% {
-    color: inherit;
-    text-shadow: inherit;
-  }
-  92% {
-    color: $color-neon-blink;
-    text-shadow: none;
-  }
-  93% {
-    color: inherit;
-    text-shadow: inherit;
-  }
+  animation: neonblink linear infinite 3s;
 }

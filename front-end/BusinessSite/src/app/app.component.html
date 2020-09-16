@@ -34,6 +34,14 @@
     <div fxLayout="column" fxLayoutAlign="none">
       <a routerLink="/"> Home </a>
       <a routerLink="/projects/"> Projects </a>
+
+      <ng-container *ngIf="authGuard.isLoggedIn$ | async; else sideLogin">
+        <a routerLink="/admin/" routerLinkActive="active">Admin</a>
+      </ng-container>
+      <ng-template #sideLogin>
+        <a routerLink="/login/" routerLinkActive="active">Login</a>
+      </ng-template>
+
     </div>
   </mat-drawer>
   

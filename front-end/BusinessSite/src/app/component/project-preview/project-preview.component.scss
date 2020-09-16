@@ -1,73 +1,65 @@
 @import "variables";
 @import "mixins";
 
-.container {
+.container
+{
+  position: relative;
   margin-bottom: 2%;
   @include flat-shadow($color-core);
 
-  display: inline-block;
-  position: relative;
-}
-
-.image-gray {
-  -webkit-filter: grayscale(100%);
-   -moz-filter: grayscale(100%);
-   filter: grayscale(100%);
-   transition: all 0.5s ease;
-
-  &:hover
+  .poster
   {
-    -webkit-filter: grayscale(40%);
-   -moz-filter: grayscale(40%);
-   filter: grayscale(40%);
+    border: 5px solid $color-core;
+    box-sizing: border-box;
+    height: 370px;
+    left: 0px;
+    object-fit: cover;
+    object-position: 100% 0%;
+    top: 0px;
+    width: 100%;
   }
-}
+  .grayscale-filter
+  {
+    filter: grayscale(100%);
+    transition: all 0.5s ease;
+  
+    &:hover
+    {
+      filter: grayscale(40%);
+    }
+  }
+  .content
+  {
+    bottom: 0%;
+    color: $color-text;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    position: absolute;
+    width: 100%;
+    background-color: $color-container-transparent;
+  }
 
-.image {
-  object-fit: cover;
-  object-position: 100% 0%;
-  width: 100%;
-  height: 370px;
+  .headline
+  {
+    color: $color-text;
+    font-size: 25px;
+    font-size: x-large;
+    font-weight: 500;
+    margin-left: 20px;
+  
+    &:hover
+    {
+      color: $color-text-highlighted;
+    }
+  }
 
-  left: 0px;
-  top: 0px;
-
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  border: 5px solid $color-core;
-}
-
-.content {
-  background-color: $color-container-transparent;
-  color: $color-text;
-
-  padding-top: 10px;
-  padding-bottom: 10px;
-  width: 100%;
-
-  position: absolute;
-  bottom: 0%;
-}
-
-.headline {
-  margin-left: 20px;
-  font-size: x-large;
-  font-weight: 500;
-
-  color: $color-text;
-  font-size: 25px;
-}
-
-.headline:hover {
-  color: $color-text-highlighted;
-}
-
-.description {
-  margin-top: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-  font-size: large;
-  overflow: hidden;
-  max-height: 300px;
+  .description
+  {
+    font-size: large;
+    margin-left: 20px;
+    margin-right: 20px;
+    max-height: 300px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
 }

@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-
 import { Project } from 'src/app/model/Project';
 
 @Component({
@@ -8,11 +7,13 @@ import { Project } from 'src/app/model/Project';
   styleUrls: ['./project-preview.component.scss'],
 })
 
-export class ProjectPreviewComponent {
+export class ProjectPreviewComponent
+{
   @Input()
   public project: Project;
 
-  public createRouterLink(): string {
+  public createRouterLink(): string
+  {
     return '/project/' + this.project.code;
   }
 }

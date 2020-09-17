@@ -114,11 +114,8 @@ export class ProjectsListComponent implements OnDestroy, OnInit
                 )
                 .then
                 (
-                  response =>
-                  {
-                    this.handleProjects(response);
-                  },
-                  reject => this.handleError(reject)
+                  win => this.handleProjects(win),
+                  fail => this.handleError(fail)
                 );
   }
 

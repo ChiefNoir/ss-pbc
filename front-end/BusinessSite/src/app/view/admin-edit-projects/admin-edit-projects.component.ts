@@ -12,6 +12,7 @@ import { Paging } from 'src/app/model/PagingInfo';
 import { Incident, RequestResult } from 'src/app/model/RequestResult';
 import { AuthGuard } from 'src/app/guards/authGuard';
 import { Router } from '@angular/router';
+import { Category } from 'src/app/model/Category';
 
 @Component({
   selector: 'app-admin-edit-projects',
@@ -58,32 +59,25 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
     this.paging$.unsubscribe();
   }
 
-  public showProject(projectCode: any): void
+  private handleCategory(result: RequestResult<Category>): void
   {
-    const dialogRef = this.dialog.open
-    (
-      DialogEditProjectComponent,
-      {width: '90%', minHeight: '80%', data: projectCode}
-    );
-
-    dialogRef.afterClosed()
-             .subscribe
-             (
-               (result) =>
-               {
-                 this.changePage(this.paging$.value.getCurrentPage());
-                }
-            );
-  }
-
-  public skipPage(amount: number): void
-  {
-    this.changePage(this.paging$.value.getCurrentPage() + amount);
-  }
-
-  public changePage(page: number): void
-  {
-    this.paging$.next(new Paging(page, environment.paging.maxProjects, this.paging$.value.getMaxItems(), this.paging$.value.getSearchParam()));
+    if (result.isSucceed)
+    {
+      this.paging$.next
+      (
+        new Paging
+        (
+          0,
+          environment.paging.maxProjects,
+          result.data.totalProjects,
+          result.data.code
+        )
+      );
+    }
+    else
+    {
+      this.handleError(result.error);
+    }
   }
 
   private refreshProjects(paging: Paging<string>): void
@@ -96,44 +90,67 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
       this.service.getEverythingCategory()
                   .then
                   (
-                    response =>
-                    {
-                      if (response.isSucceed)
-                      {
-                        this.paging$.next(new Paging(0, environment.paging.maxProjects, response.data.totalProjects, response.data.code));
-                      }
-                      else
-                      {
-                        this.handleIncident(response.error);
-                      }
-                    },
-                    reject => this.handleError(reject)
+                    win => this.handleCategory(win),
+                    fail => this.handleError(fail)
                   );
+
+      return;
     }
-    else
-    {
-      this.service.getProjectsPreview
+
+    this.service.getProjectsPreview
       (
-        0,
+        paging.getCurrentPage() * environment.paging.maxProjects,
         environment.paging.maxProjects,
         paging.getSearchParam()
       )
-        .then
+      .then
         (
-          response =>
-          {
-            this.message$.next(null);
-            this.handleProjects(response);
-          },
-          reject =>  this.handleError(reject)
+          win => this.handleProjects(win),
+          fail =>  this.handleError(fail)
         );
-    }
+
+  }
+
+  public showProject(projectCode: any): void
+  {
+    const dialogRef = this.dialog.open
+    (
+      DialogEditProjectComponent,
+      {width: '90%', minHeight: '90%', data: projectCode}
+    );
+
+    dialogRef.afterClosed()
+             .toPromise()
+             .then
+             (
+               () => this.changePage(this.paging$.value.getCurrentPage())
+             );
+  }
+
+  public skipPage(amount: number): void
+  {
+    this.changePage(this.paging$.value.getCurrentPage() + amount);
+  }
+
+  public changePage(page: number): void
+  {
+    this.paging$.next
+    (
+      new Paging
+      (
+        page,
+        environment.paging.maxProjects,
+        this.paging$.value.getMaxItems(),
+        this.paging$.value.getSearchParam()
+      )
+    );
   }
 
   private handleProjects(result: RequestResult<ProjectPreview[]>): void
   {
     if (result.isSucceed)
     {
+      this.message$.next(null);
       this.projects$.next(result.data);
     }
     else
@@ -144,7 +161,8 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
 
   private handleIncident(error: Incident): void
   {
-    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+    console.log(error);
+    this.message$.next({text: error.detail, type: MessageType.Error });
   }
 
   private handleError(error: any): void

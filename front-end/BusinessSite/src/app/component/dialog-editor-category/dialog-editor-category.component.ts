@@ -15,16 +15,17 @@ import { MessageDescription, MessageType } from '../message/message.component';
 
 export class DialogEditorCategoryComponent implements OnInit
 {
-  public category$: BehaviorSubject<Category> = new BehaviorSubject<Category>(null);
-  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
-  public systemCategoryMessage: MessageDescription = {text: 'You can\'t delete system category', type: MessageType.Info };
-  public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Category properties');
-  public staticNames: StaticNames = new StaticNames();
-
   private categoryId: number;
   private service: DataService;
   private dialog: MatDialogRef<DialogEditorCategoryComponent>;
+
+  public category$: BehaviorSubject<Category> = new BehaviorSubject<Category>(null);
+  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
+  public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Category properties');
+  public staticNames: StaticNames = new StaticNames();
+
+  public systemCategoryMessage: MessageDescription = {text: this.staticNames.CategorySystemWarning, type: MessageType.Info };
 
   constructor(service: DataService, dialogRef: MatDialogRef<DialogEditorCategoryComponent>, @Inject(MAT_DIALOG_DATA) categoryId: number)
   {
@@ -55,7 +56,7 @@ export class DialogEditorCategoryComponent implements OnInit
   public save(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: 'Saving in progress', type: MessageType.Spinner  });
+    this.message$.next({text: this.staticNames.SaveInProgress, type: MessageType.Spinner  });
 
     this.service.saveCategory(this.category$.value)
                 .then
@@ -71,7 +72,7 @@ export class DialogEditorCategoryComponent implements OnInit
 
   public delete(): void
   {
-    this.message$.next({text: 'Deleting in progress', type: MessageType.Spinner  });
+    this.message$.next({text: this.staticNames.DeleteInProgress, type: MessageType.Spinner  });
     this.disableInput$.next(true);
 
     this.service.deleteCategory(this.category$.value)
@@ -105,14 +106,17 @@ export class DialogEditorCategoryComponent implements OnInit
 
   private handleIncident(error: Incident): void
   {
+    console.log(error);
+
     this.disableInput$.next(false);
-    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+    this.message$.next({text: error.detail, type: MessageType.Error });
   }
 
   private handleError(error: any): void
   {
-    this.disableInput$.next(false);
     console.log(error);
+
+    this.disableInput$.next(false);
 
     if (error.name !== undefined)
     {

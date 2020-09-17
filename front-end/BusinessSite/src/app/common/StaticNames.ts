@@ -51,6 +51,7 @@ export class StaticNames
  public CategoryType = 'Type';
  public CategoryTypeGeneric = 'Generic';
  public CategoryTypeSystem = 'System';
+ public CategorySystemWarning = 'You can\'t delete system category';
 
 
  public Project = 'Project';

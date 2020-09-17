@@ -40,4 +40,9 @@ export class StaticNames
 
   public static AdminInformation = 'System information';
   public static AdminControls = 'Controls';
+
+  public static ProjectDescription = 'Description';
+  public static ProjectGallery = 'Gallery';
+  public static ProjectReleaseDate = 'Release date';
+  public static ProjectReleaseSoon = 'soon';
 }

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { StaticNames } from 'src/app/common/StaticNames';
 
 import { Project } from 'src/app/model/Project';
 
@@ -12,4 +13,6 @@ export class ProjectFullComponent
 {
   @Input()
   public project: Project;
+
+  public staticNames: StaticNames = StaticNames;
 }

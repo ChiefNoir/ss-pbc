@@ -18,17 +18,17 @@
     <div class="right-panel" fxFlex>
       <div>
         <h1 class="title">{{ project.displayName }}</h1>
-        <div class="subtitle">{{ project.category.displayName }} | Release date: {{ project.releaseDate || 'Soon' }}</div>
+        <div class="subtitle">{{ project.category.displayName }} | {{ staticNames.ProjectReleaseDate }}: {{ project.releaseDate || staticNames.ProjectReleaseSoon }}</div>
         <mat-divider></mat-divider>
       </div>
 
       <div class="content">
-        <h1 class="title">Description</h1>    
+        <h1 class="title">{{ staticNames.ProjectDescription }}</h1>    
         <div [innerHtml]="project.description"></div>
       </div>
 
       <div class="content" *ngIf="project.galleryImages.length > 0">
-        <h1 class="title">Gallery</h1>        
+        <h1 class="title">{{ staticNames.ProjectGallery }}</h1>        
         <app-carousel [images]="project.galleryImages"></app-carousel>
       </div>
 

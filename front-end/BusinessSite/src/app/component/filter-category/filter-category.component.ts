@@ -22,17 +22,17 @@ export class FilterCategoryComponent implements OnChanges
 
   public ngOnChanges(changes: SimpleChanges): void
   {
-    if (changes.categories.currentValue)
-    {
-      changes.categories
-             .currentValue.forEach
-             (
-               x => { x.url = this.router.createUrlTree(['/projects', x.code]).toString(); }
-             );
+    if (!changes.categories.currentValue) { return;}
 
-      this.categories = changes.categories.currentValue
-                                          .filter(x => x.totalProjects > 0)
-                                          .sort((a, b) => b.totalProjects - a.totalProjects);
-    }
+    changes.categories
+           .currentValue
+           .forEach
+           (
+             x => { x.url = this.router.createUrlTree(['/projects', x.code]).toString(); }
+           );
+
+    this.categories = changes.categories.currentValue
+                                        .filter(x => x.totalProjects > 0)
+                                        .sort((a, b) => b.totalProjects - a.totalProjects);
   }
 }

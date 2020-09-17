@@ -82,7 +82,7 @@ export class AdminLoginComponent implements OnInit
   {
     if (control.hasError('required'))
     {
-      return 'This field cannot be empty.';
+      return StaticNames.ErrorFieldCannotBeEmpty;
     }
   }
 

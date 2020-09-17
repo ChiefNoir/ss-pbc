@@ -30,4 +30,6 @@ export class StaticNames
 
   public static Login = 'Login';
   public static Password = 'Password';
+
+  public static ErrorFieldCannotBeEmpty = 'This field cannot be empty.';
 }

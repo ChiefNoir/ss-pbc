@@ -3,7 +3,7 @@
 <mat-dialog-content class="content">
   <div *ngIf="project$ | async as project">
     <mat-tab-group>
-      <mat-tab label="Project">
+      <mat-tab label="{{ staticNames.Project }}">
         <div fxLayout="column" fxLayoutAlign="space-around center">
           <mat-form-field>
             <input matInput
@@ -194,21 +194,36 @@
   </mat-tab-group>
   </div>
 
-</mat-dialog-content>
+  <div *ngIf="message$ | async as msg">
+    <app-message [message]="msg"></app-message>
+  </div>
 
-<div *ngIf="message$ | async as msg">
-  <app-message [message]="msg"></app-message>
-</div>
+  <div class="actions" fxLayoutAlign="space-between center" fxShow="true" fxHide.lt-md="true">
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
+      {{ staticNames.GenericDelete }}
+    </app-button>
 
-<div class="actions" fxHide.lt-md="true">
-  <div class="actions-left">
-    <app-button [isDisabled]="disableInput$ | async" 
-                (OnClick)="delete()">
-                {{ staticNames.GenericDelete }}
+    <div>
+      <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
+        {{ staticNames.GenericSave }}
+      </app-button>
+      <app-button (OnClick)="close()">
+        {{ staticNames.GenericClose }}
+      </app-button>
+    </div>
+  </div>
+
+  <div fxHide.gt-sm="true" fxShow="true" fxLayout="column" fxLayoutAlign="end center">
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
+      {{ staticNames.GenericSave }}
+    </app-button>
+
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
+      {{ staticNames.GenericDelete }}
+    </app-button>
+
+    <app-button (OnClick)="close()">
+      {{ staticNames.GenericClose }}
     </app-button>
   </div>
-  <div class="actions-right">
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">{{ staticNames.GenericSave }}</app-button>
-    <app-button (OnClick)="close()">{{ staticNames.GenericClose }}</app-button>
-  </div>
-</div>
+</mat-dialog-content>

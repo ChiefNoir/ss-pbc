@@ -53,6 +53,7 @@ export class StaticNames
  public CategoryTypeSystem = 'System';
 
 
+ public Project = 'Project';
  public ProjectCategory = 'Category';
  public ProjectCode = 'Code';
  public ProjectDescription = 'Description';

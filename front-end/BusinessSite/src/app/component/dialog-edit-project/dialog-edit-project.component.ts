@@ -19,21 +19,20 @@ import { GalleryImage } from 'src/app/model/GalleryImage';
 
 export class DialogEditProjectComponent implements OnInit
 {
-  public columnsInner: string[] = [ 'name', 'url', 'btn'];
-  public columnsGallery: string[] = [ 'imageUrl', 'extraUrl', 'btn'];
-
   private code: string;
   private service: DataService;
-  public categories$: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>(null);
-  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public loadingMessage: MessageDescription = {text: 'Loading', type: MessageType.Spinner };
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
-  public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
-  public staticNames: StaticNames = new StaticNames();
+  private dialog: MatDialogRef<DialogEditProjectComponent>;
 
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
   @ViewChild('galleryImagesTable') galleryImagesTable: MatTable<any>;
-  private dialog: MatDialogRef<DialogEditProjectComponent>;
+
+  public columnsInner: string[] = [ 'name', 'url', 'btn'];
+  public columnsGallery: string[] = [ 'imageUrl', 'extraUrl', 'btn'];
+  public staticNames: StaticNames = new StaticNames();
+  public categories$: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>(null);
+  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
+  public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
   constructor(service: DataService, dialog: MatDialogRef<DialogEditProjectComponent>, @Inject(MAT_DIALOG_DATA) projectCode: string)
   {
@@ -63,8 +62,8 @@ export class DialogEditProjectComponent implements OnInit
           this.service.getProject(this.code)
                       .then
                       (
-                        succeeded => this.handleProject(succeeded, {text: this.staticNames.LoadComplete, type: MessageType.Info }),
-                        rejected => this.handleError(rejected)
+                        win => this.handleProject(win, {text: this.staticNames.LoadComplete, type: MessageType.Info }),
+                        fail => this.handleError(fail)
                       );
         }
         else
@@ -108,16 +107,16 @@ export class DialogEditProjectComponent implements OnInit
   public save(): void
   {
     this.disableInput$.next(true);
-
     this.message$.next({text: this.staticNames.SaveInProgress, type: MessageType.Spinner  });
 
-    this.service.saveProject(this.project$.value).then
-    (
-      kk =>
-      {
-        this.handleProject(kk, {text: this.staticNames.SaveComplete, type: MessageType.Info });
-      },
-      notok2 => this.handleError(notok2)
+    this.service.saveProject(this.project$.value)
+        .then
+        (
+          win =>
+          {
+            this.handleProject(win, {text: this.staticNames.SaveComplete, type: MessageType.Info });
+          },
+          fail => this.handleError(fail)
     );
   }
 
@@ -129,12 +128,12 @@ export class DialogEditProjectComponent implements OnInit
     this.service.deleteProject(this.project$.value)
                 .then
                 (
-                  succeeded =>
+                  win =>
                   {
                     this.project$.next(null);
                     this.message$.next({text: this.staticNames.DeleteComplete, type: MessageType.Info });
                   },
-                  rejected => this.handleError(rejected)
+                  fail => this.handleError(fail)
     );
   }
 
@@ -196,11 +195,9 @@ export class DialogEditProjectComponent implements OnInit
     }
   }
 
-
-
   public addGalleryImage(): void
   {
-    // hack for the times, when there is only img
+    // hack for the times, when there is only img without anything
     const newItem = new GalleryImage();
     newItem.version = 0;
 
@@ -230,6 +227,7 @@ export class DialogEditProjectComponent implements OnInit
   private handleIncident(error: Incident): void
   {
     this.disableInput$.next(false);
+
     console.log(error);
     this.message$.next({text: error.detail, type: MessageType.Error });
   }

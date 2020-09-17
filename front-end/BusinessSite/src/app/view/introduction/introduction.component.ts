@@ -18,7 +18,6 @@ import { environment } from 'src/environments/environment';
 export class IntroductionComponent implements OnInit
 {
   private service: DataService;
-
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
 
@@ -26,7 +25,7 @@ export class IntroductionComponent implements OnInit
   {
     this.service = service;
 
-    titleService.setTitle(environment.siteName);
+    titleService.setTitle(StaticNames.TitlePageIntroduction + environment.siteName);
   }
 
   public ngOnInit(): void
@@ -34,12 +33,12 @@ export class IntroductionComponent implements OnInit
     this.service.getIntroduction()
                 .then
                 (
-                  result =>  this.handle(result),
-                  reject => this.handleError(reject)
+                  win => this.handleIntroduction(win),
+                  fail => this.handleError(fail)
                 );
   }
 
-  private handle(result: RequestResult<Introduction>): void
+  private handleIntroduction(result: RequestResult<Introduction>): void
   {
     if (result.isSucceed)
     {
@@ -54,6 +53,7 @@ export class IntroductionComponent implements OnInit
 
   private handleIncident(error: Incident): void
   {
+    console.log(error);
     this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
   }
 

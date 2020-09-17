@@ -14,4 +14,5 @@ export class StaticNames
 
 
   public static TitlePageNotFound = 'Page not found · ';
+  public static TitlePageIntroduction = '';
 }

@@ -1,26 +1,26 @@
 @import "variables";
 @import "mixins";
 
-.control {
-  display: flex;
-    align-items: center;
-    justify-content: center; 
-}
-.login-form {
+.login-form 
+{
+  background-color: $color-control !important;
   display: flex;
   flex-direction: column;
-
   margin: 2%;
-
-  padding-top: 1%;
+  padding-bottom: 25px;
   padding-left: 2%;
   padding-right: 2%;
-  padding-bottom: 25px;
-
+  padding-top: 1%;
   width: 400px;
 
-  background-color: $color-content !important;
   @include flat-shadow($color-core);
+
+  .control
+  {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+  }
 }
 
 .mat-form-field {
@@ -40,7 +40,7 @@
 
 ::ng-deep.mat-form-field-underline {
  /*color of underline*/
- background-color:  $color-control-active-text-highlighted !important;
+ background-color: $color-content !important;
 } 
 
 ::ng-deep.mat-form-field-ripple {
@@ -56,8 +56,4 @@ background-color: $color-text !important;;
   /*change color of placeholder*/
   color: $color-text !important;
   font-style: italic;
-}
-.error {
-  color: $color-text-highlighted !important;
-  margin-bottom: 15px;
 }

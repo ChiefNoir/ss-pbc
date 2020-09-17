@@ -9,7 +9,7 @@
       <input matInput placeholder="Password" [formControl]="password" required [type]="'password'">
       <mat-error *ngIf="password.invalid">{{this.getError(password)}}</mat-error>
     </mat-form-field>
-    <br/>
+
 
     <div *ngIf="message$ | async as msg">
       <app-message [message]="msg"></app-message>

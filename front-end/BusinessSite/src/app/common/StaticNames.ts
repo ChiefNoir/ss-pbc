@@ -16,4 +16,5 @@ export class StaticNames
   public static TitleProjects = 'Projects' + StaticNames.TitleSeparator;
   public static TitlePageNotFound = 'Page not found' + StaticNames.TitleSeparator;
   public static TitlePageIntroduction = '';
+  public static TitlePageLogin = 'Login' + StaticNames.TitleSeparator;
 }

@@ -24,30 +24,27 @@ import { StaticNames } from 'src/app/common/StaticNames';
 
 export class AdminLoginComponent implements OnInit
 {
-  private router: Router;
   private authGuard: AuthGuard;
-  private storageService: StorageService;
-
+  private authService: AuthService;
+  private router: Router;
 
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
-  private authService: AuthService;
-
   public login: FormControl = new FormControl('', [Validators.required]);
   public password: FormControl = new FormControl('', [Validators.required]);
 
-  public constructor(authService: AuthService, authGuard: AuthGuard, router: Router, titleService: Title, storageService: StorageService)
+  public constructor(authService: AuthService, authGuard: AuthGuard, router: Router, titleService: Title)
   {
     this.authService = authService;
-    this.router = router;
-    this.storageService = storageService;
     this.authGuard = authGuard;
+    this.router = router;
 
-    titleService.setTitle(environment.siteName);
+    titleService.setTitle(StaticNames.TitlePageLogin + environment.siteName);
   }
 
   public async ngOnInit(): Promise<void>
   {
     await this.authGuard.checkIsLogged();
+
     if (this.authGuard.isLoggedIn$.value)
     {
       this.router.navigate(['/admin']);
@@ -91,7 +88,8 @@ export class AdminLoginComponent implements OnInit
 
   private handleIncident(error: Incident): void
   {
-    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+    console.log(error);
+    this.message$.next({text: error.detail + '<br/>', type: MessageType.Error });
   }
 
   private handleError(error: any): void

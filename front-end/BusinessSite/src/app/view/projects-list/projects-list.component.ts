@@ -6,12 +6,12 @@ import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { Category } from 'src/app/model/Category';
-
-import { environment } from 'src/environments/environment';
-import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
-import { StaticNames } from 'src/app/common/StaticNames';
 import { Paging } from 'src/app/model/PagingInfo';
 import { Incident, RequestResult } from 'src/app/model/RequestResult';
+
+import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
+import { environment } from 'src/environments/environment';
+import { StaticNames } from 'src/app/common/StaticNames';
 
 @Component({
   selector: 'app-projects-list',
@@ -21,14 +21,14 @@ import { Incident, RequestResult } from 'src/app/model/RequestResult';
 
 export class ProjectsListComponent implements OnDestroy, OnInit
 {
-  private service: DataService;
-  private router: Router;
   private activeRoute: ActivatedRoute;
+  private router: Router;
+  private service: DataService;
 
-  public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
-  public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({type: MessageType.Spinner });
+  public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
+  public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
 
   public constructor(service: DataService, router: Router, activeRoute: ActivatedRoute, titleService: Title)
   {
@@ -36,7 +36,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit
     this.router = router;
     this.activeRoute = activeRoute;
 
-    titleService.setTitle(environment.siteName + ' - Projects');
+    titleService.setTitle(StaticNames.TitleProjects + environment.siteName);
   }
 
   public ngOnInit(): void
@@ -102,6 +102,9 @@ export class ProjectsListComponent implements OnDestroy, OnInit
   {
     if (!paging) { return; }
 
+    this.projects$.next(null);
+    this.message$.next({type: MessageType.Spinner });
+
     this.service.getProjectsPreview
                 (
                   paging.getCurrentPage() * environment.paging.maxProjects,
@@ -117,7 +120,6 @@ export class ProjectsListComponent implements OnDestroy, OnInit
                   reject => this.handleError(reject)
                 );
   }
-
 
   public skipPage(amount: number): void
   {

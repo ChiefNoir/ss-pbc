@@ -13,6 +13,7 @@ export class StaticNames
   public static ProjectsNotFound = 'Nothing was found';
 
   public static TitleSeparator = ' · ';
+  public static TitleProjects = 'Projects' + StaticNames.TitleSeparator;
   public static TitlePageNotFound = 'Page not found' + StaticNames.TitleSeparator;
   public static TitlePageIntroduction = '';
 }

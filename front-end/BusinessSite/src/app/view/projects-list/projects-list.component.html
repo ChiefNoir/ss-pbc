@@ -1,5 +1,8 @@
-<div *ngIf="projects$">
+<div *ngIf="message$ | async as msg">
+  <app-message [message]="msg"></app-message>
+</div>
 
+<div *ngIf="projects$ | async as projects">
   <div *ngIf="categories$ | async as categories">
     <app-filter-category [categories]="categories"> </app-filter-category>
   </div>
@@ -7,19 +10,13 @@
   <div flex fxLayout="row" class="container">
     <div fxFlex="100%">
       <app-project-preview 
-              *ngFor="let item of projects$ | async"
+              *ngFor="let item of projects"
               role="list"
               [project]="item">
         </app-project-preview>
     </div>
   </div>
-</div>
 
-<div *ngIf="message$ | async as msg">
-  <app-message [message]="msg"></app-message>
-</div>
-
-<div *ngIf="projects$">
   <div *ngIf="paging$ | async as paging">
     <app-paginator
           (changePage)="skipPage($event)"
@@ -31,11 +28,3 @@
     </app-paginator>
   </div>
 </div>
-
-
-
-
-
-<ng-template #loading>
-
-</ng-template>

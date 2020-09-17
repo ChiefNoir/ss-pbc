@@ -33,15 +33,31 @@
     <app-message [message]="msg"></app-message>
   </div>
 
-  <div class="actions">
-    <div class="actions-left">
-      <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">{{ staticNames.GenericDelete }}</app-button>
-    </div>
+  <div class="actions" fxLayoutAlign="space-between center" fxShow="true" fxHide.lt-md="true">
+      <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
+        {{ staticNames.GenericDelete }}
+      </app-button>
+   
+      <div>
+        <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
+          {{ staticNames.GenericSave }}
+        </app-button>
+        <app-button (OnClick)="close()">
+          {{ staticNames.GenericClose }}
+        </app-button>
+      </div>
+  </div>
+  <div fxHide.gt-sm="true" fxShow="true" fxLayout="column" fxLayoutAlign="end center">
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
+      {{ staticNames.GenericSave }}
+    </app-button>
+    
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
+      {{ staticNames.GenericDelete }}
+    </app-button>
 
-    <div class="actions-right">
-      <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">{{ staticNames.GenericSave }}</app-button>
-      <app-button (OnClick)="close()">{{ staticNames.GenericClose }}</app-button>
-    </div>
+    <app-button (OnClick)="close()">
+      {{ staticNames.GenericClose }}</app-button>
   </div>
 
 </mat-dialog-content>

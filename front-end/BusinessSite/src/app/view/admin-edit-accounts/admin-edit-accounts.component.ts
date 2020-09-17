@@ -68,8 +68,8 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
     this.service.countAccount()
                 .then
                 (
-                  result => this.hanlePaging(result, this.paging$),
-                  reject => this.handleError(reject)
+                  win => this.hanlePaging(win, this.paging$),
+                  fail => this.handleError(fail)
                 );
   }
 

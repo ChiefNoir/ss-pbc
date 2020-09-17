@@ -75,11 +75,11 @@ namespace Infrastructure.Repository
 
             var account = await _context.Accounts.FirstOrDefaultAsync(x => x.Login == login);
             if (account == null)
-                throw new Exception($"Can't delete new account {login}");
+                throw new Exception($"Wrong login or password");
 
             var hashedPassword = _hashManager.Hash(password, account.Salt);
             if (hashedPassword.HexHash != account.Password)
-                throw new Exception($"Password mismatch");
+                throw new Exception($"Wrong login or password");
 
             return new Account
             {

@@ -94,4 +94,7 @@ export class StaticNames
  public GenericPrevious = 'Previous';
  public GenericRefresh = 'refresh';
  public GenericSave = 'save';
+
+ public GenericSelectFile = 'Select file';
+ public GenericDeleteFile = 'Delete file';
 }

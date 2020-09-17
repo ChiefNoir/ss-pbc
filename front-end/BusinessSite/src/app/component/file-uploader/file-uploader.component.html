@@ -1,7 +1,20 @@
 <div fxLayout="row" fxLayoutAlign="center center" > 
-  <input matInput [(ngModel)]="filename" name="posterUrl" fxFlex="grow" hidden/>
-  <input type="file" #file placeholder="Choose file" (change)="upload(file.files)" style="display:none;">
+  <input matInput 
+         [(ngModel)]="filename"
+         name="posterUrl"
+         fxFlex="grow"
+         hidden/>
+  <input #file 
+         type="file"
+         placeholder="Choose file"
+         (change)="upload(file.files)"
+         style="display:none;">
 
-  <app-button [isDisabled]="disabled" (OnClick)="file.click()">Select file</app-button>
-  <app-button [isDisabled]="disabled" (OnClick)="delete()">Delete file</app-button>
- </div>
+  <app-button [isDisabled]="disabled" (OnClick)="file.click()">
+    {{staticNames.GenericSelectFile}}
+  </app-button>
+  
+  <app-button [isDisabled]="disabled" (OnClick)="delete()">
+    {{staticNames.GenericDeleteFile}}
+  </app-button>
+</div>

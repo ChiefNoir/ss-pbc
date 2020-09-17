@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { StaticNames } from 'src/app/common/StaticNames';
 
 @Component({
   selector: 'app-file-uploader',
@@ -9,23 +10,26 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 export class FileUploaderComponent
 {
   @Output()
-  uploadFiles = new EventEmitter<File[]>();
+  public uploadFiles = new EventEmitter<File[]>();
 
   @Output()
-  deleteFile = new EventEmitter();
+  public deleteFile = new EventEmitter();
 
   @Input()
-  filename: string;
+  public filename: string;
 
   @Input()
-  disabled: boolean;
+  public disabled: boolean;
 
-  public upload(files: File[])
+  public staticNames: StaticNames = new StaticNames();
+
+  public upload(files: File[]): void
   {
     this.uploadFiles.emit(files);
   }
 
-  public delete(): void {
+  public delete(): void
+  {
     this.deleteFile.emit();
   }
 }

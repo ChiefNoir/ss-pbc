@@ -1,12 +1,12 @@
 <div fxLayout="column" fxLayoutAlign="center center">
   <form class="login-form">
     <mat-form-field>
-      <input matInput placeholder="Login" [formControl]="login" required>
+      <input matInput placeholder="{{staticNames.Login}}" [formControl]="login" required>
       <mat-error *ngIf="login.invalid">{{this.getError(login)}}</mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Password" [formControl]="password" required [type]="'password'">
+      <input matInput placeholder="{{staticNames.Password}}" [formControl]="password" required [type]="'password'">
       <mat-error *ngIf="password.invalid">{{this.getError(password)}}</mat-error>
     </mat-form-field>
 
@@ -16,7 +16,7 @@
     </div>
 
     <app-button class="control" (OnClick)="doLogin()">
-      Login
+      {{staticNames.Login}}
     </app-button>
   </form>
 </div>

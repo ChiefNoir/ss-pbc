@@ -27,4 +27,7 @@ export class StaticNames
   public static MenuCategories = 'categories';
   public static MenuAccounts = 'accounts';
   public static MenuIntroduction = 'introduction';
+
+  public static Login = 'Login';
+  public static Password = 'Password';
 }

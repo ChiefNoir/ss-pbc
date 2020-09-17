@@ -10,7 +10,6 @@ import { Title } from '@angular/platform-browser';
 
 import { environment } from 'src/environments/environment';
 import { Identity } from 'src/app/model/Identity';
-import { StorageService } from 'src/app/service/storage.service';
 import { AuthGuard } from 'src/app/guards/authGuard';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
@@ -31,6 +30,7 @@ export class AdminLoginComponent implements OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public login: FormControl = new FormControl('', [Validators.required]);
   public password: FormControl = new FormControl('', [Validators.required]);
+  public staticNames: StaticNames = StaticNames;
 
   public constructor(authService: AuthService, authGuard: AuthGuard, router: Router, titleService: Title)
   {

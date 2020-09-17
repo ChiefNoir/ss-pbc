@@ -3,13 +3,13 @@
 
 .container
 {
-  position: relative;
+  border: 1px solid $color-core;
   margin-bottom: 2%;
+  position: relative;
   @include flat-shadow($color-core);
 
   .poster
   {
-    border: 5px solid $color-core;
     box-sizing: border-box;
     height: 370px;
     left: 0px;
@@ -18,11 +18,12 @@
     top: 0px;
     width: 100%;
   }
+
   .grayscale-filter
   {
     filter: grayscale(100%);
     transition: all 0.5s ease;
-  
+
     &:hover
     {
       filter: grayscale(40%);
@@ -30,36 +31,35 @@
   }
   .content
   {
+    background-color: $color-container-transparent;
     bottom: 0%;
     color: $color-text;
     padding-bottom: 10px;
     padding-top: 10px;
     position: absolute;
     width: 100%;
-    background-color: $color-container-transparent;
-  }
 
-  .headline
-  {
-    color: $color-text;
-    font-size: 25px;
-    font-size: x-large;
-    font-weight: 500;
-    margin-left: 20px;
-  
-    &:hover
+    .headline
     {
-      color: $color-text-highlighted;
+      color: $color-text;
+      font-size: 25px;
+      font-size: x-large;
+      font-weight: 500;
+      margin-left: 20px;
+    
+      &:hover
+      {
+        color: $color-text-highlighted;
+      }
     }
-  }
-
-  .description
-  {
-    font-size: large;
-    margin-left: 20px;
-    margin-right: 20px;
-    max-height: 300px;
-    overflow: hidden;
-    margin-top: 10px;
+    .description
+    {
+      font-size: large;
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-top: 10px;
+      max-height: 300px;
+      overflow: hidden;
+    }
   }
 }

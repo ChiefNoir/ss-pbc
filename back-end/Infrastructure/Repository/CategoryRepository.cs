@@ -80,26 +80,18 @@ namespace Infrastructure.Repository
             if (string.IsNullOrEmpty(category.Code))
                 throw new Exception("Category code can not be null or empty");
 
-            var dbItem = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
-            var oldCode = dbItem?.Code;
-
-            if (category.Id == null)
+            var anyCode = await _context.Categories.AnyAsync(x => x.Code == category.Code);
+            if(anyCode)
+                throw new Exception($"Code {category.Code} duplicate");
+            
+            var dbItem = new DataModel.Category
             {
-                dbItem = new DataModel.Category
-                {
-                    Code = category.Code,
-                    DisplayName = category.DisplayName
-                };
+                Code = category.Code,
+                DisplayName = category.DisplayName,
+                Version = 0
+            };
 
-                _context.Categories.Add(dbItem);
-            }
-            else
-            {
-                // TODO inconsistency
-                dbItem.DisplayName = category.DisplayName;
-                dbItem.Code = category.Code;
-                dbItem.Version++;
-            }
+            _context.Categories.Add(dbItem);
 
             await _context.SaveChangesAsync();
             return DataConverter.ToCategory(dbItem);
@@ -107,23 +99,26 @@ namespace Infrastructure.Repository
 
         private async Task<Category> UpdateAsync(Category category)
         {
-            if (category.Id != null)
-                throw new Exception("Inconsistency");
+            if (category.Id == null)
+                throw new Exception("Can't update new category");
 
-            var hasOldDb = await _context.Categories.AnyAsync(x => x.Code == category.Code);
-            if(hasOldDb)
-                throw new Exception("Inconsistency");
+            var oldItem = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
+            if(oldItem == null)
+                throw new Exception($"Category {category.DisplayName} was already deleted");
 
-            var dbItem = new DataModel.Category
-            {
-                Code = category.Code,
-                DisplayName = category.DisplayName
-            };
+            var countByCode = await _context.Categories.CountAsync(x => x.Code == category.Code);
 
-            _context.Categories.Add(dbItem);
+            if(countByCode > 1)
+                throw new Exception($"Code {category.Code} duplicate");
+
+            oldItem.Code = category.Code;
+            oldItem.DisplayName = category.DisplayName;
+            oldItem.IsEverything = oldItem.IsEverything;
+            oldItem.Version++;
+
             await _context.SaveChangesAsync();
 
-            return DataConverter.ToCategory(dbItem);
+            return DataConverter.ToCategory(oldItem);
         }
 
         private async Task<Category> FirstOrDefaultAsync(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)

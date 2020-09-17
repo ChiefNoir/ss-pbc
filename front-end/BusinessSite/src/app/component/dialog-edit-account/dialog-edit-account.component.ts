@@ -48,7 +48,11 @@ export class DialogEditAccountComponent implements OnInit
       this.service.getAccount(this.accountId)
                   .then
                   (
-                    succeeded => this.handleAccount(succeeded),
+                    succeeded =>
+                    {
+                      this.message$.next({text: this.staticNames.LoadComplete, type: MessageType.Info });
+                      this.handleAccount(succeeded);
+                    },
                     rejected => this.handleError(rejected.message)
                   );
     }
@@ -108,7 +112,6 @@ export class DialogEditAccountComponent implements OnInit
     {
       this.account$.next(result.data);
       this.title$.next(this.staticNames.AccountEdit + '　”'　+　result.data.login + '”');
-      this.message$.next({text: this.staticNames.LoadComplete, type: MessageType.Info });
     }
     else
     {

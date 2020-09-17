@@ -42,7 +42,7 @@ export class StaticNames
  public AccountDelete = 'Account deleted';
  public AccountEdit = 'Edit account';
  public AccountLogin = 'Login';
- public AccountPassword = 'Login';
+ public AccountPassword = 'Password';
  public AccountRole = 'Role';
 
 

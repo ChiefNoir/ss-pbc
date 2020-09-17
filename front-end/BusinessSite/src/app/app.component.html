@@ -4,10 +4,10 @@
   <mat-toolbar-row fxLayout="row" fxLayoutAlign="center stretch" 
                    fxShow="true" fxHide.lt-md="true">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        Home
+        {{staticNames.MenuHome}}
       </a>
       <a routerLink="/projects/" routerLinkActive="active">
-        Projects
+        {{staticNames.MenuProjects}}
       </a>
       
       <ng-container *ngIf="authGuard.validating$ | async; else adminLink">
@@ -15,10 +15,10 @@
       </ng-container>
       <ng-template #adminLink>
         <ng-container *ngIf="authGuard.isLoggedIn$ | async; else login">
-          <a routerLink="/admin/" routerLinkActive="active">Admin</a>
+          <a routerLink="/admin/" routerLinkActive="active">{{staticNames.MenuAdmin}}</a>
         </ng-container>
         <ng-template #login>
-          <a routerLink="/login/" routerLinkActive="active">Login</a>
+          <a routerLink="/login/" routerLinkActive="active">{{staticNames.MenuLogin}}</a>
         </ng-template>
       </ng-template>
   </mat-toolbar-row>
@@ -32,14 +32,14 @@
 <mat-drawer-container autosize>
   <mat-drawer #drawer mode="over" fxHide.gt-sm="true">
     <div fxLayout="column" fxLayoutAlign="none">
-      <a routerLink="/"> Home </a>
-      <a routerLink="/projects/"> Projects </a>
+      <a routerLink="/"> {{staticNames.MenuHome}} </a>
+      <a routerLink="/projects/"> {{staticNames.MenuProjects}}  </a>
 
       <ng-container *ngIf="authGuard.isLoggedIn$ | async; else sideLogin">
-        <a routerLink="/admin/" routerLinkActive="active">Admin</a>
+        <a routerLink="/admin/" routerLinkActive="active">{{staticNames.Admin}}</a>
       </ng-container>
       <ng-template #sideLogin>
-        <a routerLink="/login/" routerLinkActive="active">Login</a>
+        <a routerLink="/login/" routerLinkActive="active">{{staticNames.Login}}</a>
       </ng-template>
 
     </div>
@@ -53,23 +53,23 @@
      <a *ngIf="authGuard.canSee('/admin')"
         [routerLink]="['/admin']"
         [routerLinkActiveOptions]="{ exact: true }"
-        routerLinkActive="active">admin</a>
+        routerLinkActive="active">{{staticNames.MenuAdmin}}</a>
 
       <a *ngIf="authGuard.canSee('/admin/editor/projects')"
          [routerLink]="['/admin/editor/projects']"
-         routerLinkActive="active">projects</a>
+         routerLinkActive="active">{{staticNames.MenuProjects}} </a>
       
       <a *ngIf="authGuard.canSee('/admin/editor/categories/')" 
          [routerLink]="['/admin/editor/categories']"
-         routerLinkActive="active">categories</a>
+         routerLinkActive="active">{{staticNames.MenuCategories}}</a>
       
       <a *ngIf="authGuard.canSee('/admin/editor/introduction')"
          [routerLink]="['/admin/editor/introduction']"
-         routerLinkActive="active">introduction</a>
+         routerLinkActive="active">{{staticNames.MenuIntroduction}}</a>
       
       <a *ngIf="authGuard.canSee('/admin/editor/accounts')"
          [routerLink]="['/admin/editor/accounts']"
-         routerLinkActive="active">accounts</a>
+         routerLinkActive="active">{{staticNames.MenuAccounts}}</a>
     </div>
 
     <div class="content" fxFlex>

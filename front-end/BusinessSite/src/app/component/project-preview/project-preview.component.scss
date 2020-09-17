@@ -17,12 +17,13 @@
     object-position: 100% 0%;
     top: 0px;
     width: 100%;
+
+    transition: all 0.5s ease;
   }
 
   .grayscale-filter
   {
     filter: grayscale(100%);
-    transition: all 0.5s ease;
 
     &:hover
     {

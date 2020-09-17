@@ -1,35 +1,32 @@
+<div *ngIf="introduction$ | async as introduction; else loading" fxLayout="row" class="container">
 
-  <div *ngIf="introduction$ | async as introduction; else loading">
-
-    <div fxLayout="row" class="container">
-      <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+  <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
     
-        <h1 class="headline"> {{ introduction.title }} </h1>    
-        <mat-divider></mat-divider>
+    <h1 class="headline"> {{ introduction.title }} </h1>
+    <mat-divider></mat-divider>
         
-        <div class="description" [innerHtml]="introduction.content"></div>
+    <div class="description" [innerHtml]="introduction.content"></div>
     
-        <div *ngIf="introduction.externalUrls.length > 0">
-          <h1 class="headline">Other places</h1>
-          <mat-divider></mat-divider>
+    <div *ngIf="introduction.externalUrls.length > 0">
+      <h1 class="headline"> {{staticNames.IntroductionExternalUrls}}</h1>
+      <mat-divider></mat-divider>
     
-          <div class="extension"  fxLayout="row" fxLayoutAlign="space-evenly center">
-            <app-button-contact
-                    *ngFor="let item of introduction.externalUrls"
-                    role="list"
-                    [externalUrl]="item">
-            </app-button-contact>
-          </div>
-        </div>
-
+      <div class="extension"  fxLayout="row" fxLayoutAlign="space-evenly center">
+        <app-button-contact
+              *ngFor="let item of introduction.externalUrls"
+              role="list"
+              [externalUrl]="item">
+        </app-button-contact>
       </div>
-    
-      <img class="image" 
-           alt="{{ introduction.posterDescription}}" 
-           fxFlex="30" 
-           src="{{(introduction.posterUrl || '\\assets\\images\\placeholder-tall.png')}}"/>
     </div>
+  
   </div>
+    
+  <img class="poster" 
+       alt="{{ introduction.posterDescription}}" 
+       fxFlex="30" 
+       src="{{(introduction.posterUrl || '\\assets\\images\\placeholder-tall.png')}}"/>
+</div>
 
 
 <ng-template #loading>

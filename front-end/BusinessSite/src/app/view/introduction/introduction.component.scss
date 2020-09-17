@@ -3,70 +3,62 @@
 
 .container
 {
-    @include flat-shadow($color-core);
-    background-color: $color-control;
-  
-    display: inline-block;
-    position: relative;
-    min-height: 600px;
+  background-color: $color-control;
+  display: inline-block;
+  min-height: 600px;
+  position: relative;
 
-    
-  }
-  
+  @include flat-shadow($color-core);
+
   .headline {
-    margin-top: 10px;
-    margin-left: 20px;
-    font-size: x-large;
-    font-weight: 500;
-  
     color: $color-text;
     font-size: 25px;
-  }
-  
-  .description {
-    margin-top: 10px;
+    font-size: x-large;
+    font-weight: 500;
     margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    font-size: large;
-  
-    color: $color-text;
-  }
-  
-  .image {
     margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-  
-    object-fit: cover;
+  }
 
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
+  .description {
+    color: $color-text;
+    font-size: large;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+  }
+
+  .poster {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    object-fit: cover;
+    object-position: 100% 0%;
     filter: grayscale(100%);
-    transition: all 0.5s ease;
     
+    transition: all 0.5s ease;
+    @include flat-shadow($color-core);
+
     &:hover
     {
-      -webkit-filter: grayscale(40%);
-     -moz-filter: grayscale(40%);
      filter: grayscale(40%);
     } 
   }
-  
+
+  .extension {
+    color: $color-text;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+  }
+
   .mat-divider {
-    border-top-width: 2px;
     border-top-color: $color-text;
+    border-top-width: 2px;
     margin-left: 0px;
     margin-right: 0px;
   }
-  
-  .extension {
-    margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-
-    color: $color-text;
-    flex-wrap: wrap;
-  }
+}

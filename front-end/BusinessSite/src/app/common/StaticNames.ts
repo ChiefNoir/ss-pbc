@@ -17,4 +17,6 @@ export class StaticNames
   public static TitlePageNotFound = 'Page not found' + StaticNames.TitleSeparator;
   public static TitlePageIntroduction = '';
   public static TitlePageLogin = 'Login' + StaticNames.TitleSeparator;
+
+  public static IntroductionExternalUrls = 'Meet me on the other site';
 }

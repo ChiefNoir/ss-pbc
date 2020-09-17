@@ -1,4 +1,3 @@
-
 import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -20,6 +19,7 @@ export class IntroductionComponent implements OnInit
   private service: DataService;
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
+  public staticNames = StaticNames;
 
   public constructor(service: DataService, titleService: Title)
   {
@@ -54,7 +54,7 @@ export class IntroductionComponent implements OnInit
   private handleIncident(error: Incident): void
   {
     console.log(error);
-    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+    this.message$.next({text: error.detail, type: MessageType.Error });
   }
 
   private handleError(error: any): void

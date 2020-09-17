@@ -30,7 +30,7 @@ export class AdminLoginComponent implements OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public login: FormControl = new FormControl('', [Validators.required]);
   public password: FormControl = new FormControl('', [Validators.required]);
-  public staticNames: StaticNames = StaticNames;
+  public staticNames: StaticNames = new StaticNames();
 
   public constructor(authService: AuthService, authGuard: AuthGuard, router: Router, titleService: Title)
   {
@@ -38,7 +38,7 @@ export class AdminLoginComponent implements OnInit
     this.authGuard = authGuard;
     this.router = router;
 
-    titleService.setTitle(StaticNames.TitlePageLogin + environment.siteName);
+    titleService.setTitle(this.staticNames.TitlePageLogin + environment.siteName);
   }
 
   public async ngOnInit(): Promise<void>
@@ -82,7 +82,7 @@ export class AdminLoginComponent implements OnInit
   {
     if (control.hasError('required'))
     {
-      return StaticNames.ErrorFieldCannotBeEmpty;
+      return this.staticNames.ErrorFieldCannotBeEmpty;
     }
   }
 

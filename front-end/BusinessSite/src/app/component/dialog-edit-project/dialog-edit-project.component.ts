@@ -29,7 +29,7 @@ export class DialogEditProjectComponent implements OnInit
   public loadingMessage: MessageDescription = {text: 'Loading', type: MessageType.Spinner };
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
-  public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Project properties');
+  public staticNames: StaticNames = new StaticNames();
 
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
   @ViewChild('galleryImagesTable') galleryImagesTable: MatTable<any>;
@@ -63,7 +63,7 @@ export class DialogEditProjectComponent implements OnInit
           this.service.getProject(this.code)
                       .then
                       (
-                        succeeded => this.handleProject(succeeded, {text: StaticNames.LoadComplete, type: MessageType.Info }),
+                        succeeded => this.handleProject(succeeded, {text: this.staticNames.LoadComplete, type: MessageType.Info }),
                         rejected => this.handleError(rejected)
                       );
         }
@@ -72,7 +72,7 @@ export class DialogEditProjectComponent implements OnInit
           const prj = new Project();
           prj.category = categorySucceeded.data.filter(category => category.isEverything === false)[0];
           this.project$.next(prj);
-          this.message$.next({text: StaticNames.InitializationComplete, type: MessageType.Info });
+          this.message$.next({text: this.staticNames.InitializationComplete, type: MessageType.Info });
           this.disableInput$.next(false);
         }
       },
@@ -109,13 +109,13 @@ export class DialogEditProjectComponent implements OnInit
   {
     this.disableInput$.next(true);
 
-    this.message$.next({text: StaticNames.SaveInProgress, type: MessageType.Spinner  });
+    this.message$.next({text: this.staticNames.SaveInProgress, type: MessageType.Spinner  });
 
     this.service.saveProject(this.project$.value).then
     (
       kk =>
       {
-        this.handleProject(kk, {text: StaticNames.SaveComplete, type: MessageType.Info });
+        this.handleProject(kk, {text: this.staticNames.SaveComplete, type: MessageType.Info });
       },
       notok2 => this.handleError(notok2)
     );
@@ -124,7 +124,7 @@ export class DialogEditProjectComponent implements OnInit
   public delete(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: StaticNames.DeleteInProgress, type: MessageType.Info });
+    this.message$.next({text: this.staticNames.DeleteInProgress, type: MessageType.Info });
 
     this.service.deleteProject(this.project$.value)
                 .then
@@ -132,7 +132,7 @@ export class DialogEditProjectComponent implements OnInit
                   succeeded =>
                   {
                     this.project$.next(null);
-                    this.message$.next({text: StaticNames.DeleteComplete, type: MessageType.Info });
+                    this.message$.next({text: this.staticNames.DeleteComplete, type: MessageType.Info });
                   },
                   rejected => this.handleError(rejected)
     );
@@ -230,7 +230,8 @@ export class DialogEditProjectComponent implements OnInit
   private handleIncident(error: Incident): void
   {
     this.disableInput$.next(false);
-    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+    console.log(error);
+    this.message$.next({text: error.detail, type: MessageType.Error });
   }
 
   private handleError(error: any): void

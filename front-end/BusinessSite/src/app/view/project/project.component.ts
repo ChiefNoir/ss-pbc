@@ -25,6 +25,7 @@ export class ProjectComponent
 
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({type: MessageType.Spinner });
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
+  public staticNames: StaticNames = new StaticNames();
 
   public constructor(service: DataService, activeRoute: ActivatedRoute, router: Router, titleService: Title)
   {
@@ -61,7 +62,7 @@ export class ProjectComponent
         this.router.navigate(['/404']);
       }
 
-      this.titleService.setTitle(result.data?.displayName + StaticNames.TitleSeparator + environment.siteName);
+      this.titleService.setTitle(result.data?.displayName + this.staticNames.TitleSeparator + environment.siteName);
       this.project$.next(result.data);
     }
     else

@@ -19,13 +19,13 @@ export class IntroductionComponent implements OnInit
   private service: DataService;
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
-  public staticNames = StaticNames;
+  public staticNames: StaticNames = new StaticNames();
 
   public constructor(service: DataService, titleService: Title)
   {
     this.service = service;
 
-    titleService.setTitle(StaticNames.TitlePageIntroduction + environment.siteName);
+    titleService.setTitle(this.staticNames.TitlePageIntroduction + environment.siteName);
   }
 
   public ngOnInit(): void

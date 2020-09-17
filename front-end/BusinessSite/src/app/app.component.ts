@@ -15,7 +15,7 @@ export class AppComponent
 {
   public authGuard: AuthGuard;
   public router: Router;
-  public staticNames = StaticNames;
+  public staticNames: StaticNames = new StaticNames();
 
   public constructor(titleService: Title, authGuard: AuthGuard, router: Router)
   {

@@ -22,14 +22,15 @@ import { Router } from '@angular/router';
 export class AdminEditProjectsComponent implements OnInit, OnDestroy
 {
   private service: DataService;
-  public columns: string[] = ['code', 'displayName', 'category', 'releaseDate'];
+  private authGuard: AuthGuard;
+  private router: Router;
 
+  public columns: string[] = ['code', 'displayName', 'category', 'releaseDate'];
+  public dialog: MatDialog;
+  public staticNames: StaticNames = new StaticNames();
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
   public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
-  public dialog: MatDialog;
-  private authGuard: AuthGuard;
-  private router: Router;
 
   public constructor(service: DataService, dialog: MatDialog, authGuard: AuthGuard, router: Router)
   {

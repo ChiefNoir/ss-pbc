@@ -14,5 +14,5 @@ export class ProjectFullComponent
   @Input()
   public project: Project;
 
-  public staticNames: StaticNames = StaticNames;
+  public staticNames: StaticNames = new StaticNames();
 }

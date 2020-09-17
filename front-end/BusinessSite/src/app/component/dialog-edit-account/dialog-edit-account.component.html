@@ -4,21 +4,27 @@
   <div class="content" *ngIf="account$ | async as account">
     <div fxLayout="column" fxLayoutAlign="space-around center">
       <mat-form-field>
-        <input [disabled]="disableInput$ | async" matInput [(ngModel)]="account.login" name="login" placeholder="login"/>
+        <input [disabled]="disableInput$ | async" 
+               matInput [(ngModel)]="account.login"
+               name="login"
+               placeholder="{{ staticNames.AccountLogin }}"/>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Role</mat-label>
+        <mat-label>{{ staticNames.AccountRole }}</mat-label>
         <mat-select [(ngModel)]="account.role"
                     [disabled]="disableInput$ | async">
           <mat-option *ngFor="let role of roles$.value" [value]="role" >
-            {{role}} 
+            {{ role }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field>
-        <input [disabled]="disableInput$ | async" matInput [(ngModel)]="account.password" name="password" placeholder="password"/>
+        <input [disabled]="disableInput$ | async" 
+               matInput [(ngModel)]="account.password"
+               name="password"
+               placeholder="{{ staticNames.AccountPassword }}"/>
       </mat-form-field>
     </div>
   </div>
@@ -27,21 +33,15 @@
     <app-message [message]="msg"></app-message>
   </div>
 
-  <div class="actions" fxHide.lt-md="true">
+  <div class="actions">
     <div class="actions-left">
-      <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">Delete</app-button>
+      <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">{{ staticNames.GenericDelete }}</app-button>
     </div>
 
     <div class="actions-right">
-      <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">Save</app-button>
-      <app-button (OnClick)="close()">Close</app-button>
+      <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">{{ staticNames.GenericSave }}</app-button>
+      <app-button (OnClick)="close()">{{ staticNames.GenericClose }}</app-button>
     </div>
-  </div>
-
-  <div fxLayout="column" fxLayoutAlign="space-evenly center" fxHide.gt-sm="true">
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">Delete</app-button>
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">Save</app-button>
-    <app-button (OnClick)="close()">Close</app-button>
   </div>
 
 </mat-dialog-content>

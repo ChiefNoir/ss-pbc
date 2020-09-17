@@ -25,7 +25,7 @@ export class AdminComponent implements OnInit
 
   public information$: BehaviorSubject<Information> = new BehaviorSubject<Information> (null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
-  public staticNames: StaticNames = StaticNames;
+  public staticNames: StaticNames = new StaticNames();
 
   public constructor(router: Router, titleService: Title, dataService: DataService, authGuard: AuthGuard)
   {

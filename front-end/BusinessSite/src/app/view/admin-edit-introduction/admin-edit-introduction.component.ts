@@ -9,6 +9,7 @@ import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { MatTable } from '@angular/material/table';
 import { AuthGuard } from 'src/app/guards/authGuard';
 import { Router } from '@angular/router';
+import { StaticNames } from 'src/app/common/StaticNames';
 
 @Component({
   selector: 'app-admin-edit-introduction',
@@ -28,6 +29,7 @@ export class AdminEditIntroductionComponent implements OnInit
   public isDisabled: boolean = false;
   private authGuard: AuthGuard;
   private router: Router;
+  public staticNames: StaticNames = new StaticNames();
 
   public constructor(service: DataService, authGuard: AuthGuard, router: Router)
   {

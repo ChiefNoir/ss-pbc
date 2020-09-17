@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { StaticNames } from 'src/app/common/StaticNames';
 
 @Component({
   selector: 'app-paginator',
@@ -27,6 +28,7 @@ export class PaginatorComponent
   @Output()
   public previousPageClick = new EventEmitter();
 
+  public staticNames: StaticNames = new StaticNames();
 
   public changePageEnterPress(pageNumber: number)
   {

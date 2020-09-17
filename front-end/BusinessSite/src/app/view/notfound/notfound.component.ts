@@ -11,8 +11,10 @@ import { environment } from 'src/environments/environment';
 
 export class NotFoundComponent
 {
+  public staticNames: StaticNames = new StaticNames();
+
   public constructor(titleService: Title)
   {
-    titleService.setTitle(StaticNames.TitlePageNotFound + environment.siteName);
+    titleService.setTitle(this.staticNames.TitlePageNotFound + environment.siteName);
   }
 }

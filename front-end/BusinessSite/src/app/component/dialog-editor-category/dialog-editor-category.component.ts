@@ -20,6 +20,7 @@ export class DialogEditorCategoryComponent implements OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public systemCategoryMessage: MessageDescription = {text: 'You can\'t delete system category', type: MessageType.Info };
   public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Category properties');
+  public staticNames: StaticNames = new StaticNames();
 
   private categoryId: number;
   private service: DataService;
@@ -39,7 +40,7 @@ export class DialogEditorCategoryComponent implements OnInit
       this.service.getCategory(this.categoryId)
                   .then
                   (
-                    succeeded => this.handleCategory(succeeded, {text: StaticNames.LoadComplete, type: MessageType.Info }),
+                    succeeded => this.handleCategory(succeeded, {text: this.staticNames.LoadComplete, type: MessageType.Info }),
                     rejected => this.handleError(rejected.message)
                   );
     }
@@ -61,8 +62,8 @@ export class DialogEditorCategoryComponent implements OnInit
                 (
                   succeeded =>
                   {
-                    this.message$.next({text: StaticNames.SaveInProgress, type: MessageType.Info });
-                    this.handleCategory(succeeded, {text: StaticNames.SaveComplete, type: MessageType.Info });
+                    this.message$.next({text: this.staticNames.SaveInProgress, type: MessageType.Info });
+                    this.handleCategory(succeeded, {text: this.staticNames.SaveComplete, type: MessageType.Info });
                   },
                   rejected => this.handleError(rejected.message)
                 );
@@ -76,7 +77,7 @@ export class DialogEditorCategoryComponent implements OnInit
     this.service.deleteCategory(this.category$.value)
                 .then
                 (
-                  succeeded => this.handleCategory(succeeded, {text: StaticNames.DeleteComplete, type: MessageType.Info }),
+                  succeeded => this.handleCategory(succeeded, {text: this.staticNames.DeleteComplete, type: MessageType.Info }),
                   rejected => this.handleError(rejected.message)
                 );
   }

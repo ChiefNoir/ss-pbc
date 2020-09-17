@@ -1,4 +1,4 @@
-<h2 *ngIf="title$ | async as title" class="title"> {{title}} </h2>
+<h2 class="title"> {{ staticNames.ProjectProperties }} </h2>
 
 <mat-dialog-content class="content">
   <div *ngIf="project$ | async as project">
@@ -6,24 +6,34 @@
       <mat-tab label="Project">
         <div fxLayout="column" fxLayoutAlign="space-around center">
           <mat-form-field>
-            <input matInput [disabled]="disableInput$ | async" [(ngModel)]="project.code" name="Code" placeholder="Code" />
+            <input matInput
+                   [disabled]="disableInput$ | async"
+                   [(ngModel)]="project.code"
+                   name="Code"
+                   placeholder="{{ staticNames.ProjectCode }}" />
           </mat-form-field>
           
           <mat-form-field>
-            <input matInput [disabled]="disableInput$ | async" [(ngModel)]="project.displayName" name="Name" placeholder="Name" />
+            <input matInput
+                   [disabled]="disableInput$ | async"
+                   [(ngModel)]="project.displayName"
+                   name="Name"
+                   placeholder="{{ staticNames.ProjectName }}" />
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Release date</mat-label>
+            <mat-label>{{ staticNames.ProjectReleaseDate }}</mat-label>
             <input matInput 
-            [disabled]="disableInput$ | async" 
-            [matDatepicker]="dp3" [(ngModel)]="project.releaseDate" name="releaseDate">
+                  [disabled]="disableInput$ | async" 
+                  [matDatepicker]="dp3"
+                  [(ngModel)]="project.releaseDate"
+                  name="releaseDate">
             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Category</mat-label>
+            <mat-label>{{ staticNames.ProjectCategory }}</mat-label>
             <mat-select [(ngModel)]="project.category.id"
                         [disabled]="disableInput$ | async">
               <mat-option *ngFor="let ctg of categories$.value" [value]="ctg.id" >
@@ -33,32 +43,47 @@
           </mat-form-field>
 
           <mat-form-field>
-            <textarea matInput [disabled]="disableInput$ | async" 
-            [(ngModel)]="project.descriptionShort" name="descriptionShort" 
-            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
-            cdkAutosizeMaxRows="10" placeholder="Description short"></textarea>
+            <textarea matInput
+                      [disabled]="disableInput$ | async"
+                      [(ngModel)]="project.descriptionShort"
+                      name="descriptionShort" 
+                      cdkTextareaAutosize 
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="10"
+                      placeholder="{{ staticNames.ProjectDescriptionShort }}">
+            </textarea>
           </mat-form-field>
 
           <mat-form-field>
-            <textarea matInput [disabled]="disableInput$ | async" 
-            [(ngModel)]="project.description" name="description" 
-            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
-            cdkAutosizeMaxRows="10" placeholder="Description full" ></textarea>
+            <textarea matInput
+                      [disabled]="disableInput$ | async"
+                      [(ngModel)]="project.description"
+                      name="description" 
+                      cdkTextareaAutosize 
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="10"
+                      placeholder="{{ staticNames.ProjectDescription }}">
+            </textarea>
           </mat-form-field>
       </div>
     </mat-tab>
 
-    <mat-tab label="Poster">
+    <mat-tab label="{{ staticNames.ProjectPoster }}">
       <div fxLayout="column" fxLayoutAlign="space-around center">
         <div fxLayout="row" fxLayoutAlign="center center" >
-          <img [ngClass]="{'disabled': disableInput$ | async }" 
-          class="posterImage" 
-          src="{{(project.posterPreview || project.posterUrl)}}" />
+          <img [ngClass]="{'disabled': disableInput$ | async }"
+               class="posterImage"
+               src="{{(project.posterPreview || project.posterUrl)}}" />
         </div>
           
         <mat-form-field>
-          <input matInput [disabled]="disableInput$ | async" 
-             [(ngModel)]="project.posterDescription" name="posterDescriptionle" placeholder="Poster description" />
+          <input matInput
+                 [disabled]="disableInput$ | async"
+                 [(ngModel)]="project.posterDescription"
+                 name="posterDescriptionle"
+                 placeholder="{{ staticNames.ProjectPosterDescription }}" />
         </mat-form-field>
 
         <div class="wide-position">
@@ -73,23 +98,28 @@
       </div>
     </mat-tab>
 
-    <mat-tab label="Urls">
-      <table class="dialogTable" #externalUrlsTable mat-table [dataSource]="project.externalUrls">
+    <mat-tab label="{{ staticNames.ExternalUrls }}">
+      <table mat-table 
+             class="dialogTable" 
+             #externalUrlsTable 
+             [dataSource]="project.externalUrls">
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>name</th>
+          <th mat-header-cell *matHeaderCellDef>{{ staticNames.ExternalUrlName }}</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field floatLabel="never">
               <input matInput placeholder="Name" [value]="element.displayName" [(ngModel)]="element.displayName" />
             </mat-form-field>
           </td>
-          <td mat-footer-cell *matFooterCellDef> Add new external url </td>
+          <td mat-footer-cell *matFooterCellDef> {{ staticNames.ExternalUrlCreate }} </td>
         </ng-container>
 
         <ng-container matColumnDef="url">
-          <th mat-header-cell *matHeaderCellDef>url</th>
+          <th mat-header-cell *matHeaderCellDef>{{ staticNames.ExternalUrl }}</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field floatLabel="never">
-              <input matInput placeholder="url" [value]="element.url" [(ngModel)]="element.url" />
+              <input matInput placeholder="{{ staticNames.ExternalUrl }}"
+                    [value]="element.url"
+                    [(ngModel)]="element.url" />
             </mat-form-field>
           </td>
           <td mat-footer-cell *matFooterCellDef>  </td>
@@ -98,7 +128,8 @@
         <ng-container matColumnDef="btn">
           <th mat-header-cell *matHeaderCellDef> </th>
           <td mat-cell  *matCellDef="let element"> 
-            <app-button [isDisabled]="disableInput$ | async" (click)="removeUrl(element)">Delete</app-button>
+            <app-button [isDisabled]="disableInput$ | async" 
+                        (click)="removeUrl(element)">{{ staticNames.GenericDelete }}</app-button>
           </td>
     
           <td mat-footer-cell *matFooterCellDef> </td>
@@ -112,22 +143,28 @@
 
     </mat-tab>
 
-    <mat-tab label="Gallery">
+    <mat-tab label="{{ staticNames.Gallery }}">
 
-      <table class="dialogTable" #galleryImagesTable mat-table [dataSource]="project.galleryImages">
+      <table mat-table 
+             class="dialogTable"
+             #galleryImagesTable
+             [dataSource]="project.galleryImages">
         <ng-container matColumnDef="imageUrl">
-          <th mat-header-cell *matHeaderCellDef>Image Url</th>
+          <th mat-header-cell *matHeaderCellDef>{{ staticNames.GalleryImageUrl }}</th>
           <td mat-cell *matCellDef="let element">           
             <img class="small-gallery" src="{{(element.localPreview || element.imageUrl)}}" />
           </td>
-          <td mat-footer-cell *matFooterCellDef> Add new image </td>
+          <td mat-footer-cell *matFooterCellDef> {{ staticNames.GalleryAdd }} </td>
         </ng-container>
 
         <ng-container matColumnDef="extraUrl">
-          <th mat-header-cell *matHeaderCellDef>Extra Url</th>
+          <th mat-header-cell *matHeaderCellDef> {{ staticNames.GalleryExtraUrl }}</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field floatLabel="never">
-              <input matInput placeholder="Extra Url" [value]="element.extraUrl" [(ngModel)]="element.extraUrl" />
+              <input matInput
+                     placeholder="{{ staticNames.GalleryExtraUrl }}"
+                     [value]="element.extraUrl"
+                     [(ngModel)]="element.extraUrl" />
             </mat-form-field>
           </td>
           <td mat-footer-cell *matFooterCellDef>  </td>
@@ -165,16 +202,13 @@
 
 <div class="actions" fxHide.lt-md="true">
   <div class="actions-left">
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">Delete</app-button>
+    <app-button [isDisabled]="disableInput$ | async" 
+                (OnClick)="delete()">
+                {{ staticNames.GenericDelete }}
+    </app-button>
   </div>
   <div class="actions-right">
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">Save</app-button>
-    <app-button (OnClick)="close()">Close</app-button>
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">{{ staticNames.GenericSave }}</app-button>
+    <app-button (OnClick)="close()">{{ staticNames.GenericClose }}</app-button>
   </div>
-</div>
-
-<div fxLayout="column" fxLayoutAlign="space-evenly center" fxHide.gt-sm="true">
-  <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">Delete</app-button>
-  <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">Save</app-button>
-  <app-button (OnClick)="close()">Close</app-button>
 </div>

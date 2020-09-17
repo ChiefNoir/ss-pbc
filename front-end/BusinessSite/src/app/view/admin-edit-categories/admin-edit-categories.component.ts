@@ -28,6 +28,7 @@ export class AdminEditCategoriesComponent implements OnInit
   public dialog: MatDialog;
   private authGuard: AuthGuard;
   private router: Router;
+  public staticNames: StaticNames = new StaticNames();
 
   private columnDefinitions = [
     { def: 'id', show: false },

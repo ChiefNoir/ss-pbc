@@ -1,48 +1,95 @@
 export class StaticNames
 {
-  public static LoadComplete = 'Load complete';
+ public LoadComplete = 'Load complete';
+ public InitializationComplete = 'Initialization complete';
+ public SaveComplete = 'Saving complete';
+ public SaveInProgress = 'Saving in progress';
+ public DeleteComplete = 'Deleting complete';
+ public DeleteInProgress = 'Delete in progress';
 
-  public static InitializationComplete = 'Initialization complete';
 
-  public static SaveComplete = 'Saving complete';
-  public static SaveInProgress = 'Saving in progress';
+ public DoLogin = 'Login';
+ public DoLoginOut = 'Log out';
 
-  public static DeleteComplete = 'Deleting complete';
-  public static DeleteInProgress = 'Delete in progress';
 
-  public static ProjectsNotFound = 'Nothing was found';
+ public TitleSeparator = ' · ';
+ public TitlePageIntroduction = '';
+ public TitlePageLogin = 'Login' + this.TitleSeparator;
+ public TitlePageNotFound = 'Page not found' + this.TitleSeparator;
+ public TitleProjects = 'Projects' + this.TitleSeparator;
 
-  public static TitleSeparator = ' · ';
-  public static TitleProjects = 'Projects' + StaticNames.TitleSeparator;
-  public static TitlePageNotFound = 'Page not found' + StaticNames.TitleSeparator;
-  public static TitlePageIntroduction = '';
-  public static TitlePageLogin = 'Login' + StaticNames.TitleSeparator;
 
-  public static IntroductionExternalUrls = 'Meet me on the other site';
+ public Menu = 'Menu';
+ public MenuAccounts = 'accounts';
+ public MenuAdmin = 'Admin';
+ public MenuCategories = 'categories';
+ public MenuHome = 'Home';
+ public MenuIntroduction = 'introduction';
+ public MenuLogin = 'Login';
+ public MenuProjects = 'Projects';
 
-  public static MenuHome = 'Home';
-  public static MenuProjects = 'Projects';
-  public static MenuAdmin = 'Admin';
-  public static MenuLogin = 'Login';
-  public static MenuCategories = 'categories';
-  public static MenuAccounts = 'accounts';
-  public static MenuIntroduction = 'introduction';
 
-  public static Login = 'Login';
-  public static Password = 'Password';
-  public static Role = 'Role';
-  public static Api = 'API';
+ public ErrorFieldCannotBeEmpty = 'This field cannot be empty.';
+ public ErrorProjectsNotFound = 'Nothing was found';
 
-  public static DoLogin = 'Login';
-  public static DoLoginOut = 'Log out';
+ public AdminApiVersion = 'Api version';
+ public AdminControls = 'Controls';
+ public AdminInformation = 'System information';
 
-  public static ErrorFieldCannotBeEmpty = 'This field cannot be empty.';
 
-  public static AdminInformation = 'System information';
-  public static AdminControls = 'Controls';
 
-  public static ProjectDescription = 'Description';
-  public static ProjectGallery = 'Gallery';
-  public static ProjectReleaseDate = 'Release date';
-  public static ProjectReleaseSoon = 'soon';
+ public AccountCreate = 'Creat account';
+ public AccountDelete = 'Account deleted';
+ public AccountEdit = 'Edit account';
+ public AccountLogin = 'Login';
+ public AccountPassword = 'Login';
+ public AccountRole = 'Role';
+
+
+ public CategoryCode = 'Code';
+ public CategoryName = 'Display name';
+ public CategoryType = 'Type';
+ public CategoryTypeGeneric = 'Generic';
+ public CategoryTypeSystem = 'System';
+
+
+ public ProjectCategory = 'Category';
+ public ProjectCode = 'Code';
+ public ProjectDescription = 'Description';
+ public ProjectDescriptionShort = 'Description short';
+ public ProjectName = 'Name';
+ public ProjectPoster = 'Poster';
+ public ProjectPosterDescription = 'Poster description';
+ public ProjectProperties = 'Project properties';
+ public ProjectReleaseDate = 'Release date';
+ public ProjectReleaseSoon = 'soon';
+
+
+ public Gallery = 'Gallery';
+ public GalleryAdd = 'Add new image';
+ public GalleryImageUrl = 'Image url';
+ public GalleryExtraUrl = 'Extra url';
+
+
+ public Introduction = 'Introduction';
+ public IntroductionContent = 'content';
+ public IntroductionExternalUrls = 'Meet me on the other site';
+ public IntroductionPoster = 'poster';
+ public IntroductionPosterDescription = 'poster description';
+ public IntroductionTitle = 'title';
+
+
+ public ExternalUrl = 'url';
+ public ExternalUrlCreate = 'Add new external link';
+ public ExternalUrlName = 'name';
+ public ExternalUrls = 'External links';
+
+
+ public GenericClose = 'close';
+ public GenericCreateNew = 'Create new';
+ public GenericDelete = 'delete';
+ public GenericNext = 'Next';
+ public GenericPrevious = 'Previous';
+ public GenericRefresh = 'refresh';
+ public GenericSave = 'save';
 }

@@ -29,6 +29,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({type: MessageType.Spinner });
   public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
+  public staticNames: StaticNames = new StaticNames();
 
   public constructor(service: DataService, router: Router, activeRoute: ActivatedRoute, titleService: Title)
   {
@@ -36,7 +37,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit
     this.router = router;
     this.activeRoute = activeRoute;
 
-    titleService.setTitle(StaticNames.TitleProjects + environment.siteName);
+    titleService.setTitle(this.staticNames.TitleProjects + environment.siteName);
   }
 
   public ngOnInit(): void
@@ -149,7 +150,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit
 
       if (response.data.length === 0)
       {
-        this.message$.next({text: StaticNames.ProjectsNotFound, type: MessageType.Info });
+        this.message$.next({text: this.staticNames.ErrorProjectsNotFound, type: MessageType.Info });
       }
     }
     else

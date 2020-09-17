@@ -22,15 +22,17 @@ import { Router } from '@angular/router';
 })
 
 export class AdminEditAccountsComponent implements OnInit, OnDestroy {
+
+  private authGuard: AuthGuard;
+  private router: Router;
   private service: DataService;
 
   public accounts$: BehaviorSubject<Array<Account>> = new BehaviorSubject<Array<Account>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   public paging$: BehaviorSubject<Paging<null>> = new BehaviorSubject<Paging<null>>(null);
-  public dialog: MatDialog;
-  private authGuard: AuthGuard;
-  private router: Router;
   public columns: string[] = ['login', 'role'];
+  public dialog: MatDialog;
+  public staticNames: StaticNames = new StaticNames();
 
   public constructor(service: DataService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
   {
@@ -139,7 +141,8 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
 
   private handleIncident(error: Incident): void
   {
-    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+    console.log(error);
+    this.message$.next({text: error.detail, type: MessageType.Error });
   }
 
   private handleError(error: any): void

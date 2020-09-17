@@ -25,7 +25,7 @@
 
   <mat-toolbar-row class="mobile"  fxLayout="row" fxLayoutAlign="center stretch"
                    fxShow="true" fxHide.gt-sm="true" >
-        <a (click)="drawer.toggle()"> Menu </a>
+        <a (click)="drawer.toggle()"> {{staticNames.Menu}} </a>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -36,10 +36,10 @@
       <a routerLink="/projects/"> {{staticNames.MenuProjects}}  </a>
 
       <ng-container *ngIf="authGuard.isLoggedIn$ | async; else sideLogin">
-        <a routerLink="/admin/" routerLinkActive="active">{{staticNames.Admin}}</a>
+        <a routerLink="/admin/" routerLinkActive="active">{{staticNames.MenuAdmin}}</a>
       </ng-container>
       <ng-template #sideLogin>
-        <a routerLink="/login/" routerLinkActive="active">{{staticNames.Login}}</a>
+        <a routerLink="/login/" routerLinkActive="active">{{staticNames.MenuLogin}}</a>
       </ng-template>
 
     </div>

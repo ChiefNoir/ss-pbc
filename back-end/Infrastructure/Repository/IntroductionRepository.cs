@@ -50,6 +50,7 @@ namespace Infrastructure.Repository
 
         private void Merge(DataModel.Introduction dbItem, Introduction newItem)
         {
+            dbItem.Title = newItem.Title;
             dbItem.Content = newItem.Content;
             dbItem.PosterDescription = newItem.PosterDescription;
             dbItem.PosterUrl = newItem.PosterUrl;

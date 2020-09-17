@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { StorageService } from 'src/app/service/storage.service';
 
 import { Title } from '@angular/platform-browser';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
@@ -20,13 +19,13 @@ import { AuthGuard } from 'src/app/guards/authGuard';
 
 export class AdminComponent implements OnInit
 {
-  private router: Router;
   private authGuard: AuthGuard;
-  public information$: BehaviorSubject<Information> = new BehaviorSubject<Information> (null);
-
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   private dataService: DataService;
-  
+  private router: Router;
+
+  public information$: BehaviorSubject<Information> = new BehaviorSubject<Information> (null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
+  public staticNames: StaticNames = StaticNames;
 
   public constructor(router: Router, titleService: Title, dataService: DataService, authGuard: AuthGuard)
   {
@@ -77,7 +76,8 @@ export class AdminComponent implements OnInit
 
   private handleIncident(error: Incident): void
   {
-    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+    console.log(error);
+    this.message$.next({text: error.detail + '<br/>' , type: MessageType.Error });
   }
 
   private handleError(error: any): void

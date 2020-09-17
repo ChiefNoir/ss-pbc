@@ -30,6 +30,14 @@ export class StaticNames
 
   public static Login = 'Login';
   public static Password = 'Password';
+  public static Role = 'Role';
+  public static Api = 'API';
+
+  public static DoLogin = 'Login';
+  public static DoLoginOut = 'Log out';
 
   public static ErrorFieldCannotBeEmpty = 'This field cannot be empty.';
+
+  public static AdminInformation = 'System information';
+  public static AdminControls = 'Controls';
 }

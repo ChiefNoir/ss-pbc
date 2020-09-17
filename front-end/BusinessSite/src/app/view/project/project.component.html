@@ -1,8 +1,6 @@
-
-  <div *ngIf="project$ | async as project; else loading">
-    <app-project-full [project]="project"> </app-project-full>
-  </div>
-
+<div *ngIf="project$ | async as project; else loading">
+  <app-project-full [project]="project"></app-project-full>
+</div>
 
 <ng-template #loading>
   <div *ngIf="message$ | async as msg">

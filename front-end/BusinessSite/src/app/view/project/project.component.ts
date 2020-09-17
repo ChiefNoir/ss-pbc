@@ -1,15 +1,14 @@
+import { BehaviorSubject } from 'rxjs';
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
-
-import { DataService } from 'src/app/service/data.service';
-import { RequestResult, Incident } from 'src/app/model/RequestResult';
-import { Project } from 'src/app/model/Project';
 import { StaticNames } from 'src/app/common/StaticNames';
+import { DataService } from 'src/app/service/data.service';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
+import { Project } from 'src/app/model/Project';
+import { RequestResult, Incident } from 'src/app/model/RequestResult';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-project-list',
@@ -17,7 +16,8 @@ import { MessageType, MessageDescription } from 'src/app/component/message/messa
   styleUrls: ['./project.component.scss'],
 })
 
-export class ProjectComponent {
+export class ProjectComponent
+{
   private service: DataService;
   private activeRoute: ActivatedRoute;
   private router: Router;
@@ -26,30 +26,33 @@ export class ProjectComponent {
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({type: MessageType.Spinner });
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
-  public constructor(service: DataService, activeRoute: ActivatedRoute, router: Router, titleService: Title) {
+  public constructor(service: DataService, activeRoute: ActivatedRoute, router: Router, titleService: Title)
+  {
     this.service = service;
     this.activeRoute = activeRoute;
     this.router = router;
     this.titleService = titleService;
 
-    this.activeRoute.params.subscribe(() => {
-      this.refreshPage();
-    });
+    this.activeRoute.params.subscribe
+    (
+      () => { this.refreshPage(); }
+    );
   }
 
-  private refreshPage(): void {
+  private refreshPage(): void
+  {
     this.project$.next(null);
 
     const code = this.activeRoute.snapshot.paramMap.get('code');
     this.service.getProject(code)
                 .then
                 (
-                  result => this.handleProjectRequest(result),
-                  reject => this.handleError(reject)
+                  win => this.handleProject(win),
+                  fail => this.handleError(fail)
                 );
   }
 
-  private handleProjectRequest(result: RequestResult<Project>): void
+  private handleProject(result: RequestResult<Project>): void
   {
     if (result.isSucceed)
     {
@@ -58,7 +61,7 @@ export class ProjectComponent {
         this.router.navigate(['/404']);
       }
 
-      this.titleService.setTitle(environment.siteName + ' - ' + result.data?.displayName);
+      this.titleService.setTitle(result.data?.displayName + StaticNames.TitleSeparator + environment.siteName);
       this.project$.next(result.data);
     }
     else
@@ -69,6 +72,7 @@ export class ProjectComponent {
 
   private handleIncident(error: Incident): void
   {
+    console.log(error);
     this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
   }
 
@@ -85,5 +89,4 @@ export class ProjectComponent {
       this.message$.next({text: error, type: MessageType.Error });
     }
   }
-
 }

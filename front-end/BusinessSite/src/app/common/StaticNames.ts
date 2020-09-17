@@ -11,4 +11,7 @@ export class StaticNames
   public static DeleteInProgress = 'Delete in progress';
 
   public static ProjectsNotFound = 'Nothing was found';
+
+
+  public static TitlePageNotFound = 'Page not found · ';
 }

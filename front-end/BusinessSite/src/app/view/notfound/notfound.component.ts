@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { StaticNames } from 'src/app/common/StaticNames';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -8,9 +9,10 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./notfound.component.scss'],
 })
 
-export class NotFoundComponent {
-
-  public constructor(titleService: Title) {
-    titleService.setTitle(environment.siteName);
+export class NotFoundComponent
+{
+  public constructor(titleService: Title)
+  {
+    titleService.setTitle(StaticNames.TitlePageNotFound + environment.siteName);
   }
 }

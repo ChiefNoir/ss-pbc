@@ -51,35 +51,22 @@ export class ProjectsListComponent implements OnDestroy, OnInit
     this.paging$.unsubscribe();
   }
 
-
   private refreshPage(): void
   {
     this.projects$.next(null);
     this.categories$.next(null);
 
-    // TODO: something is not right
     this.service.getCategories()
                 .then
                 (
-                  response =>
-                  {
-                    if (response.isSucceed)
-                    {
-                      this.refreshCategories(response.data);
-                    }
-                    else
-                    {
-                      this.handleIncident(response.error);
-                    }
-                  },
-                  reject => this.handleError(reject)
+                  win => this.handleCategorie(win),
+                  fail => this.handleError(fail)
                 );
   }
 
   private refreshCategories(categories: Category[])
   {
     const routeCategory = this.activeRoute.snapshot.paramMap.get('category');
-
     const selectedCategory = categories.find((x) => x.code === routeCategory);
     const everythingCategory = categories.find((x) => x.isEverything === true);
 
@@ -138,6 +125,18 @@ export class ProjectsListComponent implements OnDestroy, OnInit
         );
   }
 
+  private handleCategorie(response: RequestResult<Category[]>): void
+  {
+    if (response.isSucceed)
+    {
+      this.refreshCategories(response.data);
+    }
+    else
+    {
+      this.handleIncident(response.error);
+    }
+  }
+
   private handleProjects(response: RequestResult<ProjectPreview[]>): void
   {
     if (response.isSucceed)
@@ -174,6 +173,5 @@ export class ProjectsListComponent implements OnDestroy, OnInit
       this.message$.next({text: error, type: MessageType.Error });
     }
   }
-
 
 }

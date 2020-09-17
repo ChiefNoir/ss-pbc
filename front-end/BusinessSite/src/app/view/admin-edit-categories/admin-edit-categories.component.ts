@@ -11,7 +11,6 @@ import { DialogEditorCategoryComponent } from 'src/app/component/dialog-editor-c
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
 import { StaticNames } from 'src/app/common/StaticNames';
 import { AuthGuard } from 'src/app/guards/authGuard';
-import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -53,11 +52,11 @@ export class AdminEditCategoriesComponent implements OnInit
     if (this.authGuard.isLoggedIn$.value)
     {
       this.service.getCategories()
-                .then
-                (
-                  (result) => this.handleCategories(result),
-                  (error) => this.handleError(error)
-                );
+                  .then
+                  (
+                    win => this.handleCategories(win),
+                    fail => this.handleError(fail)
+                  );
     }
     else
     {
@@ -70,16 +69,15 @@ export class AdminEditCategoriesComponent implements OnInit
     const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '50%'});
 
     dialogRef.afterClosed()
-             .subscribe
+             .toPromise()
+             .then
              (
-               () =>{
-                      this.service.getCategories()
-                                  .then
-                                  (
-                                    result => this.handleCategories(result),
-                                    reject => this.handleError(reject)
-                                  );
-                    }
+               () => this.service.getCategories()
+                         .then
+                         (
+                           win => this.handleCategories(win),
+                           fail => this.handleError(fail)
+                         )
              );
   }
 
@@ -95,17 +93,16 @@ export class AdminEditCategoriesComponent implements OnInit
     const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '50%', data: categoryId});
 
     dialogRef.afterClosed()
-             .subscribe
+             .toPromise()
+             .then
              (
-               () => {
-                      this.service.getCategories()
-                                  .then
-                                  (
-                                    result => this.handleCategories(result),
-                                    reject => this.handleError(reject)
-                                  );
-                      }
-            );
+               () => this.service.getCategories()
+                         .then
+                         (
+                           win => this.handleCategories(win),
+                           fail => this.handleError(fail)
+                         )
+             );
   }
 
   private handleCategories(result: RequestResult<Category[]>): void
@@ -122,7 +119,8 @@ export class AdminEditCategoriesComponent implements OnInit
 
   private handleIncident(error: Incident): void
   {
-    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+    console.log(error);
+    this.message$.next({text: error.detail + '<br/>' , type: MessageType.Error });
   }
 
   private handleError(error: any): void

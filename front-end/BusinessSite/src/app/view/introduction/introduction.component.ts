@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 export class IntroductionComponent implements OnInit
 {
   private service: DataService;
+
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   public staticNames: StaticNames = new StaticNames();

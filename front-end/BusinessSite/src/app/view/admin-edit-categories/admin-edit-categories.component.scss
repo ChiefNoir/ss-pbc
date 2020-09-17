@@ -1,25 +1,8 @@
 @import 'variables';
 @import 'mixins';
 
-.buttons-group {
-  display: flex;
-  justify-content: flex-end;
-  flex-direction: row;
-}
-
-app-button-internal {
-  display: inline-block !important;
-  margin-left: 3%;
-  margin-right: 3%;
-  margin-bottom: 1%;
-  text-transform: uppercase;
-  width: 94%;
-}
-
 table {
-  margin: 2%;
-  width: 96%;
-
+  width: 100%;
   background-color: $table-row !important;
   @include flat-shadow($color-core);
 }
@@ -107,8 +90,4 @@ table {
 }
 ::ng-deep.mat-calendar-body-selected{
   background-color: $color-content!important;
-}
-
-.mat-form-field {
-  width: 90%;
 }

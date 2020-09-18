@@ -128,13 +128,9 @@ export class DialogEditProjectComponent implements OnInit
     this.service.deleteProject(this.project$.value)
                 .then
                 (
-                  win =>
-                  {
-                    this.project$.next(null);
-                    this.message$.next({text: this.staticNames.DeleteComplete, type: MessageType.Info });
-                  },
+                  win => this.handleDelete(win),
                   fail => this.handleError(fail)
-    );
+                );
   }
 
   public close(): void
@@ -179,6 +175,19 @@ export class DialogEditProjectComponent implements OnInit
     this.project$.value.posterUrl = '';
     this.project$.value.posterPreview = '';
     this.project$.value.posterToUpload = null;
+  }
+
+  private handleDelete(result: RequestResult<boolean>): void
+  {
+    if (result.isSucceed)
+    {
+      this.project$.next(null);
+      this.message$.next({text: this.staticNames.DeleteComplete, type: MessageType.Info });
+    }
+    else
+    {
+      this.handleError(result.error);
+    }
   }
 
   private handleProject(result: RequestResult<Project>, msg: MessageDescription): void

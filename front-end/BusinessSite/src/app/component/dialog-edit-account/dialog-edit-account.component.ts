@@ -89,19 +89,28 @@ export class DialogEditAccountComponent implements OnInit
     this.service.deleteAccount(this.account$.value)
                 .then
                 (
-                  () =>
-                  {
-                    this.account$.next(null);
-                    this.title$.next(this.staticNames.AccountDelete);
-                    this.message$.next({text: this.staticNames.DeleteComplete, type: MessageType.Info });
-                  },
-                  rejected => this.handleError(rejected.message)
+                  win => this.handleDelete(win),
+                  fail => this.handleError(fail)
                 );
   }
 
   public close(): void
   {
     this.dialog.close();
+  }
+
+  private handleDelete(result: RequestResult<boolean>): void
+  {
+    if (result.isSucceed)
+    {
+      this.account$.next(null);
+      this.title$.next(this.staticNames.AccountDelete);
+      this.message$.next({text: this.staticNames.DeleteComplete, type: MessageType.Info });
+    }
+    else
+    {
+      this.handleError(result.error);
+    }
   }
 
   private handleAccount(result: RequestResult<Account>): void

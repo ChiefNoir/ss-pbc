@@ -107,12 +107,12 @@ export class DataService
                .toPromise();
   }
 
-  public deleteCategory(category: Category): Promise<RequestResult<any>>
+  public deleteCategory(category: Category): Promise<RequestResult<boolean>>
   {
     const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
     return this.httpClient
-               .request<RequestResult<any>>
+               .request<RequestResult<boolean>>
                (
                  'delete',
                  this.endpoint + 'category',
@@ -201,7 +201,7 @@ export class DataService
                .toPromise();
   }
 
-  public deleteAccount(account: Account): Promise<RequestResult<any>>
+  public deleteAccount(account: Account): Promise<RequestResult<boolean>>
   {
     const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
@@ -215,7 +215,7 @@ export class DataService
                .toPromise();
   }
 
-  public deleteProject(project: Project): Promise<RequestResult<any>>
+  public deleteProject(project: Project): Promise<RequestResult<boolean>>
   {
     const headers = new HttpHeaders({ Token: this.storage.getToken() });
 

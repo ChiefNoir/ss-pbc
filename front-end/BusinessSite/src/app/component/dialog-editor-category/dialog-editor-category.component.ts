@@ -78,14 +78,27 @@ export class DialogEditorCategoryComponent implements OnInit
     this.service.deleteCategory(this.category$.value)
                 .then
                 (
-                  succeeded => this.handleCategory(succeeded, {text: this.staticNames.DeleteComplete, type: MessageType.Info }),
-                  rejected => this.handleError(rejected.message)
+                  win => this.handleDelete(win),
+                  fail => this.handleError(fail)
                 );
   }
 
   public close(): void
   {
     this.dialog.close();
+  }
+
+  private handleDelete(result: RequestResult<boolean>): void
+  {
+    if (result.isSucceed)
+    {
+      this.category$.next(null);
+      this.message$.next({text: this.staticNames.DeleteComplete, type: MessageType.Info });
+    }
+    else
+    {
+      this.handleError(result.error);
+    }
   }
 
   private handleCategory(result: RequestResult<Category>, description: MessageDescription): void

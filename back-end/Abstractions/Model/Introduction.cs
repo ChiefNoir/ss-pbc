@@ -1,10 +1,9 @@
-﻿using Abstractions.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Abstractions.Model
 {
     /// <summary> Introduction for the index page </summary>
-    public class Introduction : IVersion
+    public class Introduction
     {
         /// <summary> Content </summary>
         public string Content { get; set; }

@@ -1,9 +1,7 @@
-﻿using Abstractions.Common;
-
-namespace Abstractions.Model
+﻿namespace Abstractions.Model
 {
     /// <summary> URL to the external recourses </summary>
-    public class ExternalUrl : IVersion
+    public class ExternalUrl
     {
         /// <summary> Unique id or <c>null</c> if external url is brand new </summary>
         public int? Id { get; set; }

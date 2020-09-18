@@ -1,11 +1,10 @@
-﻿using Abstractions.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Abstractions.Model
 {
     /// <summary> Full project </summary>
-    public class Project : IVersion
+    public class Project
     {
         /// <summary> Unique id or <c>null</c> if project is brand new </summary>
         public int? Id { get; set; }

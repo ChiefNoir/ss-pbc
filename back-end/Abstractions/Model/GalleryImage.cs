@@ -1,9 +1,8 @@
-﻿using Abstractions.Common;
-
+﻿
 namespace Abstractions.Model
 {
     /// <summary> Gallery for the <seealso cref="Project"/> </summary>
-    public class GalleryImage : IVersion
+    public class GalleryImage
     {
         /// <summary> Unique id or <c>null</c> if image is brand new </summary>
         public int? Id { get; set; }

@@ -1,9 +1,7 @@
-﻿using Abstractions.Common;
-
-namespace Abstractions.Model
+﻿namespace Abstractions.Model
 {
     /// <summary> Project category</summary>
-    public class Category : IVersion
+    public class Category
     {
         /// <summary> Unique id or <c>null</c> if category is brand new </summary>
         public int? Id { get; set; }

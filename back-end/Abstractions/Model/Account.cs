@@ -1,9 +1,7 @@
-﻿using Abstractions.Common;
-
-namespace Abstractions.Model
+﻿namespace Abstractions.Model
 {
     /// <summary> Account </summary>
-    public class Account : IVersion
+    public class Account
     {
         /// <summary> Unique id or <c>null</c> if account is brand new </summary>
         public int? Id { get; set; }

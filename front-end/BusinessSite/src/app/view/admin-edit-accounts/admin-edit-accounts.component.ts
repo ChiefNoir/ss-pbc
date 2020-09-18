@@ -107,9 +107,11 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
     );
 
     dialogRef.afterClosed()
-             .subscribe
+             .toPromise()
+             .then
              (
-               () => this.changePage(this.paging$.value.getCurrentPage())
+               // note: it is a full resresh
+               () => this.refreshAccounts(this.paging$.value)
              );
   }
 

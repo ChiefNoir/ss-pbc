@@ -22,8 +22,8 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
-    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();" (click)="showEditor(row.id)"></tr>
-    <tr mat-footer-row *matFooterRowDef="getDisplayedColumns()" (click)="showCreator()"></tr>
+    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();" (click)="showDialog(row.id)"></tr>
+    <tr mat-footer-row *matFooterRowDef="getDisplayedColumns()" (click)="showDialog()"></tr>
   </table>
 </div>
 

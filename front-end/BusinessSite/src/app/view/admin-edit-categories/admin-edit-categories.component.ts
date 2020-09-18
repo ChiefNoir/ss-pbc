@@ -51,34 +51,12 @@ export class AdminEditCategoriesComponent implements OnInit
     await this.authGuard.checkIsLogged();
     if (this.authGuard.isLoggedIn$.value)
     {
-      this.service.getCategories()
-                  .then
-                  (
-                    win => this.handleCategories(win),
-                    fail => this.handleError(fail)
-                  );
+      this.refreshCategories();
     }
     else
     {
       this.router.navigate(['/login']);
     }
-  }
-
-  public showCreator(): void
-  {
-    const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '50%'});
-
-    dialogRef.afterClosed()
-             .toPromise()
-             .then
-             (
-               () => this.service.getCategories()
-                         .then
-                         (
-                           win => this.handleCategories(win),
-                           fail => this.handleError(fail)
-                         )
-             );
   }
 
   public getDisplayedColumns(): string[]
@@ -88,7 +66,7 @@ export class AdminEditCategoriesComponent implements OnInit
                 .map(x => x.def);
   }
 
-  public showEditor(categoryId: number): void
+  public showDialog(categoryId?: number): void
   {
     const dialogRef = this.dialog.open(DialogEditorCategoryComponent, {width: '50%', data: categoryId});
 
@@ -96,13 +74,19 @@ export class AdminEditCategoriesComponent implements OnInit
              .toPromise()
              .then
              (
-               () => this.service.getCategories()
-                         .then
-                         (
-                           win => this.handleCategories(win),
-                           fail => this.handleError(fail)
-                         )
+               () => this.refreshCategories()
              );
+  }
+
+  private refreshCategories(): void
+  {
+    // there is no paging in the categories, because there will be not many categories
+    this.service.getCategories()
+                .then
+                (
+                  win => this.handleCategories(win),
+                  fail => this.handleError(fail)
+                );
   }
 
   private handleCategories(result: RequestResult<Category[]>): void

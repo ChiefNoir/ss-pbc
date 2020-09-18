@@ -111,7 +111,7 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
 
   }
 
-  public showProject(projectCode: any): void
+  public showDialog(projectCode?: string): void
   {
     const dialogRef = this.dialog.open
     (

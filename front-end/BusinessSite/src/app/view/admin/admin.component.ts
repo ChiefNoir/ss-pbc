@@ -77,7 +77,7 @@ export class AdminComponent implements OnInit
   private handleIncident(error: Incident): void
   {
     console.log(error);
-    this.message$.next({text: error.detail + '<br/>' , type: MessageType.Error });
+    this.message$.next({text: error.message , type: MessageType.Error });
   }
 
   private handleError(error: any): void

@@ -229,7 +229,7 @@ export class DialogEditProjectComponent implements OnInit
     this.disableInput$.next(false);
 
     console.log(error);
-    this.message$.next({text: error.detail, type: MessageType.Error });
+    this.message$.next({text: error.message, type: MessageType.Error });
   }
 
   private handleError(error: any): void

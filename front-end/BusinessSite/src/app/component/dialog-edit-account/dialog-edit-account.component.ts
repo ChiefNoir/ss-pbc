@@ -136,7 +136,7 @@ export class DialogEditAccountComponent implements OnInit
     this.disableInput$.next(false);
 
     console.log(error);
-    this.message$.next({text: error.detail + '<br/>' , type: MessageType.Error });
+    this.message$.next({text: error.message, type: MessageType.Error });
   }
 
   private handleError(error: any): void

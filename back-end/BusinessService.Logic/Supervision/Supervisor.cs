@@ -1,10 +1,9 @@
-﻿using Abstractions.IFactory;
-using Abstractions.Model.System;
+﻿using Abstractions.Model.System;
+using BusinessService.Logic.Resources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Security;
 using System;
-using System.Reflection.Metadata.Ecma335;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
@@ -39,8 +38,11 @@ namespace BusinessService.Logic.Supervision
             {
                 //TODO: log error
                 result.IsSucceed = false;
-                result.Error = IncidentFactory.Create(IncidentsCodes.InternalError);
-                result.Error.Detail = $"{ee.Message}{Environment.NewLine} {ee.InnerException?.Message}";
+                result.Error = new Incident
+                {
+                     Message = ee.Message,
+                     Detail = ee.InnerException?.Message
+                };
             }
 
             return result;
@@ -63,8 +65,11 @@ namespace BusinessService.Logic.Supervision
             {
                 //TODO: log error
                 result.IsSucceed = false;
-                result.Error = IncidentFactory.Create(IncidentsCodes.InternalError);
-                result.Error.Detail = $"{ee.Message}{Environment.NewLine} {ee.InnerException?.Message}";
+                result.Error = new Incident
+                {
+                    Message = ee.Message,
+                    Detail = ee.InnerException?.Message
+                };
             }
 
             return result;
@@ -97,8 +102,12 @@ namespace BusinessService.Logic.Supervision
                 return new ExecutionResult<T>
                 {
                     IsSucceed = false,
-                    Error = IncidentFactory.Create(IncidentsCodes.InternalError, ee.Message),
-                };
+                    Error = new Incident
+                    {
+                        Message = ee.Message,
+                        Detail = ee.InnerException?.Message
+                    }
+            };
             }
 
             return await SafeExecuteAsync(func);
@@ -131,8 +140,12 @@ namespace BusinessService.Logic.Supervision
                 return new ExecutionResult<T>
                 {
                     IsSucceed = false,
-                    Error = IncidentFactory.Create(IncidentsCodes.InternalError, ee.Message),
-                };
+                    Error = new Incident
+                    {
+                        Message = ee.Message,
+                        Detail = ee.InnerException?.Message
+                    }
+            };
             }
 
             return SafeExecute(func);
@@ -147,7 +160,11 @@ namespace BusinessService.Logic.Supervision
         {
             if (string.IsNullOrEmpty(token))
             {
-                return IncidentFactory.Create(IncidentsCodes.AuthenticationNotProvided);
+                return new Incident
+                {
+                    Message = TextMessages.AuthenticationNotProvided
+                };
+
             }
 
             IPrincipal principal;
@@ -157,12 +174,19 @@ namespace BusinessService.Logic.Supervision
             }
             catch (SecurityTokenException ee)
             {
-                return IncidentFactory.Create(IncidentsCodes.InvalidToken, ee.Message);
+                return new Incident
+                {
+                    Message = TextMessages.InvalidToken,
+                    Detail = ee.Message
+                };
             }
 
             if (principal == null || principal.Identity == null)
             {
-                return IncidentFactory.Create(IncidentsCodes.InvalidToken);
+                return new Incident
+                {
+                    Message = TextMessages.InvalidToken
+                };
             }
 
             if (roles == null || roles.Length == 0)
@@ -178,7 +202,10 @@ namespace BusinessService.Logic.Supervision
                 }
             }
 
-            return IncidentFactory.Create(IncidentsCodes.NotEnoughRights);
+            return new Incident
+            {
+                Message = TextMessages.AccessDenied
+            };
         }
     }
 }

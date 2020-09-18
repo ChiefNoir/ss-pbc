@@ -54,8 +54,8 @@ create table gallery_image
 create table external_url
 (
 	id serial primary key,
-	url varchar(256),
-	display_name varchar(64) not null,
+	url varchar(256) not null,
+	display_name varchar(128) not null,
 	version int not null default 0
 );
 -- --------------------------------------------------------------

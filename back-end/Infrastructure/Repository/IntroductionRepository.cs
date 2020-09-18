@@ -1,8 +1,8 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
 using Infrastructure.Converters;
+using Infrastructure.Validation;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,8 +38,7 @@ namespace Infrastructure.Repository
                                        .ThenInclude(x => x.ExternalUrl)
                                        .FirstOrDefaultAsync();
 
-            if (dbItem == null)
-                throw new Exception("Introduction is not found");
+            ModelValidation.Check(dbItem, item);
 
             Merge(dbItem, item);
             await _context.SaveChangesAsync();

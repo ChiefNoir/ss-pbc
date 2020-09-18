@@ -157,7 +157,8 @@ export class ProjectsListComponent implements OnDestroy, OnInit
 
   private handleIncident(error: Incident): void
   {
-    this.message$.next({text: error.code + ' : ' + error.message + '<br/>' + error.detail + '<br/>' , type: MessageType.Error });
+    console.log(error);
+    this.message$.next({text: error.message, type: MessageType.Error });
   }
 
   private handleError(error: any): void

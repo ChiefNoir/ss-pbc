@@ -2,6 +2,7 @@
 using Abstractions.ISecurity;
 using Abstractions.Model;
 using Infrastructure.Converters;
+using Infrastructure.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -33,13 +34,9 @@ namespace Infrastructure.Repository
 
         public async Task<bool> DeleteAsync(Account item)
         {
-            if (item.Id == null)
-                throw new Exception($"Can't delete new account {item.Login}");
-
             var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == item.Id);
+            ModelValidation.CheckBeforeDelete(acc, item);
 
-            if (item.Id == null)
-                throw new Exception($"Can't find account {item.Login}");
 
             _context.Accounts.Remove(acc);
             var rows = await _context.SaveChangesAsync();
@@ -111,11 +108,7 @@ namespace Infrastructure.Repository
 
         private async Task<Account> CreateAsync(Account item)
         {
-            if (string.IsNullOrEmpty(item.Login))
-                throw new Exception("Login can't be empty");
-
-            if (string.IsNullOrEmpty(item.Password))
-                throw new Exception("Password can't be empty");
+            ModelValidation.CheckBeforeCreate(item, _context);
 
             var hashedPassword = _hashManager.Hash(item.Password);
 
@@ -129,12 +122,8 @@ namespace Infrastructure.Repository
         
         private async Task<Account> UpdateAsync(Account item)
         {
-            if (string.IsNullOrEmpty(item.Login))
-                throw new Exception("Login can't be empty");
-
             var dbAccount = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == item.Id);
-            if (dbAccount == null)
-                throw new Exception($"Can't find account with id: {item.Id}");
+            ModelValidation.CheckBeforeUpdate(dbAccount, item, _context);
 
             dbAccount.Login = item.Login;
             dbAccount.Role = item.Role;

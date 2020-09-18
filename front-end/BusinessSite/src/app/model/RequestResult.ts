@@ -7,7 +7,6 @@ export class RequestResult<T>
 
 export class Incident
 {
-  public code: number;
   public message: string;
   public detail: string;
 }

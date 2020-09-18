@@ -13,6 +13,7 @@ namespace Abstractions.IRepository
         /// <summary> Delete item from storage </summary>
         /// <param name="item"><seealso cref="Account"/> to delete</param>
         /// <returns> <c>true</c> if delete was successful </returns>
+        /// <exception cref="Exceptions.InconsistencyException"/>
         Task<bool> DeleteAsync(Account item);
 
         /// <summary> Get existing <seealso cref="Account"/> </summary>
@@ -29,12 +30,14 @@ namespace Abstractions.IRepository
         /// <summary>Save <seealso cref="Account"/> to the storage </summary>
         /// <param name="item">New or updated account</param>
         /// <returns>Created or updated <seealso cref="Account"/> </returns>
+        /// <exception cref="Exceptions.InconsistencyException"/>
         Task<Account> SaveAsync(Account item);
 
         /// <summary> Search within <seealso cref="Account"/>, with paging </summary>
         /// <param name="start">Start</param>
         /// <param name="length">Length</param>
         /// <returns> Array of <seealso cref="Account"/> </returns>
+        /// <exception cref="Exceptions.InconsistencyException"/>
         Task<Account[]> SearchAsync(int start, int length);
     }
 }

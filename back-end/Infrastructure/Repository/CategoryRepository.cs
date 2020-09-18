@@ -1,10 +1,12 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
 using Infrastructure.Converters;
+using Infrastructure.Validation;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
@@ -28,12 +30,9 @@ namespace Infrastructure.Repository
 
         public async Task<bool> DeleteAsync(Category category)
         {
-            if (category.Id == null)
-                throw new Exception($"Can't delete new category");
-
             var dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
-            if (category.Id == null)
-                throw new Exception($"Can't find category with id: {category.Id}");
+
+            ModelValidation.CheckBeforeDelete(dbCategory, category);
 
             _context.Categories.Remove(dbCategory);
             var rows = await _context.SaveChangesAsync();
@@ -77,13 +76,8 @@ namespace Infrastructure.Repository
 
         private async Task<Category> CreateAsync(Category category)
         {
-            if (string.IsNullOrEmpty(category.Code))
-                throw new Exception("Category code can not be null or empty");
+            ModelValidation.CheckBeforeCreate(category, _context);
 
-            var anyCode = await _context.Categories.AnyAsync(x => x.Code == category.Code);
-            if(anyCode)
-                throw new Exception($"Code {category.Code} duplicate");
-            
             var dbItem = new DataModel.Category
             {
                 Code = category.Code,
@@ -99,26 +93,17 @@ namespace Infrastructure.Repository
 
         private async Task<Category> UpdateAsync(Category category)
         {
-            if (category.Id == null)
-                throw new Exception("Can't update new category");
+            var dbItem = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
+            ModelValidation.CheckBeforeUpdate(dbItem, category, _context);
 
-            var oldItem = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
-            if(oldItem == null)
-                throw new Exception($"Category {category.DisplayName} was already deleted");
-
-            var countByCode = await _context.Categories.CountAsync(x => x.Code == category.Code);
-
-            if(countByCode > 1)
-                throw new Exception($"Code {category.Code} duplicate");
-
-            oldItem.Code = category.Code;
-            oldItem.DisplayName = category.DisplayName;
-            oldItem.IsEverything = oldItem.IsEverything;
-            oldItem.Version++;
+            dbItem.Code = category.Code;
+            dbItem.DisplayName = category.DisplayName;
+            dbItem.IsEverything = dbItem.IsEverything;
+            dbItem.Version++;
 
             await _context.SaveChangesAsync();
 
-            return DataConverter.ToCategory(oldItem);
+            return DataConverter.ToCategory(dbItem);
         }
 
         private async Task<Category> FirstOrDefaultAsync(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)

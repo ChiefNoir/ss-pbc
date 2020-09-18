@@ -1,6 +1,7 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
 using Infrastructure.Converters;
+using Infrastructure.Validation;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,9 @@ namespace Infrastructure.Repository
         public async Task<bool> DeleteAsync(Project project)
         {
             var dbItem = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
+
+            ModelValidation.CheckBeforeDelete(dbItem, project);
+
 
             _context.Projects.Remove(dbItem);
             var rows = await _context.SaveChangesAsync();
@@ -76,9 +80,7 @@ namespace Infrastructure.Repository
         
         private async Task<Project> CreateAsync(Project project)
         {
-            var byCode = await _context.Projects.AnyAsync(x => x.Code == project.Code);
-            if (byCode)
-                throw new Exception("Code duplicate"); //TODO: move to the supervision?
+            ModelValidation.CheckBeforeCreate(project, _context);
 
             var dbItem = AbstractionsConverter.ToProject(project);
             _context.Projects.Add(dbItem);
@@ -96,8 +98,7 @@ namespace Infrastructure.Repository
                                 .ThenInclude(x => x.ExternalUrl)
                                 .FirstOrDefault(x => x.Id == project.Id);
 
-            if (dbItem == null)
-                throw new Exception($"Can't find project with id: {project.Id}");
+            ModelValidation.CheckBeforeUpdate(dbItem, project, _context);
 
             Merge(dbItem, project);
 
@@ -108,8 +109,7 @@ namespace Infrastructure.Repository
 
         private void Merge(DataModel.Project dbProject, Project project)
         {
-            //TODO: change it later
-            dbProject.Category = _context.Categories.FirstOrDefault(x => x.Id == project.Category.Id);
+            dbProject.Category = _context.Categories.FirstOrDefault(x => x.Code == project.Category.Code);
 
             dbProject.CategoryId = project.Category.Id.Value;
             dbProject.Code = project.Code;

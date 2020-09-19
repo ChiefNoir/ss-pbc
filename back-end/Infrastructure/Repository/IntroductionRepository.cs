@@ -77,7 +77,7 @@ namespace Infrastructure.Repository
                 }
             }
 
-            foreach (var item in externalUrls.Where(x => x.Id == null))
+            foreach (var item in externalUrls?.Where(x => x.Id == null) ?? new List<ExternalUrl>())
             {
                 dbItem.ExternalUrls.Add(AbstractionsConverter.ToIntroductionExternalUrl(item));
             }

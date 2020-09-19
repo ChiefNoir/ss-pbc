@@ -1,30 +1,41 @@
 ﻿using Abstractions.IRepository;
-using Infrastructure.DataModel;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 
 namespace Infrastructure.Repository
 {
+    /* NOTE:
+     * Bringing big logging library looks like an overkill
+     */
+
     public class LogRepository : ILogRepository
     {
-        private readonly DataContext _context;
+        private readonly string _logDirectory;
+        private readonly string _fileName = DateTime.Now.ToString("dd-MM-yyyy")+ ".log";
 
-        public LogRepository(DataContext context)
+        public LogRepository(IConfiguration configuration)
         {
-            _context = context;
+            _logDirectory = configuration.GetSection("Location:LogStorage").Get<string>();
+
+            if (!Directory.Exists(_logDirectory))
+            {
+                Directory.CreateDirectory(_logDirectory);
+            }
         }
 
         public void LogError(Exception exception)
         {
-            var item = new Log
-            {
-                DateTime = DateTime.Now,
-                Source = exception.GetType().Name, //mostly to differ regular exception from custom
-                Details = JsonConvert.SerializeObject(exception, Formatting.Indented)
-            };
+            var value =
+                $"[{DateTime.Now:dd.MM.yyyy HH:mm:ss}] {Environment.NewLine}"
+                +$"[{exception.GetType().Name}] {Environment.NewLine}"//mostly to differ regular exception from custom
+                + JsonConvert.SerializeObject(exception, Formatting.Indented)
+                + Environment.NewLine + Environment.NewLine
+                + "----------------------------------------------------------"
+                ;
 
-            _context.Log.Add(item);
-            _context.SaveChanges();;
+            File.WriteAllText(Path.Combine(_logDirectory, _fileName), value);
         }
 
     }

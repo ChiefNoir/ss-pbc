@@ -89,12 +89,3 @@ create table account
 	version int not null default 0
 );
 -- --------------------------------------------------------------
-
--- log
-create table log
-(
-	id serial primary key,
-	date_time date not null,
-	source varchar(512),
-	details text
-);

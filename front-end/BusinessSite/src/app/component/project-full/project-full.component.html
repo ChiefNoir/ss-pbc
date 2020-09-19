@@ -20,7 +20,10 @@
         <h1 class="title">{{ project.displayName }}</h1>
         <div class="subtitle">
           {{ project.category.displayName }} | 
-          {{ textMessages.ProjectReleaseDate }}: {{ project.releaseDate | date:'dd MMMM yyyy' || textMessages.ProjectReleaseSoon }}
+          {{ textMessages.ProjectReleaseDate }}: 
+          {{(project.releaseDate | date:'dd MMMM yyyy') || textMessages.ProjectReleaseSoon }}
+
+
         </div>
         <mat-divider></mat-divider>
       </div>

@@ -93,7 +93,15 @@ export class AdminEditCategoriesComponent implements OnInit
   {
     if (result.isSucceed)
     {
-      this.categories$.next(result.data);
+      const sorted = result.data
+                          .sort((x, y) =>
+                          {
+                            if (x.isEverything < y.isEverything) { return 1; }
+
+                            return -1;
+                          });
+
+      this.categories$.next(sorted);
     }
     else
     {

@@ -38,7 +38,7 @@ namespace Infrastructure.Repository
                                        .ThenInclude(x => x.ExternalUrl)
                                        .FirstOrDefaultAsync();
 
-            ModelValidation.Check(dbItem, item);
+            ModelValidation.CheckBeforeUpdate(dbItem, item);
 
             Merge(dbItem, item);
             await _context.SaveChangesAsync();

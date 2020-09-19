@@ -45,13 +45,12 @@ namespace Infrastructure.Repository
         }
 
 
-        public async Task<Account> GetAsync(int id)
+        public Task<Account> GetAsync(int id)
         {
-            var account = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == id);
-            if (account == null)
-                throw new Exception($"Can't find account with id: {id}");
-
-            return DataConverter.ToAccount(account);
+            return _context.Accounts
+                           .Select(x => DataConverter.ToAccount(x))
+                           .AsNoTracking()
+                           .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Account> GetAsync(string login, string password)
@@ -67,21 +66,16 @@ namespace Infrastructure.Repository
             }
 
 
-            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-                throw new Exception($"Login or password is empty");
+            var dbItem = await _context.Accounts
+                                       .AsNoTracking()
+                                       .FirstOrDefaultAsync(x => x.Login == login);
 
-            var account = await _context.Accounts.FirstOrDefaultAsync(x => x.Login == login);
-            if (account == null)
-                throw new Exception($"Wrong login or password");
-
-            var hashedPassword = _hashManager.Hash(password, account.Salt);
-            if (hashedPassword.HexHash != account.Password)
-                throw new Exception($"Wrong login or password");
+            ModelValidation.CheckAccount(dbItem, login, password, _hashManager);
 
             return new Account
             {
-                Login = account.Login,
-                Role = account.Role
+                Login = login,
+                Role = dbItem.Role
             };
         }
 
@@ -101,6 +95,7 @@ namespace Infrastructure.Repository
                            .Skip(start)
                            .Take(length)
                            .Select(x => DataConverter.ToAccount(x))
+                           .AsNoTracking()
                            .ToArrayAsync();
         }
 

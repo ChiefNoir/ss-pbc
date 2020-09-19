@@ -33,6 +33,14 @@
         /// <summary> {0} duplicate </summary>
         internal const string PropertyDuplicate = "{0} duplicate";
 
+        /// <summary> Login is empty </summary>
+        internal const string AccountEmptyLogin = "Login is empty";
+
+        /// <summary> Password is empty </summary>
+        internal const string AccountEmptyPassword = "Password is empty";
+
+        /// <summary> Wrong login or password </summary>
+        internal const string AccountSomethingWrong = "Wrong login or password";
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Abstractions.Exceptions;
+using Abstractions.ISecurity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Infrastructure.Validation
     static class ModelValidation
     {
         //Introduction
-        public static void Check(DataModel.Introduction dbItem, Abstractions.Model.Introduction introduction)
+        public static void CheckBeforeUpdate(DataModel.Introduction dbItem, Abstractions.Model.Introduction introduction)
         {
             if (dbItem == null)
             {
@@ -512,6 +513,32 @@ namespace Infrastructure.Validation
         }
 
         //
+
+
+        public static void CheckAccount(DataModel.Account dbItem, string login, string password, IHashManager hashManager)
+        {
+            if(string.IsNullOrEmpty(login))
+            {
+                throw new SecurityException(Resources.TextMessages.AccountEmptyLogin);
+            }
+
+            if (string.IsNullOrEmpty(password))
+            {
+                throw new SecurityException(Resources.TextMessages.AccountEmptyLogin);
+            }
+
+            if(dbItem == null)
+            {
+                throw new SecurityException(Resources.TextMessages.AccountSomethingWrong);
+            }
+
+            var hashedPassword = hashManager.Hash(password, dbItem.Salt);
+            if (hashedPassword.HexHash != dbItem.Password)
+            {
+                throw new SecurityException(Resources.TextMessages.AccountSomethingWrong);
+            }
+
+        }
     }
 
 }

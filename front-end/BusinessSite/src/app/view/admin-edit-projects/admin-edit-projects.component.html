@@ -23,7 +23,7 @@
 
     <ng-container matColumnDef="releaseDate">
       <th mat-header-cell *matHeaderCellDef> {{ textMessages.ProjectReleaseDate }} </th>
-      <td mat-cell *matCellDef="let item"> {{item.releaseDate}} </td>
+      <td mat-cell *matCellDef="let item"> {{ item.releaseDate | date:'dd.MM.yyyy' }} </td>
 
       <td mat-footer-cell *matFooterCellDef>  </td>
     </ng-container>

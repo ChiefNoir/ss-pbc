@@ -55,6 +55,10 @@
         [routerLinkActiveOptions]="{ exact: true }"
         routerLinkActive="active">{{textMessages.MenuAdmin}}</a>
 
+      <a *ngIf="authGuard.canSee('/admin/editor/introduction')"
+        [routerLink]="['/admin/editor/introduction']"
+        routerLinkActive="active">{{textMessages.MenuIntroduction}}</a>
+
       <a *ngIf="authGuard.canSee('/admin/editor/projects')"
          [routerLink]="['/admin/editor/projects']"
          routerLinkActive="active">{{textMessages.MenuProjects}} </a>
@@ -62,11 +66,7 @@
       <a *ngIf="authGuard.canSee('/admin/editor/categories/')" 
          [routerLink]="['/admin/editor/categories']"
          routerLinkActive="active">{{textMessages.MenuCategories}}</a>
-      
-      <a *ngIf="authGuard.canSee('/admin/editor/introduction')"
-         [routerLink]="['/admin/editor/introduction']"
-         routerLinkActive="active">{{textMessages.MenuIntroduction}}</a>
-      
+
       <a *ngIf="authGuard.canSee('/admin/editor/accounts')"
          [routerLink]="['/admin/editor/accounts']"
          routerLinkActive="active">{{textMessages.MenuAccounts}}</a>

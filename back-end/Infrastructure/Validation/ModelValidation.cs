@@ -1,5 +1,6 @@
 ﻿using Abstractions.Exceptions;
 using Abstractions.ISecurity;
+using Abstractions.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -380,7 +381,7 @@ namespace Infrastructure.Validation
                     );
             }
 
-            foreach (var item in project.ExternalUrls)
+            foreach (var item in project.ExternalUrls ?? new List<ExternalUrl>())
             {
                 if(string.IsNullOrEmpty(item.DisplayName))
                     throw new InconsistencyException
@@ -395,7 +396,7 @@ namespace Infrastructure.Validation
                     );
             }
 
-            foreach (var item in project.GalleryImages)
+            foreach (var item in project.GalleryImages ?? new List<GalleryImage>())
             {
                 if (string.IsNullOrEmpty(item.ImageUrl))
                     throw new InconsistencyException
@@ -488,7 +489,7 @@ namespace Infrastructure.Validation
                 }
             }
 
-            foreach (var item in project.ExternalUrls)
+            foreach (var item in project.ExternalUrls ?? new List<ExternalUrl>())
             {
                 if (string.IsNullOrEmpty(item.DisplayName))
                     throw new InconsistencyException
@@ -503,7 +504,7 @@ namespace Infrastructure.Validation
                     );
             }
 
-            foreach (var item in project.GalleryImages)
+            foreach (var item in project.GalleryImages ?? new List<GalleryImage>())
             {
                 if (string.IsNullOrEmpty(item.ImageUrl))
                     throw new InconsistencyException

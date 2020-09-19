@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate
 
   public account: Account;
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public validating$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public validating$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public constructor(authService: AuthService, router: Router, storage: StorageService)
   {
@@ -32,6 +32,8 @@ export class AuthGuard implements CanActivate
 
   public async checkIsLogged(): Promise<void>
   {
+    if(this.validating$.value === true) return;
+
     this.validating$.next(true);
 
     const token = this.storageService.getToken();

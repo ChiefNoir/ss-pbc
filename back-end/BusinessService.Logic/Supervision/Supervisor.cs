@@ -1,4 +1,6 @@
-﻿using Abstractions.Model.System;
+﻿using Abstractions.IRepository;
+using Abstractions.Model.System;
+using Abstractions.Supervision;
 using BusinessService.Logic.Resources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -9,23 +11,20 @@ using System.Threading.Tasks;
 
 namespace BusinessService.Logic.Supervision
 {
-    /// <summary> Utility class that provides wrapper for all things that might fail </summary>
-    /// <remarks> Service <b>CAN NOT</b> throw <seealso cref="Exception"/> and die</remarks>
-    public static class Supervisor
+
+    public class Supervisor : ISupervisor
     {
         private static IConfiguration _configuration;
+        private static ILogRepository _logRepository;
 
-        public static void InitConfiguration(IConfiguration configuration)
+        public Supervisor(IConfiguration configuration, ILogRepository logRepository)
         {
-            //for Token validation
             _configuration = configuration;
+            _logRepository = logRepository;
         }
 
-        /// <summary> Execute function and return its result if everything goes right </summary>
-        /// <typeparam name="T">Type of returning result</typeparam>
-        /// <param name="func"><seealso cref="Func"/> to execute</param>
-        /// <returns>Result of execution or ErrorMessage will have message </returns>
-        public static async Task<ExecutionResult<T>> SafeExecuteAsync<T>(Func<Task<T>> func)
+
+        public async Task<ExecutionResult<T>> SafeExecuteAsync<T>(Func<Task<T>> func)
         {
             var result = new ExecutionResult<T>();
 
@@ -36,7 +35,8 @@ namespace BusinessService.Logic.Supervision
             }
             catch (Exception ee)
             {
-                //TODO: log error
+                _logRepository.LogError(ee);
+
                 result.IsSucceed = false;
                 result.Error = new Incident
                 {
@@ -48,11 +48,8 @@ namespace BusinessService.Logic.Supervision
             return result;
         }
 
-        /// <summary> Execute function and return its result if everything goes right </summary>
-        /// <typeparam name="T">Type of returning result</typeparam>
-        /// <param name="func"><seealso cref="Func"/> to execute</param>
-        /// <returns>Result of execution or ErrorMessage will have message </returns>
-        public static ExecutionResult<T> SafeExecute<T>(Func<T> func)
+        
+        public ExecutionResult<T> SafeExecute<T>(Func<T> func)
         {
             var result = new ExecutionResult<T>();
 
@@ -63,7 +60,8 @@ namespace BusinessService.Logic.Supervision
             }
             catch (Exception ee)
             {
-                //TODO: log error
+                _logRepository.LogError(ee);
+
                 result.IsSucceed = false;
                 result.Error = new Incident
                 {
@@ -75,13 +73,8 @@ namespace BusinessService.Logic.Supervision
             return result;
         }
 
-        /// <summary> Execute function and return its result if everything goes right </summary>
-        /// <typeparam name="T">Type of returning result</typeparam>
-        /// <param name="token">JWT token to validate</param>
-        /// <param name="roles">Roles who have rights to execute function</param>
-        /// <param name="func">Function to execute</param>
-        /// <returns>Result of execution or ErrorMessage will have message </returns>
-        public static async Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, string[] roles, Func<Task<T>> func)
+        
+        public async Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, string[] roles, Func<Task<T>> func)
         {
             try
             {
@@ -98,7 +91,8 @@ namespace BusinessService.Logic.Supervision
             }
             catch (Exception ee)
             {
-                //TODO: log error
+                _logRepository.LogError(ee);
+
                 return new ExecutionResult<T>
                 {
                     IsSucceed = false,
@@ -113,13 +107,8 @@ namespace BusinessService.Logic.Supervision
             return await SafeExecuteAsync(func);
         }
 
-        /// <summary> Execute function and return its result if everything goes right </summary>
-        /// <typeparam name="T">Type of returning result</typeparam>
-        /// <param name="token">JWT token to validate</param>
-        /// <param name="roles">Roles who have rights to execute function</param>
-        /// <param name="func">Function to execute</param>
-        /// <returns>Result of execution or ErrorMessage will have message </returns>
-        public static ExecutionResult<T> SafeExecute<T>(string token, string[] roles, Func<T> func)
+        
+        public ExecutionResult<T> SafeExecute<T>(string token, string[] roles, Func<T> func)
         {
             try
             {
@@ -136,7 +125,8 @@ namespace BusinessService.Logic.Supervision
             }
             catch (Exception ee)
             {
-                //TODO: log error
+                _logRepository.LogError(ee);
+
                 return new ExecutionResult<T>
                 {
                     IsSucceed = false,
@@ -152,6 +142,7 @@ namespace BusinessService.Logic.Supervision
         }
 
 
+        //TODO: make this an secException
         /// <summary> Check JWT token</summary>
         /// <param name="token">Token to validate</param>
         /// <param name="roles">Roles who have rights to execute function</param>
@@ -208,4 +199,5 @@ namespace BusinessService.Logic.Supervision
             };
         }
     }
+
 }

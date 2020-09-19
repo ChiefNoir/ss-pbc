@@ -1,5 +1,6 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.ISecurity;
+using Abstractions.Supervision;
 using BusinessService.Logic.Supervision;
 using Infrastructure;
 using Infrastructure.Repository;
@@ -40,6 +41,8 @@ namespace BusinessService
             services.AddTransient<IIntroductionRepository, IntroductionRepository>();
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IHashManager, HashManager>();
+            services.AddTransient<ISupervisor, Supervisor>();
+            services.AddTransient<ILogRepository, LogRepository>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
@@ -48,7 +51,6 @@ namespace BusinessService
                         options.TokenValidationParameters = TokenManager.CreateTokenValidationParameters(Configuration);
                     });
 
-            Supervisor.InitConfiguration(Configuration);
 
             //MultiPartBodyLength
             services.Configure<FormOptions>(o =>

@@ -1,6 +1,6 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
-using BusinessService.Logic.Supervision;
+using Abstractions.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -11,16 +11,18 @@ namespace API.Controllers.Private
     public class PrivateCategoryController : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ISupervisor _supervisor;
 
-        public PrivateCategoryController(ICategoryRepository categoryRepository)
+        public PrivateCategoryController(ICategoryRepository categoryRepository, ISupervisor supervisor)
         {
             _categoryRepository = categoryRepository;
+            _supervisor = supervisor;
         }
 
         [HttpPost("category")]
         public async Task<IActionResult> Save([FromHeader] string token, [FromBody] Category category)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _categoryRepository.SaveAsync(category);
             });
@@ -31,7 +33,7 @@ namespace API.Controllers.Private
         [HttpDelete("category")]
         public async Task<IActionResult> Delete([FromHeader] string token, [FromBody] Category category)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _categoryRepository.DeleteAsync(category);
             });

@@ -84,7 +84,7 @@ namespace Infrastructure.Validation
             }
         }
         
-        public async static void CheckBeforeUpdate(DataModel.Account dbItem, Abstractions.Model.Account account, DataContext context)
+        public static void CheckBeforeUpdate(DataModel.Account dbItem, Abstractions.Model.Account account, DataContext context)
         {
             if (account.Id == null)
             {
@@ -127,7 +127,7 @@ namespace Infrastructure.Validation
                     );
             }
         
-            if(dbItem.Login != account.Login && await context.Accounts.AnyAsync(x => x.Login == account.Login))
+            if(dbItem.Login != account.Login && context.Accounts.Any(x => x.Login == account.Login))
             {
                 throw new InconsistencyException
                     (
@@ -137,7 +137,7 @@ namespace Infrastructure.Validation
 
         }
 
-        public static async void CheckBeforeCreate(Abstractions.Model.Account account, DataContext context)
+        public static void CheckBeforeCreate(Abstractions.Model.Account account, DataContext context)
         {
             if (account.Id != null)
             {
@@ -163,7 +163,7 @@ namespace Infrastructure.Validation
                     );
             }
 
-            if (await context.Accounts.AnyAsync(x => x.Login == account.Login))
+            if (context.Accounts.Any(x => x.Login == account.Login))
             {
                 throw new InconsistencyException
                     (
@@ -208,7 +208,7 @@ namespace Infrastructure.Validation
             }
         }
 
-        public static async void CheckBeforeCreate(Abstractions.Model.Category category, DataContext context)
+        public static void CheckBeforeCreate(Abstractions.Model.Category category, DataContext context)
         {
             if (category.Id != null)
             {
@@ -234,7 +234,7 @@ namespace Infrastructure.Validation
                     );
             }
 
-            if (await context.Categories.AnyAsync(x => x.Code == category.Code))
+            if (context.Categories.Any(x => x.Code == category.Code))
             {
                 throw new InconsistencyException
                     (
@@ -244,7 +244,7 @@ namespace Infrastructure.Validation
 
         }
 
-        public static async void CheckBeforeUpdate(DataModel.Category dbItem, Abstractions.Model.Category category, DataContext context)
+        public static void CheckBeforeUpdate(DataModel.Category dbItem, Abstractions.Model.Category category, DataContext context)
         {
             if (category.Id == null)
             {
@@ -286,7 +286,7 @@ namespace Infrastructure.Validation
                     );
             }
 
-            if (dbItem.Code != category.Code && await context.Categories.AnyAsync(x => x.Code == category.Code))
+            if (dbItem.Code != category.Code && context.Categories.Any(x => x.Code == category.Code))
             {
                 throw new InconsistencyException
                     (
@@ -327,7 +327,7 @@ namespace Infrastructure.Validation
 
         }
 
-        public static async void CheckBeforeCreate(Abstractions.Model.Project project, DataContext context)
+        public static void CheckBeforeCreate(Abstractions.Model.Project project, DataContext context)
         {
             if (project.Id != null)
             {
@@ -361,7 +361,7 @@ namespace Infrastructure.Validation
                     );
             }
 
-            if (!await context.Categories.AnyAsync(x=>x.Id == project.Category.Id))
+            if (!context.Categories.Any(x=>x.Id == project.Category.Id))
             {
                 throw new InconsistencyException
                     (
@@ -370,7 +370,7 @@ namespace Infrastructure.Validation
             }
 
 
-            if (await context.Projects.AnyAsync(x => x.Code == project.Code))
+            if (context.Projects.Any(x => x.Code == project.Code))
             {
                 throw new InconsistencyException
                     (
@@ -404,7 +404,7 @@ namespace Infrastructure.Validation
 
         }
 
-        public static async void CheckBeforeUpdate(DataModel.Project dbItem, Abstractions.Model.Project project, DataContext context)
+        public static void CheckBeforeUpdate(DataModel.Project dbItem, Abstractions.Model.Project project, DataContext context)
         {
             if (project.Id == null)
             {
@@ -446,7 +446,7 @@ namespace Infrastructure.Validation
                     );
             }
 
-            if (dbItem.Code != project.Code && await context.Projects.AnyAsync(x => x.Code == project.Code))
+            if (dbItem.Code != project.Code && context.Projects.Any(x => x.Code == project.Code))
             {
                 throw new InconsistencyException
                     (

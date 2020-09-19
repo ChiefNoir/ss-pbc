@@ -1,12 +1,11 @@
 ﻿using Abstractions.Model;
+using Abstractions.Supervision;
 using API.Model;
-using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Security;
 using Security.Extensions;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace API.Controllers.Private
 {
@@ -15,16 +14,18 @@ namespace API.Controllers.Private
     public class PrivateInformationalController : ControllerBase
     {
         private readonly IConfiguration _config;
+        private readonly ISupervisor _supervisor;
 
-        public PrivateInformationalController(IConfiguration config)
+        public PrivateInformationalController(IConfiguration config, ISupervisor supervisor)
         {
             _config = config;
+            _supervisor = supervisor;
         }
 
         [HttpGet("information")]
         public IActionResult GetIntroduction([FromHeader] string token)
         {
-            var result = Supervisor.SafeExecute(token, new[] { RoleNames.Admin, RoleNames.Demo }, () =>
+            var result = _supervisor.SafeExecute(token, new[] { RoleNames.Admin, RoleNames.Demo }, () =>
             {
                 var claims = TokenManager.ValidateToken(_config, token);
 

@@ -1,7 +1,7 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
+using Abstractions.Supervision;
 using API.Model;
-using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Security;
@@ -18,17 +18,19 @@ namespace API.Controllers.Gateway
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IConfiguration _configuration;
+        private readonly ISupervisor _supervisor;
 
-        public AuthenticationController(IConfiguration configuration, IAccountRepository userRepository)
+        public AuthenticationController(IConfiguration configuration, IAccountRepository userRepository, ISupervisor supervisor)
         {
             _configuration = configuration;
             _accountRepository = userRepository;
+            _supervisor = supervisor;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Credentials credentials)
         {
-            var result = await Supervisor.SafeExecuteAsync(async () =>
+            var result = await _supervisor.SafeExecuteAsync(async () =>
             {
                 var user = await _accountRepository.GetAsync(credentials.Login, credentials.Password);
 
@@ -46,7 +48,7 @@ namespace API.Controllers.Gateway
         [HttpPost("token")]
         public IActionResult Validate([FromHeader] string token)
         {
-            var result = Supervisor.SafeExecute(() =>
+            var result = _supervisor.SafeExecute(() =>
             {
                 var principal = TokenManager.ValidateToken(_configuration, token);
 

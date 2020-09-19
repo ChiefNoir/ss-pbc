@@ -94,8 +94,10 @@ namespace Infrastructure.Repository
         private async Task<Category> UpdateAsync(Category category)
         {
             var dbItem = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
-            ModelValidation.CheckBeforeUpdate(dbItem, category, _context);
 
+            ModelValidation.CheckBeforeUpdate(dbItem, category, _context);
+            
+            
             dbItem.Code = category.Code;
             dbItem.DisplayName = category.DisplayName;
             dbItem.IsEverything = dbItem.IsEverything;

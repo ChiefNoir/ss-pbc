@@ -1,5 +1,6 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
+using Abstractions.Supervision;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,18 +17,20 @@ namespace API.Controllers.Private
         private readonly IConfiguration _configuration;
         private readonly IFileRepository _fileRepository;
         private readonly IIntroductionRepository _introductionRepository;
+        private readonly ISupervisor _supervisor;
 
-        public PrivateIntroductionController(IFileRepository fileRepository, IConfiguration configuration, IIntroductionRepository introductionRepository)
+        public PrivateIntroductionController(IFileRepository fileRepository, IConfiguration configuration, IIntroductionRepository introductionRepository, ISupervisor supervisor)
         {
             _configuration = configuration;
             _fileRepository = fileRepository;
             _introductionRepository = introductionRepository;
+            _supervisor = supervisor;
         }
 
         [HttpPatch("introduction"), DisableRequestSizeLimit]
         public async Task<IActionResult> UpdateIntroduction([FromHeader] string token, [FromForm] Introduction introduction)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 HandleFiles(introduction, Request.Form.Files);
                 return _introductionRepository.SaveAsync(introduction);

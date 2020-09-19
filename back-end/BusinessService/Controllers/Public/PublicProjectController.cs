@@ -1,4 +1,5 @@
 ﻿using Abstractions.IRepository;
+using Abstractions.Supervision;
 using API.Queries;
 using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
@@ -11,16 +12,18 @@ namespace API.Controllers.Public
     public class PublicProjectController : ControllerBase
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly ISupervisor _supervisor;
 
-        public PublicProjectController(IProjectRepository projectRepository)
+        public PublicProjectController(IProjectRepository projectRepository, ISupervisor supervisor)
         {
             _projectRepository = projectRepository;
+            _supervisor = supervisor;
         }
 
         [HttpGet("projects/{code}")]
         public async Task<IActionResult> GetProject(string code)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await _supervisor.SafeExecuteAsync(() =>
             {
                 return _projectRepository.GetAsync(code);
             });
@@ -31,7 +34,7 @@ namespace API.Controllers.Public
         [HttpGet("projects/search")]
         public async Task<IActionResult> GetProjectsPreview([FromQuery] Paging paging, [FromQuery] ProjectSearch searchQuery)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await _supervisor.SafeExecuteAsync(() =>
             {
                 return _projectRepository.GetPreviewAsync(paging.Start, paging.Length, searchQuery.CategoryCode);
             });

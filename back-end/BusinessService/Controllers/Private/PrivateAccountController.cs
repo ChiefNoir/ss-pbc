@@ -1,7 +1,7 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
+using Abstractions.Supervision;
 using API.Queries;
-using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,16 +13,18 @@ namespace API.Controllers.Private
     public class PrivateAccountController : ControllerBase
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly ISupervisor _supervisor;
 
-        public PrivateAccountController(IAccountRepository accountRepository)
+        public PrivateAccountController(IAccountRepository accountRepository, ISupervisor supervisor)
         {
             _accountRepository = accountRepository;
+            _supervisor = supervisor;
         }
 
         [HttpPost("accounts")]
         public async Task<IActionResult> AddAccount([FromHeader] string token, [FromBody] Account account)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
              {
                  return _accountRepository.SaveAsync(account);
              });
@@ -33,7 +35,7 @@ namespace API.Controllers.Private
         [HttpGet("accounts")]
         public async Task<IActionResult> CountAccounts([FromHeader] string token)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.CountAsync();
             });
@@ -44,7 +46,7 @@ namespace API.Controllers.Private
         [HttpDelete("accounts")]
         public async Task<IActionResult> DeleteUser([FromHeader] string token, [FromBody] Account account)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.DeleteAsync(account);
             });
@@ -55,7 +57,7 @@ namespace API.Controllers.Private
         [HttpGet("accounts/{id}")]
         public async Task<IActionResult> GetAccount([FromHeader] string token, int id)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.GetAsync(id);
             });
@@ -66,7 +68,7 @@ namespace API.Controllers.Private
         [HttpGet("accounts/search")]
         public async Task<IActionResult> GetAccounts([FromHeader] string token, [FromQuery] Paging paging)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.SearchAsync(paging.Start, paging.Length);
             });
@@ -77,7 +79,7 @@ namespace API.Controllers.Private
         [HttpGet("roles")]
         public IActionResult GetRoles([FromHeader] string token)
         {
-            var result = Supervisor.SafeExecute(token, new[] { RoleNames.Admin }, () =>
+            var result = _supervisor.SafeExecute(token, new[] { RoleNames.Admin }, () =>
             {
                 var lst = new List<string>();
                 foreach (var property in typeof(RoleNames).GetProperties())
@@ -94,7 +96,7 @@ namespace API.Controllers.Private
         [HttpPatch("accounts")]
         public async Task<IActionResult> UpdateAccount([FromHeader] string token, [FromBody] Account account)
         {
-            var result = await Supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
+            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
                 return _accountRepository.SaveAsync(account);
             });

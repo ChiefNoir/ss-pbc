@@ -19,6 +19,7 @@ namespace Infrastructure
         internal DbSet<Introduction> Introductions { get; set; }
         internal DbSet<IntroductionExternalUrl> IntroductionExternalUrls { get; set; }
         internal DbSet<Project> Projects { get; set; }
+        internal DbSet<Log> Log { get; set; }
         internal DbSet<ProjectExternalUrl> ProjectExternalUrls { get; set; }
 
         public DataContext(DbContextOptions options) : base(options)

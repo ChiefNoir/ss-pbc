@@ -1,5 +1,5 @@
 ﻿using Abstractions.IRepository;
-using BusinessService.Logic.Supervision;
+using Abstractions.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,16 +10,18 @@ namespace API.Controllers.Public
     public class PublicCategoryController : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ISupervisor _supervisor;
 
-        public PublicCategoryController(ICategoryRepository categoryRepository)
+        public PublicCategoryController(ICategoryRepository categoryRepository, ISupervisor supervisor)
         {
             _categoryRepository = categoryRepository;
+            _supervisor = supervisor;
         }
 
         [HttpGet("categories")]
         public async Task<IActionResult> GetCategories()
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await _supervisor.SafeExecuteAsync(() =>
             {
                 return _categoryRepository.GetAsync();
             });
@@ -30,7 +32,7 @@ namespace API.Controllers.Public
         [HttpGet("categories/{id}")]
         public async Task<IActionResult> GetCategory(int id)
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await _supervisor.SafeExecuteAsync(() =>
             {
                 return _categoryRepository.GetAsync(id);
             });
@@ -41,7 +43,7 @@ namespace API.Controllers.Public
         [HttpGet("categories/everything")]
         public async Task<IActionResult> GetEverythingCategory()
         {
-            var result = await Supervisor.SafeExecuteAsync(() =>
+            var result = await _supervisor.SafeExecuteAsync(() =>
             {
                 return _categoryRepository.GetTechnicalAsync();
             });

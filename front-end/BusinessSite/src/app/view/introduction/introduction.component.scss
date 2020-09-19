@@ -28,6 +28,22 @@
     margin-top: 10px;
   }
 
+  .description ::ng-deep span {
+    position: relative;
+    white-space: pre;
+    &:after {
+      background: black;
+      border-radius: 0.1em;
+      box-shadow: 0 0 1px rgba(0,0,0,0.35);
+      content: " ";
+      width: 100%;
+      height: 1.2em;
+      left: 0;
+      position: absolute ;
+      transform: skewY(-5deg) rotate(5deg) ;
+    }
+  }
+
   .poster {
     margin-bottom: 20px;
     margin-left: 20px;

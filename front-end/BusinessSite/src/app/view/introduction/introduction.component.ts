@@ -5,7 +5,7 @@ import { DataService } from 'src/app/service/data.service';
 import { Introduction } from 'src/app/model/Introduction';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { RequestResult, Incident } from 'src/app/model/RequestResult';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -20,13 +20,13 @@ export class IntroductionComponent implements OnInit
 
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
 
   public constructor(service: DataService, titleService: Title)
   {
     this.service = service;
 
-    titleService.setTitle(this.staticNames.TitlePageIntroduction + environment.siteName);
+    titleService.setTitle(this.textMessages.TitlePageIntroduction + environment.siteName);
   }
 
   public ngOnInit(): void

@@ -2,14 +2,14 @@
   <table mat-table [dataSource]="accounts">
 
     <ng-container matColumnDef="login">
-      <th mat-header-cell *matHeaderCellDef> {{staticNames.AccountLogin}} </th>
+      <th mat-header-cell *matHeaderCellDef> {{textMessages.AccountLogin}} </th>
       <td mat-cell *matCellDef="let item"> {{item.login}} </td>
 
-      <td mat-footer-cell *matFooterCellDef> {{staticNames.GenericCreateNew}}  </td>
+      <td mat-footer-cell *matFooterCellDef> {{textMessages.GenericCreateNew}}  </td>
     </ng-container>
 
     <ng-container matColumnDef="role">
-      <th mat-header-cell *matHeaderCellDef> {{staticNames.AccountRole}} </th>
+      <th mat-header-cell *matHeaderCellDef> {{textMessages.AccountRole}} </th>
       <td mat-cell *matCellDef="let item"> {{item.role}} </td>
 
       <td mat-footer-cell *matFooterCellDef>  </td>

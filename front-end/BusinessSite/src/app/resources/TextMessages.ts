@@ -1,4 +1,4 @@
-export class StaticNames
+export class TextMessages
 {
  public LoadComplete = 'Load complete';
  public InitializationComplete = 'Initialization complete';

@@ -3,7 +3,7 @@
     <a class="button" *ngIf="currentPage > minPage"
        fxFlex="100%"
        (click)="btnPreviousClick()">
-       {{ staticNames.GenericPrevious }}
+       {{ textMessages.GenericPrevious }}
     </a>
   </div>
   <div fxFlex="30%">
@@ -21,7 +21,7 @@
     <a class="button" *ngIf="currentPage < maxPage"
        fxFlex="100%"
        (click)="btnNextClick()">
-       {{ staticNames.GenericNext }}
+       {{ textMessages.GenericNext }}
     </a>
   </div>
 </div>

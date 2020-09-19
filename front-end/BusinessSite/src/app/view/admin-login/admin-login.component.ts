@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 import { Identity } from 'src/app/model/Identity';
 import { AuthGuard } from 'src/app/guards/authGuard';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class AdminLoginComponent implements OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public login: FormControl = new FormControl('', [Validators.required]);
   public password: FormControl = new FormControl('', [Validators.required]);
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
 
   public constructor(authService: AuthService, authGuard: AuthGuard, router: Router, titleService: Title)
   {
@@ -38,7 +38,7 @@ export class AdminLoginComponent implements OnInit
     this.authGuard = authGuard;
     this.router = router;
 
-    titleService.setTitle(this.staticNames.TitlePageLogin + environment.siteName);
+    titleService.setTitle(this.textMessages.TitlePageLogin + environment.siteName);
   }
 
   public async ngOnInit(): Promise<void>
@@ -82,7 +82,7 @@ export class AdminLoginComponent implements OnInit
   {
     if (control.hasError('required'))
     {
-      return this.staticNames.ErrorFieldCannotBeEmpty;
+      return this.textMessages.ErrorFieldCannotBeEmpty;
     }
   }
 

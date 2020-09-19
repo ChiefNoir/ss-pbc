@@ -4,10 +4,10 @@
   <mat-toolbar-row fxLayout="row" fxLayoutAlign="center stretch" 
                    fxShow="true" fxHide.lt-md="true">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        {{staticNames.MenuHome}}
+        {{textMessages.MenuHome}}
       </a>
       <a routerLink="/projects/" routerLinkActive="active">
-        {{staticNames.MenuProjects}}
+        {{textMessages.MenuProjects}}
       </a>
       
       <ng-container *ngIf="authGuard.validating$ | async; else adminLink">
@@ -15,31 +15,31 @@
       </ng-container>
       <ng-template #adminLink>
         <ng-container *ngIf="authGuard.isLoggedIn$ | async; else login">
-          <a routerLink="/admin/" routerLinkActive="active">{{staticNames.MenuAdmin}}</a>
+          <a routerLink="/admin/" routerLinkActive="active">{{textMessages.MenuAdmin}}</a>
         </ng-container>
         <ng-template #login>
-          <a routerLink="/login/" routerLinkActive="active">{{staticNames.MenuLogin}}</a>
+          <a routerLink="/login/" routerLinkActive="active">{{textMessages.MenuLogin}}</a>
         </ng-template>
       </ng-template>
   </mat-toolbar-row>
 
   <mat-toolbar-row class="mobile"  fxLayout="row" fxLayoutAlign="center stretch"
                    fxShow="true" fxHide.gt-sm="true" >
-        <a (click)="drawer.toggle()"> {{staticNames.Menu}} </a>
+        <a (click)="drawer.toggle()"> {{textMessages.Menu}} </a>
   </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-drawer-container autosize>
   <mat-drawer #drawer mode="over" fxHide.gt-sm="true">
     <div fxLayout="column" fxLayoutAlign="none">
-      <a routerLink="/"> {{staticNames.MenuHome}} </a>
-      <a routerLink="/projects/"> {{staticNames.MenuProjects}}  </a>
+      <a routerLink="/"> {{textMessages.MenuHome}} </a>
+      <a routerLink="/projects/"> {{textMessages.MenuProjects}}  </a>
 
       <ng-container *ngIf="authGuard.isLoggedIn$ | async; else sideLogin">
-        <a routerLink="/admin/" routerLinkActive="active">{{staticNames.MenuAdmin}}</a>
+        <a routerLink="/admin/" routerLinkActive="active">{{textMessages.MenuAdmin}}</a>
       </ng-container>
       <ng-template #sideLogin>
-        <a routerLink="/login/" routerLinkActive="active">{{staticNames.MenuLogin}}</a>
+        <a routerLink="/login/" routerLinkActive="active">{{textMessages.MenuLogin}}</a>
       </ng-template>
 
     </div>
@@ -53,23 +53,23 @@
      <a *ngIf="authGuard.canSee('/admin')"
         [routerLink]="['/admin']"
         [routerLinkActiveOptions]="{ exact: true }"
-        routerLinkActive="active">{{staticNames.MenuAdmin}}</a>
+        routerLinkActive="active">{{textMessages.MenuAdmin}}</a>
 
       <a *ngIf="authGuard.canSee('/admin/editor/projects')"
          [routerLink]="['/admin/editor/projects']"
-         routerLinkActive="active">{{staticNames.MenuProjects}} </a>
+         routerLinkActive="active">{{textMessages.MenuProjects}} </a>
       
       <a *ngIf="authGuard.canSee('/admin/editor/categories/')" 
          [routerLink]="['/admin/editor/categories']"
-         routerLinkActive="active">{{staticNames.MenuCategories}}</a>
+         routerLinkActive="active">{{textMessages.MenuCategories}}</a>
       
       <a *ngIf="authGuard.canSee('/admin/editor/introduction')"
          [routerLink]="['/admin/editor/introduction']"
-         routerLinkActive="active">{{staticNames.MenuIntroduction}}</a>
+         routerLinkActive="active">{{textMessages.MenuIntroduction}}</a>
       
       <a *ngIf="authGuard.canSee('/admin/editor/accounts')"
          [routerLink]="['/admin/editor/accounts']"
-         routerLinkActive="active">{{staticNames.MenuAccounts}}</a>
+         routerLinkActive="active">{{textMessages.MenuAccounts}}</a>
     </div>
 
     <div class="content" fxFlex>

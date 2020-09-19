@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { AuthGuard } from './guards/authGuard';
-import { StaticNames } from './common/StaticNames';
+import { TextMessages } from './resources/TextMessages';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent
 {
   public authGuard: AuthGuard;
   public router: Router;
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
 
   public constructor(titleService: Title, authGuard: AuthGuard, router: Router)
   {

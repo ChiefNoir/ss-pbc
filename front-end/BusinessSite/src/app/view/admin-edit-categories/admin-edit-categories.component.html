@@ -1,22 +1,22 @@
 <div *ngIf="categories$ | async as categories; else loading">
   <table mat-table [dataSource]="categories">
     <ng-container matColumnDef="code">
-      <th mat-header-cell *matHeaderCellDef> {{staticNames.CategoryCode}} </th>
+      <th mat-header-cell *matHeaderCellDef> {{textMessages.CategoryCode}} </th>
       <td mat-cell *matCellDef="let item"> {{item.code}} </td>
 
-      <td mat-footer-cell *matFooterCellDef> {{staticNames.GenericCreateNew}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{textMessages.GenericCreateNew}} </td>
     </ng-container>
 
     <ng-container matColumnDef="displayName">
-      <th mat-header-cell *matHeaderCellDef> {{staticNames.CategoryName}} </th>
+      <th mat-header-cell *matHeaderCellDef> {{textMessages.CategoryName}} </th>
       <td mat-cell *matCellDef="let item"> {{item.displayName}} </td>
 
       <td mat-footer-cell *matFooterCellDef>　</td>
     </ng-container>
 
     <ng-container matColumnDef="isEverything">
-      <th mat-header-cell *matHeaderCellDef> {{staticNames.CategoryType}} </th>
-      <td mat-cell *matCellDef="let item"> {{item.isEverything? staticNames.CategoryTypeSystem : staticNames.CategoryTypeGeneric }} </td>
+      <th mat-header-cell *matHeaderCellDef> {{textMessages.CategoryType}} </th>
+      <td mat-cell *matCellDef="let item"> {{item.isEverything? textMessages.CategoryTypeSystem : textMessages.CategoryTypeGeneric }} </td>
 
       <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>

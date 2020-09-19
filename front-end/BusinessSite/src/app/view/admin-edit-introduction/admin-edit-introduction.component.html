@@ -2,11 +2,11 @@
   <div *ngIf="introduction$ | async as introduction">
 
     <mat-tab-group>
-      <mat-tab label="{{staticNames.Introduction}}"> 
+      <mat-tab label="{{textMessages.Introduction}}"> 
         <div fxLayout="column" fxLayoutAlign="space-around stretch" class="content">
           <form>
             <mat-form-field>
-              <input [disabled]="isDisabled" matInput [(ngModel)]="introduction.title" name="title" placeholder="{{staticNames.IntroductionTitle}}" />
+              <input [disabled]="isDisabled" matInput [(ngModel)]="introduction.title" name="title" placeholder="{{textMessages.IntroductionTitle}}" />
             </mat-form-field>
             <mat-form-field>
               <textarea matInput 
@@ -17,14 +17,14 @@
                         #autosize="cdkTextareaAutosize"
                         cdkAutosizeMinRows="1" 
                         cdkAutosizeMaxRows="10" 
-                        placeholder="{{staticNames.IntroductionContent}}">
+                        placeholder="{{textMessages.IntroductionContent}}">
               </textarea>
             </mat-form-field>
           </form>        
         </div>
       </mat-tab>
 
-      <mat-tab label="{{ staticNames.IntroductionPoster }}">
+      <mat-tab label="{{ textMessages.IntroductionPoster }}">
         <div fxLayout="column" fxLayoutAlign="space-around stretch" class="content">
           <form>
             
@@ -37,7 +37,7 @@
               <input matInput [disabled]="isDisabled" 
                      [(ngModel)]="introduction.posterDescription"
                      name="posterDescription"
-                     placeholder="{{ staticNames.IntroductionPosterDescription }}" />
+                     placeholder="{{ textMessages.IntroductionPosterDescription }}" />
             </mat-form-field>
 
             <div class="wide-position">
@@ -53,31 +53,31 @@
         </div>
       </mat-tab>
             
-      <mat-tab label="{{ staticNames.ExternalUrls }}"> 
+      <mat-tab label="{{ textMessages.ExternalUrls }}"> 
         <div fxLayout="column" fxLayoutAlign="space-around stretch">
           <table #externalUrlsTable mat-table [dataSource]="introduction.externalUrls">
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef>{{ staticNames.ExternalUrlName }}</th>
+              <th mat-header-cell *matHeaderCellDef>{{ textMessages.ExternalUrlName }}</th>
               <td mat-cell *matCellDef="let element">
                 <mat-form-field floatLabel="never">
                   <input matInput 
                          [disabled]="isDisabled"
-                         placeholder="{{ staticNames.ExternalUrlName }}"
+                         placeholder="{{ textMessages.ExternalUrlName }}"
                          [value]="element.displayName"
                          [(ngModel)]="element.displayName" />
                 </mat-form-field>
               </td>
 
-              <td mat-footer-cell *matFooterCellDef> {{ staticNames.ExternalUrlCreate }} </td>
+              <td mat-footer-cell *matFooterCellDef> {{ textMessages.ExternalUrlCreate }} </td>
             </ng-container>
     
             <ng-container matColumnDef="url">
-              <th mat-header-cell *matHeaderCellDef>{{ staticNames.ExternalUrl }}</th>
+              <th mat-header-cell *matHeaderCellDef>{{ textMessages.ExternalUrl }}</th>
               <td mat-cell *matCellDef="let element">
                 <mat-form-field floatLabel="never">
                   <input matInput 
                          [disabled]="isDisabled"
-                         placeholder="{{ staticNames.ExternalUrl }}"
+                         placeholder="{{ textMessages.ExternalUrl }}"
                          [value]="element.url"
                          [(ngModel)]="element.url" />
                 </mat-form-field>
@@ -88,7 +88,7 @@
             <ng-container matColumnDef="btn">
               <th mat-header-cell *matHeaderCellDef> </th>
               <td mat-cell *matCellDef="let element"> 
-                <app-button [isDisabled]="isDisabled" (OnClick)="removeUrl(element)">{{ staticNames.GenericDelete }}</app-button>
+                <app-button [isDisabled]="isDisabled" (OnClick)="removeUrl(element)">{{ textMessages.GenericDelete }}</app-button>
               </td>
         
               <td mat-footer-cell *matFooterCellDef> </td>
@@ -117,8 +117,8 @@
 
 
   <div fxLayout="row" fxLayoutAlign="end center">
-    <app-button [isDisabled]="isDisabled" (OnClick)="refresh()">{{ staticNames.GenericRefresh }}</app-button>
-    <app-button [isDisabled]="isDisabled" (OnClick)="save()">{{ staticNames.GenericSave }}</app-button>
+    <app-button [isDisabled]="isDisabled" (OnClick)="refresh()">{{ textMessages.GenericRefresh }}</app-button>
+    <app-button [isDisabled]="isDisabled" (OnClick)="save()">{{ textMessages.GenericSave }}</app-button>
   </div>
 
 </div>

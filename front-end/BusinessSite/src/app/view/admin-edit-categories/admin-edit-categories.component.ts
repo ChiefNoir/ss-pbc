@@ -9,7 +9,7 @@ import { Category } from 'src/app/model/Category';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorCategoryComponent } from 'src/app/component/dialog-editor-category/dialog-editor-category.component';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 import { AuthGuard } from 'src/app/guards/authGuard';
 import { Router } from '@angular/router';
 
@@ -27,7 +27,7 @@ export class AdminEditCategoriesComponent implements OnInit
   public dialog: MatDialog;
   private authGuard: AuthGuard;
   private router: Router;
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
 
   private columnDefinitions = [
     { def: 'id', show: false },

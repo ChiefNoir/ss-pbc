@@ -1,16 +1,16 @@
-<h2 class="title"> {{ staticNames.ProjectProperties }} </h2>
+<h2 class="title"> {{ textMessages.ProjectProperties }} </h2>
 
 <mat-dialog-content class="content">
   <div *ngIf="project$ | async as project">
     <mat-tab-group>
-      <mat-tab label="{{ staticNames.Project }}">
+      <mat-tab label="{{ textMessages.Project }}">
         <div fxLayout="column" fxLayoutAlign="space-around center">
           <mat-form-field>
             <input matInput
                    [disabled]="disableInput$ | async"
                    [(ngModel)]="project.code"
                    name="Code"
-                   placeholder="{{ staticNames.ProjectCode }}" />
+                   placeholder="{{ textMessages.ProjectCode }}" />
           </mat-form-field>
           
           <mat-form-field>
@@ -18,11 +18,11 @@
                    [disabled]="disableInput$ | async"
                    [(ngModel)]="project.displayName"
                    name="Name"
-                   placeholder="{{ staticNames.ProjectName }}" />
+                   placeholder="{{ textMessages.ProjectName }}" />
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{ staticNames.ProjectReleaseDate }}</mat-label>
+            <mat-label>{{ textMessages.ProjectReleaseDate }}</mat-label>
             <input matInput 
                   [disabled]="disableInput$ | async" 
                   [matDatepicker]="dp3"
@@ -33,7 +33,7 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{ staticNames.ProjectCategory }}</mat-label>
+            <mat-label>{{ textMessages.ProjectCategory }}</mat-label>
             <mat-select [(ngModel)]="project.category.id"
                         [disabled]="disableInput$ | async">
               <mat-option *ngFor="let ctg of categories$.value" [value]="ctg.id" >
@@ -51,7 +51,7 @@
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
                       cdkAutosizeMaxRows="10"
-                      placeholder="{{ staticNames.ProjectDescriptionShort }}">
+                      placeholder="{{ textMessages.ProjectDescriptionShort }}">
             </textarea>
           </mat-form-field>
 
@@ -64,13 +64,13 @@
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
                       cdkAutosizeMaxRows="10"
-                      placeholder="{{ staticNames.ProjectDescription }}">
+                      placeholder="{{ textMessages.ProjectDescription }}">
             </textarea>
           </mat-form-field>
       </div>
     </mat-tab>
 
-    <mat-tab label="{{ staticNames.ProjectPoster }}">
+    <mat-tab label="{{ textMessages.ProjectPoster }}">
       <div fxLayout="column" fxLayoutAlign="space-around center">
         <div fxLayout="row" fxLayoutAlign="center center" >
           <img [ngClass]="{'disabled': disableInput$ | async }"
@@ -83,7 +83,7 @@
                  [disabled]="disableInput$ | async"
                  [(ngModel)]="project.posterDescription"
                  name="posterDescriptionle"
-                 placeholder="{{ staticNames.ProjectPosterDescription }}" />
+                 placeholder="{{ textMessages.ProjectPosterDescription }}" />
         </mat-form-field>
 
         <div class="wide-position">
@@ -98,26 +98,26 @@
       </div>
     </mat-tab>
 
-    <mat-tab label="{{ staticNames.ExternalUrls }}">
+    <mat-tab label="{{ textMessages.ExternalUrls }}">
       <table mat-table 
              class="dialogTable" 
              #externalUrlsTable 
              [dataSource]="project.externalUrls">
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>{{ staticNames.ExternalUrlName }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ textMessages.ExternalUrlName }}</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field floatLabel="never">
               <input matInput placeholder="Name" [value]="element.displayName" [(ngModel)]="element.displayName" />
             </mat-form-field>
           </td>
-          <td mat-footer-cell *matFooterCellDef> {{ staticNames.ExternalUrlCreate }} </td>
+          <td mat-footer-cell *matFooterCellDef> {{ textMessages.ExternalUrlCreate }} </td>
         </ng-container>
 
         <ng-container matColumnDef="url">
-          <th mat-header-cell *matHeaderCellDef>{{ staticNames.ExternalUrl }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ textMessages.ExternalUrl }}</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field floatLabel="never">
-              <input matInput placeholder="{{ staticNames.ExternalUrl }}"
+              <input matInput placeholder="{{ textMessages.ExternalUrl }}"
                     [value]="element.url"
                     [(ngModel)]="element.url" />
             </mat-form-field>
@@ -129,7 +129,7 @@
           <th mat-header-cell *matHeaderCellDef> </th>
           <td mat-cell  *matCellDef="let element"> 
             <app-button [isDisabled]="disableInput$ | async" 
-                        (click)="removeUrl(element)">{{ staticNames.GenericDelete }}</app-button>
+                        (click)="removeUrl(element)">{{ textMessages.GenericDelete }}</app-button>
           </td>
     
           <td mat-footer-cell *matFooterCellDef> </td>
@@ -143,26 +143,26 @@
 
     </mat-tab>
 
-    <mat-tab label="{{ staticNames.Gallery }}">
+    <mat-tab label="{{ textMessages.Gallery }}">
 
       <table mat-table 
              class="dialogTable"
              #galleryImagesTable
              [dataSource]="project.galleryImages">
         <ng-container matColumnDef="imageUrl">
-          <th mat-header-cell *matHeaderCellDef>{{ staticNames.GalleryImageUrl }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ textMessages.GalleryImageUrl }}</th>
           <td mat-cell *matCellDef="let element">           
             <img class="small-gallery" src="{{(element.localPreview || element.imageUrl)}}" />
           </td>
-          <td mat-footer-cell *matFooterCellDef> {{ staticNames.GalleryAdd }} </td>
+          <td mat-footer-cell *matFooterCellDef> {{ textMessages.GalleryAdd }} </td>
         </ng-container>
 
         <ng-container matColumnDef="extraUrl">
-          <th mat-header-cell *matHeaderCellDef> {{ staticNames.GalleryExtraUrl }}</th>
+          <th mat-header-cell *matHeaderCellDef> {{ textMessages.GalleryExtraUrl }}</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field floatLabel="never">
               <input matInput
-                     placeholder="{{ staticNames.GalleryExtraUrl }}"
+                     placeholder="{{ textMessages.GalleryExtraUrl }}"
                      [value]="element.extraUrl"
                      [(ngModel)]="element.extraUrl" />
             </mat-form-field>
@@ -200,30 +200,30 @@
 
   <div class="actions" fxLayoutAlign="space-between center" fxShow="true" fxHide.lt-md="true">
     <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
-      {{ staticNames.GenericDelete }}
+      {{ textMessages.GenericDelete }}
     </app-button>
 
     <div>
       <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
-        {{ staticNames.GenericSave }}
+        {{ textMessages.GenericSave }}
       </app-button>
       <app-button (OnClick)="close()">
-        {{ staticNames.GenericClose }}
+        {{ textMessages.GenericClose }}
       </app-button>
     </div>
   </div>
 
   <div fxHide.gt-sm="true" fxShow="true" fxLayout="column" fxLayoutAlign="end center">
     <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
-      {{ staticNames.GenericSave }}
+      {{ textMessages.GenericSave }}
     </app-button>
 
     <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
-      {{ staticNames.GenericDelete }}
+      {{ textMessages.GenericDelete }}
     </app-button>
 
     <app-button (OnClick)="close()">
-      {{ staticNames.GenericClose }}
+      {{ textMessages.GenericClose }}
     </app-button>
   </div>
 </mat-dialog-content>

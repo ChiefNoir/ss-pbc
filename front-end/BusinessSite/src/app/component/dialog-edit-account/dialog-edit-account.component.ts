@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from '../message/message.component';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 import { DataService } from 'src/app/service/data.service';
 import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Account } from 'src/app/model/Account';
@@ -20,7 +20,7 @@ export class DialogEditAccountComponent implements OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public roles$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(null);
   public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Account properties');
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
 
   private accountId: number;
   private service: DataService;
@@ -50,7 +50,7 @@ export class DialogEditAccountComponent implements OnInit
                   (
                     succeeded =>
                     {
-                      this.message$.next({text: this.staticNames.LoadComplete, type: MessageType.Info });
+                      this.message$.next({text: this.textMessages.LoadComplete, type: MessageType.Info });
                       this.handleAccount(succeeded);
                     },
                     rejected => this.handleError(rejected.message)
@@ -58,7 +58,7 @@ export class DialogEditAccountComponent implements OnInit
     }
     else
     {
-      this.title$.next(this.staticNames.AccountCreate);
+      this.title$.next(this.textMessages.AccountCreate);
       this.disableInput$.next(false);
       this.account$.next(new Account());
     }
@@ -67,14 +67,14 @@ export class DialogEditAccountComponent implements OnInit
   public save(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: this.staticNames.SaveInProgress, type: MessageType.Spinner });
+    this.message$.next({text: this.textMessages.SaveInProgress, type: MessageType.Spinner });
 
     this.service.saveAccount(this.account$.value)
                 .then
                 (
                   succeeded =>
                   {
-                    this.message$.next({text: this.staticNames.SaveComplete, type: MessageType.Info });
+                    this.message$.next({text: this.textMessages.SaveComplete, type: MessageType.Info });
                     this.handleAccount(succeeded);
                   },
                   rejected => this.handleError(rejected.message)
@@ -84,7 +84,7 @@ export class DialogEditAccountComponent implements OnInit
   public delete(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: this.staticNames.DeleteInProgress, type: MessageType.Spinner });
+    this.message$.next({text: this.textMessages.DeleteInProgress, type: MessageType.Spinner });
 
     this.service.deleteAccount(this.account$.value)
                 .then
@@ -104,8 +104,8 @@ export class DialogEditAccountComponent implements OnInit
     if (result.isSucceed)
     {
       this.account$.next(null);
-      this.title$.next(this.staticNames.AccountDelete);
-      this.message$.next({text: this.staticNames.DeleteComplete, type: MessageType.Info });
+      this.title$.next(this.textMessages.AccountDelete);
+      this.message$.next({text: this.textMessages.DeleteComplete, type: MessageType.Info });
     }
     else
     {
@@ -120,7 +120,7 @@ export class DialogEditAccountComponent implements OnInit
     if (result.isSucceed)
     {
       this.account$.next(result.data);
-      this.title$.next(this.staticNames.AccountEdit + '　”'　+　result.data.login + '”');
+      this.title$.next(this.textMessages.AccountEdit + '　”'　+　result.data.login + '”');
     }
     else
     {

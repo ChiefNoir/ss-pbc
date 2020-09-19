@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 import { GalleryImage } from 'src/app/model/GalleryImage';
 import { MessageDescription, MessageType } from '../message/message.component';
 

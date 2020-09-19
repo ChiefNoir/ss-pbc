@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,10 +11,10 @@ import { environment } from 'src/environments/environment';
 
 export class NotFoundComponent
 {
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
 
   public constructor(titleService: Title)
   {
-    titleService.setTitle(this.staticNames.TitlePageNotFound + environment.siteName);
+    titleService.setTitle(this.textMessages.TitlePageNotFound + environment.siteName);
   }
 }

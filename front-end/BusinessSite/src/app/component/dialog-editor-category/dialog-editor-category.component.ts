@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Category } from 'src/app/model/Category';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -23,9 +23,9 @@ export class DialogEditorCategoryComponent implements OnInit
   public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Category properties');
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
 
-  public systemCategoryMessage: MessageDescription = {text: this.staticNames.CategorySystemWarning, type: MessageType.Info };
+  public systemCategoryMessage: MessageDescription = {text: this.textMessages.CategorySystemWarning, type: MessageType.Info };
 
   constructor(service: DataService, dialogRef: MatDialogRef<DialogEditorCategoryComponent>, @Inject(MAT_DIALOG_DATA) categoryId: number)
   {
@@ -41,7 +41,7 @@ export class DialogEditorCategoryComponent implements OnInit
       this.service.getCategory(this.categoryId)
                   .then
                   (
-                    succeeded => this.handleCategory(succeeded, {text: this.staticNames.LoadComplete, type: MessageType.Info }),
+                    succeeded => this.handleCategory(succeeded, {text: this.textMessages.LoadComplete, type: MessageType.Info }),
                     rejected => this.handleError(rejected.message)
                   );
     }
@@ -56,15 +56,15 @@ export class DialogEditorCategoryComponent implements OnInit
   public save(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: this.staticNames.SaveInProgress, type: MessageType.Spinner  });
+    this.message$.next({text: this.textMessages.SaveInProgress, type: MessageType.Spinner  });
 
     this.service.saveCategory(this.category$.value)
                 .then
                 (
                   succeeded =>
                   {
-                    this.message$.next({text: this.staticNames.SaveInProgress, type: MessageType.Info });
-                    this.handleCategory(succeeded, {text: this.staticNames.SaveComplete, type: MessageType.Info });
+                    this.message$.next({text: this.textMessages.SaveInProgress, type: MessageType.Info });
+                    this.handleCategory(succeeded, {text: this.textMessages.SaveComplete, type: MessageType.Info });
                   },
                   rejected => this.handleError(rejected.message)
                 );
@@ -72,7 +72,7 @@ export class DialogEditorCategoryComponent implements OnInit
 
   public delete(): void
   {
-    this.message$.next({text: this.staticNames.DeleteInProgress, type: MessageType.Spinner  });
+    this.message$.next({text: this.textMessages.DeleteInProgress, type: MessageType.Spinner  });
     this.disableInput$.next(true);
 
     this.service.deleteCategory(this.category$.value)
@@ -93,7 +93,7 @@ export class DialogEditorCategoryComponent implements OnInit
     if (result.isSucceed)
     {
       this.category$.next(null);
-      this.message$.next({text: this.staticNames.DeleteComplete, type: MessageType.Info });
+      this.message$.next({text: this.textMessages.DeleteComplete, type: MessageType.Info });
     }
     else
     {

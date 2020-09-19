@@ -8,7 +8,7 @@ import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { MatTable } from '@angular/material/table';
 import { MessageType, MessageDescription } from '../message/message.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 import { GalleryImage } from 'src/app/model/GalleryImage';
 
 @Component({
@@ -28,7 +28,7 @@ export class DialogEditProjectComponent implements OnInit
 
   public columnsInner: string[] = [ 'name', 'url', 'btn'];
   public columnsGallery: string[] = [ 'imageUrl', 'extraUrl', 'btn'];
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
   public categories$: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>(null);
   public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
@@ -62,7 +62,7 @@ export class DialogEditProjectComponent implements OnInit
           this.service.getProject(this.code)
                       .then
                       (
-                        win => this.handleProject(win, {text: this.staticNames.LoadComplete, type: MessageType.Info }),
+                        win => this.handleProject(win, {text: this.textMessages.LoadComplete, type: MessageType.Info }),
                         fail => this.handleError(fail)
                       );
         }
@@ -71,7 +71,7 @@ export class DialogEditProjectComponent implements OnInit
           const prj = new Project();
           prj.category = categorySucceeded.data.filter(category => category.isEverything === false)[0];
           this.project$.next(prj);
-          this.message$.next({text: this.staticNames.InitializationComplete, type: MessageType.Info });
+          this.message$.next({text: this.textMessages.InitializationComplete, type: MessageType.Info });
           this.disableInput$.next(false);
         }
       },
@@ -107,14 +107,14 @@ export class DialogEditProjectComponent implements OnInit
   public save(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: this.staticNames.SaveInProgress, type: MessageType.Spinner  });
+    this.message$.next({text: this.textMessages.SaveInProgress, type: MessageType.Spinner  });
 
     this.service.saveProject(this.project$.value)
         .then
         (
           win =>
           {
-            this.handleProject(win, {text: this.staticNames.SaveComplete, type: MessageType.Info });
+            this.handleProject(win, {text: this.textMessages.SaveComplete, type: MessageType.Info });
           },
           fail => this.handleError(fail)
     );
@@ -123,7 +123,7 @@ export class DialogEditProjectComponent implements OnInit
   public delete(): void
   {
     this.disableInput$.next(true);
-    this.message$.next({text: this.staticNames.DeleteInProgress, type: MessageType.Info });
+    this.message$.next({text: this.textMessages.DeleteInProgress, type: MessageType.Info });
 
     this.service.deleteProject(this.project$.value)
                 .then
@@ -182,7 +182,7 @@ export class DialogEditProjectComponent implements OnInit
     if (result.isSucceed)
     {
       this.project$.next(null);
-      this.message$.next({text: this.staticNames.DeleteComplete, type: MessageType.Info });
+      this.message$.next({text: this.textMessages.DeleteComplete, type: MessageType.Info });
     }
     else
     {

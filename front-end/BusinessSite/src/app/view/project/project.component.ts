@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 import { DataService } from 'src/app/service/data.service';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
 import { Project } from 'src/app/model/Project';
@@ -25,7 +25,7 @@ export class ProjectComponent
 
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({type: MessageType.Spinner });
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
 
   public constructor(service: DataService, activeRoute: ActivatedRoute, router: Router, titleService: Title)
   {
@@ -62,7 +62,7 @@ export class ProjectComponent
         this.router.navigate(['/404']);
       }
 
-      this.titleService.setTitle(result.data?.displayName + this.staticNames.TitleSeparator + environment.siteName);
+      this.titleService.setTitle(result.data?.displayName + this.textMessages.TitleSeparator + environment.siteName);
       this.project$.next(result.data);
     }
     else

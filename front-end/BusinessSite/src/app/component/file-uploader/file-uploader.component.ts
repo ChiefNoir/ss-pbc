@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 
 @Component({
   selector: 'app-file-uploader',
@@ -21,7 +21,7 @@ export class FileUploaderComponent
   @Input()
   public disabled: boolean;
 
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
 
   public upload(files: File[]): void
   {

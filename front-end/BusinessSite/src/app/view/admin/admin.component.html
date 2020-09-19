@@ -4,20 +4,20 @@
     <div fxLayout="row" class="container">
       <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
     
-        <h1 class="headline"> {{ staticNames.AdminInformation }} </h1>    
+        <h1 class="headline"> {{ textMessages.AdminInformation }} </h1>    
         <mat-divider></mat-divider>
         
         <div class="description">
-          <b>{{ staticNames.AccountLogin }}</b> {{ introduction.login }} <br/>
-          <b>{{ staticNames.AccountRole }}</b> {{ introduction.role }}<br/>
-          <b>{{ staticNames.AdminApiVersion }}</b> {{ introduction.apiVersion }}<br/>
+          <b>{{ textMessages.AccountLogin }}</b> {{ introduction.login }} <br/>
+          <b>{{ textMessages.AccountRole }}</b> {{ introduction.role }}<br/>
+          <b>{{ textMessages.AdminApiVersion }}</b> {{ introduction.apiVersion }}<br/>
         </div>
 
-        <h1 class="headline">{{ staticNames.AdminControls }} </h1>
+        <h1 class="headline">{{ textMessages.AdminControls }} </h1>
           <mat-divider></mat-divider>
     
           <div class="extension">  
-            <app-button (OnClick)="logout()">{{ staticNames.DoLoginOut }}</app-button>
+            <app-button (OnClick)="logout()">{{ textMessages.DoLoginOut }}</app-button>
           </div>
       </div>
     

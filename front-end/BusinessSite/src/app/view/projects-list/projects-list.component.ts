@@ -11,7 +11,7 @@ import { Incident, RequestResult } from 'src/app/model/RequestResult';
 
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { environment } from 'src/environments/environment';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 
 @Component({
   selector: 'app-projects-list',
@@ -29,7 +29,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({type: MessageType.Spinner });
   public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
 
   public constructor(service: DataService, router: Router, activeRoute: ActivatedRoute, titleService: Title)
   {
@@ -37,7 +37,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit
     this.router = router;
     this.activeRoute = activeRoute;
 
-    titleService.setTitle(this.staticNames.TitleProjects + environment.siteName);
+    titleService.setTitle(this.textMessages.TitleProjects + environment.siteName);
   }
 
   public ngOnInit(): void
@@ -146,7 +146,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit
 
       if (response.data.length === 0)
       {
-        this.message$.next({text: this.staticNames.ErrorProjectsNotFound, type: MessageType.Info });
+        this.message$.next({text: this.textMessages.ErrorProjectsNotFound, type: MessageType.Info });
       }
     }
     else

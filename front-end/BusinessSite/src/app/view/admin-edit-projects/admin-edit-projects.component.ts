@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogEditProjectComponent } from 'src/app/component/dialog-edit-project/dialog-edit-project.component';
 import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
-import { StaticNames } from 'src/app/common/StaticNames';
+import { TextMessages } from 'src/app/resources/TextMessages';
 import { Paging } from 'src/app/model/PagingInfo';
 import { Incident, RequestResult } from 'src/app/model/RequestResult';
 import { AuthGuard } from 'src/app/guards/authGuard';
@@ -28,7 +28,7 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy
 
   public columns: string[] = ['code', 'displayName', 'category', 'releaseDate'];
   public dialog: MatDialog;
-  public staticNames: StaticNames = new StaticNames();
+  public textMessages: TextMessages = new TextMessages();
   public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
   public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });

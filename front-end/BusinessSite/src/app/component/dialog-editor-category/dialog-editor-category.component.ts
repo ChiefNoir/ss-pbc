@@ -97,7 +97,7 @@ export class DialogEditorCategoryComponent implements OnInit
     }
     else
     {
-      this.handleError(result.error);
+      this.handleIncident(result.error);
     }
   }
 

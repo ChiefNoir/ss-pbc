@@ -26,5 +26,10 @@
     <ProjectReference Include="..\Secutiry\Security.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="files\" />
+    <Folder Include="log\" />
+  </ItemGroup>
+
 
 </Project>

@@ -48,9 +48,10 @@ namespace Infrastructure.Repository
         public Task<Account> GetAsync(int id)
         {
             return _context.Accounts
+                           .Where(x=>x.Id == id)
                            .Select(x => DataConverter.ToAccount(x))
                            .AsNoTracking()
-                           .FirstOrDefaultAsync(x => x.Id == id);
+                           .FirstOrDefaultAsync();
         }
 
         public async Task<Account> GetAsync(string login, string password)

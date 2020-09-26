@@ -14,7 +14,7 @@ create table introduction
 create table category 
 (
 	id serial primary key,
-	code varchar(128) not null unique,
+	code varchar(128) not null unique, -- every category have unique code to identify category with short friendly name for inner use
 	display_name varchar(128) not null,
 	is_everything boolean not null default false,
 	version int not null default 0
@@ -25,7 +25,7 @@ create table category
 create table project
 (
 	id serial primary key,
-	code varchar(128) not null unique,
+	code varchar(128) not null unique,-- every project have unique code to identify project with short friendly name for inner use
 	display_name varchar(128) not null,
 	release_date date, 
 	poster_url varchar(2000), -- URLs over 2,000 characters will not work in the most popular web browsers

@@ -1,7 +1,4 @@
-﻿-- NOTE: 
--- URLs over 2,000 characters will not work in the most popular web browsers
-
--- introduction
+﻿-- introduction
 create table introduction 
 (
 	id serial primary key,
@@ -31,7 +28,7 @@ create table project
 	code varchar(128) not null unique,
 	display_name varchar(128) not null,
 	release_date date, 
-	poster_url varchar(2000),
+	poster_url varchar(2000), -- URLs over 2,000 characters will not work in the most popular web browsers
 	poster_description varchar(512),
 	category_id int references category (id),
 	description_short text,
@@ -45,8 +42,8 @@ create table gallery_image
 (
 	id serial primary key,
 
-	extra_url varchar(2000),
-	image_url varchar(2000) not null,
+	extra_url varchar(2000), -- URLs over 2,000 characters will not work in the most popular web browsers
+	image_url varchar(2000) not null, -- URLs over 2,000 characters will not work in the most popular web browsers
 
 	project_id int references project (id) on delete cascade,
 	version int not null default 0
@@ -57,7 +54,7 @@ create table gallery_image
 create table external_url
 (
 	id serial primary key,
-	url varchar(2000) not null,
+	url varchar(2000) not null, -- URLs over 2,000 characters will not work in the most popular web browsers
 	display_name varchar(128) not null,
 	version int not null default 0
 );

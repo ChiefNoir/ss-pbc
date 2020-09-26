@@ -45,5 +45,11 @@
         /// <summary> Wrong login or password </summary>
         internal const string AccountSomethingWrong = "Wrong login or password";
 
+        /// <summary> File is empty </summary>
+        internal const string FileIsEmpty = "File is empty";
+
+        /// <summary> File is too big. Max file size if {0} </summary>
+        internal const string FileIsTooBig = "File is too big. Max file size if {0} ";
+
     }
 }

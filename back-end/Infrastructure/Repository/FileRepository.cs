@@ -1,4 +1,6 @@
-﻿using Abstractions.IRepository;
+﻿using Abstractions.Exceptions;
+using Abstractions.IRepository;
+using Common.FirendlyConverters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -18,8 +20,20 @@ namespace Infrastructure.Repository
 
         public string Save(IFormFile file)
         {
-            if (file == null || file.Length == 0) //TODO: max file size
-                throw new Exception("Empty file"); //TODO: custom exception
+            var maxFileSize = _configuration.GetSection("Location:MaxFileSizeBytes").Get<int>();
+
+            if (file == null || file.Length == 0)
+            {
+                throw new InfrastructureException(Resources.TextMessages.FileIsEmpty);
+            }
+
+            if (file.Length > maxFileSize)
+            {
+                throw new InfrastructureException
+                   (
+                        string.Format(Resources.TextMessages.FileIsTooBig, FriendlyConvert.BytesToString(maxFileSize))
+                   );
+            }
 
             var folderName = _configuration.GetSection("Location:FileStorage").Get<string>();
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);

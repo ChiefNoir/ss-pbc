@@ -13,11 +13,18 @@ namespace Common.FirendlyConverters
         /// The default values are in English
         /// </remarks>
         /// <returns>User-friendly string, ex.:  '10 Mb'</returns>
+        /// <exception cref="ArgumentException" />
         public static string BytesToString(long byteCount, string[] suffices = null)
         {
-            if(suffices == null || suffices.Length == 0)
+            if (byteCount < 0)
+                throw new ArgumentException("byteCount can't be less than 0", nameof(byteCount));
+
+            if(suffices != null && suffices.Length < 4)
+                throw new ArgumentException("Suffices must have at least 7 values: B, KB, MB, GB", nameof(suffices));
+
+            if (suffices == null || suffices.Length == 0)
             {
-                suffices = new string[] { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
+                suffices = new string[] { "B", "KB", "MB", "GB" };
             }
 
             if (byteCount == 0)

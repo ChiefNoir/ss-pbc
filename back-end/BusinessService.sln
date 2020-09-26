@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30105.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API.csproj", "{A9096576-66AB-43A1-9461-F6A6105806C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{A9096576-66AB-43A1-9461-F6A6105806C6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{72EE54D1-9985-4BCA-84AD-3A82E1D31538}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{72EE54D1-9985-4BCA-84AD-3A82E1D31538}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abstractions", "..\Abstractions\Abstractions.csproj", "{AC4E00C0-6EC9-4266-8208-1F9CA5CE95CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abstractions", "Abstractions\Abstractions.csproj", "{AC4E00C0-6EC9-4266-8208-1F9CA5CE95CA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Security", "..\Secutiry\Security.csproj", "{655C7092-C8D0-401C-8863-EB18B4125305}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Security", "Secutiry\Security.csproj", "{655C7092-C8D0-401C-8863-EB18B4125305}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\Common\Common.csproj", "{A3727745-4344-4E66-B681-38083269BF8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{A3727745-4344-4E66-B681-38083269BF8F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{42534954-33E6-486D-A861-6EB442D0380A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Tests", "..\Common.Tests\Common.Tests.csproj", "{5E36A30A-B12F-4B01-8149-FB7FAAA6F170}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Tests", "Common.Tests\Common.Tests.csproj", "{5E36A30A-B12F-4B01-8149-FB7FAAA6F170}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

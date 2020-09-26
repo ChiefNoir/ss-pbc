@@ -179,7 +179,7 @@ namespace Infrastructure.Validation
 
 
         // Category
-        public static void CheckBeforeDelete(DataModel.Category dbItem, Abstractions.Model.Category category)
+        public static void CheckBeforeDelete(DataModel.Category dbItem, Abstractions.Model.Category category, DataContext context)
         {
             if (category.Id == null)
             {
@@ -208,6 +208,16 @@ namespace Infrastructure.Validation
             if (dbItem.IsEverything)
             {
                 throw new InconsistencyException(Resources.TextMessages.CantDeleteSystemCategory);
+            }
+
+            var catWithProjects = context.CategoriesWithTotalProjects.FirstOrDefault(x => x.Id == category.Id);
+            
+            if(catWithProjects.TotalProjects > 0)
+            {
+                throw new InconsistencyException
+                    (
+                    string.Format(Resources.TextMessages.CantDeleteNotEmptyCategory, catWithProjects.TotalProjects, catWithProjects.DisplayName)
+                    );
             }
         }
 

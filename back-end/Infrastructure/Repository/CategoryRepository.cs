@@ -32,7 +32,7 @@ namespace Infrastructure.Repository
         {
             var dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
 
-            ModelValidation.CheckBeforeDelete(dbCategory, category);
+            ModelValidation.CheckBeforeDelete(dbCategory, category, _context);
 
             _context.Categories.Remove(dbCategory);
             var rows = await _context.SaveChangesAsync();

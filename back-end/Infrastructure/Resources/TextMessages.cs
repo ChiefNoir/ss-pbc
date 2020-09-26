@@ -15,6 +15,9 @@
         /// <summary> Can't delete system category </summary>
         internal const string CantDeleteSystemCategory = "Can't delete system category";
 
+        /// <summary> Can't delete category, there are {0} projects within {1} category </summary>
+        internal const string CantDeleteNotEmptyCategory = "Can't delete category, there are {0} projects within {1} category";
+
         /// <summary> Can't update new {0} </summary>
         internal const string CantUpdateNewItem = "Can't update new {0}";
 

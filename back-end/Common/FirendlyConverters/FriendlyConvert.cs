@@ -2,7 +2,7 @@
 
 namespace Common.FirendlyConverters
 {
-    /// <summary> Convert values to friendly one </summary>
+    /// <summary> Convert values to friendly ones </summary>
     public static class FriendlyConvert
     {
         /// <summary> Convert byte length to human-friendly string like '10 Mb' </summary>

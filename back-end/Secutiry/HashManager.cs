@@ -1,11 +1,11 @@
 ﻿using Abstractions.ISecurity;
 using Abstractions.Model;
-using Secutiry.Helpers;
+using Security.Helpers;
 using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Secutiry
+namespace Security
 {
     /// <summary> Hash manager </summary>
     public class HashManager : IHashManager

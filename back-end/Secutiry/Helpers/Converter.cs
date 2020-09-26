@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace Secutiry.Helpers
+namespace Security.Helpers
 {
     /// <summary> Converter </summary>
     internal static class Converter

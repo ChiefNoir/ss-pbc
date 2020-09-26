@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Common.Tests.FirendlyConverters
 {
-    public class FriendlyConvert_BytesToString
+    public class FriendlyConvertTests
     {
         [Theory]
         [InlineData(00,                      "0 B")]

@@ -3,11 +3,11 @@ using Xunit;
 
 namespace Security.Tests
 {
-    public class HashManager_Hash
+    public class HashManagerTests
     {
         private readonly HashManager _hashManager;
 
-        public HashManager_Hash()
+        public HashManagerTests()
         {
             _hashManager = new HashManager();
         }

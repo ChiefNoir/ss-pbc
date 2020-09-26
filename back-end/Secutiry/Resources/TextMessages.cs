@@ -1,4 +1,4 @@
-﻿namespace BusinessService.Logic.Resources
+﻿namespace Security.Resources
 {
     /// <summary> User-friendly messages</summary>
     static class TextMessages

@@ -1,6 +1,5 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Supervision;
-using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

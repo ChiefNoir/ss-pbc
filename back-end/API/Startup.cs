@@ -1,7 +1,6 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.ISecurity;
 using Abstractions.Supervision;
-using BusinessService.Logic.Supervision;
 using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Security;
+using Security.Supervision;
 using System.IO;
 
 namespace BusinessService

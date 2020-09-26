@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30105.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API.csproj", "{A9096576-66AB-43A1-9461-F6A6105806C6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessService.Logic", "..\BusinessService.Logic\BusinessService.Logic.csproj", "{8ED7DC38-20EC-4A8C-861D-53D90C449511}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{72EE54D1-9985-4BCA-84AD-3A82E1D31538}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abstractions", "..\Abstractions\Abstractions.csproj", "{AC4E00C0-6EC9-4266-8208-1F9CA5CE95CA}"
@@ -17,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\Common\Common.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{42534954-33E6-486D-A861-6EB442D0380A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tests", "..\Common.Tests\Common.Tests.csproj", "{5E36A30A-B12F-4B01-8149-FB7FAAA6F170}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Tests", "..\Common.Tests\Common.Tests.csproj", "{5E36A30A-B12F-4B01-8149-FB7FAAA6F170}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{A9096576-66AB-43A1-9461-F6A6105806C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9096576-66AB-43A1-9461-F6A6105806C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9096576-66AB-43A1-9461-F6A6105806C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8ED7DC38-20EC-4A8C-861D-53D90C449511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8ED7DC38-20EC-4A8C-861D-53D90C449511}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8ED7DC38-20EC-4A8C-861D-53D90C449511}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8ED7DC38-20EC-4A8C-861D-53D90C449511}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72EE54D1-9985-4BCA-84AD-3A82E1D31538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72EE54D1-9985-4BCA-84AD-3A82E1D31538}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72EE54D1-9985-4BCA-84AD-3A82E1D31538}.Release|Any CPU.ActiveCfg = Release|Any CPU

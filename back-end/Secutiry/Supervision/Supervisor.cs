@@ -1,15 +1,15 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model.System;
 using Abstractions.Supervision;
-using BusinessService.Logic.Resources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Security;
+using Security.Resources;
 using System;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
-namespace BusinessService.Logic.Supervision
+
+namespace Security.Supervision
 {
 
     public class Supervisor : ISupervisor
@@ -40,15 +40,15 @@ namespace BusinessService.Logic.Supervision
                 result.IsSucceed = false;
                 result.Error = new Incident
                 {
-                     Message = ee.Message,
-                     Detail = ee.InnerException?.Message
+                    Message = ee.Message,
+                    Detail = ee.InnerException?.Message
                 };
             }
 
             return result;
         }
 
-        
+
         public ExecutionResult<T> SafeExecute<T>(Func<T> func)
         {
             var result = new ExecutionResult<T>();
@@ -73,7 +73,7 @@ namespace BusinessService.Logic.Supervision
             return result;
         }
 
-        
+
         public async Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, string[] roles, Func<Task<T>> func)
         {
             try
@@ -101,13 +101,13 @@ namespace BusinessService.Logic.Supervision
                         Message = ee.Message,
                         Detail = ee.InnerException?.Message
                     }
-            };
+                };
             }
 
             return await SafeExecuteAsync(func);
         }
 
-        
+
         public ExecutionResult<T> SafeExecute<T>(string token, string[] roles, Func<T> func)
         {
             try
@@ -135,7 +135,7 @@ namespace BusinessService.Logic.Supervision
                         Message = ee.Message,
                         Detail = ee.InnerException?.Message
                     }
-            };
+                };
             }
 
             return SafeExecute(func);

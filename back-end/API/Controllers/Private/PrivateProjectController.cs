@@ -1,7 +1,6 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
 using Abstractions.Supervision;
-using BusinessService.Logic.Supervision;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

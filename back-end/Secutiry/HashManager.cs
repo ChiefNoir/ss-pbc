@@ -47,17 +47,10 @@ namespace Security
 
             using (var algorithm = new SHA384CryptoServiceProvider())
             {
-                //TODO: can be simplified
                 var plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
 
-                for (int i = 0; i < plainText.Length; i++)
-                {
-                    plainTextWithSaltBytes[i] = plainText[i];
-                }
-                for (int i = 0; i < salt.Length; i++)
-                {
-                    plainTextWithSaltBytes[plainText.Length + i] = salt[i];
-                }
+                plainText.CopyTo(plainTextWithSaltBytes, 0);
+                salt.CopyTo(plainTextWithSaltBytes, plainText.Length);
 
                 return algorithm.ComputeHash(plainTextWithSaltBytes);
             }

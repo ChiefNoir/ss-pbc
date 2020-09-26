@@ -16,6 +16,13 @@ namespace Security
         /// <returns>Hash as hex string and hashed string</returns>
         public HashResult Hash(string plainText, string hexSalt = null)
         {
+            if (string.IsNullOrEmpty(plainText))
+                throw new ArgumentException("plainText must have value", nameof(plainText));
+
+            if (hexSalt != null && string.IsNullOrEmpty(hexSalt))
+                throw new ArgumentException("hexSalt must have value", nameof(hexSalt));
+
+
             byte[] salt;
             if (string.IsNullOrEmpty(hexSalt))
                 salt = GenerateRandomArray(128);

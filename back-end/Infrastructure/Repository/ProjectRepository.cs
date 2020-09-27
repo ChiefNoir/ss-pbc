@@ -42,10 +42,6 @@ namespace Infrastructure.Repository
             return FirstOrDefaultAsync(x => x.Code == code);
         }
 
-        public Task<Project> GetAsync(int id)
-        {
-            return FirstOrDefaultAsync(x => x.Id == id);
-        }
 
         public async Task<ProjectPreview[]> GetPreviewAsync(int start, int length, string categoryCode)
         {

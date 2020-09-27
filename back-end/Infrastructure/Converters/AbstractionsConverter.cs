@@ -36,28 +36,6 @@ namespace Infrastructure.Converters
             };
         }
 
-        internal static Introduction ToIntroduction(Abstractions.Model.Introduction introduction)
-        {
-            var result = new Introduction
-            {
-                Title = introduction.Title,
-                Content = introduction.Content,
-                PosterDescription = introduction.PosterDescription,
-                PosterUrl = introduction.PosterUrl,
-                Version = 0
-            };
-
-            foreach (var item in ToExternalUrls(introduction.ExternalUrls))
-            {
-                item.Introduction = result;
-                item.IntroductionId = result.Id;
-
-                result.ExternalUrls.Add(item);
-            }
-
-            return result;
-        }
-
         internal static IntroductionExternalUrl ToIntroductionExternalUrl(Abstractions.Model.ExternalUrl item)
         {
             return new IntroductionExternalUrl

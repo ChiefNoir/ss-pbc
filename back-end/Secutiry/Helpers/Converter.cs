@@ -7,7 +7,7 @@ namespace Security.Helpers
     /// <summary> Converter </summary>
     internal static class Converter
     {
-        /// <summary> Convert hex <see cref="string"/> to <see cref="byte[]"/> </summary>
+        /// <summary> Convert hex <see cref="string"/> to <see cref="byte"/> array </summary>
         /// <param name="hexString">String to convert</param>
         /// <returns><see cref="byte"/>array</returns>
         internal static byte[] ToByteArray(string hexString)

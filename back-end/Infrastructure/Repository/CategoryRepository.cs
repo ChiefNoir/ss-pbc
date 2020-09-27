@@ -19,14 +19,6 @@ namespace Infrastructure.Repository
             _context = context;
         }
 
-
-
-        public Task<int> CountAsync()
-        {
-            return _context.Categories.CountAsync();
-        }
-
-
         public async Task<bool> DeleteAsync(Category category)
         {
             var dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);

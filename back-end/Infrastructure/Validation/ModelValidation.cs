@@ -541,7 +541,7 @@ namespace Infrastructure.Validation
 
             if (string.IsNullOrEmpty(password))
             {
-                throw new SecurityException(Resources.TextMessages.AccountEmptyLogin);
+                throw new SecurityException(Resources.TextMessages.AccountEmptyPassword);
             }
 
             if(dbItem == null)

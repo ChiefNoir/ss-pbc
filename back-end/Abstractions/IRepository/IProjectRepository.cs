@@ -17,11 +17,6 @@ namespace Abstractions.IRepository
         /// <returns> <seealso cref="Project"/> </returns>
         Task<Project> GetAsync(string code);
 
-        /// <summary> Get <seealso cref="Project"/> by id </summary>
-        /// <param name="id">Project id </param>
-        /// <returns> <seealso cref="Project"/> </returns>
-        Task<Project> GetAsync(int id);
-
         /// <summary> Get <seealso cref="ProjectPreview"/> (with paging)</summary>
         /// <param name="start">Start</param>
         /// <param name="length">Length</param>

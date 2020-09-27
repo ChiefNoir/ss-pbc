@@ -6,10 +6,6 @@ namespace Abstractions.IRepository
     /// <summary> Category repository</summary>
     public interface ICategoryRepository
     {
-        /// <summary> Count items in the storage</summary>
-        /// <returns> Total of the items in the storage</returns>
-        Task<int> CountAsync();
-
         /// <summary> Delete <seealso cref="Category"/>  from storage </summary>
         /// <param name="category"><seealso cref="Category"/> to delete</param>
         /// <returns> <c>true</c> if deleting was successful </returns>

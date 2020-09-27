@@ -24,7 +24,7 @@ namespace Common.FriendlyConverters
 
             if (suffices == null || suffices.Length == 0)
             {
-                suffices = new string[] { "B", "KB", "MB", "GB" };
+                suffices = new [] { "B", "KB", "MB", "GB" };
             }
 
             if (byteCount == 0)

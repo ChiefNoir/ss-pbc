@@ -7,7 +7,7 @@ using System.Reflection;
 namespace Infrastructure
 {
     /// <summary>Entity framework data context </summary>
-    public class DataContext : DbContext
+    public sealed class DataContext : DbContext
     {
         private static bool _isMigrationsDone;
 
@@ -23,11 +23,11 @@ namespace Infrastructure
 
         public DataContext(DbContextOptions options) : base(options)
         {
-            if (!_isMigrationsDone)
-            {
-                MigrateDatabase(Database.GetDbConnection());
-                _isMigrationsDone = true;
-            }
+            if (_isMigrationsDone) return;
+
+
+            MigrateDatabase(Database.GetDbConnection());
+            _isMigrationsDone = true;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

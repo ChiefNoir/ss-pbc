@@ -24,15 +24,15 @@ namespace Common.Tests.FriendlyConverters
         }
 
         [Theory]
-        [InlineData(00,                      new string[] { "a", "b", "c", "d" }, "0 a")]
-        [InlineData(01,                      new string[] { "a", "b", "c", "d" }, "1 a")]
-        [InlineData(01 * 1000,               new string[] { "a", "b", "c", "d" }, "1000 a")]
-        [InlineData(01 * 1024,               new string[] { "a", "b", "c", "d" }, "1 b")]
-        [InlineData(08 * 1024,               new string[] { "a", "b", "c", "d" }, "8 b")]
-        [InlineData(19 * 1024,               new string[] { "a", "b", "c", "d" }, "19 b")]
-        [InlineData(01 * 1024 * 1024,        new string[] { "a", "b", "c", "d" }, "1 c")]
-        [InlineData(16 * 1024 * 1024,        new string[] { "a", "b", "c", "d" }, "16 c")]
-        [InlineData(01 * 1024 * 1024 * 1024, new string[] { "a", "b", "c", "d" }, "1 d")]
+        [InlineData(00,                      new [] { "a", "b", "c", "d" }, "0 a")]
+        [InlineData(01,                      new [] { "a", "b", "c", "d" }, "1 a")]
+        [InlineData(01 * 1000,               new [] { "a", "b", "c", "d" }, "1000 a")]
+        [InlineData(01 * 1024,               new [] { "a", "b", "c", "d" }, "1 b")]
+        [InlineData(08 * 1024,               new [] { "a", "b", "c", "d" }, "8 b")]
+        [InlineData(19 * 1024,               new [] { "a", "b", "c", "d" }, "19 b")]
+        [InlineData(01 * 1024 * 1024,        new [] { "a", "b", "c", "d" }, "1 c")]
+        [InlineData(16 * 1024 * 1024,        new [] { "a", "b", "c", "d" }, "16 c")]
+        [InlineData(01 * 1024 * 1024 * 1024, new [] { "a", "b", "c", "d" }, "1 d")]
         public void BytesToString_ValidLocalizedInput(long bytes, string[] suffices, string expected)
         {
             var result = FriendlyConvert.BytesToString(bytes, suffices);
@@ -44,8 +44,8 @@ namespace Common.Tests.FriendlyConverters
         [Theory]
         [InlineData(-1 , null)]
         [InlineData(long.MinValue, null)]
-        [InlineData(12, new string[] { "", "" })]
-        [InlineData(77, new string[] { "", "", "" })]
+        [InlineData(12, new [] { "", "" })]
+        [InlineData(77, new [] { "", "", "" })]
         public void BytesToString_InValidInput(long bytes, string[] suffices)
         {
             Assert.Throws<ArgumentException>(() => FriendlyConvert.BytesToString(bytes, suffices));

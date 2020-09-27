@@ -43,7 +43,7 @@ namespace Security.Tests.Extensions
                 {
                     new MockPrincipal(new ClaimsIdentity
                     (
-                        new List<Claim> { }
+                        new List<Claim>()
                     )),
                     Array.Empty<string>()
                 };

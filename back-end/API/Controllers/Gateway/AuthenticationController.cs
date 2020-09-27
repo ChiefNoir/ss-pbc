@@ -55,11 +55,14 @@ namespace API.Controllers.Gateway
                 if (principal == null)
                     throw new Exception("Validation failed");
 
+                if (principal.Identity == null)
+                    throw new Exception("Validation failed");
+
                 return new Identity
                 {
-                    Account = principal == null ? null : new Account
+                    Account = new Account
                     {
-                        Login = principal?.Identity.Name,
+                        Login = principal.Identity.Name,
                         Role = principal.GetRoles().FirstOrDefault(),
                     },
                     Token = token,

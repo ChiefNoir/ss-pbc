@@ -22,10 +22,10 @@ namespace API.Controllers.Public
         [HttpGet("projects/{code}")]
         public async Task<IActionResult> GetProject(string code)
         {
-            var result = await _supervisor.SafeExecuteAsync(() =>
-            {
-                return _projectRepository.GetAsync(code);
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                () => _projectRepository.GetAsync(code)
+            );
 
             return new JsonResult(result);
         }
@@ -33,10 +33,10 @@ namespace API.Controllers.Public
         [HttpGet("projects/search")]
         public async Task<IActionResult> GetProjectsPreview([FromQuery] Paging paging, [FromQuery] ProjectSearch searchQuery)
         {
-            var result = await _supervisor.SafeExecuteAsync(() =>
-            {
-                return _projectRepository.GetPreviewAsync(paging.Start, paging.Length, searchQuery.CategoryCode);
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                () => _projectRepository.GetPreviewAsync(paging.Start, paging.Length, searchQuery.CategoryCode)
+            );
 
             return new JsonResult(result);
         }

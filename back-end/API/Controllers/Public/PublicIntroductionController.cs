@@ -21,10 +21,10 @@ namespace API.Controllers.Public
         [HttpGet("introduction")]
         public async Task<IActionResult> GetIntroduction()
         {
-            var result = await _supervisor.SafeExecuteAsync(() =>
-            {
-                return _introductionRepository.GetAsync();
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                () => _introductionRepository.GetAsync()
+            );
 
             return new JsonResult(result);
         }

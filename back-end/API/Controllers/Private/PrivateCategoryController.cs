@@ -22,10 +22,12 @@ namespace API.Controllers.Private
         [HttpPost("category")]
         public async Task<IActionResult> Save([FromHeader] string token, [FromBody] Category category)
         {
-            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
-            {
-                return _categoryRepository.SaveAsync(category);
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                token, 
+                new[] { RoleNames.Admin },
+                () => _categoryRepository.SaveAsync(category)
+            );
 
             return new JsonResult(result);
         }
@@ -33,10 +35,12 @@ namespace API.Controllers.Private
         [HttpDelete("category")]
         public async Task<IActionResult> Delete([FromHeader] string token, [FromBody] Category category)
         {
-            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
-            {
-                return _categoryRepository.DeleteAsync(category);
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                token, 
+                new[] { RoleNames.Admin },
+                () => _categoryRepository.DeleteAsync(category)
+            );
 
             return new JsonResult(result);
         }

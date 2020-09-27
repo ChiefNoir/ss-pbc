@@ -21,10 +21,10 @@ namespace API.Controllers.Public
         [HttpGet("categories")]
         public async Task<IActionResult> GetCategories()
         {
-            var result = await _supervisor.SafeExecuteAsync(() =>
-            {
-                return _categoryRepository.GetAsync();
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                () => _categoryRepository.GetAsync()
+            );
 
             return new JsonResult(result);
         }
@@ -32,10 +32,10 @@ namespace API.Controllers.Public
         [HttpGet("categories/{id}")]
         public async Task<IActionResult> GetCategory(int id)
         {
-            var result = await _supervisor.SafeExecuteAsync(() =>
-            {
-                return _categoryRepository.GetAsync(id);
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                () => _categoryRepository.GetAsync(id)
+            );
 
             return new JsonResult(result);
         }
@@ -43,10 +43,10 @@ namespace API.Controllers.Public
         [HttpGet("categories/everything")]
         public async Task<IActionResult> GetEverythingCategory()
         {
-            var result = await _supervisor.SafeExecuteAsync(() =>
-            {
-                return _categoryRepository.GetTechnicalAsync();
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                () => _categoryRepository.GetTechnicalAsync()
+            );
 
             return new JsonResult(result);
         }

@@ -132,7 +132,7 @@ namespace Infrastructure.Converters
             if (externalUrls == null)
                 return new List<IntroductionExternalUrl>();
 
-            return externalUrls.Select(x => ToIntroductionExternalUrl(x));
+            return externalUrls.Select(ToIntroductionExternalUrl);
         }
 
         private static IEnumerable<ProjectExternalUrl> ToProjectExternalUrls(IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
@@ -140,7 +140,7 @@ namespace Infrastructure.Converters
             if (externalUrls == null)
                 return new List<ProjectExternalUrl>();
 
-            return externalUrls.Select(x => ToProjectExternalUrl(x));
+            return externalUrls.Select(ToProjectExternalUrl);
         }
     }
 }

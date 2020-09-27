@@ -171,7 +171,7 @@ namespace Security
                 };
             }
 
-            if (principal == null || principal.Identity == null)
+            if (principal?.Identity == null)
             {
                 return new Incident
                 {

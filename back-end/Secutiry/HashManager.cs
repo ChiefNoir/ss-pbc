@@ -52,13 +52,13 @@ namespace Security
             if (salt == null || salt.Length == 0)
                 throw new ArgumentNullException(nameof(salt), "Can't calculate hash: input salt is empty.");
 
+
+            var plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
+            plainText.CopyTo(plainTextWithSaltBytes, 0);
+            salt.CopyTo(plainTextWithSaltBytes, plainText.Length);
+            
             using (var algorithm = new SHA384CryptoServiceProvider())
             {
-                var plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
-
-                plainText.CopyTo(plainTextWithSaltBytes, 0);
-                salt.CopyTo(plainTextWithSaltBytes, plainText.Length);
-
                 return algorithm.ComputeHash(plainTextWithSaltBytes);
             }
         }

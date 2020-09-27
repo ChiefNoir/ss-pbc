@@ -55,10 +55,12 @@ namespace API.Controllers.Private
         [HttpDelete("project"), DisableRequestSizeLimit]
         public async Task<IActionResult> Delete([FromHeader] string token, [FromBody] Project project)
         {
-            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
-            {
-                return _projectRepository.DeleteAsync(project);
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                token, 
+                new[] { RoleNames.Admin },
+                () => _projectRepository.DeleteAsync(project)
+            );
 
             return new JsonResult(result);
         }

@@ -18,13 +18,13 @@ namespace Abstractions.IRepository
 
         /// <summary> Get existing <seealso cref="Account"/> </summary>
         /// <param name="id">Account id</param>
-        /// <returns>Existing <seealso cref="Account"/> or <seealso cref="null"/> </returns>
+        /// <returns>Existing <seealso cref="Account"/> or <b>null</b> </returns>
         Task<Account> GetAsync(int id);
 
         /// <summary> Get existing <seealso cref="Account"/> </summary>
         /// <param name="login">Account login as plain text</param>
         /// <param name="plainTextPassword">Account password as plaint text</param>
-        /// <returns>Existing <seealso cref="Account"/> or <seealso cref="null"/> </returns>
+        /// <returns>Existing <seealso cref="Account"/> or <b>null</b> </returns>
         Task<Account> GetAsync(string login, string plainTextPassword);
 
         /// <summary>Save <seealso cref="Account"/> to the storage </summary>

@@ -1,11 +1,8 @@
 ﻿using Abstractions.Exceptions;
 using Abstractions.ISecurity;
 using Abstractions.Model;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Infrastructure.Validation
 {
@@ -19,7 +16,7 @@ namespace Infrastructure.Validation
      * rather than rewriting big and weird generic method
      */
 
-    static class ModelValidation
+    internal static class ModelValidation
     {
         //Introduction
         public static void CheckBeforeUpdate(DataModel.Introduction dbItem, Introduction introduction)
@@ -495,7 +492,7 @@ namespace Infrastructure.Validation
             foreach (var item in dbItem.GalleryImages)
             {
                 var newUrl = project.GalleryImages.FirstOrDefault(x => x.Id == item.Id);
-                if (project == null)
+                if (newUrl == null)
                     continue;
 
                 if (dbItem.Version != project.Version)

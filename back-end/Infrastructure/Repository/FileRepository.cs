@@ -4,6 +4,7 @@ using Common.FriendlyConverters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace Infrastructure.Repository
@@ -53,7 +54,7 @@ namespace Infrastructure.Repository
 
         private static string GenerateFileName()
         {
-            return DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds.ToString();
+            return DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

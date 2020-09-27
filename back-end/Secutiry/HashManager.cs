@@ -63,9 +63,9 @@ namespace Security
             }
         }
 
-        /// <summary>Create <see cref="byte[]"/> filled with random numbers </summary>
-        /// <param name="size"><see cref="byte[]"/> size </param>
-        /// <returns><see cref="byte[]"/> filled with random numbers </returns>
+        /// <summary>Create <see cref="byte"/> array filled with random numbers </summary>
+        /// <param name="size"><see cref="byte"/> array size </param>
+        /// <returns><see cref="byte"/> array filled with random numbers </returns>
         private static byte[] GenerateRandomArray(int size)
         {
             using (var rngCsp = new RNGCryptoServiceProvider())

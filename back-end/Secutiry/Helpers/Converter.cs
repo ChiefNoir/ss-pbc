@@ -9,7 +9,7 @@ namespace Security.Helpers
     {
         /// <summary> Convert hex <see cref="string"/> to <see cref="byte[]"/> </summary>
         /// <param name="hexString">String to convert</param>
-        /// <returns><see cref="byte[]"/></returns>
+        /// <returns><see cref="byte"/>array</returns>
         internal static byte[] ToByteArray(string hexString)
         {
             if (string.IsNullOrEmpty(hexString))
@@ -21,13 +21,13 @@ namespace Security.Helpers
             {
                 for (var i = 0; i < outputLength; i++)
                 {
-                    output[i] = Convert.ToByte(new string(new char[2] { (char)sr.Read(), (char)sr.Read() }), 16);
+                    output[i] = Convert.ToByte(new string(new[] { (char)sr.Read(), (char)sr.Read() }), 16);
                 }
             }
             return output;
         }
 
-        /// <summary> Convert <see cref="byte[]"/> to hex <see cref="string"/> </summary>
+        /// <summary> Convert <see cref="byte"/> array to hex <see cref="string"/> </summary>
         /// <param name="array">Array to convert</param>
         /// <returns>Hex <see cref="string"/></returns>
         internal static string ToHexString(byte[] array)

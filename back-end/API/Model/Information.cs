@@ -6,6 +6,6 @@
 
         public string Role { get; set; }
         
-        public string APIVersion { get; set; }
+        public string ApiVersion { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace API.Controllers.Private
                 {
                     Login = claims.Identity.Name,
                     Role = string.Join(';', claims.GetRoles()),
-                    APIVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
+                    ApiVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
                 };
             });
 

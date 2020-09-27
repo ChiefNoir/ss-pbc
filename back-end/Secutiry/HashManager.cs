@@ -46,13 +46,6 @@ namespace Security
         /// <exception cref="ArgumentNullException"/>
         private static byte[] CalcSaltedHash(byte[] plainText, byte[] salt)
         {
-            if (plainText == null || plainText.Length == 0)
-                throw new ArgumentNullException(nameof(plainText), "Can't calculate hash: input text is empty.");
-
-            if (salt == null || salt.Length == 0)
-                throw new ArgumentNullException(nameof(salt), "Can't calculate hash: input salt is empty.");
-
-
             var plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
             plainText.CopyTo(plainTextWithSaltBytes, 0);
             salt.CopyTo(plainTextWithSaltBytes, plainText.Length);

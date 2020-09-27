@@ -16,7 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Security;
 using System.IO;
 
-namespace BusinessService
+namespace API
 {
     public class Startup
     {

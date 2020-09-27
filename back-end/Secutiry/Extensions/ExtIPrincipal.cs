@@ -12,10 +12,16 @@ namespace Security.Extensions
         /// <returns><seealso cref="IEnumerable"/> with roles names</returns>
         public static IEnumerable<string> GetRoles(this IPrincipal principal)
         {
-            if (!(principal.Identity is ClaimsIdentity userIdentity) || userIdentity.Claims == null)
+            if(principal == null)
                 return new List<string>();
 
-            return userIdentity.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x=>x.Value);
+            if(!(principal.Identity is ClaimsIdentity userIdentity))
+                return new List<string>();
+
+            if(userIdentity.Claims == null || !userIdentity.Claims.Any())
+                return new List<string>();
+
+            return userIdentity.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value);
         }
     }
 }

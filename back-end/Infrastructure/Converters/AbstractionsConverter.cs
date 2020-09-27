@@ -17,12 +17,12 @@ namespace Infrastructure.Converters
             };
         }
 
-        internal static IEnumerable<GalleryImage> ToGalleryImage(IEnumerable<Abstractions.Model.GalleryImage> items)
+        private static IEnumerable<GalleryImage> ToGalleryImage(IEnumerable<Abstractions.Model.GalleryImage> items)
         {
             if (items == null)
                 return new List<GalleryImage>();
 
-            return items.Select(x => ToGalleryImage(x));
+            return items.Select(ToGalleryImage);
         }
 
         internal static GalleryImage ToGalleryImage(Abstractions.Model.GalleryImage item)

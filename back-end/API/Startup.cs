@@ -20,7 +20,7 @@ namespace API
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
@@ -32,7 +32,7 @@ namespace API
             services.AddControllers();
             services.AddCors();
 
-            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
+            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")));
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.FirendlyConverters
+namespace Common.FriendlyConverters
 {
     /// <summary> Convert values to friendly ones </summary>
     public static class FriendlyConvert

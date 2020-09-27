@@ -1,8 +1,8 @@
-﻿using Common.FirendlyConverters;
+﻿using Common.FriendlyConverters;
 using System;
 using Xunit;
 
-namespace Common.Tests.FirendlyConverters
+namespace Common.Tests.FriendlyConverters
 {
     public class FriendlyConvertTests
     {

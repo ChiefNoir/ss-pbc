@@ -1,9 +1,9 @@
 ﻿namespace Abstractions.Model
 {
-    /// <summary> URL to the external recourses </summary>
+    /// <summary> URL to the external resources </summary>
     public class ExternalUrl
     {
-        /// <summary> Unique id or <c>null</c> if external url is brand new </summary>
+        /// <summary> Unique id or <c>null</c> if external URL is brand new </summary>
         public int? Id { get; set; }
 
         /// <summary> Friendly name for URL </summary>

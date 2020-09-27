@@ -37,7 +37,7 @@ namespace Abstractions.Model
         public long Version { get; set; }
 
 
-        /// <summary> URL for the external recourses for the project </summary>
+        /// <summary> URL for the external resources for the project </summary>
         public IEnumerable<ExternalUrl> ExternalUrls { get; set; }
 
         /// <summary> Projects gallery </summary>

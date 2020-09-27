@@ -28,7 +28,7 @@
         internal const string WasAlreadyDeleted = "{0} was already deleted";
 
         /// <summary> The property {0} can't be empty </summary>
-        internal const string ThePropertyCantbeEmpty = "The {0} can't be empty";
+        internal const string ThePropertyCantBeEmpty = "The {0} can't be empty";
 
         /// <summary> The category {0} does not exist </summary>
         internal const string TheCategoryDoesNotExist = "The category {0} does not exist";

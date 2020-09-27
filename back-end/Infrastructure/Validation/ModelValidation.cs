@@ -109,7 +109,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Login")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Login")
                     );
             }
 
@@ -117,7 +117,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Role")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Role")
                     );
             }
 
@@ -154,7 +154,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Login")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Login")
                     );
             }
 
@@ -162,7 +162,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Password")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Password")
                     );
             }
 
@@ -235,7 +235,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Code")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
                     );
             }
 
@@ -243,7 +243,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "DisplayName")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
                     );
             }
 
@@ -279,7 +279,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Code")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
                     );
             }
 
@@ -287,7 +287,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "DisplayName")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
                     );
             }
 
@@ -354,7 +354,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Code")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
                     );
             }
 
@@ -362,7 +362,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "DisplayName")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
                     );
             }
 
@@ -370,7 +370,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Category")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Category")
                     );
             }
 
@@ -396,13 +396,13 @@ namespace Infrastructure.Validation
                 if(string.IsNullOrEmpty(item.DisplayName))
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Display name of the External URL")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name of the External URL")
                     );
 
                 if (string.IsNullOrEmpty(item.Url))
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "URL of the External URL")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "URL of the External URL")
                     );
             }
 
@@ -411,7 +411,7 @@ namespace Infrastructure.Validation
                 if (string.IsNullOrEmpty(item.ImageUrl))
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Image of the Gallery Image")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Image of the Gallery Image")
                     );
             }
 
@@ -439,7 +439,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Code")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
                     );
             }
 
@@ -447,7 +447,7 @@ namespace Infrastructure.Validation
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "DisplayName")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
                     );
             }
 
@@ -504,13 +504,13 @@ namespace Infrastructure.Validation
                 if (string.IsNullOrEmpty(item.DisplayName))
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Display name of the External URL")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name of the External URL")
                     );
 
                 if (string.IsNullOrEmpty(item.Url))
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "URL of the External URL")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "URL of the External URL")
                     );
             }
 
@@ -519,7 +519,7 @@ namespace Infrastructure.Validation
                 if (string.IsNullOrEmpty(item.ImageUrl))
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantbeEmpty, "Image of the Gallery Image")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Image of the Gallery Image")
                     );
             }
         }

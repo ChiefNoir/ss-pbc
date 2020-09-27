@@ -1,6 +1,6 @@
 ﻿using Abstractions.Exceptions;
 using Abstractions.IRepository;
-using Common.FirendlyConverters;
+using Common.FriendlyConverters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;

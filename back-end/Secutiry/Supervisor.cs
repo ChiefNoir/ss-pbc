@@ -9,9 +9,8 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 
 
-namespace Security.Supervision
+namespace Security
 {
-
     public class Supervisor : ISupervisor
     {
         private static IConfiguration _configuration;

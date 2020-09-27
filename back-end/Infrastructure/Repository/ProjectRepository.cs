@@ -83,7 +83,7 @@ namespace Infrastructure.Repository
             ModelValidation.CheckBeforeCreate(project, _context);
 
             var dbItem = AbstractionsConverter.ToProject(project);
-            _context.Projects.Add(dbItem);
+            await _context.Projects.AddAsync(dbItem);
 
             await _context.SaveChangesAsync();
             return project;

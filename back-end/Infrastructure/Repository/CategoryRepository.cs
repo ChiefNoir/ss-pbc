@@ -85,7 +85,7 @@ namespace Infrastructure.Repository
                 Version = 0
             };
 
-            _context.Categories.Add(dbItem);
+            await _context.Categories.AddAsync(dbItem);
 
             await _context.SaveChangesAsync();
             return DataConverter.ToCategory(dbItem);

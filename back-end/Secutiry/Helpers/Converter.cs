@@ -12,9 +12,6 @@ namespace Security.Helpers
         /// <returns><see cref="byte"/>array</returns>
         internal static byte[] ToByteArray(string hexString)
         {
-            if (string.IsNullOrEmpty(hexString))
-                throw new ArgumentNullException(nameof(hexString), "Hex string can't be null or empty");
-
             var outputLength = hexString.Length / 2;
             var output = new byte[outputLength];
             using (var sr = new StringReader(hexString))
@@ -32,9 +29,6 @@ namespace Security.Helpers
         /// <returns>Hex <see cref="string"/></returns>
         internal static string ToHexString(byte[] array)
         {
-            if (array == null || array.Length == 0)
-                throw new ArgumentNullException(nameof(array), "Array can't be null or empty");
-
             var hex = new StringBuilder(array.Length * 2);
             foreach (var item in array)
             {

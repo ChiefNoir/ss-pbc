@@ -71,9 +71,9 @@ namespace Security.Tests.Extensions
         [ClassData(typeof(ValidClaimsIdentity))]
         public void ExtIPrincipal_GetRoles(MockPrincipal principal, string[] expected)
         {
-            var result = ExtIPrincipal.GetRoles(principal).OrderBy(x => x).ToArray();
+            var result = principal.GetRoles().OrderBy(x => x).ToArray();
 
-            Assert.True(Enumerable.SequenceEqual(result, expected));
+            Assert.True(result.SequenceEqual(expected));
         }
     }
 

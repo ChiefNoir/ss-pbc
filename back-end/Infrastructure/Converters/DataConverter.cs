@@ -108,12 +108,12 @@ namespace Infrastructure.Converters
             if (externalUrls == null || !externalUrls.Any())
                 return result;
 
-            return externalUrls.Select(x => ToExternalUrl(x));
+            return externalUrls.Select(ToExternalUrl);
         }
 
         private static IEnumerable<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<IntroductionExternalUrl> items)
         {
-            return items.Select(x => ToExternalUrl(x));
+            return items.Select(ToExternalUrl);
         }
 
         private static Abstractions.Model.ExternalUrl ToExternalUrl(IntroductionExternalUrl item)
@@ -134,7 +134,7 @@ namespace Infrastructure.Converters
             if (items == null || !items.Any())
                 return result;
 
-            return items.Select(x => ToGalleryImage(x)).ToList();
+            return items.Select(ToGalleryImage).ToList();
         }
 
         private static Abstractions.Model.GalleryImage ToGalleryImage(GalleryImage item)

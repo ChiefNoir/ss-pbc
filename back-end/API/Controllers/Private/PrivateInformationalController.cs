@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Security;
 using Security.Extensions;
 using System.Reflection;
+using Abstractions.ISecurity;
 
 namespace API.Controllers.Private
 {
@@ -13,13 +14,13 @@ namespace API.Controllers.Private
     [Route("api/v1/")]
     public class PrivateInformationalController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly ITokenManager _tokenManager;
         private readonly ISupervisor _supervisor;
 
-        public PrivateInformationalController(IConfiguration config, ISupervisor supervisor)
+        public PrivateInformationalController(ISupervisor supervisor, ITokenManager tokenManager)
         {
-            _config = config;
             _supervisor = supervisor;
+            _tokenManager = tokenManager;
         }
 
         [HttpGet("information")]
@@ -27,7 +28,7 @@ namespace API.Controllers.Private
         {
             var result = _supervisor.SafeExecute(token, new[] { RoleNames.Admin, RoleNames.Demo }, () =>
             {
-                var claims = TokenManager.ValidateToken(_config, token);
+                var claims = _tokenManager.ValidateToken(token);
 
                 return new Information
                 {

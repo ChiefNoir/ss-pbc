@@ -5,6 +5,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Abstractions.ISecurity;
 using Xunit;
 
 namespace Security.Tests
@@ -14,10 +15,11 @@ namespace Security.Tests
         private readonly ISupervisor _supervisor;
         private readonly Mock<IConfiguration> _config = new Mock<IConfiguration>();
         private readonly Mock<ILogRepository> _log = new Mock<ILogRepository>();
+        private readonly Mock<ITokenManager> _tokenMock = new Mock<ITokenManager>();
 
         public SupervisorTests()
         {
-            _supervisor = new Supervisor(_config.Object, _log.Object);
+            _supervisor = new Supervisor(_config.Object, _log.Object, _tokenMock.Object);
         }
 
 

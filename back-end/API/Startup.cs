@@ -15,6 +15,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Security;
 using System.IO;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API
 {
@@ -41,14 +43,27 @@ namespace API
             services.AddTransient<IHashManager, HashManager>();
             services.AddTransient<ISupervisor, Supervisor>();
             services.AddTransient<ILogRepository, LogRepository>();
+            services.AddTransient<ITokenManager, TokenManager>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddJwtBearer(options =>
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = Configuration.GetSection("Token:RequireHttpsMetadata").Get<bool>();
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        options.RequireHttpsMetadata = false;
-                        options.TokenValidationParameters = TokenManager.CreateTokenValidationParameters(Configuration);
-                    });
-
+                        ValidateIssuer = Configuration.GetSection("Token:ValidateIssuer").Get<bool>(),
+                        ValidateAudience = Configuration.GetSection("Token:ValidateAudience").Get<bool>(),
+                        ValidateLifetime = Configuration.GetSection("Token:ValidateLifetime").Get<bool>(),
+                        ValidateIssuerSigningKey = Configuration.GetSection("Token:ValidateIssuerSigningKey").Get<bool>(),
+                        ValidIssuer = Configuration.GetSection("Token:Issuer").Get<string>(),
+                        ValidAudience = Configuration.GetSection("Token:Audience").Get<string>(),
+                        IssuerSigningKey = new SymmetricSecurityKey
+                        (
+                            Encoding.UTF8.GetBytes(Configuration.GetSection("Token:Key").Get<string>())
+                        ),
+                        RequireExpirationTime = Configuration.GetSection("Token:RequireExpirationTime").Get<bool>()
+                    };
+                });
 
             //MultiPartBodyLength
             services.Configure<FormOptions>(o =>
@@ -86,6 +101,7 @@ namespace API
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), path)),
                 RequestPath = new PathString("/" + path)
             });
+
 
             app.UseAuthentication();
             app.UseAuthorization();

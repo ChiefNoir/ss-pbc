@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Abstractions.ISecurity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,20 @@ using System.Text;
 namespace Security
 {
     /// <summary> JWT Toke manager </summary>
-    public static class TokenManager
+    public class TokenManager : ITokenManager
     {
+        private readonly IConfiguration _configuration;
+
+        public TokenManager(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         /// <summary> Create JWT token </summary>
-        /// <param name="configuration"> <see cref="IConfiguration"/> </param>
         /// <param name="login"> Login </param>
         /// <param name="roles"> Roles </param>
         /// <returns>JWT token</returns>
-        public static string CreateToken(IConfiguration configuration, string login, params string[] roles)
+        public string CreateToken(string login, params string[] roles)
         {
             var claims = new List<Claim>
             {
@@ -31,15 +38,15 @@ namespace Security
 
             var jwt = new JwtSecurityToken
                 (
-                    issuer: configuration.GetSection("Token:Issuer").Get<string>(),
-                    audience: configuration.GetSection("Token:Audience").Get<string>(),
+                    issuer: _configuration.GetSection("Token:Issuer").Get<string>(),
+                    audience: _configuration.GetSection("Token:Audience").Get<string>(),
                     notBefore: DateTime.UtcNow,
                     claims: claims,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(configuration.GetSection("Token:LifeTime").Get<int>())),
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_configuration.GetSection("Token:LifeTime").Get<int>())),
                     signingCredentials: new SigningCredentials
                     (
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Token:Key").Get<string>())),
-                        configuration.GetSection("Token:SecurityAlgorithms").Get<string>()
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Token:Key").Get<string>())),
+                        _configuration.GetSection("Token:SecurityAlgorithms").Get<string>()
                     )
                 );
 
@@ -49,34 +56,35 @@ namespace Security
         }
 
         /// <summary> Create <seea cref="TokenValidationParameters"/> parameters </summary>
-        /// <param name="configuration"> <see cref="IConfiguration"/> </param>
         /// <returns> <seea cref="TokenValidationParameters"/> </returns>
-        public static TokenValidationParameters CreateTokenValidationParameters(IConfiguration configuration)
+        private TokenValidationParameters CreateTokenValidationParameters()
         {
             return new TokenValidationParameters
             {
-                ValidateIssuer = true,
-                ValidIssuer = configuration.GetSection("Token:Issuer").Get<string>(),
-                ValidateAudience = true,
-                ValidAudience = configuration.GetSection("Token:Audience").Get<string>(),
-                ValidateLifetime = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Token:Key").Get<string>())),
-                ValidateIssuerSigningKey = true,
-                RequireExpirationTime = true
+                ValidateIssuer = _configuration.GetSection("Token:ValidateIssuer").Get<bool>(),
+                ValidateAudience = _configuration.GetSection("Token:ValidateAudience").Get<bool>(),
+                ValidateLifetime = _configuration.GetSection("Token:ValidateLifetime").Get<bool>(),
+                ValidateIssuerSigningKey = _configuration.GetSection("Token:ValidateIssuerSigningKey").Get<bool>(),
+                ValidIssuer = _configuration.GetSection("Token:Issuer").Get<string>(),
+                ValidAudience = _configuration.GetSection("Token:Audience").Get<string>(),
+                IssuerSigningKey = new SymmetricSecurityKey
+                (
+                    Encoding.UTF8.GetBytes(_configuration.GetSection("Token:Key").Get<string>())
+                ),
+                RequireExpirationTime = _configuration.GetSection("Token:RequireExpirationTime").Get<bool>()
             };
         }
 
         /// <summary> Validate JWT token </summary>
-        /// <param name="configuration"> <see cref="IConfiguration"/> </param>
         /// <param name="token">Token to validate</param>
         /// <returns> <see cref="IPrincipal"/></returns>
-        public static IPrincipal ValidateToken(IConfiguration configuration, string token)
+        public IPrincipal ValidateToken(string token)
         {
             if (string.IsNullOrEmpty(token))
                 return null;
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var validationParameters = CreateTokenValidationParameters(configuration);
+            var validationParameters = CreateTokenValidationParameters();
             return tokenHandler.ValidateToken(token, validationParameters, out _);
         }
     }

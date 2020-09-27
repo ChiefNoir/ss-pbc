@@ -7,19 +7,22 @@ using Security.Resources;
 using System;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Abstractions.ISecurity;
 
 
 namespace Security
 {
     public class Supervisor : ISupervisor
     {
-        private static IConfiguration _configuration;
-        private static ILogRepository _logRepository;
+        private readonly IConfiguration _configuration;
+        private readonly ILogRepository _logRepository;
+        private readonly ITokenManager _tokenManager;
 
-        public Supervisor(IConfiguration configuration, ILogRepository logRepository)
+        public Supervisor(IConfiguration configuration, ILogRepository logRepository, ITokenManager tokenManager)
         {
             _configuration = configuration;
             _logRepository = logRepository;
+            _tokenManager = tokenManager;
         }
 
 
@@ -146,7 +149,7 @@ namespace Security
         /// <param name="token">Token to validate</param>
         /// <param name="roles">Roles who have rights to execute function</param>
         /// <returns> <c>null</c> if everything is good </returns>
-        private static Incident CheckToken(string token, string[] roles)
+        private Incident CheckToken(string token, string[] roles)
         {
             if (string.IsNullOrEmpty(token))
             {
@@ -160,7 +163,7 @@ namespace Security
             IPrincipal principal;
             try
             {
-                principal = TokenManager.ValidateToken(_configuration, token);
+                principal = _tokenManager.ValidateToken(token);
             }
             catch (SecurityTokenException ee)
             {

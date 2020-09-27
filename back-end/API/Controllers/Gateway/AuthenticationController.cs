@@ -9,6 +9,7 @@ using Security.Extensions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Abstractions.ISecurity;
 
 namespace API.Controllers.Gateway
 {
@@ -18,13 +19,15 @@ namespace API.Controllers.Gateway
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IConfiguration _configuration;
+        private readonly ITokenManager _tokenManager;
         private readonly ISupervisor _supervisor;
 
-        public AuthenticationController(IConfiguration configuration, IAccountRepository userRepository, ISupervisor supervisor)
+        public AuthenticationController(IConfiguration configuration, IAccountRepository userRepository, ISupervisor supervisor, ITokenManager tokenManager)
         {
             _configuration = configuration;
             _accountRepository = userRepository;
             _supervisor = supervisor;
+            _tokenManager = tokenManager;
         }
 
         [HttpPost("login")]
@@ -37,7 +40,7 @@ namespace API.Controllers.Gateway
                 return new Identity
                 {
                     Account = user,
-                    Token = TokenManager.CreateToken(_configuration, credentials.Login, user.Role),
+                    Token = _tokenManager.CreateToken(credentials.Login, user.Role),
                     TokenLifeTimeMinutes = _configuration.GetSection("Token:LifeTime").Get<int>()
                 };
             });
@@ -50,7 +53,7 @@ namespace API.Controllers.Gateway
         {
             var result = _supervisor.SafeExecute(() =>
             {
-                var principal = TokenManager.ValidateToken(_configuration, token);
+                var principal = _tokenManager.ValidateToken(token);
 
                 if (principal == null)
                     throw new Exception("Validation failed");

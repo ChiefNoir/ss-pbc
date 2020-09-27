@@ -22,7 +22,7 @@ namespace Infrastructure.Validation
     static class ModelValidation
     {
         //Introduction
-        public static void CheckBeforeUpdate(DataModel.Introduction dbItem, Abstractions.Model.Introduction introduction)
+        public static void CheckBeforeUpdate(DataModel.Introduction dbItem, Introduction introduction)
         {
             if (dbItem == null)
             {
@@ -60,7 +60,7 @@ namespace Infrastructure.Validation
 
 
         //Account
-        public static void CheckBeforeDelete(DataModel.Account dbItem, Abstractions.Model.Account account)
+        public static void CheckBeforeDelete(DataModel.Account dbItem, Account account)
         {
             if (account.Id == null)
             {
@@ -87,7 +87,7 @@ namespace Infrastructure.Validation
             }
         }
         
-        public static void CheckBeforeUpdate(DataModel.Account dbItem, Abstractions.Model.Account account, DataContext context)
+        public static void CheckBeforeUpdate(DataModel.Account dbItem, Account account, DataContext context)
         {
             if (account.Id == null)
             {
@@ -140,7 +140,7 @@ namespace Infrastructure.Validation
 
         }
 
-        public static void CheckBeforeCreate(Abstractions.Model.Account account, DataContext context)
+        public static void CheckBeforeCreate(Account account, DataContext context)
         {
             if (account.Id != null)
             {
@@ -179,7 +179,7 @@ namespace Infrastructure.Validation
 
 
         // Category
-        public static void CheckBeforeDelete(DataModel.Category dbItem, Abstractions.Model.Category category, DataContext context)
+        public static void CheckBeforeDelete(DataModel.Category dbItem, Category category, DataContext context)
         {
             if (category.Id == null)
             {
@@ -221,7 +221,7 @@ namespace Infrastructure.Validation
             }
         }
 
-        public static void CheckBeforeCreate(Abstractions.Model.Category category, DataContext context)
+        public static void CheckBeforeCreate(Category category, DataContext context)
         {
             if (category.Id != null)
             {
@@ -257,7 +257,7 @@ namespace Infrastructure.Validation
 
         }
 
-        public static void CheckBeforeUpdate(DataModel.Category dbItem, Abstractions.Model.Category category, DataContext context)
+        public static void CheckBeforeUpdate(DataModel.Category dbItem, Category category, DataContext context)
         {
             if (category.Id == null)
             {
@@ -312,7 +312,7 @@ namespace Infrastructure.Validation
 
 
         //Project
-        public static void CheckBeforeDelete(DataModel.Project dbItem, Abstractions.Model.Project project)
+        public static void CheckBeforeDelete(DataModel.Project dbItem, Project project)
         {
             if (project.Id == null)
             {
@@ -340,7 +340,7 @@ namespace Infrastructure.Validation
 
         }
 
-        public static void CheckBeforeCreate(Abstractions.Model.Project project, DataContext context)
+        public static void CheckBeforeCreate(Project project, DataContext context)
         {
             if (project.Id != null)
             {
@@ -417,7 +417,7 @@ namespace Infrastructure.Validation
 
         }
 
-        public static void CheckBeforeUpdate(DataModel.Project dbItem, Abstractions.Model.Project project, DataContext context)
+        public static void CheckBeforeUpdate(DataModel.Project dbItem, Project project, DataContext context)
         {
             if (project.Id == null)
             {

@@ -211,8 +211,16 @@ namespace Infrastructure.Validation
             }
 
             var catWithProjects = context.CategoriesWithTotalProjects.FirstOrDefault(x => x.Id == category.Id);
-            
-            if(catWithProjects.TotalProjects > 0)
+            if (catWithProjects == null)
+            {
+                throw new InconsistencyException
+                (
+                    string.Format(Resources.TextMessages.CantDeleteNewItem, category.GetType().Name)
+                );
+            }
+
+
+            if (catWithProjects.TotalProjects > 0)
             {
                 throw new InconsistencyException
                     (

@@ -18,7 +18,7 @@ jobs:
            dotnet-version: 3.0.100
       - name: Generate coverage report
         run: |
-          cd ./back-end/Security.Tests/
+          cd ./back-end/
           dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
       - name: Publish coverage report to coveralls.io
         uses: coverallsapp/github-action@v1.0.1

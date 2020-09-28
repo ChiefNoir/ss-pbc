@@ -1,4 +1,4 @@
-![Build Status](https://github.com/ChiefNoir/BusinessCard/workflows/Build .NET Core/badge.svg?branch=master)
+![Build Status](https://github.com/ChiefNoir/BusinessCard/workflows/Build%20.NET%20Core/badge.svg?branch=master)
 ![CodeQL](https://github.com/ChiefNoir/BusinessCard/workflows/CodeQL/badge.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ChiefNoir/BusinessCard/badge.svg?branch=master)](https://coveralls.io/github/ChiefNoir/BusinessCard?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-Apache-green.svg)](https://github.com/ChiefNoir/BusinessCard/blob/master/LICENSE)

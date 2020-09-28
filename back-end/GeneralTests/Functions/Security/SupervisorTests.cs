@@ -1,8 +1,7 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.ISecurity;
 using Abstractions.Supervision;
-using ApiTests.shared.Mocks;
-using Microsoft.Extensions.Configuration;
+using GeneralTests.Functions.SharedMocks;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using Security;
@@ -13,7 +12,7 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ApiTests.Security
+namespace GeneralTests.Functions.Security
 {
     public class SupervisorTests
     {
@@ -31,7 +30,7 @@ namespace ApiTests.Security
                         }
                     )));
             _tokenMock.Setup(x => x.ValidateToken("invalid")).Returns(new MockPrincipal(new ClaimsIdentity()));
-            _tokenMock.Setup(x => x.ValidateToken("SecurityTokenException")).Returns( ()=> throw new SecurityTokenException());
+            _tokenMock.Setup(x => x.ValidateToken("SecurityTokenException")).Returns(() => throw new SecurityTokenException());
             _tokenMock.Setup(x => x.ValidateToken("IPrincipal-null")).Returns<IPrincipal>(null);
 
             _supervisor = new Supervisor(_log.Object, _tokenMock.Object);
@@ -106,7 +105,7 @@ namespace ApiTests.Security
             Assert.True(resultInt.IsSucceed);
             Assert.True(resultInt.Error == null);
 
-            var resultCollection  = await _supervisor.SafeExecuteAsync(() => Task.FromResult(new List<int> { 42 }));
+            var resultCollection = await _supervisor.SafeExecuteAsync(() => Task.FromResult(new List<int> { 42 }));
             Assert.True(resultCollection.Data.Count == 1);
             Assert.True(resultCollection.Data[0] == 42);
             Assert.True(resultCollection.IsSucceed);
@@ -209,5 +208,5 @@ namespace ApiTests.Security
 
 
 
-        }
+    }
 }

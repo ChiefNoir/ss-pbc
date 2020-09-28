@@ -1,8 +1,8 @@
-using Security;
+﻿using Security;
 using System;
 using Xunit;
 
-namespace ApiTests.Security
+namespace GeneralTests.Functions.Security
 {
     public class HashManagerTests
     {
@@ -38,7 +38,7 @@ namespace ApiTests.Security
         [Theory]
         [InlineData
             (
-                "sa", 
+                "sa",
                 "83ce1b2fafc2efaec0986e31311a064dad3a348f224aad85270289cbe57c4da15fda1f2b71f037520c1c79920767149ffdaadcfa49455fb53ffbb91312bf9d564bb4238e5e9b034b137c3518f4cfc63912daa2fca9c8d03e6a6187a9fdc595e07c91a45ae77ed17ee37dcafac475b9be3501828d9089febddd8cabad3b541992",
                 "92cb4dc464f7008d722b7d9ab7fb7dbbec104b028b590c75bd9116b316e8250a581473c743cb4fd9bbc11760638e4495"
             )

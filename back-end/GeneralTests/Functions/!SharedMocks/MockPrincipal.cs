@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Security.Principal;
 
-namespace ApiTests.shared.Mocks
+namespace GeneralTests.Functions.SharedMocks
 {
     public class MockPrincipal : IPrincipal
     {

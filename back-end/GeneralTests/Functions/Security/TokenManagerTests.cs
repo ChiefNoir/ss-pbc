@@ -8,7 +8,7 @@ using Moq;
 using Security;
 using Xunit;
 
-namespace ApiTests.Security
+namespace GeneralTests.Functions.Security
 {
     public class TokenManagerTests
     {
@@ -31,21 +31,21 @@ namespace ApiTests.Security
 
         [Theory]
         [InlineData("login", null)]
-        [InlineData(null,    new[] { "admin" })]
+        [InlineData(null, new[] { "admin" })]
         [InlineData("login", new[] { "" })]
-        [InlineData("login", new[] { "","","" })]
+        [InlineData("login", new[] { "", "", "" })]
         [InlineData("login", new[] { null, null, "" })]
-        [InlineData(null,    new[] { "" })]
+        [InlineData(null, new[] { "" })]
         public void CreateToken_Invalid(string login, string[] roles)
         {
             Assert.ThrowsAny<Exception>(() => _tokenManager.CreateToken(login, roles));
         }
 
         [Theory]
-        [InlineData("login",    new[] { "admin" })]
-        [InlineData("root",     new[] { "sa", "as" })]
+        [InlineData("login", new[] { "admin" })]
+        [InlineData("root", new[] { "sa", "as" })]
         [InlineData("original", new[] { "role 1", null })]
-        [InlineData("qwerty",   new[] { "role 1", null, "" })]
+        [InlineData("qwerty", new[] { "role 1", null, "" })]
         public void ValidateToken_Valid(string login, string[] roles)
         {
             var token = _tokenManager.CreateToken(login, roles);
@@ -53,7 +53,7 @@ namespace ApiTests.Security
 
             Assert.True(principal.Identity.Name == login);
 
-            foreach (var item in roles.Where(x=> !string.IsNullOrEmpty(x)))
+            foreach (var item in roles.Where(x => !string.IsNullOrEmpty(x)))
             {
                 Assert.True(principal.IsInRole(item));
             }

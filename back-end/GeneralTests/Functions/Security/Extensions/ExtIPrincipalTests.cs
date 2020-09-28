@@ -1,14 +1,13 @@
-﻿using System;
+﻿using GeneralTests.Functions.SharedMocks;
 using Security.Extensions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Principal;
 using Xunit;
-using ApiTests.shared.Mocks;
 
-namespace ApiTests.Security.Extensions
+namespace GeneralTests.Functions.Security.Extensions
 {
     public class ExtIPrincipalTests
     {
@@ -78,4 +77,3 @@ namespace ApiTests.Security.Extensions
         }
     }
 }
-

@@ -1,3 +1,8 @@
+![Build Status](https://github.com/ChiefNoir/BusinessCard/workflows/Build.NETCore/badge.svg?branch=master)
+![CodeQL](https://github.com/ChiefNoir/BusinessCard/workflows/CodeQL/badge.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ChiefNoir/BusinessCard/badge.svg?branch=master)](https://coveralls.io/github/ChiefNoir/BusinessCard?branch=master)
+[![License: MIT](https://img.shields.io/badge/License-Apache-green.svg)](https://github.com/ChiefNoir/BusinessCard/blob/master/LICENSE)
+
 # BusinessCard
 
 Personal website.

@@ -37,59 +37,35 @@ namespace GeneralTests.Functions.Security
         }
 
 
-        [Fact]
-        public void SafeExecute_Valid()
+        [Theory]
+        [InlineData(12)]
+        public void SafeExecute_Valid(int value)
         {
-            var resultString = _supervisor.SafeExecute(() => "text");
-            Assert.True(resultString.Data == "text");
+            var resultString = _supervisor.SafeExecute(() => value);
+            Assert.True(resultString.Data == value);
             Assert.True(resultString.IsSucceed);
             Assert.True(resultString.Error == null);
-
-            var resultInt = _supervisor.SafeExecute(() => 12);
-            Assert.True(resultInt.Data == 12);
-            Assert.True(resultInt.IsSucceed);
-            Assert.True(resultInt.Error == null);
-
-            var resultCollection = _supervisor.SafeExecute(() => new List<int> { 42 });
-            Assert.True(resultCollection.Data.Count == 1);
-            Assert.True(resultCollection.Data[0] == 42);
-            Assert.True(resultCollection.IsSucceed);
-            Assert.True(resultCollection.Error == null);
         }
-
 
         [Fact]
         public void SafeExecute_Invalid()
         {
-            var resultString = _supervisor.SafeExecute<string>(() => throw new Exception("One"));
+            var resultString = _supervisor.SafeExecute<string>(() => throw new Exception("one"));
             Assert.True(resultString.Data == default);
             Assert.True(resultString.IsSucceed == false);
             Assert.True(resultString.Error != null);
-            Assert.True(resultString.Error.Message == "One");
+            Assert.True(resultString.Error.Message == "one");
             Assert.True(resultString.Error.Detail == null);
 
-            var resultInt = _supervisor.SafeExecute<int>(() => throw new Exception("Two"));
+
+            var resultInt = _supervisor.SafeExecute<string>(() => throw new Exception("one", new Exception("two")));
             Assert.True(resultInt.Data == default);
             Assert.True(resultInt.IsSucceed == false);
             Assert.True(resultInt.Error != null);
-            Assert.True(resultInt.Error.Message == "Two");
-            Assert.True(resultInt.Error.Detail == null);
-
-            var resultCollection = _supervisor.SafeExecute<List<int>>(() => throw new Exception("Three"));
-            Assert.True(resultCollection.Data == default);
-            Assert.True(resultCollection.IsSucceed == false);
-            Assert.True(resultCollection.Error != null);
-            Assert.True(resultCollection.Error.Message == "Three");
-            Assert.True(resultCollection.Error.Detail == null);
-
-
-            var result = _supervisor.SafeExecute<int>(() => throw new Exception("Main", new Exception("Inner")));
-            Assert.True(result.Data == default);
-            Assert.True(result.IsSucceed == false);
-            Assert.True(result.Error != null);
-            Assert.True(result.Error.Message == "Main");
-            Assert.True(result.Error.Detail == "Inner");
+            Assert.True(resultInt.Error.Message == "one");
+            Assert.True(resultInt.Error.Detail == "two");
         }
+
 
 
         [Fact]
@@ -99,19 +75,7 @@ namespace GeneralTests.Functions.Security
             Assert.True(resultString.Data == "text");
             Assert.True(resultString.IsSucceed);
             Assert.True(resultString.Error == null);
-
-            var resultInt = await _supervisor.SafeExecuteAsync(() => Task.FromResult(12));
-            Assert.True(resultInt.Data == 12);
-            Assert.True(resultInt.IsSucceed);
-            Assert.True(resultInt.Error == null);
-
-            var resultCollection = await _supervisor.SafeExecuteAsync(() => Task.FromResult(new List<int> { 42 }));
-            Assert.True(resultCollection.Data.Count == 1);
-            Assert.True(resultCollection.Data[0] == 42);
-            Assert.True(resultCollection.IsSucceed);
-            Assert.True(resultCollection.Error == null);
         }
-
 
         [Fact]
         public async void SafeExecuteAsync_Invalid()
@@ -123,21 +87,6 @@ namespace GeneralTests.Functions.Security
             Assert.True(resultString.Error.Message == "One");
             Assert.True(resultString.Error.Detail == null);
 
-            var resultInt = await _supervisor.SafeExecuteAsync<int>(() => throw new Exception("Two"));
-            Assert.True(resultInt.Data == default);
-            Assert.True(resultInt.IsSucceed == false);
-            Assert.True(resultInt.Error != null);
-            Assert.True(resultInt.Error.Message == "Two");
-            Assert.True(resultInt.Error.Detail == null);
-
-            var resultCollection = await _supervisor.SafeExecuteAsync<List<int>>(() => throw new Exception("Three"));
-            Assert.True(resultCollection.Data == default);
-            Assert.True(resultCollection.IsSucceed == false);
-            Assert.True(resultCollection.Error != null);
-            Assert.True(resultCollection.Error.Message == "Three");
-            Assert.True(resultCollection.Error.Detail == null);
-
-
             var result = await _supervisor.SafeExecuteAsync<int>(() => throw new Exception("Main", new Exception("Inner")));
             Assert.True(result.Data == default);
             Assert.True(result.IsSucceed == false);
@@ -147,6 +96,8 @@ namespace GeneralTests.Functions.Security
         }
 
 
+
+
         [Fact]
         public void SafeExecuteWithToken_Valid()
         {
@@ -154,45 +105,15 @@ namespace GeneralTests.Functions.Security
             Assert.True(resultString.Data == "text");
             Assert.True(resultString.IsSucceed);
             Assert.True(resultString.Error == null);
-
-            var resultInt = _supervisor.SafeExecute("valid", null, () => 12);
-            Assert.True(resultInt.Data == 12);
-            Assert.True(resultInt.IsSucceed);
-            Assert.True(resultInt.Error == null);
-
-            var resultCollection = _supervisor.SafeExecute("valid", new[] { "valid" }, () => new List<int> { 42 });
-            Assert.True(resultCollection.Data.Count == 1);
-            Assert.True(resultCollection.Data[0] == 42);
-            Assert.True(resultCollection.IsSucceed);
-            Assert.True(resultCollection.Error == null);
-        }
-
-        [Fact]
-        public void SafeExecuteWithToken_InValid()
-        {
-            var resultString = _supervisor.SafeExecute("invalid", new[] { "invalid" }, () => "text");
-            Assert.True(resultString.Data == default);
-            Assert.True(resultString.IsSucceed == false);
-            Assert.True(resultString.Error != null);
-
-            var resultInt = _supervisor.SafeExecute("invalid", new[] { "invalid" }, () => 12);
-            Assert.True(resultInt.Data == default);
-            Assert.True(resultInt.IsSucceed == false);
-            Assert.True(resultInt.Error != null);
-
-            var resultCollection = _supervisor.SafeExecute("invalid", new[] { "invalid" }, () => new List<int> { 42 });
-            Assert.True(resultCollection.Data == default);
-
-            Assert.True(resultCollection.IsSucceed == false);
-            Assert.True(resultCollection.Error != null);
         }
 
         [Theory]
+        [InlineData("")]
         [InlineData("invalid")]
         [InlineData(null)]
         [InlineData("SecurityTokenException")]
         [InlineData("IPrincipal-null")]
-        public void SafeExecuteWithToken_InValidTokenVariations(string token)
+        public void SafeExecuteWithToken_InValid(string token)
         {
             var resultString = _supervisor.SafeExecute(token, new[] { "invalid" }, () => "text");
             Assert.True(resultString.Data == default);
@@ -201,12 +122,28 @@ namespace GeneralTests.Functions.Security
         }
 
 
+        [Fact]
+        public async void SafeExecuteAsyncWithToken_Valid()
+        {
+            var resultString = await _supervisor.SafeExecuteAsync("valid", new[] { "valid" }, () => Task.FromResult("text"));
+            Assert.True(resultString.Data == "text");
+            Assert.True(resultString.IsSucceed);
+            Assert.True(resultString.Error == null);
+        }
 
-
-
-
-
-
+        [Theory]
+        [InlineData("")]
+        [InlineData("invalid")]
+        [InlineData(null)]
+        [InlineData("SecurityTokenException")]
+        [InlineData("IPrincipal-null")]
+        public async void SafeExecuteAsyncWithToken_InValid(string token)
+        {
+            var resultString = await _supervisor.SafeExecuteAsync(token, new[] { "invalid" }, () => Task.FromResult("text"));
+            Assert.True(resultString.Data == default);
+            Assert.True(resultString.IsSucceed == false);
+            Assert.True(resultString.Error != null);
+        }
 
     }
 }

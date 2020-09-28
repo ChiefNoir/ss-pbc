@@ -1,13 +1,14 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model.System;
 using Abstractions.Supervision;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Security.Resources;
 using System;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Abstractions.ISecurity;
+using System.Security;
+using System.Linq;
 
 namespace Security
 {
@@ -77,16 +78,8 @@ namespace Security
         {
             try
             {
-                var incident = CheckToken(token, roles);
-
-                if (incident != null)
-                {
-                    return new ExecutionResult<T>
-                    {
-                        IsSucceed = false,
-                        Error = incident
-                    };
-                }
+                CheckToken(token, roles);
+                return await SafeExecuteAsync(func);
             }
             catch (Exception ee)
             {
@@ -102,8 +95,6 @@ namespace Security
                     }
                 };
             }
-
-            return await SafeExecuteAsync(func);
         }
 
 
@@ -111,16 +102,8 @@ namespace Security
         {
             try
             {
-                var incident = CheckToken(token, roles);
-
-                if (incident != null)
-                {
-                    return new ExecutionResult<T>
-                    {
-                        IsSucceed = false,
-                        Error = incident
-                    };
-                }
+                CheckToken(token, roles);
+                return SafeExecute(func);
             }
             catch (Exception ee)
             {
@@ -136,26 +119,22 @@ namespace Security
                     }
                 };
             }
-
-            return SafeExecute(func);
         }
 
 
-        //TODO: make this an secException
         /// <summary> Check JWT token</summary>
         /// <param name="token">Token to validate</param>
         /// <param name="roles">Roles who have rights to execute function</param>
         /// <returns> <c>null</c> if everything is good </returns>
-        private Incident CheckToken(string token, string[] roles)
+        private void CheckToken(string token, string[] roles)
         {
-            if (string.IsNullOrEmpty(token))
-            {
-                return new Incident
-                {
-                    Message = TextMessages.AuthenticationNotProvided
-                };
+            //no need no check token, if the roles are empty
+            if (roles == null || !roles.Any())
+                return;
 
-            }
+            if (string.IsNullOrEmpty(token))
+                throw new SecurityException(TextMessages.AuthenticationNotProvided);
+
 
             IPrincipal principal;
             try
@@ -164,38 +143,21 @@ namespace Security
             }
             catch (SecurityTokenException ee)
             {
-                return new Incident
-                {
-                    Message = TextMessages.InvalidToken,
-                    Detail = ee.Message
-                };
+                throw new SecurityException(TextMessages.InvalidToken, ee);
             }
 
             if (principal?.Identity == null)
-            {
-                return new Incident
-                {
-                    Message = TextMessages.InvalidToken
-                };
-            }
-
-            if (roles == null || roles.Length == 0)
-            {
-                return null;
-            }
+                throw new SecurityException(TextMessages.InvalidToken);
 
             foreach (var item in roles)
             {
                 if (principal.IsInRole(item))
                 {
-                    return null;
+                    return;
                 }
             }
 
-            return new Incident
-            {
-                Message = TextMessages.AccessDenied
-            };
+            throw new SecurityException(TextMessages.AccessDenied);
         }
     }
 

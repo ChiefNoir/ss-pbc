@@ -1,9 +1,8 @@
 name: Code coverage
 
-on: 
-    push:
-        branches:
-            - github-actions
+on:
+  push:
+    branches: [master]
 
 jobs:
   build:

@@ -1,4 +1,4 @@
-name: master-build-netcore
+name: .NETCore Build
 
 on:
   push:
@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: go to back-end
+      run: cd ./back-end/
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1

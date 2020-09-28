@@ -1,4 +1,4 @@
-name: .NETCore Build
+name: Build.NETCore
 
 on:
   push:
@@ -13,8 +13,7 @@ jobs:
 
     steps:
     - name: Go to back-end
-      run: |
-          cd /back-end/
+      run: cd back-end
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1

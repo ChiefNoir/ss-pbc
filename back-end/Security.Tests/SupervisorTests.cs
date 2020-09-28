@@ -1,11 +1,15 @@
 ﻿using Abstractions.IRepository;
+using Abstractions.ISecurity;
 using Abstractions.Supervision;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Moq;
+using Security.Tests.Mocks;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
-using Abstractions.ISecurity;
 using Xunit;
 
 namespace Security.Tests
@@ -13,13 +17,23 @@ namespace Security.Tests
     public class SupervisorTests
     {
         private readonly ISupervisor _supervisor;
-        private readonly Mock<IConfiguration> _config = new Mock<IConfiguration>();
         private readonly Mock<ILogRepository> _log = new Mock<ILogRepository>();
         private readonly Mock<ITokenManager> _tokenMock = new Mock<ITokenManager>();
 
         public SupervisorTests()
         {
-            _supervisor = new Supervisor(_config.Object, _log.Object, _tokenMock.Object);
+            _tokenMock.Setup(x => x.ValidateToken("valid")).Returns(new MockPrincipal(new ClaimsIdentity
+                    (
+                        new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Role, "valid")
+                        }
+                    )));
+            _tokenMock.Setup(x => x.ValidateToken("invalid")).Returns(new MockPrincipal(new ClaimsIdentity()));
+            _tokenMock.Setup(x => x.ValidateToken("SecurityTokenException")).Returns( ()=> throw new SecurityTokenException());
+            _tokenMock.Setup(x => x.ValidateToken("IPrincipal-null")).Returns<IPrincipal>(null);
+
+            _supervisor = new Supervisor(_log.Object, _tokenMock.Object);
         }
 
 
@@ -132,5 +146,67 @@ namespace Security.Tests
             Assert.True(result.Error.Detail == "Inner");
         }
 
-    }
+
+        [Fact]
+        public void SafeExecuteWithToken_Valid()
+        {
+            var resultString = _supervisor.SafeExecute("valid", new[] { "valid" }, () => "text");
+            Assert.True(resultString.Data == "text");
+            Assert.True(resultString.IsSucceed);
+            Assert.True(resultString.Error == null);
+
+            var resultInt = _supervisor.SafeExecute("valid", null, () => 12);
+            Assert.True(resultInt.Data == 12);
+            Assert.True(resultInt.IsSucceed);
+            Assert.True(resultInt.Error == null);
+
+            var resultCollection = _supervisor.SafeExecute("valid", new[] { "valid" }, () => new List<int> { 42 });
+            Assert.True(resultCollection.Data.Count == 1);
+            Assert.True(resultCollection.Data[0] == 42);
+            Assert.True(resultCollection.IsSucceed);
+            Assert.True(resultCollection.Error == null);
+        }
+
+        [Fact]
+        public void SafeExecuteWithToken_InValid()
+        {
+            var resultString = _supervisor.SafeExecute("invalid", new[] { "invalid" }, () => "text");
+            Assert.True(resultString.Data == default);
+            Assert.True(resultString.IsSucceed == false);
+            Assert.True(resultString.Error != null);
+
+            var resultInt = _supervisor.SafeExecute("invalid", new[] { "invalid" }, () => 12);
+            Assert.True(resultInt.Data == default);
+            Assert.True(resultInt.IsSucceed == false);
+            Assert.True(resultInt.Error != null);
+
+            var resultCollection = _supervisor.SafeExecute("invalid", new[] { "invalid" }, () => new List<int> { 42 });
+            Assert.True(resultCollection.Data == default);
+
+            Assert.True(resultCollection.IsSucceed == false);
+            Assert.True(resultCollection.Error != null);
+        }
+
+        [Theory]
+        [InlineData("invalid")]
+        [InlineData(null)]
+        [InlineData("SecurityTokenException")]
+        [InlineData("IPrincipal-null")]
+        public void SafeExecuteWithToken_InValidTokenVariations(string token)
+        {
+            var resultString = _supervisor.SafeExecute(token, new[] { "invalid" }, () => "text");
+            Assert.True(resultString.Data == default);
+            Assert.True(resultString.IsSucceed == false);
+            Assert.True(resultString.Error != null);
+        }
+
+
+
+
+
+
+
+
+
+        }
 }

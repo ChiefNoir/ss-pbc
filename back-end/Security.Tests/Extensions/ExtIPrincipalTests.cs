@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using Xunit;
+using Security.Tests.Mocks;
 
 namespace Security.Tests.Extensions
 {
@@ -74,22 +75,6 @@ namespace Security.Tests.Extensions
             var result = principal.GetRoles().OrderBy(x => x).ToArray();
 
             Assert.True(result.SequenceEqual(expected));
-        }
-    }
-
-
-    public class MockPrincipal : IPrincipal
-    {
-        public IIdentity Identity { get; }
-
-        public MockPrincipal(IIdentity identity)
-        {
-            Identity = identity;
-        }
-
-        public bool IsInRole(string role)
-        {
-            return true;
         }
     }
 }

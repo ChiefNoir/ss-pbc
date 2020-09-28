@@ -9,18 +9,15 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using Abstractions.ISecurity;
 
-
 namespace Security
 {
     public class Supervisor : ISupervisor
     {
-        private readonly IConfiguration _configuration;
         private readonly ILogRepository _logRepository;
         private readonly ITokenManager _tokenManager;
 
-        public Supervisor(IConfiguration configuration, ILogRepository logRepository, ITokenManager tokenManager)
+        public Supervisor(ILogRepository logRepository, ITokenManager tokenManager)
         {
-            _configuration = configuration;
             _logRepository = logRepository;
             _tokenManager = tokenManager;
         }

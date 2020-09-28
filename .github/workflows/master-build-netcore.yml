@@ -1,4 +1,4 @@
-name: Master/Build .NETCore
+name: master-build-netcore
 
 on:
   push:

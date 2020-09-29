@@ -113,6 +113,9 @@ namespace Infrastructure.Converters
 
         private static IEnumerable<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<IntroductionExternalUrl> items)
         {
+            if (items == null || !items.Any())
+                return new List<Abstractions.Model.ExternalUrl>();
+
             return items.Select(ToExternalUrl);
         }
 

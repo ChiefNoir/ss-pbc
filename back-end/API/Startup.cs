@@ -35,6 +35,7 @@ namespace API
             services.AddCors();
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")));
+            
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();

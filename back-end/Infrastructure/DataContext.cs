@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Data;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("GeneralTests")]
 namespace Infrastructure
 {
     /// <summary>Entity framework data context </summary>
-    public sealed class DataContext : DbContext
+    public class DataContext : DbContext
     {
         private static bool _isMigrationsDone;
 
@@ -23,8 +25,12 @@ namespace Infrastructure
 
         public DataContext(DbContextOptions options) : base(options)
         {
-            if (_isMigrationsDone) return;
+            if (Database.ProviderName == "Microsoft.EntityFrameworkCore.InMemory")
+                return;
 
+
+            if (_isMigrationsDone) 
+                return;
 
             MigrateDatabase(Database.GetDbConnection());
             _isMigrationsDone = true;

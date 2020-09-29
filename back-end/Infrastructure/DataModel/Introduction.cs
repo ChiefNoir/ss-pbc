@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("GeneralTests")]
 namespace Infrastructure.DataModel
 {
     [Table("introduction")]

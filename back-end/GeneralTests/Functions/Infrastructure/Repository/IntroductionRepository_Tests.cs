@@ -4,6 +4,7 @@ using Infrastructure.Repository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace GeneralTests.Functions.Infrastructure.Repository
@@ -76,25 +77,164 @@ namespace GeneralTests.Functions.Infrastructure.Repository
                 yield return new object[]
                 {
                     new Introduction { Content = "Content", PosterUrl = "Poster url", Title = "Title", PosterDescription = "PosterDescription", Version = 0},
-                    new Abstractions.Model.Introduction 
-                    { 
+                    new Abstractions.Model.Introduction
+                    {
                         Content = "New Content",
                         PosterDescription = "New poster description",
                         PosterUrl = "New poster url",
                         Title = "New title",
-                        Version = 0, 
+                        Version = 0,
                     },
-                    new Abstractions.Model.Introduction 
+                    new Abstractions.Model.Introduction
                     {
                         Content = "New Content",
                         PosterDescription = "New poster description",
                         PosterUrl = "New poster url",
                         Title = "New title",
                         Version = 1,
-                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>() 
+                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>()
                     }
                 };
 
+                yield return new object[]
+                {
+                    new Introduction { Content = "Content", PosterUrl = "Poster url", Title = "Title", PosterDescription = "PosterDescription", Version = 0},
+                    new Abstractions.Model.Introduction
+                    {
+                        Content = "New Content",
+                        PosterDescription = "New poster description",
+                        PosterUrl = "New poster url",
+                        Title = "New title",
+                        Version = 0,
+                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>()
+                        {
+                            new Abstractions.Model.ExternalUrl
+                            {
+                                DisplayName = "ExternalUrl DisplayName 0",
+                                Url = "ExternalUrl Url"
+                            }
+                        },
+                    },
+                    new Abstractions.Model.Introduction
+                    {
+                        Content = "New Content",
+                        PosterDescription = "New poster description",
+                        PosterUrl = "New poster url",
+                        Title = "New title",
+                        Version = 1,
+                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>()
+                        {
+                            new Abstractions.Model.ExternalUrl
+                            {
+                                Id = 1,
+                                DisplayName = "ExternalUrl DisplayName 0",
+                                Url = "ExternalUrl Url",
+                                Version = 0
+                            }
+                        },
+                    }
+                };
+
+                yield return new object[]
+                {
+                    new Introduction
+                    {
+                        Content = "Content", PosterUrl = "Poster url", Title = "Title", PosterDescription = "PosterDescription", Version = 0,
+                        ExternalUrls = new List<IntroductionExternalUrl>()
+                        {
+                            new IntroductionExternalUrl
+                            {
+                                 ExternalUrl = new ExternalUrl
+                                 {
+                                      DisplayName = "Will be deleted",
+                                 }
+                            }
+                        }
+                    },
+                    new Abstractions.Model.Introduction
+                    {
+                        Content = "New Content",
+                        PosterDescription = "New poster description",
+                        PosterUrl = "New poster url",
+                        Title = "New title",
+                        Version = 0,
+                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>(),
+                    },
+                    new Abstractions.Model.Introduction
+                    {
+                        Content = "New Content",
+                        PosterDescription = "New poster description",
+                        PosterUrl = "New poster url",
+                        Title = "New title",
+                        Version = 1,
+                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>(),
+                    }
+                };
+                yield return new object[]
+                {
+                    new Introduction
+                    {
+                        Content = "Content", PosterUrl = "Poster url", Title = "Title", PosterDescription = "PosterDescription", Version = 0,
+                        ExternalUrls = new List<IntroductionExternalUrl>()
+                        {
+                            new IntroductionExternalUrl
+                            {
+                                 ExternalUrl = new ExternalUrl
+                                 {
+                                     Id = 90,
+                                     DisplayName = "Will be updated",
+                                     Url = "Something new",
+                                     Version = 0
+                                 }
+                            }
+                        }
+                    },
+                    new Abstractions.Model.Introduction
+                    {
+                        Content = "New Content",
+                        PosterDescription = "New poster description",
+                        PosterUrl = "New poster url",
+                        Title = "New title",
+                        Version = 0,
+                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>()
+                        {
+                            new Abstractions.Model.ExternalUrl
+                            {
+                                Id = 90,
+                                DisplayName = "Will be updated",
+                                Url = "SUDDENLY",
+                                Version = 0
+                            },
+                            new Abstractions.Model.ExternalUrl
+                            {
+                                DisplayName = "Brand new",
+                            }
+                        }
+                    },
+                    new Abstractions.Model.Introduction
+                    {
+                        Content = "New Content",
+                        PosterDescription = "New poster description",
+                        PosterUrl = "New poster url",
+                        Title = "New title",
+                        Version = 1,
+                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>()
+                        {
+                            new Abstractions.Model.ExternalUrl
+                            {
+                                Id = 90,
+                                DisplayName = "Will be updated",
+                                Url = "SUDDENLY",
+                                Version = 1
+                            },
+                            new Abstractions.Model.ExternalUrl
+                            {
+                                DisplayName = "Brand new",
+                                Version = 0
+                            }
+                        }
+                    }
+                };
             }
         }
 
@@ -223,7 +363,7 @@ namespace GeneralTests.Functions.Infrastructure.Repository
                 var rep = new IntroductionRepository(context);
                 var result = await rep.GetAsync();
 
-                Assert.True(result.Equals(expected));
+                Compare(result, expected);
 
                 context.Database.EnsureDeleted();
             }
@@ -238,7 +378,7 @@ namespace GeneralTests.Functions.Infrastructure.Repository
                 var rep = new IntroductionRepository(context);
                 var result = await rep.SaveAsync(newItem);
 
-                Assert.True(result.Equals(expectedItem));
+                Compare(result, expectedItem);
 
                 context.Database.EnsureDeleted();
             }
@@ -257,5 +397,34 @@ namespace GeneralTests.Functions.Infrastructure.Repository
                 context.Database.EnsureDeleted();
             }
         }
+
+
+
+
+
+
+
+        private void Compare(Abstractions.Model.Introduction result, Abstractions.Model.Introduction expectedItem)
+        {
+            Assert.True(result.Title == expectedItem.Title);
+            Assert.True(result.Content == expectedItem.Content);
+            Assert.True(result.PosterDescription == expectedItem.PosterDescription);
+            Assert.True(result.PosterUrl == expectedItem.PosterUrl);
+            Assert.True(result.Version == expectedItem.Version);
+
+            Assert.True(result.ExternalUrls.Count() == expectedItem.ExternalUrls.Count());
+
+
+            foreach (var item in expectedItem.ExternalUrls)
+            {
+                var resultItem = result.ExternalUrls.FirstOrDefault(x => x.DisplayName == item.DisplayName);
+
+                Assert.True(resultItem.DisplayName == resultItem.DisplayName);
+                Assert.True(resultItem.Url == resultItem.Url);
+                Assert.True(resultItem.Version == resultItem.Version);
+            }
+        }
+
+
     }
 }

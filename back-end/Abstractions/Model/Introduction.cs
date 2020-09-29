@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Abstractions.Model
 {
     /// <summary> Introduction for the index page </summary>
-    public class Introduction : IEquatable<Introduction>
+    public class Introduction
     {
         /// <summary> Content </summary>
         public string Content { get; set; }
@@ -25,34 +22,5 @@ namespace Abstractions.Model
 
         /// <summary> External URLs </summary>
         public IEnumerable<ExternalUrl> ExternalUrls { get; set; }
-
-
-        public bool Equals([AllowNull] Introduction other)
-        {
-            if (other == null)
-                return false;
-
-            if (Content != other.Content)
-                return false;
-
-            if (PosterDescription != other.PosterDescription)
-                return false;
-
-            if (PosterUrl != other.PosterUrl)
-                return false;
-
-            if (Title != other.Title)
-                return false;
-
-            if (Version != other.Version)
-                return false;
-
-            return Enumerable.SequenceEqual(ExternalUrls.OrderBy(x => x.Id), other.ExternalUrls.OrderBy(x => x.Id));
-        }
-
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as Introduction);
-        }
     }
 }

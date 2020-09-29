@@ -59,11 +59,11 @@ namespace Infrastructure.Repository
             Merge(dbItem, newItem.ExternalUrls);
         }
 
-        private void Merge(DataModel.Introduction dbItem, IEnumerable<ExternalUrl> externalUrls)
+        private void Merge(DataModel.Introduction dbItem, IEnumerable<ExternalUrl> newExternalUrls)
         {
             foreach (var item in dbItem.ExternalUrls)
             {
-                var localExternalUrl = externalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
+                var localExternalUrl = newExternalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
 
                 if (localExternalUrl == null)
                 {
@@ -77,7 +77,7 @@ namespace Infrastructure.Repository
                 }
             }
 
-            foreach (var item in externalUrls?.Where(x => x.Id == null) ?? new List<ExternalUrl>())
+            foreach (var item in newExternalUrls?.Where(x => x.Id == null) ?? new List<ExternalUrl>())
             {
                 dbItem.ExternalUrls.Add(AbstractionsConverter.ToIntroductionExternalUrl(item));
             }

@@ -21,39 +21,7 @@ namespace Infrastructure.Validation
     internal static class ModelValidation
     {
         //Introduction
-        public static void CheckBeforeUpdate(DataModel.Introduction dbItem, Introduction introduction)
-        {
-            if (dbItem == null)
-            {
-                throw new InconsistencyException(Resources.TextMessages.IntroductionIsMissing);
-            }
-
-
-            if (dbItem.Version != introduction.Version)
-            {
-                throw new InconsistencyException
-                (
-                    string.Format(Resources.TextMessages.ItemWasAlreadyChanged, introduction.GetType().Name)
-                );
-            }
-
-            foreach (var item in dbItem.ExternalUrls)
-            {
-                var updated = introduction.ExternalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
-
-                if (updated == null)
-                    continue;
-
-                if (item.ExternalUrl.Version != updated.Version)
-                {
-                    throw new InconsistencyException
-                    (
-                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, updated.GetType().Name)
-                    );
-                }
-            }
-
-        }
+        
         //
 
 

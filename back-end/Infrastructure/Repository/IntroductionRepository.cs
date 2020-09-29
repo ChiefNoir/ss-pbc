@@ -2,7 +2,6 @@
 using Abstractions.IRepository;
 using Abstractions.Model;
 using Infrastructure.Converters;
-using Infrastructure.Validation;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;

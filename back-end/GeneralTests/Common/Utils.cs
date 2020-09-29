@@ -15,8 +15,11 @@ namespace GeneralTests.Common
             var context = new DataContext(options);
             context.Database.EnsureCreated();
 
-            context.Set<T>().Add(initialItem);
-            context.SaveChanges();
+            if (initialItem != null)
+            {
+                context.Set<T>().Add(initialItem);
+                context.SaveChanges();
+            }
 
             return context;
         }

@@ -1,4 +1,5 @@
-﻿using Abstractions.IRepository;
+﻿using Abstractions.Exceptions;
+using Abstractions.IRepository;
 using Abstractions.Model;
 using Infrastructure.Converters;
 using Infrastructure.Validation;
@@ -38,7 +39,7 @@ namespace Infrastructure.Repository
                                        .ThenInclude(x => x.ExternalUrl)
                                        .FirstOrDefaultAsync();
 
-            ModelValidation.CheckBeforeUpdate(dbItem, item);
+            CheckBeforeUpdate(dbItem, item);
 
             Merge(dbItem, item);
             await _context.SaveChangesAsync();
@@ -81,6 +82,41 @@ namespace Infrastructure.Repository
             {
                 dbItem.ExternalUrls.Add(AbstractionsConverter.ToIntroductionExternalUrl(item));
             }
+        }
+
+
+        private static void CheckBeforeUpdate(DataModel.Introduction dbItem, Introduction introduction)
+        {
+            if (dbItem == null)
+            {
+                throw new InconsistencyException(Resources.TextMessages.IntroductionIsMissing);
+            }
+
+
+            if (dbItem.Version != introduction.Version)
+            {
+                throw new InconsistencyException
+                (
+                    string.Format(Resources.TextMessages.ItemWasAlreadyChanged, introduction.GetType().Name)
+                );
+            }
+
+            foreach (var item in dbItem.ExternalUrls)
+            {
+                var updated = introduction.ExternalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
+
+                if (updated == null)
+                    continue;
+
+                if (item.ExternalUrl.Version != updated.Version)
+                {
+                    throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, updated.GetType().Name)
+                    );
+                }
+            }
+
         }
     }
 }

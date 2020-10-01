@@ -5,6 +5,7 @@ using Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
@@ -61,36 +62,39 @@ namespace Infrastructure.Repository
 
         private void Merge(DataModel.Introduction dbItem, IEnumerable<ExternalUrl> newExternalUrls)
         {
-            foreach (var item in dbItem.ExternalUrls)
-            {
-                var localExternalUrl = newExternalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
+            if (newExternalUrls == null)
+                newExternalUrls = new List<ExternalUrl>();
 
-                if (localExternalUrl == null)
-                {
-                    _context.ExternalUrls.Remove(item.ExternalUrl);
-                }
-                else
-                {
-                    item.ExternalUrl.DisplayName = localExternalUrl.DisplayName;
-                    item.ExternalUrl.Url = localExternalUrl.Url;
-                    item.ExternalUrl.Version++;
-                }
+            var toRemove = dbItem.ExternalUrls.Where(eu => !newExternalUrls.Any(x => eu.ExternalUrlId == x.Id)).ToList();
+            foreach (var item in toRemove)
+            {
+                dbItem.ExternalUrls.Remove(item);
+
+                _context.ExternalUrls.Remove(item.ExternalUrl);
+                _context.IntroductionExternalUrls.Remove(item);
             }
 
-            foreach (var item in newExternalUrls?.Where(x => x.Id == null) ?? new List<ExternalUrl>())
+            var toAdd = newExternalUrls.Where(x => x.Id == null);
+            foreach (var item in toAdd)
             {
                 dbItem.ExternalUrls.Add(AbstractionsConverter.ToIntroductionExternalUrl(item));
             }
+
+            var toUpdate = newExternalUrls.Where(x => x.Id.HasValue);
+            foreach (var item in toUpdate)
+            {
+                var upd = dbItem.ExternalUrls.FirstOrDefault(x => x.ExternalUrlId == item.Id.Value);
+
+                upd.ExternalUrl.DisplayName = item.DisplayName;
+                upd.ExternalUrl.Url = item.Url;
+                upd.ExternalUrl.Version++;
+            }
+
         }
 
 
         private static void CheckBeforeUpdate(DataModel.Introduction dbItem, Introduction introduction)
         {
-            if (dbItem == null)
-            {
-                throw new InconsistencyException(Resources.TextMessages.IntroductionIsMissing);
-            }
-
 
             if (dbItem.Version != introduction.Version)
             {
@@ -102,7 +106,7 @@ namespace Infrastructure.Repository
 
             foreach (var item in dbItem.ExternalUrls)
             {
-                var updated = introduction.ExternalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
+                var updated = introduction.ExternalUrls?.FirstOrDefault(x => x.Id == item.ExternalUrlId);
 
                 if (updated == null)
                     continue;
@@ -115,7 +119,6 @@ namespace Infrastructure.Repository
                     );
                 }
             }
-
         }
     }
 }

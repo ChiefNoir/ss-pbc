@@ -21,6 +21,12 @@ insert into category(code, display_name)
 -- Introduction
 insert into introduction(title, content)
 	values ('Hello', 'The service is on-line. Congratulations.');
+
+insert into external_url (display_name, url)
+	values ('GitHub', 'https://github.com/ChiefNoir');
+
+insert into introduction_to_external_url(introduction_id, external_url_id)
+	values (1, 1);
 -- --------------------------------------------------------------
 
 -- Sample project

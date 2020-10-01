@@ -580,20 +580,29 @@ namespace GeneralTests.Infrastructure.Repository
         {
             using (var context = Storage.CreateContext())
             {
-                var rep = new CategoryRepository(context);
+                try
+                {
+                    var rep = new CategoryRepository(context);
 
-                var allCategories = await rep.GetAsync();
+                    var allCategories = await rep.GetAsync();
 
-                var result = await rep.SaveAsync(category);
-                Compare(result, expected);
+                    var result = await rep.SaveAsync(category);
+                    Compare(result, expected);
 
-                var getByCode = await rep.GetAsync(expected.Code);
-                Compare(getByCode, expected);
+                    var getByCode = await rep.GetAsync(expected.Code);
+                    Compare(getByCode, expected);
 
-                var getById = await rep.GetAsync(expected.Id.Value);
-                Compare(getById, expected);
-
-                context.FlushDatabase();
+                    var getById = await rep.GetAsync(expected.Id.Value);
+                    Compare(getById, expected);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
             }
         }
 
@@ -603,18 +612,27 @@ namespace GeneralTests.Infrastructure.Repository
         {
             using (var context = Storage.CreateContext())
             {
-                var rep = new CategoryRepository(context);
+                try
+                {
+                    var rep = new CategoryRepository(context);
 
-                var result = await rep.DeleteAsync(category);
-                Assert.True(result);
+                    var result = await rep.DeleteAsync(category);
+                    Assert.True(result);
 
-                var getByCode = await rep.GetAsync(category.Code);
-                Assert.Null(getByCode);
+                    var getByCode = await rep.GetAsync(category.Code);
+                    Assert.Null(getByCode);
 
-                var getById = await rep.GetAsync(category.Id.Value);
-                Assert.Null(getById);
-
-                context.FlushDatabase();
+                    var getById = await rep.GetAsync(category.Id.Value);
+                    Assert.Null(getById);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
             }
         }
 
@@ -626,11 +644,20 @@ namespace GeneralTests.Infrastructure.Repository
         {
             using (var context = Storage.CreateContext())
             {
-                var rep = new CategoryRepository(context);
+                try
+                {
+                    var rep = new CategoryRepository(context);
 
-                await Assert.ThrowsAnyAsync<Exception>(() => rep.SaveAsync(category));
-
-                context.FlushDatabase();
+                    await Assert.ThrowsAnyAsync<Exception>(() => rep.SaveAsync(category));
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
             }
         }
 
@@ -640,11 +667,20 @@ namespace GeneralTests.Infrastructure.Repository
         {
             using (var context = Storage.CreateContext())
             {
-                var rep = new CategoryRepository(context);
+                try
+                {
+                    var rep = new CategoryRepository(context);
 
-                await Assert.ThrowsAnyAsync<Exception>(() => rep.SaveAsync(category));
-
-                context.FlushDatabase();
+                    await Assert.ThrowsAnyAsync<Exception>(() => rep.SaveAsync(category));
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
             }
         }
 
@@ -654,11 +690,20 @@ namespace GeneralTests.Infrastructure.Repository
         {
             using (var context = Storage.CreateContext())
             {
-                var rep = new CategoryRepository(context);
+                try
+                {
+                    var rep = new CategoryRepository(context);
 
-                await Assert.ThrowsAnyAsync<Exception>(() => rep.DeleteAsync(category));
-
-                context.FlushDatabase();
+                    await Assert.ThrowsAnyAsync<Exception>(() => rep.DeleteAsync(category));
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
             }
         }
 

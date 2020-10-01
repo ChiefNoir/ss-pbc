@@ -36,6 +36,38 @@ namespace Infrastructure
             _isMigrationsDone = true;
         }
 
+        public void FlushDatabase()
+        {
+            using (var connection = Database.GetDbConnection())
+            {
+                try
+                {
+                    var command = connection.CreateCommand();
+                    command.CommandText = 
+                        "DO $$ DECLARE tabname RECORD; " +
+                        "BEGIN " +
+                            "FOR tabname IN(SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) " +
+                            "LOOP " +
+                                "EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(tabname.tablename) || ' CASCADE'; " +
+                            "END LOOP; " +
+                        "END $$; ";
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    _isMigrationsDone = false;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProjectExternalUrl>().HasKey(sc => new { sc.ProjectId, sc.ExternalUrlId });

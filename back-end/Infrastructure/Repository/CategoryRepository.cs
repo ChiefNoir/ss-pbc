@@ -1,4 +1,5 @@
-﻿using Abstractions.IRepository;
+﻿using Abstractions.Exceptions;
+using Abstractions.IRepository;
 using Abstractions.Model;
 using Infrastructure.Converters;
 using Infrastructure.Validation;
@@ -23,7 +24,7 @@ namespace Infrastructure.Repository
         {
             var dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
 
-            ModelValidation.CheckBeforeDelete(dbCategory, category, _context);
+            CheckBeforeDelete(dbCategory, category);
 
             _context.Categories.Remove(dbCategory);
             var rows = await _context.SaveChangesAsync();
@@ -67,7 +68,7 @@ namespace Infrastructure.Repository
 
         private async Task<Category> CreateAsync(Category category)
         {
-            ModelValidation.CheckBeforeCreate(category, _context);
+            CheckBeforeCreate(category);
 
             var dbItem = new DataModel.Category
             {
@@ -86,7 +87,7 @@ namespace Infrastructure.Repository
         {
             var dbItem = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
 
-            ModelValidation.CheckBeforeUpdate(dbItem, category, _context);
+            CheckBeforeUpdate(dbItem, category);
             
             
             dbItem.Code = category.Code;
@@ -109,6 +110,147 @@ namespace Infrastructure.Repository
 
             return result;
         }
-       
+
+
+
+
+
+        internal void CheckBeforeDelete(DataModel.Category dbItem, Category category)
+        {
+            if (category.Id == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CantDeleteNewItem, category.GetType().Name)
+                    );
+            }
+
+            if (dbItem == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.WasAlreadyDeleted, category.GetType().Name)
+                    );
+            }
+
+            if (dbItem.Version != category.Version)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, category.GetType().Name)
+                    );
+            }
+
+            if (dbItem.IsEverything)
+            {
+                throw new InconsistencyException(Resources.TextMessages.CantDeleteSystemCategory);
+            }
+
+            var catWithProjects = _context.CategoriesWithTotalProjects.FirstOrDefault(x => x.Id == category.Id);
+            if (catWithProjects == null)
+            {
+                throw new InconsistencyException
+                (
+                    string.Format(Resources.TextMessages.CantDeleteNewItem, category.GetType().Name)
+                );
+            }
+
+
+            if (catWithProjects.TotalProjects > 0)
+            {
+                throw new InconsistencyException
+                    (
+                    string.Format(Resources.TextMessages.CantDeleteNotEmptyCategory, catWithProjects.TotalProjects, catWithProjects.DisplayName)
+                    );
+            }
+        }
+
+        internal void CheckBeforeCreate(Category category)
+        {
+            if (category.Id != null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CantCreateExistingItem, category.GetType().Name)
+                    );
+            }
+
+            if (string.IsNullOrEmpty(category.Code))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
+                    );
+            }
+
+            if (string.IsNullOrEmpty(category.DisplayName))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
+                    );
+            }
+
+            if (_context.Categories.Any(x => x.Code == category.Code))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.PropertyDuplicate, "Code")
+                    );
+            }
+
+        }
+
+        internal void CheckBeforeUpdate(DataModel.Category dbItem, Category category)
+        {
+            if (category.Id == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CantUpdateNewItem, category.GetType().Name)
+                    );
+            }
+
+            if (dbItem == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.WasAlreadyDeleted, category.GetType().Name)
+                    );
+            }
+
+            if (string.IsNullOrEmpty(category.Code))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
+                    );
+            }
+
+            if (string.IsNullOrEmpty(category.DisplayName))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
+                    );
+            }
+
+            if (dbItem.Version != category.Version)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, category.GetType().Name)
+                    );
+            }
+
+            if (dbItem.Code != category.Code && _context.Categories.Any(x => x.Code == category.Code))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.PropertyDuplicate, "Code")
+                    );
+            }
+
+        }
     }
 }

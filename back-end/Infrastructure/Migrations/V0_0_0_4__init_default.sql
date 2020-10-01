@@ -22,3 +22,22 @@ insert into category(code, display_name)
 insert into introduction(title, content)
 	values ('Hello', 'The service is on-line. Congratulations.');
 -- --------------------------------------------------------------
+
+-- Sample project
+INSERT INTO project
+(
+	code, 
+	display_name, 
+	category_id, 
+	description_short, 
+	description
+)
+values
+(
+	'new',
+	'Brand new project',
+	4,
+	'The smart and short description',
+	'The not smart and pretty long description'
+)
+--

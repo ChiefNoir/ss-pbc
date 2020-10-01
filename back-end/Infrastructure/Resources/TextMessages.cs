@@ -15,6 +15,9 @@
         /// <summary> Can't delete system category </summary>
         internal const string CantDeleteSystemCategory = "Can't delete system category";
 
+        /// <summary> {0} must be only one </summary>
+        internal const string MustBeOnlyOne = "{0} must be only one";
+
         /// <summary> Can't delete category, there are {0} projects within {1} category </summary>
         internal const string CantDeleteNotEmptyCategory = "Can't delete category, there are {0} projects within {1} category";
 

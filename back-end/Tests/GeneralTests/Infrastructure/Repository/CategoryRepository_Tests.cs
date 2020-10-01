@@ -1,6 +1,7 @@
 ﻿using GeneralTests.Utils;
 using Infrastructure.DataModel;
 using Infrastructure.Repository;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -161,7 +162,6 @@ namespace GeneralTests.Infrastructure.Repository
             }
         }
 
-
         class GenerateValidDelete : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -194,17 +194,6 @@ namespace GeneralTests.Infrastructure.Repository
                 {
                     new Abstractions.Model.Category
                     {
-                        Id = 4,
-                        Code = "lit",
-                        DisplayName = "Stories",
-                        IsEverything = false,
-                        Version = 0,
-                    }
-                };
-                yield return new object[]
-                {
-                    new Abstractions.Model.Category
-                    {
                         Id = 5,
                         Code = "bg",
                         DisplayName = "Tabletop",
@@ -222,6 +211,246 @@ namespace GeneralTests.Infrastructure.Repository
                         IsEverything = false,
                         Version = 0,
                     },
+                };
+            }
+        }
+
+        class GenerateInValidUpdate: IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 1,
+                        Code = "all",
+                        DisplayName = "Everything",
+                        IsEverything = false,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 1,
+                        Code = "all",
+                        DisplayName = null,
+                        IsEverything = true,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = null,
+                        Code = "vg",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 129,
+                        Code = "vg",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 2,
+                        Code = null,
+                        DisplayName = "Games-Games",
+                        IsEverything = true,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 2,
+                        Code = "vg",
+                        DisplayName = "Games1",
+                        IsEverything = true,
+                        Version = 10,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 2,
+                        Code = "vg",
+                        DisplayName = "Games",
+                        IsEverything = true,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 2,
+                        Code = "s",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                        Version = 0,
+                    }
+                };
+            }
+        }
+
+        class GenerateInValidCreate : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = null,
+                        Code = "all",
+                        DisplayName = "Everything",
+                        IsEverything = false,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = null,
+                        Code = null,
+                        DisplayName = "Games",
+                        IsEverything = false,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = null,
+                        Code = "",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = null,
+                        Code = "something",
+                        DisplayName = "Games",
+                        IsEverything = true,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = null,
+                        Code = "Ms",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = null,
+                        Code = "++",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = null,
+                        Code = "loncode",
+                        DisplayName = null,
+                        IsEverything = false,
+                    }
+                };
+            }
+        }
+
+        class GenerateInValidDelete : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 1,
+                        Code = "all",
+                        DisplayName = "Everything",
+                        IsEverything = true,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = null,
+                        Code = "vg",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 2,
+                        Code = "vg",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                        Version = 10,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 122,
+                        Code = "vg",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                        Version = 10,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Abstractions.Model.Category
+                    {
+                        Id = 4,
+                        Code = "lit",
+                        DisplayName = "Stories",
+                        IsEverything = false,
+                        Version = 0,
+                    }
                 };
             }
         }
@@ -389,6 +618,63 @@ namespace GeneralTests.Infrastructure.Repository
             }
         }
 
+
+
+        [Theory]
+        [ClassData(typeof(GenerateInValidUpdate))]
+        internal async void Save_InValid(Abstractions.Model.Category category)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                var rep = new CategoryRepository(context);
+
+                await Assert.ThrowsAnyAsync<Exception>(() => rep.SaveAsync(category));
+
+                context.FlushDatabase();
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(GenerateInValidCreate))]
+        internal async void Create_InValid(Abstractions.Model.Category category)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                var rep = new CategoryRepository(context);
+
+                await Assert.ThrowsAnyAsync<Exception>(() => rep.SaveAsync(category));
+
+                context.FlushDatabase();
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(GenerateInValidDelete))]
+        internal async void Delete_InValid(Abstractions.Model.Category category)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                var rep = new CategoryRepository(context);
+
+                await Assert.ThrowsAnyAsync<Exception>(() => rep.DeleteAsync(category));
+
+                context.FlushDatabase();
+            }
+        }
+
+        [Fact]
+        internal async void CheckIsViewWorking()
+        {
+            using (var context = Storage.CreateContext())
+            {
+                var rep = new CategoryRepository(context);
+
+                var cat = await rep.GetAsync("lit");
+                Assert.Equal(1, cat.TotalProjects);
+
+                context.FlushDatabase();
+            }
+        }
 
 
 

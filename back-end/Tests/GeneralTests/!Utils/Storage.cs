@@ -9,40 +9,40 @@ namespace GeneralTests.Utils
 {
     public static class Storage
     {
-        public static DataContext CreateContextInMemory<T>(T initialItem) where T : class
-        {
-            var builder = new DbContextOptionsBuilder<DataContext>();
-            builder.UseInMemoryDatabase("temp");
+        //public static DataContext CreateContextInMemory<T>(T initialItem) where T : class
+        //{
+        //    var builder = new DbContextOptionsBuilder<DataContext>();
+        //    builder.UseInMemoryDatabase("temp");
 
-            var options = builder.Options;
-            var context = new DataContext(options);
-            context.Database.EnsureCreated();
+        //    var options = builder.Options;
+        //    var context = new DataContext(options);
+        //    context.Database.EnsureCreated();
 
-            if (initialItem != null)
-            {
-                context.Set<T>().Add(initialItem);
-                context.SaveChanges();
-            }
+        //    if (initialItem != null)
+        //    {
+        //        context.Set<T>().Add(initialItem);
+        //        context.SaveChanges();
+        //    }
 
-            return context;
-        }
+        //    return context;
+        //}
 
-        public static DataContext CreateContext<T>(T initialItem) where T : class
-        {
-            var builder = new DbContextOptionsBuilder<DataContext>();
-            builder.UseNpgsql(InitConfiguration().GetConnectionString("Test"));
+        //public static DataContext CreateContext<T>(T initialItem) where T : class
+        //{
+        //    var builder = new DbContextOptionsBuilder<DataContext>();
+        //    builder.UseNpgsql(InitConfiguration().GetConnectionString("Test"));
 
-            var options = builder.Options;
-            var context = new DataContext(options);
+        //    var options = builder.Options;
+        //    var context = new DataContext(options);
 
-            if (initialItem != null)
-            {
-                context.Set<T>().Add(initialItem);
-                context.SaveChanges();
-            }
+        //    if (initialItem != null)
+        //    {
+        //        context.Set<T>().Add(initialItem);
+        //        context.SaveChanges();
+        //    }
 
-            return context;
-        }
+        //    return context;
+        //}
 
         public static DataContext CreateContext()
         {

@@ -92,7 +92,7 @@ namespace Infrastructure.Repository
             
             dbItem.Code = category.Code;
             dbItem.DisplayName = category.DisplayName;
-            dbItem.IsEverything = dbItem.IsEverything;
+            dbItem.IsEverything = category.IsEverything;
             dbItem.Version++;
 
             await _context.SaveChangesAsync();
@@ -115,7 +115,7 @@ namespace Infrastructure.Repository
 
 
 
-        internal void CheckBeforeDelete(DataModel.Category dbItem, Category category)
+        private void CheckBeforeDelete(DataModel.Category dbItem, Category category)
         {
             if (category.Id == null)
             {
@@ -147,34 +147,22 @@ namespace Infrastructure.Repository
             }
 
             var catWithProjects = _context.CategoriesWithTotalProjects.FirstOrDefault(x => x.Id == category.Id);
-            if (catWithProjects == null)
-            {
-                throw new InconsistencyException
-                (
-                    string.Format(Resources.TextMessages.CantDeleteNewItem, category.GetType().Name)
-                );
-            }
-
-
             if (catWithProjects.TotalProjects > 0)
             {
                 throw new InconsistencyException
                     (
-                    string.Format(Resources.TextMessages.CantDeleteNotEmptyCategory, catWithProjects.TotalProjects, catWithProjects.DisplayName)
+                        string.Format
+                        (
+                            Resources.TextMessages.CantDeleteNotEmptyCategory, 
+                            catWithProjects.TotalProjects, 
+                            catWithProjects.DisplayName
+                        )
                     );
             }
         }
 
-        internal void CheckBeforeCreate(Category category)
+        private void CheckBeforeCreate(Category category)
         {
-            if (category.Id != null)
-            {
-                throw new InconsistencyException
-                    (
-                        string.Format(Resources.TextMessages.CantCreateExistingItem, category.GetType().Name)
-                    );
-            }
-
             if (string.IsNullOrEmpty(category.Code))
             {
                 throw new InconsistencyException
@@ -187,7 +175,15 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name")
+                    );
+            }
+
+            if (category.IsEverything)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.MustBeOnlyOne, "The systems category ")
                     );
             }
 
@@ -201,16 +197,8 @@ namespace Infrastructure.Repository
 
         }
 
-        internal void CheckBeforeUpdate(DataModel.Category dbItem, Category category)
+        private void CheckBeforeUpdate(DataModel.Category dbItem, Category category)
         {
-            if (category.Id == null)
-            {
-                throw new InconsistencyException
-                    (
-                        string.Format(Resources.TextMessages.CantUpdateNewItem, category.GetType().Name)
-                    );
-            }
-
             if (dbItem == null)
             {
                 throw new InconsistencyException
@@ -223,7 +211,7 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(category.Code))
                     );
             }
 
@@ -231,7 +219,7 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name")
                     );
             }
 
@@ -247,10 +235,23 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.PropertyDuplicate, "Code")
+                        string.Format(Resources.TextMessages.PropertyDuplicate, "The category code")
                     );
             }
-
+            if (dbItem.IsEverything && dbItem.IsEverything != category.IsEverything)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CantDeleteSystemCategory)
+                    );
+            }
+            if (category.IsEverything && _context.Categories.Any(x => x.Id != category.Id && x.IsEverything))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.MustBeOnlyOne, "System category ")
+                    );
+            }
         }
     }
 }

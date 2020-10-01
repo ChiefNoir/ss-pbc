@@ -4,14 +4,14 @@ CREATE VIEW categories_with_projects_total_v AS
 	select 
 		c.*, coalesce(sm.total, 0) as total_projects
 	from 
-		site.category c
+		category c
 		left join
 		(
 			select
-				coalesce(category_id, (select id from site.category where is_everything = true limit 1) ) as id, 
+				coalesce(category_id, (select id from category where is_everything = true limit 1) ) as id, 
 				count(1) as total
 			from 
-				site.project 
+				project 
 			group by
 				rollup(category_id)
 		) sm 

@@ -1,4 +1,5 @@
-﻿using Abstractions.IRepository;
+﻿using Abstractions.Exceptions;
+using Abstractions.IRepository;
 using Abstractions.ISecurity;
 using Abstractions.Model;
 using Infrastructure.Converters;
@@ -34,7 +35,7 @@ namespace Infrastructure.Repository
         public async Task<bool> DeleteAsync(Account item)
         {
             var acc = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == item.Id);
-            ModelValidation.CheckBeforeDelete(acc, item);
+            CheckBeforeDelete(acc, item);
 
 
             _context.Accounts.Remove(acc);
@@ -70,12 +71,14 @@ namespace Infrastructure.Repository
                                        .AsNoTracking()
                                        .FirstOrDefaultAsync(x => x.Login == login);
 
-            ModelValidation.CheckAccount(dbItem, login, password, _hashManager);
+            CheckAccount(dbItem, login, password, _hashManager);
 
             return new Account
             {
+                Id = dbItem.Id,
                 Login = login,
-                Role = dbItem.Role
+                Role = dbItem.Role,
+                Version = dbItem.Version
             };
         }
 
@@ -92,6 +95,7 @@ namespace Infrastructure.Repository
         public Task<Account[]> SearchAsync(int start, int length)
         {
             return _context.Accounts
+                           .OrderBy(x=>x.Id)
                            .Skip(start)
                            .Take(length)
                            .Select(x => DataConverter.ToAccount(x))
@@ -103,7 +107,7 @@ namespace Infrastructure.Repository
 
         private async Task<Account> CreateAsync(Account item)
         {
-            ModelValidation.CheckBeforeCreate(item, _context);
+            CheckBeforeCreate(item);
 
             var hashedPassword = _hashManager.Hash(item.Password);
 
@@ -118,7 +122,7 @@ namespace Infrastructure.Repository
         private async Task<Account> UpdateAsync(Account item)
         {
             var dbAccount = await _context.Accounts.FirstOrDefaultAsync(x => x.Id == item.Id);
-            ModelValidation.CheckBeforeUpdate(dbAccount, item, _context);
+            CheckBeforeUpdate(dbAccount, item, _context);
 
             dbAccount.Login = item.Login;
             dbAccount.Role = item.Role;
@@ -135,6 +139,140 @@ namespace Infrastructure.Repository
             await _context.SaveChangesAsync();
 
             return DataConverter.ToAccount(dbAccount);
+        }
+
+
+        public void CheckBeforeCreate(Account account)
+        {
+            if (string.IsNullOrEmpty(account.Login))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Login")
+                    );
+            }
+
+            if (string.IsNullOrEmpty(account.Password))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Password")
+                    );
+            }
+
+            if (string.IsNullOrEmpty(account.Role))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Password")
+                    );
+            }
+
+            if (_context.Accounts.Any(x => x.Login == account.Login))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.PropertyDuplicate, "Login")
+                    );
+            }
+
+        }
+
+        private static void CheckBeforeDelete(DataModel.Account dbItem, Account account)
+        {
+            if (account.Id == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CantDeleteNewItem, account.GetType().Name)
+                    );
+            }
+
+            if (dbItem == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.WasAlreadyDeleted, account.GetType().Name)
+                    );
+            }
+
+            if (dbItem.Version != account.Version)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, account.GetType().Name)
+                    );
+            }
+        }
+
+        private static void CheckBeforeUpdate(DataModel.Account dbItem, Account account, DataContext context)
+        {
+            if (dbItem == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.WasAlreadyDeleted, account.GetType().Name)
+                    );
+            }
+
+            if (string.IsNullOrEmpty(account.Login))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Login")
+                    );
+            }
+
+            if (string.IsNullOrEmpty(account.Role))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Role")
+                    );
+            }
+
+
+            if (dbItem.Version != account.Version)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, account.GetType().Name)
+                    );
+            }
+
+            if (dbItem.Login != account.Login && context.Accounts.Any(x => x.Login == account.Login))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.PropertyDuplicate, "Login")
+                    );
+            }
+
+        }
+
+        private static void CheckAccount(DataModel.Account dbItem, string login, string password, IHashManager hashManager)
+        {
+            if (string.IsNullOrEmpty(login))
+            {
+                throw new SecurityException(Resources.TextMessages.AccountEmptyLogin);
+            }
+
+            if (string.IsNullOrEmpty(password))
+            {
+                throw new SecurityException(Resources.TextMessages.AccountEmptyPassword);
+            }
+
+            if (dbItem == null)
+            {
+                throw new SecurityException(Resources.TextMessages.AccountSomethingWrong);
+            }
+
+            var hashedPassword = hashManager.Hash(password, dbItem.Salt);
+            if (hashedPassword?.HexHash != dbItem.Password)
+            {
+                throw new SecurityException(Resources.TextMessages.AccountSomethingWrong);
+            }
+
         }
     }
 }

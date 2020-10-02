@@ -2,48 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GeneralTests.Utils
 {
     public static class Storage
     {
-        //public static DataContext CreateContextInMemory<T>(T initialItem) where T : class
-        //{
-        //    var builder = new DbContextOptionsBuilder<DataContext>();
-        //    builder.UseInMemoryDatabase("temp");
-
-        //    var options = builder.Options;
-        //    var context = new DataContext(options);
-        //    context.Database.EnsureCreated();
-
-        //    if (initialItem != null)
-        //    {
-        //        context.Set<T>().Add(initialItem);
-        //        context.SaveChanges();
-        //    }
-
-        //    return context;
-        //}
-
-        //public static DataContext CreateContext<T>(T initialItem) where T : class
-        //{
-        //    var builder = new DbContextOptionsBuilder<DataContext>();
-        //    builder.UseNpgsql(InitConfiguration().GetConnectionString("Test"));
-
-        //    var options = builder.Options;
-        //    var context = new DataContext(options);
-
-        //    if (initialItem != null)
-        //    {
-        //        context.Set<T>().Add(initialItem);
-        //        context.SaveChanges();
-        //    }
-
-        //    return context;
-        //}
-
         public static DataContext CreateContext()
         {
             var builder = new DbContextOptionsBuilder<DataContext>();
@@ -55,10 +18,31 @@ namespace GeneralTests.Utils
             return context;
         }
 
+        public static void RunSql(string sql)
+        {
+            if (string.IsNullOrEmpty(sql))
+                return;
 
+            using (var connection = new Npgsql.NpgsqlConnection(InitConfiguration().GetConnectionString("Test")))
+            {
+                try
+                {
+                    var command = connection.CreateCommand();
+                    command.CommandText = sql;
 
-
-
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
 
 
         public static IConfiguration InitConfiguration()

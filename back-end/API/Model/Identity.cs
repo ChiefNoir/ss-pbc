@@ -3,7 +3,7 @@
 namespace API.Model
 {
     /// <summary> Account confirmed identity</summary>
-    internal class Identity
+    public class Identity
     {
         public Account Account { get; set; }
 

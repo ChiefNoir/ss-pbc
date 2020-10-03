@@ -31,7 +31,7 @@ namespace API.Controllers.Gateway
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] Credentials credentials)
+        public async Task<IActionResult> LoginAsync([FromBody] Credentials credentials)
         {
             var result = await _supervisor.SafeExecuteAsync(async () =>
             {

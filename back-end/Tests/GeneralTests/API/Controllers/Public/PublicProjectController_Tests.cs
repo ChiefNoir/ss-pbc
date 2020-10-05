@@ -193,6 +193,50 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
+        class CreateInValidProjectsPreview : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Paging {Start = 20, Length = 1 },
+                    new ProjectSearch { CategoryCode = "s"},
+                };
+
+                yield return new object[]
+                {
+                    new Paging {Start = 0, Length = 2 },
+                    new ProjectSearch { CategoryCode = "lit"},
+                };
+
+                yield return new object[]
+                {
+                    new Paging {Start = 0, Length = 2 },
+                    new ProjectSearch { CategoryCode = "bg"},
+                };
+
+                yield return new object[]
+                {
+                    new Paging {Start = 0, Length = 1 },
+                    new ProjectSearch { CategoryCode = "qwerty"},
+                };
+
+                yield return new object[]
+                {
+                    new Paging {Start = 0, Length = -10 },
+                    new ProjectSearch { CategoryCode = "bg"},
+                };
+                yield return new object[]
+                {
+                    new Paging {Start = -10, Length = 0 },
+                    new ProjectSearch { CategoryCode = "bg"},
+                };
+            }
+        }
+
+
 
         [Theory]
         [ClassData(typeof(CreateValidDefaults))]
@@ -202,22 +246,54 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
+                    var categoryRep = new CategoryRepository(context);
+                    var projectRep = new ProjectRepository(context, categoryRep);
+                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var log = new LogRepository(Storage.InitConfiguration());
-                    var sup = new Supervisor(log, tokenManager);
-                    var catRep = new CategoryRepository(context);
-                    var prjRep = new ProjectRepository(context, catRep);
+                    var sup = new Supervisor(logRep, tokenManager);
 
-                    
-                    var api = new PublicProjectController(prjRep, sup);
+                    var api = new PublicProjectController(projectRep, sup);
 
-                    var response = await api.GetProject(expected.Code);
+                    var response = (await api.GetProject(expected.Code) as JsonResult).Value as ExecutionResult<Project>;
+                    Assert.True(response.IsSucceed);
+                    Assert.Null(response.Error);
+                    Assert.NotNull(response.Data);
 
-                    var result = (response as JsonResult).Value as ExecutionResult<Project>;
+                    Compare(expected, response.Data);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
 
-                    Assert.True(result.IsSucceed);
-                    Assert.Null(result.Error);
-                    Compare(expected, result.Data);
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("qwerty")]
+        internal async void GetProject_InValid(string code)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var categoryRep = new CategoryRepository(context);
+                    var projectRep = new ProjectRepository(context, categoryRep);
+                    var logRep = new LogRepository(Storage.InitConfiguration());
+                    var tokenManager = new TokenManager(Storage.InitConfiguration());
+                    var sup = new Supervisor(logRep, tokenManager);
+
+                    var api = new PublicProjectController(projectRep, sup);
+
+                    var response = (await api.GetProject(code) as JsonResult).Value as ExecutionResult<Project>;
+                    Assert.True(response.IsSucceed);
+                    Assert.Null(response.Error);
+                    Assert.Null(response.Data);
                 }
                 catch (Exception)
                 {
@@ -240,32 +316,30 @@ namespace GeneralTests.API.Controllers.Public
                 {
                     Storage.RunSql(sql);
 
+                    var categoryRep = new CategoryRepository(context);
+                    var projectRep = new ProjectRepository(context, categoryRep);
+                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var log = new LogRepository(Storage.InitConfiguration());
-                    var sup = new Supervisor(log, tokenManager);
-                    var catRep = new CategoryRepository(context);
-                    var prjRep = new ProjectRepository(context, catRep);
+                    var sup = new Supervisor(logRep, tokenManager);
+
+                    var api = new PublicProjectController(projectRep, sup);
 
 
-                    var api = new PublicProjectController(prjRep, sup);
+                    var response = 
+                    (
+                        await api.GetProjectsPreview(paging, projectSearch) as JsonResult
+                    ).Value as ExecutionResult<ProjectPreview[]>;
 
-                    var response = await api.GetProjectsPreview
-                        (
-                            paging,
-                            projectSearch
-                        );
+                    Assert.True(response.IsSucceed);
+                    Assert.Null(response.Error);
+                    Assert.NotNull(response.Data);
 
-                    var result = (response as JsonResult).Value as ExecutionResult<ProjectPreview[]>;
-
-                    Assert.True(result.IsSucceed);
-                    Assert.Null(result.Error);
-
-                    Assert.Equal(expectedProjects.Length, result.Data.Length);
+                    Assert.Equal(expectedProjects.Length, response.Data.Length);
 
 
                     foreach (var item in expectedProjects)
                     {
-                        var actual = result.Data.SingleOrDefault(x => x.Code == item.Code);
+                        var actual = response.Data.SingleOrDefault(x => x.Code == item.Code);
                         Compare(item, actual);
                     }
                 }
@@ -280,31 +354,31 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
-
-
-        [Fact]
-        internal async void GetProject_InValid()
+        [Theory]
+        [ClassData(typeof(CreateInValidProjectsPreview))]
+        internal async void GetProjectsPreview_InValid(Paging paging, ProjectSearch projectSearch)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
+                    var categoryRep = new CategoryRepository(context);
+                    var projectRep = new ProjectRepository(context, categoryRep);
+                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var log = new LogRepository(Storage.InitConfiguration());
-                    var sup = new Supervisor(log, tokenManager);
-                    var catRep = new CategoryRepository(context);
-                    var prjRep = new ProjectRepository(context, catRep);
+                    var sup = new Supervisor(logRep, tokenManager);
+
+                    var api = new PublicProjectController(projectRep, sup);
 
 
-                    var api = new PublicProjectController(prjRep, sup);
+                    var response =
+                    (
+                        await api.GetProjectsPreview(paging, projectSearch) as JsonResult
+                    ).Value as ExecutionResult<ProjectPreview[]>;
 
-                    var response = await api.GetProject("empty-code");
-
-                    var result = (response as JsonResult).Value as ExecutionResult<Project>;
-
-                    Assert.True(result.IsSucceed);
-                    Assert.Null(result.Error);
-                    Assert.Null(result.Data);
+                    Assert.True(response.IsSucceed);
+                    Assert.Null(response.Error);
+                    Assert.Empty(response.Data);
                 }
                 catch (Exception)
                 {
@@ -317,18 +391,8 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
-        private void Compare(ProjectPreview expected, ProjectPreview actual)
-        {
-            Assert.Equal(expected.Code, actual.Code);
-            Assert.Equal(expected.Description, actual.Description);
-            Assert.Equal(expected.DisplayName, actual.DisplayName);
 
-            Assert.Equal(expected.PosterDescription, actual.PosterDescription);
-            Assert.Equal(expected.PosterUrl, actual.PosterUrl);
-            Assert.Equal(expected.ReleaseDate, actual.ReleaseDate);
-            
-            Compare(expected.Category, actual.Category);
-        }
+
 
         private void Compare(Project expected, Project actual)
         {
@@ -337,7 +401,7 @@ namespace GeneralTests.API.Controllers.Public
             Assert.Equal(expected.Description, actual.Description);
             Assert.Equal(expected.DescriptionShort, actual.DescriptionShort);
             Assert.Equal(expected.DisplayName, actual.DisplayName);
-            
+
             Assert.Equal(expected.PosterDescription, actual.PosterDescription);
             Assert.Equal(expected.PosterUrl, actual.PosterUrl);
             Assert.Equal(expected.ReleaseDate, actual.ReleaseDate);
@@ -367,6 +431,19 @@ namespace GeneralTests.API.Controllers.Public
                 Assert.Equal(expectedImg.ExtraUrl, actualUrl.ExtraUrl);
                 Assert.Equal(expectedImg.Version, actualUrl.Version);
             }
+        }
+
+        private void Compare(ProjectPreview expected, ProjectPreview actual)
+        {
+            Assert.Equal(expected.Code, actual.Code);
+            Assert.Equal(expected.Description, actual.Description);
+            Assert.Equal(expected.DisplayName, actual.DisplayName);
+
+            Assert.Equal(expected.PosterDescription, actual.PosterDescription);
+            Assert.Equal(expected.PosterUrl, actual.PosterUrl);
+            Assert.Equal(expected.ReleaseDate, actual.ReleaseDate);
+            
+            Compare(expected.Category, actual.Category);
         }
 
         private void Compare(Category expected, Category actual)

@@ -47,7 +47,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(CreateDefaults))]
-        internal async void GetCategories_Valid(Introduction expected)
+        internal async void GetIntroduction_Test(Introduction expected)
         {
             using (var context = Storage.CreateContext())
             {

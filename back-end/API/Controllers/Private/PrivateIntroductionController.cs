@@ -31,7 +31,7 @@ namespace API.Controllers.Private
         {
             var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-                HandleFiles(introduction, Request.Form.Files);
+                HandleFiles(introduction, Request?.Form?.Files);
                 return _introductionRepository.SaveAsync(introduction);
             });
 
@@ -40,6 +40,9 @@ namespace API.Controllers.Private
 
         private void HandleFiles(Introduction introduction, IFormFileCollection files)
         {
+            if (files == null)
+                return;
+
             var poster = files.FirstOrDefault(x => x.Name == "introduction[posterToUpload]");
             if (poster != null)
             {

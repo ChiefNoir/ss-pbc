@@ -53,20 +53,20 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var rep = new IntroductionRepository(context);
-                    var log = new LogRepository(Storage.InitConfiguration());
+                    var introductionRep = new IntroductionRepository(context);
+                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(logRep, tokenManager);
 
-                    var api = new PublicIntroductionController(rep, sup);
+                    var api = new PublicIntroductionController(introductionRep, sup);
 
-                    var response = await api.GetIntroduction();
+                    var response = (await api.GetIntroduction() as JsonResult).Value as ExecutionResult<Introduction>;
 
-                    var result = (response as JsonResult).Value as ExecutionResult<Introduction>;
+                    Assert.True(response.IsSucceed);
+                    Assert.Null(response.Error);
+                    Assert.NotNull(response.Data);
 
-                    Assert.True(result.IsSucceed);
-                    Assert.Null(result.Error);
-                    Compare(expected, result.Data);
+                    Compare(expected, response.Data);
                 }
                 catch (Exception)
                 {

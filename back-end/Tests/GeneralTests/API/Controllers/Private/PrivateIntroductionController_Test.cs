@@ -18,7 +18,7 @@ namespace GeneralTests.API.Controllers.Private
 {
     public class PrivateIntroductionController_Test
     {
-        class GenerateValidSave : IEnumerable<object[]>
+        private class GenerateValidSave : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -26,16 +26,16 @@ namespace GeneralTests.API.Controllers.Private
             {
                 yield return new object[]
                 {
-                    new Abstractions.Model.Introduction
+                    new Introduction
                     {
                         Content = "The service is on-line. Congratulations.",
                         Title = "Hello",
                         PosterDescription = "des",
                         PosterUrl = "url",
                         Version = 0,
-                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>
+                        ExternalUrls = new List<ExternalUrl>
                         {
-                            new Abstractions.Model.ExternalUrl
+                            new ExternalUrl
                             {
                                 Id = 1,
                                 DisplayName = "GitHub",
@@ -44,16 +44,16 @@ namespace GeneralTests.API.Controllers.Private
                             }
                         }
                     },
-                    new Abstractions.Model.Introduction
+                    new Introduction
                     {
                         Content = "The service is on-line. Congratulations.",
                         Title = "Hello",
                         PosterDescription = "des",
                         PosterUrl = "url",
                         Version = 1,
-                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>
+                        ExternalUrls = new List<ExternalUrl>
                         {
-                            new Abstractions.Model.ExternalUrl
+                            new ExternalUrl
                             {
                                 Id = 1,
                                 DisplayName = "GitHub",
@@ -66,7 +66,7 @@ namespace GeneralTests.API.Controllers.Private
 
                 yield return new object[]
                 {
-                    new Abstractions.Model.Introduction
+                    new Introduction
                     {
                         Content = "New Content",
                         PosterDescription = "New poster description",
@@ -74,45 +74,45 @@ namespace GeneralTests.API.Controllers.Private
                         Title = "New title",
                         Version = 0,
                     },
-                    new Abstractions.Model.Introduction
+                    new Introduction
                     {
                         Content = "New Content",
                         PosterDescription = "New poster description",
                         PosterUrl = "New poster url",
                         Title = "New title",
                         Version = 1,
-                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>()
+                        ExternalUrls = new List<ExternalUrl>()
                     }
                 };
 
                 yield return new object[]
                 {
-                    new Abstractions.Model.Introduction
+                    new Introduction
                     {
                         Content = "New Content",
                         PosterDescription = "New poster description",
                         PosterUrl = "New poster url",
                         Title = "New title",
                         Version = 0,
-                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>()
+                        ExternalUrls = new List<ExternalUrl>()
                         {
-                            new Abstractions.Model.ExternalUrl
+                            new ExternalUrl
                             {
                                 DisplayName = "ExternalUrl DisplayName 0",
                                 Url = "ExternalUrl Url"
                             }
                         },
                     },
-                    new Abstractions.Model.Introduction
+                    new Introduction
                     {
                         Content = "New Content",
                         PosterDescription = "New poster description",
                         PosterUrl = "New poster url",
                         Title = "New title",
                         Version = 1,
-                        ExternalUrls = new List<Abstractions.Model.ExternalUrl>()
+                        ExternalUrls = new List<ExternalUrl>()
                         {
-                            new Abstractions.Model.ExternalUrl
+                            new ExternalUrl
                             {
                                 Id = 1,
                                 DisplayName = "ExternalUrl DisplayName 0",
@@ -122,11 +122,10 @@ namespace GeneralTests.API.Controllers.Private
                         },
                     }
                 };
-
             }
         }
 
-        class GenerateInValidSave : IEnumerable<object[]>
+        private class GenerateInValidSave : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -183,10 +182,12 @@ namespace GeneralTests.API.Controllers.Private
                         }
                     },
                 };
+                yield return new object[]
+                {
+                    null
+                };
             }
         }
-
-
 
         [Theory]
         [ClassData(typeof(GenerateValidSave))]
@@ -197,54 +198,59 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-
-                    var log = new LogRepository(confing);
+                    var fileRep = new FileRepository(confing);
+                    var introductionRep = new IntroductionRepository(context);
+                    var logRep = new LogRepository(confing);
+                    var hashManager = new HashManager();
+                    var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(logRep, tokenManager);
 
-                    var repIntrod = new IntroductionRepository(context);
-                    var repFile = new FileRepository(confing);
-                    var repAccount = new AccountRepository(context, confing, hasManager);
+                    var api = new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
+                    var apiPublic = new PublicIntroductionController(introductionRep, sup);
+                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
 
+                    var identity =
+                    (
+                        await apiAuth.LoginAsync
+                        (
+                            new Credentials { Login = "sa", Password = "sa" }
+                        ) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
 
-                    
-
-                    var apiPrivateIntroduction = new PrivateIntroductionController(repFile, confing, repIntrod, sup);
-                    var apiPublicIntroduction = new PublicIntroductionController(repIntrod, sup);
-                    var apiAuth = new AuthenticationController(confing, repAccount, sup, tokenManager);
-
-
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
                     Assert.NotNull(identity.Data);
                     Assert.Null(identity.Error);
                     Assert.True(identity.IsSucceed);
 
-                    var updateResponse = await apiPrivateIntroduction.UpdateIntroductionAsync(identity.Data.Token, update);
-                    var introductionUpdated = (updateResponse as JsonResult).Value as ExecutionResult<Introduction>;
-                    Assert.NotNull(introductionUpdated.Data);
-                    Assert.Null(introductionUpdated.Error);
-                    Assert.True(introductionUpdated.IsSucceed);
-                    Compare(introductionUpdated.Data, expected);
+                    var updateResponse =
+                    (
+                        await api.UpdateIntroductionAsync(identity.Data.Token, update) as JsonResult
+                    ).Value as ExecutionResult<Introduction>;
 
-                    var getResponse = await apiPrivateIntroduction.UpdateIntroductionAsync(identity.Data.Token, update);
-                    var introductionGet = (getResponse as JsonResult).Value as ExecutionResult<Introduction>;
-                    Assert.NotNull(introductionGet.Data);
-                    Assert.Null(introductionGet.Error);
-                    Assert.True(introductionGet.IsSucceed);
-                    Compare(introductionGet.Data, expected);
+                    Assert.NotNull(updateResponse.Data);
+                    Assert.Null(updateResponse.Error);
+                    Assert.True(updateResponse.IsSucceed);
+                    Compare(updateResponse.Data, expected);
 
+                    var getResponse =
+                    (
+                        await apiPublic.GetIntroduction() as JsonResult
+                    ).Value as ExecutionResult<Introduction>;
+
+                    Assert.NotNull(getResponse.Data);
+                    Assert.Null(getResponse.Error);
+                    Assert.True(getResponse.IsSucceed);
+                    Compare(getResponse.Data, expected);
                 }
                 catch (Exception)
                 {
-
+                    throw;
                 }
                 finally
                 {
                     context.FlushDatabase();
                 }
-            }           
+            }
         }
 
         [Theory]
@@ -256,53 +262,107 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-
-                    var log = new LogRepository(confing);
+                    var fileRep = new FileRepository(confing);
+                    var introductionRep = new IntroductionRepository(context);
+                    var logRep = new LogRepository(confing);
+                    var hashManager = new HashManager();
+                    var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(logRep, tokenManager);
 
-                    var repIntrod = new IntroductionRepository(context);
-                    var repFile = new FileRepository(confing);
-                    var repAccount = new AccountRepository(context, confing, hasManager);
+                    var api = new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
+                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
 
+                    var identity =
+                    (
+                        await apiAuth.LoginAsync
+                        (
+                            new Credentials { Login = "sa", Password = "sa" }
+                        ) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
 
-
-
-                    var apiPrivateIntroduction = new PrivateIntroductionController(repFile, confing, repIntrod, sup);
-                    var apiPublicIntroduction = new PublicIntroductionController(repIntrod, sup);
-                    var apiAuth = new AuthenticationController(confing, repAccount, sup, tokenManager);
-
-
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
                     Assert.NotNull(identity.Data);
                     Assert.Null(identity.Error);
                     Assert.True(identity.IsSucceed);
 
-                    var updateResponse = await apiPrivateIntroduction.UpdateIntroductionAsync(identity.Data.Token, update);
-                    var introductionUpdated = (updateResponse as JsonResult).Value as ExecutionResult<Introduction>;
-                    Assert.Null(introductionUpdated.Data);
-                    Assert.NotNull(introductionUpdated.Error);
-                    Assert.False(introductionUpdated.IsSucceed);
+                    var updateResponse =
+                    (
+                        await api.UpdateIntroductionAsync(identity.Data.Token, update) as JsonResult
+                    ).Value as ExecutionResult<Introduction>;
+
+                    Assert.Null(updateResponse.Data);
+                    Assert.NotNull(updateResponse.Error);
+                    Assert.False(updateResponse.IsSucceed);
                 }
                 catch (Exception)
                 {
-
+                    throw;
                 }
                 finally
                 {
                     context.FlushDatabase();
                 }
             }
-
-
-
-
         }
 
+        [Theory]
+        [InlineData("token-toke-token")]
+        [InlineData(null)]
+        internal async void UpdateIntroduction_Test_BadToken(string token)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var fileRep = new FileRepository(confing);
+                    var introductionRep = new IntroductionRepository(context);
+                    var logRep = new LogRepository(confing);
+                    var hashManager = new HashManager();
+                    var accountRep = new AccountRepository(context, confing, hashManager);
+                    var tokenManager = new TokenManager(confing);
+                    var sup = new Supervisor(logRep, tokenManager);
 
+                    var api = new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
 
+                    var introduction = new Introduction
+                    {
+                        Content = "The service is on-line. Congratulations.",
+                        Title = "Hello",
+                        PosterDescription = "des",
+                        PosterUrl = "url",
+                        Version = 0,
+                        ExternalUrls = new List<ExternalUrl>
+                        {
+                            new ExternalUrl
+                            {
+                                Id = 1,
+                                DisplayName = "GitHub",
+                                Url = "https://github.com/ChiefNoir",
+                                Version = 0
+                            }
+                        }
+                    };
+
+                    var updateResponse =
+                    (
+                        await api.UpdateIntroductionAsync(token, introduction) as JsonResult
+                    ).Value as ExecutionResult<Introduction>;
+
+                    Assert.Null(updateResponse.Data);
+                    Assert.NotNull(updateResponse.Error);
+                    Assert.False(updateResponse.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
 
         private void Compare(Introduction result, Introduction expectedItem)
         {
@@ -313,7 +373,6 @@ namespace GeneralTests.API.Controllers.Private
             Assert.Equal(result.Version, expectedItem.Version);
 
             Assert.Equal(result.ExternalUrls.Count(), expectedItem.ExternalUrls.Count());
-
 
             foreach (var item in expectedItem.ExternalUrls)
             {

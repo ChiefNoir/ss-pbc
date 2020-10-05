@@ -45,11 +45,15 @@ namespace Infrastructure.Repository
 
         public async Task<ProjectPreview[]> GetPreviewAsync(int start, int length, string categoryCode)
         {
-            var category = string.IsNullOrEmpty(categoryCode) ? null : await _categoryRepository.GetAsync(categoryCode);
-            var isEverything = category == null || category.IsEverything;
+            if(length < 1 || start < 0)
+                return Array.Empty<ProjectPreview>();
+
+            var category = await _categoryRepository.GetAsync(categoryCode);
+            if (category == null)
+                return Array.Empty<ProjectPreview>();
 
             return await _context.Projects
-                                 .Where(x => isEverything || x.CategoryId == category.Id)
+                                 .Where(x => category.IsEverything || x.CategoryId == category.Id)
                                  .OrderByDescending(x => x.ReleaseDate)
                                  .Skip(start)
                                  .Take(length)

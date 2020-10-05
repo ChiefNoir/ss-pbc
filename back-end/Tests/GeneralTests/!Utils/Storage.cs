@@ -1,6 +1,8 @@
 ﻿using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 using System;
 
 namespace GeneralTests.Utils
@@ -16,6 +18,17 @@ namespace GeneralTests.Utils
             var context = new DataContext(options);
 
             return context;
+        }
+
+        public static void RunSql(string[] sql)
+        {
+            if (sql == null || !sql.Any())
+                return;
+
+            foreach (var item in sql)
+            {
+                RunSql(item);
+            }
         }
 
         public static void RunSql(string sql)

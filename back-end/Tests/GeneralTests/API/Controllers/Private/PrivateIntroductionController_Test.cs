@@ -244,11 +244,7 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     context.FlushDatabase();
                 }
-            }
-
-
-
-           
+            }           
         }
 
         [Theory]

@@ -1,7 +1,7 @@
-﻿using Abstractions.IRepository;
+﻿using Abstractions.Exceptions;
+using Abstractions.IRepository;
 using Abstractions.Model;
 using Infrastructure.Converters;
-using Infrastructure.Validation;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace Infrastructure.Repository
         {
             var dbItem = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
 
-            ModelValidation.CheckBeforeDelete(dbItem, project);
+            CheckBeforeDelete(dbItem, project);
 
 
             _context.Projects.Remove(dbItem);
@@ -75,7 +75,7 @@ namespace Infrastructure.Repository
         
         private async Task<Project> CreateAsync(Project project)
         {
-            ModelValidation.CheckBeforeCreate(project, _context);
+            CheckBeforeCreate(project);
 
             var dbItem = AbstractionsConverter.ToProject(project);
             await _context.Projects.AddAsync(dbItem);
@@ -93,7 +93,7 @@ namespace Infrastructure.Repository
                                 .ThenInclude(x => x.ExternalUrl)
                                 .FirstOrDefault(x => x.Id == project.Id);
 
-            ModelValidation.CheckBeforeUpdate(dbItem, project, _context);
+            CheckBeforeUpdate(dbItem, project);
 
             Merge(dbItem, project);
 
@@ -167,6 +167,222 @@ namespace Infrastructure.Repository
                 dbProject.GalleryImages.Add(AbstractionsConverter.ToGalleryImage(item));
             }
         }
+
+
+
+        private void CheckBeforeDelete(DataModel.Project dbItem, Project project)
+        {
+            if (project.Id == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CantDeleteNewItem, project.GetType().Name)
+                    );
+            }
+
+            if (dbItem == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.WasAlreadyDeleted, project.GetType().Name)
+                    );
+            }
+
+            if (dbItem.Version != project.Version)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, project.GetType().Name)
+                    );
+            }
+
+        }
+
+        private void CheckBeforeCreate(Project project)
+        {
+            if (project.Id != null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CantCreateExistingItem, project.GetType().Name)
+                    );
+            }
+
+            if (string.IsNullOrEmpty(project.Code))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
+                    );
+            }
+
+            if (string.IsNullOrEmpty(project.DisplayName))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
+                    );
+            }
+
+            if (project.Category == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Category")
+                    );
+            }
+
+            if (!_context.Categories.Any(x => x.Id == project.Category.Id))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.TheCategoryDoesNotExist, project.Category.Code)
+                    );
+            }
+
+
+            if (_context.Projects.Any(x => x.Code == project.Code))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.PropertyDuplicate, "Code")
+                    );
+            }
+
+            foreach (var item in project.ExternalUrls ?? new List<ExternalUrl>())
+            {
+                if (string.IsNullOrEmpty(item.DisplayName))
+                    throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name of the External URL")
+                    );
+
+                if (string.IsNullOrEmpty(item.Url))
+                    throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "URL of the External URL")
+                    );
+            }
+
+            foreach (var item in project.GalleryImages ?? new List<GalleryImage>())
+            {
+                if (string.IsNullOrEmpty(item.ImageUrl))
+                    throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Image of the Gallery Image")
+                    );
+            }
+
+        }
+
+        private void CheckBeforeUpdate(DataModel.Project dbItem, Project project)
+        {
+            if (project.Id == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CantUpdateNewItem, project.GetType().Name)
+                    );
+            }
+
+            if (dbItem == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.WasAlreadyDeleted, project.GetType().Name)
+                    );
+            }
+
+            if (string.IsNullOrEmpty(project.Code))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
+                    );
+            }
+
+            if (string.IsNullOrEmpty(project.DisplayName))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
+                    );
+            }
+
+            if (dbItem.Version != project.Version)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, project.GetType().Name)
+                    );
+            }
+
+            if (dbItem.Code != project.Code && _context.Projects.Any(x => x.Code == project.Code))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.PropertyDuplicate, "Code")
+                    );
+            }
+
+            foreach (var item in dbItem.ExternalUrls)
+            {
+                var updated = project.ExternalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
+
+                if (updated == null)
+                    continue;
+
+                if (item.ExternalUrl.Version != updated.Version)
+                {
+                    throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, updated.GetType().Name)
+                    );
+                }
+            }
+
+
+            foreach (var item in dbItem.GalleryImages)
+            {
+                var newUrl = project.GalleryImages.FirstOrDefault(x => x.Id == item.Id);
+                if (newUrl == null)
+                    continue;
+
+                if (dbItem.Version != project.Version)
+                {
+                    throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, item.GetType().Name)
+                    );
+                }
+            }
+
+            foreach (var item in project.ExternalUrls ?? new List<ExternalUrl>())
+            {
+                if (string.IsNullOrEmpty(item.DisplayName))
+                    throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name of the External URL")
+                    );
+
+                if (string.IsNullOrEmpty(item.Url))
+                    throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "URL of the External URL")
+                    );
+            }
+
+            foreach (var item in project.GalleryImages ?? new List<GalleryImage>())
+            {
+                if (string.IsNullOrEmpty(item.ImageUrl))
+                    throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Image of the Gallery Image")
+                    );
+            }
+        }
+
+
 
 
         private async Task<Project> FirstOrDefaultAsync(Expression<Func<DataModel.Project, bool>> predicate)

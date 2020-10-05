@@ -22,7 +22,7 @@ namespace API.Controllers.Private
         }
 
         [HttpPost("accounts")]
-        public async Task<IActionResult> AddAccount([FromHeader] string token, [FromBody] Account account)
+        public async Task<IActionResult> AddAccountAsync([FromHeader] string token, [FromBody] Account account)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -35,7 +35,7 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("accounts")]
-        public async Task<IActionResult> CountAccounts([FromHeader] string token)
+        public async Task<IActionResult> CountAccountsAsync([FromHeader] string token)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -48,7 +48,7 @@ namespace API.Controllers.Private
         }
 
         [HttpDelete("accounts")]
-        public async Task<IActionResult> DeleteUser([FromHeader] string token, [FromBody] Account account)
+        public async Task<IActionResult> DeleteAccountAsync([FromHeader] string token, [FromBody] Account account)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -61,7 +61,7 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("accounts/{id}")]
-        public async Task<IActionResult> GetAccount([FromHeader] string token, int id)
+        public async Task<IActionResult> GetAccountAsync([FromHeader] string token, int id)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -74,7 +74,7 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("accounts/search")]
-        public async Task<IActionResult> GetAccounts([FromHeader] string token, [FromQuery] Paging paging)
+        public async Task<IActionResult> GetAccountsAsync([FromHeader] string token, [FromQuery] Paging paging)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -104,7 +104,7 @@ namespace API.Controllers.Private
         }
 
         [HttpPatch("accounts")]
-        public async Task<IActionResult> UpdateAccount([FromHeader] string token, [FromBody] Account account)
+        public async Task<IActionResult> UpdateAccountAsync([FromHeader] string token, [FromBody] Account account)
         {
             var result = await _supervisor.SafeExecuteAsync
             (

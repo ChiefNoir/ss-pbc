@@ -3,7 +3,6 @@ using Abstractions.IRepository;
 using Abstractions.ISecurity;
 using Abstractions.Model;
 using Infrastructure.Converters;
-using Infrastructure.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Linq;

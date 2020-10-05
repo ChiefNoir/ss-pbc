@@ -39,6 +39,7 @@ namespace GeneralTests.API.Controllers.Public
                         {
                             new ExternalUrl
                             {
+                                Id = 1,
                                 DisplayName = "GitHub",
                                 Url = "https://github.com/ChiefNoir",
                                 Version = 0
@@ -191,7 +192,6 @@ namespace GeneralTests.API.Controllers.Public
                 };
             }
         }
-
 
 
         [Theory]

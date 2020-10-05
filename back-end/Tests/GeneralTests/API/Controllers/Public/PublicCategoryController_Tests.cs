@@ -1,4 +1,5 @@
-﻿using Abstractions.Supervision;
+﻿using Abstractions.Model;
+using Abstractions.Supervision;
 using API.Controllers.Public;
 using GeneralTests.Utils;
 using Infrastructure.Repository;
@@ -14,7 +15,7 @@ namespace GeneralTests.API.Controllers.Public
 {
     public class PublicCategoryController_Tests
     {
-        class CreateValidDefaults : IEnumerable<object[]>
+        class CreateDefaults : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -24,15 +25,16 @@ namespace GeneralTests.API.Controllers.Public
                 {
                     new object[]
                     {
-                        new Abstractions.Model.Category
+                        new Category
                         {
                             Id = 1,
                             Code = "all",
                             DisplayName = "Everything",
                             IsEverything = true,
+                            TotalProjects = 1,
                             Version = 0,
                         },
-                        new Abstractions.Model.Category
+                        new Category
                         {
                             Id = 2,
                             Code = "vg",
@@ -40,7 +42,7 @@ namespace GeneralTests.API.Controllers.Public
                             IsEverything = false,
                             Version = 0,
                         },
-                        new Abstractions.Model.Category
+                        new Category
                         {
                             Id = 3,
                             Code = "ma",
@@ -48,7 +50,7 @@ namespace GeneralTests.API.Controllers.Public
                             IsEverything = false,
                             Version = 0,
                         },
-                        new Abstractions.Model.Category
+                        new Category
                         {
                             Id = 4,
                             Code = "lit",
@@ -56,7 +58,7 @@ namespace GeneralTests.API.Controllers.Public
                             IsEverything = false,
                             Version = 0,
                         },
-                        new Abstractions.Model.Category
+                        new Category
                         {
                             Id = 5,
                             Code = "bg",
@@ -64,11 +66,12 @@ namespace GeneralTests.API.Controllers.Public
                             IsEverything = false,
                             Version = 0,
                         },
-                        new Abstractions.Model.Category
+                        new Category
                         {
                             Id = 6,
                             Code = "s",
                             DisplayName = "Software",
+                            TotalProjects = 1,
                             IsEverything = false,
                             Version = 0,
                         },
@@ -86,14 +89,15 @@ namespace GeneralTests.API.Controllers.Public
             {
                 yield return new object[]
                 {
-                    new Abstractions.Model.Category
-                        {
-                            Id = 1,
-                            Code = "all",
-                            DisplayName = "Everything",
-                            IsEverything = true,
-                            Version = 0,
-                        }
+                    new Category
+                    {
+                        Id = 1,
+                        Code = "all",
+                        DisplayName = "Everything",
+                        IsEverything = true,
+                        TotalProjects = 1,
+                        Version = 0,
+                    }
                 };
 
             }
@@ -101,30 +105,28 @@ namespace GeneralTests.API.Controllers.Public
 
 
         [Theory]
-        [ClassData(typeof(CreateValidDefaults))]
-        internal async void GetCategories_Valid(Abstractions.Model.Category[] expectedCategory)
+        [ClassData(typeof(CreateDefaults))]
+        internal async void GetCategories_Test(Category[] expectedCategory)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var rep = new CategoryRepository(context);
-                    var log = new LogRepository(Storage.InitConfiguration());
+                    var categoryRep = new CategoryRepository(context);
+                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(logRep, tokenManager);
 
-                    var api = new PublicCategoryController(rep, sup);
+                    var api = new PublicCategoryController(categoryRep, sup);
 
-                    var response = await api.GetCategories();
-
-                    var result = (response as JsonResult).Value as ExecutionResult<Abstractions.Model.Category[]>;
+                    var response = (await api.GetCategories() as JsonResult).Value as ExecutionResult<Category[]>;
+                    Assert.True(response.IsSucceed);
+                    Assert.Null(response.Error);
+                    Assert.NotNull(response.Data);
 
                     foreach (var expected in expectedCategory)
                     {
-                        var actual = result.Data.FirstOrDefault(x => x.Id == expected.Id);
-
-                        Assert.True(result.IsSucceed);
-                        Assert.Null(result.Error);
+                        var actual = response.Data.FirstOrDefault(x => x.Id == expected.Id);
                         Compare(expected, actual);
                     }
                 }
@@ -140,28 +142,31 @@ namespace GeneralTests.API.Controllers.Public
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidDefaults))]
-        internal async void GetCategory_Valid(Abstractions.Model.Category[] expectedCategory)
+        [ClassData(typeof(CreateDefaults))]
+        internal async void GetCategory_Valid(Category[] expectedCategory)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var rep = new CategoryRepository(context);
-                    var log = new LogRepository(Storage.InitConfiguration());
+                    var categoryRep = new CategoryRepository(context);
+                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(logRep, tokenManager);
 
-                    var api = new PublicCategoryController(rep, sup);
+                    var api = new PublicCategoryController(categoryRep, sup);
 
                     foreach (var expected in expectedCategory)
                     {
-                        var response = await api.GetCategory(expected.Id.Value);
-                        var result = (response as JsonResult).Value as ExecutionResult<Abstractions.Model.Category>;
+                        var response = 
+                            (await api.GetCategory(expected.Id.Value) as JsonResult).Value as ExecutionResult<Category>;
 
-                        Assert.True(result.IsSucceed);
-                        Assert.Null(result.Error);
-                        Compare(expected, result.Data);
+
+                        Assert.True(response.IsSucceed);
+                        Assert.Null(response.Error);
+                        Assert.NotNull(response.Data);
+
+                        Compare(expected, response.Data);
                     }
                     
                 }
@@ -177,27 +182,27 @@ namespace GeneralTests.API.Controllers.Public
         }
 
         [Theory]
-        [ClassData(typeof(CreateEverythinCategory))]
-        internal async void GetEverythingCategory_Valid(Abstractions.Model.Category expected)
+        [InlineData(10)]
+        [InlineData(-10)]
+        internal async void GetCategory_InValid(int id)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var rep = new CategoryRepository(context);
-                    var log = new LogRepository(Storage.InitConfiguration());
+                    var categoryRep = new CategoryRepository(context);
+                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(logRep, tokenManager);
 
-                    var api = new PublicCategoryController(rep, sup);
+                    var api = new PublicCategoryController(categoryRep, sup);
 
-                    var response = await api.GetEverythingCategory();
-                    var result = (response as JsonResult).Value as ExecutionResult<Abstractions.Model.Category>;
+                    var response =
+                             (await api.GetCategory(id) as JsonResult).Value as ExecutionResult<Category>;
 
-                    Assert.True(result.IsSucceed);
-                    Assert.Null(result.Error);
-                    Compare(expected, result.Data);
-
+                    Assert.True(response.IsSucceed);
+                    Assert.Null(response.Error);
+                    Assert.Null(response.Data);
                 }
                 catch (Exception)
                 {
@@ -211,13 +216,50 @@ namespace GeneralTests.API.Controllers.Public
         }
 
 
-        private void Compare(Abstractions.Model.Category expected, Abstractions.Model.Category actual)
+
+        [Theory]
+        [ClassData(typeof(CreateEverythinCategory))]
+        internal async void GetEverythingCategory_Valid(Category expected)
         {
-            Assert.Equal(expected.Code, expected.Code);
-            Assert.Equal(expected.DisplayName, expected.DisplayName);
-            Assert.Equal(expected.IsEverything, expected.IsEverything);
-            Assert.Equal(expected.TotalProjects, expected.TotalProjects);
-            Assert.Equal(expected.Version, expected.Version);
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var categoryRep = new CategoryRepository(context);
+                    var logRep = new LogRepository(Storage.InitConfiguration());
+                    var tokenManager = new TokenManager(Storage.InitConfiguration());
+                    var sup = new Supervisor(logRep, tokenManager);
+
+                    var api = new PublicCategoryController(categoryRep, sup);
+
+                    var response =
+                             (await api.GetEverythingCategory() as JsonResult).Value as ExecutionResult<Category>;
+
+                    Assert.True(response.IsSucceed);
+                    Assert.Null(response.Error);
+                    Assert.NotNull(response.Data);
+
+                    Compare(expected, response.Data);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+
+        private void Compare(Category expected, Category actual)
+        {
+            Assert.Equal(expected.Code, actual.Code);
+            Assert.Equal(expected.DisplayName, actual.DisplayName);
+            Assert.Equal(expected.IsEverything, actual.IsEverything);
+            Assert.Equal(expected.TotalProjects, actual.TotalProjects);
+            Assert.Equal(expected.Version, actual.Version);
         }
     }
 }

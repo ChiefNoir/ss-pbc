@@ -106,7 +106,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(CreateDefaults))]
-        internal async void GetCategories_Test(Category[] expectedCategory)
+        internal async void GetCategories(Category[] expectedCategory)
         {
             using (var context = Storage.CreateContext())
             {

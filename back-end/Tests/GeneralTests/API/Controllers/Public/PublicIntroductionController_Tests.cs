@@ -15,7 +15,7 @@ namespace GeneralTests.API.Controllers.Public
 {
     public class PublicIntroductionController_Tests
     {
-        class CreateValidDefaults : IEnumerable<object[]>
+        class CreateDefaults : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -46,7 +46,7 @@ namespace GeneralTests.API.Controllers.Public
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidDefaults))]
+        [ClassData(typeof(CreateDefaults))]
         internal async void GetCategories_Valid(Introduction expected)
         {
             using (var context = Storage.CreateContext())

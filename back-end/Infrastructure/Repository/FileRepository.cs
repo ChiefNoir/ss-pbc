@@ -25,12 +25,12 @@ namespace Infrastructure.Repository
 
             if (file == null || file.Length == 0)
             {
-                throw new InfrastructureException(Resources.TextMessages.FileIsEmpty);
+                throw new ArgumentException(Resources.TextMessages.FileIsEmpty);
             }
 
             if (file.Length > maxFileSize)
             {
-                throw new InfrastructureException
+                throw new ArgumentException
                    (
                         string.Format(Resources.TextMessages.FileIsTooBig, FriendlyConvert.BytesToString(maxFileSize))
                    );

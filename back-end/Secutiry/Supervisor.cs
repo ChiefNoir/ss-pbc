@@ -128,10 +128,6 @@ namespace Security
         /// <returns> <c>null</c> if everything is good </returns>
         private void CheckToken(string token, string[] roles)
         {
-            //no need no check token, if the roles are empty
-            if (roles == null || !roles.Any())
-                return;
-
             if (string.IsNullOrEmpty(token))
                 throw new SecurityException(TextMessages.AuthenticationNotProvided);
 
@@ -148,6 +144,9 @@ namespace Security
 
             if (principal?.Identity == null)
                 throw new SecurityException(TextMessages.InvalidToken);
+
+            if (roles == null || roles.Any())
+                return;
 
             foreach (var item in roles)
             {

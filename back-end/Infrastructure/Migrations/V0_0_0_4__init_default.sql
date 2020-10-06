@@ -1,21 +1,21 @@
 ﻿-- Categories
-insert into category(id, code, display_name, is_everything)
-	values (1, 'all', 'Everything', true);
+insert into category(code, display_name, is_everything)
+	values ('all', 'Everything', true);
 
-insert into category(id, code, display_name)
-	values (2, 'vg', 'Games');
+insert into category(code, display_name)
+	values ('vg', 'Games');
 
-insert into category(id, code, display_name)
-	values (3, 'ma', 'Comics');
+insert into category(code, display_name)
+	values ('ma', 'Comics');
 
-insert into category(id, code, display_name)
-	values (4, 'lit', 'Stories');
+insert into category(code, display_name)
+	values ('lit', 'Stories');
 
-insert into category(id, code, display_name)
-	values (5, 'bg', 'Tabletop');
+insert into category(code, display_name)
+	values ('bg', 'Tabletop');
 
-insert into category(id, code, display_name)
-	values (6, 's', 'Software');
+insert into category(code, display_name)
+	values ('s', 'Software');
 -- --------------------------------------------------------------
 
 -- Introduction
@@ -32,7 +32,6 @@ insert into introduction_to_external_url(introduction_id, external_url_id)
 -- Sample project
 insert into project
 (
-	id,
 	code, 
 	display_name, 
 	category_id, 
@@ -41,7 +40,6 @@ insert into project
 )
 values
 (
-	1,
 	'placeholder_code',
 	'Brand new project',
 	6,

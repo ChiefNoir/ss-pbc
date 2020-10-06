@@ -27,7 +27,7 @@ namespace API.Controllers.Private
         }
 
         [HttpPatch("introduction"), DisableRequestSizeLimit]
-        public async Task<IActionResult> UpdateIntroductionAsync([FromHeader] string token, [FromForm] Introduction introduction)
+        public async Task<IActionResult> SaveAsync([FromHeader] string token, [FromForm] Introduction introduction)
         {
             var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {

@@ -224,7 +224,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var updateResponse =
                     (
-                        await api.UpdateIntroductionAsync(identity.Data.Token, update) as JsonResult
+                        await api.SaveAsync(identity.Data.Token, update) as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
                     Assert.NotNull(updateResponse.Data);
@@ -287,7 +287,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var updateResponse =
                     (
-                        await api.UpdateIntroductionAsync(identity.Data.Token, update) as JsonResult
+                        await api.SaveAsync(identity.Data.Token, update) as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
                     Assert.Null(updateResponse.Data);
@@ -346,7 +346,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var updateResponse =
                     (
-                        await api.UpdateIntroductionAsync(token, introduction) as JsonResult
+                        await api.SaveAsync(token, introduction) as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
                     Assert.Null(updateResponse.Data);

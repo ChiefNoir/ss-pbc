@@ -102,8 +102,7 @@ namespace Security
             var validationParameters = CreateTokenValidationParameters(_configuration);
 
             
-            var ff = tokenHandler.ValidateToken(token, validationParameters, out _);
-            return ff;
+            return tokenHandler.ValidateToken(token, validationParameters, out _);
         }
     }
 }

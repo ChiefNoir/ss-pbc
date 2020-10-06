@@ -79,7 +79,9 @@ namespace Infrastructure.Repository
             await _context.Categories.AddAsync(dbItem);
 
             await _context.SaveChangesAsync();
-            return DataConverter.ToCategory(dbItem);
+
+            var categoryWithProject = await _context.CategoriesWithTotalProjects.FirstOrDefaultAsync(x => x.Id == dbItem.Id);
+            return DataConverter.ToCategory(categoryWithProject);
         }
 
         private async Task<Category> UpdateAsync(Category category)
@@ -96,7 +98,7 @@ namespace Infrastructure.Repository
 
             await _context.SaveChangesAsync();
 
-            var categoryWithProject = await _context.CategoriesWithTotalProjects.FirstOrDefaultAsync(x => x.Id == category.Id);
+            var categoryWithProject = await _context.CategoriesWithTotalProjects.FirstOrDefaultAsync(x => x.Id == dbItem.Id);
             return DataConverter.ToCategory(categoryWithProject);
         }
 

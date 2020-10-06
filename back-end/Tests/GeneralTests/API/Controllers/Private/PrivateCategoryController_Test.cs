@@ -20,7 +20,7 @@ namespace GeneralTests.API.Controllers.Private
 {
     public class PrivateCategoryController_Test
     {
-        class ValidCategoryUpdate : IEnumerable<object[]>
+        class ValidUpdate : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -71,7 +71,107 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        class InValidCategoryUpdate : IEnumerable<object[]>
+        class ValidCreate : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Category
+                    {
+                        Id = null,
+                        Code = "cute",
+                        DisplayName = "Cute things",
+                        IsEverything = false,
+                        Version = 0,
+                    },
+                    new Category
+                    {
+                        Id = null,
+                        Code = "cute",
+                        DisplayName = "Cute things",
+                        IsEverything = false,
+                        Version = 0,
+                    },
+                };
+                yield return new object[]
+                {
+                    new Category
+                    {
+                        Id = null,
+                        Code = "cute_long_name",
+                        DisplayName = "Very Cute things",
+                        IsEverything = false,
+                        Version = 0,
+                    },
+                    new Category
+                    {
+                        Id = null,
+                        Code = "cute_long_name",
+                        DisplayName = "Very Cute things",
+                        IsEverything = false,
+                        Version = 0,
+                    },
+                };
+            }
+        }
+
+        class InValidCreate : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Category
+                    {
+                        Id = null,
+                        Code = "cute",
+                        DisplayName = "Cute things",
+                        IsEverything = true,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Category
+                    {
+                        Id = null,
+                        Code = "vg",
+                        DisplayName = "Cute things",
+                        IsEverything = false,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Category
+                    {
+                        Id = null,
+                        Code = null,
+                        DisplayName = "Cute things",
+                        IsEverything = false,
+                        Version = 0,
+                    },
+                };
+                yield return new object[]
+                {
+                    new Category
+                    {
+                        Id = null,
+                        Code = "cute",
+                        DisplayName = null,
+                        IsEverything = false,
+                        Version = 0,
+                    },
+                };
+            }
+        }
+
+        class InValidUpdate : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -85,7 +185,6 @@ namespace GeneralTests.API.Controllers.Private
                         Code = "all",
                         DisplayName = "Everything",
                         IsEverything = true,
-                        TotalProjects = 1,
                         Version = 10,
                     }
                 };
@@ -97,7 +196,6 @@ namespace GeneralTests.API.Controllers.Private
                         Code = "all",
                         DisplayName = "Everything",
                         IsEverything = false,
-                        TotalProjects = 1,
                         Version = 0,
                     }
                 };
@@ -109,7 +207,6 @@ namespace GeneralTests.API.Controllers.Private
                         Code = "all",
                         DisplayName = null,
                         IsEverything = true,
-                        TotalProjects = 1,
                         Version = 0,
                     }
                 };
@@ -121,7 +218,6 @@ namespace GeneralTests.API.Controllers.Private
                         Code = null,
                         DisplayName = "Everything",
                         IsEverything = true,
-                        TotalProjects = 1,
                         Version = 0,
                     }
                 };
@@ -133,7 +229,6 @@ namespace GeneralTests.API.Controllers.Private
                         Code = "all",
                         DisplayName = "Everything",
                         IsEverything = true,
-                        TotalProjects = 1,
                         Version = 0,
                     }
                 };
@@ -145,7 +240,6 @@ namespace GeneralTests.API.Controllers.Private
                         Code = "all",
                         DisplayName = "Everything",
                         IsEverything = true,
-                        TotalProjects = 1,
                         Version = 0,
                     }
                 };
@@ -157,14 +251,35 @@ namespace GeneralTests.API.Controllers.Private
                         Code = "all",
                         DisplayName = "Everything",
                         IsEverything = true,
-                        TotalProjects = 1,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Category
+                    {
+                        Id = 6,
+                        Code = "vg",
+                        DisplayName = "Software",
+                        IsEverything = false,
+                        Version = 0,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Category
+                    {
+                        Id = 6,
+                        Code = "s",
+                        DisplayName = "Software",
+                        IsEverything = true,
                         Version = 0,
                     }
                 };
             }
         }
 
-        class ValidCategoryDelete : IEnumerable<object[]>
+        class ValidDelete : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -195,8 +310,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-
-        class BadTokens : IEnumerable<object[]>
+        class InValidDelete : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -204,26 +318,64 @@ namespace GeneralTests.API.Controllers.Private
             {
                 yield return new object[]
                 {
-                    null
+                    new Category
+                    {
+                        Id = 1,
+                        Code = "all",
+                        DisplayName = "Everything",
+                        IsEverything = true,
+                        Version = 0,
+                    },
                 };
                 yield return new object[]
                 {
-                    "bad-token"
+                    new Category
+                    {
+                        Id = 2,
+                        Code = "vg",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                        Version = 10,
+                    },
                 };
                 yield return new object[]
                 {
-                    string.Empty
+                    new Category
+                    {
+                        Id = null,
+                        Code = "vg",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                        Version = 0,
+                    },
                 };
                 yield return new object[]
                 {
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic2EiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIm5iZiI6MTYwMTk5Njk3MSwiZXhwIjoxNjAxOTk4NzcxLCJpc3MiOiJJc3N1ZXJOYW1lIiwiYXVkIjoiQXVkaWVuY2UtMSJ9.DCbppW8SqvL1QJS2BIO2qlplZv-UHqI2_NP_Za0KDzA"
+                    new Category
+                    {
+                        Id = 10,
+                        Code = "vg",
+                        DisplayName = "Games",
+                        IsEverything = false,
+                        Version = 0,
+                    },
                 };
-                
+                yield return new object[]
+                {
+                    new Category
+                    {
+                        Id = 6,
+                        Code = "s",
+                        DisplayName = "Software",
+                        IsEverything = false,
+                        Version = 0,
+                    },
+                };
             }
         }
 
         [Theory]
-        [ClassData(typeof(ValidCategoryUpdate))]
+        [ClassData(typeof(ValidUpdate))]
         internal async void Save_Valid(Category update, Category expected)
         {
             using (var context = Storage.CreateContext())
@@ -288,7 +440,7 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
-        [ClassData(typeof(InValidCategoryUpdate))]
+        [ClassData(typeof(InValidUpdate))]
         internal async void Save_InValid(Category update)
         {
             using (var context = Storage.CreateContext())
@@ -339,9 +491,10 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+
         [Theory]
-        [ClassData(typeof(BadTokens))]
-        internal async void Save_BadToken(string badToken)
+        [ClassData(typeof(ValidCreate))]
+        internal async void Create_Valid(Category create, Category expected)
         {
             using (var context = Storage.CreateContext())
             {
@@ -359,20 +512,86 @@ namespace GeneralTests.API.Controllers.Private
                     var apiPublic = new PublicCategoryController(categoryRep, sup);
                     var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
 
+                    var identity =
+                    (
+                        await apiAuth.LoginAsync
+                        (
+                            new Credentials { Login = "sa", Password = "sa" }
+                        ) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
 
-                    var update = new Category
-                    {
-                        Id = 1,
-                        Code = "all",
-                        DisplayName = "All",
-                        IsEverything = true,
-                        TotalProjects = 1,
-                        Version = 0,
-                    };
+                    Assert.NotNull(identity.Data);
+                    Assert.Null(identity.Error);
+                    Assert.True(identity.IsSucceed);
 
                     var response =
                     (
-                        await api.Save(badToken, update) as JsonResult
+                        await api.Save(identity.Data.Token, create) as JsonResult
+                    ).Value as ExecutionResult<Category>;
+
+                    Assert.NotNull(response.Data);
+                    Assert.Null(response.Error);
+                    Assert.True(response.IsSucceed);
+                    Compare(expected, response.Data, true);
+
+
+                    var getResponse =
+                    (
+                        await apiPublic.GetCategory(response.Data.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Category>;
+
+                    Assert.NotNull(getResponse.Data);
+                    Assert.Null(getResponse.Error);
+                    Assert.True(getResponse.IsSucceed);
+                    Compare(expected, getResponse.Data, true);
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(InValidCreate))]
+        internal async void Create_InValid(Category create)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var logRep = new LogRepository(confing);
+                    var categoryRep = new CategoryRepository(context);
+                    var hashManager = new HashManager();
+                    var accountRep = new AccountRepository(context, confing, hashManager);
+                    var tokenManager = new TokenManager(confing);
+                    var sup = new Supervisor(logRep, tokenManager);
+
+                    var api = new PrivateCategoryController(categoryRep, sup);
+                    var apiPublic = new PublicCategoryController(categoryRep, sup);
+                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
+
+                    var identity =
+                    (
+                        await apiAuth.LoginAsync
+                        (
+                            new Credentials { Login = "sa", Password = "sa" }
+                        ) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+
+                    Assert.NotNull(identity.Data);
+                    Assert.Null(identity.Error);
+                    Assert.True(identity.IsSucceed);
+
+                    var response =
+                    (
+                        await api.Save(identity.Data.Token, create) as JsonResult
                     ).Value as ExecutionResult<Category>;
 
                     Assert.Null(response.Data);
@@ -390,8 +609,10 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+
+
         [Theory]
-        [ClassData(typeof(ValidCategoryDelete))]
+        [ClassData(typeof(ValidDelete))]
         internal async void Delete_Valid(Category category)
         {
             using (var context = Storage.CreateContext())
@@ -430,7 +651,7 @@ namespace GeneralTests.API.Controllers.Private
                     Assert.True(response.Data);
                     Assert.Null(response.Error);
                     Assert.True(response.IsSucceed);
-                    
+
 
                     var getResponse =
                     (
@@ -452,10 +673,70 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-
-        private void Compare(Category expected, Category actual)
+        [Theory]
+        [ClassData(typeof(InValidDelete))]
+        internal async void Delete_InValid(Category category)
         {
-            Assert.Equal(expected.Id, actual.Id);
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var logRep = new LogRepository(confing);
+                    var categoryRep = new CategoryRepository(context);
+                    var hashManager = new HashManager();
+                    var accountRep = new AccountRepository(context, confing, hashManager);
+                    var tokenManager = new TokenManager(confing);
+                    var sup = new Supervisor(logRep, tokenManager);
+
+                    var api = new PrivateCategoryController(categoryRep, sup);
+                    var apiPublic = new PublicCategoryController(categoryRep, sup);
+                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
+
+                    var identity =
+                    (
+                        await apiAuth.LoginAsync
+                        (
+                            new Credentials { Login = "sa", Password = "sa" }
+                        ) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+
+                    Assert.NotNull(identity.Data);
+                    Assert.Null(identity.Error);
+                    Assert.True(identity.IsSucceed);
+
+                    var response =
+                    (
+                        await api.Delete(identity.Data.Token, category) as JsonResult
+                    ).Value as ExecutionResult<bool>;
+
+                    Assert.False(response.Data);
+                    Assert.NotNull(response.Error);
+                    Assert.False(response.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+
+        private void Compare(Category expected, Category actual, bool ignoreId = false)
+        {
+            if (!ignoreId)
+            {
+                Assert.Equal(expected.Id, actual.Id);
+            }
+            else
+            {
+                Assert.NotNull(actual.Id);
+            }
+            
             Assert.Equal(expected.Code, actual.Code);
             Assert.Equal(expected.DisplayName, actual.DisplayName);
             Assert.Equal(expected.IsEverything, actual.IsEverything);

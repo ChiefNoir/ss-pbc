@@ -29,7 +29,7 @@ namespace API.Controllers.Private
         }
 
         [HttpPost("project"), DisableRequestSizeLimit]
-        public async Task<IActionResult> Add([FromHeader] string token, [FromForm] Project project)
+        public async Task<IActionResult> Save([FromHeader] string token, [FromForm] Project project)
         {
             var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {

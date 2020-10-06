@@ -19,12 +19,12 @@ namespace Common.FriendlyConverters
             if (byteCount < 0)
                 throw new ArgumentException("byteCount can't be less than 0", nameof(byteCount));
 
-            if(suffices != null && suffices.Length < 4)
-                throw new ArgumentException("Suffices must have at least 7 values: B, KB, MB, GB", nameof(suffices));
+            if(suffices != null && suffices.Length != 7)
+                throw new ArgumentException("Suffices must have at 7 values: B, KB, MB, GB, TB, PB, EB", nameof(suffices));
 
             if (suffices == null || suffices.Length == 0)
             {
-                suffices = new [] { "B", "KB", "MB", "GB" };
+                suffices = new [] { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
             }
 
             if (byteCount == 0)

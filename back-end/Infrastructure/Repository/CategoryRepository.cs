@@ -96,7 +96,8 @@ namespace Infrastructure.Repository
 
             await _context.SaveChangesAsync();
 
-            return DataConverter.ToCategory(dbItem);
+            var categoryWithProject = await _context.CategoriesWithTotalProjects.FirstOrDefaultAsync(x => x.Id == category.Id);
+            return DataConverter.ToCategory(categoryWithProject);
         }
 
         private async Task<Category> FirstOrDefaultAsync(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)

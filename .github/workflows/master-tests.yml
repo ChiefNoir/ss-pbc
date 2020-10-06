@@ -5,35 +5,29 @@ on:
     branches: [ master ]
 
 jobs:
-  container-job:
-    runs-on: ubuntu-latest
-    # Docker Hub image that `container-job` executes in
-    container: node:10.18-jessie 
+  build:
+    runs-on:  ubuntu-latest
 
-    # Service containers to run with `container-job`
     services:
-      # Label used to access the service container
       postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
+        image: postgres:latest 
         env:
+          POSTGRES_PASSWORD: sa
           POSTGRES_USER: test
-          POSTGRES_PASSWORD: sa  
-        ports:
-        # Maps tcp port 5432 on service container to the host
-          - 5432:5432
+          POSTGRES_DB: test
+        
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
 
     steps:
-      - name: Create db
-        run: docker_run="$docker_run -e POSTGRES_DB=test"
-
       - name: Check out repository code
         uses: actions/checkout@v1
 
@@ -42,7 +36,7 @@ jobs:
         with:
            dotnet-version: 3.1.101
 
-      - name: Generate coverage report
+      - name: Test and cover
         run: |
           cd ./back-end/
           dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov

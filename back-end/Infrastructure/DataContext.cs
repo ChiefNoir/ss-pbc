@@ -88,7 +88,7 @@ namespace Infrastructure
                 {
                     EmbeddedResourceAssemblies = new[] { Assembly.GetExecutingAssembly() },
                     IsEraseDisabled = true,
-                    EnableClusterMode = true
+                    EnableClusterMode = false
                 };
 
                 evolve.Migrate();

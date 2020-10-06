@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Abstractions.ISecurity;
 using System.Security;
 using System.Linq;
+using Security.Extensions;
 
 namespace Security
 {
@@ -145,7 +146,10 @@ namespace Security
             if (principal?.Identity == null)
                 throw new SecurityException(TextMessages.InvalidToken);
 
-            if (roles == null || roles.Any())
+            if (!principal.GetRoles().Any())
+                throw new SecurityException(TextMessages.InvalidToken);
+
+            if (roles == null || !roles.Any())
                 return;
 
             foreach (var item in roles)

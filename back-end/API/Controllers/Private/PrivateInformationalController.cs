@@ -24,7 +24,7 @@ namespace API.Controllers.Private
         }
 
         [HttpGet("information")]
-        public IActionResult GetIntroduction([FromHeader] string token)
+        public IActionResult GetInformation([FromHeader] string token)
         {
             var result = _supervisor.SafeExecute(token, new[] { RoleNames.Admin, RoleNames.Demo }, () =>
             {

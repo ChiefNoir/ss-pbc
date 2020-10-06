@@ -12,6 +12,8 @@ namespace Infrastructure
     public class DataContext : DbContext
     {
         private static bool _isMigrationsDone;
+        private static readonly object _migrationLock = new object();
+
 
         internal DbSet<Account> Accounts { get; set; }
         internal DbSet<Category> Categories { get; set; }
@@ -28,12 +30,16 @@ namespace Infrastructure
             if (Database.ProviderName == "Microsoft.EntityFrameworkCore.InMemory")
                 return;
 
-
             if (_isMigrationsDone) 
                 return;
 
-            MigrateDatabase(Database.GetDbConnection());
-            _isMigrationsDone = true;
+            lock (_migrationLock)
+            {
+                if (_isMigrationsDone)
+                    return;
+
+                MigrateDatabase(Database.GetDbConnection());
+            }
         }
 
         public void FlushDatabase()
@@ -86,6 +92,7 @@ namespace Infrastructure
                 };
 
                 evolve.Migrate();
+                _isMigrationsDone = true;
             }
             catch (Exception)
             {

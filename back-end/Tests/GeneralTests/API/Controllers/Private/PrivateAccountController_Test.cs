@@ -247,6 +247,93 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        class InValidUpdate : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = 10,
+                        Login = "sa",
+                        Password = "sa",
+                        Role = "admin",
+                        Version = 0
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = null,
+                        Login = "sa",
+                        Password = "sa",
+                        Role = "admin",
+                        Version = 0
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = 1,
+                        Login = "sa",
+                        Password = "sa",
+                        Role = "admin",
+                        Version = 10
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = 1,
+                        Login = "sa",
+                        Password = "sa",
+                        Role = null,
+                        Version = 0
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = 1,
+                        Login = null,
+                        Password = "sa",
+                        Role = "admin",
+                        Version = 10
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = 1,
+                        Login = "sa",
+                        Password = "sa",
+                        Role = "wrong",
+                        Version = 0
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = 1,
+                        Login = "login",
+                        Password = "sa",
+                        Role = "admin",
+                        Version = 0
+                    }
+                };
+            }
+        }
+
+
         class InsertWithInvalidDelete : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -1058,6 +1145,53 @@ namespace GeneralTests.API.Controllers.Private
                 }
             }
         }
+
+        [Theory]
+        [ClassData(typeof(InValidUpdate))]
+        internal async void UpdateAcountAsync_InValid(Account account)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+
+
+                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
+                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
+                    Assert.NotNull(identity.Data);
+                    Assert.Null(identity.Error);
+                    Assert.True(identity.IsSucceed);
+
+                    Storage.RunSql("INSERT INTO account (id, login, password, salt, role) VALUES (2, 'login', 'password', 'salt', 'role'); ");
+
+                    var api = new PrivateAccountController(accRep, sup);
+                    var response = 
+                    (
+                        await api.UpdateAccountAsync(identity.Data.Token, account) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    Assert.Null(response.Data);
+                    Assert.NotNull(response.Error);
+                    Assert.False(response.IsSucceed);
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
 
         [Fact]
         internal async void UpdatePasswordAsync_Valid()

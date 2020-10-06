@@ -168,7 +168,6 @@ namespace Infrastructure.Repository
             }
 
             var allRoles = typeof(RoleNames).GetProperties().Select(x => x.GetValue(null, null)?.ToString()).ToList();
-
             if(!allRoles.Contains(account.Role))
             {
                 throw new InconsistencyException
@@ -240,6 +239,14 @@ namespace Infrastructure.Repository
                     );
             }
 
+            var allRoles = typeof(RoleNames).GetProperties().Select(x => x.GetValue(null, null)?.ToString()).ToList();
+            if (!allRoles.Contains(account.Role))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.TheRoleDoesNotExist, account.Role)
+                    );
+            }
 
             if (dbItem.Version != account.Version)
             {

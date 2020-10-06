@@ -1,15 +1,12 @@
 ﻿using Abstractions.IRepository;
-using Abstractions.Model;
 using Abstractions.Supervision;
 using API.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Security;
-using Security.Extensions;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
+using Abstractions.Exceptions;
 using Abstractions.ISecurity;
+using System.Security;
 
 namespace API.Controllers.Gateway
 {
@@ -49,25 +46,22 @@ namespace API.Controllers.Gateway
         }
 
         [HttpPost("token")]
-        public IActionResult Validate([FromHeader] string token)
+        public async Task<IActionResult> ValidateAsync([FromHeader] string token)
         {
-            var result = _supervisor.SafeExecute(() =>
+            var result = await _supervisor.SafeExecuteAsync(async () =>
             {
                 var principal = _tokenManager.ValidateToken(token);
 
-                if (principal == null)
-                    throw new Exception("Validation failed");
+                if (principal?.Identity == null)
+                    throw new SecurityException("Validation failed");
 
-                if (principal.Identity == null)
-                    throw new Exception("Validation failed");
+                var account = await _accountRepository.GetAsync(principal.Identity.Name);
+                if (account == null)
+                    throw new SecurityException("Validation failed");
 
                 return new Identity
                 {
-                    Account = new Account
-                    {
-                        Login = principal.Identity.Name,
-                        Role = principal.GetRoles().FirstOrDefault(),
-                    },
+                    Account = account,
                     Token = token,
                     TokenLifeTimeMinutes = _configuration.GetSection("Token:LifeTime").Get<int>()
                 };

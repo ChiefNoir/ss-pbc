@@ -26,7 +26,3 @@ jobs:
         run: |
           cd ./back-end/
           dotnet build --configuration Release --no-restore
-      - name: Test
-        run: |
-          cd ./back-end/
-          dotnet test --no-restore --verbosity normal

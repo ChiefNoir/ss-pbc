@@ -27,9 +27,9 @@ jobs:
           --health-retries 5
 
     steps:
-      - name: Install dependencies
-        run: npm ci
-      
+      - name: Create db
+        run: docker_run="$docker_run -e POSTGRES_DB=test"      
+
       - name: Check out repository code
       - uses: actions/checkout@v1
 

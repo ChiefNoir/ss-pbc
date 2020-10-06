@@ -3,6 +3,7 @@ using GeneralTests.Utils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -25,14 +26,23 @@ namespace GeneralTests
                 });
 
             // Build and start the IHost
-            var host = await hostBuilder.StartAsync();
-
-            var client = host.GetTestClient();
-
-            var response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode(); // Status Code 200-299
-
-            Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
+            using var host = await hostBuilder.StartAsync();
+            try
+            {
+                using var client = host.GetTestClient();
+                using var response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode(); // Status Code 200-299
+                Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                await host.StopAsync();
+                host.Dispose();
+            }
         }
     }
 

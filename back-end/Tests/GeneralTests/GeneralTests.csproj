@@ -43,9 +43,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Abstractions\Abstractions.csproj" />
     <ProjectReference Include="..\..\API\API.csproj" />
+    <ProjectReference Include="..\..\Common\Common.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\..\Secutiry\Security.csproj" />
-	<ProjectReference Include="..\..\Common\Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

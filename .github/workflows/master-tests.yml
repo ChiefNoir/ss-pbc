@@ -18,7 +18,9 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: sa  
+          POSTGRES_PORT: 5432  
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -29,8 +31,6 @@ jobs:
     steps:
       - name: Create db
         run: docker_run="$docker_run -e POSTGRES_DB=test"
-             docker_run="$docker_run -e POSTGRES_USER=test"
-             docker_run="$docker_run -e POSTGRES_PASSWORD=sa"
 
       - name: Check out repository code
         uses: actions/checkout@v1

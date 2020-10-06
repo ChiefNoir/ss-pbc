@@ -15,8 +15,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Security;
 using System.IO;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
 
 namespace API
 {

@@ -34,10 +34,13 @@
         internal const string ThePropertyCantBeEmpty = "The {0} can't be empty";
 
         /// <summary> The category {0} does not exist </summary>
-        internal const string TheCategoryDoesNotExist = "The category {0} does not exist";
+        internal const string TheCategoryDoesNotExist = "Category {0} does not exist";
 
         /// <summary> {0} duplicate </summary>
         internal const string PropertyDuplicate = "{0} duplicate";
+
+        /// <summary> Role {0} does not exist </summary>
+        internal const string TheRoleDoesNotExist = "Role {0} does not exist";
 
         /// <summary> Login is empty </summary>
         internal const string AccountEmptyLogin = "Login is empty";

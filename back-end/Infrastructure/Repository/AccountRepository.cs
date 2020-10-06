@@ -167,6 +167,16 @@ namespace Infrastructure.Repository
                     );
             }
 
+            var allRoles = typeof(RoleNames).GetProperties().Select(x => x.GetValue(null, null)?.ToString()).ToList();
+
+            if(!allRoles.Contains(account.Role))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.TheRoleDoesNotExist, account.Role)
+                    );
+            }
+
             if (_context.Accounts.Any(x => x.Login == account.Login))
             {
                 throw new InconsistencyException

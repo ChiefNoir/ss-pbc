@@ -76,7 +76,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        class GenerateValidAccount : IEnumerable<object[]>
+        class ValidAccounts : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -105,7 +105,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        class GenerateRoles : IEnumerable<object[]>
+        class Roles : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -123,7 +123,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        class InsertWithResultsAndPaging : IEnumerable<object[]>
+        class InsertWithPagingAndResults : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -188,10 +188,137 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        class InValidAdd : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = null,
+                        Login = "sa",
+                        Password = "sa",
+                        Role = "admin"
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = null,
+                        Login = null,
+                        Password = "pswrd",
+                        Role = "demo"
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = null,
+                        Login = "admin",
+                        Password = null,
+                        Role = "demo"
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = null,
+                        Login = "admin",
+                        Password = "admin",
+                        Role = null
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = null,
+                        Login = "admin",
+                        Password = "admin",
+                        Role = "something"
+                    }
+                };
+            }
+        }
+
+        class InsertWithInvalidDelete : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    null,
+                    new Account
+                    {
+                        Id = 3, Login = "login", Password = null, Role = "role", Version = 0
+                    }
+                };
+                yield return new object[]
+                {
+                    "INSERT INTO account (id, login, password, salt, role) VALUES (3, 'login', 'password', 'salt', 'role'); ",
+                    new Account
+                    {
+                        Id = null, Login = "login", Password = null, Role = "role", Version = 0
+                    }
+                };
+                yield return new object[]
+                {
+                    "INSERT INTO account (id, login, password, salt, role) VALUES (3, 'login', 'password', 'salt', 'role'); ",
+                    new Account
+                    {
+                        Id = 3, Login = "login", Password = null, Role = "role", Version = 10
+                    }
+                };
+            }
+        }
+
+        class InsertWithInvalidGet : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    "INSERT INTO account (id, login, password, salt, role) VALUES (3, 'login', 'password', 'salt', 'role'); ",
+                    -1
+                };
+                yield return new object[]
+                {
+                    "INSERT INTO account (id, login, password, salt, role) VALUES (3, 'login', 'password', 'salt', 'role'); ",
+                    4
+                };
+                yield return new object[]
+                {
+                    "INSERT INTO account (id, login, password, salt, role) VALUES (3, 'login', 'password', 'salt', 'role'); "
+                    + " INSERT INTO account (id, login, password, salt, role) VALUES (4, 'login2', 'password', 'salt', 'role'); "
+                    + " INSERT INTO account (id, login, password, salt, role) VALUES (5, 'login3', 'password', 'salt', 'role'); "
+                    ,
+                    int.MaxValue
+                };
+                yield return new object[]
+                {
+                    "INSERT INTO account (id, login, password, salt, role) VALUES (3, 'login', 'password', 'salt', 'role'); "
+                    + " INSERT INTO account (id, login, password, salt, role) VALUES (4, 'login2', 'password', 'salt', 'role'); "
+                    + " INSERT INTO account (id, login, password, salt, role) VALUES (5, 'login3', 'password', 'salt', 'role'); "
+                    ,
+                    int.MinValue
+                };
+            }
+        }
+
 
         [Theory]
-        [ClassData(typeof(GenerateRoles))]
-        internal async void GetRolesAsync_Test_Valid(string[] expectedRoles)
+        [ClassData(typeof(Roles))]
+        internal async void GetRolesAsync_Valid(string[] expectedRoles)
         {
             using (var context = Storage.CreateContext())
             {
@@ -240,10 +367,48 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        [Theory]
+        [InlineData("bad-token")]
+        [InlineData(null)]
+        internal void GetRolesAsync_BadToken(string token)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+
+
+                    var api = new PrivateAccountController(accRep, sup);
+
+                    var response = (api.GetRoles(token) as JsonResult).Value as ExecutionResult<List<string>>;
+
+                    Assert.Null(response.Data);
+                    Assert.NotNull(response.Error);
+                    Assert.False(response.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+
 
         [Theory]
         [ClassData(typeof(Inserts))]
-        internal async void CountAsync_Test_Valid(string[] sql)
+        internal async void CountAsync_Valid(string[] sql)
         {
             using (var context = Storage.CreateContext())
             {
@@ -287,10 +452,51 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        [Theory]
+        [ClassData(typeof(Inserts))]
+        internal async void CountAsync_BadToken(string[] sql)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+
+
+                    Storage.RunSql(sql);
+
+                    var api = new PrivateAccountController(accRep, sup);
+
+                    var response = await api.CountAccountsAsync("bad-token");
+                    var responseResult = (response as JsonResult).Value as ExecutionResult<int>;
+
+                    Assert.NotNull(responseResult.Error);
+                    Assert.False(responseResult.IsSucceed);
+                    Assert.Equal(default, responseResult.Data);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+
+
 
         [Theory]
-        [ClassData(typeof(GenerateValidAccount))]
-        internal async void AddAccountAsync_Test_Valid(Account account)
+        [ClassData(typeof(ValidAccounts))]
+        internal async void AddAccountAsync_Valid(Account account)
         {
             using (var context = Storage.CreateContext())
             {
@@ -342,8 +548,90 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
+        [ClassData(typeof(ValidAccounts))]
+        internal async void AddAccountAsync_BadToken(Account account)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+
+
+                    var api = new PrivateAccountController(accRep, sup);
+                    var responseAdd = await api.AddAccountAsync("bad-token", account);
+                    var addResult = (responseAdd as JsonResult).Value as ExecutionResult<Account>;
+                    Assert.Null(addResult.Data);
+                    Assert.NotNull(addResult.Error);
+                    Assert.False(addResult.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(InValidAdd))]
+        internal async void AddAccountAsync_InValid(Account account)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+
+
+                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
+                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
+                    Assert.NotNull(identity.Data);
+                    Assert.Null(identity.Error);
+                    Assert.True(identity.IsSucceed);
+
+
+                    var api = new PrivateAccountController(accRep, sup);
+                    var response = 
+                    (
+                        await api.AddAccountAsync(identity.Data.Token, account) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    
+                    Assert.Null(response.Data);
+                    Assert.NotNull(response.Error);
+                    Assert.False(response.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+
+
+        [Theory]
         [ClassData(typeof(InsertWithResults))]
-        internal async void DeleteAccountAsync_Test_Valid(string sql, Account account)
+        internal async void DeleteAccountAsync_Valid(string sql, Account account)
         {
             using (var context = Storage.CreateContext())
             {
@@ -394,7 +682,52 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InsertWithResults))]
-        internal async void GetAccountAsync_Test_Valid(string sql, Account expected)
+        internal async void DeleteAccountAsync_BatToken(string sql, Account account)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+
+
+                    Storage.RunSql(sql);
+
+                    var api = new PrivateAccountController(accRep, sup);
+                    var responseDel = await api.DeleteAccountAsync("bad-token", account);
+                    var delResult = (responseDel as JsonResult).Value as ExecutionResult<bool>;
+                    Assert.False(delResult.Data);
+                    Assert.NotNull(delResult.Error);
+                    Assert.False(delResult.IsSucceed);
+
+
+                    var responseGet = await api.GetAccountAsync("bad-token", account.Id.Value);
+                    var getResult = (responseGet as JsonResult).Value as ExecutionResult<Account>;
+
+                    Assert.Null(getResult.Data);
+                    Assert.NotNull(getResult.Error);
+                    Assert.False(getResult.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(InsertWithInvalidDelete))]
+        internal async void DeleteAccountAsync_InValid(string sql, Account account)
         {
             using (var context = Storage.CreateContext())
             {
@@ -418,13 +751,61 @@ namespace GeneralTests.API.Controllers.Private
                     Storage.RunSql(sql);
 
                     var api = new PrivateAccountController(accRep, sup);
-                    var responseGet = await api.GetAccountAsync(identity.Data.Token, expected.Id.Value);
-                    var getResult = (responseGet as JsonResult).Value as ExecutionResult<Account>;
-                    Assert.NotNull(getResult.Data);
-                    Assert.Null(getResult.Error);
-                    Assert.True(getResult.IsSucceed);
+                    var response =
+                    (
+                        await api.DeleteAccountAsync(identity.Data.Token, account) as JsonResult
+                    ).Value as ExecutionResult<bool>;
+                    Assert.False(response.Data);
+                    Assert.NotNull(response.Error);
+                    Assert.False(response.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
 
-                    Compare(getResult.Data, expected);
+
+
+        [Theory]
+        [ClassData(typeof(InsertWithResults))]
+        internal async void GetAccountAsync_Valid(string sql, Account expected)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+
+
+                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
+                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
+                    Assert.NotNull(identity.Data);
+                    Assert.Null(identity.Error);
+                    Assert.True(identity.IsSucceed);
+
+                    Storage.RunSql(sql);
+
+                    var api = new PrivateAccountController(accRep, sup);
+                    var responseGet =
+                    (
+                        await api.GetAccountAsync(identity.Data.Token, expected.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    
+                    Assert.NotNull(responseGet.Data);
+                    Assert.Null(responseGet.Error);
+                    Assert.True(responseGet.IsSucceed);
                 }
                 catch (Exception)
                 {
@@ -438,7 +819,97 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
-        [ClassData(typeof(InsertWithResultsAndPaging))]
+        [ClassData(typeof(InsertWithResults))]
+        internal async void GetAccountAsync_BadToken(string sql, Account expected)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+
+                    Storage.RunSql(sql);
+
+                    var api = new PrivateAccountController(accRep, sup);
+                    var getResult =
+                    (
+                        await api.GetAccountAsync("bad-token", expected.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    
+                    Assert.Null(getResult.Data);
+                    Assert.NotNull(getResult.Error);
+                    Assert.False(getResult.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(InsertWithInvalidGet))]
+        internal async void GetAccountAsync_InValid(string sql, int id)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+
+
+                    var loginResponse = 
+                    (
+                        await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    Assert.NotNull(loginResponse.Data);
+                    Assert.Null(loginResponse.Error);
+                    Assert.True(loginResponse.IsSucceed);
+
+                    Storage.RunSql(sql);
+
+                    var api = new PrivateAccountController(accRep, sup);
+                    var responseGet =
+                    (
+                        await api.GetAccountAsync(loginResponse.Data.Token, id) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+
+                    Assert.Null(responseGet.Data);
+                    Assert.Null(responseGet.Error);
+                    Assert.True(responseGet.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+
+
+
+        [Theory]
+        [ClassData(typeof(InsertWithPagingAndResults))]
         internal async void GetAccountsAsyncPaging_Valid(string sql, Paging paging, Account[] expected)
         {
             using (var context = Storage.CreateContext())
@@ -488,6 +959,47 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        [Theory]
+        [ClassData(typeof(InsertWithPagingAndResults))]
+        internal async void GetAccountsAsyncPaging_BadToken(string sql, Paging paging, Account[] expected)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+
+                    Storage.RunSql(sql);
+
+                    var api = new PrivateAccountController(accRep, sup);
+                    var response =
+                    (
+                        await api.GetAccountsAsync("bad-token", paging) as JsonResult
+                    ).Value as ExecutionResult<Account[]>;
+                    
+                    Assert.Null(response.Data);
+                    Assert.NotNull(response.Error);
+                    Assert.False(response.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+
+
         [Fact]
         internal async void UpdateAcountAsync_Valid()
         {
@@ -518,7 +1030,6 @@ namespace GeneralTests.API.Controllers.Private
                         Version = 0
                     };
 
-
                     var api = new PrivateAccountController(accRep, sup);
                     var response = await api.UpdateAccountAsync(identity.Data.Token, newAccount);
                     var responseUpdate = (response as JsonResult).Value as ExecutionResult<Account>;
@@ -532,8 +1043,6 @@ namespace GeneralTests.API.Controllers.Private
                     Assert.NotNull(exResultresponseGet.Data);
                     Assert.Null(exResultresponseGet.Error);
                     Assert.True(exResultresponseGet.IsSucceed);
-
-
 
 
                     Compare(exResultresponseGet.Data, newAccount, 1);
@@ -550,14 +1059,92 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        [Fact]
+        internal async void UpdatePasswordAsync_Valid()
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var confing = Storage.InitConfiguration();
+                    var log = new LogRepository(confing);
+                    var tokenManager = new TokenManager(confing);
+                    var hasManager = new HashManager();
+                    var sup = new Supervisor(log, tokenManager);
+                    var accRep = new AccountRepository(context, confing, hasManager);
+                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
 
+                    var identity =
+                    (
+                        await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    Assert.NotNull(identity.Data);
+                    Assert.Null(identity.Error);
+                    Assert.True(identity.IsSucceed);
+
+                    Assert.NotNull(identity.Data.Token);
+                    Assert.Equal(30, identity.Data.TokenLifeTimeMinutes);
+
+                    Assert.NotNull(identity.Data.Account);
+                    Assert.Equal("sa", identity.Data.Account.Login);
+                    Assert.Null(identity.Data.Account.Password);
+                    Assert.Equal("admin", identity.Data.Account.Role);
+
+                    
+
+                    identity.Data.Account.Password = "brand-new-password";
+
+                    var api = new PrivateAccountController(accRep, sup);
+                    var response = await api.UpdateAccountAsync(identity.Data.Token, identity.Data.Account);
+                    var responseUpdate = (response as JsonResult).Value as ExecutionResult<Account>;
+                    Assert.NotNull(responseUpdate.Data);
+                    Assert.Null(responseUpdate.Error);
+                    Assert.True(responseUpdate.IsSucceed);
+                    Compare(responseUpdate.Data, identity.Data.Account, 1);
+
+                    var responseGet = await api.GetAccountAsync(identity.Data.Token, identity.Data.Account.Id.Value);
+                    var exResultresponseGet = (responseGet as JsonResult).Value as ExecutionResult<Account>;
+                    Assert.NotNull(exResultresponseGet.Data);
+                    Assert.Null(exResultresponseGet.Error);
+                    Assert.True(exResultresponseGet.IsSucceed);
+
+                    Compare(exResultresponseGet.Data, identity.Data.Account, 1);
+
+                    var newIdentity =
+                    (
+                        await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = identity.Data.Account.Password }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+
+                    Assert.NotNull(newIdentity.Data);
+                    Assert.Null(newIdentity.Error);
+                    Assert.True(newIdentity.IsSucceed);
+
+                    Assert.NotNull(newIdentity.Data.Token);
+                    Assert.Equal(30, newIdentity.Data.TokenLifeTimeMinutes);
+
+                    Assert.NotNull(newIdentity.Data.Account);
+                    Assert.Equal("sa", newIdentity.Data.Account.Login);
+                    Assert.Null(newIdentity.Data.Account.Password);
+                    Assert.Equal("admin", newIdentity.Data.Account.Role);
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
 
         private void Compare(Account actual, Account expected, int? version = null)
         {
             Assert.NotNull(actual.Id);
             Assert.Equal(expected.Login, actual.Login);
-            Assert.Null(actual.Password);
+            Assert.Null(actual.Password); // API must not return password
             Assert.Equal(expected.Role, actual.Role);
 
             if (version == null)

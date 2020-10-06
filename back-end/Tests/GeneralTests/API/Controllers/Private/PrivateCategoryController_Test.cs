@@ -212,10 +212,6 @@ namespace GeneralTests.API.Controllers.Private
                 };
                 yield return new object[]
                 {
-                    ""
-                };
-                yield return new object[]
-                {
                     string.Empty
                 };
                 yield return new object[]

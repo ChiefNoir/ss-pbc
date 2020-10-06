@@ -6,6 +6,7 @@ using Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
@@ -52,6 +53,16 @@ namespace Infrastructure.Repository
                            .AsNoTracking()
                            .FirstOrDefaultAsync();
         }
+
+        public Task<Account> GetAsync(string login)
+        {
+            return _context.Accounts
+                           .Where(x => x.Login == login)
+                           .Select(x => DataConverter.ToAccount(x))
+                           .AsNoTracking()
+                           .FirstOrDefaultAsync();
+        }
+
 
         public async Task<Account> GetAsync(string login, string password)
         {

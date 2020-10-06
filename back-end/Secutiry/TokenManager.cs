@@ -44,18 +44,19 @@ namespace Security
             }
 
             var jwt = new JwtSecurityToken
+            (
+                issuer: _configuration.GetSection("Token:Issuer").Get<string>(),
+                audience: _configuration.GetSection("Token:Audience").Get<string>(),
+                notBefore: DateTime.UtcNow,
+                claims: claims,
+                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_configuration.GetSection("Token:LifeTime").Get<int>())),
+                signingCredentials: new SigningCredentials
                 (
-                    issuer: _configuration.GetSection("Token:Issuer").Get<string>(),
-                    audience: _configuration.GetSection("Token:Audience").Get<string>(),
-                    notBefore: DateTime.UtcNow,
-                    claims: claims,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_configuration.GetSection("Token:LifeTime").Get<int>())),
-                    signingCredentials: new SigningCredentials
-                    (
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Token:Key").Get<string>())),
-                        _configuration.GetSection("Token:SecurityAlgorithms").Get<string>()
-                    )
-                );
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Token:Key").Get<string>())),
+                    _configuration.GetSection("Token:SecurityAlgorithms").Get<string>()
+                )
+            );
+
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
@@ -64,21 +65,26 @@ namespace Security
 
         /// <summary> Create <seea cref="TokenValidationParameters"/> parameters </summary>
         /// <returns> <seea cref="TokenValidationParameters"/> </returns>
-        private TokenValidationParameters CreateTokenValidationParameters()
+        public static TokenValidationParameters CreateTokenValidationParameters(IConfiguration configuration)
         {
             return new TokenValidationParameters
             {
-                ValidateIssuer = _configuration.GetSection("Token:ValidateIssuer").Get<bool>(),
-                ValidateAudience = _configuration.GetSection("Token:ValidateAudience").Get<bool>(),
-                ValidateLifetime = _configuration.GetSection("Token:ValidateLifetime").Get<bool>(),
-                ValidateIssuerSigningKey = _configuration.GetSection("Token:ValidateIssuerSigningKey").Get<bool>(),
-                ValidIssuer = _configuration.GetSection("Token:Issuer").Get<string>(),
-                ValidAudience = _configuration.GetSection("Token:Audience").Get<string>(),
+                ValidateIssuer = configuration.GetSection("Token:ValidateIssuer").Get<bool>(),
+                ValidateAudience = configuration.GetSection("Token:ValidateAudience").Get<bool>(),
+                ValidateLifetime = configuration.GetSection("Token:ValidateLifetime").Get<bool>(),
+                ValidateIssuerSigningKey = configuration.GetSection("Token:ValidateIssuerSigningKey").Get<bool>(),
+                
+                ValidIssuer = configuration.GetSection("Token:Issuer").Get<string>(),
+                ValidAudience = configuration.GetSection("Token:Audience").Get<string>(),
                 IssuerSigningKey = new SymmetricSecurityKey
                 (
-                    Encoding.UTF8.GetBytes(_configuration.GetSection("Token:Key").Get<string>())
+                    Encoding.UTF8.GetBytes(configuration.GetSection("Token:Key").Get<string>())
                 ),
-                RequireExpirationTime = _configuration.GetSection("Token:RequireExpirationTime").Get<bool>()
+                RequireExpirationTime = configuration.GetSection("Token:RequireExpirationTime").Get<bool>(),
+                ClockSkew = TimeSpan.FromMinutes
+                (
+                    configuration.GetSection("Token:ClockSkewMinutes").Get<int>()
+                )
             };
         }
 
@@ -87,12 +93,17 @@ namespace Security
         /// <returns> <see cref="IPrincipal"/></returns>
         public IPrincipal ValidateToken(string token)
         {
+            //TODO: extend validation
+
             if (string.IsNullOrEmpty(token))
                 throw new ArgumentException("Token can't be null or empty", nameof(token));
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var validationParameters = CreateTokenValidationParameters();
-            return tokenHandler.ValidateToken(token, validationParameters, out _);
+            var validationParameters = CreateTokenValidationParameters(_configuration);
+
+            
+            var ff = tokenHandler.ValidateToken(token, validationParameters, out _);
+            return ff;
         }
     }
 }

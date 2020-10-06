@@ -50,20 +50,7 @@ namespace API
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = Configuration.GetSection("Token:RequireHttpsMetadata").Get<bool>();
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = Configuration.GetSection("Token:ValidateIssuer").Get<bool>(),
-                        ValidateAudience = Configuration.GetSection("Token:ValidateAudience").Get<bool>(),
-                        ValidateLifetime = Configuration.GetSection("Token:ValidateLifetime").Get<bool>(),
-                        ValidateIssuerSigningKey = Configuration.GetSection("Token:ValidateIssuerSigningKey").Get<bool>(),
-                        ValidIssuer = Configuration.GetSection("Token:Issuer").Get<string>(),
-                        ValidAudience = Configuration.GetSection("Token:Audience").Get<string>(),
-                        IssuerSigningKey = new SymmetricSecurityKey
-                        (
-                            Encoding.UTF8.GetBytes(Configuration.GetSection("Token:Key").Get<string>())
-                        ),
-                        RequireExpirationTime = Configuration.GetSection("Token:RequireExpirationTime").Get<bool>()
-                    };
+                    options.TokenValidationParameters = TokenManager.CreateTokenValidationParameters(Configuration);
                 });
 
             //MultiPartBodyLength

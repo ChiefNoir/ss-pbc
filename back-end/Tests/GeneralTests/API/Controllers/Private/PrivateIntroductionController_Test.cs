@@ -200,11 +200,10 @@ namespace GeneralTests.API.Controllers.Private
                     var confing = Storage.InitConfiguration();
                     var fileRep = new FileRepository(confing);
                     var introductionRep = new IntroductionRepository(context);
-                    var logRep = new LogRepository(confing);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
                     var apiPublic = new PublicIntroductionController(introductionRep, sup);
@@ -264,11 +263,10 @@ namespace GeneralTests.API.Controllers.Private
                     var confing = Storage.InitConfiguration();
                     var fileRep = new FileRepository(confing);
                     var introductionRep = new IntroductionRepository(context);
-                    var logRep = new LogRepository(confing);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor( tokenManager);
 
                     var api = new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
                     var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
@@ -317,11 +315,10 @@ namespace GeneralTests.API.Controllers.Private
                     var confing = Storage.InitConfiguration();
                     var fileRep = new FileRepository(confing);
                     var introductionRep = new IntroductionRepository(context);
-                    var logRep = new LogRepository(confing);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
 

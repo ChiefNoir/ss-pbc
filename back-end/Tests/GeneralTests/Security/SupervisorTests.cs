@@ -17,7 +17,6 @@ namespace GeneralTests.Security
     public class SupervisorTests
     {
         private readonly ISupervisor _supervisor;
-        private readonly Mock<ILogRepository> _log = new Mock<ILogRepository>();
         private readonly Mock<ITokenManager> _tokenMock = new Mock<ITokenManager>();
 
         public SupervisorTests()
@@ -33,7 +32,7 @@ namespace GeneralTests.Security
             _tokenMock.Setup(x => x.ValidateToken("SecurityTokenException")).Returns(() => throw new SecurityTokenException());
             _tokenMock.Setup(x => x.ValidateToken("IPrincipal-null")).Returns<IPrincipal>(null);
 
-            _supervisor = new Supervisor(_log.Object, _tokenMock.Object);
+            _supervisor = new Supervisor(_tokenMock.Object);
         }
 
 

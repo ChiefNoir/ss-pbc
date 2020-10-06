@@ -21,11 +21,10 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var logRep = new LogRepository(confing);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PrivateInformationalController(sup, tokenManager);
                     var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
@@ -78,11 +77,10 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var logRep = new LogRepository(confing);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PrivateInformationalController(sup, tokenManager);
                     var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);

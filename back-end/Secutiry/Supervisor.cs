@@ -15,12 +15,10 @@ namespace Security
 {
     public class Supervisor : ISupervisor
     {
-        private readonly ILogRepository _logRepository;
         private readonly ITokenManager _tokenManager;
 
-        public Supervisor(ILogRepository logRepository, ITokenManager tokenManager)
+        public Supervisor(ITokenManager tokenManager)
         {
-            _logRepository = logRepository;
             _tokenManager = tokenManager;
         }
 
@@ -36,8 +34,6 @@ namespace Security
             }
             catch (Exception ee)
             {
-                _logRepository.LogError(ee);
-
                 result.IsSucceed = false;
                 result.Error = new Incident
                 {
@@ -61,8 +57,6 @@ namespace Security
             }
             catch (Exception ee)
             {
-                _logRepository.LogError(ee);
-
                 result.IsSucceed = false;
                 result.Error = new Incident
                 {
@@ -84,8 +78,6 @@ namespace Security
             }
             catch (Exception ee)
             {
-                _logRepository.LogError(ee);
-
                 return new ExecutionResult<T>
                 {
                     IsSucceed = false,
@@ -108,8 +100,6 @@ namespace Security
             }
             catch (Exception ee)
             {
-                _logRepository.LogError(ee);
-
                 return new ExecutionResult<T>
                 {
                     IsSucceed = false,

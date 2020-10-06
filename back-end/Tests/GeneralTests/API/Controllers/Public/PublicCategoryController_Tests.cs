@@ -113,9 +113,8 @@ namespace GeneralTests.API.Controllers.Public
                 try
                 {
                     var categoryRep = new CategoryRepository(context);
-                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PublicCategoryController(categoryRep, sup);
 
@@ -150,9 +149,8 @@ namespace GeneralTests.API.Controllers.Public
                 try
                 {
                     var categoryRep = new CategoryRepository(context);
-                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PublicCategoryController(categoryRep, sup);
 
@@ -191,9 +189,8 @@ namespace GeneralTests.API.Controllers.Public
                 try
                 {
                     var categoryRep = new CategoryRepository(context);
-                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PublicCategoryController(categoryRep, sup);
 
@@ -226,9 +223,8 @@ namespace GeneralTests.API.Controllers.Public
                 try
                 {
                     var categoryRep = new CategoryRepository(context);
-                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PublicCategoryController(categoryRep, sup);
 

@@ -67,9 +67,8 @@ namespace GeneralTests.API.Controllers.Gateway
                     var config = Storage.InitConfiguration();
                     var hashManager = new HashManager();
                     var accRep = new AccountRepository(context, config, hashManager);
-                    var log = new LogRepository(config);
                     var tokenManager = new TokenManager(config);
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
 
                     var api = new AuthenticationController(config, accRep, sup, tokenManager);
@@ -107,9 +106,8 @@ namespace GeneralTests.API.Controllers.Gateway
                     var config = Storage.InitConfiguration();
                     var hashManager = new HashManager();
                     var accRep = new AccountRepository(context, config, hashManager);
-                    var log = new LogRepository(config);
                     var tokenManager = new TokenManager(config);
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
 
                     var api = new AuthenticationController(config, accRep, sup, tokenManager);
@@ -143,9 +141,8 @@ namespace GeneralTests.API.Controllers.Gateway
                     var config = Storage.InitConfiguration();
                     var hashManager = new HashManager();
                     var accRep = new AccountRepository(context, config, hashManager);
-                    var log = new LogRepository(config);
                     var tokenManager = new TokenManager(config);
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
 
                     var api = new AuthenticationController(config, accRep, sup, tokenManager);
@@ -180,9 +177,8 @@ namespace GeneralTests.API.Controllers.Gateway
                     var config = Storage.InitConfiguration();
                     var hashManager = new HashManager();
                     var accRep = new AccountRepository(context, config, hashManager);
-                    var log = new LogRepository(config);
                     var tokenManager = new TokenManager(config);
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
 
                     var api = new AuthenticationController(config, accRep, sup, tokenManager);
@@ -226,9 +222,8 @@ namespace GeneralTests.API.Controllers.Gateway
                     var config = Storage.InitConfiguration();
                     var hashManager = new HashManager();
                     var accRep = new AccountRepository(context, config, hashManager);
-                    var log = new LogRepository(config);
                     var tokenManager = new TokenManager(config);
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
 
                     var api = new AuthenticationController(config, accRep, sup, tokenManager);
@@ -273,9 +268,8 @@ namespace GeneralTests.API.Controllers.Gateway
                     var config = Storage.InitConfiguration();
                     var hashManager = new HashManager();
                     var accRep = new AccountRepository(context, config, hashManager);
-                    var log = new LogRepository(config);
                     var tokenManager = new TokenManager(config);
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
 
                     var api = new AuthenticationController(config, accRep, sup, tokenManager);

@@ -14,9 +14,8 @@ namespace GeneralTests.API.Controllers.Public
         internal void Ping_Test()
         {
             var config = Storage.InitConfiguration();
-            var log = new LogRepository(config);
             var tokenManager = new TokenManager(config);
-            var sup = new Supervisor(log, tokenManager);
+            var sup = new Supervisor(tokenManager);
             var api = new PublicPingController(sup);
 
             var response = (api.Ping() as JsonResult).Value as ExecutionResult<string>;

@@ -248,9 +248,8 @@ namespace GeneralTests.API.Controllers.Public
                 {
                     var categoryRep = new CategoryRepository(context);
                     var projectRep = new ProjectRepository(context, categoryRep);
-                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PublicProjectController(projectRep, sup);
 
@@ -284,9 +283,8 @@ namespace GeneralTests.API.Controllers.Public
                 {
                     var categoryRep = new CategoryRepository(context);
                     var projectRep = new ProjectRepository(context, categoryRep);
-                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PublicProjectController(projectRep, sup);
 
@@ -318,9 +316,8 @@ namespace GeneralTests.API.Controllers.Public
 
                     var categoryRep = new CategoryRepository(context);
                     var projectRep = new ProjectRepository(context, categoryRep);
-                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PublicProjectController(projectRep, sup);
 
@@ -364,9 +361,8 @@ namespace GeneralTests.API.Controllers.Public
                 {
                     var categoryRep = new CategoryRepository(context);
                     var projectRep = new ProjectRepository(context, categoryRep);
-                    var logRep = new LogRepository(Storage.InitConfiguration());
                     var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PublicProjectController(projectRep, sup);
 

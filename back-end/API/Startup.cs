@@ -41,7 +41,6 @@ namespace API
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IHashManager, HashManager>();
             services.AddTransient<ISupervisor, Supervisor>();
-            services.AddTransient<ILogRepository, LogRepository>();
             services.AddTransient<ITokenManager, TokenManager>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

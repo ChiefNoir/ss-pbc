@@ -463,10 +463,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -515,10 +514,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -553,10 +551,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -599,10 +596,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -641,10 +637,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -694,10 +689,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -729,10 +723,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -776,10 +769,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -827,10 +819,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -872,10 +863,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -919,10 +909,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -965,10 +954,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -1004,10 +992,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -1055,10 +1042,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor( tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -1106,10 +1092,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -1146,10 +1131,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -1206,10 +1190,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 
@@ -1252,10 +1235,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var confing = Storage.InitConfiguration();
-                    var log = new LogRepository(confing);
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
-                    var sup = new Supervisor(log, tokenManager);
+                    var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
 

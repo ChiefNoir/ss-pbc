@@ -53,10 +53,10 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
+                    var config = Storage.InitConfiguration();
                     var introductionRep = new IntroductionRepository(context);
-                    var logRep = new LogRepository(Storage.InitConfiguration());
-                    var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(logRep, tokenManager);
+                    var tokenManager = new TokenManager(config);
+                    var sup = new Supervisor(tokenManager);
 
                     var api = new PublicIntroductionController(introductionRep, sup);
 

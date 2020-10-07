@@ -382,7 +382,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);
@@ -446,7 +446,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);
@@ -498,7 +498,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);
@@ -562,7 +562,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);
@@ -615,7 +615,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);
@@ -676,7 +676,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
                     var hashManager = new HashManager();
                     var accountRep = new AccountRepository(context, confing, hashManager);

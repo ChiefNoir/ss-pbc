@@ -48,7 +48,7 @@ namespace GeneralTests.API.Controllers.Public
 
         private static PublicIntroductionController CreatePublicIntroductionController(DataContext context)
         {
-            var config = Storage.InitConfiguration();
+            var config = Storage.CreateConfiguration();
             var introductionRep = new IntroductionRepository(context);
             var tokenManager = new TokenManager(config);
             var sup = new Supervisor(tokenManager);
@@ -70,7 +70,7 @@ namespace GeneralTests.API.Controllers.Public
                         await api.GetIntroduction() as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
-                    GenericChecks.CheckValid(response);
+                    GenericChecks.CheckSucceed(response);
                     Compare(expected, response.Data);
                 }
                 catch (Exception)

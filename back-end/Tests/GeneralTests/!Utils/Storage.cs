@@ -12,7 +12,7 @@ namespace GeneralTests.Utils
         public static DataContext CreateContext()
         {
             var builder = new DbContextOptionsBuilder<DataContext>();
-            builder.UseNpgsql(InitConfiguration().GetConnectionString("Test"));
+            builder.UseNpgsql(CreateConfiguration().GetConnectionString("Test"));
 
             var options = builder.Options;
             var context = new DataContext(options);
@@ -36,7 +36,7 @@ namespace GeneralTests.Utils
             if (string.IsNullOrEmpty(sql))
                 return;
 
-            using (var connection = new Npgsql.NpgsqlConnection(InitConfiguration().GetConnectionString("Test")))
+            using (var connection = new Npgsql.NpgsqlConnection(CreateConfiguration().GetConnectionString("Test")))
             {
                 try
                 {
@@ -58,7 +58,7 @@ namespace GeneralTests.Utils
         }
 
 
-        public static IConfiguration InitConfiguration()
+        public static IConfiguration CreateConfiguration()
         {
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.test.json")

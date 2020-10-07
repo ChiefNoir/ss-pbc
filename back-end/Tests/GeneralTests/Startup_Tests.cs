@@ -21,7 +21,7 @@ namespace GeneralTests
                 {
                     webHost.UseTestServer();
 
-                    webHost.UseConfiguration(Storage.InitConfiguration());
+                    webHost.UseConfiguration(Storage.CreateConfiguration());
                     webHost.UseStartup<Startup>();
                 });
 

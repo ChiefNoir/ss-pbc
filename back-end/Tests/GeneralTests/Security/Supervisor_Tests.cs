@@ -43,7 +43,7 @@ namespace GeneralTests.Security
         {
             var result = _supervisor.SafeExecute(() => { return value; });
             
-            GenericChecks.CheckValid(result);
+            GenericChecks.CheckSucceed(result);
             Assert.Equal(value, result.Data);
         }
 
@@ -52,14 +52,14 @@ namespace GeneralTests.Security
         {
             var resultString = _supervisor.SafeExecute<string>(() => throw new Exception("one"));
             
-            GenericChecks.CheckInvalid(resultString);
+            GenericChecks.CheckFail(resultString);
             Assert.Equal("one", resultString.Error.Message);
             Assert.Null(resultString.Error.Detail);
 
 
             var resultInt = _supervisor.SafeExecute<int>(() => throw new Exception("one", new Exception("two")));
 
-            GenericChecks.CheckInvalid(resultInt);
+            GenericChecks.CheckFail(resultInt);
             Assert.Equal("one", resultInt.Error.Message);
             Assert.Equal("two", resultInt.Error.Detail);
         }
@@ -71,7 +71,7 @@ namespace GeneralTests.Security
         {
             var result = await _supervisor.SafeExecuteAsync(() => Task.FromResult(value));
 
-            GenericChecks.CheckValid(result);
+            GenericChecks.CheckSucceed(result);
             Assert.Equal(value, result.Data);
         }
 
@@ -80,12 +80,12 @@ namespace GeneralTests.Security
         {
             var resultString = await _supervisor.SafeExecuteAsync<string>(() => throw new Exception("One"));
 
-            GenericChecks.CheckInvalid(resultString);
+            GenericChecks.CheckFail(resultString);
             Assert.Equal("One", resultString.Error.Message);
             Assert.Null(resultString.Error.Detail);
 
             var result = await _supervisor.SafeExecuteAsync<int>(() => throw new Exception("Main", new Exception("Inner")));
-            GenericChecks.CheckInvalid(result);
+            GenericChecks.CheckFail(result);
 
             Assert.Equal("Main", result.Error.Message);
             Assert.Equal("Inner", result.Error.Detail);
@@ -99,7 +99,7 @@ namespace GeneralTests.Security
         {
             var result = _supervisor.SafeExecute("valid", new[] { "valid" }, () => { return value; });
 
-            GenericChecks.CheckValid(result);
+            GenericChecks.CheckSucceed(result);
             Assert.Equal(value, result.Data);
         }
 
@@ -112,7 +112,7 @@ namespace GeneralTests.Security
         {
             var resultString = _supervisor.SafeExecute(token, new[] { "invalid" }, () => "text");
 
-            GenericChecks.CheckInvalid(resultString);
+            GenericChecks.CheckFail(resultString);
         }
 
 
@@ -123,7 +123,7 @@ namespace GeneralTests.Security
         {
             var result = await _supervisor.SafeExecuteAsync("valid", new[] { "valid" }, () => Task.FromResult(value));
 
-            GenericChecks.CheckValid(result);
+            GenericChecks.CheckSucceed(result);
             Assert.Equal(value, result.Data);
         }
 
@@ -134,7 +134,7 @@ namespace GeneralTests.Security
         {
             var result = await _supervisor.SafeExecuteAsync("valid", Array.Empty<string>(), () => Task.FromResult(value));
 
-            GenericChecks.CheckValid(result);
+            GenericChecks.CheckSucceed(result);
             Assert.Equal(value, result.Data);
         }
 
@@ -148,7 +148,7 @@ namespace GeneralTests.Security
         {
             var resultString = await _supervisor.SafeExecuteAsync(token, new[] { "invalid" }, () => Task.FromResult("text"));
 
-            GenericChecks.CheckInvalid(resultString);
+            GenericChecks.CheckFail(resultString);
         }
 
         [Fact]
@@ -156,7 +156,7 @@ namespace GeneralTests.Security
         {
             var resultString = await _supervisor.SafeExecuteAsync("valid", new[] { "role" }, () => Task.FromResult("text"));
 
-            GenericChecks.CheckInvalid(resultString);
+            GenericChecks.CheckFail(resultString);
         }
 
     }

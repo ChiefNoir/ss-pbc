@@ -197,7 +197,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var fileRep = new FileRepository(confing);
                     var introductionRep = new IntroductionRepository(context);
                     var hashManager = new HashManager();
@@ -260,7 +260,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var fileRep = new FileRepository(confing);
                     var introductionRep = new IntroductionRepository(context);
                     var hashManager = new HashManager();
@@ -312,7 +312,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var fileRep = new FileRepository(confing);
                     var introductionRep = new IntroductionRepository(context);
                     var hashManager = new HashManager();

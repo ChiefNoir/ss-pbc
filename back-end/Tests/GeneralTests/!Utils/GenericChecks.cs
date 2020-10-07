@@ -7,14 +7,14 @@ namespace GeneralTests.Utils
 {
     internal static class GenericChecks
     {
-        public static void CheckValid<T>(ExecutionResult<T> response)
+        public static void CheckSucceed<T>(ExecutionResult<T> response)
         {
             Assert.NotEqual(default, response.Data);
             Assert.True(response.IsSucceed);
             Assert.Null(response.Error);
         }
 
-        public static void CheckInvalid<T>(ExecutionResult<T> response)
+        public static void CheckFail<T>(ExecutionResult<T> response)
         {
             if (typeof(T).IsArray)
             {

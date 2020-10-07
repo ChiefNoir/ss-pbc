@@ -97,7 +97,7 @@ namespace GeneralTests.API.Controllers.Gateway
 
         private static AuthenticationController CreateAuthenticationController(DataContext context)
         {
-            var config = Storage.InitConfiguration();
+            var config = Storage.CreateConfiguration();
             var hashManager = new HashManager();
             var accRep = new AccountRepository(context, config, hashManager);
             var tokenManager = new TokenManager(config);
@@ -122,7 +122,7 @@ namespace GeneralTests.API.Controllers.Gateway
                         await api.LoginAsync(new Credentials { Login = login, Password = password }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    GenericChecks.CheckValid(response);
+                    GenericChecks.CheckSucceed(response);
                     
                     Assert.NotNull(response.Data.Account);
                     Compare(DefaultAccount, response.Data.Account);
@@ -153,7 +153,7 @@ namespace GeneralTests.API.Controllers.Gateway
                         await api.LoginAsync(credentials) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    GenericChecks.CheckInvalid(response);
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -181,14 +181,14 @@ namespace GeneralTests.API.Controllers.Gateway
                         await api.LoginAsync(new Credentials { Login = login, Password = password }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    GenericChecks.CheckValid(authResponse);
+                    GenericChecks.CheckSucceed(authResponse);
                    
                     var response =
                     (
                         await api.ValidateAsync(authResponse.Data.Token) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    GenericChecks.CheckValid(response);
+                    GenericChecks.CheckSucceed(response);
                     Compare(authResponse.Data.Account, response.Data.Account);
                 }
                 catch (Exception)
@@ -217,7 +217,7 @@ namespace GeneralTests.API.Controllers.Gateway
                         await api.LoginAsync(new Credentials { Login = login, Password = password }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    GenericChecks.CheckValid(authResponse);
+                    GenericChecks.CheckSucceed(authResponse);
 
                     //delete accounts from db
                     Storage.RunSql("delete from account");
@@ -227,7 +227,7 @@ namespace GeneralTests.API.Controllers.Gateway
                         await api.ValidateAsync(authResponse.Data.Token) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    GenericChecks.CheckInvalid(response);
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -256,7 +256,7 @@ namespace GeneralTests.API.Controllers.Gateway
                        await api.ValidateAsync(token) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    GenericChecks.CheckInvalid(response);
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {

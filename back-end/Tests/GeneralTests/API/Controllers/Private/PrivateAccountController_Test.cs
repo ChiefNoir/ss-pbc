@@ -462,7 +462,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -513,7 +513,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -550,7 +550,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -595,7 +595,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -636,7 +636,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -688,7 +688,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -722,7 +722,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -768,7 +768,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -818,7 +818,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -862,7 +862,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -908,7 +908,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -953,7 +953,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -991,7 +991,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -1041,7 +1041,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor( tokenManager);
@@ -1091,7 +1091,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -1130,7 +1130,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -1189,7 +1189,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);
@@ -1234,7 +1234,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.InitConfiguration();
+                    var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
                     var hasManager = new HashManager();
                     var sup = new Supervisor(tokenManager);

@@ -11,7 +11,7 @@ namespace GeneralTests.API.Controllers.Public
     {
         private static PublicPingController CreatePublicPingController()
         {
-            var config = Storage.InitConfiguration();
+            var config = Storage.CreateConfiguration();
             var tokenManager = new TokenManager(config);
             var sup = new Supervisor(tokenManager);
             return new PublicPingController(sup);
@@ -27,7 +27,7 @@ namespace GeneralTests.API.Controllers.Public
                 api.Ping() as JsonResult
             ).Value as ExecutionResult<string>;
 
-            GenericChecks.CheckValid(response);
+            GenericChecks.CheckSucceed(response);
 
             Assert.Equal("pong", response.Data);
         }

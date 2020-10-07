@@ -107,7 +107,7 @@ namespace GeneralTests.API.Controllers.Public
         private static PublicCategoryController CreatePublicCategoryController(DataContext context)
         {
             var categoryRep = new CategoryRepository(context);
-            var tokenManager = new TokenManager(Storage.InitConfiguration());
+            var tokenManager = new TokenManager(Storage.CreateConfiguration());
             var sup = new Supervisor(tokenManager);
 
             return new PublicCategoryController(categoryRep, sup);
@@ -127,7 +127,7 @@ namespace GeneralTests.API.Controllers.Public
                         await api.GetCategories() as JsonResult
                     ).Value as ExecutionResult<Category[]>;
 
-                    GenericChecks.CheckValid(response);
+                    GenericChecks.CheckSucceed(response);
 
                     foreach (var expected in expectedCategories)
                     {
@@ -163,7 +163,7 @@ namespace GeneralTests.API.Controllers.Public
                             await api.GetCategory(expected.Id.Value) as JsonResult
                         ).Value as ExecutionResult<Category>;
                         
-                        GenericChecks.CheckValid(response);
+                        GenericChecks.CheckSucceed(response);
                         Compare(expected, response.Data);
                     }
                     
@@ -195,7 +195,7 @@ namespace GeneralTests.API.Controllers.Public
                         await api.GetCategory(id) as JsonResult
                     ).Value as ExecutionResult<Category>;
 
-                    GenericChecks.CheckInvalid(response);
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -225,7 +225,7 @@ namespace GeneralTests.API.Controllers.Public
                         await api.GetEverythingCategory() as JsonResult
                     ).Value as ExecutionResult<Category>;
 
-                    GenericChecks.CheckValid(response);
+                    GenericChecks.CheckSucceed(response);
                     Compare(expected, response.Data);
                 }
                 catch (Exception)

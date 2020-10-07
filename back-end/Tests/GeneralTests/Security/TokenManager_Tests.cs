@@ -15,7 +15,7 @@ namespace GeneralTests.Security
 
         public TokenManager_Tests()
         {
-            _tokenManager = new TokenManager(Storage.InitConfiguration());
+            _tokenManager = new TokenManager(Storage.CreateConfiguration());
         }
 
         [Theory]

@@ -235,7 +235,7 @@ namespace GeneralTests.API.Controllers.Public
         {
             var categoryRep = new CategoryRepository(context);
             var projectRep = new ProjectRepository(context, categoryRep);
-            var tokenManager = new TokenManager(Storage.InitConfiguration());
+            var tokenManager = new TokenManager(Storage.CreateConfiguration());
             var sup = new Supervisor(tokenManager);
 
             return new PublicProjectController(projectRep, sup);
@@ -257,7 +257,7 @@ namespace GeneralTests.API.Controllers.Public
                         await api.GetProject(expected.Code) as JsonResult
                     ).Value as ExecutionResult<Project>;
 
-                    GenericChecks.CheckValid(response);
+                    GenericChecks.CheckSucceed(response);
                     Compare(expected, response.Data);
                 }
                 catch (Exception)
@@ -288,7 +288,7 @@ namespace GeneralTests.API.Controllers.Public
                         await api.GetProject(code) as JsonResult
                     ).Value as ExecutionResult<Project>;
 
-                    GenericChecks.CheckInvalid(response);
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -319,7 +319,7 @@ namespace GeneralTests.API.Controllers.Public
                         await api.GetProjectsPreview(paging, projectSearch) as JsonResult
                     ).Value as ExecutionResult<ProjectPreview[]>;
 
-                    GenericChecks.CheckValid(response);
+                    GenericChecks.CheckSucceed(response);
                     Assert.Equal(expectedProjects.Length, response.Data.Length);
 
                     foreach (var item in expectedProjects)

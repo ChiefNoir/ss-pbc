@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using Abstractions.ISecurity;
+using GeneralTests.Utils;
 using Microsoft.Extensions.Configuration;
 using Security;
 using Xunit;
 
 namespace GeneralTests.Security
 {
-    public class TokenManagerTests
+    public class TokenManager_Tests
     {
         private readonly ITokenManager _tokenManager;
 
-        public TokenManagerTests()
+        public TokenManager_Tests()
         {
-            _tokenManager = new TokenManager(CreateConfiguration());
+            _tokenManager = new TokenManager(Storage.InitConfiguration());
         }
 
         [Theory]
@@ -57,29 +58,5 @@ namespace GeneralTests.Security
             }
         }
 
-
-
-        private static IConfigurationRoot CreateConfiguration()
-        {
-            var myConfiguration = new Dictionary<string, string>
-            {
-                {"Token:Audience", "AudienceName"},
-                {"Token:Issuer", "IssuerName"},
-                {"Token:Key", "1234567890123456"},
-                {"Token:LifeTime", "30"},
-                {"Token:RequireExpirationTime", "true"},
-                {"Token:RequireHttpsMetadata", "false"},
-                {"Token:Scheme", "SchemeName"},
-                {"Token:SecurityAlgorithms", "HS256"},
-                {"Token:ValidateAudience", "true"},
-                {"Token:ValidateIssuer", "true"},
-                {"Token:ValidateIssuerSigningKey", "true"},
-                {"Token:ValidateLifetime", "true"}
-            };
-
-            return new ConfigurationBuilder()
-                .AddInMemoryCollection(myConfiguration)
-                .Build();
-        }
     }
 }

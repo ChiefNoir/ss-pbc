@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace API
 {
+    [ExcludeFromCodeCoverage]
     public static class Program
     {
         public static void Main(string[] args)

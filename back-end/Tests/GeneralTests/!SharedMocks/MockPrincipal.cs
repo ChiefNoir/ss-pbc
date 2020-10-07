@@ -7,8 +7,6 @@ namespace GeneralTests.SharedMocks
     public class MockPrincipal : IPrincipal
     {
         public IIdentity Identity { get; }
-        private readonly string _role;
-
 
         public MockPrincipal(IIdentity identity)
         {

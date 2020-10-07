@@ -2,6 +2,7 @@
 using Abstractions.Supervision;
 using API.Controllers.Gateway;
 using API.Model;
+using GeneralTests._Utils;
 using GeneralTests.Utils;
 using Infrastructure;
 using Infrastructure.Repository;
@@ -122,7 +123,8 @@ namespace GeneralTests.API.Controllers.Gateway
                         await api.LoginAsync(new Credentials { Login = login, Password = password }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    CheckValid(response);
+                    GenericChecks.CheckValid(response);
+                    
                     Assert.NotNull(response.Data.Account);
                     Compare(DefaultAccount, response.Data.Account);
                 }
@@ -152,7 +154,7 @@ namespace GeneralTests.API.Controllers.Gateway
                         await api.LoginAsync(credentials) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    CheckInvalid(response);
+                    GenericChecks.CheckInvalid(response);
                 }
                 catch (Exception)
                 {
@@ -179,15 +181,15 @@ namespace GeneralTests.API.Controllers.Gateway
                     (
                         await api.LoginAsync(new Credentials { Login = login, Password = password }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
-                    
-                    CheckValid(authResponse);
+
+                    GenericChecks.CheckValid(authResponse);
                    
                     var response =
                     (
                         await api.ValidateAsync(authResponse.Data.Token) as JsonResult
                     ).Value as ExecutionResult<Identity>;
-                    
-                    CheckValid(response);
+
+                    GenericChecks.CheckValid(response);
                     Compare(authResponse.Data.Account, response.Data.Account);
                 }
                 catch (Exception)
@@ -215,8 +217,8 @@ namespace GeneralTests.API.Controllers.Gateway
                     (
                         await api.LoginAsync(new Credentials { Login = login, Password = password }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
-                    
-                    CheckValid(authResponse);
+
+                    GenericChecks.CheckValid(authResponse);
 
                     //delete accounts from db
                     Storage.RunSql("delete from account");
@@ -225,8 +227,8 @@ namespace GeneralTests.API.Controllers.Gateway
                     (
                         await api.ValidateAsync(authResponse.Data.Token) as JsonResult
                     ).Value as ExecutionResult<Identity>;
-                    
-                    CheckInvalid(response);
+
+                    GenericChecks.CheckInvalid(response);
                 }
                 catch (Exception)
                 {
@@ -255,7 +257,7 @@ namespace GeneralTests.API.Controllers.Gateway
                        await api.ValidateAsync(token) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    CheckInvalid(response);
+                    GenericChecks.CheckInvalid(response);
                 }
                 catch (Exception)
                 {
@@ -273,23 +275,10 @@ namespace GeneralTests.API.Controllers.Gateway
         {
             Assert.Equal(expected.Login, actual.Login);
             Assert.Equal(expected.Id, actual.Id);
-            Assert.Null(actual.Password);
+            Assert.Null(actual.Password); // Password from service will be always null
             Assert.Equal(expected.Role, actual.Role);
             Assert.Equal(expected.Version, actual.Version);
         }
 
-        private static void CheckValid<T>(ExecutionResult<T> result)
-        {
-            Assert.NotNull(result.Data);
-            Assert.True(result.IsSucceed);
-            Assert.Null(result.Error);
-        }
-
-        private static void CheckInvalid<T>(ExecutionResult<T> result)
-        {
-            Assert.Null(result.Data);
-            Assert.False(result.IsSucceed);
-            Assert.NotNull(result.Error);
-        }
     }
 }

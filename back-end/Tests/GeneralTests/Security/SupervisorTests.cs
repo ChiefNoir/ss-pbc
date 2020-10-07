@@ -1,6 +1,6 @@
-﻿using Abstractions.IRepository;
-using Abstractions.ISecurity;
+﻿using Abstractions.ISecurity;
 using Abstractions.Supervision;
+using GeneralTests.Utils;
 using GeneralTests.SharedMocks;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
@@ -37,123 +37,126 @@ namespace GeneralTests.Security
 
 
         [Theory]
-        [InlineData(12)]
+        [InlineData(-1)]
+        [InlineData(10)]
         public void SafeExecute_Valid(int value)
         {
-            var resultString = _supervisor.SafeExecute(() => value);
-
-            Assert.Equal(value, resultString.Data);
-            Assert.True(resultString.IsSucceed);
-            Assert.Null(resultString.Error);
+            var result = _supervisor.SafeExecute(() => { return value; });
+            
+            GenericChecks.CheckValid(result);
+            Assert.Equal(value, result.Data);
         }
 
         [Fact]
         public void SafeExecute_Invalid()
         {
             var resultString = _supervisor.SafeExecute<string>(() => throw new Exception("one"));
-            Assert.Null(resultString.Data);
-            Assert.False(resultString.IsSucceed);
-            Assert.NotNull(resultString.Error);
-
+            
+            GenericChecks.CheckInvalid(resultString);
             Assert.Equal("one", resultString.Error.Message);
             Assert.Null(resultString.Error.Detail);
 
 
             var resultInt = _supervisor.SafeExecute<int>(() => throw new Exception("one", new Exception("two")));
-            Assert.Equal(default, resultInt.Data);
-            Assert.False(resultInt.IsSucceed);
-            Assert.NotNull(resultInt.Error);
 
+            GenericChecks.CheckInvalid(resultInt);
             Assert.Equal("one", resultInt.Error.Message);
             Assert.Equal("two", resultInt.Error.Detail);
         }
 
-
-
-        [Fact]
-        public async void SafeExecuteAsync_Valid()
+        [Theory]
+        [InlineData("text")]
+        [InlineData("")]
+        public async void SafeExecuteAsync_Valid(string value)
         {
-            var resultString = await _supervisor.SafeExecuteAsync(() => Task.FromResult("text"));
+            var result = await _supervisor.SafeExecuteAsync(() => Task.FromResult(value));
 
-            Assert.NotNull(resultString.Data);
-            Assert.Equal("text", resultString.Data);
-            Assert.True(resultString.IsSucceed);
-            Assert.Null(resultString.Error);
+            GenericChecks.CheckValid(result);
+            Assert.Equal(value, result.Data);
         }
 
         [Fact]
         public async void SafeExecuteAsync_Invalid()
         {
             var resultString = await _supervisor.SafeExecuteAsync<string>(() => throw new Exception("One"));
-            Assert.Null(resultString.Data);
-            Assert.False(resultString.IsSucceed);
-            Assert.NotNull(resultString.Error);
 
+            GenericChecks.CheckInvalid(resultString);
             Assert.Equal("One", resultString.Error.Message);
             Assert.Null(resultString.Error.Detail);
 
             var result = await _supervisor.SafeExecuteAsync<int>(() => throw new Exception("Main", new Exception("Inner")));
-            Assert.Equal(default, result.Data);
-            Assert.False(result.IsSucceed);
-            Assert.NotNull(result.Error);
+            GenericChecks.CheckInvalid(result);
 
             Assert.Equal("Main", result.Error.Message);
             Assert.Equal("Inner", result.Error.Detail);
         }
 
 
-
-
-        [Fact]
-        public void SafeExecuteWithToken_Valid()
+        [Theory]
+        [InlineData("text")]
+        [InlineData("")]
+        public void SafeExecuteWithToken_Valid(string value)
         {
-            var resultString = _supervisor.SafeExecute("valid", new[] { "valid" }, () => "text");
+            var result = _supervisor.SafeExecute("valid", new[] { "valid" }, () => { return value; });
 
-            Assert.NotNull(resultString.Data);
-            Assert.Equal("text", resultString.Data);
-            Assert.True(resultString.IsSucceed);
-            Assert.Null(resultString.Error);
+            GenericChecks.CheckValid(result);
+            Assert.Equal(value, result.Data);
         }
 
         [Theory]
         [InlineData("")]
         [InlineData("invalid")]
-        [InlineData(null)]
         [InlineData("SecurityTokenException")]
         [InlineData("IPrincipal-null")]
         public void SafeExecuteWithToken_InValid(string token)
         {
             var resultString = _supervisor.SafeExecute(token, new[] { "invalid" }, () => "text");
-            Assert.Null(resultString.Data);
-            Assert.False(resultString.IsSucceed);
-            Assert.NotNull(resultString.Error);
+
+            GenericChecks.CheckInvalid(resultString);
         }
 
 
-        [Fact]
-        public async void SafeExecuteAsyncWithToken_Valid()
+        [Theory]
+        [InlineData("text")]
+        [InlineData("")]
+        public async void SafeExecuteAsyncWithToken_Valid(string value)
         {
-            var resultString = await _supervisor.SafeExecuteAsync("valid", new[] { "valid" }, () => Task.FromResult("text"));
+            var result = await _supervisor.SafeExecuteAsync("valid", new[] { "valid" }, () => Task.FromResult(value));
 
-            Assert.NotNull(resultString.Data);
-            Assert.Equal("text", resultString.Data);
-            Assert.True(resultString.IsSucceed);
-            Assert.Null(resultString.Error);
+            GenericChecks.CheckValid(result);
+            Assert.Equal(value, result.Data);
         }
+
+        [Theory]
+        [InlineData("text")]
+        [InlineData("")]
+        public async void SafeExecuteAsyncWithTokenEmptyRoles_Valid(string value)
+        {
+            var result = await _supervisor.SafeExecuteAsync("valid", Array.Empty<string>(), () => Task.FromResult(value));
+
+            GenericChecks.CheckValid(result);
+            Assert.Equal(value, result.Data);
+        }
+
 
         [Theory]
         [InlineData("")]
         [InlineData("invalid")]
-        [InlineData(null)]
         [InlineData("SecurityTokenException")]
         [InlineData("IPrincipal-null")]
         public async void SafeExecuteAsyncWithToken_InValid(string token)
         {
             var resultString = await _supervisor.SafeExecuteAsync(token, new[] { "invalid" }, () => Task.FromResult("text"));
 
-            Assert.Null(resultString.Data);
-            Assert.False(resultString.IsSucceed);
-            Assert.NotNull(resultString.Error);
+            GenericChecks.CheckInvalid(resultString);
+        }
+
+        [Fact]
+        public async void SafeExecuteAsyncWithTokenUnexpectedRole_InValid()
+        {
+            var resultString = await _supervisor.SafeExecuteAsync("valid", new[] { "role" }, () => Task.FromResult("text"));
+
+            GenericChecks.CheckInvalid(resultString);
         }
 
     }

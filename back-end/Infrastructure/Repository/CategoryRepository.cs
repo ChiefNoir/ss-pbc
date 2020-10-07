@@ -105,10 +105,17 @@ namespace Infrastructure.Repository
         private async Task<Category> FirstOrDefaultAsync(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)
         {
             var result = await _context.CategoriesWithTotalProjects
-               .AsNoTracking()
-               .Where(predicate)
-               .Select(x => DataConverter.ToCategory(x))
-               .FirstOrDefaultAsync();
+                                       .AsNoTracking()
+                                       .Where(predicate)
+                                       .Select(x => DataConverter.ToCategory(x))
+                                       .FirstOrDefaultAsync();
+            if (result == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CategoryDoesNotExist, "")
+                    );
+            }
 
             return result;
         }

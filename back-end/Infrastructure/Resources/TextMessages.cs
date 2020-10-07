@@ -34,7 +34,7 @@
         internal const string ThePropertyCantBeEmpty = "The {0} can't be empty";
 
         /// <summary> The category {0} does not exist </summary>
-        internal const string TheCategoryDoesNotExist = "Category {0} does not exist";
+        internal const string CategoryDoesNotExist = "Category {0} does not exist";
 
         /// <summary> {0} duplicate </summary>
         internal const string PropertyDuplicate = "{0} duplicate";

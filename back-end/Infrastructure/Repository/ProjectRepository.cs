@@ -240,7 +240,7 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.TheCategoryDoesNotExist, project.Category.Code)
+                        string.Format(Resources.TextMessages.CategoryDoesNotExist, project.Category.Code)
                     );
             }
 

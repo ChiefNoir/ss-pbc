@@ -1,7 +1,9 @@
 ﻿using Abstractions.Model;
 using Abstractions.Supervision;
 using API.Controllers.Public;
+using GeneralTests._Utils;
 using GeneralTests.Utils;
+using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Security;
@@ -15,7 +17,7 @@ namespace GeneralTests.API.Controllers.Public
 {
     public class PublicCategoryController_Tests
     {
-        class CreateDefaults : IEnumerable<object[]>
+        class DefaultCategories : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -81,7 +83,7 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
-        class CreateEverythinCategory : IEnumerable<object[]>
+        class DefaultEverythinCategory : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -103,27 +105,32 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
+        private static PublicCategoryController CreatePublicCategoryController(DataContext context)
+        {
+            var categoryRep = new CategoryRepository(context);
+            var tokenManager = new TokenManager(Storage.InitConfiguration());
+            var sup = new Supervisor(tokenManager);
+
+            return new PublicCategoryController(categoryRep, sup);
+        }
 
         [Theory]
-        [ClassData(typeof(CreateDefaults))]
-        internal async void GetCategories(Category[] expectedCategory)
+        [ClassData(typeof(DefaultCategories))]
+        internal async void GetCategories(Category[] expectedCategories)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var categoryRep = new CategoryRepository(context);
-                    var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(tokenManager);
+                    var api = CreatePublicCategoryController(context);
+                    var response =
+                    (
+                        await api.GetCategories() as JsonResult
+                    ).Value as ExecutionResult<Category[]>;
 
-                    var api = new PublicCategoryController(categoryRep, sup);
+                    GenericChecks.CheckValid(response);
 
-                    var response = (await api.GetCategories() as JsonResult).Value as ExecutionResult<Category[]>;
-                    Assert.True(response.IsSucceed);
-                    Assert.Null(response.Error);
-                    Assert.NotNull(response.Data);
-
-                    foreach (var expected in expectedCategory)
+                    foreach (var expected in expectedCategories)
                     {
                         var actual = response.Data.FirstOrDefault(x => x.Id == expected.Id);
                         Compare(expected, actual);
@@ -141,29 +148,23 @@ namespace GeneralTests.API.Controllers.Public
         }
 
         [Theory]
-        [ClassData(typeof(CreateDefaults))]
+        [ClassData(typeof(DefaultCategories))]
         internal async void GetCategory_Valid(Category[] expectedCategory)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var categoryRep = new CategoryRepository(context);
-                    var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PublicCategoryController(categoryRep, sup);
+                    var api = CreatePublicCategoryController(context);
 
                     foreach (var expected in expectedCategory)
                     {
                         var response = 
-                            (await api.GetCategory(expected.Id.Value) as JsonResult).Value as ExecutionResult<Category>;
-
-
-                        Assert.True(response.IsSucceed);
-                        Assert.Null(response.Error);
-                        Assert.NotNull(response.Data);
-
+                        (
+                            await api.GetCategory(expected.Id.Value) as JsonResult
+                        ).Value as ExecutionResult<Category>;
+                        
+                        GenericChecks.CheckValid(response);
                         Compare(expected, response.Data);
                     }
                     
@@ -182,24 +183,20 @@ namespace GeneralTests.API.Controllers.Public
         [Theory]
         [InlineData(10)]
         [InlineData(-10)]
-        internal async void GetCategory_InValid(int id)
+        internal async void GetCategory_Invalid(int id)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var categoryRep = new CategoryRepository(context);
-                    var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PublicCategoryController(categoryRep, sup);
+                    var api = CreatePublicCategoryController(context);
 
                     var response =
-                             (await api.GetCategory(id) as JsonResult).Value as ExecutionResult<Category>;
+                    (
+                        await api.GetCategory(id) as JsonResult
+                    ).Value as ExecutionResult<Category>;
 
-                    Assert.True(response.IsSucceed);
-                    Assert.Null(response.Error);
-                    Assert.Null(response.Data);
+                    GenericChecks.CheckInvalid(response);
                 }
                 catch (Exception)
                 {
@@ -215,26 +212,21 @@ namespace GeneralTests.API.Controllers.Public
 
 
         [Theory]
-        [ClassData(typeof(CreateEverythinCategory))]
-        internal async void GetEverythingCategory_Valid(Category expected)
+        [ClassData(typeof(DefaultEverythinCategory))]
+        internal async void GetEverythingCategory(Category expected)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var categoryRep = new CategoryRepository(context);
-                    var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PublicCategoryController(categoryRep, sup);
+                    var api = CreatePublicCategoryController(context);
 
                     var response =
-                             (await api.GetEverythingCategory() as JsonResult).Value as ExecutionResult<Category>;
+                    (
+                        await api.GetEverythingCategory() as JsonResult
+                    ).Value as ExecutionResult<Category>;
 
-                    Assert.True(response.IsSucceed);
-                    Assert.Null(response.Error);
-                    Assert.NotNull(response.Data);
-
+                    GenericChecks.CheckValid(response);
                     Compare(expected, response.Data);
                 }
                 catch (Exception)

@@ -14,12 +14,12 @@ using Xunit;
 
 namespace GeneralTests.Security
 {
-    public class SupervisorTests
+    public class Supervisor_Tests
     {
         private readonly ISupervisor _supervisor;
         private readonly Mock<ITokenManager> _tokenMock = new Mock<ITokenManager>();
 
-        public SupervisorTests()
+        public Supervisor_Tests()
         {
             _tokenMock.Setup(x => x.ValidateToken("valid")).Returns(new MockPrincipal(new ClaimsIdentity
                     (

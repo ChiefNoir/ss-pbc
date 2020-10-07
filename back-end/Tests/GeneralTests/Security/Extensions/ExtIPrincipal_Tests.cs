@@ -9,7 +9,7 @@ using Xunit;
 
 namespace GeneralTests.Security.Extensions
 {
-    public class ExtIPrincipalTests
+    public class ExtIPrincipal_Tests
     {
         private class ValidClaimsIdentity : IEnumerable<object[]>
         {

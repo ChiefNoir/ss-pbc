@@ -4,7 +4,7 @@ using Xunit;
 
 namespace GeneralTests.Security
 {
-    public class HashManagerTests
+    public class HashManager_Tests
     {
         [Theory]
         [InlineData("12")]

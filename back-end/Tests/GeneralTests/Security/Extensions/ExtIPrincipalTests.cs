@@ -13,6 +13,8 @@ namespace GeneralTests.Security.Extensions
     {
         private class ValidClaimsIdentity : IEnumerable<object[]>
         {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
             public IEnumerator<object[]> GetEnumerator()
             {
                 yield return new object[]
@@ -63,8 +65,6 @@ namespace GeneralTests.Security.Extensions
                     Array.Empty<string>()
                 };
             }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
         [Theory]

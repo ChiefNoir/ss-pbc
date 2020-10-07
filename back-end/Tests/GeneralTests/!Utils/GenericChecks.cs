@@ -5,18 +5,18 @@ namespace GeneralTests._Utils
 {
     internal static class GenericChecks
     {
-        public static void CheckValid<T>(ExecutionResult<T> result)
+        public static void CheckValid<T>(ExecutionResult<T> response)
         {
-            Assert.NotEqual(default, result.Data);
-            Assert.True(result.IsSucceed);
-            Assert.Null(result.Error);
+            Assert.NotEqual(default, response.Data);
+            Assert.True(response.IsSucceed);
+            Assert.Null(response.Error);
         }
 
-        public static void CheckInvalid<T>(ExecutionResult<T> result)
+        public static void CheckInvalid<T>(ExecutionResult<T> response)
         {
-            Assert.Equal(default, result.Data);
-            Assert.False(result.IsSucceed);
-            Assert.NotNull(result.Error);
+            Assert.Equal(default, response.Data);
+            Assert.False(response.IsSucceed);
+            Assert.NotNull(response.Error);
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Abstractions.Model;
 using Abstractions.Supervision;
 using API.Controllers.Public;
+using GeneralTests._Utils;
 using GeneralTests.Utils;
+using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Security;
@@ -15,7 +17,7 @@ namespace GeneralTests.API.Controllers.Public
 {
     public class PublicIntroductionController_Tests
     {
-        class CreateDefaults : IEnumerable<object[]>
+        class Defaults : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -45,27 +47,31 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
+        private static PublicIntroductionController CreatePublicIntroductionController(DataContext context)
+        {
+            var config = Storage.InitConfiguration();
+            var introductionRep = new IntroductionRepository(context);
+            var tokenManager = new TokenManager(config);
+            var sup = new Supervisor(tokenManager);
+
+            return new PublicIntroductionController(introductionRep, sup);
+        }
+
         [Theory]
-        [ClassData(typeof(CreateDefaults))]
+        [ClassData(typeof(Defaults))]
         internal async void GetIntroduction_Test(Introduction expected)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var config = Storage.InitConfiguration();
-                    var introductionRep = new IntroductionRepository(context);
-                    var tokenManager = new TokenManager(config);
-                    var sup = new Supervisor(tokenManager);
+                    var api = CreatePublicIntroductionController(context);
+                    var response =
+                    (
+                        await api.GetIntroduction() as JsonResult
+                    ).Value as ExecutionResult<Introduction>;
 
-                    var api = new PublicIntroductionController(introductionRep, sup);
-
-                    var response = (await api.GetIntroduction() as JsonResult).Value as ExecutionResult<Introduction>;
-
-                    Assert.True(response.IsSucceed);
-                    Assert.Null(response.Error);
-                    Assert.NotNull(response.Data);
-
+                    GenericChecks.CheckValid(response);
                     Compare(expected, response.Data);
                 }
                 catch (Exception)

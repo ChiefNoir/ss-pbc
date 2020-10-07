@@ -87,7 +87,7 @@ namespace GeneralTests.API.Controllers.Gateway
             }
         }
 
-        private Account DefaultAccount = new Account
+        private readonly Account DefaultAccount = new Account
         {
             Id = 1,
             Login = "sa",

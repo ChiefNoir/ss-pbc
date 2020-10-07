@@ -355,7 +355,7 @@ namespace GeneralTests.API.Controllers.Public
                     (
                         await api.GetProjectsPreview(paging, projectSearch) as JsonResult
                     ).Value as ExecutionResult<ProjectPreview[]>;
-                    GenericChecks.CheckInvalid(response);
+                    GenericChecks.CheckEmpty(response);
                 }
                 catch (Exception)
                 {

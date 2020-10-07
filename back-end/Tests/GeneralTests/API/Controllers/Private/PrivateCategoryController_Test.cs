@@ -654,8 +654,8 @@ namespace GeneralTests.API.Controllers.Private
                     ).Value as ExecutionResult<Category>;
 
                     Assert.Null(getResponse.Data);
-                    Assert.Null(getResponse.Error);
-                    Assert.True(getResponse.IsSucceed);
+                    Assert.NotNull(getResponse.Error);
+                    Assert.False(getResponse.IsSucceed);
                 }
                 catch (Exception)
                 {

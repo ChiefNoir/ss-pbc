@@ -35,7 +35,16 @@ namespace GeneralTests.API.Controllers.Public
                         PosterDescription = null,
                         PosterUrl = null,
                         ReleaseDate = null,
-                        GalleryImages = new List<GalleryImage>(),
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
                         ExternalUrls = new List<ExternalUrl>()
                         {
                             new ExternalUrl
@@ -62,7 +71,7 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
-        class CreateValidProjectsPreview : IEnumerable<object[]>
+        class ValidProjectsPreview : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -194,7 +203,7 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
-        class CreateInValidProjectsPreview : IEnumerable<object[]>
+        class InvalidProjectsPreview : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -302,7 +311,7 @@ namespace GeneralTests.API.Controllers.Public
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidProjectsPreview))]
+        [ClassData(typeof(ValidProjectsPreview))]
         internal async void GetProjectsPreview_Valid(string sql, Paging paging, ProjectSearch projectSearch, ProjectPreview[] expectedProjects)
         {
             using (var context = Storage.CreateContext())
@@ -340,7 +349,7 @@ namespace GeneralTests.API.Controllers.Public
         }
 
         [Theory]
-        [ClassData(typeof(CreateInValidProjectsPreview))]
+        [ClassData(typeof(InvalidProjectsPreview))]
         internal async void GetProjectsPreview_InValid(Paging paging, ProjectSearch projectSearch)
         {
             using (var context = Storage.CreateContext())
@@ -396,7 +405,6 @@ namespace GeneralTests.API.Controllers.Public
                 Assert.Equal(expectedUrl.Version, actualUrl.Version);
             }
 
-            Assert.Equal(expected.GalleryImages, actual.GalleryImages);
             Assert.Equal(expected.GalleryImages.Count(), actual.GalleryImages.Count());
 
             foreach (var expectedImg in expected.GalleryImages)

@@ -52,4 +52,7 @@ insert into external_url (display_name, url)
 
 insert into project_to_external_url(project_id, external_url_id)
 	values (1, 2);
+
+insert into gallery_image (extra_url, image_url, project_id)
+	values (null, 'https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png', 1);
 -- --------------------------------------------------------------

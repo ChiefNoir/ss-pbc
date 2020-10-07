@@ -100,11 +100,7 @@ namespace Security
             var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = CreateTokenValidationParameters(_configuration);
 
-            var ff = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken toke);
-
-            var dd = toke.Id;
-
-            return ff;
+            return tokenHandler.ValidateToken(token, validationParameters, out _);
         }
     }
 }

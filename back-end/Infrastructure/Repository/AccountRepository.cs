@@ -45,25 +45,45 @@ namespace Infrastructure.Repository
         }
 
 
-        public Task<Account> GetAsync(int id)
+        public async Task<Account> GetAsync(int id)
         {
-            return _context.Accounts
-                           .Where(x=>x.Id == id)
-                           .Select(x => DataConverter.ToAccount(x))
-                           .AsNoTracking()
-                           .FirstOrDefaultAsync();
+            var result = await _context.Accounts
+                                       .Where(x=>x.Id == id)
+                                       .Select(x => DataConverter.ToAccount(x))
+                                       .AsNoTracking()
+                                       .FirstOrDefaultAsync();
+
+            if (result == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.WasAlreadyDeleted, result.GetType().Name)
+                    );
+            }
+
+            return result;
         }
 
-        public Task<Account> GetAsync(string login)
+        public async Task<Account> GetAsync(string login)
         {
             if (string.IsNullOrEmpty(login))
                 return null;
 
-            return _context.Accounts
-                           .Where(x => x.Login == login)
-                           .Select(x => DataConverter.ToAccount(x))
-                           .AsNoTracking()
-                           .FirstOrDefaultAsync();
+            var result = await _context.Accounts
+                                       .Where(x => x.Login == login)
+                                       .Select(x => DataConverter.ToAccount(x))
+                                       .AsNoTracking()
+                                       .FirstOrDefaultAsync();
+
+            if(result == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.WasAlreadyDeleted, result.GetType().Name)
+                    );
+            }
+
+            return result;
         }
 
 

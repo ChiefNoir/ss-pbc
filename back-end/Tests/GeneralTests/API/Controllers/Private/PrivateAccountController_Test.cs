@@ -6,6 +6,7 @@ using API.Controllers.Public;
 using API.Model;
 using API.Queries;
 using GeneralTests.Utils;
+using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Security;
@@ -19,7 +20,7 @@ namespace GeneralTests.API.Controllers.Private
 {
     public class PrivateAccountController_Test
     {
-        class Inserts : IEnumerable<object[]>
+        class SqlInsert : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -33,22 +34,22 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     new[]
                     {
-                        "INSERT INTO account (id, login, password, salt, role) VALUES (2, 'login', 'password', 'salt', 'role'); "
+                        "INSERT INTO account (login, password, salt, role) VALUES ('login', 'password', 'salt', 'role'); "
                     }
                 };
                 yield return new object[]
                 {
                     new[]
                     {
-                        "INSERT INTO account (id, login, password, salt, role) VALUES (2, 'login', 'password', 'salt', 'role'); ",
-                        "INSERT INTO account (id, login, password, salt, role) VALUES (3, 'login2', 'password', 'salt', 'role'); ",
-                        "INSERT INTO account (id, login, password, salt, role) VALUES (4, 'login3', 'password', 'salt', 'role'); "
+                        "INSERT INTO account (login, password, salt, role) VALUES ('login', 'password', 'salt', 'role'); ",
+                        "INSERT INTO account (login, password, salt, role) VALUES ('login2', 'password', 'salt', 'role'); ",
+                        "INSERT INTO account (login, password, salt, role) VALUES ('login3', 'password', 'salt', 'role'); "
                     }
                 };
             }
         }
 
-        class InsertWithResults : IEnumerable<object[]>
+        class SqlInsertWithResults : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -76,7 +77,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        class ValidAccounts : IEnumerable<object[]>
+        class ValidAdd : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -239,7 +240,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        class InValidAdd : IEnumerable<object[]>
+        class InvalidAdd : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -298,7 +299,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        class InValidUpdate : IEnumerable<object[]>
+        class InvalidUpdate : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -454,6 +455,30 @@ namespace GeneralTests.API.Controllers.Private
         }
 
 
+        private AuthenticationController CreateAuthenticationController(DataContext context)
+        {
+            var confing = Storage.CreateConfiguration();
+            var tokenManager = new TokenManager(confing);
+            var hasManager = new HashManager();
+            var sup = new Supervisor(tokenManager);
+            var accRep = new AccountRepository(context, confing, hasManager);
+            
+            return new AuthenticationController(confing, accRep, sup, tokenManager);
+        }
+
+        private PrivateAccountController CreatePrivateAccountController(DataContext context)
+        {
+            var confing = Storage.CreateConfiguration();
+            var tokenManager = new TokenManager(confing);
+            var hasManager = new HashManager();
+            var sup = new Supervisor(tokenManager);
+            var accRep = new AccountRepository(context, confing, hasManager);
+
+            return new PrivateAccountController(accRep, sup);
+        }
+
+        // -- 
+
         [Theory]
         [ClassData(typeof(Roles))]
         internal async void GetRolesAsync_Valid(string[] expectedRoles)
@@ -462,34 +487,29 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+                    var apiAuth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
 
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
 
-                    var api = new PrivateAccountController(accRep, sup);
+                    var api = CreatePrivateAccountController(context);
 
-                    var response = api.GetRoles(identity.Data.Token);
-                    var responseResult = (response as JsonResult).Value as ExecutionResult<List<string>>;
-                    
-                    Assert.NotNull(responseResult.Data);
-                    Assert.Null(responseResult.Error);
-                    Assert.True(responseResult.IsSucceed);
+                    var response =
+                    (
+                        api.GetRoles(identity.Data.Token) as JsonResult
+                    ).Value as ExecutionResult<List<string>>;
 
-                    Assert.Equal(expectedRoles.Length, responseResult.Data.Count);
+                    GenericChecks.CheckSucceed(response);
+
+                    Assert.Equal(expectedRoles.Length, response.Data.Count);
 
                     foreach (var item in expectedRoles)
                     {
-                        var actural = responseResult.Data.First(x => x == item);
+                        var actural = response.Data.First(x => x == item);
                         Assert.Equal(item, actural);
                     }
                 }
@@ -505,8 +525,10 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
-        [InlineData("bad-token")]
         [InlineData(null)]
+        [InlineData("bad-token")]
+        [InlineData("")]
+        [InlineData("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic2EiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIm5iZiI6MTYwMTk5Njk3MSwiZXhwIjoxNjAxOTk4NzcxLCJpc3MiOiJJc3N1ZXJOYW1lIiwiYXVkIjoiQXVkaWVuY2UtMSJ9.DCbppW8SqvL1QJS2BIO2qlplZv-UHqI2_NP_Za0KDzA")]
         internal void GetRolesAsync_BadToken(string token)
         {
             using (var context = Storage.CreateContext())
@@ -540,41 +562,80 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        [Fact]
+        internal async void GetRolesAsync_InsufficientRights()
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var apiAuth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
+
+                    var api = CreatePrivateAccountController(context);
+
+                    var createDemo = await api.SaveAsync
+                    (
+                        identity.Data.Token, new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
+                    );
+                    var demoIdentity =
+                    (
+                        await apiAuth.LoginAsync(new Credentials { Login = "demo", Password = "demo" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
+
+                    var response =
+                    (
+                        api.GetRoles(demoIdentity.Data.Token) as JsonResult
+                    ).Value as ExecutionResult<List<string>>;
+
+                    GenericChecks.CheckFail(response);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        // -- 
 
         [Theory]
-        [ClassData(typeof(Inserts))]
+        [ClassData(typeof(SqlInsert))]
         internal async void CountAsync_Valid(string[] sql)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
+                    var auth = CreateAuthenticationController(context);
+                    
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
                     Storage.RunSql(sql);
 
-                    var api = new PrivateAccountController(accRep, sup);
+                    var api = CreatePrivateAccountController(context);
                     
-                    var response = await api.CountAsync(identity.Data.Token);
-                    var responseResult = (response as JsonResult).Value as ExecutionResult<int>;
-                    
-                    Assert.Null(responseResult.Error);
-                    Assert.True(responseResult.IsSucceed);
+                    var response = 
+                    (
+                        await api.CountAsync(identity.Data.Token) as JsonResult
+                    ).Value as ExecutionResult<int>;
+                    GenericChecks.CheckSucceed(response);
 
-                    Assert.Equal(sql.Length + 1, responseResult.Data);
+                    Assert.Equal(sql.Length + 1, response.Data);
                 }
                 catch (Exception)
                 {
@@ -588,31 +649,23 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
-        [ClassData(typeof(Inserts))]
+        [ClassData(typeof(SqlInsert))]
         internal async void CountAsync_BadToken(string[] sql)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
                     Storage.RunSql(sql);
 
-                    var api = new PrivateAccountController(accRep, sup);
+                    var api = CreatePrivateAccountController(context);
 
-                    var response = await api.CountAsync("bad-token");
-                    var responseResult = (response as JsonResult).Value as ExecutionResult<int>;
+                    var response = 
+                    (
+                        await api.CountAsync("bad-token") as JsonResult
+                    ).Value as ExecutionResult<int>;
 
-                    Assert.NotNull(responseResult.Error);
-                    Assert.False(responseResult.IsSucceed);
-                    Assert.Equal(default, responseResult.Data);
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -625,48 +678,85 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        [Theory]
+        [ClassData(typeof(SqlInsert))]
+        internal async void CountAsync_InsufficientRights(string[] sql)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var apiAuth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
+                    Storage.RunSql(sql);
 
+                    var api = CreatePrivateAccountController(context);
+
+                    var createDemo = await api.SaveAsync
+                    (
+                        identity.Data.Token, new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
+                    );
+                    var demoIdentity =
+                    (
+                        await apiAuth.LoginAsync(new Credentials { Login = "demo", Password = "demo" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(demoIdentity);
+
+                    var response = 
+                    (
+                        await api.CountAsync(demoIdentity.Data.Token) as JsonResult
+                    ).Value as ExecutionResult<int>;
+
+                    GenericChecks.CheckFail(response);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        // --
 
         [Theory]
-        [ClassData(typeof(ValidAccounts))]
+        [ClassData(typeof(ValidAdd))]
         internal async void AddAccountAsync_Valid(Account account)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+                    var auth = CreateAuthenticationController(context);
+                    var identity = 
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
 
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
-
-
-                    var api = new PrivateAccountController(accRep, sup);
-                    var responseAdd = await api.SaveAsync(identity.Data.Token, account);
-                    var addResult = (responseAdd as JsonResult).Value as ExecutionResult<Account>;
-                    Assert.NotNull(addResult.Data);
-                    Assert.Null(addResult.Error);
-                    Assert.True(addResult.IsSucceed);
-
+                    var api = CreatePrivateAccountController(context);
+                    var addResult =
+                    (
+                        await api.SaveAsync(identity.Data.Token, account) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(addResult);
                     Compare(addResult.Data, account);
 
 
-                    var responseGet = await api.GetAsync(identity.Data.Token, addResult.Data.Id.Value);
-                    var getResult = (responseGet as JsonResult).Value as ExecutionResult<Account>;
-                    Assert.NotNull(getResult.Data);
-                    Assert.Null(getResult.Error);
-                    Assert.True(getResult.IsSucceed);
-
+                    var getResult =
+                    (
+                        await api.GetAsync(identity.Data.Token, addResult.Data.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(getResult);
                     Compare(getResult.Data, account);
                 }
                 catch (Exception)
@@ -681,27 +771,19 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
-        [ClassData(typeof(ValidAccounts))]
+        [ClassData(typeof(ValidAdd))]
         internal async void AddAccountAsync_BadToken(Account account)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
-                    var api = new PrivateAccountController(accRep, sup);
-                    var responseAdd = await api.SaveAsync("bad-token", account);
-                    var addResult = (responseAdd as JsonResult).Value as ExecutionResult<Account>;
-                    Assert.Null(addResult.Data);
-                    Assert.NotNull(addResult.Error);
-                    Assert.False(addResult.IsSucceed);
+                    var api = CreatePrivateAccountController(context);
+                    var addResult =
+                    (
+                        await api.SaveAsync("bad-token", account) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckFail(addResult);
                 }
                 catch (Exception)
                 {
@@ -715,37 +797,27 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
-        [ClassData(typeof(InValidAdd))]
+        [ClassData(typeof(InvalidAdd))]
         internal async void AddAccountAsync_InValid(Account account)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
 
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
-
-
-                    var api = new PrivateAccountController(accRep, sup);
-                    var response = 
+                    var api = CreatePrivateAccountController(context);
+                    var addResult =
                     (
                         await api.SaveAsync(identity.Data.Token, account) as JsonResult
                     ).Value as ExecutionResult<Account>;
-                    
-                    Assert.Null(response.Data);
-                    Assert.NotNull(response.Error);
-                    Assert.False(response.IsSucceed);
+                    GenericChecks.CheckFail(addResult);
                 }
                 catch (Exception)
                 {
@@ -758,46 +830,88 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        [Theory]
+        [ClassData(typeof(ValidAdd))]
+        internal async void AddAccountAsync_InsufficientRights(Account account)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
+
+                    var api = CreatePrivateAccountController(context);
+                    var demoResult =
+                    (
+                        await api.SaveAsync
+                        (
+                            identity.Data.Token, 
+                            new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
+                        ) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(demoResult);
+
+
+                    var failResut =
+                    (
+                        await api.SaveAsync
+                        (
+                            identity.Data.Token,
+                            account
+                        ) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckFail(failResut);
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        // --
 
         [Theory]
-        [ClassData(typeof(InsertWithResults))]
+        [ClassData(typeof(SqlInsertWithResults))]
         internal async void DeleteAccountAsync_Valid(string sql, Account account)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
                     Storage.RunSql(sql);
 
-                    var api = new PrivateAccountController(accRep, sup);
-                    var responseDel = await api.DeleteAsync(identity.Data.Token, account);
-                    var delResult = (responseDel as JsonResult).Value as ExecutionResult<bool>;
-                    Assert.True(delResult.Data);
-                    Assert.Null(delResult.Error);
-                    Assert.True(delResult.IsSucceed);
+                    var api = CreatePrivateAccountController(context);
+                    var delResult =
+                    (
+                        await api.DeleteAsync(identity.Data.Token, account) as JsonResult
+                    ).Value as ExecutionResult<bool>;
+                    GenericChecks.CheckSucceed(delResult);
 
 
-                    var responseGet = await api.GetAsync(identity.Data.Token, account.Id.Value);
-                    var getResult = (responseGet as JsonResult).Value as ExecutionResult<Account>;
-
-                    Assert.Null(getResult.Data);
-                    Assert.Null(getResult.Error);
-                    Assert.True(getResult.IsSucceed);
+                    var responseGet =
+                    (
+                        await api.GetAsync(identity.Data.Token, account.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckFail(responseGet);
                 }
                 catch (Exception)
                 {
@@ -811,37 +925,96 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
-        [ClassData(typeof(InsertWithResults))]
-        internal async void DeleteAccountAsync_BatToken(string sql, Account account)
+        [ClassData(typeof(SqlInsertWithResults))]
+        internal async void DeleteAccountAsync_BadToken(string sql, Account account)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
 
                     Storage.RunSql(sql);
 
-                    var api = new PrivateAccountController(accRep, sup);
-                    var responseDel = await api.DeleteAsync("bad-token", account);
-                    var delResult = (responseDel as JsonResult).Value as ExecutionResult<bool>;
-                    Assert.False(delResult.Data);
-                    Assert.NotNull(delResult.Error);
-                    Assert.False(delResult.IsSucceed);
+                    var api = CreatePrivateAccountController(context);
+                    var delResult =
+                    (
+                        await api.DeleteAsync("bad-token", account) as JsonResult
+                    ).Value as ExecutionResult<bool>;
+                    GenericChecks.CheckFail(delResult);
 
 
-                    var responseGet = await api.GetAsync("bad-token", account.Id.Value);
-                    var getResult = (responseGet as JsonResult).Value as ExecutionResult<Account>;
+                    var responseGet =
+                    (
+                        await api.GetAsync(identity.Data.Token, account.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(responseGet);
+                    Compare(responseGet.Data, account);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
 
-                    Assert.Null(getResult.Data);
-                    Assert.NotNull(getResult.Error);
-                    Assert.False(getResult.IsSucceed);
+        [Theory]
+        [ClassData(typeof(SqlInsertWithResults))]
+        internal async void DeleteAccountAsync_InsufficientRights(string sql, Account account)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
+
+
+                    Storage.RunSql(sql);
+
+                    var api = CreatePrivateAccountController(context);
+                    var demoResult =
+                    (
+                        await api.SaveAsync
+                        (
+                            identity.Data.Token,
+                            new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
+                        ) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(demoResult);
+
+                    var demoIdentity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "demo", Password = "demo" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+
+                    var delResult =
+                    (
+                        await api.DeleteAsync(demoIdentity.Data.Token, account) as JsonResult
+                    ).Value as ExecutionResult<bool>;
+                    GenericChecks.CheckFail(delResult);
+
+
+                    var responseGet =
+                    (
+                        await api.GetAsync(identity.Data.Token, account.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(responseGet);
+                    Compare(responseGet.Data, account);
                 }
                 catch (Exception)
                 {
@@ -862,30 +1035,21 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
                     Storage.RunSql(sql);
 
-                    var api = new PrivateAccountController(accRep, sup);
-                    var response =
+                    var api = CreatePrivateAccountController(context);
+                    var delResult =
                     (
                         await api.DeleteAsync(identity.Data.Token, account) as JsonResult
                     ).Value as ExecutionResult<bool>;
-                    Assert.False(response.Data);
-                    Assert.NotNull(response.Error);
-                    Assert.False(response.IsSucceed);
+                    GenericChecks.CheckFail(delResult);
                 }
                 catch (Exception)
                 {
@@ -898,79 +1062,33 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-
+        // --
 
         [Theory]
-        [ClassData(typeof(InsertWithResults))]
+        [ClassData(typeof(SqlInsertWithResults))]
         internal async void GetAccountAsync_Valid(string sql, Account expected)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
                     Storage.RunSql(sql);
 
-                    var api = new PrivateAccountController(accRep, sup);
-                    var responseGet =
+                    var api = CreatePrivateAccountController(context);
+                    var getResult =
                     (
                         await api.GetAsync(identity.Data.Token, expected.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
-                    
-                    Assert.NotNull(responseGet.Data);
-                    Assert.Null(responseGet.Error);
-                    Assert.True(responseGet.IsSucceed);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    context.FlushDatabase();
-                }
-            }
-        }
+                    GenericChecks.CheckSucceed(getResult);
+                    Compare(getResult.Data, expected);
 
-        [Theory]
-        [ClassData(typeof(InsertWithResults))]
-        internal async void GetAccountAsync_BadToken(string sql, Account expected)
-        {
-            using (var context = Storage.CreateContext())
-            {
-                try
-                {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-                    Storage.RunSql(sql);
-
-                    var api = new PrivateAccountController(accRep, sup);
-                    var getResult =
-                    (
-                        await api.GetAsync("bad-token", expected.Id.Value) as JsonResult
-                    ).Value as ExecutionResult<Account>;
-                    
-                    Assert.Null(getResult.Data);
-                    Assert.NotNull(getResult.Error);
-                    Assert.False(getResult.IsSucceed);
                 }
                 catch (Exception)
                 {
@@ -991,33 +1109,189 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
-                    var loginResponse = 
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
                     (
-                        await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(loginResponse.Data);
-                    Assert.Null(loginResponse.Error);
-                    Assert.True(loginResponse.IsSucceed);
+                    GenericChecks.CheckSucceed(identity);
 
                     Storage.RunSql(sql);
 
-                    var api = new PrivateAccountController(accRep, sup);
+                    var api = CreatePrivateAccountController(context);
+                    var getResult =
+                    (
+                        await api.GetAsync(identity.Data.Token, id) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckFail(getResult);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(SqlInsertWithResults))]
+        internal async void GetAccountAsync_BadToken(string sql, Account expected)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    Storage.RunSql(sql);
+
+                    var api = CreatePrivateAccountController(context);
+                    var getResult =
+                    (
+                        await api.GetAsync("bad-token", expected.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckFail(getResult);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(SqlInsertWithResults))]
+        internal async void GetAccountAsync_InsufficientRights(string sql, Account expected)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
+
+
+                    Storage.RunSql(sql);
+
+                    var api = CreatePrivateAccountController(context);
+                    var demoResult =
+                    (
+                        await api.SaveAsync
+                        (
+                            identity.Data.Token,
+                            new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
+                        ) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(demoResult);
+
+                    var demoIdentity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "demo", Password = "demo" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(demoIdentity);
+
+                    var getResult =
+                    (
+                        await api.GetAsync(demoIdentity.Data.Token, expected.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckFail(getResult);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        // --
+
+        [Fact]
+        internal async void UpdateAcountAsync_Valid()
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
+
+                    var api = CreatePrivateAccountController(context);
+
+                    identity.Data.Account.Login = "sa-sa";
+
+
+                    var response =
+                    (
+                        await api.SaveAsync(identity.Data.Token, identity.Data.Account) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(response);
+
+
                     var responseGet =
                     (
-                        await api.GetAsync(loginResponse.Data.Token, id) as JsonResult
+                        await api.GetAsync(identity.Data.Token, identity.Data.Account.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(responseGet);
+                    
+                    Compare(responseGet.Data, identity.Data.Account, 1);
 
-                    Assert.Null(responseGet.Data);
-                    Assert.Null(responseGet.Error);
-                    Assert.True(responseGet.IsSucceed);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(InvalidUpdate))]
+        internal async void UpdateAcountAsync_InValid(Account account)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
+
+                    var api = CreatePrivateAccountController(context);
+
+                    identity.Data.Account.Login = "sa-sa";
+
+                    Storage.RunSql("INSERT INTO account (id, login, password, salt, role) VALUES (2, 'login', 'password', 'salt', 'role'); ");
+
+
+                    var response =
+                    (
+                        await api.SaveAsync(identity.Data.Token, account) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -1033,6 +1307,7 @@ namespace GeneralTests.API.Controllers.Private
 
 
 
+
         [Theory]
         [ClassData(typeof(InsertWithPagingAndResults))]
         internal async void GetAccountsAsyncPaging_Valid(string sql, Paging paging, Account[] expected)
@@ -1041,33 +1316,26 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor( tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
                     Storage.RunSql(sql);
 
-                    var api = new PrivateAccountController(accRep, sup);
-                    var responseGet = await api.GetAsync(identity.Data.Token, paging);
-                    var getResult = (responseGet as JsonResult).Value as ExecutionResult<Account[]>;
-                    Assert.NotNull(getResult.Data);
-                    Assert.Null(getResult.Error);
-                    Assert.True(getResult.IsSucceed);
-                    Assert.Equal(expected.Length, getResult.Data.Length);
+                    var api = CreatePrivateAccountController(context);
+
+                    var response =
+                    (
+                        await api.GetAsync(identity.Data.Token, paging) as JsonResult
+                    ).Value as ExecutionResult<Account[]>;
+                    GenericChecks.CheckSucceed(response);
 
                     foreach (var item in expected)
                     {
-                        var actual = getResult.Data.FirstOrDefault(x => x.Id == item.Id);
+                        var actual = response.Data.FirstOrDefault(x => x.Id == item.Id);
 
                         Compare(actual, item);
                     }
@@ -1091,129 +1359,15 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
                     Storage.RunSql(sql);
 
-                    var api = new PrivateAccountController(accRep, sup);
+                    var api = CreatePrivateAccountController(context);
+
                     var response =
                     (
                         await api.GetAsync(token, paging) as JsonResult
                     ).Value as ExecutionResult<Account[]>;
-                    
-                    Assert.Null(response.Data);
-                    Assert.NotNull(response.Error);
-                    Assert.False(response.IsSucceed);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    context.FlushDatabase();
-                }
-            }
-        }
-
-
-
-        [Fact]
-        internal async void UpdateAcountAsync_Valid()
-        {
-            using (var context = Storage.CreateContext())
-            {
-                try
-                {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
-
-                    var newAccount = new Account
-                    {
-                        Id = 1,
-                        Login = "sa-sa",
-                        Role = "admin",
-                        Version = 0
-                    };
-
-                    var api = new PrivateAccountController(accRep, sup);
-                    var response = await api.SaveAsync(identity.Data.Token, newAccount);
-                    var responseUpdate = (response as JsonResult).Value as ExecutionResult<Account>;
-                    Assert.NotNull(responseUpdate.Data);
-                    Assert.Null(responseUpdate.Error);
-                    Assert.True(responseUpdate.IsSucceed);
-                    Compare(responseUpdate.Data, newAccount, 1);
-
-                    var responseGet = await api.GetAsync(identity.Data.Token, newAccount.Id.Value);
-                    var exResultresponseGet = (responseGet as JsonResult).Value as ExecutionResult<Account>;
-                    Assert.NotNull(exResultresponseGet.Data);
-                    Assert.Null(exResultresponseGet.Error);
-                    Assert.True(exResultresponseGet.IsSucceed);
-
-
-                    Compare(exResultresponseGet.Data, newAccount, 1);
-
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    context.FlushDatabase();
-                }
-            }
-        }
-
-        [Theory]
-        [ClassData(typeof(InValidUpdate))]
-        internal async void UpdateAcountAsync_InValid(Account account)
-        {
-            using (var context = Storage.CreateContext())
-            {
-                try
-                {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
-                    var loginResponse = await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" });
-                    var identity = (loginResponse as JsonResult).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
-
-                    Storage.RunSql("INSERT INTO account (id, login, password, salt, role) VALUES (2, 'login', 'password', 'salt', 'role'); ");
-
-                    var api = new PrivateAccountController(accRep, sup);
-                    var response = 
-                    (
-                        await api.SaveAsync(identity.Data.Token, account) as JsonResult
-                    ).Value as ExecutionResult<Account>;
-                    Assert.Null(response.Data);
-                    Assert.NotNull(response.Error);
-                    Assert.False(response.IsSucceed);
-
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -1234,66 +1388,44 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
+                    var auth = CreateAuthenticationController(context);
                     var identity =
                     (
-                        await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
+                    GenericChecks.CheckSucceed(identity);
 
-                    Assert.NotNull(identity.Data.Token);
-                    Assert.Equal(30, identity.Data.TokenLifeTimeMinutes);
 
-                    Assert.NotNull(identity.Data.Account);
-                    Assert.Equal("sa", identity.Data.Account.Login);
-                    Assert.Null(identity.Data.Account.Password);
-                    Assert.Equal("admin", identity.Data.Account.Role);
 
-                    
+                    var api = CreatePrivateAccountController(context);
 
-                    identity.Data.Account.Password = "brand-new-password";
+                    identity.Data.Account.Password = "sa-sa";
 
-                    var api = new PrivateAccountController(accRep, sup);
-                    var response = await api.SaveAsync(identity.Data.Token, identity.Data.Account);
-                    var responseUpdate = (response as JsonResult).Value as ExecutionResult<Account>;
-                    Assert.NotNull(responseUpdate.Data);
-                    Assert.Null(responseUpdate.Error);
-                    Assert.True(responseUpdate.IsSucceed);
-                    Compare(responseUpdate.Data, identity.Data.Account, 1);
+                    var updated =
+                    (
+                        await api.SaveAsync(identity.Data.Token, identity.Data.Account) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(updated);
 
-                    var responseGet = await api.GetAsync(identity.Data.Token, identity.Data.Account.Id.Value);
-                    var exResultresponseGet = (responseGet as JsonResult).Value as ExecutionResult<Account>;
-                    Assert.NotNull(exResultresponseGet.Data);
-                    Assert.Null(exResultresponseGet.Error);
-                    Assert.True(exResultresponseGet.IsSucceed);
 
-                    Compare(exResultresponseGet.Data, identity.Data.Account, 1);
+                    var responseGet =
+                    (
+                        await api.GetAsync(identity.Data.Token, identity.Data.Account.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(responseGet);
+
+                    Compare(responseGet.Data, identity.Data.Account, 1);
 
                     var newIdentity =
                     (
-                        await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = identity.Data.Account.Password }) as JsonResult
+                        await auth.LoginAsync
+                        (
+                            new Credentials { Login = "sa", Password = identity.Data.Account.Password }
+                        ) as JsonResult
                     ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
 
-                    Assert.NotNull(newIdentity.Data);
-                    Assert.Null(newIdentity.Error);
-                    Assert.True(newIdentity.IsSucceed);
-
-                    Assert.NotNull(newIdentity.Data.Token);
-                    Assert.Equal(30, newIdentity.Data.TokenLifeTimeMinutes);
-
-                    Assert.NotNull(newIdentity.Data.Account);
-                    Assert.Equal("sa", newIdentity.Data.Account.Login);
-                    Assert.Null(newIdentity.Data.Account.Password);
-                    Assert.Equal("admin", newIdentity.Data.Account.Role);
+                    Compare(newIdentity.Data.Account, identity.Data.Account, 1);
 
                 }
                 catch (Exception)
@@ -1306,6 +1438,60 @@ namespace GeneralTests.API.Controllers.Private
                 }
             }
         }
+
+        [Fact]
+        internal async void UpdatePasswordAsync_BadToken()
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var auth = CreateAuthenticationController(context);
+                    var identity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(identity);
+
+                    var api = CreatePrivateAccountController(context);
+                    identity.Data.Account.Password = "sa-sa";
+
+                    var updated =
+                    (
+                        await api.SaveAsync("bad-token", identity.Data.Account) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckFail(updated);
+
+
+                    var responseGet =
+                    (
+                        await api.GetAsync(identity.Data.Token, identity.Data.Account.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Account>;
+                    GenericChecks.CheckSucceed(responseGet);
+
+                    Compare(responseGet.Data, identity.Data.Account);
+
+                    var newIdentity =
+                    (
+                        await auth.LoginAsync
+                        (
+                            new Credentials { Login = "sa", Password = identity.Data.Account.Password }
+                        ) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckFail(newIdentity);
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushDatabase();
+                }
+            }
+        }
+
 
         private void Compare(Account actual, Account expected, int? version = null)
         {

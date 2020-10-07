@@ -2,7 +2,9 @@
 using Abstractions.Supervision;
 using API.Controllers.Public;
 using API.Queries;
+using GeneralTests._Utils;
 using GeneralTests.Utils;
+using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Security;
@@ -16,7 +18,7 @@ namespace GeneralTests.API.Controllers.Public
 {
     public class PublicProjectController_Tests
     {
-        class CreateValidDefaults : IEnumerable<object[]>
+        class DefaultProjects : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -216,13 +218,6 @@ namespace GeneralTests.API.Controllers.Public
                     new Paging {Start = 0, Length = 2 },
                     new ProjectSearch { CategoryCode = "bg"},
                 };
-
-                yield return new object[]
-                {
-                    new Paging {Start = 0, Length = 1 },
-                    new ProjectSearch { CategoryCode = "qwerty"},
-                };
-
                 yield return new object[]
                 {
                     new Paging {Start = 0, Length = -10 },
@@ -237,27 +232,33 @@ namespace GeneralTests.API.Controllers.Public
         }
 
 
+        public static PublicProjectController CreatePublicProjectController(DataContext context)
+        {
+            var categoryRep = new CategoryRepository(context);
+            var projectRep = new ProjectRepository(context, categoryRep);
+            var tokenManager = new TokenManager(Storage.InitConfiguration());
+            var sup = new Supervisor(tokenManager);
+
+            return new PublicProjectController(projectRep, sup);
+        }
+
 
         [Theory]
-        [ClassData(typeof(CreateValidDefaults))]
+        [ClassData(typeof(DefaultProjects))]
         internal async void GetProject_Valid(Project expected)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var categoryRep = new CategoryRepository(context);
-                    var projectRep = new ProjectRepository(context, categoryRep);
-                    var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(tokenManager);
+                    var api = CreatePublicProjectController(context);
 
-                    var api = new PublicProjectController(projectRep, sup);
+                    var response =
+                    (
+                        await api.GetProject(expected.Code) as JsonResult
+                    ).Value as ExecutionResult<Project>;
 
-                    var response = (await api.GetProject(expected.Code) as JsonResult).Value as ExecutionResult<Project>;
-                    Assert.True(response.IsSucceed);
-                    Assert.Null(response.Error);
-                    Assert.NotNull(response.Data);
-
+                    GenericChecks.CheckValid(response);
                     Compare(expected, response.Data);
                 }
                 catch (Exception)
@@ -281,17 +282,14 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var categoryRep = new CategoryRepository(context);
-                    var projectRep = new ProjectRepository(context, categoryRep);
-                    var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(tokenManager);
+                    var api = CreatePublicProjectController(context);
 
-                    var api = new PublicProjectController(projectRep, sup);
+                    var response =
+                    (
+                        await api.GetProject(code) as JsonResult
+                    ).Value as ExecutionResult<Project>;
 
-                    var response = (await api.GetProject(code) as JsonResult).Value as ExecutionResult<Project>;
-                    Assert.True(response.IsSucceed);
-                    Assert.Null(response.Error);
-                    Assert.Null(response.Data);
+                    GenericChecks.CheckInvalid(response);
                 }
                 catch (Exception)
                 {
@@ -314,12 +312,7 @@ namespace GeneralTests.API.Controllers.Public
                 {
                     Storage.RunSql(sql);
 
-                    var categoryRep = new CategoryRepository(context);
-                    var projectRep = new ProjectRepository(context, categoryRep);
-                    var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PublicProjectController(projectRep, sup);
+                    var api = CreatePublicProjectController(context);
 
 
                     var response = 
@@ -327,12 +320,8 @@ namespace GeneralTests.API.Controllers.Public
                         await api.GetProjectsPreview(paging, projectSearch) as JsonResult
                     ).Value as ExecutionResult<ProjectPreview[]>;
 
-                    Assert.True(response.IsSucceed);
-                    Assert.Null(response.Error);
-                    Assert.NotNull(response.Data);
-
+                    GenericChecks.CheckValid(response);
                     Assert.Equal(expectedProjects.Length, response.Data.Length);
-
 
                     foreach (var item in expectedProjects)
                     {
@@ -359,22 +348,14 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var categoryRep = new CategoryRepository(context);
-                    var projectRep = new ProjectRepository(context, categoryRep);
-                    var tokenManager = new TokenManager(Storage.InitConfiguration());
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PublicProjectController(projectRep, sup);
+                    var api = CreatePublicProjectController(context);
 
 
                     var response =
                     (
                         await api.GetProjectsPreview(paging, projectSearch) as JsonResult
                     ).Value as ExecutionResult<ProjectPreview[]>;
-
-                    Assert.True(response.IsSucceed);
-                    Assert.Null(response.Error);
-                    Assert.Empty(response.Data);
+                    GenericChecks.CheckInvalid(response);
                 }
                 catch (Exception)
                 {

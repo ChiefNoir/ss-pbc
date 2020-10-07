@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Resources
+﻿using System;
+
+namespace Infrastructure.Resources
 {
     /// <summary> User-friendly messages</summary>
     static class TextMessages
@@ -57,5 +59,7 @@
         /// <summary> File is too big. Max file size if {0} </summary>
         internal const string FileIsTooBig = "File is too big. Max file size if {0} ";
 
+        /// <summary> Project does not exist </summary>
+        internal const string ProjectDoesNotExist = "Project does not exist";
     }
 }

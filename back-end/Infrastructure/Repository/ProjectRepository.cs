@@ -392,14 +392,19 @@ namespace Infrastructure.Repository
         private async Task<Project> FirstOrDefaultAsync(Expression<Func<DataModel.Project, bool>> predicate)
         {
             var result = await _context.Projects
-               .AsNoTracking()
-               .Include(x=>x.Category)
-               .Include(x=>x.GalleryImages)
-               .Include(x=>x.ExternalUrls)
-               .ThenInclude(x=>x.ExternalUrl)
-               .Where(predicate)
-               .Select(x => DataConverter.ToProject(x))
-               .FirstOrDefaultAsync();
+                                       .AsNoTracking()
+                                       .Include(x=>x.Category)
+                                       .Include(x=>x.GalleryImages)
+                                       .Include(x=>x.ExternalUrls)
+                                       .ThenInclude(x=>x.ExternalUrl)
+                                       .Where(predicate)
+                                       .Select(x => DataConverter.ToProject(x))
+                                       .FirstOrDefaultAsync();
+
+            if (result == null)
+            {
+                throw new InconsistencyException(Resources.TextMessages.ProjectDoesNotExist);
+            }
 
             return result;
         }

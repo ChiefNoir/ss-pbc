@@ -1,6 +1,6 @@
 ﻿using Abstractions.ISecurity;
 using Abstractions.Model;
-using Security.Helpers;
+using Common.Converters;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -27,14 +27,14 @@ namespace Security
             if (string.IsNullOrEmpty(hexSalt))
                 salt = GenerateRandomArray(128);
             else
-                salt = Converter.ToByteArray(hexSalt);
+                salt = HexConverter.ToByteArray(hexSalt);
 
             var result = CalcSaltedHash(Encoding.UTF8.GetBytes(plainText), salt);
 
             return new HashResult
             {
-                HexHash = Converter.ToHexString(result),
-                HexSalt = hexSalt ?? Converter.ToHexString(salt)
+                HexHash = HexConverter.ToHexString(result),
+                HexSalt = hexSalt ?? HexConverter.ToHexString(salt)
             };
         }
 

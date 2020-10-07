@@ -44,8 +44,10 @@ namespace GeneralTests.Common.FriendlyConverters
         [Theory]
         [InlineData(-1, null)]
         [InlineData(long.MinValue, null)]
-        [InlineData(12, new[] { "", "" })]
-        [InlineData(77, new[] { "", "", "" })]
+        [InlineData(12, new string[] { })]
+        [InlineData(12, new[] { "a", "b" })]
+        [InlineData(77, new[] { "a", "b", "c" })]
+        [InlineData(01 * 1024 * 1024 * 1024, new[] { "a", "b", "c", "d", "e", })]
         public void BytesToString_InValid(long bytes, string[] suffices)
         {
             Assert.Throws<ArgumentException>(() => FriendlyConvert.BytesToString(bytes, suffices));

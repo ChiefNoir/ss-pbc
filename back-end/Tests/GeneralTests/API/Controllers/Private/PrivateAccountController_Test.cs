@@ -857,12 +857,17 @@ namespace GeneralTests.API.Controllers.Private
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(demoResult);
 
+                    var demoIdentity =
+                    (
+                        await auth.LoginAsync(new Credentials { Login = "demo", Password = "demo" }) as JsonResult
+                    ).Value as ExecutionResult<Identity>;
+                    GenericChecks.CheckSucceed(demoIdentity);
 
                     var failResut =
                     (
                         await api.SaveAsync
                         (
-                            identity.Data.Token,
+                            demoIdentity.Data.Token,
                             account
                         ) as JsonResult
                     ).Value as ExecutionResult<Account>;

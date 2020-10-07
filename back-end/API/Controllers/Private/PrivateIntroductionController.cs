@@ -1,6 +1,7 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
 using Abstractions.Supervision;
+using API.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -40,22 +41,16 @@ namespace API.Controllers.Private
 
         private void HandleFiles(Introduction introduction, IFormFileCollection files)
         {
-            if (files == null)
+            if (files == null || !files.Any())
                 return;
 
             var poster = files.FirstOrDefault(x => x.Name == "introduction[posterToUpload]");
             if (poster != null)
             {
                 var filename = _fileRepository.Save(poster);
-                introduction.PosterUrl = AppendUrlToName(filename);
+                introduction.PosterUrl = Utils.AppendUrlToName(_configuration, filename);
             }
         }
 
-        private string AppendUrlToName(string name)
-        {
-            return _configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>()
-                  + "/" + _configuration.GetSection("Location:FileStorage").Get<string>()
-                  + "/" + name;
-        }
     }
 }

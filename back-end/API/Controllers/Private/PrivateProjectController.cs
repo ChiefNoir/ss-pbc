@@ -1,6 +1,7 @@
 ﻿using Abstractions.IRepository;
 using Abstractions.Model;
 using Abstractions.Supervision;
+using API.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -71,7 +72,7 @@ namespace API.Controllers.Private
             if (poster != null)
             {
                 var filename = _fileRepository.Save(poster);
-                project.PosterUrl = AppendUrlToName(filename);
+                project.PosterUrl = Utils.AppendUrlToName(_configuration, filename);
             }
 
             var gallery = files.Where(x => x.Name.StartsWith("project[galleryImages]")).OrderBy(x => x.Name);
@@ -82,15 +83,8 @@ namespace API.Controllers.Private
                 if (index == -1)
                     continue;
 
-                project.GalleryImages[index].ImageUrl = AppendUrlToName(filename);
+                project.GalleryImages[index].ImageUrl = Utils.AppendUrlToName(_configuration, filename);
             }
-        }
-
-        private string AppendUrlToName(string name)
-        {
-            return _configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>()
-                  + "/" + _configuration.GetSection("Location:FileStorage").Get<string>()
-                  + "/" + name;
         }
 
         private static int ParseIndex(string galleryImagesName)

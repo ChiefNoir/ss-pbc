@@ -5,6 +5,7 @@ using API.Controllers.Private;
 using API.Controllers.Public;
 using API.Model;
 using GeneralTests.Utils;
+using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Security;
@@ -189,26 +190,48 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+
+        private static PrivateIntroductionController CreatePrivateIntroductionController(DataContext context)
+        {
+            var confing = Storage.CreateConfiguration();
+            var fileRep = new FileRepository(confing);
+            var introductionRep = new IntroductionRepository(context);
+            var tokenManager = new TokenManager(confing);
+            var sup = new Supervisor(tokenManager);
+
+            return new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
+        }
+
+        public static PublicIntroductionController CreatePublicIntroductionController(DataContext context)
+        {
+            var confing = Storage.CreateConfiguration();
+            var introductionRep = new IntroductionRepository(context);
+            var tokenManager = new TokenManager(confing);
+            var sup = new Supervisor(tokenManager);
+
+            return new PublicIntroductionController(introductionRep, sup);
+        }
+
+        public static AuthenticationController CreateAuthenticationController(DataContext context)
+        {
+            var confing = Storage.CreateConfiguration();
+            var hashManager = new HashManager();
+            var accountRep = new AccountRepository(context, confing, hashManager);
+            var tokenManager = new TokenManager(confing);
+            var sup = new Supervisor(tokenManager);
+
+            return new AuthenticationController(confing, accountRep, sup, tokenManager);
+        }
+
         [Theory]
         [ClassData(typeof(GenerateValidSave))]
-        internal async void UpdateIntroduction_Test_Valid(Introduction update, Introduction expected)
+        internal async void UpdateIntroduction_Valid(Introduction update, Introduction expected)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var fileRep = new FileRepository(confing);
-                    var introductionRep = new IntroductionRepository(context);
-                    var hashManager = new HashManager();
-                    var accountRep = new AccountRepository(context, confing, hashManager);
-                    var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
-                    var apiPublic = new PublicIntroductionController(introductionRep, sup);
-                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
-
+                    var apiAuth = CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync
@@ -216,30 +239,27 @@ namespace GeneralTests.API.Controllers.Private
                             new Credentials { Login = "sa", Password = "sa" }
                         ) as JsonResult
                     ).Value as ExecutionResult<Identity>;
+                    
+                    GenericChecks.CheckSucceed(identity);
 
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
-
+                    var api = CreatePrivateIntroductionController(context);
                     var updateResponse =
                     (
                         await api.SaveAsync(identity.Data.Token, update) as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
-                    Assert.NotNull(updateResponse.Data);
-                    Assert.Null(updateResponse.Error);
-                    Assert.True(updateResponse.IsSucceed);
+                    GenericChecks.CheckSucceed(updateResponse);
                     Compare(updateResponse.Data, expected);
 
+                    var apiPublic = CreatePublicIntroductionController(context);
                     var getResponse =
                     (
                         await apiPublic.GetIntroduction() as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
-                    Assert.NotNull(getResponse.Data);
-                    Assert.Null(getResponse.Error);
-                    Assert.True(getResponse.IsSucceed);
+                    GenericChecks.CheckSucceed(getResponse);
                     Compare(getResponse.Data, expected);
+
                 }
                 catch (Exception)
                 {
@@ -254,23 +274,13 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(GenerateInValidSave))]
-        internal async void UpdateIntroduction_Test_InValid(Introduction update)
+        internal async void UpdateIntroduction_Invalid(Introduction update)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var fileRep = new FileRepository(confing);
-                    var introductionRep = new IntroductionRepository(context);
-                    var hashManager = new HashManager();
-                    var accountRep = new AccountRepository(context, confing, hashManager);
-                    var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor( tokenManager);
-
-                    var api = new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
-                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
-
+                    var apiAuth = CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync
@@ -279,18 +289,15 @@ namespace GeneralTests.API.Controllers.Private
                         ) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
-                    Assert.NotNull(identity.Data);
-                    Assert.Null(identity.Error);
-                    Assert.True(identity.IsSucceed);
+                    GenericChecks.CheckSucceed(identity);
 
+                    var api = CreatePrivateIntroductionController(context);
                     var updateResponse =
                     (
                         await api.SaveAsync(identity.Data.Token, update) as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
-                    Assert.Null(updateResponse.Data);
-                    Assert.NotNull(updateResponse.Error);
-                    Assert.False(updateResponse.IsSucceed);
+                    GenericChecks.CheckFail(updateResponse);
                 }
                 catch (Exception)
                 {
@@ -304,24 +311,16 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
-        [InlineData("token-toke-token")]
         [InlineData(null)]
-        internal async void UpdateIntroduction_Test_BadToken(string token)
+        [InlineData("bad-token")]
+        [InlineData("")]
+        [InlineData("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic2EiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIm5iZiI6MTYwMTk5Njk3MSwiZXhwIjoxNjAxOTk4NzcxLCJpc3MiOiJJc3N1ZXJOYW1lIiwiYXVkIjoiQXVkaWVuY2UtMSJ9.DCbppW8SqvL1QJS2BIO2qlplZv-UHqI2_NP_Za0KDzA")]
+        internal async void UpdateIntroduction_BadToken(string token)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var fileRep = new FileRepository(confing);
-                    var introductionRep = new IntroductionRepository(context);
-                    var hashManager = new HashManager();
-                    var accountRep = new AccountRepository(context, confing, hashManager);
-                    var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
-
                     var introduction = new Introduction
                     {
                         Content = "The service is on-line. Congratulations.",
@@ -341,14 +340,14 @@ namespace GeneralTests.API.Controllers.Private
                         }
                     };
 
+
+                    var api = CreatePrivateIntroductionController(context);
                     var updateResponse =
                     (
                         await api.SaveAsync(token, introduction) as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
-                    Assert.Null(updateResponse.Data);
-                    Assert.NotNull(updateResponse.Error);
-                    Assert.False(updateResponse.IsSucceed);
+                    GenericChecks.CheckFail(updateResponse);
                 }
                 catch (Exception)
                 {

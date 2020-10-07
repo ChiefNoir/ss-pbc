@@ -2,7 +2,6 @@
 using Abstractions.Supervision;
 using API.Controllers.Gateway;
 using API.Model;
-using GeneralTests._Utils;
 using GeneralTests.Utils;
 using Infrastructure;
 using Infrastructure.Repository;

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace GeneralTests._Utils
+namespace GeneralTests.Utils
 {
     internal static class GenericChecks
     {
@@ -26,11 +26,11 @@ namespace GeneralTests._Utils
             }
             else if (typeof(T).IsValueType)
             {
-                Assert.Null(response.Data);
+                Assert.Equal(default, response.Data);
             }
             else
             {
-                Assert.Equal(default, response.Data);
+                Assert.Null(response.Data);
             }
 
             Assert.False(response.IsSucceed);

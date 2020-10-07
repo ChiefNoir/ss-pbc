@@ -56,6 +56,9 @@ namespace Infrastructure.Repository
 
         public Task<Account> GetAsync(string login)
         {
+            if (string.IsNullOrEmpty(login))
+                return null;
+
             return _context.Accounts
                            .Where(x => x.Login == login)
                            .Select(x => DataConverter.ToAccount(x))

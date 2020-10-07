@@ -57,7 +57,6 @@ namespace Security
                 )
             );
 
-
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             return encodedJwt;
@@ -101,8 +100,11 @@ namespace Security
             var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = CreateTokenValidationParameters(_configuration);
 
-            
-            return tokenHandler.ValidateToken(token, validationParameters, out _);
+            var ff = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken toke);
+
+            var dd = toke.Id;
+
+            return ff;
         }
     }
 }

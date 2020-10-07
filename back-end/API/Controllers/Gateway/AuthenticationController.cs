@@ -52,10 +52,7 @@ namespace API.Controllers.Gateway
             {
                 var principal = _tokenManager.ValidateToken(token);
 
-                if (principal?.Identity == null)
-                    throw new SecurityException("Validation failed");
-
-                var account = await _accountRepository.GetAsync(principal.Identity.Name);
+                var account = await _accountRepository.GetAsync(principal?.Identity?.Name);
                 if (account == null)
                     throw new SecurityException("Validation failed");
 

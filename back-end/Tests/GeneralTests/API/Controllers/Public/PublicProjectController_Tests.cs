@@ -2,7 +2,7 @@
 using Abstractions.Supervision;
 using API.Controllers.Public;
 using API.Queries;
-using GeneralTests.Utils;
+using GeneralTests.SharedUtils;
 using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;

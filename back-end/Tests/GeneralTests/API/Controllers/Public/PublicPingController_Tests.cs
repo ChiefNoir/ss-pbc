@@ -1,6 +1,6 @@
 ﻿using Abstractions.Supervision;
 using API.Controllers.Public;
-using GeneralTests.Utils;
+using GeneralTests.SharedUtils;
 using Microsoft.AspNetCore.Mvc;
 using Security;
 using Xunit;

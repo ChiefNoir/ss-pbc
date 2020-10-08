@@ -1,5 +1,5 @@
 ﻿using API;
-using GeneralTests.Utils;
+using GeneralTests.SharedUtils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;

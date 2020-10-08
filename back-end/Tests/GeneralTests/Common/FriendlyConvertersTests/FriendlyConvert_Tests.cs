@@ -2,7 +2,7 @@
 using System;
 using Xunit;
 
-namespace GeneralTests.Common.FriendlyConverters
+namespace GeneralTests.Common.FriendlyConvertersTests
 {
     public class FriendlyConvert_Tests
     {

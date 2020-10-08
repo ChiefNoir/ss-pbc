@@ -274,14 +274,6 @@ namespace Infrastructure.Repository
 
         private void CheckBeforeUpdate(DataModel.Project dbItem, Project project)
         {
-            if (project.Id == null)
-            {
-                throw new InconsistencyException
-                    (
-                        string.Format(Resources.TextMessages.CantUpdateNewItem, project.GetType().Name)
-                    );
-            }
-
             if (dbItem == null)
             {
                 throw new InconsistencyException
@@ -339,17 +331,17 @@ namespace Infrastructure.Repository
             }
 
 
-            foreach (var item in dbItem.GalleryImages)
+            foreach (var dbGalleryitem in dbItem.GalleryImages)
             {
-                var newUrl = project.GalleryImages.FirstOrDefault(x => x.Id == item.Id);
-                if (newUrl == null)
+                var updatedGalleryItem = project.GalleryImages.FirstOrDefault(x => x.Id == dbGalleryitem.Id);
+                if (updatedGalleryItem == null)
                     continue;
 
-                if (dbItem.Version != project.Version)
+                if (dbGalleryitem.Version != updatedGalleryItem.Version)
                 {
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, item.GetType().Name)
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, dbGalleryitem.GetType().Name)
                     );
                 }
             }

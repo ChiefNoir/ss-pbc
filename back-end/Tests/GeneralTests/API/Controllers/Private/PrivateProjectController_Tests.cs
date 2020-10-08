@@ -4,7 +4,7 @@ using API.Controllers.Gateway;
 using API.Controllers.Private;
 using API.Controllers.Public;
 using API.Model;
-using GeneralTests.Utils;
+using GeneralTests.SharedUtils;
 using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -1217,6 +1217,92 @@ namespace GeneralTests.API.Controllers.Private
                     }
                 };
 
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = 1,
+                        Code = "placeholder_code",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
+                        ExternalUrls = new List<ExternalUrl>()
+                        {
+                            new ExternalUrl
+                            {
+                                Id = 2,
+                                DisplayName = "GitHub",
+                                Url = "https://github.com/ChiefNoir",
+                                Version = 10
+                            }
+                        },
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    }
+                };
+
+                new Project
+                {
+                    Id = 1,
+                    Code = "placeholder_code",
+                    DisplayName = "Brand new project",
+                    Description = "Not that smart and pretty long description.",
+                    DescriptionShort = "The smart and short description.",
+                    PosterDescription = null,
+                    PosterUrl = null,
+                    ReleaseDate = null,
+                    GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 10
+                            }
+                        },
+                    ExternalUrls = new List<ExternalUrl>()
+                        {
+                            new ExternalUrl
+                            {
+                                Id = 2,
+                                DisplayName = "GitHub",
+                                Url = "https://github.com/ChiefNoir",
+                                Version = 0
+                            }
+                        },
+                    Category = new Category
+                    {
+                        Id = 6,
+                        Code = "s",
+                        DisplayName = "Software",
+                        IsEverything = false,
+                        TotalProjects = 1,
+                        Version = 0
+                    },
+                    Version = 0,
+                };
             }
         }
 
@@ -1422,6 +1508,308 @@ namespace GeneralTests.API.Controllers.Private
                         Version = 0,
                     }
 };
+
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = null,
+                        Code = "placeholder_code",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    }
+                };
+
+                yield return new object[]
+{
+                    new Project
+                    {
+                        Id = null,
+                        Code = "cute",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = DateTime.Now,
+                        ExternalUrls = new List<ExternalUrl>()
+                        {
+                            new ExternalUrl
+                            {
+                                Id = null,
+                                DisplayName = null,
+                                Url = "https://github.com/ChiefNoir",
+                                Version = 0
+                            }
+                        },
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    }
+};
+            }
+        }
+
+        class ValidUpdateWithoutExpected : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = 1,
+                        Code = "placeholder_code",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
+                        ExternalUrls = new List<ExternalUrl>()
+                        {
+                            new ExternalUrl
+                            {
+                                Id = 2,
+                                DisplayName = "GitHub",
+                                Url = "https://github.com/ChiefNoir",
+                                Version = 0
+                            }
+                        },
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    },
+                };
+
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = 1,
+                        Code = "placeholder_code",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
+                        ExternalUrls = new List<ExternalUrl>(),
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    },
+                };
+
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = 1,
+                        Code = "placeholder_code",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        GalleryImages = new List<GalleryImage>(),
+                        ExternalUrls = new List<ExternalUrl>(),
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    },
+                };
+
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = 1,
+                        Code = "placeholder_code",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
+                        ExternalUrls = new List<ExternalUrl>(),
+                        Category = new Category
+                        {
+                            Id = 2,
+                            Code = "vg",
+                            DisplayName = "Games",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    },
+                };
+
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = 1,
+                        Code = "placeholder_code",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
+                        ExternalUrls = new List<ExternalUrl>()
+                        {
+                            new ExternalUrl
+                            {
+                                Id = null,
+                                DisplayName = "cute",
+                                Url = "https://github.com/",
+                            }
+                        },
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    },
+                };
+
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = 1,
+                        Code = "placeholder_code",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = null,
+                                ExtraUrl = null,
+                                ImageUrl = "something",
+                                Version = 0
+                            }
+                        },
+                        ExternalUrls = new List<ExternalUrl>()
+                        {
+                            new ExternalUrl
+                            {
+                                Id = 2,
+                                DisplayName = "GitHub",
+                                Url = "https://github.com/ChiefNoir",
+                                Version = 0
+                            }
+                        },
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    },
+                };
+
             }
         }
 
@@ -1882,8 +2270,8 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
-        [ClassData(typeof(ValidUpdate))]
-        internal async void UpdateProject_Badtoken(Project project, Project expected)
+        [ClassData(typeof(ValidUpdateWithoutExpected))]
+        internal async void UpdateProject_Badtoken(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -1908,8 +2296,8 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Theory]
-        [ClassData(typeof(ValidUpdate))]
-        internal async void UpdateProject_InsufficientRights(Project project, Project expected)
+        [ClassData(typeof(ValidUpdateWithoutExpected))]
+        internal async void UpdateProject_InsufficientRights(Project project)
         {
             using (var context = Storage.CreateContext())
             {

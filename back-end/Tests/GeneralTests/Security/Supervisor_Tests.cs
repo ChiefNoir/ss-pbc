@@ -1,6 +1,6 @@
 ﻿using Abstractions.ISecurity;
 using Abstractions.Supervision;
-using GeneralTests.Utils;
+using GeneralTests.SharedUtils;
 using GeneralTests.SharedMocks;
 using Microsoft.IdentityModel.Tokens;
 using Moq;

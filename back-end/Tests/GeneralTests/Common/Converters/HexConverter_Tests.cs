@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace GeneralTests.Common.Converters
+namespace GeneralTests.Common.ConvertersTests
 {
     public class HexConverter_Tests
     {

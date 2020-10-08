@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Abstractions.ISecurity;
-using GeneralTests.Utils;
-using Microsoft.Extensions.Configuration;
+using GeneralTests.SharedUtils;
 using Security;
 using Xunit;
 

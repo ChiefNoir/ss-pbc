@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System;
 
-namespace GeneralTests.Utils
+namespace GeneralTests.SharedUtils
 {
     public static class Storage
     {

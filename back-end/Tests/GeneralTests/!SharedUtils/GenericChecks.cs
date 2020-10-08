@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace GeneralTests.Utils
+namespace GeneralTests.SharedUtils
 {
     internal static class GenericChecks
     {

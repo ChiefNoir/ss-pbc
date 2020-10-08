@@ -2,12 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("GeneralTests")]
 namespace Infrastructure
 {
+    [ExcludeFromCodeCoverage]
     /// <summary>Entity framework data context </summary>
     public class DataContext : DbContext
     {

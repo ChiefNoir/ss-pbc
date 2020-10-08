@@ -384,7 +384,7 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager();
+                    var hashManager = new HashManager(confing);
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
                     var sup = new Supervisor(tokenManager);
@@ -448,7 +448,7 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager();
+                    var hashManager = new HashManager(confing);
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
                     var sup = new Supervisor(tokenManager);
@@ -500,7 +500,7 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager();
+                    var hashManager = new HashManager(confing);
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
                     var sup = new Supervisor(tokenManager);
@@ -564,7 +564,7 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager();
+                    var hashManager = new HashManager(confing);
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
                     var sup = new Supervisor(tokenManager);
@@ -617,7 +617,7 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager();
+                    var hashManager = new HashManager(confing);
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
                     var sup = new Supervisor(tokenManager);
@@ -678,7 +678,7 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     var confing = Storage.CreateConfiguration();
                     var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager();
+                    var hashManager = new HashManager(confing);
                     var accountRep = new AccountRepository(context, confing, hashManager);
                     var tokenManager = new TokenManager(confing);
                     var sup = new Supervisor(tokenManager);

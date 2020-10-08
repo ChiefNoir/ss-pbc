@@ -458,7 +458,7 @@ namespace GeneralTests.API.Controllers.Private
         {
             var confing = Storage.CreateConfiguration();
             var tokenManager = new TokenManager(confing);
-            var hasManager = new HashManager();
+            var hasManager = new HashManager(confing);
             var sup = new Supervisor(tokenManager);
             var accRep = new AccountRepository(context, confing, hasManager);
             
@@ -469,7 +469,7 @@ namespace GeneralTests.API.Controllers.Private
         {
             var confing = Storage.CreateConfiguration();
             var tokenManager = new TokenManager(confing);
-            var hasManager = new HashManager();
+            var hasManager = new HashManager(confing);
             var sup = new Supervisor(tokenManager);
             var accRep = new AccountRepository(context, confing, hasManager);
 
@@ -536,7 +536,7 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     var confing = Storage.CreateConfiguration();
                     var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager();
+                    var hasManager = new HashManager(confing);
                     var sup = new Supervisor(tokenManager);
                     var accRep = new AccountRepository(context, confing, hasManager);
                     var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);

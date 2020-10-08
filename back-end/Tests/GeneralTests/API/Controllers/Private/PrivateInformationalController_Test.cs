@@ -25,8 +25,8 @@ namespace GeneralTests.API.Controllers.Private
 
         private static AuthenticationController CreateAuthenticationController(DataContext context)
         {
-            var hashManager = new HashManager();
             var confing = Storage.CreateConfiguration();
+            var hashManager = new HashManager(confing);
             var tokenManager = new TokenManager(confing);
             var sup = new Supervisor(tokenManager);
             var accountRep = new AccountRepository(context, confing, hashManager);

@@ -1,6 +1,7 @@
 ﻿using Abstractions.ISecurity;
 using Abstractions.Model;
 using Common.Converters;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,6 +11,13 @@ namespace Security
     /// <summary> Hash manager </summary>
     public class HashManager : IHashManager
     {
+        private readonly IConfiguration _configuration;
+
+        public HashManager(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         /// <summary> Hash plaint text</summary>
         /// <param name="plainText"> Plain text </param>
         /// <param name="hexSalt"> Salt as hex string. If hexSalt is null, the new salt will be created</param>
@@ -22,6 +30,11 @@ namespace Security
             if (hexSalt != null && string.IsNullOrEmpty(hexSalt))
                 throw new ArgumentException("hexSalt must have value", nameof(hexSalt));
 
+            var text = AddExtraSalt
+            (
+                Encoding.UTF8.GetBytes(plainText),
+                Encoding.UTF8.GetBytes(_configuration.GetSection("Security:Key").Get<string>())
+            );
 
             byte[] salt;
             if (string.IsNullOrEmpty(hexSalt))
@@ -29,7 +42,7 @@ namespace Security
             else
                 salt = HexConverter.ToByteArray(hexSalt);
 
-            var result = CalcSaltedHash(Encoding.UTF8.GetBytes(plainText), salt);
+            var result = CalcSaltedHash(text, salt);
 
             return new HashResult
             {
@@ -68,6 +81,19 @@ namespace Security
 
                 return result;
             }
+        }
+
+        /// <summary> Add extra salt to the plain text</summary>
+        /// <param name="plainText">Plain text</param>
+        /// <param name="salt">Salt</param>
+        /// <returns>Plain text with extra salt</returns>
+        private static byte[] AddExtraSalt(byte[] plainText, byte[] salt)
+        {
+            var plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
+            plainText.CopyTo(plainTextWithSaltBytes, 0);
+            salt.CopyTo(plainTextWithSaltBytes, plainText.Length);
+
+            return plainTextWithSaltBytes;
         }
     }
 }

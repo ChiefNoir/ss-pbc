@@ -99,7 +99,7 @@ namespace GeneralTests.API.Controllers.Gateway
         private static AuthenticationController CreateAuthenticationController(DataContext context)
         {
             var config = Storage.CreateConfiguration();
-            var hashManager = new HashManager();
+            var hashManager = new HashManager(config);
             var accRep = new AccountRepository(context, config, hashManager);
             var tokenManager = new TokenManager(config);
             var sup = new Supervisor(tokenManager);

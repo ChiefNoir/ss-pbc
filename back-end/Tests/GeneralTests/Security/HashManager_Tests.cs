@@ -1,4 +1,5 @@
-﻿using Security;
+﻿using GeneralTests.SharedUtils;
+using Security;
 using System;
 using Xunit;
 
@@ -12,7 +13,8 @@ namespace GeneralTests.Security
         [InlineData("password")]
         public void Hash_Valid(string plainText)
         {
-            var hashManager = new HashManager();
+            var config = Storage.CreateConfiguration();
+            var hashManager = new HashManager(config);
 
             var result = hashManager.Hash(plainText);
 
@@ -26,7 +28,8 @@ namespace GeneralTests.Security
         [InlineData("")]
         public void Hash_Invalid(string plainText)
         {
-            var hashManager = new HashManager();
+            var config = Storage.CreateConfiguration();
+            var hashManager = new HashManager(config);
 
             Assert.Throws<ArgumentException>(() => hashManager.Hash(plainText));
         }
@@ -35,7 +38,9 @@ namespace GeneralTests.Security
         [InlineData("")]
         public void Hash_SaltInvalid(string salt)
         {
-            var hashManager = new HashManager();
+            var config = Storage.CreateConfiguration();
+            var hashManager = new HashManager(config);
+
             Assert.Throws<ArgumentException>(() => hashManager.Hash("text", salt));
         }
 
@@ -46,8 +51,9 @@ namespace GeneralTests.Security
         [InlineData(" ")]
         public void Hash_MustBeDifferent(string plainText)
         {
-            var hashManager = new HashManager();
-            
+            var config = Storage.CreateConfiguration();
+            var hashManager = new HashManager(config);
+
             var resultOne = hashManager.Hash(plainText);
             var resultTwo = hashManager.Hash(plainText);
 
@@ -61,7 +67,8 @@ namespace GeneralTests.Security
         [InlineData("password", "")]
         public void Hash_MustFail(string plainText, string salt)
         {
-            var hashManager = new HashManager();
+            var config = Storage.CreateConfiguration();
+            var hashManager = new HashManager(config);
 
             Assert.Throws<ArgumentException>(() => hashManager.Hash(plainText, salt));
         }
@@ -75,7 +82,8 @@ namespace GeneralTests.Security
         [InlineData("df0af56a20f019f585d65de70c7614b75a179a180f542b102f5460b3ce8051ed")]
         public void Hash_Restore(string plaintText)
         {
-            var hashManager = new HashManager();
+            var config = Storage.CreateConfiguration();
+            var hashManager = new HashManager(config);
 
             var initialHashing = hashManager.Hash(plaintText);
 

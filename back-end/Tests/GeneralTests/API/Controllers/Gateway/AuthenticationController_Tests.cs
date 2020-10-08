@@ -6,6 +6,7 @@ using GeneralTests.Utils;
 using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Security;
 using System;
 using System.Collections;
@@ -125,6 +126,12 @@ namespace GeneralTests.API.Controllers.Gateway
                     GenericChecks.CheckSucceed(response);
                     
                     Assert.NotNull(response.Data.Account);
+                    Assert.NotNull(response.Data.Token);
+                    Assert.Equal
+                    (
+                        Storage.CreateConfiguration().GetSection("Token:LifeTime").Get<int>(),
+                        response.Data.TokenLifeTimeMinutes
+                    );
                     Compare(DefaultAccount, response.Data.Account);
                 }
                 catch (Exception)
@@ -154,6 +161,9 @@ namespace GeneralTests.API.Controllers.Gateway
                     ).Value as ExecutionResult<Identity>;
 
                     GenericChecks.CheckFail(response);
+
+                    Assert.Null(response.Data);
+                    Assert.Null(response.Data?.Token);
                 }
                 catch (Exception)
                 {

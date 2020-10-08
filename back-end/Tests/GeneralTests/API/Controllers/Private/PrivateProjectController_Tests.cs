@@ -37,7 +37,16 @@ namespace GeneralTests.API.Controllers.Private
                         PosterDescription = null,
                         PosterUrl = null,
                         ReleaseDate = null,
-                        GalleryImages = new List<GalleryImage>(),
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
                         ExternalUrls = new List<ExternalUrl>()
                         {
                             new ExternalUrl
@@ -64,7 +73,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        class InvalidProjects : IEnumerable<object[]>
+        class InvalidDeleteProjects : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -82,7 +91,16 @@ namespace GeneralTests.API.Controllers.Private
                         PosterDescription = null,
                         PosterUrl = null,
                         ReleaseDate = null,
-                        GalleryImages = new List<GalleryImage>(),
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
                         ExternalUrls = new List<ExternalUrl>()
                         {
                             new ExternalUrl
@@ -105,10 +123,199 @@ namespace GeneralTests.API.Controllers.Private
                         Version = 0,
                     }
                 };
-
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = 1,
+                        Code = "placeholder_code",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
+                        ExternalUrls = new List<ExternalUrl>()
+                        {
+                            new ExternalUrl
+                            {
+                                Id = 1,
+                                DisplayName = "GitHub",
+                                Url = "https://github.com/ChiefNoir",
+                                Version = 0
+                            }
+                        },
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 10,
+                    }
+                };
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = 12,
+                        Code = "placeholder_code",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = 1,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
+                        ExternalUrls = new List<ExternalUrl>()
+                        {
+                            new ExternalUrl
+                            {
+                                Id = 1,
+                                DisplayName = "GitHub",
+                                Url = "https://github.com/ChiefNoir",
+                                Version = 0
+                            }
+                        },
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    }
+                };
             }
         }
 
+        class NewProjects : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = null,
+                        Code = "cute",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = null,
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    }
+                };
+
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = null,
+                        Code = "cute",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = "http://12",
+                        ReleaseDate = null,
+                        GalleryImages = new List<GalleryImage>()
+                        {
+                            new GalleryImage
+                            {
+                                Id = null,
+                                ExtraUrl = null,
+                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
+                                Version = 0
+                            }
+                        },
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    }
+                };
+
+                yield return new object[]
+                {
+                    new Project
+                    {
+                        Id = null,
+                        Code = "cute",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort ="The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = null,
+                        ReleaseDate = DateTime.Now,
+                        ExternalUrls = new List<ExternalUrl>()
+                        {
+                            new ExternalUrl
+                            {
+                                Id = null,
+                                DisplayName = "GitHub",
+                                Url = "https://github.com/ChiefNoir",
+                                Version = 0
+                            }
+                        },
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    }
+                };
+            }
+        }
 
 
         private static AuthenticationController CreateAuthenticationController(DataContext context)
@@ -225,7 +432,9 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        internal async void DeleteProject_Invalid()
+        [Theory]
+        [ClassData(typeof(InvalidDeleteProjects))]
+        internal async void DeleteProject_Invalid(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -238,6 +447,13 @@ namespace GeneralTests.API.Controllers.Private
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
+                    var apiPrivate = CreatePrivateProjectController(context);
+
+                    var response =
+                    (
+                        await apiPrivate.Delete(identity.Data.Token, project) as JsonResult
+                    ).Value as ExecutionResult<bool>;
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -250,7 +466,9 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        internal async void DeleteProject_Badtoken()
+        [Theory]
+        [ClassData(typeof(DefaultProjects))]
+        internal async void DeleteProject_Badtoken(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -263,6 +481,13 @@ namespace GeneralTests.API.Controllers.Private
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
+                    var apiPrivate = CreatePrivateProjectController(context);
+
+                    var response =
+                    (
+                        await apiPrivate.Delete("bad-token", project) as JsonResult
+                    ).Value as ExecutionResult<bool>;
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -275,7 +500,9 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        internal async void DeleteProject_InsufficientRights()
+        [Theory]
+        [ClassData(typeof(DefaultProjects))]
+        internal async void DeleteProject_InsufficientRights(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -299,6 +526,12 @@ namespace GeneralTests.API.Controllers.Private
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
+                    var apiPrivate = CreatePrivateProjectController(context);
+                    var response =
+                    (
+                        await apiPrivate.Delete(demoIdentity.Data.Token, project) as JsonResult
+                    ).Value as ExecutionResult<bool>;
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -313,7 +546,9 @@ namespace GeneralTests.API.Controllers.Private
 
         // --
 
-        internal async void CreateProject_Valid()
+        [Theory]
+        [ClassData(typeof(NewProjects))]
+        internal async void CreateProject_Valid(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -326,6 +561,31 @@ namespace GeneralTests.API.Controllers.Private
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
+                    var apiPrivate = CreatePrivateProjectController(context);
+                    var response =
+                    (
+                        await apiPrivate.Save(identity.Data.Token, project) as JsonResult
+                    ).Value as ExecutionResult<Project>;
+                    GenericChecks.CheckSucceed(response);
+
+                    Compare(project, response.Data);
+
+                    var apiCategoryPublic = CreatePublicCategoryController(context);
+                    var responseGetCategory =
+                    (
+                        await apiCategoryPublic.GetCategory(project.Category.Id.Value) as JsonResult
+                    ).Value as ExecutionResult<Category>;
+                    GenericChecks.CheckSucceed(responseGetCategory);
+
+                    Assert.Equal(project.Category.TotalProjects + 1, responseGetCategory.Data.TotalProjects);
+
+                    var responseGetCategoryEverything =
+                    (
+                        await apiCategoryPublic.GetEverythingCategory() as JsonResult
+                    ).Value as ExecutionResult<Category>;
+                    GenericChecks.CheckSucceed(responseGetCategoryEverything);
+                    Assert.Equal(project.Category.TotalProjects + 1, responseGetCategoryEverything.Data.TotalProjects);
+
                 }
                 catch (Exception)
                 {
@@ -337,6 +597,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
             }
         }
+
 
         internal async void CreateProject_Invalid()
         {
@@ -363,19 +624,20 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        internal async void CreateProject_Badtoken()
+        [Theory]
+        [ClassData(typeof(NewProjects))]
+        internal async void CreateProject_Badtoken(Project project)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
-                    var identity =
+                    var apiPrivate = CreatePrivateProjectController(context);
+                    var response =
                     (
-                        await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
-                    ).Value as ExecutionResult<Identity>;
-                    GenericChecks.CheckSucceed(identity);
-
+                        await apiPrivate.Save("bad-token", project) as JsonResult
+                    ).Value as ExecutionResult<Project>;
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -388,7 +650,9 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        internal async void CreateProject_InsufficientRights()
+        [Theory]
+        [ClassData(typeof(NewProjects))]
+        internal async void CreateProject_InsufficientRights(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -412,6 +676,13 @@ namespace GeneralTests.API.Controllers.Private
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
+
+                    var apiPrivate = CreatePrivateProjectController(context);
+                    var response =
+                    (
+                        await apiPrivate.Save(demoIdentity.Data.Token, project) as JsonResult
+                    ).Value as ExecutionResult<Project>;
+                    GenericChecks.CheckFail(response);
                 }
                 catch (Exception)
                 {
@@ -538,5 +809,71 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         // --
+
+
+        private void Compare(Project expected, Project actual)
+        {
+            Assert.NotNull(actual.Id);
+            Assert.Equal(expected.Code, actual.Code);
+            Assert.Equal(expected.Description, actual.Description);
+            Assert.Equal(expected.DescriptionShort, actual.DescriptionShort);
+            Assert.Equal(expected.DisplayName, actual.DisplayName);
+
+            Assert.Equal(expected.PosterDescription, actual.PosterDescription);
+            Assert.Equal(expected.PosterUrl, actual.PosterUrl);
+            Assert.Equal(expected.ReleaseDate?.Date, actual.ReleaseDate?.Date);
+
+            Assert.Equal(expected.Version, actual.Version);
+
+
+            Compare(expected.Category, actual.Category);
+
+            Assert.Equal(expected.ExternalUrls?.Count() ?? 0, actual.ExternalUrls?.Count() ?? 0);
+
+            foreach (var expectedUrl in expected.ExternalUrls ?? new List<ExternalUrl>())
+            {
+                var actualUrl = actual.ExternalUrls.FirstOrDefault(x => x.DisplayName == expectedUrl.DisplayName);
+
+                Assert.Equal(expectedUrl.DisplayName, actualUrl.DisplayName);
+                Assert.Equal(expectedUrl.Url, actualUrl.Url);
+                Assert.Equal(expectedUrl.Version, actualUrl.Version);
+            }
+
+            Assert.Equal(expected.GalleryImages?.Count() ?? 0, actual.GalleryImages?.Count() ?? 0);
+
+            foreach (var expectedImg in expected.GalleryImages ?? new List<GalleryImage>())
+            {
+                var actualUrl = actual.GalleryImages.FirstOrDefault(x => x.ImageUrl == expectedImg.ImageUrl);
+
+                Assert.Equal(expectedImg.ImageUrl, actualUrl.ImageUrl);
+                Assert.Equal(expectedImg.ExtraUrl, actualUrl.ExtraUrl);
+                Assert.Equal(expectedImg.Version, actualUrl.Version);
+            }
+        }
+
+        private void Compare(ProjectPreview expected, ProjectPreview actual)
+        {
+            Assert.Equal(expected.Code, actual.Code);
+            Assert.Equal(expected.Description, actual.Description);
+            Assert.Equal(expected.DisplayName, actual.DisplayName);
+
+            Assert.Equal(expected.PosterDescription, actual.PosterDescription);
+            Assert.Equal(expected.PosterUrl, actual.PosterUrl);
+            Assert.Equal(expected.ReleaseDate, actual.ReleaseDate);
+
+            Compare(expected.Category, actual.Category);
+        }
+
+        private void Compare(Category expected, Category actual)
+        {
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Equal(expected.Code, actual.Code);
+            Assert.Equal(expected.DisplayName, actual.DisplayName);
+
+            Assert.False(expected.IsEverything);
+            Assert.Equal(expected.IsEverything, actual.IsEverything);
+            Assert.Equal(expected.Version, actual.Version);
+        }
+
     }
 }

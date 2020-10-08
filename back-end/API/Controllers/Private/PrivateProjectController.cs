@@ -34,19 +34,7 @@ namespace API.Controllers.Private
         {
             var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
-                HandleFiles(project, Request.Form.Files);
-                return _projectRepository.SaveAsync(project);
-            });
-
-            return new JsonResult(result);
-        }
-
-        [HttpPatch("project"), DisableRequestSizeLimit]
-        public async Task<IActionResult> Update([FromHeader] string token, [FromForm] Project project)
-        {
-            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
-            {
-                HandleFiles(project, Request.Form.Files);
+                HandleFiles(project, Request?.Form?.Files);
                 return _projectRepository.SaveAsync(project);
             });
 
@@ -68,6 +56,9 @@ namespace API.Controllers.Private
 
         private void HandleFiles(Project project, IFormFileCollection files)
         {
+            if (files == null || !files.Any())
+                return;
+
             var poster = files.FirstOrDefault(x => x.Name == "project[posterToUpload]");
             if (poster != null)
             {

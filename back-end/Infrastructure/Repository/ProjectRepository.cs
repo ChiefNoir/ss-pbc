@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
@@ -83,9 +84,9 @@ namespace Infrastructure.Repository
 
             var dbItem = AbstractionsConverter.ToProject(project);
             await _context.Projects.AddAsync(dbItem);
-
             await _context.SaveChangesAsync();
-            return project;
+
+            return await FirstOrDefaultAsync(x => x.Id == dbItem.Id);
         }
 
         private async Task<Project> UpdateAsync(Project project)
@@ -102,7 +103,7 @@ namespace Infrastructure.Repository
             Merge(dbItem, project);
 
             await _context.SaveChangesAsync();
-            return DataConverter.ToProject(dbItem);
+            return await FirstOrDefaultAsync(x => x.Id == dbItem.Id);
         }
 
 

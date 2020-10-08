@@ -4,7 +4,7 @@ using Xunit;
 
 namespace GeneralTests.Common.FriendlyConverters
 {
-    public class FriendlyConvertTests
+    public class FriendlyConvert_Tests
     {
         [Theory]
         [InlineData(00, "0 B")]

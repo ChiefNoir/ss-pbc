@@ -205,14 +205,6 @@ namespace Infrastructure.Repository
 
         private void CheckBeforeCreate(Project project)
         {
-            if (project.Id != null)
-            {
-                throw new InconsistencyException
-                    (
-                        string.Format(Resources.TextMessages.CantCreateExistingItem, project.GetType().Name)
-                    );
-            }
-
             if (string.IsNullOrEmpty(project.Code))
             {
                 throw new InconsistencyException

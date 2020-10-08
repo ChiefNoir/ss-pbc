@@ -1,5 +1,8 @@
-﻿namespace Abstractions.Model.System
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Abstractions.Model.System
 {
+    [ExcludeFromCodeCoverage]
     /// <summary> Wrapper for exceptional situation</summary>
     public sealed class Incident
     {

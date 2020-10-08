@@ -1,5 +1,8 @@
-﻿namespace Abstractions.Model
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Abstractions.Model
 {
+    [ExcludeFromCodeCoverage]
     /// <summary> Account </summary>
     public class Account
     {

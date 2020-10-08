@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Abstractions.Model
 {
+    [ExcludeFromCodeCoverage]
     /// <summary> Introduction for the index page </summary>
     public class Introduction
     {

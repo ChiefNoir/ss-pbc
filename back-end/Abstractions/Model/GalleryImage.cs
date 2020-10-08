@@ -1,6 +1,9 @@
 ﻿
+using System.Diagnostics.CodeAnalysis;
+
 namespace Abstractions.Model
 {
+    [ExcludeFromCodeCoverage]
     /// <summary> Gallery for the <seealso cref="Project"/> </summary>
     public class GalleryImage
     {

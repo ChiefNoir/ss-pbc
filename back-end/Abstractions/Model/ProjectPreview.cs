@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Abstractions.Model
 {
+    [ExcludeFromCodeCoverage]
     /// <summary> Short version of project </summary>
     public class ProjectPreview
     {

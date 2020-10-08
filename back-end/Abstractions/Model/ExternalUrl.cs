@@ -1,5 +1,8 @@
-﻿namespace Abstractions.Model
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Abstractions.Model
 {
+    [ExcludeFromCodeCoverage]
     /// <summary> URL to the external resources </summary>
     public class ExternalUrl
     {

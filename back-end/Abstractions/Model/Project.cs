@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Abstractions.Model
 {
+    [ExcludeFromCodeCoverage]
     /// <summary> Full project </summary>
     public class Project
     {

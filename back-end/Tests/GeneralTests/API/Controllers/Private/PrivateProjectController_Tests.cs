@@ -811,7 +811,7 @@ namespace GeneralTests.API.Controllers.Private
         // --
 
 
-        private void Compare(Project expected, Project actual)
+        private static void Compare(Project expected, Project actual)
         {
             Assert.NotNull(actual.Id);
             Assert.Equal(expected.Code, actual.Code);
@@ -851,20 +851,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        private void Compare(ProjectPreview expected, ProjectPreview actual)
-        {
-            Assert.Equal(expected.Code, actual.Code);
-            Assert.Equal(expected.Description, actual.Description);
-            Assert.Equal(expected.DisplayName, actual.DisplayName);
-
-            Assert.Equal(expected.PosterDescription, actual.PosterDescription);
-            Assert.Equal(expected.PosterUrl, actual.PosterUrl);
-            Assert.Equal(expected.ReleaseDate, actual.ReleaseDate);
-
-            Compare(expected.Category, actual.Category);
-        }
-
-        private void Compare(Category expected, Category actual)
+        private static void Compare(Category expected, Category actual)
         {
             Assert.Equal(expected.Id, actual.Id);
             Assert.Equal(expected.Code, actual.Code);

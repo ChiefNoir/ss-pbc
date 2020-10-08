@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.DataModel
 {
     [Table("project_to_external_url")]
+    [ExcludeFromCodeCoverage]
     internal class ProjectExternalUrl
     {
         [Column("project_id")]

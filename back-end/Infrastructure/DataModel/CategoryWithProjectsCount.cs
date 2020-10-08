@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.DataModel
 {
     [Table("categories_with_projects_total_v")]
+    [ExcludeFromCodeCoverage]
     internal class CategoryWithTotalProjects
     {
         [Key]

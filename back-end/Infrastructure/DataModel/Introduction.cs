@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
+using System.Diagnostics.CodeAnalysis;
 
-[assembly: InternalsVisibleTo("GeneralTests")]
 namespace Infrastructure.DataModel
 {
     [Table("introduction")]
+    [ExcludeFromCodeCoverage]
     internal class Introduction
     {
         [Column("id")]

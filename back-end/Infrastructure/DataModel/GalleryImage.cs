@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.DataModel
 {
     [Table("gallery_image")]
+    [ExcludeFromCodeCoverage]
     internal class GalleryImage
     {
         [Key]

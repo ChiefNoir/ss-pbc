@@ -1,5 +1,8 @@
-﻿namespace API.Model
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace API.Model
 {
+    [ExcludeFromCodeCoverage]
     public class Information
     {
         public string Login { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Infrastructure.DataModel;
+using Infrastructure.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +17,17 @@ namespace Infrastructure.Converters
                 Role = account.Role
             };
         }
+
+        internal static Category ToCategory(Abstractions.Model.Category category)
+        {
+            return new Category
+            {
+                Code = Sanitizer.SanitizeCode(category.Code),
+                DisplayName = category.DisplayName,
+                Version = 0
+            };
+        }
+
 
         private static IEnumerable<GalleryImage> ToGalleryImage(IEnumerable<Abstractions.Model.GalleryImage> items)
         {
@@ -50,7 +62,7 @@ namespace Infrastructure.Converters
             var dbProject = new Project
             {
                 Id = project.Id ?? 0,
-                Code = project.Code,
+                Code = Sanitizer.SanitizeCode(project.Code),
                 Description = project.Description,
                 DescriptionShort = project.DescriptionShort,
                 DisplayName = project.DisplayName,
@@ -103,14 +115,6 @@ namespace Infrastructure.Converters
                 Url = externalUrl.Url,
                 Version = externalUrl.Version
             };
-        }
-
-        private static IEnumerable<IntroductionExternalUrl> ToExternalUrls(IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
-        {
-            if (externalUrls == null)
-                return new List<IntroductionExternalUrl>();
-
-            return externalUrls.Select(ToIntroductionExternalUrl);
         }
 
         private static IEnumerable<ProjectExternalUrl> ToProjectExternalUrls(IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)

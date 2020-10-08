@@ -69,12 +69,7 @@ namespace Infrastructure.Repository
         {
             CheckBeforeCreate(category);
 
-            var dbItem = new DataModel.Category
-            {
-                Code = category.Code,
-                DisplayName = category.DisplayName,
-                Version = 0
-            };
+            var dbItem = AbstractionsConverter.ToCategory(category);
 
             await _context.Categories.AddAsync(dbItem);
 

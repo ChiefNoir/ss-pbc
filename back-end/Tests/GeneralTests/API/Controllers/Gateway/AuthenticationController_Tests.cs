@@ -140,7 +140,7 @@ namespace GeneralTests.API.Controllers.Gateway
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -171,7 +171,7 @@ namespace GeneralTests.API.Controllers.Gateway
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -207,7 +207,7 @@ namespace GeneralTests.API.Controllers.Gateway
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -245,7 +245,7 @@ namespace GeneralTests.API.Controllers.Gateway
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -274,7 +274,7 @@ namespace GeneralTests.API.Controllers.Gateway
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }

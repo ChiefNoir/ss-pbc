@@ -518,7 +518,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -556,7 +556,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -601,7 +601,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -642,7 +642,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -672,7 +672,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -719,7 +719,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -764,7 +764,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -790,7 +790,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -824,7 +824,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -879,7 +879,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -923,7 +923,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -967,7 +967,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1026,7 +1026,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1061,7 +1061,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1100,7 +1100,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1135,7 +1135,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1163,7 +1163,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1215,7 +1215,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1263,7 +1263,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1303,7 +1303,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1350,7 +1350,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1379,7 +1379,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1438,7 +1438,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -1491,7 +1491,7 @@ namespace GeneralTests.API.Controllers.Private
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }

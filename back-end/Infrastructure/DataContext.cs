@@ -4,7 +4,9 @@ using System;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("GeneralTests")]
 namespace Infrastructure
 {
     [ExcludeFromCodeCoverage]
@@ -42,7 +44,7 @@ namespace Infrastructure
             }
         }
 
-        public void FlushDatabase()
+        internal void FlushData()
         {
             using (var connection = Database.GetDbConnection())
             {

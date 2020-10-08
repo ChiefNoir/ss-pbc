@@ -141,7 +141,7 @@ namespace GeneralTests.API.Controllers.Public
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -174,7 +174,7 @@ namespace GeneralTests.API.Controllers.Public
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -203,7 +203,7 @@ namespace GeneralTests.API.Controllers.Public
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }
@@ -234,7 +234,7 @@ namespace GeneralTests.API.Controllers.Public
                 }
                 finally
                 {
-                    context.FlushDatabase();
+                    context.FlushData();
                 }
             }
         }

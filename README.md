@@ -17,6 +17,7 @@ For the change of pace, for the playing around and for the developing new skills
 ## Back-end
 - [.Net Core 3.1](https://dotnet.microsoft.com/download)
 - [JwtBearer](https://github.com/dotnet/aspnetcore/tree/844a82e37cae48af2ab2ee4f39b41283e6bb4f0e)
+- [NLog](https://nlog-project.org/)
 
 ### Testing
 - [xUnit](https://xunit.net/)

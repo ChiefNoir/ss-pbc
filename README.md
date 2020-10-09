@@ -4,7 +4,7 @@
 
 # BusinessCard
 
-Personal website.
+Personal website for showcasing pet-projects and stuff. 
 For the change of pace, for the playing around and for the developing new skills.
 
 ## Front-end
@@ -16,6 +16,15 @@ For the change of pace, for the playing around and for the developing new skills
 
 ## Back-end
 - [.Net Core 3.1](https://dotnet.microsoft.com/download)
+- [JwtBearer](https://github.com/dotnet/aspnetcore/tree/844a82e37cae48af2ab2ee4f39b41283e6bb4f0e)
+
+### Testing
+- [xUnit](https://xunit.net/)
+- [Moq](https://github.com/moq/moq4)
+- [coverlet.collector](https://www.nuget.org/packages/coverlet.collector)
+- [coverlet.msbuild](https://www.nuget.org/packages/coverlet.msbuild/)
+
+### Database
 - [PostgreSQL](https://www.postgresql.org/)
 - [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/3.1.3/)
 - [Evolve](https://www.nuget.org/packages/Evolve/)

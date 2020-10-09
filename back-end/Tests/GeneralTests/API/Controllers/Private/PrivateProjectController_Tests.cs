@@ -8,6 +8,8 @@ using GeneralTests.SharedUtils;
 using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Security;
 using System;
 using System.Collections;
@@ -1814,59 +1816,7 @@ namespace GeneralTests.API.Controllers.Private
         }
 
 
-        private static AuthenticationController CreateAuthenticationController(DataContext context)
-        {
-            var confing = Storage.CreateConfiguration();
-            var hashManager = new HashManager(confing);
-            var accountRep = new AccountRepository(context, confing, hashManager);
-            var tokenManager = new TokenManager(confing);
-            var sup = new Supervisor(tokenManager);
 
-            return new AuthenticationController(confing, accountRep, sup, tokenManager);
-        }
-
-        private static PublicProjectController CreatePublicProjectController(DataContext context)
-        {
-            var categoryRep = new CategoryRepository(context);
-            var projectRep = new ProjectRepository(context, categoryRep);
-            var tokenManager = new TokenManager(Storage.CreateConfiguration());
-            var sup = new Supervisor(tokenManager);
-
-            return new PublicProjectController(projectRep, sup);
-        }
-
-        private static PublicCategoryController CreatePublicCategoryController(DataContext context)
-        {
-            var categoryRep = new CategoryRepository(context);
-            var tokenManager = new TokenManager(Storage.CreateConfiguration());
-            var sup = new Supervisor(tokenManager);
-
-            return new PublicCategoryController(categoryRep, sup);
-        }
-
-
-        private static PrivateProjectController CreatePrivateProjectController(DataContext context)
-        {
-            var config = Storage.CreateConfiguration();
-            var fileRep = new FileRepository(config);
-            var categoryRep = new CategoryRepository(context);
-            var projectRep = new ProjectRepository(context, categoryRep);
-            var tokenManager = new TokenManager(config);
-            var sup = new Supervisor(tokenManager);
-
-            return new PrivateProjectController(config, fileRep, projectRep, sup);
-        }
-
-        private static PrivateAccountController CreatePrivateAccountController(DataContext context)
-        {
-            var confing = Storage.CreateConfiguration();
-            var tokenManager = new TokenManager(confing);
-            var hasManager = new HashManager(confing);
-            var sup = new Supervisor(tokenManager);
-            var accRep = new AccountRepository(context, confing, hasManager);
-
-            return new PrivateAccountController(accRep, sup);
-        }
 
         // --
         [Theory]
@@ -1877,7 +1827,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -1885,7 +1835,7 @@ namespace GeneralTests.API.Controllers.Private
                     GenericChecks.CheckSucceed(identity);
 
 
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
                     
                     var response =
                     (
@@ -1894,14 +1844,14 @@ namespace GeneralTests.API.Controllers.Private
                     GenericChecks.CheckSucceed(response);
                     Assert.True(response.Data);
 
-                    var apiProjectPublic = CreatePublicProjectController(context);
+                    var apiProjectPublic = Storage.CreatePublicProjectController(context);
                     var responseGet =
                     (
                         await apiProjectPublic.GetProject(project.Code) as JsonResult
                     ).Value as ExecutionResult<Project>;
                     GenericChecks.CheckFail(responseGet);
 
-                    var apiCategoryPublic = CreatePublicCategoryController(context);
+                    var apiCategoryPublic = Storage.CreatePublicCategoryController(context);
                     var responseGetCategory =
                     (
                         await apiCategoryPublic.GetCategory(project.Category.Id.Value) as JsonResult
@@ -1936,14 +1886,14 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
 
                     var response =
                     (
@@ -1970,14 +1920,14 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
 
                     var response =
                     (
@@ -2004,14 +1954,14 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var apiAccount = CreatePrivateAccountController(context);
+                    var apiAccount = Storage.CreatePrivateAccountController(context);
                     var createDemo = await apiAccount.SaveAsync
                     (
                         identity.Data.Token, new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
@@ -2022,7 +1972,7 @@ namespace GeneralTests.API.Controllers.Private
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
                     var response =
                     (
                         await apiPrivate.Delete(demoIdentity.Data.Token, project) as JsonResult
@@ -2050,14 +2000,14 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
                     var response =
                     (
                         await apiPrivate.Save(identity.Data.Token, project) as JsonResult
@@ -2066,7 +2016,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     Compare(project, response.Data);
 
-                    var apiCategoryPublic = CreatePublicCategoryController(context);
+                    var apiCategoryPublic = Storage.CreatePublicCategoryController(context);
                     var responseGetCategory =
                     (
                         await apiCategoryPublic.GetCategory(project.Category.Id.Value) as JsonResult
@@ -2102,14 +2052,14 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
                     var response =
                     (
                         await apiPrivate.Save(identity.Data.Token, project) as JsonResult
@@ -2135,7 +2085,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
                     var response =
                     (
                         await apiPrivate.Save("bad-token", project) as JsonResult
@@ -2161,14 +2111,14 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var apiAccount = CreatePrivateAccountController(context);
+                    var apiAccount = Storage.CreatePrivateAccountController(context);
                     var createDemo = await apiAccount.SaveAsync
                     (
                         identity.Data.Token, new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
@@ -2180,7 +2130,7 @@ namespace GeneralTests.API.Controllers.Private
                     GenericChecks.CheckSucceed(identity);
 
 
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
                     var response =
                     (
                         await apiPrivate.Save(demoIdentity.Data.Token, project) as JsonResult
@@ -2207,14 +2157,14 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
                     var response =
                     (
                         await apiPrivate.Save(identity.Data.Token, project) as JsonResult
@@ -2242,7 +2192,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -2251,7 +2201,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql("insert into project (code, display_name, category_id) values ('nice','temp',6);");
 
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
                     var response =
                     (
                         await apiPrivate.Save(identity.Data.Token, project) as JsonResult
@@ -2277,7 +2227,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
                     var response =
                     (
                         await apiPrivate.Save("bad-token", project) as JsonResult
@@ -2303,14 +2253,14 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var apiAccount = CreatePrivateAccountController(context);
+                    var apiAccount = Storage.CreatePrivateAccountController(context);
                     var createDemo = await apiAccount.SaveAsync
                     (
                         identity.Data.Token, new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
@@ -2321,7 +2271,7 @@ namespace GeneralTests.API.Controllers.Private
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var apiPrivate = CreatePrivateProjectController(context);
+                    var apiPrivate = Storage.CreatePrivateProjectController(context);
                     var response =
                     (
                         await apiPrivate.Save(demoIdentity.Data.Token, project) as JsonResult

@@ -6,8 +6,11 @@ using API.Controllers.Public;
 using API.Model;
 using API.Queries;
 using GeneralTests.SharedUtils;
+using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Security;
 using System;
 using System.Collections;
@@ -374,6 +377,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        
         [Theory]
         [ClassData(typeof(ValidUpdate))]
         internal async void Save_Valid(Category update, Category expected)
@@ -382,16 +386,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager(confing);
-                    var accountRep = new AccountRepository(context, confing, hashManager);
-                    var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PrivateCategoryController(categoryRep, sup);
-                    var apiPublic = new PublicCategoryController(categoryRep, sup);
-                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
+                    var api = Storage.CreatePrivateCategoryController(context);
+                    var apiPublic = Storage.CreatePublicCategoryController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
 
                     var identity =
                     (
@@ -446,16 +443,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager(confing);
-                    var accountRep = new AccountRepository(context, confing, hashManager);
-                    var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PrivateCategoryController(categoryRep, sup);
-                    var apiPublic = new PublicCategoryController(categoryRep, sup);
-                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
+                    var api = Storage.CreatePrivateCategoryController(context);
+                    var apiPublic = Storage.CreatePublicCategoryController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
 
                     var identity =
                     (
@@ -498,16 +488,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager(confing);
-                    var accountRep = new AccountRepository(context, confing, hashManager);
-                    var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PrivateCategoryController(categoryRep, sup);
-                    var apiPublic = new PublicCategoryController(categoryRep, sup);
-                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
+                    var api = Storage.CreatePrivateCategoryController(context);
+                    var apiPublic = Storage.CreatePublicCategoryController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
 
                     var identity =
                     (
@@ -562,16 +545,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager(confing);
-                    var accountRep = new AccountRepository(context, confing, hashManager);
-                    var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PrivateCategoryController(categoryRep, sup);
-                    var apiPublic = new PublicCategoryController(categoryRep, sup);
-                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
+                    var api = Storage.CreatePrivateCategoryController(context);
+                    var apiPublic = Storage.CreatePublicCategoryController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
 
                     var identity =
                     (
@@ -615,16 +591,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager(confing);
-                    var accountRep = new AccountRepository(context, confing, hashManager);
-                    var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PrivateCategoryController(categoryRep, sup);
-                    var apiPublic = new PublicCategoryController(categoryRep, sup);
-                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
+                    var api = Storage.CreatePrivateCategoryController(context);
+                    var apiPublic = Storage.CreatePublicCategoryController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
 
                     var identity =
                     (
@@ -676,16 +645,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var categoryRep = new CategoryRepository(context);
-                    var hashManager = new HashManager(confing);
-                    var accountRep = new AccountRepository(context, confing, hashManager);
-                    var tokenManager = new TokenManager(confing);
-                    var sup = new Supervisor(tokenManager);
-
-                    var api = new PrivateCategoryController(categoryRep, sup);
-                    var apiPublic = new PublicCategoryController(categoryRep, sup);
-                    var apiAuth = new AuthenticationController(confing, accountRep, sup, tokenManager);
+                    var api = Storage.CreatePrivateCategoryController(context);
+                    var apiPublic = Storage.CreatePublicCategoryController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
 
                     var identity =
                     (

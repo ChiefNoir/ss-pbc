@@ -203,7 +203,7 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
-        class InvalidProjectsPreview : IEnumerable<object[]>
+        class InvalidEmptyProjectsPreview : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -226,6 +226,20 @@ namespace GeneralTests.API.Controllers.Public
                     new Paging {Start = 0, Length = 2 },
                     new ProjectSearch { CategoryCode = "bg"},
                 };
+            }
+        }
+
+        class InvalidProjectsPreview : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    new Paging {Start = 0, Length = 10 },
+                    new ProjectSearch { CategoryCode = "cute"},
+                };
                 yield return new object[]
                 {
                     new Paging {Start = 0, Length = -10 },
@@ -240,17 +254,6 @@ namespace GeneralTests.API.Controllers.Public
         }
 
 
-        public static PublicProjectController CreatePublicProjectController(DataContext context)
-        {
-            var categoryRep = new CategoryRepository(context);
-            var projectRep = new ProjectRepository(context, categoryRep);
-            var tokenManager = new TokenManager(Storage.CreateConfiguration());
-            var sup = new Supervisor(tokenManager);
-
-            return new PublicProjectController(projectRep, sup);
-        }
-
-
         [Theory]
         [ClassData(typeof(DefaultProjects))]
         internal async void GetProject_Valid(Project expected)
@@ -259,7 +262,7 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = CreatePublicProjectController(context);
+                    var api = Storage.CreatePublicProjectController(context);
 
                     var response =
                     (
@@ -290,7 +293,7 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = CreatePublicProjectController(context);
+                    var api = Storage.CreatePublicProjectController(context);
 
                     var response =
                     (
@@ -320,7 +323,7 @@ namespace GeneralTests.API.Controllers.Public
                 {
                     Storage.RunSql(sql);
 
-                    var api = CreatePublicProjectController(context);
+                    var api = Storage.CreatePublicProjectController(context);
 
 
                     var response = 
@@ -356,7 +359,35 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = CreatePublicProjectController(context);
+                    var api = Storage.CreatePublicProjectController(context);
+
+
+                    var response =
+                    (
+                        await api.GetProjectsPreview(paging, projectSearch) as JsonResult
+                    ).Value as ExecutionResult<ProjectPreview[]>;
+                    GenericChecks.CheckFail(response);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushData();
+                }
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(InvalidEmptyProjectsPreview))]
+        internal async void GetProjectsPreview_InValidEmpty(Paging paging, ProjectSearch projectSearch)
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var api = Storage.CreatePublicProjectController(context);
 
 
                     var response =
@@ -375,8 +406,6 @@ namespace GeneralTests.API.Controllers.Public
                 }
             }
         }
-
-
 
 
         private void Compare(Project expected, Project actual)

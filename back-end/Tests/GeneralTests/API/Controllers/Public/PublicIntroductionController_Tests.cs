@@ -46,16 +46,7 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
-        private static PublicIntroductionController CreatePublicIntroductionController(DataContext context)
-        {
-            var config = Storage.CreateConfiguration();
-            var introductionRep = new IntroductionRepository(context);
-            var tokenManager = new TokenManager(config);
-            var sup = new Supervisor(tokenManager);
-
-            return new PublicIntroductionController(introductionRep, sup);
-        }
-
+        
         [Theory]
         [ClassData(typeof(Defaults))]
         internal async void GetIntroduction_Test(Introduction expected)
@@ -64,7 +55,7 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = CreatePublicIntroductionController(context);
+                    var api = Storage.CreatePublicIntroductionController(context);
                     var response =
                     (
                         await api.GetIntroduction() as JsonResult

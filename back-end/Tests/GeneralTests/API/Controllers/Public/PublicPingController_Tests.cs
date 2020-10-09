@@ -9,18 +9,11 @@ namespace GeneralTests.API.Controllers.Public
 {
     public class PublicPingController_Tests
     {
-        private static PublicPingController CreatePublicPingController()
-        {
-            var config = Storage.CreateConfiguration();
-            var tokenManager = new TokenManager(config);
-            var sup = new Supervisor(tokenManager);
-            return new PublicPingController(sup);
-        }
-
+        
         [Fact]
         internal void Ping_Test()
         {
-            var api = CreatePublicPingController();
+            var api = Storage.CreatePublicPingController();
 
             var response =
             (

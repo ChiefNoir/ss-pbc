@@ -9,16 +9,19 @@ using Abstractions.ISecurity;
 using System.Security;
 using System.Linq;
 using Security.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace Security
 {
     public class Supervisor : ISupervisor
     {
         private readonly ITokenManager _tokenManager;
+        private readonly ILogger<Supervisor> _logger;
 
-        public Supervisor(ITokenManager tokenManager)
+        public Supervisor(ITokenManager tokenManager, ILogger<Supervisor> logger)
         {
             _tokenManager = tokenManager;
+            _logger = logger;
         }
 
 
@@ -33,6 +36,8 @@ namespace Security
             }
             catch (Exception ee)
             {
+                _logger.LogError(ee, "Exception in public call");
+
                 result.IsSucceed = false;
                 result.Error = new Incident
                 {
@@ -56,6 +61,8 @@ namespace Security
             }
             catch (Exception ee)
             {
+                _logger.LogError(ee, "Exception in public call");
+
                 result.IsSucceed = false;
                 result.Error = new Incident
                 {
@@ -77,6 +84,8 @@ namespace Security
             }
             catch (Exception ee)
             {
+                _logger.LogError(ee, $"Exception in private call. Roles: {string.Join(',', roles ?? Array.Empty<string>()) } ");
+
                 return new ExecutionResult<T>
                 {
                     IsSucceed = false,
@@ -99,6 +108,8 @@ namespace Security
             }
             catch (Exception ee)
             {
+                _logger.LogError(ee, $"Exception in private call. Roles: {string.Join(',', roles ?? Array.Empty<string>()) } ");
+
                 return new ExecutionResult<T>
                 {
                     IsSucceed = false,

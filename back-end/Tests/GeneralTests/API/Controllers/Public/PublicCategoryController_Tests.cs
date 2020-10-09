@@ -5,6 +5,8 @@ using GeneralTests.SharedUtils;
 using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Security;
 using System;
 using System.Collections;
@@ -108,7 +110,8 @@ namespace GeneralTests.API.Controllers.Public
         {
             var categoryRep = new CategoryRepository(context);
             var tokenManager = new TokenManager(Storage.CreateConfiguration());
-            var sup = new Supervisor(tokenManager);
+            var logger = new Mock<ILogger<Supervisor>>();
+            var sup = new Supervisor(tokenManager, logger.Object);
 
             return new PublicCategoryController(categoryRep, sup);
         }

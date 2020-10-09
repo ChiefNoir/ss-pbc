@@ -46,13 +46,12 @@ namespace Infrastructure.Repository
 
         public async Task<ProjectPreview[]> GetPreviewAsync(int start, int length, string categoryCode)
         {
-            if(length < 1 || start < 0)
-                return Array.Empty<ProjectPreview>();
+            if (length < 1 || start < 0)
+            {
+                throw new InconsistencyException(Resources.TextMessages.WrongPagingQuery);
+            }
 
             var category = await _categoryRepository.GetAsync(categoryCode);
-            if (category == null)
-                return Array.Empty<ProjectPreview>();
-
             return await _context.Projects
                                  .Where(x => category.IsEverything || x.CategoryId == category.Id)
                                  .OrderByDescending(x => x.ReleaseDate)

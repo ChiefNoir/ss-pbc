@@ -191,38 +191,6 @@ namespace GeneralTests.API.Controllers.Private
         }
 
 
-        private static PrivateIntroductionController CreatePrivateIntroductionController(DataContext context)
-        {
-            var confing = Storage.CreateConfiguration();
-            var fileRep = new FileRepository(confing);
-            var introductionRep = new IntroductionRepository(context);
-            var tokenManager = new TokenManager(confing);
-            var sup = new Supervisor(tokenManager);
-
-            return new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
-        }
-
-        public static PublicIntroductionController CreatePublicIntroductionController(DataContext context)
-        {
-            var confing = Storage.CreateConfiguration();
-            var introductionRep = new IntroductionRepository(context);
-            var tokenManager = new TokenManager(confing);
-            var sup = new Supervisor(tokenManager);
-
-            return new PublicIntroductionController(introductionRep, sup);
-        }
-
-        public static AuthenticationController CreateAuthenticationController(DataContext context)
-        {
-            var confing = Storage.CreateConfiguration();
-            var hashManager = new HashManager(confing);
-            var accountRep = new AccountRepository(context, confing, hashManager);
-            var tokenManager = new TokenManager(confing);
-            var sup = new Supervisor(tokenManager);
-
-            return new AuthenticationController(confing, accountRep, sup, tokenManager);
-        }
-
         [Theory]
         [ClassData(typeof(GenerateValidSave))]
         internal async void UpdateIntroduction_Valid(Introduction update, Introduction expected)
@@ -231,7 +199,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync
@@ -242,7 +210,7 @@ namespace GeneralTests.API.Controllers.Private
                     
                     GenericChecks.CheckSucceed(identity);
 
-                    var api = CreatePrivateIntroductionController(context);
+                    var api = Storage.CreatePrivateIntroductionController(context);
                     var updateResponse =
                     (
                         await api.SaveAsync(identity.Data.Token, update) as JsonResult
@@ -251,7 +219,7 @@ namespace GeneralTests.API.Controllers.Private
                     GenericChecks.CheckSucceed(updateResponse);
                     Compare(updateResponse.Data, expected);
 
-                    var apiPublic = CreatePublicIntroductionController(context);
+                    var apiPublic = Storage.CreatePublicIntroductionController(context);
                     var getResponse =
                     (
                         await apiPublic.GetIntroduction() as JsonResult
@@ -280,7 +248,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync
@@ -291,7 +259,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     GenericChecks.CheckSucceed(identity);
 
-                    var api = CreatePrivateIntroductionController(context);
+                    var api = Storage.CreatePrivateIntroductionController(context);
                     var updateResponse =
                     (
                         await api.SaveAsync(identity.Data.Token, update) as JsonResult
@@ -341,7 +309,7 @@ namespace GeneralTests.API.Controllers.Private
                     };
 
 
-                    var api = CreatePrivateIntroductionController(context);
+                    var api = Storage.CreatePrivateIntroductionController(context);
                     var updateResponse =
                     (
                         await api.SaveAsync(token, introduction) as JsonResult

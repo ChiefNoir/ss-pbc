@@ -14,26 +14,6 @@ namespace GeneralTests.API.Controllers.Private
 {
     public class PrivateInformationalController_Test
     {
-        private static PrivateInformationalController CreatePrivateInformationalController(DataContext context)
-        {
-            var confing = Storage.CreateConfiguration();
-            var tokenManager = new TokenManager(confing);
-            var sup = new Supervisor(tokenManager);
-
-            return new PrivateInformationalController(sup, tokenManager);
-        }
-
-        private static AuthenticationController CreateAuthenticationController(DataContext context)
-        {
-            var confing = Storage.CreateConfiguration();
-            var hashManager = new HashManager(confing);
-            var tokenManager = new TokenManager(confing);
-            var sup = new Supervisor(tokenManager);
-            var accountRep = new AccountRepository(context, confing, hashManager);
-
-            return new AuthenticationController(confing, accountRep, sup, tokenManager);
-        }
-
         [Fact]
         internal async void GetInformation()
         {
@@ -41,8 +21,8 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = CreatePrivateInformationalController(context);
-                    var apiAuth = CreateAuthenticationController(context);
+                    var api = Storage.CreatePrivateInformationalController(context);
+                    var apiAuth = Storage.CreateAuthenticationController(context);
 
 
                     var identity =
@@ -89,7 +69,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = CreatePrivateInformationalController(context);
+                    var api = Storage.CreatePrivateInformationalController(context);
 
                     var response =
                     (

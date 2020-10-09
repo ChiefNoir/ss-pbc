@@ -8,6 +8,8 @@ using GeneralTests.SharedUtils;
 using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Security;
 using System;
 using System.Collections;
@@ -459,7 +461,8 @@ namespace GeneralTests.API.Controllers.Private
             var confing = Storage.CreateConfiguration();
             var tokenManager = new TokenManager(confing);
             var hasManager = new HashManager(confing);
-            var sup = new Supervisor(tokenManager);
+            var logger = new Mock<ILogger<Supervisor>>();
+            var sup = new Supervisor(tokenManager, logger.Object);
             var accRep = new AccountRepository(context, confing, hasManager);
             
             return new AuthenticationController(confing, accRep, sup, tokenManager);
@@ -470,7 +473,8 @@ namespace GeneralTests.API.Controllers.Private
             var confing = Storage.CreateConfiguration();
             var tokenManager = new TokenManager(confing);
             var hasManager = new HashManager(confing);
-            var sup = new Supervisor(tokenManager);
+            var logger = new Mock<ILogger<Supervisor>>();
+            var sup = new Supervisor(tokenManager, logger.Object);
             var accRep = new AccountRepository(context, confing, hasManager);
 
             return new PrivateAccountController(accRep, sup);
@@ -534,15 +538,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var confing = Storage.CreateConfiguration();
-                    var tokenManager = new TokenManager(confing);
-                    var hasManager = new HashManager(confing);
-                    var sup = new Supervisor(tokenManager);
-                    var accRep = new AccountRepository(context, confing, hasManager);
-                    var apiAuth = new AuthenticationController(confing, accRep, sup, tokenManager);
-
-
-                    var api = new PrivateAccountController(accRep, sup);
+                    var api = CreatePrivateAccountController(context);
 
                     var response = (api.GetRoles(token) as JsonResult).Value as ExecutionResult<List<string>>;
 

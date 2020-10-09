@@ -7,6 +7,8 @@ using Infrastructure;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Security;
 using System;
 using System.Collections;
@@ -96,17 +98,6 @@ namespace GeneralTests.API.Controllers.Gateway
             Version = 0
         };
 
-        private static AuthenticationController CreateAuthenticationController(DataContext context)
-        {
-            var config = Storage.CreateConfiguration();
-            var hashManager = new HashManager(config);
-            var accRep = new AccountRepository(context, config, hashManager);
-            var tokenManager = new TokenManager(config);
-            var sup = new Supervisor(tokenManager);
-
-            return new AuthenticationController(config, accRep, sup, tokenManager);
-        }
-
 
         [Theory]
         [InlineData("sa", "sa")]
@@ -116,7 +107,7 @@ namespace GeneralTests.API.Controllers.Gateway
             {
                 try
                 {
-                    var api = CreateAuthenticationController(context);
+                    var api = Storage.CreateAuthenticationController(context);
 
                     var response = 
                     (
@@ -153,7 +144,7 @@ namespace GeneralTests.API.Controllers.Gateway
             {
                 try
                 {
-                    var api = CreateAuthenticationController(context);
+                    var api = Storage.CreateAuthenticationController(context);
 
                     var response = 
                     (
@@ -184,7 +175,7 @@ namespace GeneralTests.API.Controllers.Gateway
             {
                 try
                 {
-                    var api = CreateAuthenticationController(context);
+                    var api = Storage.CreateAuthenticationController(context);
 
                     var authResponse =
                     (
@@ -220,7 +211,7 @@ namespace GeneralTests.API.Controllers.Gateway
             {
                 try
                 {
-                    var api = CreateAuthenticationController(context);
+                    var api = Storage.CreateAuthenticationController(context);
 
                     var authResponse =
                     (
@@ -259,7 +250,7 @@ namespace GeneralTests.API.Controllers.Gateway
             {
                 try
                 {
-                    var api = CreateAuthenticationController(context);
+                    var api = Storage.CreateAuthenticationController(context);
 
                     var response =
                     (

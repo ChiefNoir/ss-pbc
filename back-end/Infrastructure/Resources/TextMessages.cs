@@ -38,6 +38,9 @@ namespace Infrastructure.Resources
         /// <summary> The category {0} does not exist </summary>
         internal const string CategoryDoesNotExist = "Category {0} does not exist";
 
+        /// <summary> Wrong paging query </summary>
+        internal const string WrongPagingQuery = "Wrong paging query";
+
         /// <summary> {0} duplicate </summary>
         internal const string PropertyDuplicate = "{0} duplicate";
 

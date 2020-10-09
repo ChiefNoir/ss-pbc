@@ -96,9 +96,6 @@ namespace Infrastructure.Converters
 
         internal static ProjectExternalUrl ToProjectExternalUrl(Abstractions.Model.ExternalUrl externalUrl)
         {
-            if (externalUrl == null)
-                return null;
-
             return new ProjectExternalUrl
             {
                 ExternalUrl = ToExternalUrl(externalUrl),

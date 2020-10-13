@@ -332,7 +332,7 @@ namespace Infrastructure.Repository
 
             foreach (var dbGalleryitem in dbItem.GalleryImages)
             {
-                var updatedGalleryItem = project.GalleryImages.FirstOrDefault(x => x.Id == dbGalleryitem.Id);
+                var updatedGalleryItem = project.GalleryImages?.FirstOrDefault(x => x.Id == dbGalleryitem.Id);
                 if (updatedGalleryItem == null)
                     continue;
 

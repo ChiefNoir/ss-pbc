@@ -30,34 +30,6 @@ export class DataService
   }
 
 // --------------------------------------------------------------------
-// SWITCH METHODS
-  public saveAccount(account: Account): Promise<RequestResult<Account>>
-  {
-    if (account.id)
-    {
-      return this.updateAccount(account);
-    }
-    else
-    {
-      return this.createAccount(account);
-    }
-  }
-
-  public saveProject(project: Project): Promise<RequestResult<Project>>
-  {
-    if (project.id)
-    {
-      return this.updateProject(project);
-    }
-    else
-    {
-      return this.createProject(project);
-    }
-  }
-// [END OF] SWITCH METHODS
-// --------------------------------------------------------------------
-
-// --------------------------------------------------------------------
 // Restricted methods
   public getInformation(): Promise<RequestResult<Information>>
   {
@@ -173,7 +145,7 @@ export class DataService
                .toPromise();
   }
 
-  private createAccount(account: Account): Promise<RequestResult<Account>>
+  public saveAccount(account: Account): Promise<RequestResult<Account>>
   {
     const headers = new HttpHeaders({ Token: this.storage.getToken() });
 
@@ -183,20 +155,6 @@ export class DataService
                  this.endpoint + 'accounts',
                  account,
                  { headers }
-               )
-               .toPromise();
-  }
-
-  private updateAccount(account: Account): Promise<RequestResult<Account>>
-  {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
-
-    return this.httpClient
-               .request<RequestResult<Account>>
-               (
-                'patch',
-                 this.endpoint + 'accounts',
-                 {body: account, headers}
                )
                .toPromise();
   }
@@ -229,24 +187,7 @@ export class DataService
                .toPromise();
   }
 
-  private updateProject(project: Project): Promise<RequestResult<Project>>
-  {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
-
-    const formData = new FormData();
-    this.fillFormData(formData, 'project', project);
-
-    return this.httpClient
-               .patch<RequestResult<Project>>
-               (
-                 this.endpoint + 'project',
-                 formData,
-                 {headers}
-               )
-               .toPromise();
-  }
-
-  private createProject(project: Project): Promise<RequestResult<Project>>
+  public saveProject(project: Project): Promise<RequestResult<Project>>
   {
     const headers = new HttpHeaders({ Token: this.storage.getToken() });
 

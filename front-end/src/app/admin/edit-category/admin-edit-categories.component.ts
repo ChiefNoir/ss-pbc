@@ -8,7 +8,7 @@ import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Category } from 'src/app/shared/category.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorCategoryComponent } from 'src/app/admin/dialog-editor-category/dialog-editor-category.component';
-import { MessageType, MessageDescription } from 'src/app/shared/message.component';
+import { MessageType, MessageDescription } from 'src/app/shared/message/message.component';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';

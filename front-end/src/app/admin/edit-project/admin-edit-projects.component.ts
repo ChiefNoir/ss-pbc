@@ -9,7 +9,7 @@ import { ProjectPreview } from 'src/app/projects/project-preview.model';
 import {
   MessageType,
   MessageDescription,
-} from 'src/app/shared/message.component';
+} from 'src/app/shared/message/message.component';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { Paging } from 'src/app/shared/paging-info.model';
 import { Incident, RequestResult } from 'src/app/shared/request-result.model';

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 import { Title } from '@angular/platform-browser';
-import { MessageDescription, MessageType } from 'src/app/shared/message.component';
+import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { DataService } from 'src/app/core/data.service';
 import { Information } from 'src/app/admin/information.model';

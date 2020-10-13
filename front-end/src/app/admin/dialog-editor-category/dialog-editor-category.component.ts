@@ -5,7 +5,7 @@ import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Category } from 'src/app/shared/category.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MessageDescription, MessageType } from 'src/app/shared/message.component';
+import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
 
 @Component({
   selector: 'app-dialog-editor-category.component',

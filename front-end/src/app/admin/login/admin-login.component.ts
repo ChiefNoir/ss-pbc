@@ -14,7 +14,7 @@ import { AuthGuard } from 'src/app/core/auth.guard';
 import {
   MessageDescription,
   MessageType,
-} from 'src/app/shared/message.component';
+} from 'src/app/shared/message/message.component';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 
 @Component({

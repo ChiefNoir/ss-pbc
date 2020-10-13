@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { DataService } from 'src/app/core/data.service';
-import { MessageType, MessageDescription } from 'src/app/shared/message.component';
+import { MessageType, MessageDescription } from 'src/app/shared/message/message.component';
 import { Project } from 'src/app/shared/project.model';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { environment } from 'src/environments/environment';

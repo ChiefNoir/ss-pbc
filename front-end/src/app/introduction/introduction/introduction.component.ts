@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { DataService } from 'src/app/core/data.service';
 import { Introduction } from 'src/app/introduction/introduction.model';
-import { MessageDescription, MessageType } from 'src/app/shared/message.component';
+import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { environment } from 'src/environments/environment';

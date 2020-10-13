@@ -12,26 +12,26 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IntroductionRoutingModule } from './introduction/introduction-routing.module';
 
-import { MaterialModules } from './#import/material.modules';
+import { MaterialModules } from './#imports/material.modules';
 // -----
 
 // components
-import { HeaderComponent } from './component/header/header.component';
-import { FooterComponent } from './component/footer/footer.component';
-import { ButtonComponent } from './component/button/button.component';
-import { ButtonContactComponent } from './shared/button-contact.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { ButtonComponent } from './shared/button/button.component';
+import { ButtonContactComponent } from './shared/button-contact/button-contact.component';
 import { CarouselComponent } from './project/carousel/carousel.component';
 import { ButtonCategoryComponent } from './projects/button-category/button-category.component';
-import { ButtonExternalUrlComponent } from './shared/button-external-url.component';
+import { ButtonExternalUrlComponent } from './shared/button-external-url/button-external-url.component';
 import { FilterCategoryComponent } from './projects/filter-category/filter-category.component';
-import { PaginatorComponent } from './component/paginator/paginator.component';
+import { PaginatorComponent } from './shared/paginator/paginator.component';
 import { ProjectPreviewComponent } from './projects/project-preview/project-preview.component';
 import { ProjectFullComponent } from './project/project-full/project-full.component';
 import { ProjectComponent } from './project/project.component';
 import { DialogEditProjectComponent } from './admin/dialog-edit-project/dialog-edit-project.component';
 import { DialogEditorCategoryComponent } from './admin/dialog-editor-category/dialog-editor-category.component';
 import { DialogEditAccountComponent } from './admin/dialog-edit-account/dialog-edit-account.component';
-import { MessageComponent } from 'src/app/shared/message.component';
+import { MessageComponent } from './shared/message/message.component';
 import { FileUploaderComponent } from './admin/shared/file-uploader/file-uploader.component';
 // -----
 

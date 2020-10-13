@@ -12,7 +12,7 @@ import { Incident, RequestResult } from 'src/app/shared/request-result.model';
 import {
   MessageDescription,
   MessageType,
-} from 'src/app/shared/message.component';
+} from 'src/app/shared/message/message.component';
 import { environment } from 'src/environments/environment';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 

@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { MaterialModules } from './#import/material';
+import { MaterialModules } from './#import/material.modules';
 // -----
 
 // components

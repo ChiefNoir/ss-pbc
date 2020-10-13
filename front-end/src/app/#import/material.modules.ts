@@ -18,7 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 const Providers = [
   MatDatepickerModule,
   MatNativeDateModule
-]
+];
 
 const Material = [
   FormsModule,

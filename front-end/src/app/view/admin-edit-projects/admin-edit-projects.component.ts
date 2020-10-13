@@ -7,10 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogEditProjectComponent } from 'src/app/component/dialog-edit-project/dialog-edit-project.component';
 import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
-import { TextMessages } from 'src/app/resources/TextMessages';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
 import { Paging } from 'src/app/model/PagingInfo';
 import { Incident, RequestResult } from 'src/app/model/RequestResult';
-import { AuthGuard } from 'src/app/guards/authGuard';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/model/Category';
 

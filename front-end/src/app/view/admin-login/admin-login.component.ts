@@ -10,9 +10,9 @@ import { Title } from '@angular/platform-browser';
 
 import { environment } from 'src/environments/environment';
 import { Identity } from 'src/app/model/Identity';
-import { AuthGuard } from 'src/app/guards/authGuard';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
-import { TextMessages } from 'src/app/resources/TextMessages';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
 
 
 @Component({

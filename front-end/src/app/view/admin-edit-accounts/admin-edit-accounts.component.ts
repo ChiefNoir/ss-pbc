@@ -11,8 +11,8 @@ import { Account } from 'src/app/model/Account';
 import { DialogEditAccountComponent } from 'src/app/component/dialog-edit-account/dialog-edit-account.component';
 import { Paging } from 'src/app/model/PagingInfo';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
-import { TextMessages } from 'src/app/resources/TextMessages';
-import { AuthGuard } from 'src/app/guards/authGuard';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 import { Router } from '@angular/router';
 
 @Component({

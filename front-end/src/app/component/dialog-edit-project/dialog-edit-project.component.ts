@@ -8,7 +8,7 @@ import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { MatTable } from '@angular/material/table';
 import { MessageType, MessageDescription } from '../message/message.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TextMessages } from 'src/app/resources/TextMessages';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
 import { GalleryImage } from 'src/app/model/GalleryImage';
 
 @Component({

@@ -3,7 +3,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
 // -----
 
 import { AppComponent } from './app.component';
@@ -34,7 +34,7 @@ import { FileUploaderComponent } from './component/file-uploader/file-uploader.c
 import { OnlyIntModule } from './directive/onlyInt/onlyInt.module';
 // -----
 
-import { SplitPipe } from './pipe/SplitPipe';
+import { SplitPipe } from './pipe/split.pipe';
 //
 
 // views
@@ -56,7 +56,7 @@ import { AuthService } from './service/auth.service';
 import { StorageService } from './service/storage.service';
 // -----
 
-import { AuthGuard } from './guards/authGuard';
+import { AuthGuard } from './guards/auth.guard';
 
 // providers
 import { CookieService } from 'ngx-cookie-service';

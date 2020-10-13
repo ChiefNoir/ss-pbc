@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { TextMessages } from 'src/app/resources/TextMessages';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
 import { environment } from 'src/environments/environment';
 
 @Component({

@@ -5,7 +5,7 @@ import { DataService } from 'src/app/service/data.service';
 import { Introduction } from 'src/app/model/Introduction';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { RequestResult, Incident } from 'src/app/model/RequestResult';
-import { TextMessages } from 'src/app/resources/TextMessages';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
 import { environment } from 'src/environments/environment';
 
 @Component({

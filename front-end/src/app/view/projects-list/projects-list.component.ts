@@ -11,7 +11,7 @@ import { Incident, RequestResult } from 'src/app/model/RequestResult';
 
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { environment } from 'src/environments/environment';
-import { TextMessages } from 'src/app/resources/TextMessages';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
 
 @Component({
   selector: 'app-projects-list',

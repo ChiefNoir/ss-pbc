@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
-import { TextMessages } from 'src/app/resources/TextMessages';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
 import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Category } from 'src/app/model/Category';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';

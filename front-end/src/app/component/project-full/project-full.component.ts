@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TextMessages } from 'src/app/resources/TextMessages';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
 
 import { Project } from 'src/app/model/Project';
 

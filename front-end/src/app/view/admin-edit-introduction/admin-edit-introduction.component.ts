@@ -7,9 +7,9 @@ import { Introduction } from 'src/app/model/Introduction';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { ExternalUrl } from 'src/app/model/ExternalUrl';
 import { MatTable } from '@angular/material/table';
-import { AuthGuard } from 'src/app/guards/authGuard';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 import { Router } from '@angular/router';
-import { TextMessages } from 'src/app/resources/TextMessages';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
 
 @Component({
   selector: 'app-admin-edit-introduction',

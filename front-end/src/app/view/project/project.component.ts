@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { TextMessages } from 'src/app/resources/TextMessages';
+import { TextMessages } from 'src/app/resources/text-messages.resources';
 import { DataService } from 'src/app/service/data.service';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
 import { Project } from 'src/app/model/Project';

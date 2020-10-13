@@ -12,7 +12,7 @@ import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
 import { ProjectsListComponent } from './view/projects-list/projects-list.component';
 
-import { AuthGuard } from './guards/authGuard';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes =
 [

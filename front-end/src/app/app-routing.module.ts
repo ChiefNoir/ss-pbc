@@ -9,29 +9,45 @@ import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edi
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
-import { ProjectsListComponent } from './view/projects-list/projects-list.component';
 
 import { AuthGuard } from './core/auth.guard';
 
 import { IntroductionRoutingModule } from './introduction/introduction-routing.module';
+import { ProjectsRoutingModule } from './projects/projects-routing.module';
 
-const routes: Routes =
-[
-  { path: 'projects', component: ProjectsListComponent },
+const routes: Routes = [
   { path: 'login', component: AdminLoginComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
-  { path: 'admin/editor/projects',  component: AdminEditProjectsComponent, canActivate: [AuthGuard] },
-  { path: 'admin/editor/categories', component: AdminEditCategoriesComponent, canActivate: [AuthGuard] },
-  { path: 'admin/editor/accounts', component: AdminEditAccountsComponent, canActivate: [AuthGuard] },
-  { path: 'admin/editor/introduction', component: AdminEditIntroductionComponent, canActivate: [AuthGuard] },
+  {
+    path: 'admin/editor/projects',
+    component: AdminEditProjectsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/editor/categories',
+    component: AdminEditCategoriesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/editor/accounts',
+    component: AdminEditAccountsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/editor/introduction',
+    component: AdminEditIntroductionComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'project/:code', component: ProjectComponent },
-  { path: 'projects/:category', component: ProjectsListComponent },
   { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
-  imports: [IntroductionRoutingModule, RouterModule.forRoot(routes)],
+  imports: [
+    IntroductionRoutingModule,
+    ProjectsRoutingModule,
+    RouterModule.forRoot(routes),
+  ],
   exports: [RouterModule],
 })
-
 export class AppRoutingModule {}

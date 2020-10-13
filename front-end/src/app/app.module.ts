@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IntroductionRoutingModule } from './introduction/introduction-routing.module';
 
-
 import { MaterialModules } from './#import/material.modules';
 // -----
 
@@ -24,9 +23,9 @@ import { ButtonContactComponent } from './shared/button-contact.component';
 import { CarouselComponent } from './component/carousel/carousel.component';
 import { ButtonCategoryComponent } from './component/button-category/button-category.component';
 import { ButtonExternalUrlComponent } from './shared/button-external-url.component';
-import { FilterCategoryComponent } from './component/filter-category/filter-category.component';
+import { FilterCategoryComponent } from './projects/filter-category/filter-category.component';
 import { PaginatorComponent } from './component/paginator/paginator.component';
-import { ProjectPreviewComponent } from './component/project-preview/project-preview.component';
+import { ProjectPreviewComponent } from './projects/project-preview/project-preview.component';
 import { ProjectFullComponent } from './component/project-full/project-full.component';
 import { DialogEditProjectComponent } from './component/dialog-edit-project/dialog-edit-project.component';
 import { DialogEditorCategoryComponent } from './component/dialog-editor-category/dialog-editor-category.component';
@@ -43,7 +42,7 @@ import { SplitPipe } from './shared/split.pipe';
 
 // views
 import { IntroductionComponent } from './introduction/introduction/introduction.component';
-import { ProjectsListComponent } from './view/projects-list/projects-list.component';
+import { ProjectsListComponent } from './projects/project-list/projects-list.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';

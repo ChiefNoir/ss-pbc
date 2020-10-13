@@ -6,7 +6,7 @@ import { Category } from '../model/category.model';
 import { Information } from '../model/information.model';
 import { Introduction } from '../introduction/introduction.model';
 import { Project } from '../model/project.model';
-import { ProjectPreview } from '../model/project-preview.model';
+import { ProjectPreview } from '../projects/project-preview.model';
 import { RequestResult } from '../model/request-result.model';
 
 import { environment } from 'src/environments/environment';

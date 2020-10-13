@@ -6,6 +6,7 @@ import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Category } from 'src/app/shared/category.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
+import { PrivateService } from 'src/app/core/private.service';
 
 @Component({
   selector: 'app-dialog-editor-category.component',
@@ -16,7 +17,8 @@ import { MessageDescription, MessageType } from 'src/app/shared/message/message.
 export class DialogEditorCategoryComponent implements OnInit
 {
   private categoryId: number;
-  private service: DataService;
+  private service: PrivateService;
+  private publicService: DataService;
   private dialog: MatDialogRef<DialogEditorCategoryComponent>;
 
   public category$: BehaviorSubject<Category> = new BehaviorSubject<Category>(null);
@@ -27,10 +29,11 @@ export class DialogEditorCategoryComponent implements OnInit
 
   public systemCategoryMessage: MessageDescription = {text: this.textMessages.CategorySystemWarning, type: MessageType.Info };
 
-  constructor(service: DataService, dialogRef: MatDialogRef<DialogEditorCategoryComponent>, @Inject(MAT_DIALOG_DATA) categoryId: number)
+  constructor(service: PrivateService, publicService: DataService, dialogRef: MatDialogRef<DialogEditorCategoryComponent>, @Inject(MAT_DIALOG_DATA) categoryId: number)
   {
     this.service = service;
     this.dialog = dialogRef;
+    this.publicService = publicService;
     this.categoryId = categoryId;
   }
 
@@ -38,7 +41,7 @@ export class DialogEditorCategoryComponent implements OnInit
   {
     if (this.categoryId)
     {
-      this.service.getCategory(this.categoryId)
+      this.publicService.getCategory(this.categoryId)
                   .then
                   (
                     succeeded => this.handleCategory(succeeded, {text: this.textMessages.LoadComplete, type: MessageType.Info }),

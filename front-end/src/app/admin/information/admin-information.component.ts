@@ -10,6 +10,7 @@ import { Information } from 'src/app/admin/information.model';
 import { environment } from 'src/environments/environment';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { AuthGuard } from 'src/app/core/auth.guard';
+import { PrivateService } from 'src/app/core/private.service';
 
 @Component({
   selector: 'app-admin-information',
@@ -20,14 +21,14 @@ import { AuthGuard } from 'src/app/core/auth.guard';
 export class AdminInformationComponent implements OnInit
 {
   private authGuard: AuthGuard;
-  private dataService: DataService;
+  private dataService: PrivateService;
   private router: Router;
 
   public information$: BehaviorSubject<Information> = new BehaviorSubject<Information> (null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   public textMessages: TextMessages = new TextMessages();
 
-  public constructor(router: Router, titleService: Title, dataService: DataService, authGuard: AuthGuard)
+  public constructor(router: Router, titleService: Title, dataService: PrivateService, authGuard: AuthGuard)
   {
     this.router = router;
     this.dataService = dataService;

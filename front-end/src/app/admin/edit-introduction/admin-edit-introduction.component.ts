@@ -10,6 +10,7 @@ import { MatTable } from '@angular/material/table';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { PrivateService } from 'src/app/core/private.service';
 
 @Component({
   selector: 'app-admin-edit-introduction',
@@ -19,7 +20,8 @@ import { TextMessages } from 'src/app/shared/text-messages.resources';
 
 export class AdminEditIntroductionComponent implements OnInit
 {
-  private service: DataService;
+  private service: PrivateService;
+  private publicService: DataService;
 
   public columnsInner: string[] = [ 'name', 'url', 'btn'];
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
@@ -31,11 +33,12 @@ export class AdminEditIntroductionComponent implements OnInit
   private router: Router;
   public textMessages: TextMessages = new TextMessages();
 
-  public constructor(service: DataService, authGuard: AuthGuard, router: Router)
+  public constructor(service: PrivateService,  publicService: DataService, authGuard: AuthGuard, router: Router)
   {
     this.service = service;
     this.authGuard = authGuard;
     this.router = router;
+    this.publicService = publicService;
   }
 
   public async ngOnInit(): Promise<void>
@@ -45,7 +48,7 @@ export class AdminEditIntroductionComponent implements OnInit
     {
       this.introduction$.next(null);
 
-      this.service.getIntroduction()
+      this.publicService.getIntroduction()
                   .then
                   (
                     result => this.handle(result, {text: 'Load complete', type: MessageType.Info }),
@@ -88,7 +91,7 @@ export class AdminEditIntroductionComponent implements OnInit
   {
     this.introduction$.next(null);
 
-    this.service.getIntroduction()
+    this.publicService.getIntroduction()
         .then
         (
           result => this.handle(result, {text: 'Load complete', type: MessageType.Info }),

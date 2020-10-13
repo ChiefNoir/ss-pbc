@@ -14,6 +14,7 @@ import { MessageDescription, MessageType } from 'src/app/shared/message/message.
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';
+import { PrivateService } from 'src/app/core/private.service';
 
 @Component({
   selector: 'app-admin-edit-accounts',
@@ -25,7 +26,7 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
 
   private authGuard: AuthGuard;
   private router: Router;
-  private service: DataService;
+  private service: PrivateService;
 
   public accounts$: BehaviorSubject<Array<Account>> = new BehaviorSubject<Array<Account>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
@@ -34,7 +35,7 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
   public dialog: MatDialog;
   public textMessages: TextMessages = new TextMessages();
 
-  public constructor(service: DataService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
+  public constructor(service: PrivateService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
   {
     this.service = service;
     this.dialog = dialog;

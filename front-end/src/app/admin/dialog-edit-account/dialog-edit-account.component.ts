@@ -6,6 +6,7 @@ import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { DataService } from 'src/app/core/data.service';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Account } from 'src/app/admin/account.model';
+import { PrivateService } from 'src/app/core/private.service';
 
 @Component({
   selector: 'app-dialog-edit-account.component',
@@ -24,18 +25,20 @@ export class DialogEditAccountComponent implements OnInit
 
   private accountId: number;
   private service: DataService;
+  private privateService: PrivateService;
   private dialog: MatDialogRef<DialogEditAccountComponent>;
 
-  constructor(service: DataService, dialogRef: MatDialogRef<DialogEditAccountComponent>, @Inject(MAT_DIALOG_DATA) data: number)
+  constructor(service: DataService, privateService: PrivateService, dialogRef: MatDialogRef<DialogEditAccountComponent>, @Inject(MAT_DIALOG_DATA) data: number)
   {
     this.service = service;
+    this.privateService = privateService;
     this.dialog = dialogRef;
     this.accountId = data;
   }
 
   public ngOnInit(): void
   {
-    this.service.getRoles()
+    this.privateService.getRoles()
                 .then
                 (
                   succeeded => this.handleRoles(succeeded),
@@ -45,7 +48,7 @@ export class DialogEditAccountComponent implements OnInit
     if (this.accountId)
     {
       this.message$.next({type: MessageType.Spinner });
-      this.service.getAccount(this.accountId)
+      this.privateService.getAccount(this.accountId)
                   .then
                   (
                     succeeded =>
@@ -69,7 +72,7 @@ export class DialogEditAccountComponent implements OnInit
     this.disableInput$.next(true);
     this.message$.next({text: this.textMessages.SaveInProgress, type: MessageType.Spinner });
 
-    this.service.saveAccount(this.account$.value)
+    this.privateService.saveAccount(this.account$.value)
                 .then
                 (
                   succeeded =>
@@ -86,7 +89,7 @@ export class DialogEditAccountComponent implements OnInit
     this.disableInput$.next(true);
     this.message$.next({text: this.textMessages.DeleteInProgress, type: MessageType.Spinner });
 
-    this.service.deleteAccount(this.account$.value)
+    this.privateService.deleteAccount(this.account$.value)
                 .then
                 (
                   win => this.handleDelete(win),

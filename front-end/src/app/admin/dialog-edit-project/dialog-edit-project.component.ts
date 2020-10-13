@@ -10,6 +10,7 @@ import { MessageType, MessageDescription } from 'src/app/shared/message/message.
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { GalleryImage } from 'src/app/shared/gallery-image.model';
+import { PrivateService } from 'src/app/core/private.service';
 
 @Component({
   selector: 'app-dialog-edit-project.',
@@ -20,7 +21,8 @@ import { GalleryImage } from 'src/app/shared/gallery-image.model';
 export class DialogEditProjectComponent implements OnInit
 {
   private code: string;
-  private service: DataService;
+  private service: PrivateService;
+  private publicService: DataService;
   private dialog: MatDialogRef<DialogEditProjectComponent>;
 
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
@@ -34,9 +36,10 @@ export class DialogEditProjectComponent implements OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
-  constructor(service: DataService, dialog: MatDialogRef<DialogEditProjectComponent>, @Inject(MAT_DIALOG_DATA) projectCode: string)
+  constructor(service: PrivateService, publicService: DataService, dialog: MatDialogRef<DialogEditProjectComponent>, @Inject(MAT_DIALOG_DATA) projectCode: string)
   {
     this.service = service;
+    this.publicService = publicService;
     this.dialog = dialog;
     this.code = projectCode;
   }
@@ -51,7 +54,7 @@ export class DialogEditProjectComponent implements OnInit
     this.disableInput$.next(true);
     this.message$.next({ type: MessageType.Spinner  });
 
-    this.service.getCategories().then
+    this.publicService.getCategories().then
     (
       categorySucceeded =>
       {
@@ -59,7 +62,7 @@ export class DialogEditProjectComponent implements OnInit
 
         if (this.code)
         {
-          this.service.getProject(this.code)
+          this.publicService.getProject(this.code)
                       .then
                       (
                         win => this.handleProject(win, {text: this.textMessages.LoadComplete, type: MessageType.Info }),

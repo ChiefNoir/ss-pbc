@@ -4,14 +4,14 @@ import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
 import { DataService } from 'src/app/core/data.service';
-import { ProjectPreview } from 'src/app/model/ProjectPreview';
-import { Category } from 'src/app/model/Category';
-import { Paging } from 'src/app/model/PagingInfo';
-import { Incident, RequestResult } from 'src/app/model/RequestResult';
+import { ProjectPreview } from 'src/app/model/project-preview.model';
+import { Category } from 'src/app/model/category.model';
+import { Paging } from 'src/app/model/paging-info.model';
+import { Incident, RequestResult } from 'src/app/model/request-result.model';
 
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { environment } from 'src/environments/environment';
-import { TextMessages } from 'src/app/resources/text-messages.resources';
+import { TextMessages } from 'src/app/shared/text-messages.resources';
 
 @Component({
   selector: 'app-projects-list',

@@ -7,11 +7,11 @@ import {
 } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Identity } from '../model/Identity';
-import { AuthService } from '../core/auth.service';
-import { StorageService } from '../core/storage.service';
-import { Account } from 'src/app/model/Account';
-import { RequestResult } from '../model/RequestResult';
+import { Identity } from '../model/identity.model';
+import { AuthService } from './auth.service';
+import { StorageService } from './storage.service';
+import { Account } from 'src/app/model/account.model';
+import { RequestResult } from '../model/request-result.model';
 
 @Injectable({
   providedIn: 'root',

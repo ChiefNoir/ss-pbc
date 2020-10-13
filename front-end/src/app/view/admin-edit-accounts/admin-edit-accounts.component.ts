@@ -4,15 +4,15 @@ import { BehaviorSubject  } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/core/data.service';
-import { RequestResult, Incident } from 'src/app/model/RequestResult';
+import { RequestResult, Incident } from 'src/app/model/request-result.model';
 import { MatDialog } from '@angular/material/dialog';
-import { Account } from 'src/app/model/Account';
+import { Account } from 'src/app/model/account.model';
 
 import { DialogEditAccountComponent } from 'src/app/component/dialog-edit-account/dialog-edit-account.component';
-import { Paging } from 'src/app/model/PagingInfo';
+import { Paging } from 'src/app/model/paging-info.model';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
-import { TextMessages } from 'src/app/resources/text-messages.resources';
-import { AuthGuard } from 'src/app/guards/auth.guard';
+import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';
 
 @Component({

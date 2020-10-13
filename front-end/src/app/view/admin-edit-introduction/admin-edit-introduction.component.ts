@@ -2,14 +2,14 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { DataService } from 'src/app/core/data.service';
-import { RequestResult, Incident } from 'src/app/model/RequestResult';
-import { Introduction } from 'src/app/model/Introduction';
+import { RequestResult, Incident } from 'src/app/model/request-result.model';
+import { Introduction } from 'src/app/model/introduction.model';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
-import { ExternalUrl } from 'src/app/model/ExternalUrl';
+import { ExternalUrl } from 'src/app/model/external-url.model';
 import { MatTable } from '@angular/material/table';
-import { AuthGuard } from 'src/app/guards/auth.guard';
+import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';
-import { TextMessages } from 'src/app/resources/text-messages.resources';
+import { TextMessages } from 'src/app/shared/text-messages.resources';
 
 @Component({
   selector: 'app-admin-edit-introduction',

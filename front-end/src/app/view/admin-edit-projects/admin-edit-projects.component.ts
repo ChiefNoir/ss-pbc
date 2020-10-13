@@ -5,14 +5,14 @@ import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/core/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditProjectComponent } from 'src/app/component/dialog-edit-project/dialog-edit-project.component';
-import { ProjectPreview } from 'src/app/model/ProjectPreview';
+import { ProjectPreview } from 'src/app/model/project-preview.model';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
-import { TextMessages } from 'src/app/resources/text-messages.resources';
-import { Paging } from 'src/app/model/PagingInfo';
-import { Incident, RequestResult } from 'src/app/model/RequestResult';
-import { AuthGuard } from 'src/app/guards/auth.guard';
+import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { Paging } from 'src/app/model/paging-info.model';
+import { Incident, RequestResult } from 'src/app/model/request-result.model';
+import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';
-import { Category } from 'src/app/model/Category';
+import { Category } from 'src/app/model/category.model';
 
 @Component({
   selector: 'app-admin-edit-projects',

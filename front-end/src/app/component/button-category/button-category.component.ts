@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Category } from 'src/app/model/Category';
+import { Category } from 'src/app/model/category.model';
 
 @Component({
   selector: 'app-button-category',

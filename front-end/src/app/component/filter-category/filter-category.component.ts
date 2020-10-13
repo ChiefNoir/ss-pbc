@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Category } from 'src/app/model/Category';
+import { Category } from 'src/app/model/category.model';
 import { Router } from '@angular/router';
 
 @Component({

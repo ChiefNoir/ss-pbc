@@ -1,6 +1,6 @@
-import { ExternalUrl } from 'src/app/model/ExternalUrl';
-import { Category } from 'src/app/model/Category';
-import { GalleryImage } from 'src/app/model/GalleryImage';
+import { ExternalUrl } from 'src/app/model/external-url.model';
+import { Category } from 'src/app/model/category.model';
+import { GalleryImage } from 'src/app/model/gallery-image.model';
 
 export class Project
 {

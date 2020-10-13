@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { TextMessages } from 'src/app/resources/text-messages.resources';
+import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { DataService } from 'src/app/core/data.service';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
-import { Project } from 'src/app/model/Project';
-import { RequestResult, Incident } from 'src/app/model/RequestResult';
+import { Project } from 'src/app/model/project.model';
+import { RequestResult, Incident } from 'src/app/model/request-result.model';
 import { environment } from 'src/environments/environment';
 
 @Component({

@@ -2,8 +2,8 @@ import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
-import { AuthGuard } from './guards/auth.guard';
-import { TextMessages } from './resources/text-messages.resources';
+import { AuthGuard } from './core/auth.guard';
+import { TextMessages } from './shared/text-messages.resources';
 
 @Component({
   selector: 'app-root',

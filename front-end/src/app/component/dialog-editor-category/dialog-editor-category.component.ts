@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/core/data.service';
-import { TextMessages } from 'src/app/resources/text-messages.resources';
-import { RequestResult, Incident } from 'src/app/model/RequestResult';
-import { Category } from 'src/app/model/Category';
+import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { RequestResult, Incident } from 'src/app/model/request-result.model';
+import { Category } from 'src/app/model/category.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from '../message/message.component';
 

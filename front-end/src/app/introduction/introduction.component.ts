@@ -2,10 +2,10 @@ import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { DataService } from 'src/app/core/data.service';
-import { Introduction } from 'src/app/model/Introduction';
+import { Introduction } from 'src/app/model/introduction.model';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
-import { RequestResult, Incident } from 'src/app/model/RequestResult';
-import { TextMessages } from 'src/app/resources/text-messages.resources';
+import { RequestResult, Incident } from 'src/app/model/request-result.model';
+import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { environment } from 'src/environments/environment';
 
 @Component({

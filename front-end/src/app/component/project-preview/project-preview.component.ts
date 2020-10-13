@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Project } from 'src/app/model/Project';
+import { Project } from 'src/app/model/project.model';
 
 @Component({
   selector: 'app-project-preview',

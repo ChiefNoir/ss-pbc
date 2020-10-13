@@ -4,13 +4,13 @@ import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/core/data.service';
-import { RequestResult, Incident } from 'src/app/model/RequestResult';
-import { Category } from 'src/app/model/Category';
+import { RequestResult, Incident } from 'src/app/model/request-result.model';
+import { Category } from 'src/app/model/category.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorCategoryComponent } from 'src/app/component/dialog-editor-category/dialog-editor-category.component';
 import { MessageType, MessageDescription } from 'src/app/component/message/message.component';
-import { TextMessages } from 'src/app/resources/text-messages.resources';
-import { AuthGuard } from 'src/app/guards/auth.guard';
+import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';
 
 @Component({

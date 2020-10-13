@@ -16,10 +16,10 @@ import { MaterialModules } from './#import/material.modules';
 import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { ButtonComponent } from './component/button/button.component';
-import { ButtonContactComponent } from './component/button-contact/button-contact.component';
+import { ButtonContactComponent } from './shared/button-contact.component';
 import { CarouselComponent } from './component/carousel/carousel.component';
 import { ButtonCategoryComponent } from './component/button-category/button-category.component';
-import { ButtonExternalUrlComponent } from './component/button-external-url/button-external-url.component';
+import { ButtonExternalUrlComponent } from './shared/button-external-url.component';
 import { FilterCategoryComponent } from './component/filter-category/filter-category.component';
 import { PaginatorComponent } from './component/paginator/paginator.component';
 import { ProjectPreviewComponent } from './component/project-preview/project-preview.component';
@@ -31,14 +31,14 @@ import { MessageComponent } from './component/message/message.component';
 import { FileUploaderComponent } from './component/file-uploader/file-uploader.component';
 // -----
 
-import { OnlyIntModule } from './directive/onlyInt/only-int.module';
+import { OnlyIntModule } from './shared/only-int.module';
 // -----
 
-import { SplitPipe } from './pipe/split.pipe';
+import { SplitPipe } from './shared/split.pipe';
 //
 
 // views
-import { IntroductionComponent } from './view/introduction/introduction.component';
+import { IntroductionComponent } from './introduction/introduction.component';
 import { ProjectsListComponent } from './view/projects-list/projects-list.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
@@ -56,7 +56,7 @@ import { AuthService } from './core/auth.service';
 import { StorageService } from './core/storage.service';
 // -----
 
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './core/auth.guard';
 
 // providers
 import { CookieService } from 'ngx-cookie-service';

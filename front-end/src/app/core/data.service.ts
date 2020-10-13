@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Account } from '../model/Account';
-import { Category } from '../model/Category';
-import { Information } from '../model/Information';
-import { Introduction } from '../model/Introduction';
-import { Project } from '../model/Project';
-import { ProjectPreview } from '../model/ProjectPreview';
-import { RequestResult } from '../model/RequestResult';
+import { Account } from '../model/account.model';
+import { Category } from '../model/category.model';
+import { Information } from '../model/information.model';
+import { Introduction } from '../model/introduction.model';
+import { Project } from '../model/project.model';
+import { ProjectPreview } from '../model/project-preview.model';
+import { RequestResult } from '../model/request-result.model';
 
 import { environment } from 'src/environments/environment';
 

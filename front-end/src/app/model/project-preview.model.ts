@@ -1,4 +1,4 @@
-import { Category } from 'src/app/model/Category';
+import { Category } from 'src/app/model/category.model';
 
 export class ProjectPreview
 {

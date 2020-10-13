@@ -7,13 +7,13 @@ import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin
 import { AdminEditIntroductionComponent } from './view/admin-edit-introduction/admin-edit-introduction.component';
 import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edit-projects.component';
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';
-import { NotFoundComponent } from './view/notfound/notfound.component';
 
 import { AuthGuard } from './core/auth.guard';
 
 import { IntroductionRoutingModule } from './introduction/introduction-routing.module';
 import { ProjectsRoutingModule } from './projects/projects-routing.module';
 import { ProjectRoutingModule } from './project/project.routing.module';
+import { NotFoundRoutingModule } from './not-found/not-found.routing.module';
 
 const routes: Routes = [
   { path: 'login', component: AdminLoginComponent },
@@ -37,9 +37,7 @@ const routes: Routes = [
     path: 'admin/editor/introduction',
     component: AdminEditIntroductionComponent,
     canActivate: [AuthGuard],
-  },
-
-  { path: '**', component: NotFoundComponent },
+  }
 ];
 
 @NgModule({
@@ -47,6 +45,7 @@ const routes: Routes = [
     IntroductionRoutingModule,
     ProjectsRoutingModule,
     ProjectRoutingModule,
+    NotFoundRoutingModule,
     RouterModule.forRoot(routes),
   ],
   exports: [RouterModule],

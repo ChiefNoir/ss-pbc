@@ -5,8 +5,8 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-not-found',
-  templateUrl: './notfound.component.html',
-  styleUrls: ['./notfound.component.scss'],
+  templateUrl: './not-found.component.html',
+  styleUrls: ['./not-found.component.scss'],
 })
 
 export class NotFoundComponent

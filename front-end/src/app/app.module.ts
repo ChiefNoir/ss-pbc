@@ -44,7 +44,7 @@ import { SplitPipe } from './shared/split.pipe';
 // views
 import { IntroductionComponent } from './introduction/introduction/introduction.component';
 import { ProjectsListComponent } from './projects/project-list/projects-list.component';
-import { NotFoundComponent } from './view/notfound/notfound.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';
 import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edit-projects.component';
 import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin-edit-categories.component';

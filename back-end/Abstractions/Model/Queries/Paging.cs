@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace API.Queries
+namespace Abstractions.Model.Queries
 {
     public class Paging
     {

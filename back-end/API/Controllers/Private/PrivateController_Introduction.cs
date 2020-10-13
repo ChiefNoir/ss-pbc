@@ -1,4 +1,5 @@
-﻿using Abstractions.IRepository;
+﻿using Abstractions.API;
+using Abstractions.IRepository;
 using Abstractions.Model;
 using Abstractions.Supervision;
 using API.Helpers;
@@ -10,25 +11,9 @@ using System.Threading.Tasks;
 
 namespace API.Controllers.Private
 {
-    [ApiController]
-    [Route("api/v1/")]
-    public class PrivateIntroductionController : ControllerBase
+    public partial class PrivateController : PrivateControllerBase
     {
-        private readonly IConfiguration _configuration;
-        private readonly IFileRepository _fileRepository;
-        private readonly IIntroductionRepository _introductionRepository;
-        private readonly ISupervisor _supervisor;
-
-        public PrivateIntroductionController(IFileRepository fileRepository, IConfiguration configuration, IIntroductionRepository introductionRepository, ISupervisor supervisor)
-        {
-            _configuration = configuration;
-            _fileRepository = fileRepository;
-            _introductionRepository = introductionRepository;
-            _supervisor = supervisor;
-        }
-
-        [HttpPatch("introduction"), DisableRequestSizeLimit]
-        public async Task<IActionResult> SaveAsync([FromHeader] string token, [FromForm] Introduction introduction)
+        public override async Task<IActionResult> SaveIntroductionAsync([FromHeader] string token, [FromForm] Introduction introduction)
         {
             var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {

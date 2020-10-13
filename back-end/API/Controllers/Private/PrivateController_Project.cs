@@ -1,4 +1,5 @@
-﻿using Abstractions.IRepository;
+﻿using Abstractions.API;
+using Abstractions.IRepository;
 using Abstractions.Model;
 using Abstractions.Supervision;
 using API.Helpers;
@@ -12,25 +13,9 @@ using System.Threading.Tasks;
 
 namespace API.Controllers.Private
 {
-    [ApiController]
-    [Route("api/v1/")]
-    public class PrivateProjectController : ControllerBase
+    public partial class PrivateController : PrivateControllerBase
     {
-        private readonly IConfiguration _configuration;
-        private readonly IFileRepository _fileRepository;
-        private readonly IProjectRepository _projectRepository;
-        private readonly ISupervisor _supervisor;
-
-        public PrivateProjectController(IConfiguration configuration, IFileRepository fileRepository, IProjectRepository projectRepository, ISupervisor supervisor)
-        {
-            _configuration = configuration;
-            _fileRepository = fileRepository;
-            _projectRepository = projectRepository;
-            _supervisor = supervisor;
-        }
-
-        [HttpPost("project"), DisableRequestSizeLimit]
-        public async Task<IActionResult> Save([FromHeader] string token, [FromForm] Project project)
+        public override async Task<IActionResult> SaveProjectAsync([FromHeader] string token, [FromForm] Project project)
         {
             var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
             {
@@ -41,8 +26,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        [HttpDelete("project"), DisableRequestSizeLimit]
-        public async Task<IActionResult> Delete([FromHeader] string token, [FromBody] Project project)
+        public override async Task<IActionResult> DeleteProjectAsync([FromHeader] string token, [FromBody] Project project)
         {
             var result = await _supervisor.SafeExecuteAsync
             (

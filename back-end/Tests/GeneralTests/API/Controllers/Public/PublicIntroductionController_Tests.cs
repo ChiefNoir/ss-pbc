@@ -55,10 +55,10 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = Storage.CreatePublicIntroductionController(context);
+                    var api = Storage.CreatePublicController(context);
                     var response =
                     (
-                        await api.GetIntroduction() as JsonResult
+                        await api.GetIntroductionAsync() as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
                     GenericChecks.CheckSucceed(response);

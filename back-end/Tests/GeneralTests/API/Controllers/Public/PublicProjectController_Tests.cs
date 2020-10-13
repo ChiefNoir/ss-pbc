@@ -1,12 +1,8 @@
 ﻿using Abstractions.Model;
+using Abstractions.Model.Queries;
 using Abstractions.Supervision;
-using API.Controllers.Public;
-using API.Queries;
 using GeneralTests.SharedUtils;
-using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Security;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -262,11 +258,11 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = Storage.CreatePublicProjectController(context);
+                    var api = Storage.CreatePublicController(context);
 
                     var response =
                     (
-                        await api.GetProject(expected.Code) as JsonResult
+                        await api.GetProjectAsync(expected.Code) as JsonResult
                     ).Value as ExecutionResult<Project>;
 
                     GenericChecks.CheckSucceed(response);
@@ -293,11 +289,11 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = Storage.CreatePublicProjectController(context);
+                    var api = Storage.CreatePublicController(context);
 
                     var response =
                     (
-                        await api.GetProject(code) as JsonResult
+                        await api.GetProjectAsync(code) as JsonResult
                     ).Value as ExecutionResult<Project>;
 
                     GenericChecks.CheckFail(response);
@@ -323,12 +319,12 @@ namespace GeneralTests.API.Controllers.Public
                 {
                     Storage.RunSql(sql);
 
-                    var api = Storage.CreatePublicProjectController(context);
+                    var api = Storage.CreatePublicController(context);
 
 
                     var response = 
                     (
-                        await api.GetProjectsPreview(paging, projectSearch) as JsonResult
+                        await api.GetProjectsPreviewAsync(paging, projectSearch) as JsonResult
                     ).Value as ExecutionResult<ProjectPreview[]>;
 
                     GenericChecks.CheckSucceed(response);
@@ -359,12 +355,12 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = Storage.CreatePublicProjectController(context);
+                    var api = Storage.CreatePublicController(context);
 
 
                     var response =
                     (
-                        await api.GetProjectsPreview(paging, projectSearch) as JsonResult
+                        await api.GetProjectsPreviewAsync(paging, projectSearch) as JsonResult
                     ).Value as ExecutionResult<ProjectPreview[]>;
                     GenericChecks.CheckFail(response);
                 }
@@ -387,12 +383,12 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = Storage.CreatePublicProjectController(context);
+                    var api = Storage.CreatePublicController(context);
 
 
                     var response =
                     (
-                        await api.GetProjectsPreview(paging, projectSearch) as JsonResult
+                        await api.GetProjectsPreviewAsync(paging, projectSearch) as JsonResult
                     ).Value as ExecutionResult<ProjectPreview[]>;
                     GenericChecks.CheckEmpty(response);
                 }

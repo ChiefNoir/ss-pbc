@@ -1,12 +1,7 @@
-﻿using Abstractions.Supervision;
-using API.Controllers.Gateway;
-using API.Controllers.Private;
-using API.Model;
+﻿using Abstractions.Model.System;
+using Abstractions.Supervision;
 using GeneralTests.SharedUtils;
-using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Security;
 using System;
 using Xunit;
 
@@ -21,8 +16,8 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = Storage.CreatePrivateInformationalController(context);
-                    var apiAuth = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
 
 
                     var identity =
@@ -37,7 +32,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var response =
                     (
-                        api.GetInformation(identity.Data.Token) as JsonResult
+                        api.GetInformationAsync(identity.Data.Token) as JsonResult
                     ).Value as ExecutionResult<Information>;
 
                     GenericChecks.CheckSucceed(response);
@@ -69,11 +64,11 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = Storage.CreatePrivateInformationalController(context);
+                    var api = Storage.CreatePrivateController(context);
 
                     var response =
                     (
-                        api.GetInformation(token) as JsonResult
+                        api.GetInformationAsync(token) as JsonResult
                     ).Value as ExecutionResult<Information>;
 
                     GenericChecks.CheckFail(response);

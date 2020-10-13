@@ -1,34 +1,15 @@
-﻿using Abstractions.IRepository;
-using Abstractions.Supervision;
-using API.Model;
+﻿using Abstractions.API;
+using Abstractions.Model.System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Threading.Tasks;
-using Abstractions.Exceptions;
-using Abstractions.ISecurity;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace API.Controllers.Gateway
 {
-    [ApiController]
-    [Route("api/v1/")]
-    public class AuthenticationController : ControllerBase
+    public partial class GatewayController : GatewayControllerBase
     {
-        private readonly IAccountRepository _accountRepository;
-        private readonly IConfiguration _configuration;
-        private readonly ITokenManager _tokenManager;
-        private readonly ISupervisor _supervisor;
-
-        public AuthenticationController(IConfiguration configuration, IAccountRepository userRepository, ISupervisor supervisor, ITokenManager tokenManager)
-        {
-            _configuration = configuration;
-            _accountRepository = userRepository;
-            _supervisor = supervisor;
-            _tokenManager = tokenManager;
-        }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] Credentials credentials)
+        public override async Task<IActionResult> LoginAsync([FromBody] Credentials credentials)
         {
             var result = await _supervisor.SafeExecuteAsync(async () =>
             {
@@ -45,8 +26,7 @@ namespace API.Controllers.Gateway
             return new JsonResult(result);
         }
 
-        [HttpPost("token")]
-        public async Task<IActionResult> ValidateAsync([FromHeader] string token)
+        public override async Task<IActionResult> ValidateAsync([FromHeader] string token)
         {
             var result = await _supervisor.SafeExecuteAsync(async () =>
             {

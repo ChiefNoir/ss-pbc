@@ -13,16 +13,19 @@ namespace GeneralTests.API.Controllers.Public
         [Fact]
         internal void Ping_Test()
         {
-            var api = Storage.CreatePublicPingController();
+            using (var context = Storage.CreateContext())
+            {
+                var api = Storage.CreatePublicController(context);
 
-            var response =
-            (
-                api.Ping() as JsonResult
-            ).Value as ExecutionResult<string>;
+                var response =
+                (
+                    api.Ping() as JsonResult
+                ).Value as ExecutionResult<string>;
 
-            GenericChecks.CheckSucceed(response);
+                GenericChecks.CheckSucceed(response);
 
-            Assert.Equal("pong", response.Data);
+                Assert.Equal("pong", response.Data);
+            }
         }
 
     }

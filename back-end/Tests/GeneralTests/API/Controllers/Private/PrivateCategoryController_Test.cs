@@ -1,21 +1,11 @@
 ﻿using Abstractions.Model;
+using Abstractions.Model.System;
 using Abstractions.Supervision;
-using API.Controllers.Gateway;
-using API.Controllers.Private;
-using API.Controllers.Public;
-using API.Model;
-using API.Queries;
 using GeneralTests.SharedUtils;
-using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Moq;
-using Security;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 
@@ -377,7 +367,7 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        
+
         [Theory]
         [ClassData(typeof(ValidUpdate))]
         internal async void Save_Valid(Category update, Category expected)
@@ -386,9 +376,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = Storage.CreatePrivateCategoryController(context);
-                    var apiPublic = Storage.CreatePublicCategoryController(context);
-                    var apiAuth = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    var apiPublic = Storage.CreatePublicController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
 
                     var identity =
                     (
@@ -404,7 +394,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var response =
                     (
-                        await api.Save(identity.Data.Token, update) as JsonResult
+                        await api.SaveCategoryAsync(identity.Data.Token, update) as JsonResult
                     ).Value as ExecutionResult<Category>;
 
                     Assert.NotNull(response.Data);
@@ -415,7 +405,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var getResponse =
                     (
-                        await apiPublic.GetCategory(update.Id.Value) as JsonResult
+                        await apiPublic.GetCategoryAsync(update.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Category>;
 
                     Assert.NotNull(getResponse.Data);
@@ -443,9 +433,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = Storage.CreatePrivateCategoryController(context);
-                    var apiPublic = Storage.CreatePublicCategoryController(context);
-                    var apiAuth = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    var apiPublic = Storage.CreatePublicController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
 
                     var identity =
                     (
@@ -461,7 +451,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var response =
                     (
-                        await api.Save(identity.Data.Token, update) as JsonResult
+                        await api.SaveCategoryAsync(identity.Data.Token, update) as JsonResult
                     ).Value as ExecutionResult<Category>;
 
                     Assert.Null(response.Data);
@@ -488,9 +478,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = Storage.CreatePrivateCategoryController(context);
-                    var apiPublic = Storage.CreatePublicCategoryController(context);
-                    var apiAuth = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    var apiPublic = Storage.CreatePublicController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
 
                     var identity =
                     (
@@ -506,7 +496,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var response =
                     (
-                        await api.Save(identity.Data.Token, create) as JsonResult
+                        await api.SaveCategoryAsync(identity.Data.Token, create) as JsonResult
                     ).Value as ExecutionResult<Category>;
 
                     Assert.NotNull(response.Data);
@@ -517,7 +507,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var getResponse =
                     (
-                        await apiPublic.GetCategory(response.Data.Id.Value) as JsonResult
+                        await apiPublic.GetCategoryAsync(response.Data.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Category>;
 
                     Assert.NotNull(getResponse.Data);
@@ -545,9 +535,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = Storage.CreatePrivateCategoryController(context);
-                    var apiPublic = Storage.CreatePublicCategoryController(context);
-                    var apiAuth = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    var apiPublic = Storage.CreatePublicController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
 
                     var identity =
                     (
@@ -563,7 +553,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var response =
                     (
-                        await api.Save(identity.Data.Token, create) as JsonResult
+                        await api.SaveCategoryAsync(identity.Data.Token, create) as JsonResult
                     ).Value as ExecutionResult<Category>;
 
                     Assert.Null(response.Data);
@@ -591,9 +581,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = Storage.CreatePrivateCategoryController(context);
-                    var apiPublic = Storage.CreatePublicCategoryController(context);
-                    var apiAuth = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    var apiPublic = Storage.CreatePublicController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
 
                     var identity =
                     (
@@ -609,7 +599,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var response =
                     (
-                        await api.Delete(identity.Data.Token, category) as JsonResult
+                        await api.DeleteCategoryAsync(identity.Data.Token, category) as JsonResult
                     ).Value as ExecutionResult<bool>;
 
                     Assert.True(response.Data);
@@ -619,7 +609,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var getResponse =
                     (
-                        await apiPublic.GetCategory(category.Id.Value) as JsonResult
+                        await apiPublic.GetCategoryAsync(category.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Category>;
 
                     Assert.Null(getResponse.Data);
@@ -645,9 +635,9 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = Storage.CreatePrivateCategoryController(context);
-                    var apiPublic = Storage.CreatePublicCategoryController(context);
-                    var apiAuth = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    var apiPublic = Storage.CreatePublicController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
 
                     var identity =
                     (
@@ -663,7 +653,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var response =
                     (
-                        await api.Delete(identity.Data.Token, category) as JsonResult
+                        await api.DeleteCategoryAsync(identity.Data.Token, category) as JsonResult
                     ).Value as ExecutionResult<bool>;
 
                     Assert.False(response.Data);
@@ -692,7 +682,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 Assert.NotNull(actual.Id);
             }
-            
+
             Assert.Equal(expected.Code, actual.Code);
             Assert.Equal(expected.DisplayName, actual.DisplayName);
             Assert.Equal(expected.IsEverything, actual.IsEverything);

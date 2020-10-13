@@ -1,30 +1,17 @@
 ﻿using Abstractions.Model;
 using Abstractions.Supervision;
-using API.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Security;
 using Security.Extensions;
 using System.Reflection;
 using Abstractions.ISecurity;
+using Abstractions.Model.System;
+using Abstractions.API;
 
 namespace API.Controllers.Private
 {
-    [ApiController]
-    [Route("api/v1/")]
-    public class PrivateInformationalController : ControllerBase
+    public partial class PrivateController : PrivateControllerBase
     {
-        private readonly ITokenManager _tokenManager;
-        private readonly ISupervisor _supervisor;
-
-        public PrivateInformationalController(ISupervisor supervisor, ITokenManager tokenManager)
-        {
-            _supervisor = supervisor;
-            _tokenManager = tokenManager;
-        }
-
-        [HttpGet("information")]
-        public IActionResult GetInformation([FromHeader] string token)
+        public override IActionResult GetInformationAsync([FromHeader] string token)
         {
             var result = _supervisor.SafeExecute(token, new[] { RoleNames.Admin, RoleNames.Demo }, () =>
             {

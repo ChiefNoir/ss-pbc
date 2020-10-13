@@ -1,10 +1,5 @@
-﻿using Abstractions.Model;
-using System.Diagnostics.CodeAnalysis;
-
-namespace API.Model
+﻿namespace Abstractions.Model.System
 {
-    [ExcludeFromCodeCoverage]
-    /// <summary> Account confirmed identity</summary>
     public class Identity
     {
         public Account Account { get; set; }

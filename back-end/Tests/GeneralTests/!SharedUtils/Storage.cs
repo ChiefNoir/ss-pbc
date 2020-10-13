@@ -16,10 +16,12 @@ namespace GeneralTests.SharedUtils
 {
     public static class Storage
     {
+        private const string connectionName = "Default";
+
         public static DataContext CreateContext()
         {
             var builder = new DbContextOptionsBuilder<DataContext>();
-            builder.UseNpgsql(CreateConfiguration().GetConnectionString("Test"));
+            builder.UseNpgsql(CreateConfiguration().GetConnectionString(connectionName));
 
             var options = builder.Options;
             var context = new DataContext(options);
@@ -43,7 +45,7 @@ namespace GeneralTests.SharedUtils
             if (string.IsNullOrEmpty(sql))
                 return;
 
-            using (var connection = new Npgsql.NpgsqlConnection(CreateConfiguration().GetConnectionString("Test")))
+            using (var connection = new Npgsql.NpgsqlConnection(CreateConfiguration().GetConnectionString(connectionName)))
             {
                 try
                 {
@@ -75,117 +77,56 @@ namespace GeneralTests.SharedUtils
 
 
 
-
-        internal static PrivateCategoryController CreatePrivateCategoryController(DataContext context)
+        internal static PublicController CreatePublicController(DataContext context)
         {
-            var confing = Storage.CreateConfiguration();
-            var categoryRep = new CategoryRepository(context);
-            var tokenManager = new TokenManager(confing);
+            var config = CreateConfiguration();
+            var tokenManager = new TokenManager(config);
             var logger = new Mock<ILogger<Supervisor>>();
             var sup = new Supervisor(tokenManager, logger.Object);
 
-            return new PrivateCategoryController(categoryRep, sup);
-        }
-
-        internal static PublicCategoryController CreatePublicCategoryController(DataContext context)
-        {
-            var confing = Storage.CreateConfiguration();
             var catRep = new CategoryRepository(context);
-            var tokenManager = new TokenManager(confing);
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
-            return new PublicCategoryController(catRep, sup);
+            var intrRep = new IntroductionRepository(context);
+            var prjRep = new ProjectRepository(context, catRep);
+
+            return new PublicController (sup, catRep, intrRep, prjRep);
         }
 
-        internal static AuthenticationController CreateAuthenticationController(DataContext context)
+        internal static GatewayController CreateGatewayController(DataContext context)
         {
-            var confing = Storage.CreateConfiguration();
-            var hashManager = new HashManager(confing);
-            var accountRep = new AccountRepository(context, confing, hashManager);
-            var tokenManager = new TokenManager(confing);
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
-
-            return new AuthenticationController(confing, accountRep, sup, tokenManager);
-        }
-
-        internal static PublicProjectController CreatePublicProjectController(DataContext context)
-        {
-            var categoryRep = new CategoryRepository(context);
-            var projectRep = new ProjectRepository(context, categoryRep);
-            var tokenManager = new TokenManager(Storage.CreateConfiguration());
+            var config = CreateConfiguration();
+            var tokenManager = new TokenManager(config);
+            var hashManager = new HashManager(config);
             var logger = new Mock<ILogger<Supervisor>>();
             var sup = new Supervisor(tokenManager, logger.Object);
 
-            return new PublicProjectController(projectRep, sup);
+            var accRep = new AccountRepository(context, config, hashManager);
+
+            return new GatewayController
+            (
+                config, accRep, sup, tokenManager
+            );
         }
 
-        internal static PrivateProjectController CreatePrivateProjectController(DataContext context)
+        internal static PrivateController CreatePrivateController(DataContext context)
         {
-            var config = Storage.CreateConfiguration();
+            var config = CreateConfiguration();
+            var tokenManager = new TokenManager(config);
+            var hashManager = new HashManager(config);
+            var logger = new Mock<ILogger<Supervisor>>();
+            var sup = new Supervisor(tokenManager, logger.Object);
+
+
+            var accRep = new AccountRepository(context, config, hashManager);
+            var catRep = new CategoryRepository(context);
+            var intrRep = new IntroductionRepository(context);
+            var prjRep = new ProjectRepository(context, catRep);
             var fileRep = new FileRepository(config);
-            var categoryRep = new CategoryRepository(context);
-            var projectRep = new ProjectRepository(context, categoryRep);
-            var tokenManager = new TokenManager(config);
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
 
-            return new PrivateProjectController(config, fileRep, projectRep, sup);
+
+            return new PrivateController
+            (
+                accRep, catRep, config, fileRep, intrRep, prjRep, sup, tokenManager
+            );
         }
-
-        internal static PrivateAccountController CreatePrivateAccountController(DataContext context)
-        {
-            var confing = CreateConfiguration();
-            var tokenManager = new TokenManager(confing);
-            var hasManager = new HashManager(confing);
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
-            var accRep = new AccountRepository(context, confing, hasManager);
-
-            return new PrivateAccountController(accRep, sup);
-        }
-
-        internal static PrivateInformationalController CreatePrivateInformationalController(DataContext context)
-        {
-            var confing = CreateConfiguration();
-            var tokenManager = new TokenManager(confing);
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
-
-            return new PrivateInformationalController(sup, tokenManager);
-        }
-
-        internal static PrivateIntroductionController CreatePrivateIntroductionController(DataContext context)
-        {
-            var confing = CreateConfiguration();
-            var fileRep = new FileRepository(confing);
-            var introductionRep = new IntroductionRepository(context);
-            var tokenManager = new TokenManager(confing);
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
-
-            return new PrivateIntroductionController(fileRep, confing, introductionRep, sup);
-        }
-
-        internal static PublicIntroductionController CreatePublicIntroductionController(DataContext context)
-        {
-            var confing = CreateConfiguration();
-            var introductionRep = new IntroductionRepository(context);
-            var tokenManager = new TokenManager(confing);
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
-
-            return new PublicIntroductionController(introductionRep, sup);
-        }
-
-        internal static PublicPingController CreatePublicPingController()
-        {
-            var config = Storage.CreateConfiguration();
-            var tokenManager = new TokenManager(config);
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
-            return new PublicPingController(sup);
-        }
-
     }
 }

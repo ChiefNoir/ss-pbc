@@ -1,13 +1,7 @@
 ﻿using Abstractions.Model;
 using Abstractions.Supervision;
-using API.Controllers.Public;
 using GeneralTests.SharedUtils;
-using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Moq;
-using Security;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -106,16 +100,6 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
-        private static PublicCategoryController CreatePublicCategoryController(DataContext context)
-        {
-            var categoryRep = new CategoryRepository(context);
-            var tokenManager = new TokenManager(Storage.CreateConfiguration());
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
-
-            return new PublicCategoryController(categoryRep, sup);
-        }
-
         [Theory]
         [ClassData(typeof(DefaultCategories))]
         internal async void GetCategories(Category[] expectedCategories)
@@ -124,10 +108,10 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = CreatePublicCategoryController(context);
+                    var api = Storage.CreatePublicController(context);
                     var response =
                     (
-                        await api.GetCategories() as JsonResult
+                        await api.GetCategoriesAsync() as JsonResult
                     ).Value as ExecutionResult<Category[]>;
 
                     GenericChecks.CheckSucceed(response);
@@ -157,13 +141,13 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = CreatePublicCategoryController(context);
+                    var api = Storage.CreatePublicController(context);
 
                     foreach (var expected in expectedCategory)
                     {
                         var response = 
                         (
-                            await api.GetCategory(expected.Id.Value) as JsonResult
+                            await api.GetCategoryAsync(expected.Id.Value) as JsonResult
                         ).Value as ExecutionResult<Category>;
                         
                         GenericChecks.CheckSucceed(response);
@@ -191,11 +175,11 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = CreatePublicCategoryController(context);
+                    var api = Storage.CreatePublicController(context);
 
                     var response =
                     (
-                        await api.GetCategory(id) as JsonResult
+                        await api.GetCategoryAsync(id) as JsonResult
                     ).Value as ExecutionResult<Category>;
 
                     GenericChecks.CheckFail(response);
@@ -221,11 +205,11 @@ namespace GeneralTests.API.Controllers.Public
             {
                 try
                 {
-                    var api = CreatePublicCategoryController(context);
+                    var api = Storage.CreatePublicController(context);
 
                     var response =
                     (
-                        await api.GetEverythingCategory() as JsonResult
+                        await api.GetCategoryEverythingAsync() as JsonResult
                     ).Value as ExecutionResult<Category>;
 
                     GenericChecks.CheckSucceed(response);

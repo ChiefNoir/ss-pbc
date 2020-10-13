@@ -1,9 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace API.Model
+namespace Abstractions.Model.System
 {
-    [ExcludeFromCodeCoverage]
-    /// <summary> Users credentials</summary>
     public class Credentials
     {
         /// <summary> User name </summary>

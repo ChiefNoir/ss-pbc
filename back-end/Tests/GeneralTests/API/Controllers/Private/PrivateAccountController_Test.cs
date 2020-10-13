@@ -1,16 +1,9 @@
 ﻿using Abstractions.Model;
+using Abstractions.Model.Queries;
+using Abstractions.Model.System;
 using Abstractions.Supervision;
-using API.Controllers.Gateway;
-using API.Controllers.Private;
-using API.Model;
-using API.Queries;
 using GeneralTests.SharedUtils;
-using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Moq;
-using Security;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -455,31 +448,6 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-
-        private AuthenticationController CreateAuthenticationController(DataContext context)
-        {
-            var confing = Storage.CreateConfiguration();
-            var tokenManager = new TokenManager(confing);
-            var hasManager = new HashManager(confing);
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
-            var accRep = new AccountRepository(context, confing, hasManager);
-            
-            return new AuthenticationController(confing, accRep, sup, tokenManager);
-        }
-
-        private PrivateAccountController CreatePrivateAccountController(DataContext context)
-        {
-            var confing = Storage.CreateConfiguration();
-            var tokenManager = new TokenManager(confing);
-            var hasManager = new HashManager(confing);
-            var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
-            var accRep = new AccountRepository(context, confing, hasManager);
-
-            return new PrivateAccountController(accRep, sup);
-        }
-
         // -- 
 
         [Theory]
@@ -490,7 +458,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -499,7 +467,7 @@ namespace GeneralTests.API.Controllers.Private
 
 
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
 
                     var response =
                     (
@@ -538,7 +506,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
 
                     var response = (api.GetRoles(token) as JsonResult).Value as ExecutionResult<List<string>>;
 
@@ -564,7 +532,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -572,9 +540,9 @@ namespace GeneralTests.API.Controllers.Private
                     GenericChecks.CheckSucceed(identity);
 
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
 
-                    var createDemo = await api.SaveAsync
+                    var createDemo = await api.SaveAccountAsync
                     (
                         identity.Data.Token, new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
                     );
@@ -612,7 +580,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     
                     var identity =
                     (
@@ -622,11 +590,11 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     
                     var response = 
                     (
-                        await api.CountAsync(identity.Data.Token) as JsonResult
+                        await api.CountAccountAsync(identity.Data.Token) as JsonResult
                     ).Value as ExecutionResult<int>;
                     GenericChecks.CheckSucceed(response);
 
@@ -653,11 +621,11 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
 
                     var response = 
                     (
-                        await api.CountAsync("bad-token") as JsonResult
+                        await api.CountAccountAsync("bad-token") as JsonResult
                     ).Value as ExecutionResult<int>;
 
                     GenericChecks.CheckFail(response);
@@ -681,7 +649,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -690,9 +658,9 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
 
-                    var createDemo = await api.SaveAsync
+                    var createDemo = await api.SaveAccountAsync
                     (
                         identity.Data.Token, new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
                     );
@@ -704,7 +672,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var response = 
                     (
-                        await api.CountAsync(demoIdentity.Data.Token) as JsonResult
+                        await api.CountAccountAsync(demoIdentity.Data.Token) as JsonResult
                     ).Value as ExecutionResult<int>;
 
                     GenericChecks.CheckFail(response);
@@ -730,7 +698,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity = 
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -738,10 +706,10 @@ namespace GeneralTests.API.Controllers.Private
                     GenericChecks.CheckSucceed(identity);
 
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var addResult =
                     (
-                        await api.SaveAsync(identity.Data.Token, account) as JsonResult
+                        await api.SaveAccountAsync(identity.Data.Token, account) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(addResult);
                     Compare(addResult.Data, account);
@@ -749,7 +717,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var getResult =
                     (
-                        await api.GetAsync(identity.Data.Token, addResult.Data.Id.Value) as JsonResult
+                        await api.GetAccountAsync(identity.Data.Token, addResult.Data.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(getResult);
                     Compare(getResult.Data, account);
@@ -773,10 +741,10 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var addResult =
                     (
-                        await api.SaveAsync("bad-token", account) as JsonResult
+                        await api.SaveAccountAsync("bad-token", account) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckFail(addResult);
                 }
@@ -799,7 +767,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -807,10 +775,10 @@ namespace GeneralTests.API.Controllers.Private
                     GenericChecks.CheckSucceed(identity);
 
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var addResult =
                     (
-                        await api.SaveAsync(identity.Data.Token, account) as JsonResult
+                        await api.SaveAccountAsync(identity.Data.Token, account) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckFail(addResult);
                 }
@@ -833,7 +801,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -841,10 +809,10 @@ namespace GeneralTests.API.Controllers.Private
                     GenericChecks.CheckSucceed(identity);
 
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var demoResult =
                     (
-                        await api.SaveAsync
+                        await api.SaveAccountAsync
                         (
                             identity.Data.Token, 
                             new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
@@ -860,7 +828,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var failResut =
                     (
-                        await api.SaveAsync
+                        await api.SaveAccountAsync
                         (
                             demoIdentity.Data.Token,
                             account
@@ -890,7 +858,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -899,17 +867,17 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var delResult =
                     (
-                        await api.DeleteAsync(identity.Data.Token, account) as JsonResult
+                        await api.DeleteAccountAsync(identity.Data.Token, account) as JsonResult
                     ).Value as ExecutionResult<bool>;
                     GenericChecks.CheckSucceed(delResult);
 
 
                     var responseGet =
                     (
-                        await api.GetAsync(identity.Data.Token, account.Id.Value) as JsonResult
+                        await api.GetAccountAsync(identity.Data.Token, account.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckFail(responseGet);
                 }
@@ -932,7 +900,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -942,17 +910,17 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var delResult =
                     (
-                        await api.DeleteAsync("bad-token", account) as JsonResult
+                        await api.DeleteAccountAsync("bad-token", account) as JsonResult
                     ).Value as ExecutionResult<bool>;
                     GenericChecks.CheckFail(delResult);
 
 
                     var responseGet =
                     (
-                        await api.GetAsync(identity.Data.Token, account.Id.Value) as JsonResult
+                        await api.GetAccountAsync(identity.Data.Token, account.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(responseGet);
                     Compare(responseGet.Data, account);
@@ -976,7 +944,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -986,10 +954,10 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var demoResult =
                     (
-                        await api.SaveAsync
+                        await api.SaveAccountAsync
                         (
                             identity.Data.Token,
                             new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
@@ -1004,14 +972,14 @@ namespace GeneralTests.API.Controllers.Private
 
                     var delResult =
                     (
-                        await api.DeleteAsync(demoIdentity.Data.Token, account) as JsonResult
+                        await api.DeleteAccountAsync(demoIdentity.Data.Token, account) as JsonResult
                     ).Value as ExecutionResult<bool>;
                     GenericChecks.CheckFail(delResult);
 
 
                     var responseGet =
                     (
-                        await api.GetAsync(identity.Data.Token, account.Id.Value) as JsonResult
+                        await api.GetAccountAsync(identity.Data.Token, account.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(responseGet);
                     Compare(responseGet.Data, account);
@@ -1035,7 +1003,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -1044,10 +1012,10 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var delResult =
                     (
-                        await api.DeleteAsync(identity.Data.Token, account) as JsonResult
+                        await api.DeleteAccountAsync(identity.Data.Token, account) as JsonResult
                     ).Value as ExecutionResult<bool>;
                     GenericChecks.CheckFail(delResult);
                 }
@@ -1072,7 +1040,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -1081,10 +1049,10 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var getResult =
                     (
-                        await api.GetAsync(identity.Data.Token, expected.Id.Value) as JsonResult
+                        await api.GetAccountAsync(identity.Data.Token, expected.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(getResult);
                     Compare(getResult.Data, expected);
@@ -1109,7 +1077,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -1118,10 +1086,10 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var getResult =
                     (
-                        await api.GetAsync(identity.Data.Token, id) as JsonResult
+                        await api.GetAccountAsync(identity.Data.Token, id) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckFail(getResult);
                 }
@@ -1146,10 +1114,10 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var getResult =
                     (
-                        await api.GetAsync("bad-token", expected.Id.Value) as JsonResult
+                        await api.GetAccountAsync("bad-token", expected.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckFail(getResult);
                 }
@@ -1172,7 +1140,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -1182,10 +1150,10 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var demoResult =
                     (
-                        await api.SaveAsync
+                        await api.SaveAccountAsync
                         (
                             identity.Data.Token,
                             new Account { Login = "demo", Password = "demo", Role = RoleNames.Demo }
@@ -1201,7 +1169,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var getResult =
                     (
-                        await api.GetAsync(demoIdentity.Data.Token, expected.Id.Value) as JsonResult
+                        await api.GetAccountAsync(demoIdentity.Data.Token, expected.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckFail(getResult);
                 }
@@ -1225,28 +1193,28 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
 
                     identity.Data.Account.Login = "sa-sa";
 
 
                     var response =
                     (
-                        await api.SaveAsync(identity.Data.Token, identity.Data.Account) as JsonResult
+                        await api.SaveAccountAsync(identity.Data.Token, identity.Data.Account) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(response);
 
 
                     var responseGet =
                     (
-                        await api.GetAsync(identity.Data.Token, identity.Data.Account.Id.Value) as JsonResult
+                        await api.GetAccountAsync(identity.Data.Token, identity.Data.Account.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(responseGet);
                     
@@ -1273,14 +1241,14 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
 
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
 
                     identity.Data.Account.Login = "sa-sa";
 
@@ -1289,7 +1257,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var response =
                     (
-                        await api.SaveAsync(identity.Data.Token, account) as JsonResult
+                        await api.SaveAccountAsync(identity.Data.Token, account) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckFail(response);
                 }
@@ -1316,7 +1284,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -1325,11 +1293,11 @@ namespace GeneralTests.API.Controllers.Private
 
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
 
                     var response =
                     (
-                        await api.GetAsync(identity.Data.Token, paging) as JsonResult
+                        await api.GetAccountsAsync(identity.Data.Token, paging) as JsonResult
                     ).Value as ExecutionResult<Account[]>;
                     GenericChecks.CheckSucceed(response);
 
@@ -1361,11 +1329,11 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     Storage.RunSql(sql);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
 
                     var response =
                     (
-                        await api.GetAsync(token, paging) as JsonResult
+                        await api.GetAccountsAsync(token, paging) as JsonResult
                     ).Value as ExecutionResult<Account[]>;
                     GenericChecks.CheckFail(response);
                 }
@@ -1388,7 +1356,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
@@ -1397,20 +1365,20 @@ namespace GeneralTests.API.Controllers.Private
 
 
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
 
                     identity.Data.Account.Password = "sa-sa";
 
                     var updated =
                     (
-                        await api.SaveAsync(identity.Data.Token, identity.Data.Account) as JsonResult
+                        await api.SaveAccountAsync(identity.Data.Token, identity.Data.Account) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(updated);
 
 
                     var responseGet =
                     (
-                        await api.GetAsync(identity.Data.Token, identity.Data.Account.Id.Value) as JsonResult
+                        await api.GetAccountAsync(identity.Data.Token, identity.Data.Account.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(responseGet);
 
@@ -1446,26 +1414,26 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var auth = CreateAuthenticationController(context);
+                    var auth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
                     GenericChecks.CheckSucceed(identity);
 
-                    var api = CreatePrivateAccountController(context);
+                    var api = Storage.CreatePrivateController(context);
                     identity.Data.Account.Password = "sa-sa";
 
                     var updated =
                     (
-                        await api.SaveAsync("bad-token", identity.Data.Account) as JsonResult
+                        await api.SaveAccountAsync("bad-token", identity.Data.Account) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckFail(updated);
 
 
                     var responseGet =
                     (
-                        await api.GetAsync(identity.Data.Token, identity.Data.Account.Id.Value) as JsonResult
+                        await api.GetAccountAsync(identity.Data.Token, identity.Data.Account.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Account>;
                     GenericChecks.CheckSucceed(responseGet);
 

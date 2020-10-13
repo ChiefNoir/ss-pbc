@@ -1,14 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace API.Model
+﻿namespace Abstractions.Model.System
 {
-    [ExcludeFromCodeCoverage]
     public class Information
     {
         public string Login { get; set; }
 
         public string Role { get; set; }
-        
+
         public string ApiVersion { get; set; }
     }
 }

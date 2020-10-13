@@ -1,14 +1,8 @@
 ﻿using Abstractions.Model;
+using Abstractions.Model.System;
 using Abstractions.Supervision;
-using API.Controllers.Gateway;
-using API.Controllers.Private;
-using API.Controllers.Public;
-using API.Model;
 using GeneralTests.SharedUtils;
-using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Security;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -199,7 +193,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = Storage.CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync
@@ -207,22 +201,22 @@ namespace GeneralTests.API.Controllers.Private
                             new Credentials { Login = "sa", Password = "sa" }
                         ) as JsonResult
                     ).Value as ExecutionResult<Identity>;
-                    
+
                     GenericChecks.CheckSucceed(identity);
 
-                    var api = Storage.CreatePrivateIntroductionController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var updateResponse =
                     (
-                        await api.SaveAsync(identity.Data.Token, update) as JsonResult
+                        await api.SaveIntroductionAsync(identity.Data.Token, update) as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
                     GenericChecks.CheckSucceed(updateResponse);
                     Compare(updateResponse.Data, expected);
 
-                    var apiPublic = Storage.CreatePublicIntroductionController(context);
+                    var apiPublic = Storage.CreatePublicController(context);
                     var getResponse =
                     (
-                        await apiPublic.GetIntroduction() as JsonResult
+                        await apiPublic.GetIntroductionAsync() as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
                     GenericChecks.CheckSucceed(getResponse);
@@ -248,7 +242,7 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiAuth = Storage.CreateAuthenticationController(context);
+                    var apiAuth = Storage.CreateGatewayController(context);
                     var identity =
                     (
                         await apiAuth.LoginAsync
@@ -259,10 +253,10 @@ namespace GeneralTests.API.Controllers.Private
 
                     GenericChecks.CheckSucceed(identity);
 
-                    var api = Storage.CreatePrivateIntroductionController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var updateResponse =
                     (
-                        await api.SaveAsync(identity.Data.Token, update) as JsonResult
+                        await api.SaveIntroductionAsync(identity.Data.Token, update) as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
                     GenericChecks.CheckFail(updateResponse);
@@ -309,10 +303,10 @@ namespace GeneralTests.API.Controllers.Private
                     };
 
 
-                    var api = Storage.CreatePrivateIntroductionController(context);
+                    var api = Storage.CreatePrivateController(context);
                     var updateResponse =
                     (
-                        await api.SaveAsync(token, introduction) as JsonResult
+                        await api.SaveIntroductionAsync(token, introduction) as JsonResult
                     ).Value as ExecutionResult<Introduction>;
 
                     GenericChecks.CheckFail(updateResponse);

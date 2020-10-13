@@ -1,15 +1,9 @@
 ﻿using Abstractions.Model;
+using Abstractions.Model.System;
 using Abstractions.Supervision;
-using API.Controllers.Gateway;
-using API.Model;
 using GeneralTests.SharedUtils;
-using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Moq;
-using Security;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -107,7 +101,7 @@ namespace GeneralTests.API.Controllers.Gateway
             {
                 try
                 {
-                    var api = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreateGatewayController(context);
 
                     var response = 
                     (
@@ -144,7 +138,7 @@ namespace GeneralTests.API.Controllers.Gateway
             {
                 try
                 {
-                    var api = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreateGatewayController(context);
 
                     var response = 
                     (
@@ -175,7 +169,7 @@ namespace GeneralTests.API.Controllers.Gateway
             {
                 try
                 {
-                    var api = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreateGatewayController(context);
 
                     var authResponse =
                     (
@@ -211,7 +205,7 @@ namespace GeneralTests.API.Controllers.Gateway
             {
                 try
                 {
-                    var api = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreateGatewayController(context);
 
                     var authResponse =
                     (
@@ -250,7 +244,7 @@ namespace GeneralTests.API.Controllers.Gateway
             {
                 try
                 {
-                    var api = Storage.CreateAuthenticationController(context);
+                    var api = Storage.CreateGatewayController(context);
 
                     var response =
                     (

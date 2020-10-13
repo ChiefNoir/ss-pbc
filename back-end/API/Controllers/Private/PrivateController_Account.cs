@@ -1,28 +1,17 @@
-﻿using Abstractions.IRepository;
+﻿using Abstractions.API;
+using Abstractions.IRepository;
 using Abstractions.Model;
+using Abstractions.Model.Queries;
 using Abstractions.Supervision;
-using API.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Private
 {
-    [ApiController]
-    [Route("api/v1/")]
-    public class PrivateAccountController : ControllerBase
+    public partial class PrivateController : PrivateControllerBase
     {
-        private readonly IAccountRepository _accountRepository;
-        private readonly ISupervisor _supervisor;
-
-        public PrivateAccountController(IAccountRepository accountRepository, ISupervisor supervisor)
-        {
-            _accountRepository = accountRepository;
-            _supervisor = supervisor;
-        }
-
-        [HttpPost("accounts")]
-        public async Task<IActionResult> SaveAsync([FromHeader] string token, [FromBody] Account account)
+        public override async Task<IActionResult> SaveAccountAsync([FromHeader] string token, [FromBody] Account account)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -34,8 +23,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        [HttpGet("accounts")]
-        public async Task<IActionResult> CountAsync([FromHeader] string token)
+        public override async Task<IActionResult> CountAccountAsync([FromHeader] string token)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -47,8 +35,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        [HttpDelete("accounts")]
-        public async Task<IActionResult> DeleteAsync([FromHeader] string token, [FromBody] Account account)
+        public override async Task<IActionResult> DeleteAccountAsync([FromHeader] string token, [FromBody] Account account)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -60,8 +47,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        [HttpGet("accounts/{id}")]
-        public async Task<IActionResult> GetAsync([FromHeader] string token, int id)
+        public override async Task<IActionResult> GetAccountAsync([FromHeader] string token, int id)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -73,8 +59,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        [HttpGet("accounts/search")]
-        public async Task<IActionResult> GetAsync([FromHeader] string token, [FromQuery] Paging paging)
+        public override async Task<IActionResult> GetAccountsAsync([FromHeader] string token, [FromQuery] Paging paging)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -86,8 +71,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        [HttpGet("roles")]
-        public IActionResult GetRoles([FromHeader] string token)
+        public override IActionResult GetRoles([FromHeader] string token)
         {
             var result = _supervisor.SafeExecute(token, new[] { RoleNames.Admin }, () =>
             {

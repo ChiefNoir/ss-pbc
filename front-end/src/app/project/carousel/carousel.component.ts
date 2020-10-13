@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GalleryImage } from 'src/app/model/gallery-image.model';
-import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
+import { GalleryImage } from 'src/app/shared/gallery-image.model';
+import { MessageDescription, MessageType } from 'src/app/shared/message.component';
 
 @Component({
   selector: 'app-carousel',

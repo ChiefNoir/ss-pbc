@@ -1,4 +1,4 @@
-import { Account } from 'src/app/model/account.model';
+import { Account } from 'src/app/admin/account.model';
 
 export class Identity
 {

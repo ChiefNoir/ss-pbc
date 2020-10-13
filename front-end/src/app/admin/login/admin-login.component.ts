@@ -3,18 +3,18 @@ import { Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-import { RequestResult, Incident } from 'src/app/model/request-result.model';
+import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 
 import { AuthService } from 'src/app/core/auth.service';
 import { Title } from '@angular/platform-browser';
 
 import { environment } from 'src/environments/environment';
-import { Identity } from 'src/app/model/identity.model';
+import { Identity } from 'src/app/shared/identity.model';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import {
   MessageDescription,
   MessageType,
-} from 'src/app/component/message/message.component';
+} from 'src/app/shared/message.component';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 
 @Component({

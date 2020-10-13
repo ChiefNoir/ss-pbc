@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
-
+ 
 @Component({
   selector: 'app-file-uploader',
   templateUrl: './file-uploader.component.html',

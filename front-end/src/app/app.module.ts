@@ -21,18 +21,18 @@ import { FooterComponent } from './component/footer/footer.component';
 import { ButtonComponent } from './component/button/button.component';
 import { ButtonContactComponent } from './shared/button-contact.component';
 import { CarouselComponent } from './project/carousel/carousel.component';
-import { ButtonCategoryComponent } from './component/button-category/button-category.component';
+import { ButtonCategoryComponent } from './projects/button-category/button-category.component';
 import { ButtonExternalUrlComponent } from './shared/button-external-url.component';
 import { FilterCategoryComponent } from './projects/filter-category/filter-category.component';
 import { PaginatorComponent } from './component/paginator/paginator.component';
 import { ProjectPreviewComponent } from './projects/project-preview/project-preview.component';
 import { ProjectFullComponent } from './project/project-full/project-full.component';
 import { ProjectComponent } from './project/project.component';
-import { DialogEditProjectComponent } from './component/dialog-edit-project/dialog-edit-project.component';
-import { DialogEditorCategoryComponent } from './component/dialog-editor-category/dialog-editor-category.component';
-import { DialogEditAccountComponent } from './component/dialog-edit-account/dialog-edit-account.component';
-import { MessageComponent } from './component/message/message.component';
-import { FileUploaderComponent } from './component/file-uploader/file-uploader.component';
+import { DialogEditProjectComponent } from './admin/dialog-edit-project/dialog-edit-project.component';
+import { DialogEditorCategoryComponent } from './admin/dialog-editor-category/dialog-editor-category.component';
+import { DialogEditAccountComponent } from './admin/dialog-edit-account/dialog-edit-account.component';
+import { MessageComponent } from 'src/app/shared/message.component';
+import { FileUploaderComponent } from './admin/shared/file-uploader/file-uploader.component';
 // -----
 
 import { OnlyIntModule } from './shared/only-int.module';
@@ -45,12 +45,12 @@ import { SplitPipe } from './shared/split.pipe';
 import { IntroductionComponent } from './introduction/introduction/introduction.component';
 import { ProjectsListComponent } from './projects/project-list/projects-list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { AdminLoginComponent } from './view/admin-login/admin-login.component';
-import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edit-projects.component';
-import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin-edit-categories.component';
-import { AdminEditAccountsComponent } from './view/admin-edit-accounts/admin-edit-accounts.component';
-import { AdminEditIntroductionComponent } from './view/admin-edit-introduction/admin-edit-introduction.component';
-import { AdminComponent } from './view/admin/admin.component';
+import { AdminLoginComponent } from './admin/login/admin-login.component';
+import { AdminEditProjectsComponent } from './admin/edit-project/admin-edit-projects.component';
+import { AdminEditCategoriesComponent } from './admin/edit-category/admin-edit-categories.component';
+import { AdminEditAccountsComponent } from './admin/edit-account/admin-edit-accounts.component';
+import { AdminEditIntroductionComponent } from './admin/edit-introduction/admin-edit-introduction.component';
+import { AdminInformationComponent } from './admin/information/admin-information.component';
 // -----
 
 // services
@@ -87,7 +87,7 @@ import { CookieService } from 'ngx-cookie-service';
     ProjectsListComponent,
     NotFoundComponent,
     ProjectComponent,
-    AdminComponent,
+    AdminInformationComponent,
     AdminLoginComponent,
     AdminEditProjectsComponent,
     AdminEditCategoriesComponent,

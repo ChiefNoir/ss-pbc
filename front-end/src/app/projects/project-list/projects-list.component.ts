@@ -5,14 +5,14 @@ import { BehaviorSubject } from 'rxjs';
 
 import { DataService } from 'src/app/core/data.service';
 import { ProjectPreview } from 'src/app/projects/project-preview.model';
-import { Category } from 'src/app/model/category.model';
-import { Paging } from 'src/app/model/paging-info.model';
-import { Incident, RequestResult } from 'src/app/model/request-result.model';
+import { Category } from 'src/app/shared/category.model';
+import { Paging } from 'src/app/shared/paging-info.model';
+import { Incident, RequestResult } from 'src/app/shared/request-result.model';
 
 import {
   MessageDescription,
   MessageType,
-} from 'src/app/component/message/message.component';
+} from 'src/app/shared/message.component';
 import { environment } from 'src/environments/environment';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 

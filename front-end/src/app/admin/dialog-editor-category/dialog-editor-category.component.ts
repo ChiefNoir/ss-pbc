@@ -2,10 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/core/data.service';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
-import { RequestResult, Incident } from 'src/app/model/request-result.model';
-import { Category } from 'src/app/model/category.model';
+import { RequestResult, Incident } from 'src/app/shared/request-result.model';
+import { Category } from 'src/app/shared/category.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MessageDescription, MessageType } from '../message/message.component';
+import { MessageDescription, MessageType } from 'src/app/shared/message.component';
 
 @Component({
   selector: 'app-dialog-editor-category.component',

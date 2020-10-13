@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MessageDescription, MessageType } from '../message/message.component';
+import { MessageDescription, MessageType } from 'src/app/shared/message.component';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { DataService } from 'src/app/core/data.service';
-import { RequestResult, Incident } from 'src/app/model/request-result.model';
-import { Account } from 'src/app/model/account.model';
+import { RequestResult, Incident } from 'src/app/shared/request-result.model';
+import { Account } from 'src/app/admin/account.model';
 
 @Component({
   selector: 'app-dialog-edit-account.component',

@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { Project } from 'src/app/model/project.model';
+import { Project } from 'src/app/shared/project.model';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/core/data.service';
-import { RequestResult, Incident } from 'src/app/model/request-result.model';
-import { Category } from 'src/app/model/category.model';
+import { RequestResult, Incident } from 'src/app/shared/request-result.model';
+import { Category } from 'src/app/shared/category.model';
 import { ExternalUrl } from 'src/app/shared/external-url.model';
 import { MatTable } from '@angular/material/table';
-import { MessageType, MessageDescription } from '../message/message.component';
+import { MessageType, MessageDescription } from 'src/app/shared/message.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
-import { GalleryImage } from 'src/app/model/gallery-image.model';
+import { GalleryImage } from 'src/app/shared/gallery-image.model';
 
 @Component({
   selector: 'app-dialog-edit-project.',

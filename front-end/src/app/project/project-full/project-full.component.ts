@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 
-import { Project } from 'src/app/model/project.model';
+import { Project } from 'src/app/shared/project.model';
 
 @Component({
   selector: 'app-project-full',

@@ -3,7 +3,6 @@ import { Title } from '@angular/platform-browser';
 import { BehaviorSubject  } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { DataService } from 'src/app/core/public.service';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { MatDialog } from '@angular/material/dialog';
 import { Account } from 'src/app/admin/account.model';

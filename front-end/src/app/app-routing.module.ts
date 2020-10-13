@@ -42,11 +42,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    RouterModule.forRoot(routes),
     IntroductionRoutingModule,
     ProjectsRoutingModule,
     ProjectRoutingModule,
-    NotFoundRoutingModule,
-    RouterModule.forRoot(routes),
+    NotFoundRoutingModule
   ],
   exports: [RouterModule],
 })

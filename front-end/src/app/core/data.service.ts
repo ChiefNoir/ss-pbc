@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Account } from '../model/account.model';
 import { Category } from '../model/category.model';
 import { Information } from '../model/information.model';
-import { Introduction } from '../model/introduction.model';
+import { Introduction } from '../introduction/introduction.model';
 import { Project } from '../model/project.model';
 import { ProjectPreview } from '../model/project-preview.model';
 import { RequestResult } from '../model/request-result.model';

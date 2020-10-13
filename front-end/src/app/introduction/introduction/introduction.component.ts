@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { DataService } from 'src/app/core/data.service';
-import { Introduction } from 'src/app/model/introduction.model';
+import { Introduction } from 'src/app/introduction/introduction.model';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 import { RequestResult, Incident } from 'src/app/model/request-result.model';
 import { TextMessages } from 'src/app/shared/text-messages.resources';

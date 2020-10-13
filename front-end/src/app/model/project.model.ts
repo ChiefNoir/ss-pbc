@@ -1,4 +1,4 @@
-import { ExternalUrl } from 'src/app/model/external-url.model';
+import { ExternalUrl } from 'src/app/shared/external-url.model';
 import { Category } from 'src/app/model/category.model';
 import { GalleryImage } from 'src/app/model/gallery-image.model';
 

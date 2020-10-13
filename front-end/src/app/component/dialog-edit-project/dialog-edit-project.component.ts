@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/core/data.service';
 import { RequestResult, Incident } from 'src/app/model/request-result.model';
 import { Category } from 'src/app/model/category.model';
-import { ExternalUrl } from 'src/app/model/external-url.model';
+import { ExternalUrl } from 'src/app/shared/external-url.model';
 import { MatTable } from '@angular/material/table';
 import { MessageType, MessageDescription } from '../message/message.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';

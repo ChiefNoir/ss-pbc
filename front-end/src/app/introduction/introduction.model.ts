@@ -1,4 +1,4 @@
-import { ExternalUrl } from './external-url.model';
+import { ExternalUrl } from '../shared/external-url.model';
 
 export class Introduction
 {

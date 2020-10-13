@@ -7,7 +7,11 @@ import { DatePipe } from '@angular/common';
 // -----
 
 import { AppComponent } from './app.component';
+
+// Routing
 import { AppRoutingModule } from './app-routing.module';
+import { IntroductionRoutingModule } from './introduction/introduction-routing.module';
+
 
 import { MaterialModules } from './#import/material.modules';
 // -----
@@ -38,7 +42,7 @@ import { SplitPipe } from './shared/split.pipe';
 //
 
 // views
-import { IntroductionComponent } from './introduction/introduction.component';
+import { IntroductionComponent } from './introduction/introduction/introduction.component';
 import { ProjectsListComponent } from './view/projects-list/projects-list.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
@@ -96,6 +100,7 @@ import { CookieService } from 'ngx-cookie-service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    IntroductionRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModules,

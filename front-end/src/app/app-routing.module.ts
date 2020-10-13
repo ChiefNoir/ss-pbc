@@ -7,16 +7,16 @@ import { AdminEditCategoriesComponent } from './view/admin-edit-categories/admin
 import { AdminEditIntroductionComponent } from './view/admin-edit-introduction/admin-edit-introduction.component';
 import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edit-projects.component';
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';
-import { IntroductionComponent } from './introduction/introduction.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
 import { ProjectComponent } from './view/project/project.component';
 import { ProjectsListComponent } from './view/projects-list/projects-list.component';
 
 import { AuthGuard } from './core/auth.guard';
 
+import { IntroductionRoutingModule } from './introduction/introduction-routing.module';
+
 const routes: Routes =
 [
-  { path: '', component: IntroductionComponent, pathMatch: 'full' },
   { path: 'projects', component: ProjectsListComponent },
   { path: 'login', component: AdminLoginComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
@@ -30,7 +30,7 @@ const routes: Routes =
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [IntroductionRoutingModule, RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 

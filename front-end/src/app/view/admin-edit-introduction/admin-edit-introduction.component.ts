@@ -3,9 +3,9 @@ import { BehaviorSubject } from 'rxjs';
 
 import { DataService } from 'src/app/core/data.service';
 import { RequestResult, Incident } from 'src/app/model/request-result.model';
-import { Introduction } from 'src/app/model/introduction.model';
+import { Introduction } from 'src/app/introduction/introduction.model';
 import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
-import { ExternalUrl } from 'src/app/model/external-url.model';
+import { ExternalUrl } from 'src/app/shared/external-url.model';
 import { MatTable } from '@angular/material/table';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';

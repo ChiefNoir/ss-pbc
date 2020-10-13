@@ -1,5 +1,5 @@
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-@import 'fonts';
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "fonts";
 
 $color-core: #000000;
 
@@ -15,12 +15,9 @@ $color-control-active: $color-text-highlighted;
 $color-control-text: #bebebe;
 $color-control-active-text-highlighted: #2f3136;
 
-
-
 $font-core: Roboto;
 $font-header: Roboto;
 $font-neon: Vibur;
-
 
 $shadow-text: 2px 2px 3px black;
 $color-container-transparent: rgba(32, 34, 37, 0.9);

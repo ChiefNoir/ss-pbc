@@ -1,13 +1,11 @@
-export const environment =
-{
+export const environment = {
   production: true,
   apiEndpoint: '',
   authEndpoint: '',
   siteName: 'Fireplace Of Despair',
   footerCopyright: 'Chief',
-  paging:
-  {
+  paging: {
     maxUsers: 3,
-    maxProjects: 3
-  }
+    maxProjects: 3,
+  },
 };

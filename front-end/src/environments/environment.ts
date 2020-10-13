@@ -2,16 +2,14 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment =
-{
+export const environment = {
   production: false,
   apiEndpoint: 'https://localhost:44386/api/v1/',
   authEndpoint: 'https://localhost:44386/api/v1/',
   siteName: 'Fireplace Of Despair (dev)',
   footerCopyright: 'Chief',
-  paging:
-  {
+  paging: {
     maxUsers: 3,
-    maxProjects: 3
-  }
+    maxProjects: 3,
+  },
 };

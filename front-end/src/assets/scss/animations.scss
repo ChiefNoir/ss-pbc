@@ -1,105 +1,77 @@
-
 @keyframes delayed-onetime-flicker {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    41.99% {
-      opacity: 1;
-    }
-    42% {
-      opacity: 0;
-    }
-    43% {
-      opacity: 0;
-    }
-    43.01% {
-      opacity: 1;
-    }
-    45.99% {
-      opacity: 1;
-    }
-    46% {
-      opacity: 0;
-    }
-    46.9% {
-      opacity: 0;
-    }
-    46.91% {
-      opacity: 1;
-    }
-    51.99% {
-      opacity: 1;
-    }
-    52% {
-      opacity: 0;
-    }
-    52.8% {
-      opacity: 0;
-    }
-    52.81% {
-      opacity: 1;
-    }
-  }
+  000.00%  { opacity: 1; }
+  100.00% { opacity: 1; }
+  041.99%  { opacity: 1; }
+  042.00%  { opacity: 0; }
+  043.00%  { opacity: 0; }
+  043.01%  { opacity: 1; }
+  045.99%  { opacity: 1; }
+  046.00%  { opacity: 0; }
+  046.90%  { opacity: 0; }
+  046.91%  { opacity: 1; }
+  051.99%  { opacity: 1; }
+  052.00%  { opacity: 0; }
+  052.80%  { opacity: 0; }
+  052.81%  { opacity: 1; }
+}
+
+@keyframes spin-with-click {
+  000% { transform: rotate(0deg) }
   
-  @keyframes neonblink {
-    78% {
-      color: inherit;
-      text-shadow: inherit;
-    }
-    79% {
-      color: $color-neon-blink;
-    }
-    80% {
-      text-shadow: none;
-    }
-    81% {
-      color: inherit;
-      text-shadow: inherit;
-    }
-    82% {
-      color: $color-neon-blink;
-      text-shadow: none;
-    }
-    83% {
-      color: inherit;
-      text-shadow: inherit;
-    }
-    92% {
-      color: $color-neon-blink;
-      text-shadow: none;
-    }
-    93% {
-      color: inherit;
-      text-shadow: inherit;
-    }
-  }
+  001% { transform: rotate(45deg)}
+  010% {transform: rotate(45deg)}
   
-  @keyframes spin-with-click
-      {
-        0% { transform: rotate(0deg) }
-        
-        1% { transform: rotate(45deg)}
-        10% {transform: rotate(45deg)}
-        
-        11% {transform: rotate(90deg)}
-        24% {transform: rotate(90deg)}
+  011% {transform: rotate(90deg)}
+  024% {transform: rotate(90deg)}
 
-        25% {transform: rotate(135deg)}
-        36% {transform: rotate(135deg)}
-        
-        37% {transform: rotate(180deg)}
-        48% {transform: rotate(180deg)}
+  025% {transform: rotate(135deg)}
+  036% {transform: rotate(135deg)}
+  
+  037% {transform: rotate(180deg)}
+  048% {transform: rotate(180deg)}
 
-        49% {transform: rotate(225deg)}
-        60% {transform: rotate(225deg)}
+  049% {transform: rotate(225deg)}
+  060% {transform: rotate(225deg)}
 
-        61% {transform: rotate(270deg)}
-        72% {transform: rotate(270deg)}
+  061% {transform: rotate(270deg)}
+  072% {transform: rotate(270deg)}
 
-        73% {transform: rotate(315deg)}
-        84% {transform: rotate(315deg)}
+  073% {transform: rotate(315deg)}
+  084% {transform: rotate(315deg)}
 
-        85% {transform: rotate(360deg)}
-        100% {transform: rotate(360deg)}
-      }
+  085% {transform: rotate(360deg)}
+  100% {transform: rotate(360deg)}
+}
+
+@keyframes neonblink {
+  78% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  79% {
+    color: $color-neon-blink;
+  }
+  80% {
+    text-shadow: none;
+  }
+  81% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  82% {
+    color: $color-neon-blink;
+    text-shadow: none;
+  }
+  83% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  92% {
+    color: $color-neon-blink;
+    text-shadow: none;
+  }
+  93% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+}

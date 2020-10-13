@@ -19,9 +19,6 @@ button {
   padding: 0;
   position: relative;
   transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  -webkit-transition: all 0.3s ease;
   width: 150px;
 
   &:disabled {
@@ -55,9 +52,6 @@ button {
     position: absolute;
     right: 0;
     transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
     width: 2px;
   }
   &::after {
@@ -68,9 +62,6 @@ button {
     position: absolute;
     right: 0;
     transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
     width: 20%;
   }
 
@@ -95,9 +86,6 @@ button {
       position: absolute;
       top: 0;
       transition: all 0.3s ease;
-      -moz-transition: all 0.3s ease;
-      -o-transition: all 0.3s ease;
-      -webkit-transition: all 0.3s ease;
       width: 2px;
     }
     &::after {
@@ -108,9 +96,6 @@ button {
       position: absolute;
       top: 0;
       transition: all 0.3s ease;
-      -moz-transition: all 0.3s ease;
-      -o-transition: all 0.3s ease;
-      -webkit-transition: all 0.3s ease;
       width: 20%;
     }
 

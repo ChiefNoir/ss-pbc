@@ -89,10 +89,6 @@
     color: $color-control-active;
   
     transform: translateY(-0.3em);
-    -webkit-transform: translateY(-0.3em);
-    -moz-transform: translateY(-0.3em);
-    -ms-transform: translateY(-0.3em);
-    -o-transform: translateY(-0.3em);
   }
   a.active {
     color: $color-control-active;
@@ -104,5 +100,4 @@
   height: 80px;
 
   animation:spin-with-click 11s linear infinite;
-
 }

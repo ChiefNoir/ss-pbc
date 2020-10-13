@@ -19,9 +19,6 @@ $border-color: $color-text;
   width: 100%;
 
   transition: all 0.3s ease;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
 
   &:before {
     background: $border-color;
@@ -33,9 +30,6 @@ $border-color: $color-text;
     width: 2px;
 
     transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
   }
   &:after {
     background: $border-color;
@@ -47,9 +41,6 @@ $border-color: $color-text;
     height: 2px;
 
     transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
   }
 
   &:hover {
@@ -77,9 +68,6 @@ $border-color: $color-text;
       width: 2px;
 
       transition: all 0.3s ease;
-      -webkit-transition: all 0.3s ease;
-      -moz-transition: all 0.3s ease;
-      -o-transition: all 0.3s ease;
     }
     &:after {
       background: $border-color;
@@ -91,9 +79,6 @@ $border-color: $color-text;
       height: 2px;
 
       transition: all 0.3s ease;
-      -webkit-transition: all 0.3s ease;
-      -moz-transition: all 0.3s ease;
-      -o-transition: all 0.3s ease;
     }
 
     &:hover {

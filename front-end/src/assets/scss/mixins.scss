@@ -1,6 +1,4 @@
 @mixin flat-shadow($color) {
-  -webkit-box-shadow: 4px 4px 0px -2px $color;
-  -moz-box-shadow: 4px 4px 0px -2px $color;
   box-shadow: 4px 4px 0px -2px $color;
 }
 

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { OnlyIntDirective } from './onlyInt.directive';
+import { OnlyIntDirective } from './only-int.directive';
 
 @NgModule({
   declarations: [OnlyIntDirective],

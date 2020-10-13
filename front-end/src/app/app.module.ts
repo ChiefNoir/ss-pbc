@@ -31,7 +31,7 @@ import { MessageComponent } from './component/message/message.component';
 import { FileUploaderComponent } from './component/file-uploader/file-uploader.component';
 // -----
 
-import { OnlyIntModule } from './directive/onlyInt/onlyInt.module';
+import { OnlyIntModule } from './directive/onlyInt/only-int.module';
 // -----
 
 import { SplitPipe } from './pipe/split.pipe';

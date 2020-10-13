@@ -48,7 +48,7 @@ export class DataService
                .toPromise();
   }
 
-  public updateIntroduction(introduction: Introduction): Promise<RequestResult<Introduction>>
+  public saveIntroduction(introduction: Introduction): Promise<RequestResult<Introduction>>
   {
     const headers = new HttpHeaders({ Token: this.storage.getToken()});
 
@@ -56,7 +56,7 @@ export class DataService
     this.fillFormData(formData, 'introduction', introduction);
 
     return this.httpClient
-               .patch<RequestResult<Introduction>>
+               .post<RequestResult<Introduction>>
                (
                  this.endpoint + 'introduction',
                  formData,

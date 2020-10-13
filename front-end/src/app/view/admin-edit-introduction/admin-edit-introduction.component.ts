@@ -77,7 +77,7 @@ export class AdminEditIntroductionComponent implements OnInit
     this.message$.next({text: 'Saving', type: MessageType.Spinner });
     this.isDisabled = true;
 
-    this.service.updateIntroduction(this.introduction$.value).then
+    this.service.saveIntroduction(this.introduction$.value).then
     (
       result => this.handle(result, {text: 'Saving complete', type: MessageType.Info }),
       reject => this.handleError(reject)

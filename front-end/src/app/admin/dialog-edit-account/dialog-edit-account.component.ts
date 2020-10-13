@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
-import { DataService } from 'src/app/core/data.service';
+import { PublicService } from 'src/app/core/public.service';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Account } from 'src/app/admin/account.model';
 import { PrivateService } from 'src/app/core/private.service';
@@ -24,11 +24,11 @@ export class DialogEditAccountComponent implements OnInit
   public textMessages: TextMessages = new TextMessages();
 
   private accountId: number;
-  private service: DataService;
+  private service: PublicService;
   private privateService: PrivateService;
   private dialog: MatDialogRef<DialogEditAccountComponent>;
 
-  constructor(service: DataService, privateService: PrivateService, dialogRef: MatDialogRef<DialogEditAccountComponent>, @Inject(MAT_DIALOG_DATA) data: number)
+  constructor(service: PublicService, privateService: PrivateService, dialogRef: MatDialogRef<DialogEditAccountComponent>, @Inject(MAT_DIALOG_DATA) data: number)
   {
     this.service = service;
     this.privateService = privateService;

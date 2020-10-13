@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DataService } from 'src/app/core/data.service';
+import { PublicService } from 'src/app/core/public.service';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Category } from 'src/app/shared/category.model';
@@ -18,7 +18,7 @@ export class DialogEditorCategoryComponent implements OnInit
 {
   private categoryId: number;
   private service: PrivateService;
-  private publicService: DataService;
+  private publicService: PublicService;
   private dialog: MatDialogRef<DialogEditorCategoryComponent>;
 
   public category$: BehaviorSubject<Category> = new BehaviorSubject<Category>(null);
@@ -29,7 +29,7 @@ export class DialogEditorCategoryComponent implements OnInit
 
   public systemCategoryMessage: MessageDescription = {text: this.textMessages.CategorySystemWarning, type: MessageType.Info };
 
-  constructor(service: PrivateService, publicService: DataService, dialogRef: MatDialogRef<DialogEditorCategoryComponent>, @Inject(MAT_DIALOG_DATA) categoryId: number)
+  constructor(service: PrivateService, publicService: PublicService, dialogRef: MatDialogRef<DialogEditorCategoryComponent>, @Inject(MAT_DIALOG_DATA) categoryId: number)
   {
     this.service = service;
     this.dialog = dialogRef;

@@ -54,7 +54,7 @@ import { AdminInformationComponent } from './admin/information/admin-information
 // -----
 
 // services
-import { DataService } from './core/data.service';
+import { PublicService } from './core/public.service';
 import { PrivateService } from './core/private.service';
 import { AuthService } from './core/auth.service';
 import { StorageService } from './core/storage.service';
@@ -110,7 +110,7 @@ import { CookieService } from 'ngx-cookie-service';
   ],
   providers: [
     DatePipe,
-    DataService,
+    PublicService,
     PrivateService,
     AuthService,
     StorageService,

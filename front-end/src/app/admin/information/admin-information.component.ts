@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
-import { DataService } from 'src/app/core/data.service';
 import { Information } from 'src/app/admin/information.model';
 import { environment } from 'src/environments/environment';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';

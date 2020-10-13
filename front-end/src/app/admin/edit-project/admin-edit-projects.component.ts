@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { DataService } from 'src/app/core/data.service';
+import { PublicService } from 'src/app/core/public.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditProjectComponent } from 'src/app/admin/dialog-edit-project/dialog-edit-project.component';
 import { ProjectPreview } from 'src/app/projects/project-preview.model';
@@ -23,7 +23,7 @@ import { Category } from 'src/app/shared/category.model';
   styleUrls: ['./admin-edit-projects.component.scss'],
 })
 export class AdminEditProjectsComponent implements OnInit, OnDestroy {
-  private service: DataService;
+  private service: PublicService;
   private authGuard: AuthGuard;
   private router: Router;
 
@@ -41,7 +41,7 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy {
   >({ type: MessageType.Spinner });
 
   public constructor(
-    service: DataService,
+    service: PublicService,
     dialog: MatDialog,
     authGuard: AuthGuard,
     router: Router

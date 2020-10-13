@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
-import { DataService } from 'src/app/core/data.service';
+import { PublicService } from 'src/app/core/public.service';
 import { ProjectPreview } from 'src/app/projects/project-preview.model';
 import { Category } from 'src/app/shared/category.model';
 import { Paging } from 'src/app/shared/paging-info.model';
@@ -24,7 +24,7 @@ import { TextMessages } from 'src/app/shared/text-messages.resources';
 export class ProjectsListComponent implements OnDestroy, OnInit {
   private activeRoute: ActivatedRoute;
   private router: Router;
-  private service: DataService;
+  private service: PublicService;
 
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<
     Array<Category>
@@ -41,7 +41,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit {
   public textMessages: TextMessages = new TextMessages();
 
   public constructor(
-    service: DataService,
+    service: PublicService,
     router: Router,
     activeRoute: ActivatedRoute,
     titleService: Title

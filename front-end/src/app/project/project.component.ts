@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { TextMessages } from 'src/app/shared/text-messages.resources';
-import { DataService } from 'src/app/core/data.service';
+import { PublicService } from 'src/app/core/public.service';
 import { MessageType, MessageDescription } from 'src/app/shared/message/message.component';
 import { Project } from 'src/app/shared/project.model';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
 
 export class ProjectComponent
 {
-  private service: DataService;
+  private service: PublicService;
   private activeRoute: ActivatedRoute;
   private router: Router;
   private titleService: Title;
@@ -27,7 +27,7 @@ export class ProjectComponent
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
   public textMessages: TextMessages = new TextMessages();
 
-  public constructor(service: DataService, activeRoute: ActivatedRoute, router: Router, titleService: Title)
+  public constructor(service: PublicService, activeRoute: ActivatedRoute, router: Router, titleService: Title)
   {
     this.service = service;
     this.activeRoute = activeRoute;

@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { DataService } from 'src/app/core/data.service';
+import { PublicService } from 'src/app/core/public.service';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Category } from 'src/app/shared/category.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 
 export class AdminEditCategoriesComponent implements OnInit
 {
-  private service: DataService;
+  private service: PublicService;
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   public dialog: MatDialog;
@@ -36,7 +36,7 @@ export class AdminEditCategoriesComponent implements OnInit
     { def: 'isEverything', show: true },
   ];
 
-  public constructor(service: DataService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
+  public constructor(service: PublicService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
   {
     this.service = service;
     this.dialog = dialog;

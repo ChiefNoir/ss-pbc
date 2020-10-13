@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { DataService } from 'src/app/core/data.service';
+import { PublicService } from 'src/app/core/public.service';
 import { Introduction } from 'src/app/introduction/introduction.model';
 import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
@@ -16,13 +16,13 @@ import { environment } from 'src/environments/environment';
 
 export class IntroductionComponent implements OnInit
 {
-  private service: DataService;
+  private service: PublicService;
 
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   public textMessages: TextMessages = new TextMessages();
 
-  public constructor(service: DataService, titleService: Title)
+  public constructor(service: PublicService, titleService: Title)
   {
     this.service = service;
 

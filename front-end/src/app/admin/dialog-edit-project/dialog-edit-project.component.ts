@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Project } from 'src/app/shared/project.model';
 import { BehaviorSubject } from 'rxjs';
-import { DataService } from 'src/app/core/data.service';
+import { PublicService } from 'src/app/core/public.service';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Category } from 'src/app/shared/category.model';
 import { ExternalUrl } from 'src/app/shared/external-url.model';
@@ -22,7 +22,7 @@ export class DialogEditProjectComponent implements OnInit
 {
   private code: string;
   private service: PrivateService;
-  private publicService: DataService;
+  private publicService: PublicService;
   private dialog: MatDialogRef<DialogEditProjectComponent>;
 
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
@@ -36,7 +36,7 @@ export class DialogEditProjectComponent implements OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
-  constructor(service: PrivateService, publicService: DataService, dialog: MatDialogRef<DialogEditProjectComponent>, @Inject(MAT_DIALOG_DATA) projectCode: string)
+  constructor(service: PrivateService, publicService: PublicService, dialog: MatDialogRef<DialogEditProjectComponent>, @Inject(MAT_DIALOG_DATA) projectCode: string)
   {
     this.service = service;
     this.publicService = publicService;

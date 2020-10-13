@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { DataService } from 'src/app/core/data.service';
+import { PublicService } from 'src/app/core/public.service';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Introduction } from 'src/app/introduction/introduction.model';
 import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
@@ -21,7 +21,7 @@ import { PrivateService } from 'src/app/core/private.service';
 export class AdminEditIntroductionComponent implements OnInit
 {
   private service: PrivateService;
-  private publicService: DataService;
+  private publicService: PublicService;
 
   public columnsInner: string[] = [ 'name', 'url', 'btn'];
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
@@ -33,7 +33,7 @@ export class AdminEditIntroductionComponent implements OnInit
   private router: Router;
   public textMessages: TextMessages = new TextMessages();
 
-  public constructor(service: PrivateService,  publicService: DataService, authGuard: AuthGuard, router: Router)
+  public constructor(service: PrivateService,  publicService: PublicService, authGuard: AuthGuard, router: Router)
   {
     this.service = service;
     this.authGuard = authGuard;

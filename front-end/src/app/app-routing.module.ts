@@ -8,12 +8,12 @@ import { AdminEditIntroductionComponent } from './view/admin-edit-introduction/a
 import { AdminEditProjectsComponent } from './view/admin-edit-projects/admin-edit-projects.component';
 import { AdminLoginComponent } from './view/admin-login/admin-login.component';
 import { NotFoundComponent } from './view/notfound/notfound.component';
-import { ProjectComponent } from './view/project/project.component';
 
 import { AuthGuard } from './core/auth.guard';
 
 import { IntroductionRoutingModule } from './introduction/introduction-routing.module';
 import { ProjectsRoutingModule } from './projects/projects-routing.module';
+import { ProjectRoutingModule } from './project/project.routing.module';
 
 const routes: Routes = [
   { path: 'login', component: AdminLoginComponent },
@@ -38,7 +38,7 @@ const routes: Routes = [
     component: AdminEditIntroductionComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'project/:code', component: ProjectComponent },
+
   { path: '**', component: NotFoundComponent },
 ];
 
@@ -46,6 +46,7 @@ const routes: Routes = [
   imports: [
     IntroductionRoutingModule,
     ProjectsRoutingModule,
+    ProjectRoutingModule,
     RouterModule.forRoot(routes),
   ],
   exports: [RouterModule],

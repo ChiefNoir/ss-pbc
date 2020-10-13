@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
 import { GalleryImage } from 'src/app/model/gallery-image.model';
-import { MessageDescription, MessageType } from '../message/message.component';
+import { MessageDescription, MessageType } from 'src/app/component/message/message.component';
 
 @Component({
   selector: 'app-carousel',

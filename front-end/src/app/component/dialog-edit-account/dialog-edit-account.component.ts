@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from '../message/message.component';
 import { TextMessages } from 'src/app/resources/text-messages.resources';
-import { DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/core/data.service';
 import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Account } from 'src/app/model/Account';
 

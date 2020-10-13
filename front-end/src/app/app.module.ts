@@ -51,9 +51,9 @@ import { AdminComponent } from './view/admin/admin.component';
 // -----
 
 // services
-import { DataService } from './service/data.service';
-import { AuthService } from './service/auth.service';
-import { StorageService } from './service/storage.service';
+import { DataService } from './core/data.service';
+import { AuthService } from './core/auth.service';
+import { StorageService } from './core/storage.service';
 // -----
 
 import { AuthGuard } from './guards/auth.guard';
@@ -91,7 +91,7 @@ import { CookieService } from 'ngx-cookie-service';
     AdminEditIntroductionComponent,
     MessageComponent,
     FileUploaderComponent,
-    SplitPipe
+    SplitPipe,
   ],
   imports: [
     BrowserModule,
@@ -100,7 +100,7 @@ import { CookieService } from 'ngx-cookie-service';
     FlexLayoutModule,
     MaterialModules,
     HttpClientModule,
-    OnlyIntModule
+    OnlyIntModule,
   ],
   providers: [
     DatePipe,
@@ -109,8 +109,8 @@ import { CookieService } from 'ngx-cookie-service';
     StorageService,
     CookieService,
     AuthGuard,
-    Title
+    Title,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

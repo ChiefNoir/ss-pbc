@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Project } from 'src/app/model/Project';
 import { BehaviorSubject } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/core/data.service';
 import { RequestResult, Incident } from 'src/app/model/RequestResult';
 import { Category } from 'src/app/model/Category';
 import { ExternalUrl } from 'src/app/model/ExternalUrl';

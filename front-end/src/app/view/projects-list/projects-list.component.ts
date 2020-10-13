@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
-import { DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/core/data.service';
 import { ProjectPreview } from 'src/app/model/ProjectPreview';
 import { Category } from 'src/app/model/Category';
 import { Paging } from 'src/app/model/PagingInfo';

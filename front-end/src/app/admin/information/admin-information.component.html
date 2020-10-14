@@ -1,5 +1,7 @@
-
   <div *ngIf="information$ | async as introduction; else loading">
+
+    <app-admin-menu></app-admin-menu>
+
 
     <div fxLayout="row" class="container">
       <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">

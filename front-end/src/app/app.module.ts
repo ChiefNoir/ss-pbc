@@ -33,6 +33,7 @@ import { DialogEditorCategoryComponent } from './admin/dialog-editor-category/di
 import { DialogEditAccountComponent } from './admin/dialog-edit-account/dialog-edit-account.component';
 import { MessageComponent } from './shared/message/message.component';
 import { FileUploaderComponent } from './admin/shared/file-uploader/file-uploader.component';
+import { AdminMenuComponent } from './admin/shared/admin-menu/admin-menu.component';
 // -----
 
 import { OnlyIntModule } from './shared/only-int.module';
@@ -96,6 +97,7 @@ import { CookieService } from 'ngx-cookie-service';
     AdminEditIntroductionComponent,
     MessageComponent,
     FileUploaderComponent,
+    AdminMenuComponent,
     SplitPipe,
   ],
   imports: [

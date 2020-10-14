@@ -1,4 +1,7 @@
 <div *ngIf="projects$ | async as projects">
+  
+  <app-admin-menu></app-admin-menu>
+
   <table mat-table [dataSource]="projects">
     <ng-container matColumnDef="code">
       <th mat-header-cell *matHeaderCellDef> {{textMessages.ProjectCode}} </th>

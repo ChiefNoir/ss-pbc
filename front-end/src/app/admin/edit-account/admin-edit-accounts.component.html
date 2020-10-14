@@ -1,3 +1,5 @@
+<app-admin-menu></app-admin-menu>
+
 <div *ngIf="accounts$ | async as accounts; else loading">
   <table mat-table [dataSource]="accounts">
 

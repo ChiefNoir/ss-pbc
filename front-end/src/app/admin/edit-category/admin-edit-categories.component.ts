@@ -9,7 +9,7 @@ import { Category } from 'src/app/shared/category.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorCategoryComponent } from 'src/app/admin/dialog-editor-category/dialog-editor-category.component';
 import { MessageType, MessageDescription } from 'src/app/shared/message/message.component';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';
 
@@ -27,7 +27,6 @@ export class AdminEditCategoriesComponent implements OnInit
   public dialog: MatDialog;
   private authGuard: AuthGuard;
   private router: Router;
-  public textMessages: TextMessages = new TextMessages();
 
   private columnDefinitions = [
     { def: 'id', show: false },
@@ -36,7 +35,7 @@ export class AdminEditCategoriesComponent implements OnInit
     { def: 'isEverything', show: true },
   ];
 
-  public constructor(service: PublicService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
+  public constructor(service: PublicService, public textMessages: ResourcesService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
   {
     this.service = service;
     this.dialog = dialog;

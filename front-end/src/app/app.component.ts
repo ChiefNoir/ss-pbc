@@ -2,7 +2,7 @@ import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { AuthGuard } from './core/auth.guard';
-import { TextMessages } from './shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +10,13 @@ import { TextMessages } from './shared/text-messages.resources';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements AfterViewChecked {
-  public textMessages: TextMessages = new TextMessages();
-
   private isValidating: boolean = false;
 
   public constructor(
     titleService: Title,
     public authGuard: AuthGuard,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    public textMessages: ResourcesService
   ) {
     titleService.setTitle(environment.siteName);
   }

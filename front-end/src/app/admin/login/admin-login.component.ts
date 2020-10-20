@@ -15,7 +15,7 @@ import {
   MessageDescription,
   MessageType,
 } from 'src/app/shared/message/message.component';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { StorageService } from 'src/app/core/storage.service';
 
 @Component({
@@ -33,14 +33,15 @@ export class AdminLoginComponent implements OnInit {
   >(null);
   public login: FormControl = new FormControl('', [Validators.required]);
   public password: FormControl = new FormControl('', [Validators.required]);
-  public textMessages: TextMessages = new TextMessages();
+
 
   public constructor(
     authService: AuthService,
     authGuard: AuthGuard,
     router: Router,
     titleService: Title,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public textMessages: ResourcesService
   ) {
     this.authService = authService;
     this.authGuard = authGuard;

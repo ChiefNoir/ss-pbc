@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { PublicService } from 'src/app/core/public.service';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Account } from 'src/app/admin/account.model';
@@ -21,14 +21,13 @@ export class DialogEditAccountComponent implements OnInit
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public roles$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(null);
   public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Account properties');
-  public textMessages: TextMessages = new TextMessages();
 
   private accountId: number;
   private service: PublicService;
   private privateService: PrivateService;
   private dialog: MatDialogRef<DialogEditAccountComponent>;
 
-  constructor(service: PublicService, privateService: PrivateService, dialogRef: MatDialogRef<DialogEditAccountComponent>, @Inject(MAT_DIALOG_DATA) data: number)
+  constructor(service: PublicService, public textMessages: ResourcesService, privateService: PrivateService, dialogRef: MatDialogRef<DialogEditAccountComponent>, @Inject(MAT_DIALOG_DATA) data: number)
   {
     this.service = service;
     this.privateService = privateService;

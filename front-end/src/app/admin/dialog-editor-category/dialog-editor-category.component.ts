@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PublicService } from 'src/app/core/public.service';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Category } from 'src/app/shared/category.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -25,11 +25,12 @@ export class DialogEditorCategoryComponent implements OnInit
   public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Category properties');
-  public textMessages: TextMessages = new TextMessages();
+
 
   public systemCategoryMessage: MessageDescription = {text: this.textMessages.CategorySystemWarning, type: MessageType.Info };
 
-  constructor(service: PrivateService, publicService: PublicService, dialogRef: MatDialogRef<DialogEditorCategoryComponent>, @Inject(MAT_DIALOG_DATA) categoryId: number)
+  constructor(service: PrivateService, 
+    public textMessages: ResourcesService, publicService: PublicService, dialogRef: MatDialogRef<DialogEditorCategoryComponent>, @Inject(MAT_DIALOG_DATA) categoryId: number)
   {
     this.service = service;
     this.dialog = dialogRef;

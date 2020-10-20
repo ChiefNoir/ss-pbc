@@ -54,11 +54,14 @@ import { AdminEditIntroductionComponent } from './admin/edit-introduction/admin-
 import { AdminInformationComponent } from './admin/information/admin-information.component';
 // -----
 
+
+
 // services
 import { PublicService } from './core/public.service';
 import { PrivateService } from './core/private.service';
 import { AuthService } from './core/auth.service';
 import { StorageService } from './core/storage.service';
+import { ResourcesService } from './core/resources.service';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 // -----
 
@@ -99,7 +102,7 @@ import { CookieService } from 'ngx-cookie-service';
     MessageComponent,
     FileUploaderComponent,
     AdminMenuComponent,
-    SplitPipe,
+    SplitPipe
   ],
   imports: [
     BrowserModule,
@@ -120,6 +123,7 @@ import { CookieService } from 'ngx-cookie-service';
     CookieService,
     AuthGuard,
     Title,
+    ResourcesService
   ],
   bootstrap: [AppComponent],
 })

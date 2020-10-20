@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 
 @Component({
   selector: 'app-paginator',
@@ -28,7 +28,7 @@ export class PaginatorComponent
   @Output()
   public previousPageClick = new EventEmitter();
 
-  public textMessages: TextMessages = new TextMessages();
+  constructor(public textMessages: ResourcesService) {}
 
   public changePageEnterPress(pageNumber: number)
   {

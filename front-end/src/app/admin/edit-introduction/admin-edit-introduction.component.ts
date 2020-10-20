@@ -9,7 +9,7 @@ import { ExternalUrl } from 'src/app/shared/external-url.model';
 import { MatTable } from '@angular/material/table';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { PrivateService } from 'src/app/core/private.service';
 
 @Component({
@@ -31,9 +31,8 @@ export class AdminEditIntroductionComponent implements OnInit
   public isDisabled: boolean = false;
   private authGuard: AuthGuard;
   private router: Router;
-  public textMessages: TextMessages = new TextMessages();
 
-  public constructor(service: PrivateService,  publicService: PublicService, authGuard: AuthGuard, router: Router)
+  public constructor(service: PrivateService, public textMessages: ResourcesService, publicService: PublicService, authGuard: AuthGuard, router: Router)
   {
     this.service = service;
     this.authGuard = authGuard;

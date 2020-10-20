@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { PublicService } from 'src/app/core/public.service';
 import { MessageType, MessageDescription } from 'src/app/shared/message/message.component';
 import { Project } from 'src/app/shared/project.model';
@@ -25,9 +25,9 @@ export class ProjectComponent
 
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({type: MessageType.Spinner });
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
-  public textMessages: TextMessages = new TextMessages();
 
-  public constructor(service: PublicService, activeRoute: ActivatedRoute, router: Router, titleService: Title)
+
+  public constructor(service: PublicService, public textMessages: ResourcesService, activeRoute: ActivatedRoute, router: Router, titleService: Title)
   {
     this.service = service;
     this.activeRoute = activeRoute;

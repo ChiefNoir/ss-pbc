@@ -10,7 +10,7 @@ import {
   MessageType,
   MessageDescription,
 } from 'src/app/shared/message/message.component';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { Paging } from 'src/app/shared/paging-info.model';
 import { Incident, RequestResult } from 'src/app/shared/request-result.model';
 import { AuthGuard } from 'src/app/core/auth.guard';
@@ -29,7 +29,6 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy {
 
   public columns: string[] = ['code', 'displayName', 'category', 'releaseDate'];
   public dialog: MatDialog;
-  public textMessages: TextMessages = new TextMessages();
   public projects$: BehaviorSubject<
     Array<ProjectPreview>
   > = new BehaviorSubject<Array<ProjectPreview>>(null);
@@ -44,7 +43,8 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy {
     service: PublicService,
     dialog: MatDialog,
     authGuard: AuthGuard,
-    router: Router
+    router: Router,
+    public textMessages: ResourcesService
   ) {
     this.service = service;
     this.dialog = dialog;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,9 +11,7 @@ import { environment } from 'src/environments/environment';
 
 export class NotFoundComponent
 {
-  public textMessages: TextMessages = new TextMessages();
-
-  public constructor(titleService: Title)
+  public constructor(titleService: Title, public textMessages: ResourcesService)
   {
     titleService.setTitle(this.textMessages.TitlePageNotFound + environment.siteName);
   }

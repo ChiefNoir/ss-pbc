@@ -1,4 +1,7 @@
-export class TextMessages {
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class ResourcesService {
   public LoadComplete = 'Load complete';
   public InitializationComplete = 'Initialization complete';
   public SaveComplete = 'Saving complete';
@@ -43,7 +46,7 @@ export class TextMessages {
   public CategoryType = 'Type';
   public CategoryTypeGeneric = 'Generic';
   public CategoryTypeSystem = 'System';
-  public CategorySystemWarning = "You can't delete system category";
+  public CategorySystemWarning = 'You can\'t delete system category';
 
   public Project = 'Project';
   public ProjectCategory = 'Category';

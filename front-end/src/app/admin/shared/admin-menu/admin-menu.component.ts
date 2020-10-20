@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthGuard } from 'src/app/core/auth.guard';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
-import { environment } from 'src/environments/environment';
+import { ResourcesService } from 'src/app/core/resources.service';
+
 
 @Component({
   selector: 'app-admin-menu',
@@ -12,9 +12,7 @@ import { environment } from 'src/environments/environment';
 
 export class AdminMenuComponent
 {
-  public textMessages: TextMessages = new TextMessages();
-
-  constructor(public authGuard: AuthGuard, public router: Router)
+  constructor(public authGuard: AuthGuard, public textMessages: ResourcesService, public router: Router)
   {
 
   }

@@ -8,7 +8,7 @@ import { ExternalUrl } from 'src/app/shared/external-url.model';
 import { MatTable } from '@angular/material/table';
 import { MessageType, MessageDescription } from 'src/app/shared/message/message.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { GalleryImage } from 'src/app/shared/gallery-image.model';
 import { PrivateService } from 'src/app/core/private.service';
 
@@ -30,13 +30,13 @@ export class DialogEditProjectComponent implements OnInit
 
   public columnsInner: string[] = [ 'name', 'url', 'btn'];
   public columnsGallery: string[] = [ 'imageUrl', 'extraUrl', 'btn'];
-  public textMessages: TextMessages = new TextMessages();
+
   public categories$: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>(null);
   public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
-  constructor(service: PrivateService, publicService: PublicService, dialog: MatDialogRef<DialogEditProjectComponent>, @Inject(MAT_DIALOG_DATA) projectCode: string)
+  constructor(service: PrivateService, public textMessages: ResourcesService, publicService: PublicService, dialog: MatDialogRef<DialogEditProjectComponent>, @Inject(MAT_DIALOG_DATA) projectCode: string)
   {
     this.service = service;
     this.publicService = publicService;

@@ -9,12 +9,9 @@ import { Category } from 'src/app/shared/category.model';
 import { Paging } from 'src/app/shared/paging-info.model';
 import { Incident, RequestResult } from 'src/app/shared/request-result.model';
 
-import {
-  MessageDescription,
-  MessageType,
-} from 'src/app/shared/message/message.component';
+import { MessageDescription, MessageType} from 'src/app/shared/message/message.component';
 import { environment } from 'src/environments/environment';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 
 @Component({
   selector: 'app-projects-list',
@@ -38,13 +35,13 @@ export class ProjectsListComponent implements OnDestroy, OnInit {
   public projects$: BehaviorSubject<
     Array<ProjectPreview>
   > = new BehaviorSubject<Array<ProjectPreview>>(null);
-  public textMessages: TextMessages = new TextMessages();
 
   public constructor(
     service: PublicService,
     router: Router,
     activeRoute: ActivatedRoute,
-    titleService: Title
+    titleService: Title,
+    public textMessages: ResourcesService
   ) {
     this.service = service;
     this.router = router;

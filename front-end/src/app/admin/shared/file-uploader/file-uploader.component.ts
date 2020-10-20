@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
- 
+import { ResourcesService } from 'src/app/core/resources.service';
+
 @Component({
   selector: 'app-file-uploader',
   templateUrl: './file-uploader.component.html',
@@ -21,7 +21,7 @@ export class FileUploaderComponent
   @Input()
   public disabled: boolean;
 
-  public textMessages: TextMessages = new TextMessages();
+  constructor(public textMessages: ResourcesService) {}
 
   public upload(files: File[]): void
   {

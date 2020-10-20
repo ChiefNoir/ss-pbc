@@ -10,7 +10,7 @@ import { Account } from 'src/app/admin/account.model';
 import { DialogEditAccountComponent } from 'src/app/admin/dialog-edit-account/dialog-edit-account.component';
 import { Paging } from 'src/app/shared/paging-info.model';
 import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { Router } from '@angular/router';
 import { PrivateService } from 'src/app/core/private.service';
@@ -32,9 +32,8 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
   public paging$: BehaviorSubject<Paging<null>> = new BehaviorSubject<Paging<null>>(null);
   public columns: string[] = ['login', 'role'];
   public dialog: MatDialog;
-  public textMessages: TextMessages = new TextMessages();
 
-  public constructor(service: PrivateService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
+  public constructor(service: PrivateService, public textMessages: ResourcesService, titleService: Title, dialog: MatDialog, authGuard: AuthGuard, router: Router)
   {
     this.service = service;
     this.dialog = dialog;

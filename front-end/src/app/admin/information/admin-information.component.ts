@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { Title } from '@angular/platform-browser';
 import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
-import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { ResourcesService } from 'src/app/core/resources.service';
 import { Information } from 'src/app/admin/information.model';
 import { environment } from 'src/environments/environment';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
@@ -25,9 +25,9 @@ export class AdminInformationComponent implements OnInit
 
   public information$: BehaviorSubject<Information> = new BehaviorSubject<Information> (null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
-  public textMessages: TextMessages = new TextMessages();
 
-  public constructor(router: Router, titleService: Title, dataService: PrivateService, authGuard: AuthGuard)
+
+  public constructor(router: Router, titleService: Title, public textMessages: ResourcesService, dataService: PrivateService, authGuard: AuthGuard)
   {
     this.router = router;
     this.dataService = dataService;

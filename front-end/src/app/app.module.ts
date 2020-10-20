@@ -18,7 +18,7 @@ import { MaterialModules } from './#imports/material.modules';
 // components
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
-import { ButtonComponent } from './shared/button/button.component';
+import { ButtonComponent } from './admin/shared/button/button.component';
 import { ButtonContactComponent } from './shared/button-contact/button-contact.component';
 import { CarouselComponent } from './project/carousel/carousel.component';
 import { ButtonCategoryComponent } from './projects/button-category/button-category.component';

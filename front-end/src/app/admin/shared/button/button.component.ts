@@ -9,10 +9,10 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 export class ButtonComponent
 {
   @Input()
-  isDisabled: boolean = false;
+  public isDisabled: boolean = false;
 
   @Output()
-  OnClick = new EventEmitter();
+  public OnClick: EventEmitter<void> = new EventEmitter();
 
   public btnClick()
   {

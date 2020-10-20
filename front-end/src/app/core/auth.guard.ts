@@ -39,6 +39,7 @@ export class AuthGuard implements CanActivate {
     const tokenData = this.getTokenData();
     if (tokenData === null)
     {
+      this.router.navigate(['/login']);
       return false;
     }
 
@@ -48,6 +49,7 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
+    this.router.navigate(['/login']);
     return false;
   }
 

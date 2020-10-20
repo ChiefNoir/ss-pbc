@@ -17,7 +17,11 @@ export class IntroductionComponent implements OnInit {
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
 
-  public constructor(public service: PublicService, public textMessages: ResourcesService, titleService: Title) {
+  public constructor(
+    private service: PublicService,
+    public textMessages: ResourcesService,
+    titleService: Title
+  ) {
     titleService.setTitle(
       this.textMessages.TitlePageIntroduction + environment.siteName
     );

@@ -6,8 +6,6 @@ import { environment } from 'src/environments/environment';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-
-export class HeaderComponent
-{
+export class HeaderComponent {
   public name: string = environment.siteName;
 }

@@ -8,9 +8,7 @@ import { ResourcesService } from 'src/app/core/resources.service';
   templateUrl: './project-full.component.html',
   styleUrls: ['./project-full.component.scss'],
 })
-
-export class ProjectFullComponent
-{
+export class ProjectFullComponent {
   @Input()
   public project: Project;
 

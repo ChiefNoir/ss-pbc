@@ -15,79 +15,61 @@ import { environment } from 'src/environments/environment';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss'],
 })
-
-export class ProjectComponent
-{
-  private service: PublicService;
-  private activeRoute: ActivatedRoute;
-  private router: Router;
-  private titleService: Title;
-
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({type: MessageType.Spinner });
+export class ProjectComponent {
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
-
-  public constructor(service: PublicService, public textMessages: ResourcesService, activeRoute: ActivatedRoute, router: Router, titleService: Title)
-  {
-    this.service = service;
-    this.activeRoute = activeRoute;
-    this.router = router;
-    this.titleService = titleService;
-
-    this.activeRoute.params.subscribe
-    (
-      () => { this.refreshPage(); }
-    );
+  public constructor(
+    public textMessages: ResourcesService,
+    private service: PublicService,
+    private activeRoute: ActivatedRoute,
+    private router: Router,
+    private titleService: Title
+  ) {
+    this.activeRoute.params.subscribe(() => {
+      this.refreshPage();
+    });
   }
 
-  private refreshPage(): void
-  {
+  private refreshPage(): void {
     this.project$.next(null);
 
     const code = this.activeRoute.snapshot.paramMap.get('code');
-    this.service.getProject(code)
-                .then
-                (
-                  win => this.handleProject(win),
-                  fail => this.handleError(fail)
-                );
+    this.service.getProject(code).then(
+      (win) => this.handleProject(win),
+      (fail) => this.handleError(fail)
+    );
   }
 
-  private handleProject(result: RequestResult<Project>): void
-  {
-    if (result.isSucceed)
-    {
-      if (result.data == null)
-      {
+  private handleProject(result: RequestResult<Project>): void {
+    if (result.isSucceed) {
+      if (result.data == null) {
         this.router.navigate(['/404']);
       }
 
-      this.titleService.setTitle(result.data?.displayName + this.textMessages.TitleSeparator + environment.siteName);
+      this.titleService.setTitle(
+        result.data?.displayName +
+          this.textMessages.TitleSeparator +
+          environment.siteName
+      );
       this.project$.next(result.data);
-    }
-    else
-    {
+    } else {
       this.handleIncident(result.error);
     }
   }
 
-  private handleIncident(error: Incident): void
-  {
+  private handleIncident(error: Incident): void {
     console.log(error);
-    this.message$.next({text: error.message, type: MessageType.Error });
+    this.message$.next({ text: error.message, type: MessageType.Error });
   }
 
-  private handleError(error: any): void
-  {
+  private handleError(error: any): void {
     console.log(error);
 
-    if (error.name !== undefined)
-    {
-      this.message$.next({text: error.name, type: MessageType.Error });
-    }
-    else
-    {
-      this.message$.next({text: error, type: MessageType.Error });
+    if (error.name !== undefined) {
+      this.message$.next({ text: error.name, type: MessageType.Error });
+    } else {
+      this.message$.next({ text: error, type: MessageType.Error });
     }
   }
 }

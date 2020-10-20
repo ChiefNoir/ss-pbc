@@ -5,22 +5,18 @@ import { Component, Input } from '@angular/core';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss'],
 })
-
-export class MessageComponent
-{
+export class MessageComponent {
   @Input()
   public message: MessageDescription;
 }
 
-export enum MessageType
-{
+export enum MessageType {
   Info = 0,
   Error = 1,
   Spinner = 2,
 }
 
-export class MessageDescription
-{
+export class MessageDescription {
   public text?: string;
   public type: MessageType;
 }

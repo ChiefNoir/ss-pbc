@@ -46,7 +46,7 @@ export class ResourcesService {
   public CategoryType = 'Type';
   public CategoryTypeGeneric = 'Generic';
   public CategoryTypeSystem = 'System';
-  public CategorySystemWarning = 'You can\'t delete system category';
+  public CategorySystemWarning = "You can't delete system category";
 
   public Project = 'Project';
   public ProjectCategory = 'Category';
@@ -87,4 +87,6 @@ export class ResourcesService {
 
   public GenericSelectFile = 'Select file';
   public GenericDeleteFile = 'Delete file';
+
+  public FooterCopyright = 'Chief';
 }

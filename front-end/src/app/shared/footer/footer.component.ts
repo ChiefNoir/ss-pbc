@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { ResourcesService } from 'src/app/core/resources.service';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
-
-export class FooterComponent
-{
+export class FooterComponent {
   public currentYear: number = new Date().getFullYear();
-  public copyright: string  = environment.footerCopyright;
+
+  constructor(public resourcesService: ResourcesService) {}
 }

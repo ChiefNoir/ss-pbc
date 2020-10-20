@@ -8,11 +8,13 @@ import { environment } from 'src/environments/environment';
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss'],
 })
-
-export class NotFoundComponent
-{
-  public constructor(titleService: Title, public textMessages: ResourcesService)
-  {
-    titleService.setTitle(this.textMessages.TitlePageNotFound + environment.siteName);
+export class NotFoundComponent {
+  public constructor(
+    titleService: Title,
+    public textMessages: ResourcesService
+  ) {
+    titleService.setTitle(
+      this.textMessages.TitlePageNotFound + environment.siteName
+    );
   }
 }

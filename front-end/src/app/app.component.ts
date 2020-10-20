@@ -15,8 +15,8 @@ export class AppComponent implements AfterViewChecked {
   public constructor(
     titleService: Title,
     public authGuard: AuthGuard,
-    private changeDetectorRef: ChangeDetectorRef,
-    public textMessages: ResourcesService
+    public textMessages: ResourcesService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     titleService.setTitle(environment.siteName);
   }

@@ -1,20 +1,17 @@
-@import 'variables';
-@import 'mixins';
+@import "variables";
+@import "mixins";
 
-.container
-{
+.container {
   background-color: $color-control;
   width: 100%;
   @include flat-shadow($color-core);
 
-  .mat-divider
-  {
+  .mat-divider {
     border-top-color: $color-text;
     border-top-width: 2px;
   }
 
-  .left-panel
-  {
+  .left-panel {
     margin-left: 20px;
     margin-right: 10px;
     margin-top: 20px;
@@ -23,15 +20,13 @@
     width: 300px;
     color: $color-text;
 
-    .poster
-    {
+    .poster {
       height: 100%;
       width: 300px;
     }
   }
 
-  .right-panel
-  {
+  .right-panel {
     margin-left: 10px;
     margin-right: 20px;
     margin-top: 20px;
@@ -40,22 +35,18 @@
     color: $color-text;
     font-size: large;
 
-    .title
-    {
+    .title {
       font-size: xx-large;
       font-weight: 500px;
-      margin-top: 0; 
+      margin-top: 0;
       margin-bottom: 3px;
     }
-    .subtitle
-    {
-      
+    .subtitle {
       font-size: x-large;
       font-weight: 300px;
-      margin-bottom: 3px; 
+      margin-bottom: 3px;
     }
-    .content
-    {
+    .content {
       margin-top: 20px;
     }
   }

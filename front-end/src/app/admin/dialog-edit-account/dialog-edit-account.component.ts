@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
 import { ResourcesService } from 'src/app/core/resources.service';
-import { PublicService } from 'src/app/core/public.service';
 import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { Account } from 'src/app/admin/account.model';
 import { PrivateService } from 'src/app/core/private.service';
@@ -23,15 +22,13 @@ export class DialogEditAccountComponent implements OnInit
   public title$: BehaviorSubject<string> = new BehaviorSubject<string>('Account properties');
 
   private accountId: number;
-  private service: PublicService;
-  private privateService: PrivateService;
-  private dialog: MatDialogRef<DialogEditAccountComponent>;
 
-  constructor(service: PublicService, public textMessages: ResourcesService, privateService: PrivateService, dialogRef: MatDialogRef<DialogEditAccountComponent>, @Inject(MAT_DIALOG_DATA) data: number)
+  constructor(
+    public textMessages: ResourcesService,
+    private privateService: PrivateService,
+    private dialog: MatDialogRef<DialogEditAccountComponent>,
+    @Inject(MAT_DIALOG_DATA) data: number)
   {
-    this.service = service;
-    this.privateService = privateService;
-    this.dialog = dialogRef;
     this.accountId = data;
   }
 

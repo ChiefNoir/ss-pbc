@@ -9,7 +9,7 @@ import { Category } from 'src/app/shared/category.model';
 import { Paging } from 'src/app/shared/paging-info.model';
 import { Incident, RequestResult } from 'src/app/shared/request-result.model';
 
-import { MessageDescription, MessageType} from 'src/app/shared/message/message.component';
+import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
 import { environment } from 'src/environments/environment';
 import { ResourcesService } from 'src/app/core/resources.service';
 
@@ -19,35 +19,20 @@ import { ResourcesService } from 'src/app/core/resources.service';
   styleUrls: ['./projects-list.component.scss'],
 })
 export class ProjectsListComponent implements OnDestroy, OnInit {
-  private activeRoute: ActivatedRoute;
-  private router: Router;
-  private service: PublicService;
-
-  public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<
-    Array<Category>
-  >(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<
-    MessageDescription
-  >({ type: MessageType.Spinner });
-  public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<
-    Paging<string>
-  >(null);
-  public projects$: BehaviorSubject<
-    Array<ProjectPreview>
-  > = new BehaviorSubject<Array<ProjectPreview>>(null);
+  public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
+  public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
+  public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
 
   public constructor(
-    service: PublicService,
-    router: Router,
-    activeRoute: ActivatedRoute,
+    private service: PublicService,
+    private router: Router,
+    private activeRoute: ActivatedRoute,
     titleService: Title,
     public textMessages: ResourcesService
   ) {
-    this.service = service;
-    this.router = router;
-    this.activeRoute = activeRoute;
-
-    titleService.setTitle(
+    titleService.setTitle
+    (
       this.textMessages.TitleProjects + environment.siteName
     );
   }

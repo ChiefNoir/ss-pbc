@@ -3,13 +3,12 @@
 @import "animations";
 
 .header {
-  padding-bottom: 15px;  
+  padding-bottom: 15px;
   padding-top: 15px;
   text-align: center;
 
-  &:hover
-  {
-    animation: delayed-onetime-flicker 2s linear 2s ;
+  &:hover {
+    animation: delayed-onetime-flicker 2s linear 2s;
   }
 
   a {
@@ -20,7 +19,7 @@
     line-height: 1;
     text-decoration: none;
     text-transform: uppercase;
-  
+
     @include text-reto-shadow($color-shadow-text-light);
   }
 }

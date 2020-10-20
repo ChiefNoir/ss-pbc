@@ -24,36 +24,26 @@ import { StorageService } from 'src/app/core/storage.service';
   styleUrls: ['./admin-login.component.scss'],
 })
 export class AdminLoginComponent implements OnInit {
-  private authGuard: AuthGuard;
-  private authService: AuthService;
-  private router: Router;
-
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<
     MessageDescription
   >(null);
   public login: FormControl = new FormControl('', [Validators.required]);
   public password: FormControl = new FormControl('', [Validators.required]);
 
-
   public constructor(
-    authService: AuthService,
-    authGuard: AuthGuard,
-    router: Router,
+    private authService: AuthService,
+    private authGuard: AuthGuard,
+    private router: Router,
     titleService: Title,
     private storageService: StorageService,
     public textMessages: ResourcesService
   ) {
-    this.authService = authService;
-    this.authGuard = authGuard;
-    this.router = router;
-
     titleService.setTitle(
       this.textMessages.TitlePageLogin + environment.siteName
     );
   }
 
   public async ngOnInit(): Promise<void> {
-
     if (this.authGuard.isLoggedIn()) {
       this.router.navigate(['/admin']);
     }
@@ -72,9 +62,11 @@ export class AdminLoginComponent implements OnInit {
 
   private handleLoginResult(result: RequestResult<Identity>): void {
     if (result.isSucceed) {
-
       this.message$.next(null);
-      this.storageService.saveToken(result.data.token, result.data.tokenLifeTimeMinutes);
+      this.storageService.saveToken(
+        result.data.token,
+        result.data.tokenLifeTimeMinutes
+      );
 
       this.router.navigate(['/admin']);
     } else {

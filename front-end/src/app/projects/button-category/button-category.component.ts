@@ -4,11 +4,9 @@ import { Category } from 'src/app/shared/category.model';
 @Component({
   selector: 'app-button-category',
   templateUrl: './button-category.component.html',
-  styleUrls: ['./button-category.component.scss']
+  styleUrls: ['./button-category.component.scss'],
 })
-
-export class ButtonCategoryComponent
-{
+export class ButtonCategoryComponent {
   @Input()
   public route: string;
 

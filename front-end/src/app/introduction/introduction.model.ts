@@ -1,16 +1,15 @@
 import { ExternalUrl } from '../shared/external-url.model';
 
-export class Introduction
-{
-    public title: string;
-    public content: string;
-    public posterUrl: string;
-    public posterDescription: string;
-    public externalUrls: Array<ExternalUrl>;
-    public version: number;
+export class Introduction {
+  public title: string;
+  public content: string;
+  public posterUrl: string;
+  public posterDescription: string;
+  public externalUrls: Array<ExternalUrl>;
+  public version: number;
 
-    public posterToUpload: File;
+  public posterToUpload: File;
 
-    // [front-only]
-    public posterPreview: string;
+  // [front-only]
+  public posterPreview: string;
 }

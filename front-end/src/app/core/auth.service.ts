@@ -10,7 +10,10 @@ export class AuthService {
 
   public constructor(private httpClient: HttpClient) {}
 
-  public login(login: string, password: string): Promise<RequestResult<Identity>> {
+  public login(
+    login: string,
+    password: string
+  ): Promise<RequestResult<Identity>> {
     return this.httpClient
       .post<RequestResult<Identity>>(this.endpoint + 'login', {
         login,

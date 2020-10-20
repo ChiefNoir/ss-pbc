@@ -23,12 +23,7 @@ import { Category } from 'src/app/shared/category.model';
   styleUrls: ['./admin-edit-projects.component.scss'],
 })
 export class AdminEditProjectsComponent implements OnInit, OnDestroy {
-  private service: PublicService;
-  private authGuard: AuthGuard;
-  private router: Router;
-
   public columns: string[] = ['code', 'displayName', 'category', 'releaseDate'];
-  public dialog: MatDialog;
   public projects$: BehaviorSubject<
     Array<ProjectPreview>
   > = new BehaviorSubject<Array<ProjectPreview>>(null);
@@ -40,17 +35,12 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy {
   >({ type: MessageType.Spinner });
 
   public constructor(
-    service: PublicService,
-    dialog: MatDialog,
-    authGuard: AuthGuard,
-    router: Router,
+    private service: PublicService,
+    public dialog: MatDialog,
+    private authGuard: AuthGuard,
+    private router: Router,
     public textMessages: ResourcesService
-  ) {
-    this.service = service;
-    this.dialog = dialog;
-    this.authGuard = authGuard;
-    this.router = router;
-  }
+  ) {}
 
   public ngOnInit(): void {
     if (this.authGuard.isLoggedIn()) {

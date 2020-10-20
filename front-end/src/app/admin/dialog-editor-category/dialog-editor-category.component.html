@@ -1,13 +1,25 @@
 <mat-dialog-content>
-  <h2 *ngIf="title$ | async as title" class="title"> {{title}} </h2>
+  <h2 *ngIf="title$ | async as title" class="title">{{ title }}</h2>
 
   <div class="content" *ngIf="category$ | async as category">
     <div fxLayout="column" fxLayoutAlign="space-around center">
       <mat-form-field>
-        <input [disabled]="disableInput$ | async" matInput [(ngModel)]="category.code" name="code" placeholder="code"/>
+        <input
+          [disabled]="disableInput$ | async"
+          matInput
+          [(ngModel)]="category.code"
+          name="code"
+          placeholder="code"
+        />
       </mat-form-field>
       <mat-form-field>
-        <input [disabled]="disableInput$ | async" matInput [(ngModel)]="category.displayName" name="displayName" placeholder="Display name"/>
+        <input
+          [disabled]="disableInput$ | async"
+          matInput
+          [(ngModel)]="category.displayName"
+          name="displayName"
+          placeholder="Display name"
+        />
       </mat-form-field>
     </div>
   </div>
@@ -22,25 +34,35 @@
     <app-message [message]="msg"></app-message>
   </div>
 
-  <div class="actions" fxLayoutAlign="space-between center" fxShow="true" fxHide.lt-md="true">
-      <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
-        {{ textMessages.GenericDelete }}
+  <div
+    class="actions"
+    fxLayoutAlign="space-between center"
+    fxShow="true"
+    fxHide.lt-md="true"
+  >
+    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
+      {{ textMessages.GenericDelete }}
+    </app-button>
+
+    <div>
+      <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
+        {{ textMessages.GenericSave }}
       </app-button>
-   
-      <div>
-        <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
-          {{ textMessages.GenericSave }}
-        </app-button>
-        <app-button (OnClick)="close()">
-          {{ textMessages.GenericClose }}
-        </app-button>
-      </div>
+      <app-button (OnClick)="close()">
+        {{ textMessages.GenericClose }}
+      </app-button>
+    </div>
   </div>
-  <div fxHide.gt-sm="true" fxShow="true" fxLayout="column" fxLayoutAlign="end center">
+  <div
+    fxHide.gt-sm="true"
+    fxShow="true"
+    fxLayout="column"
+    fxLayoutAlign="end center"
+  >
     <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
       {{ textMessages.GenericSave }}
     </app-button>
-    
+
     <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
       {{ textMessages.GenericDelete }}
     </app-button>
@@ -49,5 +71,4 @@
       {{ textMessages.GenericClose }}
     </app-button>
   </div>
-
 </mat-dialog-content>

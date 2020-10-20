@@ -2,8 +2,7 @@ import { ExternalUrl } from 'src/app/shared/external-url.model';
 import { Category } from 'src/app/shared/category.model';
 import { GalleryImage } from 'src/app/shared/gallery-image.model';
 
-export class Project
-{
+export class Project {
   public id: number;
   public code: string;
   public displayName: string;

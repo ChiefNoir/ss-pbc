@@ -6,11 +6,9 @@ import { StorageService } from './storage.service';
 // @ts-ignore
 import jwt_decode from 'jwt-decode';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  public validating$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  public validating$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public constructor(
     private router: Router,

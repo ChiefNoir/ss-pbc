@@ -1,5 +1,4 @@
-export class ExternalUrl
-{
+export class ExternalUrl {
   public id: number;
   public url: string;
   public displayName: string;

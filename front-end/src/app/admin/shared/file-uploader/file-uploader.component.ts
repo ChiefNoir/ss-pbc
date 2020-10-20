@@ -4,11 +4,9 @@ import { ResourcesService } from 'src/app/core/resources.service';
 @Component({
   selector: 'app-file-uploader',
   templateUrl: './file-uploader.component.html',
-  styleUrls: ['./file-uploader.component.scss']
+  styleUrls: ['./file-uploader.component.scss'],
 })
-
-export class FileUploaderComponent
-{
+export class FileUploaderComponent {
   @Output()
   public uploadFiles = new EventEmitter<File[]>();
 
@@ -23,13 +21,11 @@ export class FileUploaderComponent
 
   constructor(public textMessages: ResourcesService) {}
 
-  public upload(files: File[]): void
-  {
+  public upload(files: File[]): void {
     this.uploadFiles.emit(files);
   }
 
-  public delete(): void
-  {
+  public delete(): void {
     this.deleteFile.emit();
   }
 }

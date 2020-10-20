@@ -1,16 +1,15 @@
 <div class="container" fxLayout="column" fxLayoutAlign="end stretch">
-  <img [className]="project.releaseDate ? 'poster' : 'poster grayscale-filter'"
-       src="{{(project.posterUrl || '/assets/images/placeholder-wide.png')}}"
-       alt="{{project.posterDescription}}" />
+  <img
+    [className]="project.releaseDate ? 'poster' : 'poster grayscale-filter'"
+    src="{{ project.posterUrl || '/assets/images/placeholder-wide.png' }}"
+    alt="{{ project.posterDescription }}"
+  />
 
   <div class="content">
-    <a class="headline"
-       [routerLink]="createRouterLink()">
-       [{{project.category?.displayName}}] {{ project.displayName }}
+    <a class="headline" [routerLink]="createRouterLink()"> 
+      [{{ project.category?.displayName }}] {{ project.displayName }}
     </a>
 
-    <div class="description" 
-        [innerHtml]="project.description">
-    </div>   
+    <div class="description" [innerHtml]="project.description"></div>
   </div>
 </div>

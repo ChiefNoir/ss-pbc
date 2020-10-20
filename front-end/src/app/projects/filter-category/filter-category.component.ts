@@ -5,34 +5,26 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-filter-category',
   templateUrl: './filter-category.component.html',
-  styleUrls: ['./filter-category.component.scss']
+  styleUrls: ['./filter-category.component.scss'],
 })
-
-export class FilterCategoryComponent implements OnChanges
-{
+export class FilterCategoryComponent implements OnChanges {
   @Input()
   public categories: Array<Category>;
 
-  private router: Router;
+  constructor(private router: Router) {}
 
-  constructor(router: Router)
-  {
-    this.router = router;
-  }
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.categories.currentValue) {
+      return;
+    }
 
-  public ngOnChanges(changes: SimpleChanges): void
-  {
-    if (!changes.categories.currentValue) { return;}
+    changes.categories.currentValue.forEach((x) => {
+      x.url = this.router.createUrlTree(['/projects', x.code]).toString();
+    });
 
-    changes.categories
-           .currentValue
-           .forEach
-           (
-             x => { x.url = this.router.createUrlTree(['/projects', x.code]).toString(); }
-           );
-
+    // show only cateroies with entities, in desc order
     this.categories = changes.categories.currentValue
-                                        .filter(x => x.totalProjects > 0)
-                                        .sort((a, b) => b.totalProjects - a.totalProjects);
+      .filter((x) => x.totalProjects > 0)
+      .sort((a, b) => b.totalProjects - a.totalProjects);
   }
 }

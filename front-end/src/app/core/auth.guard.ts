@@ -1,8 +1,4 @@
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  Router
-} from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
@@ -10,13 +6,8 @@ import { StorageService } from './storage.service';
 // @ts-ignore
 import jwt_decode from 'jwt-decode';
 
-
-
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate {
-
   public validating$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
@@ -24,28 +15,21 @@ export class AuthGuard implements CanActivate {
   public constructor(
     private router: Router,
     private storageService: StorageService
-  ) {
+  ) {}
 
-  }
-
-
-  public isLoggedIn(): boolean
-  {
+  public isLoggedIn(): boolean {
     return this.getTokenData() !== null;
   }
 
-  public canActivate(route: ActivatedRouteSnapshot): boolean
-  {
+  public canActivate(route: ActivatedRouteSnapshot): boolean {
     const tokenData = this.getTokenData();
-    if (tokenData === null)
-    {
+    if (tokenData === null) {
       this.router.navigate(['/login']);
       return false;
     }
 
     const expectedRoles = route.data.expectedRoles as string[];
-    if (expectedRoles.some(x => x === tokenData.role))
-    {
+    if (expectedRoles.some((x) => x === tokenData.role)) {
       return true;
     }
 
@@ -65,52 +49,52 @@ export class AuthGuard implements CanActivate {
     }
 
     switch (routerLink) {
-      case '/admin':
-        {
-          return ['admin', 'demo'].some(x => x === tokenData.role);
-        }
-        case '/admin/editor/introduction':
-          {
-            return ['admin', 'demo'].some(x => x === tokenData.role);
-          }
-        case '/admin/editor/projects':
-          {
-            return ['admin', 'demo'].some(x => x === tokenData.role);
-          }
-        case '/admin/editor/categories':
-            {
-              return ['admin', 'demo'].some(x => x === tokenData.role);
-            }
-        case '/admin/editor/accounts':
-              {
-                return ['admin'].some(x => x === tokenData.role);
-              }
+      case '/admin': {
+        return ['admin', 'demo'].some((x) => x === tokenData.role);
+      }
+      case '/admin/editor/introduction': {
+        return ['admin', 'demo'].some((x) => x === tokenData.role);
+      }
+      case '/admin/editor/projects': {
+        return ['admin', 'demo'].some((x) => x === tokenData.role);
+      }
+      case '/admin/editor/categories': {
+        return ['admin', 'demo'].some((x) => x === tokenData.role);
+      }
+      case '/admin/editor/accounts': {
+        return ['admin'].some((x) => x === tokenData.role);
+      }
     }
 
     return false;
   }
 
-  private getTokenData(): TokenData
-  {
+  private getTokenData(): TokenData {
     const token = this.storageService.getToken();
-    if (!token) { return null; }
+    if (!token) {
+      return null;
+    }
 
     const tokenPayload = jwt_decode(token);
-    if (Date.now() >= tokenPayload.exp * 1000 ) {
+    if (Date.now() >= tokenPayload.exp * 1000) {
       this.storageService.removeToken();
       return null;
     }
 
-    const role = tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-    const name = tokenPayload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+    const role =
+      tokenPayload[
+        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+      ];
+    const name =
+      tokenPayload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
+      ];
 
     return new TokenData(role, name);
   }
-
-
 }
-class TokenData
-{
+
+class TokenData {
   constructor(role: string, name: string) {
     this.role = role;
     this.name = name;

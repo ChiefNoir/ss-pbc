@@ -44,10 +44,9 @@ export class AdminEditAccountsComponent implements OnInit, OnDestroy {
     titleService.setTitle(environment.siteName);
   }
 
-  public async ngOnInit(): Promise<void>
+  public ngOnInit() : void
   {
-    await this.authGuard.checkIsLogged();
-    if (this.authGuard.isLoggedIn$.value)
+    if (this.authGuard.isLoggedIn())
     {
       this.refreshAccounts(null);
       this.paging$.subscribe(value => this.refreshAccounts(value));

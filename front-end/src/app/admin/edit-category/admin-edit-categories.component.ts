@@ -46,10 +46,9 @@ export class AdminEditCategoriesComponent implements OnInit
     titleService.setTitle(environment.siteName);
   }
 
-  public async ngOnInit(): Promise<void>
+  public ngOnInit(): void
   {
-    await this.authGuard.checkIsLogged();
-    if (this.authGuard.isLoggedIn$.value)
+    if (this.authGuard.isLoggedIn())
     {
       this.refreshCategories();
     }

@@ -43,8 +43,8 @@ export class AdminEditIntroductionComponent implements OnInit
 
   public async ngOnInit(): Promise<void>
   {
-    await this.authGuard.checkIsLogged();
-    if (this.authGuard.isLoggedIn$.value)
+
+    if (this.authGuard.isLoggedIn())
     {
       this.introduction$.next(null);
 

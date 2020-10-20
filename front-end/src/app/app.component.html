@@ -10,17 +10,14 @@
         {{textMessages.MenuProjects}}
       </a>
       
-      <ng-container *ngIf="authGuard.validating$ | async; else adminLink">
-        <img class="loading" src="\assets\images\revolver.png" /> 
-      </ng-container>
-      <ng-template #adminLink>
-        <ng-container *ngIf="authGuard.isLoggedIn$ | async; else login">
+      <ng-container #adminLink>
+        <ng-container *ngIf="authGuard.isLoggedIn(); else login">
           <a routerLink="/admin/" routerLinkActive="active">{{textMessages.MenuAdmin}}</a>
         </ng-container>
         <ng-template #login>
           <a routerLink="/login/" routerLinkActive="active">{{textMessages.MenuLogin}}</a>
         </ng-template>
-      </ng-template>
+      </ng-container>
   </mat-toolbar-row>
 
   <mat-toolbar-row class="mobile"  fxLayout="row" fxLayoutAlign="center stretch"
@@ -35,7 +32,7 @@
       <a routerLink="/"> {{textMessages.MenuHome}} </a>
       <a routerLink="/projects/"> {{textMessages.MenuProjects}}  </a>
 
-      <ng-container *ngIf="authGuard.isLoggedIn$ | async; else sideLogin">
+      <ng-container *ngIf="authGuard.isLoggedIn(); else sideLogin">
         <a routerLink="/admin/" routerLinkActive="active">{{textMessages.MenuAdmin}}</a>
       </ng-container>
       <ng-template #sideLogin>

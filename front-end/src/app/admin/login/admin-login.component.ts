@@ -16,6 +16,7 @@ import {
   MessageType,
 } from 'src/app/shared/message/message.component';
 import { TextMessages } from 'src/app/shared/text-messages.resources';
+import { StorageService } from 'src/app/core/storage.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -38,7 +39,8 @@ export class AdminLoginComponent implements OnInit {
     authService: AuthService,
     authGuard: AuthGuard,
     router: Router,
-    titleService: Title
+    titleService: Title,
+    private storageService: StorageService
   ) {
     this.authService = authService;
     this.authGuard = authGuard;
@@ -50,9 +52,8 @@ export class AdminLoginComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    await this.authGuard.checkIsLogged();
 
-    if (this.authGuard.isLoggedIn$.value) {
+    if (this.authGuard.isLoggedIn()) {
       this.router.navigate(['/admin']);
     }
   }
@@ -70,8 +71,9 @@ export class AdminLoginComponent implements OnInit {
 
   private handleLoginResult(result: RequestResult<Identity>): void {
     if (result.isSucceed) {
-      this.authGuard.loginComplete(result.data);
+
       this.message$.next(null);
+      this.storageService.saveToken(result.data.token, result.data.tokenLifeTimeMinutes);
 
       this.router.navigate(['/admin']);
     } else {

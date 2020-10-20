@@ -52,9 +52,8 @@ export class AdminEditProjectsComponent implements OnInit, OnDestroy {
     this.router = router;
   }
 
-  public async ngOnInit(): Promise<void> {
-    await this.authGuard.checkIsLogged();
-    if (this.authGuard.isLoggedIn$.value) {
+  public ngOnInit(): void {
+    if (this.authGuard.isLoggedIn()) {
       this.paging$.subscribe((value) => this.refreshProjects(value));
     } else {
       this.router.navigate(['/login']);

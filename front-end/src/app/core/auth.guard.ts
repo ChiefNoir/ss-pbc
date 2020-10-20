@@ -1,131 +1,118 @@
 import {
   CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router,
-  UrlTree,
+  Router
 } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Identity } from '../shared/identity.model';
-import { AuthService } from './auth.service';
 import { StorageService } from './storage.service';
-import { Account } from 'src/app/admin/account.model';
-import { RequestResult } from '../shared/request-result.model';
+
+// @ts-ignore
+import jwt_decode from "jwt-decode";
+
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  private authService: AuthService;
-  private router: Router;
-  private storageService: StorageService;
 
-  public account: Account;
-  public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
   public validating$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
 
   public constructor(
-    authService: AuthService,
-    router: Router,
-    storage: StorageService
+    private router: Router,
+    private storageService: StorageService
   ) {
-    this.authService = authService;
-    this.router = router;
-    this.storageService = storage;
 
-    this.checkIsLogged();
   }
 
-  public async checkIsLogged(): Promise<void> {
-    if (this.validating$.value === true) return;
 
-    this.validating$.next(true);
-
-    const token = this.storageService.getToken();
-    if (!token) {
-      this.logoutComplete();
-      return;
-    }
-
-    await this.authService.validate(token).then(
-      (win) => this.handleIdentity(win),
-      (fail) => this.handleError(fail)
-    );
+  public isLoggedIn(): boolean
+  {
+    return this.getTokenData() !== null;
   }
 
-  public canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Promise<UrlTree | boolean> | UrlTree {
-    if (!this.canSee('/' + next.routeConfig.path)) {
-      return this.router.parseUrl('/login');
-    }
-
-    return new Promise((resolve) => {
-      resolve(true);
-    });
-  }
-
-  public async canSee(routerLink: string): Promise<boolean> {
-    if (!this.account) {
-      await this.checkIsLogged();
-    }
-    if (this.account == null || this.validating$.value === true) {
+  public canActivate(route: ActivatedRouteSnapshot): boolean
+  {
+    const tokenData = this.getTokenData();
+    if (tokenData === null)
+    {
       return false;
     }
 
-    if (routerLink === '/admin/editor/projects') {
-      return this.account.role === 'admin' || this.account.role === 'demo';
-    }
-    if (routerLink === '/admin/editor/categories') {
-      return this.account.role === 'admin' || this.account.role === 'demo';
-    }
-    if (routerLink === '/admin/editor/introduction') {
-      return this.account.role === 'admin' || this.account.role === 'demo';
-    }
-    if (routerLink === '/admin') {
-      return this.account.role === 'admin' || this.account.role === 'demo';
-    }
-
-    if (routerLink === '/admin/editor/accounts') {
-      return this.account.role === 'admin';
+    const expectedRoles = route.data.expectedRoles as string[];
+    if (expectedRoles.some(x => x === tokenData.role))
+    {
+      return true;
     }
 
     return false;
   }
 
-  public loginComplete(identety: Identity): void {
-    this.storageService.saveToken(
-      identety.token,
-      identety.tokenLifeTimeMinutes
-    );
-    this.isLoggedIn$.next(true);
-    this.validating$.next(false);
-    this.account = identety.account;
-  }
-
   public logoutComplete(): void {
-    this.account = null;
-    this.isLoggedIn$.next(false);
-    this.validating$.next(false);
     this.storageService.removeToken();
   }
 
-  private handleIdentity(result: RequestResult<Identity>): void {
-    if (result.isSucceed) {
-      this.loginComplete(result.data);
-    } else {
-      this.handleError(result.error);
+  public canSee(routerLink: string): boolean {
+    const tokenData = this.getTokenData();
+
+    if (tokenData === null) {
+      return false;
     }
+
+    switch (routerLink) {
+      case '/admin':
+        {
+          return ['admin', 'demo'].some(x => x === tokenData.role);
+        }
+        case '/admin/editor/introduction':
+          {
+            return ['admin', 'demo'].some(x => x === tokenData.role);
+          }
+        case '/admin/editor/projects':
+          {
+            return ['admin', 'demo'].some(x => x === tokenData.role);
+          }
+        case '/admin/editor/categories':
+            {
+              return ['admin', 'demo'].some(x => x === tokenData.role);
+            }
+        case '/admin/editor/accounts':
+              {
+                return ['admin'].some(x => x === tokenData.role);
+              }
+    }
+
+    return false;
   }
 
-  private handleError(error: any): void {
-    console.log(error);
-    this.logoutComplete();
+  private getTokenData(): TokenData
+  {
+    const token = this.storageService.getToken();
+    if (!token) { return null; }
+
+    const tokenPayload = jwt_decode(token);
+    if (Date.now() >= tokenPayload.exp * 1000 ) {
+      this.storageService.removeToken();
+      return null;
+    }
+
+    const role = tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    const name = tokenPayload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+
+    return new TokenData(role, name);
   }
+
+
+}
+class TokenData
+{
+  constructor(role: string, name: string) {
+    this.role = role;
+    this.name = name;
+  }
+  public role: string;
+  public name: string;
 }

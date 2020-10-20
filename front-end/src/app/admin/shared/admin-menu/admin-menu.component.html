@@ -1,12 +1,12 @@
 <div class="admin-menu" fxFlex="60"
 fxLayout="row" fxLayoutAlign="center center"
-*ngIf="router.isActive('/admin', false) && (authGuard.isLoggedIn$ | async)">
+*ngIf="authGuard.isLoggedIn()">
 
 <a *ngIf="authGuard.canSee('/admin')"
 [routerLink]="['/admin']"
 [routerLinkActiveOptions]="{ exact: true }"
 routerLinkActive="active">{{textMessages.MenuAdmin}}</a>
-
+ 
 <a *ngIf="authGuard.canSee('/admin/editor/introduction')"
 [routerLink]="['/admin/editor/introduction']"
 routerLinkActive="active">{{textMessages.MenuIntroduction}}</a>
@@ -15,7 +15,7 @@ routerLinkActive="active">{{textMessages.MenuIntroduction}}</a>
  [routerLink]="['/admin/editor/projects']"
  routerLinkActive="active">{{textMessages.MenuProjects}} </a>
 
-<a *ngIf="authGuard.canSee('/admin/editor/categories/')" 
+<a *ngIf="authGuard.canSee('/admin/editor/categories')" 
  [routerLink]="['/admin/editor/categories']"
  routerLinkActive="active">{{textMessages.MenuCategories}}</a>
 

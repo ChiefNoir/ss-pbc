@@ -13,26 +13,45 @@ import { AdminInformationComponent } from './information/admin-information.compo
 
 const routes: Routes = [
     { path: 'login', component: AdminLoginComponent },
-    { path: 'admin', component: AdminInformationComponent, canActivate: [AuthGuard] },
+    {
+      path: 'admin/editor/introduction',
+      component: AdminEditIntroductionComponent,
+      canActivate: [AuthGuard],
+      data: {
+        expectedRoles: ['admin', 'demo']
+      }
+    },
+    {
+      path: 'admin',
+      component: AdminInformationComponent,
+      canActivate: [AuthGuard],
+      data: {
+        expectedRoles: ['admin', 'demo']
+      }
+    },
     {
       path: 'admin/editor/projects',
       component: AdminEditProjectsComponent,
       canActivate: [AuthGuard],
+      data: {
+        expectedRoles: ['admin', 'demo']
+      }
     },
     {
       path: 'admin/editor/categories',
       component: AdminEditCategoriesComponent,
       canActivate: [AuthGuard],
+      data: {
+        expectedRoles: ['admin', 'demo']
+      }
     },
     {
       path: 'admin/editor/accounts',
       component: AdminEditAccountsComponent,
       canActivate: [AuthGuard],
-    },
-    {
-      path: 'admin/editor/introduction',
-      component: AdminEditIntroductionComponent,
-      canActivate: [AuthGuard],
+      data: {
+        expectedRoles: ['admin']
+      }
     }
 ];
 

@@ -7,9 +7,7 @@ import { ProjectRoutingModule } from './project/project.routing.module';
 import { NotFoundRoutingModule } from './not-found/not-found.routing.module';
 import { AdminRoutingModule } from './admin/admin.routing.module';
 
-const routes: Routes = [
-
-];
+const routes: Routes = [];
 
 @NgModule({
   imports: [
@@ -22,4 +20,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
+
 export class AppRoutingModule {}

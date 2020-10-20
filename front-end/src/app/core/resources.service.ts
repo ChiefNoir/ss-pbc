@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ResourcesService {
   public LoadComplete = 'Load complete';
   public InitializationComplete = 'Initialization complete';

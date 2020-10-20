@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
 
 // @ts-ignore
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 
 
 

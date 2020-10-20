@@ -6,10 +6,9 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthService {
-  public constructor(
-    private httpClient: HttpClient,
-    private endpoint = environment.authEndpoint
-  ) {}
+  private endpoint = environment.authEndpoint;
+
+  public constructor(private httpClient: HttpClient) {}
 
   public login(login: string, password: string): Promise<RequestResult<Identity>> {
     return this.httpClient

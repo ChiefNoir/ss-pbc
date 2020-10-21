@@ -1,48 +1,43 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-// import { IntroductionRoutingModule } from './introduction/introduction.routing.module';
-// import { ProjectsRoutingModule } from './projects/projects-routing.module';
-// import { ProjectRoutingModule } from './project/project.routing.module';
-// import { NotFoundRoutingModule } from './not-found/not-found.routing.module';
-// import { AdminRoutingModule } from './admin/admin.routing.module';
-
-const routes: Routes =
-[
+const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./introduction/introduction.module').then(m => m.IntroductionModule)
+    loadChildren: () => import('./introduction/introduction.module').then(x => x.IntroductionModule),
   },
   {
     path: 'projects',
-    loadChildren: () => import('./projects/projects.module').then(m => m.ProjectsModule)
+    loadChildren: () => import('./projects/projects.module').then(x => x.ProjectsModule),
   },
   {
     path: 'projects/:category',
-    loadChildren: () => import('./projects/projects.module').then(m => m.ProjectsModule)
+    loadChildren: () => import('./projects/projects.module').then(x => x.ProjectsModule),
   },
   {
     path: 'project',
-    loadChildren: () => import('./project/project.module').then(m => m.ProjectModule)
+    loadChildren: () => import('./project/project.module').then(x => x.ProjectModule),
   },
   {
     path: 'project/:code',
-    loadChildren: () => import('./project/project.module').then(m => m.ProjectModule)
+    loadChildren: () => import('./project/project.module').then(x => x.ProjectModule),
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+    loadChildren: () => import('./login/login.module').then(x => x.LoginModule),
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-  }
+    loadChildren: () => import('./admin/admin.module').then(x => x.AdminModule),
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./not-found/not-found.module').then(x => x.NotFoundModule),
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes)
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

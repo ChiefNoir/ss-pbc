@@ -9,10 +9,9 @@ export class ButtonComponent {
   @Input()
   public isDisabled: boolean;
 
-  @Output()
-  public OnClick: EventEmitter<void> = new EventEmitter();
+  @Output() public Click: EventEmitter<void> = new EventEmitter<void>();
 
   public btnClick() {
-    this.OnClick.emit();
+    this.Click.emit();
   }
 }

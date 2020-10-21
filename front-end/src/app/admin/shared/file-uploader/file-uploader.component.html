@@ -1,20 +1,24 @@
-<div fxLayout="row" fxLayoutAlign="center center" > 
-  <input matInput 
-         [(ngModel)]="filename"
-         name="posterUrl"
-         fxFlex="grow"
-         hidden/>
-  <input #file 
-         type="file"
-         placeholder="Choose file"
-         (change)="upload(file.files)"
-         style="display:none;">
+<div fxLayout="row" fxLayoutAlign="center center">
+  <input
+    matInput
+    [(ngModel)]="filename"
+    name="posterUrl"
+    fxFlex="grow"
+    hidden
+  />
+  <input
+    #file
+    type="file"
+    placeholder="Choose file"
+    (change)="upload(file.files)"
+    style="display: none"
+  />
 
-  <app-button [isDisabled]="disabled" (OnClick)="file.click()">
-    {{textMessages.GenericSelectFile}}
+  <app-button [isDisabled]="disabled" (Click)="file.click()">
+    {{ textMessages.GenericSelectFile }}
   </app-button>
-  
-  <app-button [isDisabled]="disabled" (OnClick)="delete()">
-    {{textMessages.GenericDeleteFile}}
+
+  <app-button [isDisabled]="disabled" (Click)="delete()">
+    {{ textMessages.GenericDeleteFile }}
   </app-button>
 </div>

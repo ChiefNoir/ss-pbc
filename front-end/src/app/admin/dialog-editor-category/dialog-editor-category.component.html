@@ -40,15 +40,15 @@
     fxShow="true"
     fxHide.lt-md="true"
   >
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
+    <app-button [isDisabled]="disableInput$ | async" (Click)="delete()">
       {{ textMessages.GenericDelete }}
     </app-button>
 
     <div>
-      <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
+      <app-button [isDisabled]="disableInput$ | async" (Click)="save()">
         {{ textMessages.GenericSave }}
       </app-button>
-      <app-button (OnClick)="close()">
+      <app-button (Click)="close()">
         {{ textMessages.GenericClose }}
       </app-button>
     </div>
@@ -59,15 +59,15 @@
     fxLayout="column"
     fxLayoutAlign="end center"
   >
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
+    <app-button [isDisabled]="disableInput$ | async" (Click)="save()">
       {{ textMessages.GenericSave }}
     </app-button>
 
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
+    <app-button [isDisabled]="disableInput$ | async" (Click)="delete()">
       {{ textMessages.GenericDelete }}
     </app-button>
 
-    <app-button (OnClick)="close()">
+    <app-button (Click)="close()">
       {{ textMessages.GenericClose }}
     </app-button>
   </div>

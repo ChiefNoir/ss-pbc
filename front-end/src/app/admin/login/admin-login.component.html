@@ -1,23 +1,34 @@
 <div fxLayout="column" fxLayoutAlign="center center">
   <form class="login-form">
     <mat-form-field>
-      <input matInput placeholder="{{textMessages.AccountLogin}}" [formControl]="login" required>
-      <mat-error *ngIf="login.invalid">{{this.getError(login)}}</mat-error>
+      <input
+        matInput
+        placeholder="{{ textMessages.AccountLogin }}"
+        [formControl]="login"
+        required
+      />
+      <mat-error *ngIf="login.invalid">{{ this.getError(login) }}</mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="{{textMessages.AccountPassword}}" [formControl]="password" required [type]="'password'">
-      <mat-error *ngIf="password.invalid">{{this.getError(password)}}</mat-error>
+      <input
+        matInput
+        placeholder="{{ textMessages.AccountPassword }}"
+        [formControl]="password"
+        required
+        [type]="'password'"
+      />
+      <mat-error *ngIf="password.invalid">{{
+        this.getError(password)
+      }}</mat-error>
     </mat-form-field>
-
 
     <div *ngIf="message$ | async as msg">
       <app-message [message]="msg"></app-message>
     </div>
 
-    <app-button class="control" (OnClick)="doLogin()">
-      {{textMessages.DoLogin}}
+    <app-button class="control" (Click)="doLogin()">
+      {{ textMessages.DoLogin }}
     </app-button>
   </form>
 </div>
-

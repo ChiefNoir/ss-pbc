@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Category } from 'src/app/shared/category.model';
+import { Category } from '../../shared/category.model';
 
 @Component({
   selector: 'app-button-category',

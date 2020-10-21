@@ -1,4 +1,4 @@
-<h2 class="title"> {{ textMessages.ProjectProperties }} </h2>
+<h2 class="title">{{ textMessages.ProjectProperties }}</h2>
 
 <mat-dialog-content class="content">
   <div *ngIf="project$ | async as project">
@@ -6,223 +6,299 @@
       <mat-tab label="{{ textMessages.Project }}">
         <div fxLayout="column" fxLayoutAlign="space-around center">
           <mat-form-field>
-            <input matInput
-                   [disabled]="disableInput$ | async"
-                   [(ngModel)]="project.code"
-                   name="Code"
-                   placeholder="{{ textMessages.ProjectCode }}" />
+            <input
+              matInput
+              [disabled]="disableInput$ | async"
+              [(ngModel)]="project.code"
+              name="Code"
+              placeholder="{{ textMessages.ProjectCode }}"
+            />
           </mat-form-field>
-          
+
           <mat-form-field>
-            <input matInput
-                   [disabled]="disableInput$ | async"
-                   [(ngModel)]="project.displayName"
-                   name="Name"
-                   placeholder="{{ textMessages.ProjectName }}" />
+            <input
+              matInput
+              [disabled]="disableInput$ | async"
+              [(ngModel)]="project.displayName"
+              name="Name"
+              placeholder="{{ textMessages.ProjectName }}"
+            />
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ textMessages.ProjectReleaseDate }}</mat-label>
-            <input matInput 
-                  [disabled]="disableInput$ | async" 
-                  [matDatepicker]="dp3"
-                  [(ngModel)]="project.releaseDate"
-                  name="releaseDate">
-            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+            <input
+              matInput
+              [disabled]="disableInput$ | async"
+              [matDatepicker]="dp3"
+              [(ngModel)]="project.releaseDate"
+              name="releaseDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dp3"
+            ></mat-datepicker-toggle>
             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ textMessages.ProjectCategory }}</mat-label>
-            <mat-select [(ngModel)]="project.category.id"
-                        [disabled]="disableInput$ | async">
-              <mat-option *ngFor="let ctg of categories$.value" [value]="ctg.id" >
-                {{ctg.displayName}} 
+            <mat-select
+              [(ngModel)]="project.category.id"
+              [disabled]="disableInput$ | async"
+            >
+              <mat-option
+                *ngFor="let ctg of categories$.value"
+                [value]="ctg.id"
+              >
+                {{ ctg.displayName }}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field>
-            <textarea matInput
-                      [disabled]="disableInput$ | async"
-                      [(ngModel)]="project.descriptionShort"
-                      name="descriptionShort" 
-                      cdkTextareaAutosize 
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="10"
-                      placeholder="{{ textMessages.ProjectDescriptionShort }}">
+            <textarea
+              matInput
+              [disabled]="disableInput$ | async"
+              [(ngModel)]="project.descriptionShort"
+              name="descriptionShort"
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="10"
+              placeholder="{{ textMessages.ProjectDescriptionShort }}"
+            >
             </textarea>
           </mat-form-field>
 
           <mat-form-field>
-            <textarea matInput
-                      [disabled]="disableInput$ | async"
-                      [(ngModel)]="project.description"
-                      name="description" 
-                      cdkTextareaAutosize 
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="10"
-                      placeholder="{{ textMessages.ProjectDescription }}">
+            <textarea
+              matInput
+              [disabled]="disableInput$ | async"
+              [(ngModel)]="project.description"
+              name="description"
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="10"
+              placeholder="{{ textMessages.ProjectDescription }}"
+            >
             </textarea>
           </mat-form-field>
-      </div>
-    </mat-tab>
-
-    <mat-tab label="{{ textMessages.ProjectPoster }}">
-      <div fxLayout="column" fxLayoutAlign="space-around center">
-        <div fxLayout="row" fxLayoutAlign="center center" >
-          <img [ngClass]="{'disabled': disableInput$ | async }"
-               class="posterImage"
-               src="{{(project.posterPreview || project.posterUrl)}}" />
         </div>
-          
-        <mat-form-field>
-          <input matInput
-                 [disabled]="disableInput$ | async"
-                 [(ngModel)]="project.posterDescription"
-                 name="posterDescriptionle"
-                 placeholder="{{ textMessages.ProjectPosterDescription }}" />
-        </mat-form-field>
+      </mat-tab>
 
-        <div class="wide-position">
-          <app-file-uploader 
-                [disabled] = "disableInput$ | async"
-                [filename] = "project.posterUrl"
-                (uploadFiles) = "selectFile($event)"
-                (deleteFile) = "deleteFile()">
-          </app-file-uploader>
+      <mat-tab label="{{ textMessages.ProjectPoster }}">
+        <div fxLayout="column" fxLayoutAlign="space-around center">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <img
+              [ngClass]="{ disabled: disableInput$ | async }"
+              class="posterImage"
+              src="{{ project.posterPreview || project.posterUrl }}"
+            />
+          </div>
+
+          <mat-form-field>
+            <input
+              matInput
+              [disabled]="disableInput$ | async"
+              [(ngModel)]="project.posterDescription"
+              name="posterDescriptionle"
+              placeholder="{{ textMessages.ProjectPosterDescription }}"
+            />
+          </mat-form-field>
+
+          <div class="wide-position">
+            <app-file-uploader
+              [disabled]="disableInput$ | async"
+              [filename]="project.posterUrl"
+              (uploadFiles)="selectFile($event)"
+              (deleteFile)="deleteFile()"
+            >
+            </app-file-uploader>
+          </div>
         </div>
+      </mat-tab>
 
-      </div>
-    </mat-tab>
+      <mat-tab label="{{ textMessages.ExternalUrls }}">
+        <table
+          mat-table
+          class="dialogTable"
+          #externalUrlsTable
+          [dataSource]="project.externalUrls"
+        >
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ textMessages.ExternalUrlName }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field floatLabel="never">
+                <input
+                  matInput
+                  placeholder="Name"
+                  [value]="element.displayName"
+                  [(ngModel)]="element.displayName"
+                />
+              </mat-form-field>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ textMessages.ExternalUrlCreate }}
+            </td>
+          </ng-container>
 
-    <mat-tab label="{{ textMessages.ExternalUrls }}">
-      <table mat-table 
-             class="dialogTable" 
-             #externalUrlsTable 
-             [dataSource]="project.externalUrls">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>{{ textMessages.ExternalUrlName }}</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field floatLabel="never">
-              <input matInput placeholder="Name" [value]="element.displayName" [(ngModel)]="element.displayName" />
-            </mat-form-field>
-          </td>
-          <td mat-footer-cell *matFooterCellDef> {{ textMessages.ExternalUrlCreate }} </td>
-        </ng-container>
+          <ng-container matColumnDef="url">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ textMessages.ExternalUrl }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field floatLabel="never">
+                <input
+                  matInput
+                  placeholder="{{ textMessages.ExternalUrl }}"
+                  [value]="element.url"
+                  [(ngModel)]="element.url"
+                />
+              </mat-form-field>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
 
-        <ng-container matColumnDef="url">
-          <th mat-header-cell *matHeaderCellDef>{{ textMessages.ExternalUrl }}</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field floatLabel="never">
-              <input matInput placeholder="{{ textMessages.ExternalUrl }}"
-                    [value]="element.url"
-                    [(ngModel)]="element.url" />
-            </mat-form-field>
-          </td>
-          <td mat-footer-cell *matFooterCellDef>  </td>
-        </ng-container>
+          <ng-container matColumnDef="btn">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <app-button
+                [isDisabled]="disableInput$ | async"
+                (click)="removeUrl(element)"
+                >{{ textMessages.GenericDelete }}</app-button
+              >
+            </td>
 
-        <ng-container matColumnDef="btn">
-          <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell  *matCellDef="let element"> 
-            <app-button [isDisabled]="disableInput$ | async" 
-                        (click)="removeUrl(element)">{{ textMessages.GenericDelete }}</app-button>
-          </td>
-    
-          <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
 
+          <tr
+            mat-header-row
+            *matHeaderRowDef="columnsInner"
+            style="display: none"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsInner"></tr>
+          <tr
+            mat-footer-row
+            *matFooterRowDef="columnsInner"
+            (click)="addUrl()"
+          ></tr>
+        </table>
+      </mat-tab>
 
-        <tr mat-header-row *matHeaderRowDef="columnsInner" style="display: none;"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnsInner"></tr>
-        <tr mat-footer-row *matFooterRowDef="columnsInner" (click)="addUrl()"></tr>
-      </table>
+      <mat-tab label="{{ textMessages.Gallery }}">
+        <table
+          mat-table
+          class="dialogTable"
+          #galleryImagesTable
+          [dataSource]="project.galleryImages"
+        >
+          <ng-container matColumnDef="imageUrl">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ textMessages.GalleryImageUrl }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <img
+                class="small-gallery"
+                src="{{ element.localPreview || element.imageUrl }}"
+              />
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ textMessages.GalleryAdd }}
+            </td>
+          </ng-container>
 
-    </mat-tab>
+          <ng-container matColumnDef="extraUrl">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ textMessages.GalleryExtraUrl }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field floatLabel="never">
+                <input
+                  matInput
+                  placeholder="{{ textMessages.GalleryExtraUrl }}"
+                  [value]="element.extraUrl"
+                  [(ngModel)]="element.extraUrl"
+                />
+              </mat-form-field>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
 
-    <mat-tab label="{{ textMessages.Gallery }}">
-
-      <table mat-table 
-             class="dialogTable"
-             #galleryImagesTable
-             [dataSource]="project.galleryImages">
-        <ng-container matColumnDef="imageUrl">
-          <th mat-header-cell *matHeaderCellDef>{{ textMessages.GalleryImageUrl }}</th>
-          <td mat-cell *matCellDef="let element">           
-            <img class="small-gallery" src="{{(element.localPreview || element.imageUrl)}}" />
-          </td>
-          <td mat-footer-cell *matFooterCellDef> {{ textMessages.GalleryAdd }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="extraUrl">
-          <th mat-header-cell *matHeaderCellDef> {{ textMessages.GalleryExtraUrl }}</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field floatLabel="never">
-              <input matInput
-                     placeholder="{{ textMessages.GalleryExtraUrl }}"
-                     [value]="element.extraUrl"
-                     [(ngModel)]="element.extraUrl" />
-            </mat-form-field>
-          </td>
-          <td mat-footer-cell *matFooterCellDef>  </td>
-        </ng-container>
-
-        <ng-container matColumnDef="btn">
-          <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell  *matCellDef="let element"> 
-            <app-file-uploader 
-                [disabled] = "disableInput$ | async"
-                [filename] = "element.imageUrl"
-                (uploadFiles) = "selectGalleryFile($event, element)"
-                (deleteFile) = "removeGalleryImage(element)">
+          <ng-container matColumnDef="btn">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <app-file-uploader
+                [disabled]="disableInput$ | async"
+                [filename]="element.imageUrl"
+                (uploadFiles)="selectGalleryFile($event, element)"
+                (deleteFile)="removeGalleryImage(element)"
+              >
               </app-file-uploader>
-          </td>
-    
-          <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
+            </td>
 
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="columnsGallery" style="display: none;"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnsGallery"></tr>
-        <tr mat-footer-row *matFooterRowDef="columnsGallery" (click)="addGalleryImage()"></tr>
-      </table>
-
-    </mat-tab>
-  </mat-tab-group>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="columnsGallery"
+            style="display: none"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsGallery"></tr>
+          <tr
+            mat-footer-row
+            *matFooterRowDef="columnsGallery"
+            (click)="addGalleryImage()"
+          ></tr>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 
   <div *ngIf="message$ | async as msg">
     <app-message [message]="msg"></app-message>
   </div>
 
-  <div class="actions" fxLayoutAlign="space-between center" fxShow="true" fxHide.lt-md="true">
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
+  <div
+    class="actions"
+    fxLayoutAlign="space-between center"
+    fxShow="true"
+    fxHide.lt-md="true"
+  >
+    <app-button [isDisabled]="disableInput$ | async" (Click)="delete()">
       {{ textMessages.GenericDelete }}
     </app-button>
 
     <div>
-      <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
+      <app-button [isDisabled]="disableInput$ | async" (Click)="save()">
         {{ textMessages.GenericSave }}
       </app-button>
-      <app-button (OnClick)="close()">
+      <app-button (OnCClicklick)="close()">
         {{ textMessages.GenericClose }}
       </app-button>
     </div>
   </div>
 
-  <div fxHide.gt-sm="true" fxShow="true" fxLayout="column" fxLayoutAlign="end center">
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
+  <div
+    fxHide.gt-sm="true"
+    fxShow="true"
+    fxLayout="column"
+    fxLayoutAlign="end center"
+  >
+    <app-button [isDisabled]="disableInput$ | async" (Click)="save()">
       {{ textMessages.GenericSave }}
     </app-button>
 
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
+    <app-button [isDisabled]="disableInput$ | async" (Click)="delete()">
       {{ textMessages.GenericDelete }}
     </app-button>
 
-    <app-button (OnClick)="close()">
+    <app-button (Click)="close()">
       {{ textMessages.GenericClose }}
     </app-button>
   </div>

@@ -1,30 +1,38 @@
 <mat-dialog-content>
-  <h2 *ngIf="title$ | async as title" class="title"> {{title}} </h2>
+  <h2 *ngIf="title$ | async as title" class="title">{{ title }}</h2>
 
   <div class="content" *ngIf="account$ | async as account">
     <div fxLayout="column" fxLayoutAlign="space-around center">
       <mat-form-field>
-        <input [disabled]="disableInput$ | async" 
-               matInput [(ngModel)]="account.login"
-               name="login"
-               placeholder="{{ textMessages.AccountLogin }}"/>
+        <input
+          [disabled]="disableInput$ | async"
+          matInput
+          [(ngModel)]="account.login"
+          name="login"
+          placeholder="{{ textMessages.AccountLogin }}"
+        />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ textMessages.AccountRole }}</mat-label>
-        <mat-select [(ngModel)]="account.role"
-                    [disabled]="disableInput$ | async">
-          <mat-option *ngFor="let role of roles$.value" [value]="role" >
+        <mat-select
+          [(ngModel)]="account.role"
+          [disabled]="disableInput$ | async"
+        >
+          <mat-option *ngFor="let role of roles$.value" [value]="role">
             {{ role }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field>
-        <input [disabled]="disableInput$ | async" 
-               matInput [(ngModel)]="account.password"
-               name="password"
-               placeholder="{{ textMessages.AccountPassword }}"/>
+        <input
+          [disabled]="disableInput$ | async"
+          matInput
+          [(ngModel)]="account.password"
+          name="password"
+          placeholder="{{ textMessages.AccountPassword }}"
+        />
       </mat-form-field>
     </div>
   </div>
@@ -33,32 +41,41 @@
     <app-message [message]="msg"></app-message>
   </div>
 
-  <div class="actions" fxLayoutAlign="space-between center" fxShow="true" fxHide.lt-md="true">
-      <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
-        {{ textMessages.GenericDelete }}
-      </app-button>
-   
-      <div>
-        <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
-          {{ textMessages.GenericSave }}
-        </app-button>
-        <app-button (OnClick)="close()">
-          {{ textMessages.GenericClose }}
-        </app-button>
-      </div>
-  </div>
-  <div fxHide.gt-sm="true" fxShow="true" fxLayout="column" fxLayoutAlign="end center">
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="save()">
-      {{ textMessages.GenericSave }}
-    </app-button>
-    
-    <app-button [isDisabled]="disableInput$ | async" (OnClick)="delete()">
+  <div
+    class="actions"
+    fxLayoutAlign="space-between center"
+    fxShow="true"
+    fxHide.lt-md="true"
+  >
+    <app-button [isDisabled]="disableInput$ | async" (Click)="delete()">
       {{ textMessages.GenericDelete }}
     </app-button>
 
-    <app-button (OnClick)="close()">
+    <div>
+      <app-button [isDisabled]="disableInput$ | async" (Click)="save()">
+        {{ textMessages.GenericSave }}
+      </app-button>
+      <app-button (Click)="close()">
+        {{ textMessages.GenericClose }}
+      </app-button>
+    </div>
+  </div>
+  <div
+    fxHide.gt-sm="true"
+    fxShow="true"
+    fxLayout="column"
+    fxLayoutAlign="end center"
+  >
+    <app-button [isDisabled]="disableInput$ | async" (Click)="save()">
+      {{ textMessages.GenericSave }}
+    </app-button>
+
+    <app-button [isDisabled]="disableInput$ | async" (Click)="delete()">
+      {{ textMessages.GenericDelete }}
+    </app-button>
+
+    <app-button (Click)="close()">
       {{ textMessages.GenericClose }}
     </app-button>
   </div>
-
 </mat-dialog-content>

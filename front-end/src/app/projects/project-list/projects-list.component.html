@@ -1,7 +1,7 @@
 <div *ngIf="message$ | async as msg">
   <app-message [message]="msg"></app-message>
 </div>
-
+ 
 <div *ngIf="projects$ | async as projects">
   <div *ngIf="categories$ | async as categories">
     <app-filter-category [categories]="categories"> </app-filter-category>

@@ -3,15 +3,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
-import { PublicService } from 'src/app/core/public.service';
-import { ProjectPreview } from 'src/app/projects/project-preview.model';
-import { Category } from 'src/app/shared/category.model';
-import { Paging } from 'src/app/shared/paging-info.model';
-import { Incident, RequestResult } from 'src/app/shared/request-result.model';
+import { PublicService } from '../../core/public.service';
+import { ProjectPreview } from '../../projects/project-preview.model';
+import { Category } from '../../shared/category.model';
+import { Paging } from '../../shared/paging-info.model';
+import { Incident, RequestResult } from '../../shared/request-result.model';
 
-import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { environment } from 'src/environments/environment';
-import { ResourcesService } from 'src/app/core/resources.service';
+import { ResourcesService } from '../../core/resources.service';
 
 @Component({
   selector: 'app-projects-list',

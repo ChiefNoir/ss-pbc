@@ -1,34 +1,31 @@
-  <div *ngIf="information$ | async as introduction; else loading">
+<div *ngIf="information$ | async as introduction; else loading">
+  <app-admin-menu></app-admin-menu>
 
-    <app-admin-menu></app-admin-menu>
+  <div fxLayout="row" class="container">
+    <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+      <h1 class="headline">{{ textMessages.AdminInformation }}</h1>
+      <mat-divider></mat-divider>
 
-
-    <div fxLayout="row" class="container">
-      <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
-    
-        <h1 class="headline"> {{ textMessages.AdminInformation }} </h1>    
-        <mat-divider></mat-divider>
-        
-        <div class="description">
-          <b>{{ textMessages.AccountLogin }}</b> {{ introduction.login }} <br/>
-          <b>{{ textMessages.AccountRole }}</b> {{ introduction.role }}<br/>
-          <b>{{ textMessages.AdminApiVersion }}</b> {{ introduction.apiVersion }}<br/>
-        </div>
-
-        <h1 class="headline">{{ textMessages.AdminControls }} </h1>
-          <mat-divider></mat-divider>
-    
-          <div class="extension">  
-            <app-button (OnClick)="logout()">{{ textMessages.DoLoginOut }}</app-button>
-          </div>
+      <div class="description">
+        <b>{{ textMessages.AccountLogin }}</b> {{ introduction.login }} <br />
+        <b>{{ textMessages.AccountRole }}</b> {{ introduction.role }}<br />
+        <b>{{ textMessages.AdminApiVersion }}</b> {{ introduction.apiVersion
+        }}<br />
       </div>
-    
-      <img class="image" fxFlex="30" src="/assets/images/placeholder-tall.png" />
+
+      <h1 class="headline">{{ textMessages.AdminControls }}</h1>
+      <mat-divider></mat-divider>
+
+      <div class="extension">
+        <app-button (Click)="logout()">{{
+          textMessages.DoLoginOut
+        }}</app-button>
+      </div>
     </div>
-    
 
+    <img class="image" fxFlex="30" src="/assets/images/placeholder-tall.png" />
   </div>
-
+</div>
 
 <ng-template #loading>
   <div *ngIf="message$ | async as msg">

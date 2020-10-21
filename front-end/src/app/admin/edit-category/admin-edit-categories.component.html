@@ -1,5 +1,4 @@
 <div *ngIf="categories$ | async as categories; else loading">
-  <app-admin-menu></app-admin-menu>
   <table mat-table [dataSource]="categories">
     <ng-container matColumnDef="code">
       <th mat-header-cell *matHeaderCellDef> {{textMessages.CategoryCode}} </th>

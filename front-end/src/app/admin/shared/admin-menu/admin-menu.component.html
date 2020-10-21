@@ -6,20 +6,21 @@ fxLayout="row" fxLayoutAlign="center center"
 [routerLink]="['/admin']"
 [routerLinkActiveOptions]="{ exact: true }"
 routerLinkActive="active">{{textMessages.MenuAdmin}}</a>
- 
-<a *ngIf="authGuard.canSee('/admin/editor/introduction')"
-[routerLink]="['/admin/editor/introduction']"
+
+<a 
+*ngIf="authGuard.canSee('/admin/introduction')"
+[routerLink]="['/admin/introduction']"
 routerLinkActive="active">{{textMessages.MenuIntroduction}}</a>
 
-<a *ngIf="authGuard.canSee('/admin/editor/projects')"
- [routerLink]="['/admin/editor/projects']"
+<a *ngIf="authGuard.canSee('/admin/projects')"
+ [routerLink]="['/admin/projects']"
  routerLinkActive="active">{{textMessages.MenuProjects}} </a>
 
-<a *ngIf="authGuard.canSee('/admin/editor/categories')" 
- [routerLink]="['/admin/editor/categories']"
+<a *ngIf="authGuard.canSee('/admin/categories')" 
+ [routerLink]="['/admin/categories']"
  routerLinkActive="active">{{textMessages.MenuCategories}}</a>
 
-<a *ngIf="authGuard.canSee('/admin/editor/accounts')"
- [routerLink]="['/admin/editor/accounts']"
+<a *ngIf="authGuard.canSee('/admin/accounts')"
+ [routerLink]="['/admin/accounts']"
  routerLinkActive="active">{{textMessages.MenuAccounts}}</a>
 </div>

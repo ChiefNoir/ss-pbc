@@ -3,30 +3,26 @@ import { Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-import { RequestResult, Incident } from 'src/app/shared/request-result.model';
+import { RequestResult, Incident } from '../../shared/request-result.model';
 
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthService } from '../../core/auth.service';
 import { Title } from '@angular/platform-browser';
 
 import { environment } from 'src/environments/environment';
-import { Identity } from 'src/app/shared/identity.model';
-import { AuthGuard } from 'src/app/core/auth.guard';
-import {
-  MessageDescription,
-  MessageType,
-} from 'src/app/shared/message/message.component';
-import { ResourcesService } from 'src/app/core/resources.service';
-import { StorageService } from 'src/app/core/storage.service';
+
+import { Identity } from '../../shared/identity.model';
+import { AuthGuard } from '../../core/auth.guard';
+import { MessageDescription, MessageType} from '../../shared/message/message.component';
+import { ResourcesService } from '../../core/resources.service';
+import { StorageService } from '../../core/storage.service';
 
 @Component({
-  selector: 'app-admin-login',
-  templateUrl: './admin-login.component.html',
-  styleUrls: ['./admin-login.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class AdminLoginComponent implements OnInit {
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<
-    MessageDescription
-  >(null);
+export class LoginComponent implements OnInit {
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public login: FormControl = new FormControl('', [Validators.required]);
   public password: FormControl = new FormControl('', [Validators.required]);
 

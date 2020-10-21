@@ -50,16 +50,16 @@ export class AuthGuard implements CanActivate {
       case '/admin': {
         return ['admin', 'demo'].some((x) => x === tokenData.role);
       }
-      case '/admin/editor/introduction': {
+      case '/admin/introduction': {
         return ['admin', 'demo'].some((x) => x === tokenData.role);
       }
-      case '/admin/editor/projects': {
+      case '/admin/projects': {
         return ['admin', 'demo'].some((x) => x === tokenData.role);
       }
-      case '/admin/editor/categories': {
+      case '/admin/categories': {
         return ['admin', 'demo'].some((x) => x === tokenData.role);
       }
-      case '/admin/editor/accounts': {
+      case '/admin/accounts': {
         return ['admin'].some((x) => x === tokenData.role);
       }
     }

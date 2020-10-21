@@ -27,7 +27,7 @@
       <app-message [message]="msg"></app-message>
     </div>
 
-    <app-button class="control" (Click)="doLogin()">
+    <app-button class="control" (Click)="doLogin()" [isDisabled]="false">
       {{ textMessages.DoLogin }}
     </app-button>
   </form>

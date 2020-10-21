@@ -30,19 +30,18 @@ const routes: Routes =
     loadChildren: () => import('./project/project.module').then(m => m.ProjectModule)
   },
   {
-    path: '**',
-    loadChildren: () => import('./not-found/not-found.module').then(m => m.NotFoundModule)
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
   }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
-    // AdminRoutingModule,
-    // IntroductionRoutingModule,
-    // ProjectsRoutingModule,
-    // ProjectRoutingModule,
-    // NotFoundRoutingModule,
+    RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
 })

@@ -1,0 +1,13 @@
+<div *ngIf="information$ | async as introduction; else loading">
+  <app-admin-menu></app-admin-menu>
+
+  <div fxLayout="row" class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div *ngIf="message$ | async as msg">
+    <app-message [message]="msg"></app-message>
+  </div>
+</ng-template>

@@ -19,6 +19,7 @@ export class ResourcesService {
   public TitlePageLogin = 'Login' + this.TitleSeparator;
   public TitlePageNotFound = 'Page not found' + this.TitleSeparator;
   public TitleProjects = 'Projects' + this.TitleSeparator;
+  public TitleAdmin = 'Admin' + this.TitleSeparator;
 
   public Menu = 'Menu';
   public MenuAccounts = 'accounts';
@@ -48,7 +49,7 @@ export class ResourcesService {
   public CategoryType = 'Type';
   public CategoryTypeGeneric = 'Generic';
   public CategoryTypeSystem = 'System';
-  public CategorySystemWarning = "You can't delete system category";
+  public CategorySystemWarning = 'You can\'t delete system category';
 
   public Project = 'Project';
   public ProjectCategory = 'Category';

@@ -2,27 +2,27 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { PublicService } from 'src/app/core/public.service';
+import { PublicService } from '../../core/public.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogEditProjectComponent } from 'src/app/admin/dialog-edit-project/dialog-edit-project.component';
-import { ProjectPreview } from 'src/app/projects/project-preview.model';
+import { DialogEditProjectComponent } from '../dialog-edit-project/dialog-edit-project.component';
+import { ProjectPreview } from '../../projects/project-preview.model';
 import {
   MessageType,
   MessageDescription,
-} from 'src/app/shared/message/message.component';
-import { ResourcesService } from 'src/app/core/resources.service';
-import { Paging } from 'src/app/shared/paging-info.model';
-import { Incident, RequestResult } from 'src/app/shared/request-result.model';
-import { AuthGuard } from 'src/app/core/auth.guard';
+} from '../../shared/message/message.component';
+import { ResourcesService } from '../../core/resources.service';
+import { Paging } from '../../shared/paging-info.model';
+import { Incident, RequestResult } from '../../shared/request-result.model';
+import { AuthGuard } from '../../core/auth.guard';
 import { Router } from '@angular/router';
-import { Category } from 'src/app/shared/category.model';
+import { Category } from '../../shared/category.model';
 
 @Component({
-  selector: 'app-admin-edit-projects',
-  templateUrl: './admin-edit-projects.component.html',
-  styleUrls: ['./admin-edit-projects.component.scss'],
+  selector: 'app-admin-projects',
+  templateUrl: './admin-projects.component.html',
+  styleUrls: ['./admin-projects.component.scss'],
 })
-export class AdminEditProjectsComponent implements OnInit, OnDestroy {
+export class AdminProjectsComponent implements OnInit, OnDestroy {
   public columns: string[] = ['code', 'displayName', 'category', 'releaseDate'];
   public projects$: BehaviorSubject<
     Array<ProjectPreview>

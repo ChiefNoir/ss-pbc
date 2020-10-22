@@ -6,13 +6,13 @@ import { Title } from '@angular/platform-browser';
 import {
   MessageDescription,
   MessageType,
-} from 'src/app/shared/message/message.component';
-import { ResourcesService } from 'src/app/core/resources.service';
-import { Information } from 'src/app/admin/information.model';
+} from '../../shared/message/message.component';
+import { ResourcesService } from '../../core/resources.service';
+import { Information } from '../information.model';
 import { environment } from 'src/environments/environment';
-import { RequestResult, Incident } from 'src/app/shared/request-result.model';
-import { AuthGuard } from 'src/app/core/auth.guard';
-import { PrivateService } from 'src/app/core/private.service';
+import { RequestResult, Incident } from '../../shared/request-result.model';
+import { AuthGuard } from '../../core/auth.guard';
+import { PrivateService } from '../../core/private.service';
 
 @Component({
   selector: 'app-admin-information',

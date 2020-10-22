@@ -1,16 +1,14 @@
-import { ModuleWithProviders } from '@angular/core';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, Route } from '@angular/router';
+import { RouterModule, Route } from '@angular/router';
 
 import { AuthGuard } from '../../app/core/auth.guard';
 
-
-import { AdminEditProjectsComponent } from './edit-project/admin-edit-projects.component';
-import { AdminEditIntroductionComponent } from './edit-introduction/admin-edit-introduction.component';
-import { AdminEditCategoriesComponent } from './edit-category/admin-edit-categories.component';
-import { AdminEditAccountsComponent } from './edit-account/admin-edit-accounts.component';
-import { AdminInformationComponent } from './information/admin-information.component';
 import { AdminComponent } from './admin/admin.component';
+import { AdminAccountsComponent } from './admin-accounts/admin-accounts.component';
+import { AdminCategoriesComponent } from './admin-categories/admin-categories.component';
+import { AdminInformationComponent } from './admin-information/admin-information.component';
+import { AdminIntroductionComponent } from './admin-introduction/admin-introduction.component';
+import { AdminProjectsComponent } from './admin-projects/admin-projects.component';
 
 const routes: Route[] = [
   {
@@ -32,7 +30,7 @@ const routes: Route[] = [
       },
       {
         path: 'introduction',
-        component: AdminEditIntroductionComponent,
+        component: AdminIntroductionComponent,
         canActivateChild: [AuthGuard],
         data: {
           expectedRoles: ['admin', 'demo'],
@@ -40,7 +38,7 @@ const routes: Route[] = [
       },
       {
         path: 'projects',
-        component: AdminEditProjectsComponent,
+        component: AdminProjectsComponent,
         canActivateChild: [AuthGuard],
         data: {
           expectedRoles: ['admin', 'demo'],
@@ -48,7 +46,7 @@ const routes: Route[] = [
       },
       {
         path: 'categories',
-        component: AdminEditCategoriesComponent,
+        component: AdminCategoriesComponent,
         canActivateChild: [AuthGuard],
         data: {
           expectedRoles: ['admin', 'demo'],
@@ -56,38 +54,14 @@ const routes: Route[] = [
       },
       {
         path: 'accounts',
-        component: AdminEditAccountsComponent,
+        component: AdminAccountsComponent,
         canActivateChild: [AuthGuard],
         data: {
-          expectedRoles: ['admin', 'demo'],
+          expectedRoles: ['admin'],
         }
       },
     ]
   }
-  // {
-  //   path: '/editor/projects',
-  //   component: AdminEditProjectsComponent,
-  //   canActivate: [AuthGuard],
-  //   data: {
-  //     expectedRoles: ['admin', 'demo'],
-  //   },
-  // }
-      // {
-      //   path: '/editor/categories',
-      //   component: AdminEditCategoriesComponent,
-      //   canActivate: [AuthGuard],
-      //   data: {
-      //     expectedRoles: ['admin', 'demo'],
-      //   },
-      // },
-      // {
-      //   path: '/editor/accounts',
-      //   component: AdminEditAccountsComponent,
-      //   canActivate: [AuthGuard],
-      //   data: {
-      //     expectedRoles: ['admin'],
-      //   },
-      // }
 ];
 
 @NgModule({

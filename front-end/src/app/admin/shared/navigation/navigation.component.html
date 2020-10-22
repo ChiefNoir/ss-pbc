@@ -1,0 +1,27 @@
+<div *ngIf="authGuard.isLoggedIn()"
+     class="navigation" 
+     fxFlex="60" fxLayout="row" fxLayoutAlign="center center">
+  
+    <a *ngIf="authGuard.canSee('/admin')"
+        [routerLink]="['/admin']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        {{ textMessages.MenuAdmin }}
+    </a>
+    <a *ngIf="authGuard.canSee('/admin/introduction')"
+        [routerLink]="['/admin/introduction']" routerLinkActive="active">
+        {{ textMessages.MenuIntroduction }}
+    </a>
+    <a *ngIf="authGuard.canSee('/admin/projects')"
+        [routerLink]="['/admin/projects']" routerLinkActive="active">
+        {{ textMessages.MenuProjects }}
+    </a>
+
+    <a *ngIf="authGuard.canSee('/admin/categories')"
+        [routerLink]="['/admin/categories']" routerLinkActive="active">
+        {{ textMessages.MenuCategories }}
+    </a>
+
+    <a *ngIf="authGuard.canSee('/admin/accounts')"
+        [routerLink]="['/admin/accounts']" routerLinkActive="active">
+        {{ textMessages.MenuAccounts }}
+    </a>
+</div>

@@ -1,26 +1,26 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { PublicService } from 'src/app/core/public.service';
-import { RequestResult, Incident } from 'src/app/shared/request-result.model';
-import { Introduction } from 'src/app/introduction/introduction.model';
+import { PublicService } from '../../core/public.service';
+import { RequestResult, Incident } from '../../shared/request-result.model';
+import { Introduction } from '../../introduction/introduction.model';
 import {
   MessageDescription,
   MessageType,
-} from 'src/app/shared/message/message.component';
-import { ExternalUrl } from 'src/app/shared/external-url.model';
+} from '../../shared/message/message.component';
+import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';
-import { AuthGuard } from 'src/app/core/auth.guard';
+import { AuthGuard } from '../../core/auth.guard';
 import { Router } from '@angular/router';
-import { ResourcesService } from 'src/app/core/resources.service';
-import { PrivateService } from 'src/app/core/private.service';
+import { ResourcesService } from '../../core/resources.service';
+import { PrivateService } from '../../core/private.service';
 
 @Component({
-  selector: 'app-admin-edit-introduction',
-  templateUrl: './admin-edit-introduction.component.html',
-  styleUrls: ['./admin-edit-introduction.component.scss'],
+  selector: 'app-admin-introduction',
+  templateUrl: './admin-introduction.component.html',
+  styleUrls: ['./admin-introduction.component.scss'],
 })
-export class AdminEditIntroductionComponent implements OnInit {
+export class AdminIntroductionComponent implements OnInit {
   public columnsInner: string[] = ['name', 'url', 'btn'];
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
 

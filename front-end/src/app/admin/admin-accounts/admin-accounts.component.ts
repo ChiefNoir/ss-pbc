@@ -3,27 +3,24 @@ import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { RequestResult, Incident } from 'src/app/shared/request-result.model';
+import { RequestResult, Incident } from '../../shared/request-result.model';
 import { MatDialog } from '@angular/material/dialog';
-import { Account } from 'src/app/admin/account.model';
+import { Account } from '../account.model';
 
-import { DialogEditAccountComponent } from 'src/app/admin/dialog-edit-account/dialog-edit-account.component';
-import { Paging } from 'src/app/shared/paging-info.model';
-import {
-  MessageDescription,
-  MessageType,
-} from 'src/app/shared/message/message.component';
-import { ResourcesService } from 'src/app/core/resources.service';
-import { AuthGuard } from 'src/app/core/auth.guard';
+import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-account.component';
+import { Paging } from '../../shared/paging-info.model';
+import { MessageDescription, MessageType } from '../../shared/message/message.component';
+import { ResourcesService } from '../../core/resources.service';
+import { AuthGuard } from '../../core/auth.guard';
 import { Router } from '@angular/router';
-import { PrivateService } from 'src/app/core/private.service';
+import { PrivateService } from '../../core/private.service';
 
 @Component({
-  selector: 'app-admin-edit-accounts',
-  templateUrl: './admin-edit-accounts.component.html',
-  styleUrls: ['./admin-edit-accounts.component.scss'],
+  selector: 'app-admin-accounts',
+  templateUrl: './admin-accounts.component.html',
+  styleUrls: ['./admin-accounts.component.scss'],
 })
-export class AdminEditAccountsComponent implements OnInit, OnDestroy {
+export class AdminAccountsComponent implements OnInit, OnDestroy {
   public accounts$: BehaviorSubject<Array<Account>> = new BehaviorSubject<
     Array<Account>
   >(null);

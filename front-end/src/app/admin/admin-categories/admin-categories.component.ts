@@ -3,25 +3,25 @@ import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { PublicService } from 'src/app/core/public.service';
-import { RequestResult, Incident } from 'src/app/shared/request-result.model';
-import { Category } from 'src/app/shared/category.model';
+import { PublicService } from '../../core/public.service';
+import { RequestResult, Incident } from '../../shared/request-result.model';
+import { Category } from '../../shared/category.model';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogEditorCategoryComponent } from 'src/app/admin/dialog-editor-category/dialog-editor-category.component';
+import { DialogEditorCategoryComponent } from '../dialog-editor-category/dialog-editor-category.component';
 import {
   MessageType,
   MessageDescription,
-} from 'src/app/shared/message/message.component';
-import { ResourcesService } from 'src/app/core/resources.service';
-import { AuthGuard } from 'src/app/core/auth.guard';
+} from '../../shared/message/message.component';
+import { ResourcesService } from '../../core/resources.service';
+import { AuthGuard } from '../../core/auth.guard';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-admin-edit-categories',
-  templateUrl: './admin-edit-categories.component.html',
-  styleUrls: ['./admin-edit-categories.component.scss'],
+  selector: 'app-admin-categories',
+  templateUrl: './admin-categories.component.html',
+  styleUrls: ['./admin-categories.component.scss'],
 })
-export class AdminEditCategoriesComponent implements OnInit {
+export class AdminCategoriesComponent implements OnInit {
   public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<
     Array<Category>
   >(null);

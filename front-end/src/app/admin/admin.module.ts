@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AdminEditAccountsComponent } from './edit-account/admin-edit-accounts.component';
-import { AdminEditCategoriesComponent } from './edit-category/admin-edit-categories.component';
-import { AdminEditIntroductionComponent } from './edit-introduction/admin-edit-introduction.component';
-import { AdminEditProjectsComponent } from './edit-project/admin-edit-projects.component';
-import { AdminInformationComponent } from './information/admin-information.component';
+import { AdminAccountsComponent } from './admin-accounts/admin-accounts.component';
+import { AdminCategoriesComponent } from './admin-categories/admin-categories.component';
+import { AdminIntroductionComponent } from './admin-introduction/admin-introduction.component';
+import { AdminProjectsComponent } from './admin-projects/admin-projects.component';
+import { AdminInformationComponent } from './admin-information/admin-information.component';
 import { AdminComponent } from './admin/admin.component';
 
 import { AdminRoutingModule } from './admin.routing.module';
 
-import { AdminMenuComponent } from './shared/admin-menu/admin-menu.component';
+import { NavigationComponent } from './shared/navigation/navigation.component';
 import { ButtonComponent } from './shared/button/button.component';
 import { DialogEditProjectComponent } from './dialog-edit-project/dialog-edit-project.component';
 import { DialogEditorCategoryComponent } from './dialog-editor-category/dialog-editor-category.component';
@@ -22,20 +22,20 @@ import { SharedModule } from '../shared/shared.module';
 @NgModule({
   imports: [CommonModule, AdminRoutingModule, SharedModule],
   declarations: [
-    AdminMenuComponent,
+    NavigationComponent,
 
     AdminComponent,
-      AdminEditAccountsComponent,
-      AdminEditCategoriesComponent,
-      AdminEditIntroductionComponent,
-      AdminEditProjectsComponent,
-      AdminInformationComponent,
+    AdminAccountsComponent,
+    AdminCategoriesComponent,
+    AdminIntroductionComponent,
+    AdminProjectsComponent,
+    AdminInformationComponent,
 
-      ButtonComponent,
-      FileUploaderComponent,
-      DialogEditProjectComponent,
-      DialogEditorCategoryComponent,
-      DialogEditAccountComponent
-    ],
+    ButtonComponent,
+    FileUploaderComponent,
+    DialogEditProjectComponent,
+    DialogEditorCategoryComponent,
+    DialogEditAccountComponent,
+  ],
 })
 export class AdminModule {}

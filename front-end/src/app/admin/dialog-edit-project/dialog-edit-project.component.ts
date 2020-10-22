@@ -1,19 +1,19 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { Project } from 'src/app/shared/project.model';
+import { Project } from '../../shared/project.model';
 import { BehaviorSubject } from 'rxjs';
-import { PublicService } from 'src/app/core/public.service';
-import { RequestResult, Incident } from 'src/app/shared/request-result.model';
-import { Category } from 'src/app/shared/category.model';
-import { ExternalUrl } from 'src/app/shared/external-url.model';
+import { PublicService } from '../../core/public.service';
+import { RequestResult, Incident } from '../../shared/request-result.model';
+import { Category } from '../../shared/category.model';
+import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';
 import {
   MessageType,
   MessageDescription,
-} from 'src/app/shared/message/message.component';
+} from '../../shared/message/message.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ResourcesService } from 'src/app/core/resources.service';
-import { GalleryImage } from 'src/app/shared/gallery-image.model';
-import { PrivateService } from 'src/app/core/private.service';
+import { ResourcesService } from '../../core/resources.service';
+import { GalleryImage } from '../../shared/gallery-image.model';
+import { PrivateService } from '../../core/private.service';
 
 @Component({
   selector: 'app-dialog-edit-project.',

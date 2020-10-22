@@ -3,7 +3,6 @@
 
 table {
   width: 100%;
-  margin-bottom: 5px;
   background-color: $table-row !important;
   @include flat-shadow($color-core);
 }
@@ -91,8 +90,4 @@ table {
 }
 ::ng-deep.mat-calendar-body-selected{
   background-color: $color-content!important;
-}
-
-.mat-form-field {
-  width: 90%;
 }

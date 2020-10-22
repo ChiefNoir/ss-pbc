@@ -1,7 +1,5 @@
 @import "variables";
 
-$border-color: $color-text;
-
 .flat-button {
   background: transparent;
   border: none;
@@ -21,7 +19,7 @@ $border-color: $color-text;
   transition: all 0.3s ease;
 
   &:before {
-    background: $border-color;
+    background: $color-text;
     content: "";
     position: absolute;
     right: 0;
@@ -32,7 +30,7 @@ $border-color: $color-text;
     transition: all 0.3s ease;
   }
   &:after {
-    background: $border-color;
+    background: $color-text;
     content: "";
     position: absolute;
     right: 0;
@@ -59,7 +57,7 @@ $border-color: $color-text;
     width: 100%;
 
     &:before {
-      background: $border-color;
+      background: $color-text;
       bottom: 0;
       content: "";
       height: 50%;
@@ -70,7 +68,7 @@ $border-color: $color-text;
       transition: all 0.3s ease;
     }
     &:after {
-      background: $border-color;
+      background: $color-text;
       bottom: 0;
       content: "";
       left: 0;

@@ -17,7 +17,7 @@ import { NavigationCompactComponent } from './shared/navigation-compact/navigati
 
 import { OnlyIntModule } from './shared/only-int.module';
 
-import { SplitPipe } from './shared/split.pipe';
+
 
 import { AuthGuard } from './core/auth.guard';
 
@@ -39,7 +39,7 @@ import { SharedModule } from './shared/shared.module';
     FooterComponent,
     NavigationComponent,
     NavigationCompactComponent,
-    SplitPipe
+    //SplitPipe
   ],
   imports: [
     BrowserModule,

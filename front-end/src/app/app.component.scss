@@ -6,38 +6,11 @@
   height: auto;
 
   .content {
-    padding-top: 20px;
+    margin-top: 10px;
     padding-bottom: 20px;
     width: 80%;
     height: auto;
     margin: auto;
-  }
-}
-
-.mat-toolbar {
-  background: transparent !important;
-  min-height: 40px !important;
-  height: 40px !important;
-
-  a {
-    color: $color-text;
-    font-size: 25px;
-    height: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
-    text-decoration: none;
-  }
-  a:hover {
-    color: $color-text-highlighted;
-    text-shadow: $shadow-text;
-    background-color: $color-container-transparent;
-  }
-  .active {
-    background-color: $color-container;
-  }
-  .mobile {
-    background-color: $color-container;
-    cursor: pointer;
   }
 }
 
@@ -60,13 +33,4 @@
     text-shadow: $shadow-text;
     background-color: $color-container-transparent;
   }
-}
-
-
-.loading
-{
-  width: 80px;
-  height: 80px;
-
-  animation:spin-with-click 11s linear infinite;
 }

@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="center stretch" 
+                   fxShow="true" fxHide.lt-md="{{testing}}">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        {{textMessages.MenuHome}}
+      </a>
+      <a routerLink="/projects/" routerLinkActive="active">
+        {{textMessages.MenuProjects}}
+      </a>
+      
+      <ng-container>
+        <ng-container *ngIf="authGuard.isLoggedIn(); else login">
+          <a routerLink="/admin/" routerLinkActive="active">{{textMessages.MenuAdmin}}</a>
+        </ng-container>
+        <ng-template #login>
+          <a routerLink="/login/" routerLinkActive="active">{{textMessages.MenuLogin}}</a>
+        </ng-template>
+      </ng-container>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="mobile"  fxLayout="row" fxLayoutAlign="center stretch"
+                   fxShow="true" fxHide.gt-sm="true" >
+        <a (click)="menuClick()"> {{textMessages.Menu}} </a>
+  </mat-toolbar-row>
+</mat-toolbar>

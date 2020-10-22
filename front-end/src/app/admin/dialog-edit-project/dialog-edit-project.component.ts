@@ -6,10 +6,7 @@ import { RequestResult, Incident } from '../../shared/request-result.model';
 import { Category } from '../../shared/category.model';
 import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';
-import {
-  MessageType,
-  MessageDescription,
-} from '../../shared/message/message.component';
+import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ResourcesService } from '../../core/resources.service';
 import { GalleryImage } from '../../shared/gallery-image.model';
@@ -29,18 +26,10 @@ export class DialogEditProjectComponent implements OnInit {
   public columnsInner: string[] = ['name', 'url', 'btn'];
   public columnsGallery: string[] = ['imageUrl', 'extraUrl', 'btn'];
 
-  public categories$: BehaviorSubject<Category[]> = new BehaviorSubject<
-    Category[]
-  >(null);
-  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<
-    MessageDescription
-  >(null);
-  public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(
-    null
-  );
+  public categories$: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>(null);
+  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
+  public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
   constructor(
     private service: PrivateService,
@@ -145,6 +134,7 @@ export class DialogEditProjectComponent implements OnInit {
   }
 
   public close(): void {
+    console.log('close');
     this.dialog.close();
   }
 

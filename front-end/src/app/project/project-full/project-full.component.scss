@@ -10,13 +10,11 @@
     border-top-color: $color-text;
     border-top-width: 2px;
   }
-  
-  .top-panel
-  {
+
+  .top-panel {
     color: $color-text;
     width: 100%;
-    .poster
-    {
+    .poster {
       box-sizing: border-box;
       height: 370px;
       left: 0px;
@@ -24,7 +22,7 @@
       object-position: 100% 0%;
       top: 0px;
       width: 100%;
-  
+
       transition: all 0.5s ease;
     }
   }

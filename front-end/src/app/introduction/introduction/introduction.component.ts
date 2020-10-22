@@ -1,11 +1,11 @@
 import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { PublicService } from 'src/app/core/public.service';
-import { Introduction } from 'src/app/introduction/introduction.model';
-import { MessageDescription, MessageType } from 'src/app/shared/message/message.component';
-import { RequestResult, Incident } from 'src/app/shared/request-result.model';
-import { ResourcesService } from 'src/app/core/resources.service';
+import { PublicService } from '../../core/public.service';
+import { ResourcesService } from '../../core/resources.service';
+import { Introduction } from '../../introduction/introduction.model';
+import { MessageDescription, MessageType } from '../../shared/message/message.component';
+import { RequestResult, Incident } from '../../shared/request-result.model';
 import { environment } from 'src/environments/environment';
 
 @Component({

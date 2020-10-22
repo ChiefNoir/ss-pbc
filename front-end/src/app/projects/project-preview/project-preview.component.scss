@@ -1,15 +1,13 @@
 @import "variables";
 @import "mixins";
 
-.container
-{
+.container {
   border: 1px solid $color-core;
   margin-bottom: 2%;
   position: relative;
   @include flat-shadow($color-core);
 
-  .poster
-  {
+  .poster {
     box-sizing: border-box;
     height: 370px;
     left: 0px;
@@ -21,17 +19,14 @@
     transition: all 0.5s ease;
   }
 
-  .grayscale-filter
-  {
+  .grayscale-filter {
     filter: grayscale(100%);
 
-    &:hover
-    {
+    &:hover {
       filter: grayscale(40%);
     }
   }
-  .content
-  {
+  .content {
     background-color: $color-container-transparent;
     bottom: 0%;
     color: $color-text;
@@ -40,21 +35,18 @@
     position: absolute;
     width: 100%;
 
-    .headline
-    {
+    .headline {
       color: $color-text;
       font-size: 25px;
       font-size: x-large;
       font-weight: 500;
       margin-left: 20px;
-    
-      &:hover
-      {
+
+      &:hover {
         color: $color-text-highlighted;
       }
     }
-    .description
-    {
+    .description {
       font-size: large;
       margin-left: 20px;
       margin-right: 20px;

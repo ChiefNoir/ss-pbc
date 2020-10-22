@@ -20,7 +20,7 @@ import { ButtonCategoryComponent } from './button-category/button-category.compo
     ProjectsListComponent,
     FilterCategoryComponent,
     ProjectPreviewComponent,
-    ButtonCategoryComponent,
+    ButtonCategoryComponent
   ],
 })
 export class ProjectsModule {}

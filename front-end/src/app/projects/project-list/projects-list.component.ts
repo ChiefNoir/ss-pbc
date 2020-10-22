@@ -22,10 +22,10 @@ import { ResourcesService } from '../../core/resources.service';
   styleUrls: ['./projects-list.component.scss'],
 })
 export class ProjectsListComponent implements OnDestroy, OnInit {
-  public categories$: BehaviorSubject<Array<Category>>;
-  public message$: BehaviorSubject<MessageDescription>;
-  public paging$: BehaviorSubject<Paging<string>>;
-  public projects$: BehaviorSubject<Array<ProjectPreview>>;
+  public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
+  public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
+  public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
 
   public constructor(
     private service: PublicService,
@@ -37,11 +37,6 @@ export class ProjectsListComponent implements OnDestroy, OnInit {
     titleService.setTitle(
       this.textMessages.TitleProjects + environment.siteName
     );
-
-    this.categories$ = new BehaviorSubject<Array<Category>>(null);
-    this.message$ = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
-    this.paging$ = new BehaviorSubject<Paging<string>>(null);
-    this.projects$ = new BehaviorSubject<Array<ProjectPreview>>(null);
   }
 
   public ngOnInit(): void {

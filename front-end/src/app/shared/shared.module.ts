@@ -8,8 +8,6 @@ import { ButtonContactComponent } from './button-contact/button-contact.componen
 import { MessageComponent } from './message/message.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { ButtonExternalUrlComponent } from './button-external-url/button-external-url.component';
-// import { } from '';
-
 
 @NgModule({
   imports: [

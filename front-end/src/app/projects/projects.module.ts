@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
 import { ProjectsRoutingModule } from './projects-routing.module';
 
 import { SharedModule } from '../shared/shared.module';
@@ -18,10 +17,10 @@ import { ButtonCategoryComponent } from './button-category/button-category.compo
     SharedModule
   ],
   declarations: [
-      ProjectsListComponent,
-      FilterCategoryComponent,
-      ProjectPreviewComponent,
-      ButtonCategoryComponent
-    ],
+    ProjectsListComponent,
+    FilterCategoryComponent,
+    ProjectPreviewComponent,
+    ButtonCategoryComponent,
+  ],
 })
 export class ProjectsModule {}

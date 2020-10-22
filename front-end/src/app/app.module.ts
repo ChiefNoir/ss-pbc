@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavigationComponent } from './shared/navigation/navigation.component';
+import { NavigationCompactComponent } from './shared/navigation-compact/navigation-compact.component';
 
 import { OnlyIntModule } from './shared/only-int.module';
 
@@ -37,6 +38,7 @@ import { SharedModule } from './shared/shared.module';
     HeaderComponent,
     FooterComponent,
     NavigationComponent,
+    NavigationCompactComponent,
     SplitPipe
   ],
   imports: [

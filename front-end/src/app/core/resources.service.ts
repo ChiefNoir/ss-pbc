@@ -29,6 +29,7 @@ export class ResourcesService {
   public MenuIntroduction = 'introduction';
   public MenuLogin = 'Login';
   public MenuProjects = 'Projects';
+  public MenuClose = 'Close';
 
   public ErrorFieldCannotBeEmpty = 'This field cannot be empty.';
   public ErrorProjectsNotFound = 'Nothing was found';

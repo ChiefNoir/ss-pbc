@@ -1,21 +1,10 @@
-<app-header></app-header>
+<app-header fxHide.lt-md="true"></app-header>
 
 <app-navigation (ShowSideNavigationClick)="drawer.toggle()"></app-navigation>
 
 <mat-drawer-container autosize>
-  <mat-drawer #drawer mode="over" fxHide.gt-sm="true">
-    <!-- <div fxLayout="column" fxLayoutAlign="none">
-      <a routerLink="/"> {{textMessages.MenuHome}} </a>
-      <a routerLink="/projects/"> {{textMessages.MenuProjects}}  </a>
-
-      <ng-container *ngIf="authGuard.isLoggedIn(); else sideLogin">
-        <a routerLink="/admin/" routerLinkActive="active">{{textMessages.MenuAdmin}}</a>
-      </ng-container>
-      <ng-template #sideLogin>
-        <a routerLink="/login/" routerLinkActive="active">{{textMessages.MenuLogin}}</a>
-      </ng-template>
-    </div> -->
-    <app-navigation (ShowSideNavigationClick)="drawer.toggle()"></app-navigation>
+  <mat-drawer #drawer mode="over" position="end" fxHide.gt-sm="true">
+    <app-navigation-compact (HideClick)="drawer.toggle()"></app-navigation-compact>
   </mat-drawer>
   
   <div class="container" fxLayout="column">

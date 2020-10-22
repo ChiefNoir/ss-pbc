@@ -1,5 +1,5 @@
-<div class="navigation" fxHide.lt-md="true"
-     fxLayout="row" fxLayoutAlign="center stretch">
+<div class="navigation" 
+  fxLayout="column" fxLayoutAlign="start start" >
   <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
     {{textMessages.MenuHome}}
   </a>
@@ -15,15 +15,8 @@
       <a routerLink="/login/" routerLinkActive="active">{{textMessages.MenuLogin}}</a>
     </ng-template>
   </ng-container>
-</div>
 
-<div class="mobile" fxHide.gt-sm="true"
-     fxLayout="row" fxLayoutAlign="center stretch" (click)="menuClick()">
-  <a> {{siteName}} </a>
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80" width="40" height="40">
-    <rect width="100" height="15"></rect>
-    <rect y="30" width="100" height="15"></rect>
-    <rect y="60" width="100" height="15"></rect>
-  </svg>
+  <mat-divider></mat-divider>
+
+  <a (click)="closeClick()"> {{textMessages.MenuClose}} </a>
 </div>

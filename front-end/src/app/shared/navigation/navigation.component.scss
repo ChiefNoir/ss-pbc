@@ -1,11 +1,8 @@
 @import "variables";
 @import "mixins";
-@import "animations";
 
-.mat-toolbar {
-  background: transparent !important;
-  min-height: 40px !important;
-  height: 40px !important;
+.navigation {
+  height: 40px;
 
   a {
     color: $color-text;
@@ -14,6 +11,7 @@
     padding-left: 10px;
     padding-right: 10px;
     text-decoration: none;
+    cursor: pointer;
   }
   a:hover {
     color: $color-text-highlighted;
@@ -23,16 +21,32 @@
   .active {
     background-color: $color-container;
   }
-  .mobile {
-    background-color: $color-container;
-    cursor: pointer;
-  }
 }
 
-.loading
-{
-  width: 80px;
-  height: 80px;
+.mobile {
+  height: 40px;
+  background: $color-container !important;
+  width: 100%;
+  color: $color-text;
+  cursor: pointer;
 
-  animation:spin-with-click 11s linear infinite;
+  a {    
+    font-size: 30px;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+  }
+
+  svg {
+    fill: $color-text;
+  }
+
+  &:hover svg,
+  &:hover
+  {
+    color: $color-text-highlighted;
+    text-shadow: $shadow-text;
+    fill: $color-text-highlighted !important;
+  }
 }

@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ResourcesService } from '../../core/resources.service';
 import { AuthGuard } from '../../core/auth.guard';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-navigation',
@@ -9,6 +10,8 @@ import { AuthGuard } from '../../core/auth.guard';
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent {
+  public siteName: string = environment.siteName;
+
   constructor(
     public textMessages: ResourcesService,
     public router: Router,
@@ -17,8 +20,6 @@ export class NavigationComponent {
 
   @Output()
   public ShowSideNavigationClick: EventEmitter<void> = new EventEmitter<void>();
-
-  public testing: boolean = false;
 
   public menuClick() {
     this.ShowSideNavigationClick.emit();

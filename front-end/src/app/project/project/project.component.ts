@@ -3,12 +3,13 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { ResourcesService } from 'src/app/core/resources.service';
-import { PublicService } from 'src/app/core/public.service';
-import { MessageType, MessageDescription } from 'src/app/shared/message/message.component';
-import { Project } from 'src/app/shared/project.model';
-import { RequestResult, Incident } from 'src/app/shared/request-result.model';
 import { environment } from 'src/environments/environment';
+
+import { ResourcesService } from '../../core/resources.service';
+import { PublicService } from '../../core/public.service';
+import { MessageType, MessageDescription } from '../../shared/message/message.component';
+import { Project } from '../../shared/project.model';
+import { RequestResult, Incident } from '../../shared/request-result.model';
 
 @Component({
   selector: 'app-project-list',
@@ -16,8 +17,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./project.component.scss'],
 })
 export class ProjectComponent {
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
-  public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
+  public message$: BehaviorSubject<MessageDescription>;
+  public project$: BehaviorSubject<Project>;
 
   public constructor(
     public textMessages: ResourcesService,
@@ -29,6 +30,9 @@ export class ProjectComponent {
     this.activeRoute.params.subscribe(() => {
       this.refreshPage();
     });
+
+    this.message$ = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
+    this.project$ = new BehaviorSubject<Project>(null);
   }
 
   private refreshPage(): void {

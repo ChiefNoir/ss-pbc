@@ -6,62 +6,42 @@
       <mat-tab label="{{ textMessages.Project }}">
         <div fxLayout="column" fxLayoutAlign="space-around center">
           <mat-form-field>
-            <input
-              matInput
-              [disabled]="disableInput$ | async"
-              [(ngModel)]="project.code"
-              name="Code"
-              placeholder="{{ textMessages.ProjectCode }}"
-            />
+            <input matInput name="Code" [(ngModel)]="project.code"
+                   placeholder="{{ textMessages.ProjectCode }}"
+                   [disabled]="disableInput$ | async"
+                   />
           </mat-form-field>
 
           <mat-form-field>
-            <input
-              matInput
-              [disabled]="disableInput$ | async"
-              [(ngModel)]="project.displayName"
-              name="Name"
-              placeholder="{{ textMessages.ProjectName }}"
-            />
+            <input matInput name="Name" [(ngModel)]="project.displayName"
+                   placeholder="{{ textMessages.ProjectName }}"
+                   [disabled]="disableInput$ | async"
+                   />
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ textMessages.ProjectReleaseDate }}</mat-label>
-            <input
-              matInput
+            <input matInput name="releaseDate" [(ngModel)]="project.releaseDate"
               [disabled]="disableInput$ | async"
               [matDatepicker]="dp3"
-              [(ngModel)]="project.releaseDate"
-              name="releaseDate"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="dp3"
-            ></mat-datepicker-toggle>
+              />
+            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ textMessages.ProjectCategory }}</mat-label>
-            <mat-select
-              [(ngModel)]="project.category.id"
-              [disabled]="disableInput$ | async"
-            >
-              <mat-option
-                *ngFor="let ctg of categories$.value"
-                [value]="ctg.id"
-              >
+            <mat-select [(ngModel)]="project.category.id"
+                        [disabled]="disableInput$ | async">
+              <mat-option *ngFor="let ctg of categories$.value" [value]="ctg.id">
                 {{ ctg.displayName }}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field>
-            <textarea
-              matInput
+            <textarea matInput name="descriptionShort" [(ngModel)]="project.descriptionShort"
               [disabled]="disableInput$ | async"
-              [(ngModel)]="project.descriptionShort"
-              name="descriptionShort"
               cdkTextareaAutosize
               #autosize="cdkTextareaAutosize"
               cdkAutosizeMinRows="1"
@@ -72,11 +52,8 @@
           </mat-form-field>
 
           <mat-form-field>
-            <textarea
-              matInput
+            <textarea matInput name="description" [(ngModel)]="project.description"
               [disabled]="disableInput$ | async"
-              [(ngModel)]="project.description"
-              name="description"
               cdkTextareaAutosize
               #autosize="cdkTextareaAutosize"
               cdkAutosizeMinRows="1"
@@ -91,19 +68,15 @@
       <mat-tab label="{{ textMessages.ProjectPoster }}">
         <div fxLayout="column" fxLayoutAlign="space-around center">
           <div fxLayout="row" fxLayoutAlign="center center">
-            <img
-              [ngClass]="{ disabled: disableInput$ | async }"
-              class="posterImage"
-              src="{{ project.posterPreview || project.posterUrl }}"
-            />
+            <img [ngClass]="{ disabled: disableInput$ | async }"
+                 class="posterImage"
+                 src="{{ project.posterPreview || project.posterUrl }}"
+                 />
           </div>
 
           <mat-form-field>
-            <input
-              matInput
+            <input matInput name="posterDescriptionle" [(ngModel)]="project.posterDescription"
               [disabled]="disableInput$ | async"
-              [(ngModel)]="project.posterDescription"
-              name="posterDescriptionle"
               placeholder="{{ textMessages.ProjectPosterDescription }}"
             />
           </mat-form-field>

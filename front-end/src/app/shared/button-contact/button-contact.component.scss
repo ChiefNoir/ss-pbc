@@ -1,8 +1,5 @@
 @import "variables";
 
-$border-color: $color-text;
-$highlighted: $color-text;
-
 .flat-button {
   background: transparent;
   border: none;
@@ -22,7 +19,7 @@ $highlighted: $color-text;
   transition: all 0.3s ease;
 
   &:before {
-    background: $border-color;
+    background: $color-text;
     content: "";
     position: absolute;
     right: 0;
@@ -33,7 +30,7 @@ $highlighted: $color-text;
     width: 2px;
   }
   &:after {
-    background: $border-color;
+    background: $color-text;
     content: "";
     position: absolute;
     right: 0;
@@ -46,11 +43,11 @@ $highlighted: $color-text;
 
   &:hover {
     &::before {
-      background: $highlighted;
+      background: $color-text;
       height: 100%;
     }
     &::after {
-      background: $highlighted;
+      background: $color-text;
       width: 100%;
     }
   }
@@ -62,7 +59,7 @@ $highlighted: $color-text;
     width: 100%;
 
     &:before {
-      background: $border-color;
+      background: $color-text;
       bottom: 0;
       content: "";
       left: 0;
@@ -73,7 +70,7 @@ $highlighted: $color-text;
       height: 50%;
     }
     &:after {
-      background: $border-color;
+      background: $color-text;
       bottom: 0;
       content: "";
       left: 0;
@@ -85,13 +82,13 @@ $highlighted: $color-text;
     }
 
     &:hover {
-      color: $highlighted;
+      color: $color-text;
       &::before {
-        background: $highlighted;
+        background: $color-text;
         height: 100%;
       }
       &::after {
-        background: $highlighted;
+        background: $color-text;
         width: 100%;
       }
     }

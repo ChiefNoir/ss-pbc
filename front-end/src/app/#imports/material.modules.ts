@@ -17,7 +17,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatToolbarModule } from '@angular/material/toolbar';
 
 const Providers = [MatDatepickerModule, MatNativeDateModule];
 
@@ -36,8 +35,7 @@ const Material = [
   MatSelectModule,
   MatSidenavModule,
   MatTableModule,
-  MatTabsModule,
-  //MatToolbarModule,
+  MatTabsModule
 ];
 
 @NgModule({

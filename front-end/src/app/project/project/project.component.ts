@@ -17,8 +17,8 @@ import { RequestResult, Incident } from '../../shared/request-result.model';
   styleUrls: ['./project.component.scss'],
 })
 export class ProjectComponent {
-  public message$: BehaviorSubject<MessageDescription>;
-  public project$: BehaviorSubject<Project>;
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
+  public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
   public constructor(
     public textMessages: ResourcesService,
@@ -30,9 +30,6 @@ export class ProjectComponent {
     this.activeRoute.params.subscribe(() => {
       this.refreshPage();
     });
-
-    this.message$ = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
-    this.project$ = new BehaviorSubject<Project>(null);
   }
 
   private refreshPage(): void {

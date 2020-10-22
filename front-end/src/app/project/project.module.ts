@@ -9,7 +9,15 @@ import { SharedModule } from '../shared/shared.module';
 import { CarouselComponent } from './carousel/carousel.component';
 
 @NgModule({
-  imports: [CommonModule, ProjectRoutingModule, SharedModule],
-  declarations: [ProjectComponent, ProjectFullComponent, CarouselComponent],
+  imports: [
+    CommonModule,
+    ProjectRoutingModule,
+    SharedModule
+  ],
+  declarations: [
+    ProjectComponent,
+    ProjectFullComponent,
+    CarouselComponent
+  ],
 })
 export class ProjectModule {}

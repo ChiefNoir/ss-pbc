@@ -5,6 +5,7 @@ import { StorageService } from './storage.service';
 
 // @ts-ignore
 import jwt_decode from 'jwt-decode';
+import { Identity } from '../shared/identity.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -37,6 +38,15 @@ export class AuthGuard implements CanActivate {
 
   public logoutComplete(): void {
     this.storageService.removeToken();
+  }
+
+  public loginComplete(identity: Identity): void {
+    this.storageService.saveToken(
+      identity.token,
+      identity.tokenLifeTimeMinutes
+    );
+
+    this.router.navigate(['/admin']);
   }
 
   public canSee(routerLink: string): boolean {

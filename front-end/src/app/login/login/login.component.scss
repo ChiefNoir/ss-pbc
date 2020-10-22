@@ -1,8 +1,7 @@
 @import "variables";
 @import "mixins";
 
-.login-form 
-{
+.login-form {
   background-color: $color-control !important;
   display: flex;
   flex-direction: column;
@@ -15,11 +14,10 @@
 
   @include flat-shadow($color-core);
 
-  .control
-  {
+  .control {
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
   }
 }
 
@@ -29,23 +27,23 @@
 }
 
 ::ng-deep.mat-error,
-::ng-deep.mat-placeholder-required  {
+::ng-deep.mat-placeholder-required {
   color: $color-text-highlighted !important;
 }
 
 ::ng-deep.mat-form-field-label {
   /*color or text in the inputs*/
- color: $color-text !important;
+  color: $color-text !important;
 }
 
 ::ng-deep.mat-form-field-underline {
- /*color of underline*/
- background-color: $color-content !important;
-} 
+  /*color of underline*/
+  background-color: $color-content !important;
+}
 
 ::ng-deep.mat-form-field-ripple {
-/*color of underline when focused*/
-background-color: $color-text !important;;
+  /*color of underline when focused*/
+  background-color: $color-text !important;
 }
 
 .mat-focused ::ng-deep.mat-form-field-label {

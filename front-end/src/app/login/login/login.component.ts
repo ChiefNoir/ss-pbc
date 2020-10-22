@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-import { RequestResult, Incident } from '../../shared/request-result.model';
-
-import { AuthService } from '../../core/auth.service';
-import { Title } from '@angular/platform-browser';
-
 import { environment } from 'src/environments/environment';
 
-import { Identity } from '../../shared/identity.model';
-import { AuthGuard } from '../../core/auth.guard';
+import { RequestResult, Incident } from '../../shared/request-result.model';
 import { MessageDescription, MessageType} from '../../shared/message/message.component';
+
+import { Identity } from '../../shared/identity.model';
+import { AuthService } from '../../core/auth.service';
+import { AuthGuard } from '../../core/auth.guard';
 import { ResourcesService } from '../../core/resources.service';
-import { StorageService } from '../../core/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +29,6 @@ export class LoginComponent implements OnInit {
     private authGuard: AuthGuard,
     private router: Router,
     titleService: Title,
-    private storageService: StorageService,
     public textMessages: ResourcesService
   ) {
     titleService.setTitle(
@@ -59,12 +56,8 @@ export class LoginComponent implements OnInit {
   private handleLoginResult(result: RequestResult<Identity>): void {
     if (result.isSucceed) {
       this.message$.next(null);
-      this.storageService.saveToken(
-        result.data.token,
-        result.data.tokenLifeTimeMinutes
-      );
 
-      this.router.navigate(['/admin']);
+      this.authGuard.loginComplete(result.data);
     } else {
       this.handleIncident(result.error);
     }

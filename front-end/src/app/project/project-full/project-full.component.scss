@@ -10,12 +10,31 @@
     border-top-color: $color-text;
     border-top-width: 2px;
   }
+  
+  .top-panel
+  {
+    color: $color-text;
+    width: 100%;
+    .poster
+    {
+      box-sizing: border-box;
+      height: 370px;
+      left: 0px;
+      object-fit: cover;
+      object-position: 100% 0%;
+      top: 0px;
+      width: 100%;
+  
+      transition: all 0.5s ease;
+    }
+  }
 
   .left-panel {
+    align-items: center;
     margin-left: 20px;
     margin-right: 10px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
     height: 100%;
     width: 300px;
     color: $color-text;

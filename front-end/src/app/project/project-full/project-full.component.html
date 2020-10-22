@@ -1,7 +1,12 @@
 <div class="container">
-  <div fxLayout="row" fxLayoutAlign="center stretch">
+  <div fxLayout="row" fxLayoutAlign="center stretch"
+       fxLayout.sm="column" fxLayout.xs="column">
 
-    <div class="left-panel">
+    <div 
+    ngClass="left-panel"
+    [ngClass.sm]="{'top-panel': true}"
+    [ngClass.xs]="{'top-panel': true}"
+    >
       <img class="poster" 
            src="{{(project.posterUrl || '/assets/images/placeholder-wide.png')}}"/>
       <mat-divider></mat-divider>
@@ -22,8 +27,6 @@
           {{ project.category.displayName }} | 
           {{ textMessages.ProjectReleaseDate }}: 
           {{(project.releaseDate | date:'dd MMMM yyyy') || textMessages.ProjectReleaseSoon }}
-
-
         </div>
         <mat-divider></mat-divider>
       </div>

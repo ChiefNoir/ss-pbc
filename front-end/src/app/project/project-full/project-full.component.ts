@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { Project } from 'src/app/shared/project.model';
-import { ResourcesService } from 'src/app/core/resources.service';
+import { Project } from '../../shared/project.model';
+import { ResourcesService } from '../../core/resources.service';
 
 @Component({
   selector: 'app-project-full',

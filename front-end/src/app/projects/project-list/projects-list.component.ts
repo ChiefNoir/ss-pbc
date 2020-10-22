@@ -9,7 +9,10 @@ import { Category } from '../../shared/category.model';
 import { Paging } from '../../shared/paging-info.model';
 import { Incident, RequestResult } from '../../shared/request-result.model';
 
-import { MessageDescription, MessageType } from '../../shared/message/message.component';
+import {
+  MessageDescription,
+  MessageType,
+} from '../../shared/message/message.component';
 import { environment } from 'src/environments/environment';
 import { ResourcesService } from '../../core/resources.service';
 
@@ -19,10 +22,10 @@ import { ResourcesService } from '../../core/resources.service';
   styleUrls: ['./projects-list.component.scss'],
 })
 export class ProjectsListComponent implements OnDestroy, OnInit {
-  public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
-  public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
-  public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
+  public categories$: BehaviorSubject<Array<Category>>;
+  public message$: BehaviorSubject<MessageDescription>;
+  public paging$: BehaviorSubject<Paging<string>>;
+  public projects$: BehaviorSubject<Array<ProjectPreview>>;
 
   public constructor(
     private service: PublicService,
@@ -31,16 +34,21 @@ export class ProjectsListComponent implements OnDestroy, OnInit {
     titleService: Title,
     public textMessages: ResourcesService
   ) {
-    titleService.setTitle
-    (
+    titleService.setTitle(
       this.textMessages.TitleProjects + environment.siteName
     );
+
+    this.categories$ = new BehaviorSubject<Array<Category>>(null);
+    this.message$ = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
+    this.paging$ = new BehaviorSubject<Paging<string>>(null);
+    this.projects$ = new BehaviorSubject<Array<ProjectPreview>>(null);
   }
 
   public ngOnInit(): void {
     this.activeRoute.params.subscribe(() => {
       this.refreshPage();
     });
+
     this.paging$.subscribe((value) => this.refreshProjects(value));
   }
 

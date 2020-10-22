@@ -1,4 +1,4 @@
-import { Category } from 'src/app/shared/category.model';
+import { Category } from '../shared/category.model';
 
 export class ProjectPreview {
   public id: number;

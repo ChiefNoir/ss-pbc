@@ -35,12 +35,12 @@ namespace Security
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, login)
+                new Claim(ClaimTypes.Name, login)
             };
 
             foreach (var item in roles.Where(x => !string.IsNullOrEmpty(x)))
             {
-                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, item));
+                claims.Add(new Claim(ClaimTypes.Role, item));
             }
 
             var jwt = new JwtSecurityToken
@@ -92,8 +92,6 @@ namespace Security
         /// <returns> <see cref="IPrincipal"/></returns>
         public IPrincipal ValidateToken(string token)
         {
-            //TODO: extend validation
-
             if (string.IsNullOrEmpty(token))
                 throw new ArgumentException("Token can't be null or empty", nameof(token));
 

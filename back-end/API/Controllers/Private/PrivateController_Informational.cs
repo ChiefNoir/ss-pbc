@@ -6,16 +6,20 @@ using System.Reflection;
 using Abstractions.ISecurity;
 using Abstractions.Model.System;
 using Abstractions.API;
+using System.Linq;
 
 namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        public override IActionResult GetInformationAsync([FromHeader] string token)
+        public override IActionResult GetInformationAsync([FromHeader] string authorization)
         {
-            var result = _supervisor.SafeExecute(token, new[] { RoleNames.Admin, RoleNames.Demo }, () =>
+            var result = _supervisor.SafeExecute(
+                () =>
             {
-                var claims = _tokenManager.ValidateToken(token);
+                var cleanToke = authorization.Split(' ').Last();
+
+                var claims = _tokenManager.ValidateToken(cleanToke);
 
                 return new Information
                 {

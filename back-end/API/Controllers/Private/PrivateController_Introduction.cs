@@ -13,13 +13,16 @@ namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        public override async Task<IActionResult> SaveIntroductionAsync([FromHeader] string token, [FromForm] Introduction introduction)
+        public override async Task<IActionResult> SaveIntroductionAsync([FromHeader] string authorization, [FromForm] Introduction introduction)
         {
-            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
-            {
-                HandleFiles(introduction, Request?.Form?.Files);
-                return _introductionRepository.SaveAsync(introduction);
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                () =>
+                {
+                    HandleFiles(introduction, Request?.Form?.Files);
+                    return _introductionRepository.SaveAsync(introduction);
+                }
+            );
 
             return new JsonResult(result);
         }

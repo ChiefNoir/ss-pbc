@@ -15,23 +15,24 @@ namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        public override async Task<IActionResult> SaveProjectAsync([FromHeader] string token, [FromForm] Project project)
+        public override async Task<IActionResult> SaveProjectAsync([FromHeader] string authorization, [FromForm] Project project)
         {
-            var result = await _supervisor.SafeExecuteAsync(token, new[] { RoleNames.Admin }, () =>
-            {
-                HandleFiles(project, Request?.Form?.Files);
-                return _projectRepository.SaveAsync(project);
-            });
+            var result = await _supervisor.SafeExecuteAsync
+            (
+                () =>
+                {
+                    HandleFiles(project, Request?.Form?.Files);
+                    return _projectRepository.SaveAsync(project);
+                }
+            );
 
             return new JsonResult(result);
         }
 
-        public override async Task<IActionResult> DeleteProjectAsync([FromHeader] string token, [FromBody] Project project)
+        public override async Task<IActionResult> DeleteProjectAsync([FromHeader] string authorization, [FromBody] Project project)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                token, 
-                new[] { RoleNames.Admin },
                 () => _projectRepository.DeleteAsync(project)
             );
 

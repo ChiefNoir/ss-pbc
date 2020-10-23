@@ -21,10 +21,9 @@ export class PrivateService {
   ) {}
 
   public getInformation(): Promise<RequestResult<Information>> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Token: this.storage.getToken(),
-    });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     return this.httpClient
       .get<RequestResult<Information>>(this.endpoint + 'information', {
@@ -36,7 +35,9 @@ export class PrivateService {
   public saveIntroduction(
     introduction: Introduction
   ): Promise<RequestResult<Introduction>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     const formData = new FormData();
     this.fillFormData(formData, 'introduction', introduction);
@@ -51,7 +52,9 @@ export class PrivateService {
   }
 
   public saveCategory(category: Category): Promise<RequestResult<Category>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     return this.httpClient
       .post<RequestResult<Category>>(this.endpoint + 'category', category, {
@@ -61,7 +64,9 @@ export class PrivateService {
   }
 
   public deleteCategory(category: Category): Promise<RequestResult<boolean>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     return this.httpClient
       .request<RequestResult<boolean>>('delete', this.endpoint + 'category', {
@@ -72,7 +77,9 @@ export class PrivateService {
   }
 
   public countAccount(): Promise<RequestResult<number>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     return this.httpClient
       .get<RequestResult<number>>(this.endpoint + 'accounts', { headers })
@@ -80,7 +87,9 @@ export class PrivateService {
   }
 
   public getAccount(id: number): Promise<RequestResult<Account>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     return this.httpClient
       .get<RequestResult<Account>>(this.endpoint + 'accounts/' + id, {
@@ -90,7 +99,9 @@ export class PrivateService {
   }
 
   public getRoles(): Promise<RequestResult<string[]>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     return this.httpClient
       .get<RequestResult<string[]>>(this.endpoint + 'roles', { headers })
@@ -101,7 +112,9 @@ export class PrivateService {
     start: number,
     length: number
   ): Promise<RequestResult<Account[]>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     return this.httpClient
       .get<RequestResult<Account[]>>(
@@ -112,7 +125,9 @@ export class PrivateService {
   }
 
   public saveAccount(account: Account): Promise<RequestResult<Account>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     return this.httpClient
       .post<RequestResult<Account>>(this.endpoint + 'accounts', account, {
@@ -122,7 +137,9 @@ export class PrivateService {
   }
 
   public deleteAccount(account: Account): Promise<RequestResult<boolean>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     return this.httpClient
       .request<RequestResult<boolean>>('delete', this.endpoint + 'accounts', {
@@ -133,7 +150,9 @@ export class PrivateService {
   }
 
   public deleteProject(project: Project): Promise<RequestResult<boolean>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     return this.httpClient
       .request<RequestResult<boolean>>('delete', this.endpoint + 'project', {
@@ -144,7 +163,9 @@ export class PrivateService {
   }
 
   public saveProject(project: Project): Promise<RequestResult<Project>> {
-    const headers = new HttpHeaders({ Token: this.storage.getToken() });
+    const headers = new HttpHeaders(
+      {Authorization: `Bearer ${this.storage.getToken()}`
+   });
 
     const formData = new FormData();
     this.fillFormData(formData, 'project', project);

@@ -15,12 +15,10 @@ namespace Security
 {
     public class Supervisor : ISupervisor
     {
-        private readonly ITokenManager _tokenManager;
         private readonly ILogger<Supervisor> _logger;
 
         public Supervisor(ITokenManager tokenManager, ILogger<Supervisor> logger)
         {
-            _tokenManager = tokenManager;
             _logger = logger;
         }
 
@@ -49,7 +47,6 @@ namespace Security
             return result;
         }
 
-
         public ExecutionResult<T> SafeExecute<T>(Func<T> func)
         {
             var result = new ExecutionResult<T>();
@@ -74,94 +71,6 @@ namespace Security
             return result;
         }
 
-
-        public async Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, string[] roles, Func<Task<T>> func)
-        {
-            try
-            {
-                CheckToken(token, roles);
-                return await SafeExecuteAsync(func);
-            }
-            catch (Exception ee)
-            {
-                _logger.LogError(ee, $"Exception in private call. Roles: {string.Join(',', roles ?? Array.Empty<string>()) } ");
-
-                return new ExecutionResult<T>
-                {
-                    IsSucceed = false,
-                    Error = new Incident
-                    {
-                        Message = ee.Message,
-                        Detail = ee.InnerException?.Message
-                    }
-                };
-            }
-        }
-
-
-        public ExecutionResult<T> SafeExecute<T>(string token, string[] roles, Func<T> func)
-        {
-            try
-            {
-                CheckToken(token, roles);
-                return SafeExecute(func);
-            }
-            catch (Exception ee)
-            {
-                _logger.LogError(ee, $"Exception in private call. Roles: {string.Join(',', roles ?? Array.Empty<string>()) } ");
-
-                return new ExecutionResult<T>
-                {
-                    IsSucceed = false,
-                    Error = new Incident
-                    {
-                        Message = ee.Message,
-                        Detail = ee.InnerException?.Message
-                    }
-                };
-            }
-        }
-
-
-        /// <summary> Check JWT token</summary>
-        /// <param name="token">Token to validate</param>
-        /// <param name="roles">Roles who have rights to execute function</param>
-        /// <returns> <c>null</c> if everything is good </returns>
-        private void CheckToken(string token, string[] roles)
-        {
-            if (string.IsNullOrEmpty(token))
-                throw new SecurityException(TextMessages.AuthenticationNotProvided);
-
-
-            IPrincipal principal;
-            try
-            {
-                principal = _tokenManager.ValidateToken(token);
-            }
-            catch (SecurityTokenException ee)
-            {
-                throw new SecurityException(TextMessages.InvalidToken, ee);
-            }
-
-            if (principal?.Identity == null)
-                throw new SecurityException(TextMessages.InvalidToken);
-
-            if (!principal.GetRoles().Any())
-                throw new SecurityException(TextMessages.InvalidToken);
-
-            if (roles == null || !roles.Any())
-                return;
-
-            foreach (var item in roles)
-            {
-                if (principal.IsInRole(item))
-                {
-                    return;
-                }
-            }
-
-            throw new SecurityException(TextMessages.AccessDenied);
-        }
     }
 
 }

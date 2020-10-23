@@ -19,20 +19,5 @@ namespace Abstractions.Supervision
         /// <returns>Result of execution or ErrorMessage will have message </returns>
         ExecutionResult<T> SafeExecute<T>(Func<T> func);
 
-        /// <summary> Execute function and return its result if everything goes right </summary>
-        /// <typeparam name="T">Type of returning result</typeparam>
-        /// <param name="token">JWT token to validate</param>
-        /// <param name="roles">Roles who have rights to execute function</param>
-        /// <param name="func">Function to execute</param>
-        /// <returns>Result of execution or ErrorMessage will have message </returns>
-        Task<ExecutionResult<T>> SafeExecuteAsync<T>(string token, string[] roles, Func<Task<T>> func);
-
-        /// <summary> Execute function and return its result if everything goes right </summary>
-        /// <typeparam name="T">Type of returning result</typeparam>
-        /// <param name="token">JWT token to validate</param>
-        /// <param name="roles">Roles who have rights to execute function</param>
-        /// <param name="func">Function to execute</param>
-        /// <returns>Result of execution or ErrorMessage will have message </returns>
-        ExecutionResult<T> SafeExecute<T>(string token, string[] roles, Func<T> func);
     }
 }

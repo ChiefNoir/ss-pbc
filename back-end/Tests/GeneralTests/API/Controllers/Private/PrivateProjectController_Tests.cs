@@ -1,4 +1,5 @@
-﻿using Abstractions.Model;
+﻿using Abstractions.ISecurity;
+using Abstractions.Model;
 using Abstractions.Model.System;
 using Abstractions.Supervision;
 using GeneralTests.SharedUtils;

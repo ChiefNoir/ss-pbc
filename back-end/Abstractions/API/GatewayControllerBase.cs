@@ -11,7 +11,5 @@ namespace Abstractions.API
         [HttpPost("login")]
         public abstract Task<IActionResult> LoginAsync([FromBody] Credentials credentials);
 
-        [HttpPost("token")]
-        public abstract Task<IActionResult> ValidateAsync([FromHeader] string token);
     }
 }

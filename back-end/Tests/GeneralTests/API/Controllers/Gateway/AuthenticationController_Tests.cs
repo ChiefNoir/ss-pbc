@@ -1,4 +1,5 @@
-﻿using Abstractions.Model;
+﻿using Abstractions.ISecurity;
+using Abstractions.Model;
 using Abstractions.Model.System;
 using Abstractions.Supervision;
 using GeneralTests.SharedUtils;
@@ -103,13 +104,13 @@ namespace GeneralTests.API.Controllers.Gateway
                 {
                     var api = Storage.CreateGatewayController(context);
 
-                    var response = 
+                    var response =
                     (
                         await api.LoginAsync(new Credentials { Login = login, Password = password }) as JsonResult
                     ).Value as ExecutionResult<Identity>;
 
                     GenericChecks.CheckSucceed(response);
-                    
+
                     Assert.NotNull(response.Data.Account);
                     Assert.NotNull(response.Data.Token);
                     Assert.Equal
@@ -140,7 +141,7 @@ namespace GeneralTests.API.Controllers.Gateway
                 {
                     var api = Storage.CreateGatewayController(context);
 
-                    var response = 
+                    var response =
                     (
                         await api.LoginAsync(credentials) as JsonResult
                     ).Value as ExecutionResult<Identity>;
@@ -177,7 +178,7 @@ namespace GeneralTests.API.Controllers.Gateway
                     ).Value as ExecutionResult<Identity>;
 
                     GenericChecks.CheckSucceed(authResponse);
-                   
+
                     var response =
                     (
                         await api.ValidateAsync(authResponse.Data.Token) as JsonResult
@@ -196,45 +197,6 @@ namespace GeneralTests.API.Controllers.Gateway
                 }
             }
         }
-
-        [Theory]
-        [InlineData("sa", "sa")]
-        internal async void Validate_Valid_DeadAccount(string login, string password)
-        {
-            using (var context = Storage.CreateContext())
-            {
-                try
-                {
-                    var api = Storage.CreateGatewayController(context);
-
-                    var authResponse =
-                    (
-                        await api.LoginAsync(new Credentials { Login = login, Password = password }) as JsonResult
-                    ).Value as ExecutionResult<Identity>;
-
-                    GenericChecks.CheckSucceed(authResponse);
-
-                    //delete accounts from db
-                    Storage.RunSql("delete from account");
-
-                    var response =
-                    (
-                        await api.ValidateAsync(authResponse.Data.Token) as JsonResult
-                    ).Value as ExecutionResult<Identity>;
-
-                    GenericChecks.CheckFail(response);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    context.FlushData();
-                }
-            }
-        }
-
 
         [Theory]
         [ClassData(typeof(InvalidTokens))]

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
 
+import { Roles } from '../admin/roles.enum';
+
 // @ts-ignore
 import jwt_decode from 'jwt-decode';
 import { Identity } from '../shared/identity.model';
@@ -55,19 +57,19 @@ export class AuthGuard implements CanActivate {
 
     switch (routerLink) {
       case '/admin': {
-        return ['admin', 'demo'].some((x) => x === tokenData.role);
+        return [Roles.Admin, Roles.Demo].some((x) => x === tokenData.role);
       }
       case '/admin/introduction': {
-        return ['admin', 'demo'].some((x) => x === tokenData.role);
+        return [Roles.Admin, Roles.Demo].some((x) => x === tokenData.role);
       }
       case '/admin/projects': {
-        return ['admin', 'demo'].some((x) => x === tokenData.role);
+        return [Roles.Admin, Roles.Demo].some((x) => x === tokenData.role);
       }
       case '/admin/categories': {
-        return ['admin', 'demo'].some((x) => x === tokenData.role);
+        return [Roles.Admin, Roles.Demo].some((x) => x === tokenData.role);
       }
       case '/admin/accounts': {
-        return ['admin'].some((x) => x === tokenData.role);
+        return [Roles.Admin].some((x) => x === tokenData.role);
       }
     }
 

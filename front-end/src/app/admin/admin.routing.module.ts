@@ -3,6 +3,8 @@ import { RouterModule, Route } from '@angular/router';
 
 import { AuthGuard } from '../../app/core/auth.guard';
 
+import { Roles } from './roles.enum';
+
 import { AdminComponent } from './admin/admin.component';
 import { AdminAccountsComponent } from './admin-accounts/admin-accounts.component';
 import { AdminCategoriesComponent } from './admin-categories/admin-categories.component';
@@ -17,7 +19,7 @@ const routes: Route[] = [
     canActivate: [AuthGuard],
     pathMatch: 'prefix',
     data: {
-      expectedRoles: ['admin', 'demo'],
+      expectedRoles: [Roles.Admin, Roles.Demo],
     },
     children: [
       {
@@ -25,7 +27,7 @@ const routes: Route[] = [
         component: AdminInformationComponent,
         canActivateChild: [AuthGuard],
         data: {
-          expectedRoles: ['admin', 'demo'],
+          expectedRoles: [Roles.Admin, Roles.Demo],
         }
       },
       {
@@ -33,7 +35,7 @@ const routes: Route[] = [
         component: AdminIntroductionComponent,
         canActivateChild: [AuthGuard],
         data: {
-          expectedRoles: ['admin', 'demo'],
+          expectedRoles: [Roles.Admin, Roles.Demo],
         }
       },
       {
@@ -41,7 +43,7 @@ const routes: Route[] = [
         component: AdminProjectsComponent,
         canActivateChild: [AuthGuard],
         data: {
-          expectedRoles: ['admin', 'demo'],
+          expectedRoles: [Roles.Admin, Roles.Demo],
         }
       },
       {
@@ -49,7 +51,7 @@ const routes: Route[] = [
         component: AdminCategoriesComponent,
         canActivateChild: [AuthGuard],
         data: {
-          expectedRoles: ['admin', 'demo'],
+          expectedRoles: [Roles.Admin, Roles.Demo],
         }
       },
       {
@@ -57,7 +59,7 @@ const routes: Route[] = [
         component: AdminAccountsComponent,
         canActivateChild: [AuthGuard],
         data: {
-          expectedRoles: ['admin'],
+          expectedRoles: [Roles.Admin],
         }
       },
     ]

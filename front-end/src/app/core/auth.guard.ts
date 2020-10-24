@@ -41,10 +41,7 @@ export class AuthGuard implements CanActivate {
   }
 
   public loginComplete(identity: Identity): void {
-    this.storageService.saveToken(
-      identity.token,
-      identity.tokenLifeTimeMinutes
-    );
+    this.storageService.saveToken(identity.token);
 
     this.router.navigate(['/admin']);
   }

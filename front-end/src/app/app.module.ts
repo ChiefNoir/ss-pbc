@@ -24,8 +24,6 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { NavigationComponent } from './shared/navigation/navigation.component';
 import { NavigationCompactComponent } from './shared/navigation-compact/navigation-compact.component';
 
-import { CookieService } from 'ngx-cookie-service';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +46,6 @@ import { CookieService } from 'ngx-cookie-service';
     PrivateService,
     AuthService,
     StorageService,
-    CookieService,
     AuthGuard,
     Title,
     ResourcesService,

@@ -1,30 +1,21 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class StorageService {
-  private readonly tokenName = window.location.hostname + '_token';
-  private readonly path = window.location.host;
+  private readonly localStorage: Storage = window.localStorage;
+  private readonly tokenName: string = 'AuthorizationToken';
 
-  public constructor(private cookieService: CookieService) {}
+  public constructor() {}
 
   public getToken(): string {
-    return this.cookieService.get(this.tokenName);
+    return JSON.parse(this.localStorage.getItem(this.tokenName));
   }
 
-  public saveToken(value: string, expires: number): void {
-    this.cookieService.set(
-      this.tokenName,
-      value,
-      expires,
-      this.path,
-      window.location.hostname,
-      true,
-      'Strict'
-    );
+  public saveToken(value: string): void {
+    this.localStorage.setItem(this.tokenName, JSON.stringify(value));
   }
 
   public removeToken(): void {
-    this.cookieService.delete(this.tokenName);
+    this.localStorage.removeItem(this.tokenName);
   }
 }

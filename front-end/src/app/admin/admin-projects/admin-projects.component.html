@@ -41,11 +41,9 @@
 
 <div *ngIf="projects$ | async as projects">
   <app-paginator *ngIf="paging$ | async as paging"
+  [paging]="paging"
         (changePage)="skipPage($event)"
-        [maxPage]="paging.getMaxPage()"
-        [currentPage]="paging.getCurrentPage()"
         (nextPageClick)="skipPage(1)"
-        (previousPageClick)="skipPage(-1)"
-        [minPage]="paging.getMinPage()">
+        (previousPageClick)="skipPage(-1)">
   </app-paginator>
 </div>

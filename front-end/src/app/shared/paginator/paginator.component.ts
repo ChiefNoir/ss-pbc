@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ResourcesService } from '../../core/resources.service';
+import { Paging } from '../paging-info.model';
 
 @Component({
   selector: 'app-paginator',
@@ -8,13 +9,7 @@ import { ResourcesService } from '../../core/resources.service';
 })
 export class PaginatorComponent {
   @Input()
-  public maxPage: number;
-
-  @Input()
-  public minPage: number;
-
-  @Input()
-  public currentPage: number;
+  public paging: Paging<any>;
 
   @Output()
   public changePage: EventEmitter<number> = new EventEmitter<number>();

@@ -22,12 +22,10 @@
 
   <div *ngIf="paging$ | async as paging; else loading">
     <app-paginator
+          [paging]="paging"
           (changePage)="changePage($event)"
-          [maxPage]="paging.getMaxPage()"
-          [currentPage]="paging.getCurrentPage()"
           (nextPageClick)="skipPage(1)"
-          (previousPageClick)="skipPage(-1)"
-          [minPage]="paging.getMinPage()">
+          (previousPageClick)="skipPage(-1)">
     </app-paginator>
   </div>
 </div>

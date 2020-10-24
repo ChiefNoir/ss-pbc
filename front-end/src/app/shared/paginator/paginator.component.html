@@ -1,13 +1,13 @@
-<div class="container" *ngIf="maxPage > 0" flex fxLayout="row" ngClass.sm="class-for-small-devices">
+<div class="container" *ngIf="paging.getMaxPage() > 0" flex fxLayout="row" ngClass.sm="class-for-small-devices">
   <div fxFlex="35%">
-    <a class="button" *ngIf="currentPage > minPage"
+    <a class="button" *ngIf="paging.getCurrentPage() > paging.getMinPage()"
        fxFlex="100%"
        (click)="btnPreviousClick()">
        {{ textMessages.GenericPrevious }}
     </a>
   </div>
   <div fxFlex="30%">
-    <input value="{{ currentPage }}"
+    <input value="{{ paging.getCurrentPage() }}"
           appOnlyInt
           #boxCurrentPage
           type="text"
@@ -15,10 +15,10 @@
           (keyup.enter)="changePageEnterPress(boxCurrentPage.value)"
           inputmode="numeric"
           pattern="[0-9]*"/>
-    <input value="/{{ maxPage }}" fxFlex="50%" readonly="true" />
+    <input value="/{{ paging.getMaxPage() }}" fxFlex="50%" readonly="true" />
   </div>
   <div fxFlex="35%">
-    <a class="button" *ngIf="currentPage < maxPage"
+    <a class="button" *ngIf="paging.getCurrentPage() < paging.getMaxPage()"
        fxFlex="100%"
        (click)="btnNextClick()">
        {{ textMessages.GenericNext }}

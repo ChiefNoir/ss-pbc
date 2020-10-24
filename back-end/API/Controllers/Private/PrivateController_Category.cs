@@ -9,7 +9,7 @@ namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        public override async Task<IActionResult> SaveCategoryAsync([FromHeader] string authorization, [FromBody] Category category)
+        public override async Task<IActionResult> SaveCategoryAsync([FromBody] Category category)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -19,7 +19,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        public override async Task<IActionResult> DeleteCategoryAsync([FromHeader] string authorization, [FromBody] Category category)
+        public override async Task<IActionResult> DeleteCategoryAsync([FromBody] Category category)
         {
             var result = await _supervisor.SafeExecuteAsync
             (

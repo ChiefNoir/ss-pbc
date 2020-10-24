@@ -13,7 +13,7 @@ namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        public override async Task<IActionResult> SaveIntroductionAsync([FromHeader] string authorization, [FromForm] Introduction introduction)
+        public override async Task<IActionResult> SaveIntroductionAsync([FromForm] Introduction introduction)
         {
             var result = await _supervisor.SafeExecuteAsync
             (

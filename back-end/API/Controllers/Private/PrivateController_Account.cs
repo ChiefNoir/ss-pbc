@@ -12,7 +12,7 @@ namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        public override async Task<IActionResult> SaveAccountAsync([FromHeader] string authorization, [FromBody] Account account)
+        public override async Task<IActionResult> SaveAccountAsync([FromBody] Account account)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -22,7 +22,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        public override async Task<IActionResult> CountAccountAsync([FromHeader] string authorization)
+        public override async Task<IActionResult> CountAccountAsync()
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -32,7 +32,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        public override async Task<IActionResult> DeleteAccountAsync([FromHeader] string authorization, [FromBody] Account account)
+        public override async Task<IActionResult> DeleteAccountAsync([FromBody] Account account)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -42,7 +42,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        public override async Task<IActionResult> GetAccountAsync([FromHeader] string authorization, int id)
+        public override async Task<IActionResult> GetAccountAsync(int id)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -52,7 +52,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        public override async Task<IActionResult> GetAccountsAsync([FromHeader] string authorization, [FromQuery] Paging paging)
+        public override async Task<IActionResult> GetAccountsAsync([FromQuery] Paging paging)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -62,7 +62,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        public override IActionResult GetRoles([FromHeader] string authorization)
+        public override IActionResult GetRoles()
         {
             var result = _supervisor.SafeExecute
             (

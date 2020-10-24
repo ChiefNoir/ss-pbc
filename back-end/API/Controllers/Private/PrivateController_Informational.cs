@@ -1,25 +1,21 @@
-﻿using Abstractions.Model;
-using Abstractions.Supervision;
+﻿using Abstractions.API;
+using Abstractions.Model.System;
 using Microsoft.AspNetCore.Mvc;
 using Security.Extensions;
-using System.Reflection;
-using Abstractions.ISecurity;
-using Abstractions.Model.System;
-using Abstractions.API;
 using System.Linq;
+using System.Reflection;
 
 namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        public override IActionResult GetInformationAsync([FromHeader] string authorization)
+        public override IActionResult GetInformationAsync()
         {
             var result = _supervisor.SafeExecute(
                 () =>
             {
-                var cleanToke = authorization.Split(' ').Last();
-
-                var claims = _tokenManager.ValidateToken(cleanToke);
+                var token = Request.Headers["Authorization"].ToString();
+                var claims = _tokenManager.ValidateToken(token.Split(' ').Last());
 
                 return new Information
                 {

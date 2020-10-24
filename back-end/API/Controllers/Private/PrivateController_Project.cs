@@ -15,7 +15,7 @@ namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        public override async Task<IActionResult> SaveProjectAsync([FromHeader] string authorization, [FromForm] Project project)
+        public override async Task<IActionResult> SaveProjectAsync([FromForm] Project project)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -29,7 +29,7 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        public override async Task<IActionResult> DeleteProjectAsync([FromHeader] string authorization, [FromBody] Project project)
+        public override async Task<IActionResult> DeleteProjectAsync([FromBody] Project project)
         {
             var result = await _supervisor.SafeExecuteAsync
             (

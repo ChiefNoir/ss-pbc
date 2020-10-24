@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Account } from '../admin/account.model';
 import { Category } from '../shared/category.model';
-import { Information } from '../admin/information.model';
+import { Information } from '../admin/information.interface';
 import { Introduction } from '../introduction/introduction.model';
 import { Project } from '../shared/project.model';
 import { RequestResult } from '../shared/request-result.model';

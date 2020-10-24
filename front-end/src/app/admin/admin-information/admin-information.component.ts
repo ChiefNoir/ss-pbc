@@ -8,7 +8,7 @@ import {
   MessageType,
 } from '../../shared/message/message.component';
 import { ResourcesService } from '../../core/resources.service';
-import { Information } from '../information.model';
+import { Information } from '../information.interface';
 import { environment } from 'src/environments/environment';
 import { RequestResult, Incident } from '../../shared/request-result.model';
 import { AuthGuard } from '../../core/auth.guard';

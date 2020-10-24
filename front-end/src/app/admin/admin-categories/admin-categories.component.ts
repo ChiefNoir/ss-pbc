@@ -96,13 +96,10 @@ export class AdminCategoriesComponent implements OnInit {
   }
 
   private handleIncident(error: Incident): void {
-    console.log(error);
     this.message$.next({ text: error.message, type: MessageType.Error });
   }
 
   private handleError(error: any): void {
-    console.log(error);
-
     if (error.name !== undefined) {
       this.message$.next({ text: error.name, type: MessageType.Error });
     } else {

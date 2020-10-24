@@ -130,15 +130,11 @@ export class DialogEditorCategoryComponent implements OnInit {
   }
 
   private handleIncident(error: Incident): void {
-    console.log(error);
-
     this.disableInput$.next(false);
     this.message$.next({ text: error.message, type: MessageType.Error });
   }
 
   private handleError(error: any): void {
-    console.log(error);
-
     this.disableInput$.next(false);
 
     if (error.name !== undefined) {

@@ -134,7 +134,6 @@ export class DialogEditProjectComponent implements OnInit {
   }
 
   public close(): void {
-    console.log('close');
     this.dialog.close();
   }
 
@@ -229,13 +228,11 @@ export class DialogEditProjectComponent implements OnInit {
   private handleIncident(error: Incident): void {
     this.disableInput$.next(false);
 
-    console.log(error);
     this.message$.next({ text: error.message, type: MessageType.Error });
   }
 
   private handleError(error: any): void {
     this.disableInput$.next(false);
-    console.log(error);
 
     if (error.name !== undefined) {
       this.message$.next({ text: error.name, type: MessageType.Error });

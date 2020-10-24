@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Security.Extensions;
 using System.Linq;
 using System.Reflection;
+using System.Security;
 
 namespace API.Controllers.Private
 {

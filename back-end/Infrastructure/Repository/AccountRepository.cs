@@ -6,6 +6,7 @@ using Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -201,8 +202,13 @@ namespace Infrastructure.Repository
                     );
             }
 
-            var allRoles = typeof(RoleNames).GetProperties().Select(x => x.GetValue(null, null)?.ToString()).ToList();
-            if(!allRoles.Contains(account.Role))
+            var allRoles = typeof(RoleNames)
+                            .GetFields(BindingFlags.Static | BindingFlags.Public)
+                            .Where(x => x.IsLiteral)
+                            .Select(x => x.GetValue(null)?.ToString())
+                            .ToList();
+            
+            if (!allRoles.Contains(account.Role))
             {
                 throw new InconsistencyException
                     (
@@ -273,7 +279,12 @@ namespace Infrastructure.Repository
                     );
             }
 
-            var allRoles = typeof(RoleNames).GetProperties().Select(x => x.GetValue(null, null)?.ToString()).ToList();
+            var allRoles = typeof(RoleNames)
+                            .GetFields(BindingFlags.Static | BindingFlags.Public)
+                            .Where(x => x.IsLiteral)
+                            .Select(x => x.GetValue(null)?.ToString())
+                            .ToList();
+
             if (!allRoles.Contains(account.Role))
             {
                 throw new InconsistencyException

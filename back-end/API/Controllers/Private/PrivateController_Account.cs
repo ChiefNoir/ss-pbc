@@ -6,6 +6,8 @@ using Abstractions.Model.Queries;
 using Abstractions.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Private
@@ -68,13 +70,12 @@ namespace API.Controllers.Private
             (
                 () =>
                 {
-                    var lst = new List<string>();
-                    foreach (var property in typeof(RoleNames).GetProperties())
-                    {
-                        lst.Add(property.GetValue(null, null)?.ToString());
-                    }
-
-                    return lst;
+                    //TODO: make a method or something
+                    return typeof(RoleNames)
+                            .GetFields(BindingFlags.Static | BindingFlags.Public)
+                            .Where(x => x.IsLiteral)
+                            .Select(x => x.GetValue(null)?.ToString())
+                            .ToList();
                 }
             );
 

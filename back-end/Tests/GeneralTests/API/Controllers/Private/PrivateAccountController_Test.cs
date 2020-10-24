@@ -23,10 +23,6 @@ namespace GeneralTests.API.Controllers.Private
             {
                 yield return new object[]
                 {
-                    new string[] { }
-                };
-                yield return new object[]
-                {
                     new[]
                     {
                         "INSERT INTO account (login, password, salt, role) VALUES ('login', 'password', 'salt', 'role'); "
@@ -504,9 +500,9 @@ namespace GeneralTests.API.Controllers.Private
                     (
                         await api.CountAccountAsync() as JsonResult
                     ).Value as ExecutionResult<int>;
-                    GenericChecks.CheckSucceed(response, true);
+                    GenericChecks.CheckSucceed(response);
 
-                    Assert.Equal(sql.Length + 1, response.Data);
+                    Assert.Equal(sql.Length, response.Data);
                 }
                 catch (Exception)
                 {

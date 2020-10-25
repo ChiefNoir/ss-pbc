@@ -55,7 +55,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit {
     this.projects$.next(null);
     this.categories$.next(null);
 
-    this.service.getCategories().then(
+    this.service.getCategories().subscribe(
       (win) => this.handleCategorie(win),
       (fail) => this.handleError(fail)
     );
@@ -101,7 +101,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit {
         environment.paging.maxProjects,
         paging.getSearchParam()
       )
-      .then(
+      .subscribe(
         (win) => this.handleProjects(win),
         (fail) => this.handleError(fail)
       );

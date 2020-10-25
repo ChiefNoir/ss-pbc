@@ -73,7 +73,7 @@ export class AdminCategoriesComponent implements OnInit {
 
   private refreshCategories(): void {
     // there is no paging in the categories, because there will be not many categories
-    this.service.getCategories().then(
+    this.service.getCategories().subscribe(
       (win) => this.handleCategories(win),
       (fail) => this.handleError(fail)
     );

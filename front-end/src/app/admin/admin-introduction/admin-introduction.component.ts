@@ -44,14 +44,13 @@ export class AdminIntroductionComponent implements OnInit {
     if (this.authGuard.isLoggedIn()) {
       this.introduction$.next(null);
 
-      this.publicService.getIntroduction().then(
-        (result) =>
-          this.handle(result, {
-            text: 'Load complete',
-            type: MessageType.Info,
-          }),
-        (error) => this.handleError(error)
-      );
+      this.publicService.getIntroduction().subscribe((x: RequestResult<Introduction>) => {
+        this.handle(x, { text: this.textMessages.LoadComplete, type: MessageType.Info })
+      },
+      error => {
+        //this.notificationService.printErrorMessage(error);
+      });
+
     } else {
       this.router.navigate(['/login']);
     }
@@ -68,13 +67,13 @@ export class AdminIntroductionComponent implements OnInit {
   }
 
   public save(): void {
-    this.message$.next({ text: 'Saving', type: MessageType.Spinner });
+    this.message$.next({ text:  this.textMessages.SaveInProgress, type: MessageType.Spinner });
     this.isDisabled = true;
 
     this.service.saveIntroduction(this.introduction$.value).then(
       (result) =>
         this.handle(result, {
-          text: 'Saving complete',
+          text:  this.textMessages.SaveComplete,
           type: MessageType.Info,
         }),
       (reject) => this.handleError(reject)
@@ -84,11 +83,14 @@ export class AdminIntroductionComponent implements OnInit {
   public refresh(): void {
     this.introduction$.next(null);
 
-    this.publicService.getIntroduction().then(
-      (result) =>
-        this.handle(result, { text: 'Load complete', type: MessageType.Info }),
-      (reject) => this.handleError(reject)
-    );
+    this.publicService.getIntroduction()
+    .subscribe((x: RequestResult<Introduction>) => {
+      this.handle(x, { text: 'Load complete', type: MessageType.Info })
+    },
+    error => {
+      //this.notificationService.printErrorMessage(error);
+    });
+
   }
 
   public uploadFile(files: File[]) {

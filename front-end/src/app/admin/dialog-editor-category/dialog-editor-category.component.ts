@@ -49,7 +49,7 @@ export class DialogEditorCategoryComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.categoryId) {
-      this.publicService.getCategory(this.categoryId).then(
+      this.publicService.getCategory(this.categoryId).subscribe(
         (succeeded) =>
           this.handleCategory(succeeded, {
             text: this.textMessages.LoadComplete,

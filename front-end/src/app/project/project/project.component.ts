@@ -36,7 +36,7 @@ export class ProjectComponent {
     this.project$.next(null);
 
     const code = this.activeRoute.snapshot.paramMap.get('code');
-    this.service.getProject(code).then(
+    this.service.getProject(code).subscribe(
       (win) => this.handleProject(win),
       (fail) => this.handleError(fail)
     );

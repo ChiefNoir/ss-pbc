@@ -49,7 +49,7 @@ export class DialogEditProjectComponent implements OnInit {
     this.disableInput$.next(true);
     this.message$.next({ type: MessageType.Spinner });
 
-    this.publicService.getCategories().then(
+    this.publicService.getCategories().subscribe(
       (categorySucceeded) => {
         this.categories$.next(
           categorySucceeded.data.filter(
@@ -58,7 +58,7 @@ export class DialogEditProjectComponent implements OnInit {
         );
 
         if (this.code) {
-          this.publicService.getProject(this.code).then(
+          this.publicService.getProject(this.code).subscribe(
             (win) =>
               this.handleProject(win, {
                 text: this.textMessages.LoadComplete,

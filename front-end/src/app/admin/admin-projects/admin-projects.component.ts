@@ -74,7 +74,7 @@ export class AdminProjectsComponent implements OnInit, OnDestroy {
     this.message$.next({ type: MessageType.Spinner });
 
     if (!paging) {
-      this.service.getEverythingCategory().then(
+      this.service.getEverythingCategory().subscribe(
         (win) => this.handleCategory(win),
         (fail) => this.handleError(fail)
       );
@@ -88,7 +88,7 @@ export class AdminProjectsComponent implements OnInit, OnDestroy {
         environment.paging.maxProjects,
         paging.getSearchParam()
       )
-      .then(
+      .subscribe(
         (win) => this.handleProjects(win),
         (fail) => this.handleError(fail)
       );

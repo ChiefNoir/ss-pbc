@@ -28,10 +28,14 @@ export class IntroductionComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.service.getIntroduction().then(
-      (win) => this.handleIntroduction(win),
-      (fail) => this.handleError(fail)
-    );
+    this.service.getIntroduction()
+                .subscribe(
+                  win => {
+                    this.handleIntroduction(win);
+                  },
+                  fail => {
+                    this.handleError(fail);
+                  });
   }
 
   private handleIntroduction(result: RequestResult<Introduction>): void {

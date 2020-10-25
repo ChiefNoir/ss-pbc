@@ -11,7 +11,7 @@ import { AuthGuard } from '../../core/auth.guard';
 export class AdminComponent implements OnInit {
   public constructor(private router: Router, private authGuard: AuthGuard) {}
 
-  public async ngOnInit(): Promise<void> {
+  public ngOnInit(): void {
     if (!this.authGuard.isLoggedIn()) {
       this.router.navigate(['/login']);
       this.authGuard.logoutComplete();

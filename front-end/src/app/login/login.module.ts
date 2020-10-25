@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './auth.service';
+
+
 import { LoginComponent } from './login/login.component';
 import { LoginRoutingModule } from './login.routing.module';
 
@@ -10,5 +13,6 @@ import { ButtonComponent } from './shared/button/button.component'
 @NgModule({
   imports: [CommonModule, LoginRoutingModule, SharedModule],
   declarations: [LoginComponent, ButtonComponent],
+  providers: [AuthService]
 })
 export class LoginModule { }

@@ -11,7 +11,6 @@ import { NotFoundComponent } from './not-found.component';
 
 import { PublicService } from './core/public.service';
 import { PrivateService } from './core/private.service';
-import { AuthService } from './core/auth.service';
 import { StorageService } from './core/storage.service';
 import { ResourcesService } from './core/resources.service';
 import { AuthGuard } from './core/auth.guard';
@@ -46,7 +45,6 @@ import { NavigationCompactComponent } from './shared/navigation-compact/navigati
     DatePipe,
     PublicService,
     PrivateService,
-    AuthService,
     StorageService,
     AuthGuard,
     Title,

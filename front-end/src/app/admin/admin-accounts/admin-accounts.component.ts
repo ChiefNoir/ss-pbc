@@ -13,7 +13,7 @@ import { MessageDescription, MessageType } from '../../shared/message/message.co
 import { ResourcesService } from '../../core/resources.service';
 import { AuthGuard } from '../../core/auth.guard';
 import { Router } from '@angular/router';
-import { PrivateService } from '../../core/private.service';
+import { PrivateService } from '../private.service';
 
 @Component({
   selector: 'app-admin-accounts',

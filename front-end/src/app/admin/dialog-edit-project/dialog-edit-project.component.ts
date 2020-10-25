@@ -10,7 +10,7 @@ import { MessageType, MessageDescription } from '../../shared/message/message.co
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ResourcesService } from '../../core/resources.service';
 import { GalleryImage } from '../../shared/gallery-image.model';
-import { PrivateService } from '../../core/private.service';
+import { PrivateService } from '../private.service';
 
 @Component({
   selector: 'app-dialog-edit-project.',

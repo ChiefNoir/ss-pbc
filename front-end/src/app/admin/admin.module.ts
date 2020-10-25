@@ -17,6 +17,8 @@ import { DialogEditorCategoryComponent } from './dialog-editor-category/dialog-e
 import { DialogEditAccountComponent } from './dialog-edit-account/dialog-edit-account.component';
 import { FileUploaderComponent } from './shared/file-uploader/file-uploader.component';
 
+import { PrivateService } from './private.service';
+
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -37,5 +39,8 @@ import { SharedModule } from '../shared/shared.module';
     DialogEditorCategoryComponent,
     DialogEditAccountComponent,
   ],
+  providers: [
+    PrivateService
+  ]
 })
 export class AdminModule {}

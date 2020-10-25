@@ -9,7 +9,7 @@ import {
   MessageDescription,
   MessageType,
 } from '../../shared/message/message.component';
-import { PrivateService } from '../../core/private.service';
+import { PrivateService } from '../private.service';
 
 @Component({
   selector: 'app-dialog-editor-category.component',

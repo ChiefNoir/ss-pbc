@@ -13,7 +13,7 @@ import { MatTable } from '@angular/material/table';
 import { AuthGuard } from '../../core/auth.guard';
 import { Router } from '@angular/router';
 import { ResourcesService } from '../../core/resources.service';
-import { PrivateService } from '../../core/private.service';
+import { PrivateService } from '../private.service';
 
 @Component({
   selector: 'app-admin-introduction',

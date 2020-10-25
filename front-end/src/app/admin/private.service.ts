@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Account } from '../admin/account.model';
+import { Account } from './account.model';
 import { Category } from '../shared/category.model';
-import { Information } from '../admin/information.interface';
+import { Information } from './information.interface';
 import { Introduction } from '../introduction/introduction.model';
 import { Project } from '../shared/project.model';
 import { RequestResult } from '../shared/request-result.model';
 import { environment } from 'src/environments/environment';
-import { StorageService } from './storage.service';
+import { StorageService } from '../core/storage.service';
 import { DatePipe } from '@angular/common';
 
 @Injectable()

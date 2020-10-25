@@ -12,7 +12,7 @@ import { Information } from '../information.interface';
 import { environment } from 'src/environments/environment';
 import { RequestResult, Incident } from '../../shared/request-result.model';
 import { AuthGuard } from '../../core/auth.guard';
-import { PrivateService } from '../../core/private.service';
+import { PrivateService } from '../private.service';
 
 @Component({
   selector: 'app-admin-information',

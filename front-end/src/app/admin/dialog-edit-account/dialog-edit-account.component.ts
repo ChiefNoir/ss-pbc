@@ -5,7 +5,7 @@ import { MessageDescription, MessageType } from '../../shared/message/message.co
 import { ResourcesService } from '../../core/resources.service';
 import { RequestResult, Incident } from '../../shared/request-result.model';
 import { Account } from '../account.model';
-import { PrivateService } from '../../core/private.service';
+import { PrivateService } from '../private.service';
 
 @Component({
   selector: 'app-dialog-edit-account.component',

@@ -10,7 +10,6 @@ import { AppRoutingModule } from './app.routing.module';
 import { NotFoundComponent } from './not-found.component';
 
 import { PublicService } from './core/public.service';
-import { PrivateService } from './core/private.service';
 import { StorageService } from './core/storage.service';
 import { ResourcesService } from './core/resources.service';
 import { AuthGuard } from './core/auth.guard';
@@ -44,7 +43,6 @@ import { NavigationCompactComponent } from './shared/navigation-compact/navigati
   providers: [
     DatePipe,
     PublicService,
-    PrivateService,
     StorageService,
     AuthGuard,
     Title,

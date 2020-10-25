@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Identity } from '../shared/identity.model';
 import { RequestResult } from '../shared/request-result.model';
@@ -19,11 +19,4 @@ export class AuthService {
       .toPromise();
   }
 
-  public async validate(token: string): Promise<RequestResult<Identity>> {
-    const headers = new HttpHeaders({ Token: token });
-
-    return this.httpClient
-      .post<RequestResult<Identity>>(this.endpoint + 'token', null, { headers })
-      .toPromise();
-  }
 }

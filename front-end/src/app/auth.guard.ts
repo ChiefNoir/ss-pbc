@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
 
-import { Roles } from '../admin/roles.enum';
+import { Roles } from './admin/roles.enum';
 
 // @ts-ignore
 import jwt_decode from 'jwt-decode';
-import { Identity } from '../shared/identity.model';
+import { Identity } from './shared/identity.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {

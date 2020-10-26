@@ -7,7 +7,7 @@ import { Introduction } from '../introduction/introduction.model';
 import { Project } from '../shared/project.model';
 import { RequestResult } from '../shared/request-result.model';
 import { environment } from 'src/environments/environment';
-import { StorageService } from '../core/storage.service';
+import { StorageService } from '../storage.service';
 import { DatePipe } from '@angular/common';
 import { Observable } from 'rxjs';
 

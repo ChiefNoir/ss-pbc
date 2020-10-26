@@ -8,7 +8,7 @@ import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ResourcesService } from '../../core/resources.service';
+import { ResourcesService } from '../../resources.service';
 import { GalleryImage } from '../../shared/gallery-image.model';
 import { PrivateService } from '../private.service';
 

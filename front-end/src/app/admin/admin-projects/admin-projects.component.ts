@@ -10,10 +10,10 @@ import {
   MessageType,
   MessageDescription,
 } from '../../shared/message/message.component';
-import { ResourcesService } from '../../core/resources.service';
+import { ResourcesService } from '../../resources.service';
 import { Paging } from '../../shared/paging-info.model';
 import { Incident, RequestResult } from '../../shared/request-result.model';
-import { AuthGuard } from '../../core/auth.guard';
+import { AuthGuard } from '../../auth.guard';
 import { Router } from '@angular/router';
 import { Category } from '../../shared/category.model';
 

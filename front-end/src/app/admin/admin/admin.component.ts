@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthGuard } from '../../core/auth.guard';
+import { AuthGuard } from '../../auth.guard';
 
 @Component({
   selector: 'app-admin',

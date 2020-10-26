@@ -10,8 +10,8 @@ import { Account } from '../account.model';
 import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-account.component';
 import { Paging } from '../../shared/paging-info.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
-import { ResourcesService } from '../../core/resources.service';
-import { AuthGuard } from '../../core/auth.guard';
+import { ResourcesService } from '../../resources.service';
+import { AuthGuard } from '../../auth.guard';
 import { Router } from '@angular/router';
 import { PrivateService } from '../private.service';
 

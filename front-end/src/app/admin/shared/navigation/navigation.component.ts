@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthGuard } from '../../../core/auth.guard';
-import { ResourcesService } from '../../../core/resources.service';
+import { AuthGuard } from '../../../auth.guard';
+import { ResourcesService } from '../../../resources.service';
 
 @Component({
   selector: 'app-navigation',

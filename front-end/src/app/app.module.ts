@@ -10,9 +10,9 @@ import { AppRoutingModule } from './app.routing.module';
 import { NotFoundComponent } from './not-found.component';
 
 import { PublicService } from './public.service';
-import { StorageService } from './core/storage.service';
-import { ResourcesService } from './core/resources.service';
-import { AuthGuard } from './core/auth.guard';
+import { StorageService } from './storage.service';
+import { ResourcesService } from './resources.service';
+import { AuthGuard } from './auth.guard';
 
 
 import { SharedModule } from './shared/shared.module';

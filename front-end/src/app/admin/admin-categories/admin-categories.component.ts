@@ -12,8 +12,8 @@ import {
   MessageType,
   MessageDescription,
 } from '../../shared/message/message.component';
-import { ResourcesService } from '../../core/resources.service';
-import { AuthGuard } from '../../core/auth.guard';
+import { ResourcesService } from '../../resources.service';
+import { AuthGuard } from '../../auth.guard';
 import { Router } from '@angular/router';
 
 @Component({

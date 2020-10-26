@@ -14,7 +14,7 @@ import {
   MessageType,
 } from '../../shared/message/message.component';
 import { environment } from 'src/environments/environment';
-import { ResourcesService } from '../../core/resources.service';
+import { ResourcesService } from '../../resources.service';
 
 @Component({
   selector: 'app-projects-list',

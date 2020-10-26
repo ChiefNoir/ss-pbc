@@ -11,8 +11,8 @@ import { MessageDescription, MessageType} from '../../shared/message/message.com
 
 import { Identity } from '../../shared/identity.model';
 import { AuthService } from '../auth.service';
-import { AuthGuard } from '../../core/auth.guard';
-import { ResourcesService } from '../../core/resources.service';
+import { AuthGuard } from '../../auth.guard';
+import { ResourcesService } from '../../resources.service';
 
 @Component({
   selector: 'app-login',

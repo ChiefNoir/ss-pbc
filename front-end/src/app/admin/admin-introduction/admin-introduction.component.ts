@@ -10,9 +10,9 @@ import {
 } from '../../shared/message/message.component';
 import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';
-import { AuthGuard } from '../../core/auth.guard';
+import { AuthGuard } from '../../auth.guard';
 import { Router } from '@angular/router';
-import { ResourcesService } from '../../core/resources.service';
+import { ResourcesService } from '../../resources.service';
 import { PrivateService } from '../private.service';
 
 @Component({

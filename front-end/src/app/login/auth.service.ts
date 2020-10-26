@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Identity } from '../shared/identity.interface';
-import { RequestResult } from '../shared/request-result.model';
+import { RequestResult } from '../shared/request-result.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable()

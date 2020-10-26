@@ -5,7 +5,7 @@ import { Category } from './shared/category.model';
 import { Introduction } from './introduction/introduction.model';
 import { Project } from './shared/project.model';
 import { ProjectPreview } from './projects/project-preview.model';
-import { RequestResult } from './shared/request-result.model';
+import { RequestResult } from './shared/request-result.interface';
 
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';

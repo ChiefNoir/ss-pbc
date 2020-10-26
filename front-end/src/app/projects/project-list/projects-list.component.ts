@@ -7,7 +7,8 @@ import { PublicService } from '../../public.service';
 import { ProjectPreview } from '../../projects/project-preview.model';
 import { Category } from '../../shared/category.model';
 import { Paging } from '../../shared/paging-info.model';
-import { Incident, RequestResult } from '../../shared/request-result.model';
+import { RequestResult } from '../../shared/request-result.interface';
+import { Incident } from '../../shared/incident.interface'
 
 import {
   MessageDescription,

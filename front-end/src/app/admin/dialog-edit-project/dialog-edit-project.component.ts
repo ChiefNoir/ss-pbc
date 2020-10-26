@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Project } from '../../shared/project.model';
 import { BehaviorSubject } from 'rxjs';
 import { PublicService } from '../../public.service';
-import { RequestResult, Incident } from '../../shared/request-result.model';
+import { RequestResult } from '../../shared/request-result.interface';
+import { Incident } from '../../shared/incident.interface'
 import { Category } from '../../shared/category.model';
 import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';

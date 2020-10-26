@@ -6,7 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { RequestResult, Incident } from '../../shared/request-result.model';
+import { RequestResult } from '../../shared/request-result.interface';
+import { Incident } from '../../shared/incident.interface'
 import { MessageDescription, MessageType} from '../../shared/message/message.component';
 
 import { Identity } from '../../shared/identity.interface';

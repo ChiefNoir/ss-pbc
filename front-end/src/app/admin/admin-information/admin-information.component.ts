@@ -7,7 +7,8 @@ import { MessageDescription, MessageType } from '../../shared/message/message.co
 import { ResourcesService } from '../../resources.service';
 import { Information } from '../information.interface';
 import { environment } from 'src/environments/environment';
-import { RequestResult, Incident } from '../../shared/request-result.model';
+import { RequestResult } from '../../shared/request-result.interface';
+import { Incident } from '../../shared/incident.interface'
 import { AuthGuard } from '../../auth.guard';
 import { PrivateService } from '../private.service';
 

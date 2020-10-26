@@ -9,7 +9,8 @@ import { ProjectPreview } from '../../projects/project-preview.model';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { ResourcesService } from '../../resources.service';
 import { Paging } from '../../shared/paging-info.model';
-import { Incident, RequestResult } from '../../shared/request-result.model';
+import { RequestResult } from '../../shared/request-result.interface';
+import { Incident } from '../../shared/incident.interface'
 import { Category } from '../../shared/category.model';
 
 @Component({

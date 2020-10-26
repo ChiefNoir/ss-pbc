@@ -2,7 +2,8 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { PublicService } from '../../public.service';
-import { RequestResult, Incident } from '../../shared/request-result.model';
+import { RequestResult } from '../../shared/request-result.interface';
+import { Incident } from '../../shared/incident.interface'
 import { Introduction } from '../../introduction/introduction.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { ExternalUrl } from '../../shared/external-url.model';

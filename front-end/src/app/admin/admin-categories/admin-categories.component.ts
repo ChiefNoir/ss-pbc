@@ -4,7 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { PublicService } from '../../public.service';
-import { RequestResult, Incident } from '../../shared/request-result.model';
+import { RequestResult } from '../../shared/request-result.interface';
+import { Incident } from '../../shared/incident.interface'
 import { Category } from '../../shared/category.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorCategoryComponent } from '../dialog-editor-category/dialog-editor-category.component';

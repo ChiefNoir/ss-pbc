@@ -3,7 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { ResourcesService } from '../../resources.service';
-import { RequestResult, Incident } from '../../shared/request-result.model';
+import { RequestResult } from '../../shared/request-result.interface';
+import { Incident } from '../../shared/incident.interface'
 import { Account } from '../account.model';
 import { PrivateService } from '../private.service';
 

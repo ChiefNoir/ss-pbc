@@ -22,7 +22,7 @@
   &::before {
     background: $color-text;
     content: "";
-    height: 0%;
+    height: 0;
     position: absolute;
     right: 0;
     top: 0;
@@ -34,7 +34,7 @@
     background: $color-text;
     bottom: 0;
     content: "";
-    height: 0%;
+    height: 0;
     left: 0;
     position: absolute;
     width: 2px;
@@ -67,7 +67,7 @@
       left: 0;
       position: absolute;
       top: 0;
-      width: 0%;
+      width: 0;
 
       transition: all 0.1s 0.1s ease;
     }

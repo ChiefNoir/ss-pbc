@@ -20,6 +20,6 @@
     text-decoration: none;
     text-transform: uppercase;
 
-    @include text-reto-shadow($color-shadow-text-light);
+    @include text-retro-shadow($color-shadow-text-light);
   }
 }

@@ -11,7 +11,6 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminRoutingModule } from './admin.routing.module';
 
 import { NavigationComponent } from './shared/navigation/navigation.component';
-import { ButtonComponent } from './shared/button/button.component';
 import { DialogEditProjectComponent } from './dialog-edit-project/dialog-edit-project.component';
 import { DialogEditorCategoryComponent } from './dialog-editor-category/dialog-editor-category.component';
 import { DialogEditAccountComponent } from './dialog-edit-account/dialog-edit-account.component';
@@ -32,8 +31,6 @@ import { SharedModule } from '../shared/shared.module';
     AdminIntroductionComponent,
     AdminProjectsComponent,
     AdminInformationComponent,
-
-    ButtonComponent,
     FileUploaderComponent,
     DialogEditProjectComponent,
     DialogEditorCategoryComponent,

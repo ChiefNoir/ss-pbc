@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.login(this.login.value, this.password.value).then(
+    this.authService.login(this.login.value, this.password.value).subscribe(
       (result) => this.handleLoginResult(result),
       (reject) => this.handleError(reject)
     );

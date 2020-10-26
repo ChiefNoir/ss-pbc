@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/auth.module').then(x => x.AuthModule),
+    loadChildren: () => import('./auth/auth.module').then(x => x.AuthModule),
   },
   {
     path: 'admin',

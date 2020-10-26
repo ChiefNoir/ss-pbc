@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
@@ -13,7 +12,6 @@ import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-a
 import { Paging } from '../../shared/paging-info.model';
 
 import { ResourcesService } from '../../resources.service';
-import { AuthGuard } from '../../auth.guard';
 import { PrivateService } from '../private.service';
 
 import { environment } from 'src/environments/environment';
@@ -33,20 +31,14 @@ export class AdminAccountsComponent implements OnInit, OnDestroy {
     public textMessages: ResourcesService,
     public dialog: MatDialog,
     private service: PrivateService,
-    private authGuard: AuthGuard,
-    private router: Router,
     titleService: Title
   ) {
     titleService.setTitle(environment.siteName);
   }
 
   public ngOnInit(): void {
-    if (this.authGuard.isLoggedIn()) {
-      this.refreshAccounts(null);
-      this.paging$.subscribe((value) => this.refreshAccounts(value));
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.refreshAccounts(null);
+    this.paging$.subscribe((value) => this.refreshAccounts(value));
   }
 
   ngOnDestroy(): void {

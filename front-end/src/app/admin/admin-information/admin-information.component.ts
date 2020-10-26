@@ -3,10 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 import { Title } from '@angular/platform-browser';
-import {
-  MessageDescription,
-  MessageType,
-} from '../../shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { ResourcesService } from '../../resources.service';
 import { Information } from '../information.interface';
 import { environment } from 'src/environments/environment';
@@ -20,12 +17,8 @@ import { PrivateService } from '../private.service';
   styleUrls: ['./admin-information.component.scss'],
 })
 export class AdminInformationComponent implements OnInit {
-  public information$: BehaviorSubject<Information> = new BehaviorSubject<
-    Information
-  >(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<
-    MessageDescription
-  >({ type: MessageType.Spinner });
+  public information$: BehaviorSubject<Information> = new BehaviorSubject<Information>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
 
   public constructor(
     private router: Router,
@@ -38,14 +31,10 @@ export class AdminInformationComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.authGuard.isLoggedIn()) {
-      this.dataService.getInformation().subscribe(
-        (result) => this.handleRequestResult(result),
-        (reject) => this.handleError(reject)
-      );
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.dataService.getInformation().subscribe(
+      (result) => this.handleRequestResult(result),
+      (reject) => this.handleError(reject)
+    );
   }
 
   public logout(): void {

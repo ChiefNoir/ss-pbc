@@ -1,4 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Account } from './account.model';
 import { Category } from '../shared/category.model';
@@ -9,17 +11,35 @@ import { RequestResult } from '../shared/request-result.model';
 import { environment } from 'src/environments/environment';
 import { StorageService } from '../storage.service';
 import { DatePipe } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
-export class PrivateService {
+export class PrivateService implements HttpInterceptor  {
   private endpoint = environment.apiEndpoint;
 
   public constructor(
     private httpClient: HttpClient,
     private storage: StorageService,
-    private datepipe: DatePipe
-  ) {}
+    private datepipe: DatePipe,
+    private router: Router
+  ) {
+  }
+
+  // NOTE: https://stackoverflow.com/questions/34934009/handling-401s-globally-with-angular
+  // nice way to handle 401 and 403
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (err.status == 401 || err.status == 403) {
+          this.storage.removeToken();
+          this.router.navigate(['/login']);
+        } else {
+          return throwError(err);
+        }
+      })
+    );
+  }
 
   public getInformation(): Observable<RequestResult<Information>> {
     const headers = new HttpHeaders(

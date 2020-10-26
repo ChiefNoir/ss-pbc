@@ -8,13 +8,8 @@ import { RequestResult, Incident } from '../../shared/request-result.model';
 import { Category } from '../../shared/category.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorCategoryComponent } from '../dialog-editor-category/dialog-editor-category.component';
-import {
-  MessageType,
-  MessageDescription,
-} from '../../shared/message/message.component';
+import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { ResourcesService } from '../../resources.service';
-import { AuthGuard } from '../../auth.guard';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-categories',
@@ -22,12 +17,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-categories.component.scss'],
 })
 export class AdminCategoriesComponent implements OnInit {
-  public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<
-    Array<Category>
-  >(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<
-    MessageDescription
-  >({ type: MessageType.Spinner });
+  public categories$: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
 
   private columnDefinitions = [
     { def: 'id', show: false },
@@ -40,19 +31,13 @@ export class AdminCategoriesComponent implements OnInit {
     private service: PublicService,
     public textMessages: ResourcesService,
     titleService: Title,
-    public dialog: MatDialog,
-    private authGuard: AuthGuard,
-    private router: Router
+    public dialog: MatDialog
   ) {
     titleService.setTitle(environment.siteName);
   }
 
   public ngOnInit(): void {
-    if (this.authGuard.isLoggedIn()) {
-      this.refreshCategories();
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.refreshCategories();
   }
 
   public getDisplayedColumns(): string[] {

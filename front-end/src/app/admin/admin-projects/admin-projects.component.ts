@@ -6,15 +6,10 @@ import { PublicService } from '../../public.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditProjectComponent } from '../dialog-edit-project/dialog-edit-project.component';
 import { ProjectPreview } from '../../projects/project-preview.model';
-import {
-  MessageType,
-  MessageDescription,
-} from '../../shared/message/message.component';
+import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { ResourcesService } from '../../resources.service';
 import { Paging } from '../../shared/paging-info.model';
 import { Incident, RequestResult } from '../../shared/request-result.model';
-import { AuthGuard } from '../../auth.guard';
-import { Router } from '@angular/router';
 import { Category } from '../../shared/category.model';
 
 @Component({
@@ -24,30 +19,18 @@ import { Category } from '../../shared/category.model';
 })
 export class AdminProjectsComponent implements OnInit, OnDestroy {
   public columns: string[] = ['code', 'displayName', 'category', 'releaseDate'];
-  public projects$: BehaviorSubject<
-    Array<ProjectPreview>
-  > = new BehaviorSubject<Array<ProjectPreview>>(null);
-  public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<
-    Paging<string>
-  >(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<
-    MessageDescription
-  >({ type: MessageType.Spinner });
+  public projects$: BehaviorSubject<Array<ProjectPreview>> = new BehaviorSubject<Array<ProjectPreview>>(null);
+  public paging$: BehaviorSubject<Paging<string>> = new BehaviorSubject<Paging<string>>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
 
   public constructor(
     private service: PublicService,
     public dialog: MatDialog,
-    private authGuard: AuthGuard,
-    private router: Router,
     public textMessages: ResourcesService
   ) {}
 
   public ngOnInit(): void {
-    if (this.authGuard.isLoggedIn()) {
-      this.paging$.subscribe((value) => this.refreshProjects(value));
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.paging$.subscribe((value) => this.refreshProjects(value));
   }
 
   public ngOnDestroy(): void {

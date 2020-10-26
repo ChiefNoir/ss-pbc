@@ -4,10 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { PublicService } from '../../public.service';
 import { RequestResult, Incident } from '../../shared/request-result.model';
 import { Introduction } from '../../introduction/introduction.model';
-import {
-  MessageDescription,
-  MessageType,
-} from '../../shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';
 import { AuthGuard } from '../../auth.guard';
@@ -24,12 +21,8 @@ export class AdminIntroductionComponent implements OnInit {
   public columnsInner: string[] = ['name', 'url', 'btn'];
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
 
-  public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<
-    Introduction
-  >(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<
-    MessageDescription
-  >({ text: 'Loading', type: MessageType.Spinner });
+  public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ text: 'Loading', type: MessageType.Spinner });
   public isDisabled: boolean = false;
 
   public constructor(
@@ -41,19 +34,14 @@ export class AdminIntroductionComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    if (this.authGuard.isLoggedIn()) {
-      this.introduction$.next(null);
+    this.introduction$.next(null);
 
       this.publicService.getIntroduction().subscribe((x: RequestResult<Introduction>) => {
         this.handle(x, { text: this.textMessages.LoadComplete, type: MessageType.Info })
       },
       error => {
-        //this.notificationService.printErrorMessage(error);
+        this.handleError(error);
       });
-
-    } else {
-      this.router.navigate(['/login']);
-    }
   }
 
   public addExternalUrl(): void {

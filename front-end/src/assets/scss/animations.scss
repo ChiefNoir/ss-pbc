@@ -1,3 +1,5 @@
+@import "variables";
+
 @keyframes delayed-onetime-flicker {
   000.00%  { opacity: 1; }
   100.00% { opacity: 1; }
@@ -17,16 +19,16 @@
 
 @keyframes spin-with-click {
   000% { transform: rotate(0deg) }
-  
+
   001% { transform: rotate(45deg)}
   010% {transform: rotate(45deg)}
-  
+
   011% {transform: rotate(90deg)}
   024% {transform: rotate(90deg)}
 
   025% {transform: rotate(135deg)}
   036% {transform: rotate(135deg)}
-  
+
   037% {transform: rotate(180deg)}
   048% {transform: rotate(180deg)}
 
@@ -43,7 +45,7 @@
   100% {transform: rotate(360deg)}
 }
 
-@keyframes neonblink {
+@keyframes neon-blink {
   78% {
     color: inherit;
     text-shadow: inherit;

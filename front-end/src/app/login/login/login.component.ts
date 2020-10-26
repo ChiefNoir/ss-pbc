@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  public async ngOnInit(): Promise<void> {
+  public ngOnInit(): void {
     if (this.authGuard.isLoggedIn()) {
       this.router.navigate(['/admin']);
     }

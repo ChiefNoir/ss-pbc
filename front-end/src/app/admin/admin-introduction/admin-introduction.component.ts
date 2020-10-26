@@ -40,7 +40,7 @@ export class AdminIntroductionComponent implements OnInit {
     private router: Router
   ) {}
 
-  public async ngOnInit(): Promise<void> {
+  public ngOnInit(): void {
     if (this.authGuard.isLoggedIn()) {
       this.introduction$.next(null);
 
@@ -70,7 +70,7 @@ export class AdminIntroductionComponent implements OnInit {
     this.message$.next({ text:  this.textMessages.SaveInProgress, type: MessageType.Spinner });
     this.isDisabled = true;
 
-    this.service.saveIntroduction(this.introduction$.value).then(
+    this.service.saveIntroduction(this.introduction$.value).subscribe(
       (result) =>
         this.handle(result, {
           text:  this.textMessages.SaveComplete,

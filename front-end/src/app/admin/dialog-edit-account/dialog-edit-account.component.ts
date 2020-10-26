@@ -35,7 +35,7 @@ export class DialogEditAccountComponent implements OnInit
   public ngOnInit(): void
   {
     this.privateService.getRoles()
-                .then
+                .subscribe
                 (
                   succeeded => this.handleRoles(succeeded),
                   rejected => this.handleError(rejected.message)
@@ -45,7 +45,7 @@ export class DialogEditAccountComponent implements OnInit
     {
       this.message$.next({type: MessageType.Spinner });
       this.privateService.getAccount(this.accountId)
-                  .then
+                  .subscribe
                   (
                     succeeded =>
                     {
@@ -69,7 +69,7 @@ export class DialogEditAccountComponent implements OnInit
     this.message$.next({text: this.textMessages.SaveInProgress, type: MessageType.Spinner });
 
     this.privateService.saveAccount(this.account$.value)
-                .then
+                .subscribe
                 (
                   succeeded =>
                   {
@@ -86,7 +86,7 @@ export class DialogEditAccountComponent implements OnInit
     this.message$.next({text: this.textMessages.DeleteInProgress, type: MessageType.Spinner });
 
     this.privateService.deleteAccount(this.account$.value)
-                .then
+                .subscribe
                 (
                   win => this.handleDelete(win),
                   fail => this.handleError(fail)

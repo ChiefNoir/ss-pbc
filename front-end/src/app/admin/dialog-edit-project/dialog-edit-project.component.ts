@@ -109,7 +109,7 @@ export class DialogEditProjectComponent implements OnInit {
       type: MessageType.Spinner,
     });
 
-    this.service.saveProject(this.project$.value).then(
+    this.service.saveProject(this.project$.value).subscribe(
       (win) => {
         this.handleProject(win, {
           text: this.textMessages.SaveComplete,
@@ -127,7 +127,7 @@ export class DialogEditProjectComponent implements OnInit {
       type: MessageType.Info,
     });
 
-    this.service.deleteProject(this.project$.value).then(
+    this.service.deleteProject(this.project$.value).subscribe(
       (win) => this.handleDelete(win),
       (fail) => this.handleError(fail)
     );

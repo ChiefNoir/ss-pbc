@@ -9,6 +9,7 @@ import { RequestResult } from '../shared/request-result.model';
 import { environment } from 'src/environments/environment';
 import { StorageService } from '../core/storage.service';
 import { DatePipe } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class PrivateService {
@@ -20,7 +21,7 @@ export class PrivateService {
     private datepipe: DatePipe
   ) {}
 
-  public getInformation(): Promise<RequestResult<Information>> {
+  public getInformation(): Observable<RequestResult<Information>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
@@ -28,13 +29,10 @@ export class PrivateService {
     return this.httpClient
       .get<RequestResult<Information>>(this.endpoint + 'information', {
         headers,
-      })
-      .toPromise();
+      });
   }
 
-  public saveIntroduction(
-    introduction: Introduction
-  ): Promise<RequestResult<Introduction>> {
+  public saveIntroduction(introduction: Introduction): Observable<RequestResult<Introduction>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
@@ -47,11 +45,10 @@ export class PrivateService {
         this.endpoint + 'introduction',
         formData,
         { headers }
-      )
-      .toPromise();
+      );
   }
 
-  public saveCategory(category: Category): Promise<RequestResult<Category>> {
+  public saveCategory(category: Category): Observable<RequestResult<Category>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
@@ -59,11 +56,10 @@ export class PrivateService {
     return this.httpClient
       .post<RequestResult<Category>>(this.endpoint + 'category', category, {
         headers,
-      })
-      .toPromise();
+      });
   }
 
-  public deleteCategory(category: Category): Promise<RequestResult<boolean>> {
+  public deleteCategory(category: Category): Observable<RequestResult<boolean>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
@@ -72,21 +68,19 @@ export class PrivateService {
       .request<RequestResult<boolean>>('delete', this.endpoint + 'category', {
         body: category,
         headers,
-      })
-      .toPromise();
+      });
   }
 
-  public countAccount(): Promise<RequestResult<number>> {
+  public countAccount(): Observable<RequestResult<number>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
 
     return this.httpClient
-      .get<RequestResult<number>>(this.endpoint + 'accounts', { headers })
-      .toPromise();
+      .get<RequestResult<number>>(this.endpoint + 'accounts', { headers });
   }
 
-  public getAccount(id: number): Promise<RequestResult<Account>> {
+  public getAccount(id: number): Observable<RequestResult<Account>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
@@ -94,24 +88,19 @@ export class PrivateService {
     return this.httpClient
       .get<RequestResult<Account>>(this.endpoint + 'accounts/' + id, {
         headers,
-      })
-      .toPromise();
+      });
   }
 
-  public getRoles(): Promise<RequestResult<string[]>> {
+  public getRoles(): Observable<RequestResult<string[]>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
 
     return this.httpClient
-      .get<RequestResult<string[]>>(this.endpoint + 'roles', { headers })
-      .toPromise();
+      .get<RequestResult<string[]>>(this.endpoint + 'roles', { headers });
   }
 
-  public getAccounts(
-    start: number,
-    length: number
-  ): Promise<RequestResult<Account[]>> {
+  public getAccounts(start: number, length: number): Observable<RequestResult<Account[]>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
@@ -120,11 +109,10 @@ export class PrivateService {
       .get<RequestResult<Account[]>>(
         this.endpoint + 'accounts/search?start=' + start + '&length=' + length,
         { headers }
-      )
-      .toPromise();
+      );
   }
 
-  public saveAccount(account: Account): Promise<RequestResult<Account>> {
+  public saveAccount(account: Account): Observable<RequestResult<Account>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
@@ -132,11 +120,10 @@ export class PrivateService {
     return this.httpClient
       .post<RequestResult<Account>>(this.endpoint + 'accounts', account, {
         headers,
-      })
-      .toPromise();
+      });
   }
 
-  public deleteAccount(account: Account): Promise<RequestResult<boolean>> {
+  public deleteAccount(account: Account): Observable<RequestResult<boolean>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
@@ -145,11 +132,10 @@ export class PrivateService {
       .request<RequestResult<boolean>>('delete', this.endpoint + 'accounts', {
         body: account,
         headers,
-      })
-      .toPromise();
+      });
   }
 
-  public deleteProject(project: Project): Promise<RequestResult<boolean>> {
+  public deleteProject(project: Project): Observable<RequestResult<boolean>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
@@ -158,11 +144,10 @@ export class PrivateService {
       .request<RequestResult<boolean>>('delete', this.endpoint + 'project', {
         body: project,
         headers,
-      })
-      .toPromise();
+      });
   }
 
-  public saveProject(project: Project): Promise<RequestResult<Project>> {
+  public saveProject(project: Project): Observable<RequestResult<Project>> {
     const headers = new HttpHeaders(
       {Authorization: `Bearer ${this.storage.getToken()}`
    });
@@ -173,8 +158,7 @@ export class PrivateService {
     return this.httpClient
       .post<RequestResult<Project>>(this.endpoint + 'project', formData, {
         headers,
-      })
-      .toPromise();
+      });
   }
 
   // Usage: this.fillFormData(formData, 'project', project);

@@ -37,9 +37,9 @@ export class AdminInformationComponent implements OnInit {
     titleService.setTitle(environment.siteName);
   }
 
-  public async ngOnInit(): Promise<void> {
+  public ngOnInit(): void {
     if (this.authGuard.isLoggedIn()) {
-      this.dataService.getInformation().then(
+      this.dataService.getInformation().subscribe(
         (result) => this.handleRequestResult(result),
         (reject) => this.handleError(reject)
       );

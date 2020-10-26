@@ -57,7 +57,7 @@ export class AdminAccountsComponent implements OnInit, OnDestroy {
   }
 
   private refreshPaging(): void {
-    this.service.countAccount().then(
+    this.service.countAccount().subscribe(
       (win) => this.hanlePaging(win, this.paging$),
       (fail) => this.handleError(fail)
     );
@@ -74,7 +74,7 @@ export class AdminAccountsComponent implements OnInit, OnDestroy {
         paging.getCurrentPage() * environment.paging.maxUsers,
         environment.paging.maxUsers
       )
-      .then(
+      .subscribe(
         (result) => this.handleAccounts(result),
         (reject) => this.handleError(reject)
       );

@@ -70,7 +70,7 @@ export class DialogEditorCategoryComponent implements OnInit {
       type: MessageType.Spinner,
     });
 
-    this.service.saveCategory(this.category$.value).then(
+    this.service.saveCategory(this.category$.value).subscribe(
       (succeeded) => {
         this.message$.next({
           text: this.textMessages.SaveInProgress,
@@ -92,7 +92,7 @@ export class DialogEditorCategoryComponent implements OnInit {
     });
     this.disableInput$.next(true);
 
-    this.service.deleteCategory(this.category$.value).then(
+    this.service.deleteCategory(this.category$.value).subscribe(
       (win) => this.handleDelete(win),
       (fail) => this.handleError(fail)
     );

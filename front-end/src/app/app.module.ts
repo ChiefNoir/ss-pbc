@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
-import { NotFoundComponent } from './not-found.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 import { PublicService } from './public.service';
 import { StorageService } from './storage.service';

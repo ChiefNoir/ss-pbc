@@ -1,19 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
 import { RequestResult, Incident } from '../../shared/request-result.model';
-import { MatDialog } from '@angular/material/dialog';
+import { MessageDescription, MessageType } from '../../shared/message/message.component';
+
 import { Account } from '../account.model';
 
 import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-account.component';
 import { Paging } from '../../shared/paging-info.model';
-import { MessageDescription, MessageType } from '../../shared/message/message.component';
+
 import { ResourcesService } from '../../resources.service';
 import { AuthGuard } from '../../auth.guard';
-import { Router } from '@angular/router';
 import { PrivateService } from '../private.service';
+
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin-accounts',
@@ -21,24 +24,18 @@ import { PrivateService } from '../private.service';
   styleUrls: ['./admin-accounts.component.scss'],
 })
 export class AdminAccountsComponent implements OnInit, OnDestroy {
-  public accounts$: BehaviorSubject<Array<Account>> = new BehaviorSubject<
-    Array<Account>
-  >(null);
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<
-    MessageDescription
-  >({ type: MessageType.Spinner });
-  public paging$: BehaviorSubject<Paging<null>> = new BehaviorSubject<
-    Paging<null>
-  >(null);
+  public accounts$: BehaviorSubject<Array<Account>> = new BehaviorSubject<Array<Account>>(null);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ type: MessageType.Spinner });
+  public paging$: BehaviorSubject<Paging<null>> = new BehaviorSubject<Paging<null>>(null);
   public columns: string[] = ['login', 'role'];
 
   public constructor(
-    private service: PrivateService,
     public textMessages: ResourcesService,
-    titleService: Title,
     public dialog: MatDialog,
+    private service: PrivateService,
     private authGuard: AuthGuard,
-    private router: Router
+    private router: Router,
+    titleService: Title
   ) {
     titleService.setTitle(environment.siteName);
   }
@@ -58,7 +55,7 @@ export class AdminAccountsComponent implements OnInit, OnDestroy {
 
   private refreshPaging(): void {
     this.service.countAccount().subscribe(
-      (win) => this.hanlePaging(win, this.paging$),
+      (win) => this.handlePaging(win, this.paging$),
       (fail) => this.handleError(fail)
     );
   }
@@ -104,12 +101,12 @@ export class AdminAccountsComponent implements OnInit, OnDestroy {
       .afterClosed()
       .toPromise()
       .then(
-        // note: it is a full resresh
+        // TODO: it is a full refresh
         () => this.refreshAccounts(this.paging$.value)
       );
   }
 
-  private hanlePaging(
+  private handlePaging(
     result: RequestResult<number>,
     content: BehaviorSubject<Paging<null>>
   ): void {

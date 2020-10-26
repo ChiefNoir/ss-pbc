@@ -5,8 +5,6 @@ export class StorageService {
   private readonly localStorage: Storage = window.localStorage;
   private readonly tokenName: string = 'AuthorizationToken';
 
-  public constructor() {}
-
   public getToken(): string {
     return JSON.parse(this.localStorage.getItem(this.tokenName));
   }

@@ -4,12 +4,12 @@ import { BehaviorSubject } from 'rxjs';
 
 import { Title } from '@angular/platform-browser';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
-import { ResourcesService } from '../../resources.service';
+import { ResourcesService } from '../../core/services/resources.service';
 import { Information } from '../information.interface';
 import { environment } from 'src/environments/environment';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'
-import { AuthGuard } from '../../auth.guard';
+import { AuthGuard } from '../../core/services/auth.guard';
 import { PrivateService } from '../private.service';
 
 @Component({

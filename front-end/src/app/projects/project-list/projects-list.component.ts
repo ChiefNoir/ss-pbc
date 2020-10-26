@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
-import { PublicService } from '../../public.service';
+import { PublicService } from '../../core/services/public.service';
 import { ProjectPreview } from '../../projects/project-preview.model';
 import { Category } from '../../shared/category.model';
 import { Paging } from '../../shared/paging-info.model';
@@ -15,7 +15,7 @@ import {
   MessageType,
 } from '../../shared/message/message.component';
 import { environment } from 'src/environments/environment';
-import { ResourcesService } from '../../resources.service';
+import { ResourcesService } from '../../core/services/resources.service';
 
 @Component({
   selector: 'app-projects-list',

@@ -1,16 +1,16 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { PublicService } from '../../public.service';
+import { PublicService } from '../../core/services/public.service';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'
 import { Introduction } from '../../introduction/introduction.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';
-import { AuthGuard } from '../../auth.guard';
+import { AuthGuard } from '../../core/services/auth.guard';
 import { Router } from '@angular/router';
-import { ResourcesService } from '../../resources.service';
+import { ResourcesService } from '../../core/services/resources.service';
 import { PrivateService } from '../private.service';
 
 @Component({

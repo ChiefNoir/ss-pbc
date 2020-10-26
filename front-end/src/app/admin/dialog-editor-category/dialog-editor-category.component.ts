@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { PublicService } from '../../public.service';
-import { ResourcesService } from '../../resources.service';
+import { PublicService } from '../../core/services/public.service';
+import { ResourcesService } from '../../core/services/resources.service';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'
 import { Category } from '../../shared/category.model';

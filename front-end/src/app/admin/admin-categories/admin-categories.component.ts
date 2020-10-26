@@ -3,14 +3,14 @@ import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { PublicService } from '../../public.service';
+import { PublicService } from '../../core/services/public.service';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'
 import { Category } from '../../shared/category.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorCategoryComponent } from '../dialog-editor-category/dialog-editor-category.component';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
-import { ResourcesService } from '../../resources.service';
+import { ResourcesService } from '../../core/services/resources.service';
 
 @Component({
   selector: 'app-admin-categories',

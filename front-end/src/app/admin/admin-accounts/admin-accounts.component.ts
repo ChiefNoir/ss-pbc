@@ -12,7 +12,7 @@ import { Account } from '../account.model';
 import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-account.component';
 import { Paging } from '../../shared/paging-info.model';
 
-import { ResourcesService } from '../../resources.service';
+import { ResourcesService } from '../../core/services/resources.service';
 import { PrivateService } from '../private.service';
 
 import { environment } from 'src/environments/environment';

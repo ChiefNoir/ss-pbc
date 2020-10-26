@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Project } from '../../shared/project.model';
 import { BehaviorSubject } from 'rxjs';
-import { PublicService } from '../../public.service';
+import { PublicService } from '../../core/services/public.service';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'
 import { Category } from '../../shared/category.model';
@@ -9,7 +9,7 @@ import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ResourcesService } from '../../resources.service';
+import { ResourcesService } from '../../core/services/resources.service';
 import { GalleryImage } from '../../shared/gallery-image.model';
 import { PrivateService } from '../private.service';
 

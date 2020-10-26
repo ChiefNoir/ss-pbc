@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResourcesService } from '../../resources.service';
-import { AuthGuard } from '../../auth.guard';
+import { ResourcesService } from '../../core/services/resources.service';
+import { AuthGuard } from '../../core/services/auth.guard';
 
 @Component({
   selector: 'app-navigation-compact',

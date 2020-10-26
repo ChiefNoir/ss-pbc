@@ -9,7 +9,7 @@ import { Introduction } from '../introduction/introduction.model';
 import { Project } from '../shared/project.model';
 import { RequestResult } from '../shared/request-result.interface';
 import { environment } from 'src/environments/environment';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../core/services/storage.service';
 import { DatePipe } from '@angular/common';
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';

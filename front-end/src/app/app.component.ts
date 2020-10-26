@@ -22,6 +22,7 @@ export class AppComponent implements AfterViewChecked {
   }
 
   public ngAfterViewChecked(): void {
+    // NOTE: right now this thing is useless, but, it will remain here just in case
     // In dev mode change detection adds an additional turn
     // after every regular change detection run to check if the model has changed
     const isValidating = this.authGuard.validating$.value;

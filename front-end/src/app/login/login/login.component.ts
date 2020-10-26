@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 import { RequestResult, Incident } from '../../shared/request-result.model';
 import { MessageDescription, MessageType} from '../../shared/message/message.component';
 
-import { Identity } from '../../shared/identity.model';
+import { Identity } from '../../shared/identity.interface';
 import { AuthService } from '../auth.service';
 import { AuthGuard } from '../../auth.guard';
 import { ResourcesService } from '../../resources.service';

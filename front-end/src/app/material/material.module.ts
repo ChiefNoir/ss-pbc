@@ -3,11 +3,6 @@ import { NgModule } from '@angular/core';
 // Providers
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-//
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { TextFieldModule } from '@angular/cdk/text-field';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -18,14 +13,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 
-const Providers = [MatDatepickerModule, MatNativeDateModule];
+const Providers = [
+    MatDatepickerModule,
+    MatNativeDateModule
+];
 
 const Material = [
-  FormsModule,
-  ReactiveFormsModule,
-
-  TextFieldModule,
-
   MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
@@ -43,4 +36,4 @@ const Material = [
   exports: Material,
   providers: Providers,
 })
-export class MaterialModules {}
+export class MaterialModule {}

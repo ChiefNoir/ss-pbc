@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
-import { PublicService } from '../../core/public.service';
+import { PublicService } from '../../public.service';
 import { ProjectPreview } from '../../projects/project-preview.model';
 import { Category } from '../../shared/category.model';
 import { Paging } from '../../shared/paging-info.model';

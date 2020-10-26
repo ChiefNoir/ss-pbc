@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { PublicService } from '../../core/public.service';
+import { PublicService } from '../../public.service';
 import { RequestResult, Incident } from '../../shared/request-result.model';
 import { Category } from '../../shared/category.model';
 import { MatDialog } from '@angular/material/dialog';

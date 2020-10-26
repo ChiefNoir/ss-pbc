@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { NotFoundComponent } from './not-found.component';
 
-import { PublicService } from './core/public.service';
+import { PublicService } from './public.service';
 import { StorageService } from './core/storage.service';
 import { ResourcesService } from './core/resources.service';
 import { AuthGuard } from './core/auth.guard';

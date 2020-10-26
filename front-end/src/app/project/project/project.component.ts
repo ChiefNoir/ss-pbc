@@ -6,7 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 
 import { ResourcesService } from '../../core/resources.service';
-import { PublicService } from '../../core/public.service';
+import { PublicService } from '../../public.service';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { Project } from '../../shared/project.model';
 import { RequestResult, Incident } from '../../shared/request-result.model';

@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { PublicService } from '../../core/public.service';
+import { PublicService } from '../../public.service';
 import { ResourcesService } from '../../core/resources.service';
 import { Introduction } from '../../introduction/introduction.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';

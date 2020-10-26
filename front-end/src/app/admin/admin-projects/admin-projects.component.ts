@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { PublicService } from '../../core/public.service';
+import { PublicService } from '../../public.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditProjectComponent } from '../dialog-edit-project/dialog-edit-project.component';
 import { ProjectPreview } from '../../projects/project-preview.model';

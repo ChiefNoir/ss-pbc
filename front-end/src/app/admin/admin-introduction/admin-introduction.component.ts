@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { PublicService } from '../../core/public.service';
+import { PublicService } from '../../public.service';
 import { RequestResult, Incident } from '../../shared/request-result.model';
 import { Introduction } from '../../introduction/introduction.model';
 import {

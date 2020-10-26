@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Project } from '../../shared/project.model';
 import { BehaviorSubject } from 'rxjs';
-import { PublicService } from '../../core/public.service';
+import { PublicService } from '../../public.service';
 import { RequestResult, Incident } from '../../shared/request-result.model';
 import { Category } from '../../shared/category.model';
 import { ExternalUrl } from '../../shared/external-url.model';

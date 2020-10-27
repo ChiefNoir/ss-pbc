@@ -8,7 +8,7 @@ import { ProjectPreview } from '../../shared/project-preview.model';
 import { Category } from '../../shared/category.model';
 import { Paging } from '../../shared/paging-info.model';
 import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface'
+import { Incident } from '../../shared/incident.interface';
 
 import {
   MessageDescription,

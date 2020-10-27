@@ -4,21 +4,17 @@
   <div class="content" *ngIf="account$ | async as account">
     <div fxLayout="column" fxLayoutAlign="space-around center">
       <mat-form-field>
-        <input
-          [disabled]="disableInput$ | async"
-          matInput
-          [(ngModel)]="account.login"
-          name="login"
-          placeholder="{{ textMessages.AccountLogin }}"
-        />
+        <input matInput 
+              [disabled]="disableInput$ | async"
+              [(ngModel)]="account.login"
+              name="login"
+              placeholder="{{ textMessages.AccountLogin }}"/>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ textMessages.AccountRole }}</mat-label>
-        <mat-select
-          [(ngModel)]="account.role"
-          [disabled]="disableInput$ | async"
-        >
+        <mat-select [(ngModel)]="account.role" 
+                    [disabled]="disableInput$ | async">
           <mat-option *ngFor="let role of roles$.value" [value]="role">
             {{ role }}
           </mat-option>
@@ -26,12 +22,11 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input
-          [disabled]="disableInput$ | async"
-          matInput
-          [(ngModel)]="account.password"
-          name="password"
-          placeholder="{{ textMessages.AccountPassword }}"
+        <input [disabled]="disableInput$ | async" 
+               matInput
+               [(ngModel)]="account.password"
+               name="password"
+               placeholder="{{ textMessages.AccountPassword }}"
         />
       </mat-form-field>
     </div>
@@ -41,12 +36,10 @@
     <app-message [message]="msg"></app-message>
   </div>
 
-  <div
-    class="actions"
-    fxLayoutAlign="space-between center"
-    fxShow="true"
-    fxHide.lt-md="true"
-  >
+  <div class="actions"
+      fxLayoutAlign="space-between center"
+      fxShow="true"
+      fxHide.lt-md="true">
     <app-button [isDisabled]="disableInput$ | async" (Click)="delete()">
       {{ textMessages.GenericDelete }}
     </app-button>
@@ -60,12 +53,10 @@
       </app-button>
     </div>
   </div>
-  <div
-    fxHide.gt-sm="true"
-    fxShow="true"
-    fxLayout="column"
-    fxLayoutAlign="end center"
-  >
+  <div fxHide.gt-sm="true" 
+       fxShow="true"
+       fxLayout="column"
+       fxLayoutAlign="end center">
     <app-button [isDisabled]="disableInput$ | async" (Click)="save()">
       {{ textMessages.GenericSave }}
     </app-button>

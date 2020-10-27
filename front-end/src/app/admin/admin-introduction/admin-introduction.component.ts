@@ -9,7 +9,7 @@ import { PrivateService } from '../private.service';
 import { ResourcesService } from '../../core/services/resources.service';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface'
+import { Incident } from '../../shared/incident.interface';
 import { Introduction } from '../../shared/introduction.model';
 import { ExternalUrl } from '../../shared/external-url.model';
 

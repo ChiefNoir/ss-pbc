@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 
 import { PublicService } from '../../core/services/public.service';
-import { ProjectPreview } from '../../projects/project-preview.model';
+import { ProjectPreview } from '../../shared/project-preview.model';
 import { Category } from '../../shared/category.model';
 import { Paging } from '../../shared/paging-info.model';
 import { RequestResult } from '../../shared/request-result.interface';

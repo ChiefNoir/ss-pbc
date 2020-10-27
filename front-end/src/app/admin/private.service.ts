@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Account } from './account.model';
 import { Category } from '../shared/category.model';
 import { Information } from './information.interface';
-import { Introduction } from '../introduction/introduction.model';
+import { Introduction } from '../shared/introduction.model';
 import { Project } from '../shared/project.model';
 import { RequestResult } from '../shared/request-result.interface';
 import { environment } from 'src/environments/environment';

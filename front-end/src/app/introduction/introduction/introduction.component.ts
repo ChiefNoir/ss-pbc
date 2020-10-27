@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { PublicService } from '../../core/services/public.service';
 import { ResourcesService } from '../../core/services/resources.service';
-import { Introduction } from '../../introduction/introduction.model';
+import { Introduction } from '../../shared/introduction.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'

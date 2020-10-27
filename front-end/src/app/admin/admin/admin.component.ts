@@ -9,7 +9,10 @@ import { AuthGuard } from '../../core/services/auth.guard';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-  public constructor(private router: Router, private authGuard: AuthGuard) {}
+  public constructor(
+    private router: Router,
+    private authGuard: AuthGuard
+    ) {}
 
   public ngOnInit(): void {
     if (!this.authGuard.isLoggedIn()) {

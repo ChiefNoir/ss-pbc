@@ -2,33 +2,23 @@
   <div *ngIf="introduction$ | async as introduction">
     <mat-tab-group>
       <mat-tab label="{{ textMessages.Introduction }}">
-        <div
-          fxLayout="column"
-          fxLayoutAlign="space-around stretch"
-          class="content"
-        >
+        <div class="content" fxLayout="column" fxLayoutAlign="space-around stretch">
           <form>
             <mat-form-field>
-              <input
-                [disabled]="isDisabled"
-                matInput
-                [(ngModel)]="introduction.title"
-                name="title"
-                placeholder="{{ textMessages.IntroductionTitle }}"
-              />
+              <input matInput name="title"
+                    [disabled]="isDisabled"
+                    [(ngModel)]="introduction.title"
+                    placeholder="{{ textMessages.IntroductionTitle }}"/>
             </mat-form-field>
             <mat-form-field>
-              <textarea
-                matInput
-                name="content"
-                [disabled]="isDisabled"
-                [(ngModel)]="introduction.content"
-                cdkTextareaAutosize
-                #autosize="cdkTextareaAutosize"
-                cdkAutosizeMinRows="1"
-                cdkAutosizeMaxRows="10"
-                placeholder="{{ textMessages.IntroductionContent }}"
-              >
+              <textarea matInput name="content"
+                        [(ngModel)]="introduction.content"
+                        [disabled]="isDisabled"
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="10"
+                        placeholder="{{ textMessages.IntroductionContent }}">
               </textarea>
             </mat-form-field>
           </form>
@@ -36,37 +26,27 @@
       </mat-tab>
 
       <mat-tab label="{{ textMessages.IntroductionPoster }}">
-        <div
-          fxLayout="column"
-          fxLayoutAlign="space-around stretch"
-          class="content"
-        >
+        <div class="content" fxLayout="column" fxLayoutAlign="space-around stretch">
           <form>
             <div fxLayout="row" fxLayoutAlign="center center">
-              <img
-                [ngClass]="{ disabled: isDisabled }"
-                class="image"
-                src="{{ introduction.posterPreview || introduction.posterUrl }}"
-              />
+              <img [ngClass]="{ disabled: isDisabled }"
+                   class="image"
+                   src="{{ introduction.posterPreview || introduction.posterUrl }}"/>
             </div>
 
             <mat-form-field>
-              <input
-                matInput
-                [disabled]="isDisabled"
-                [(ngModel)]="introduction.posterDescription"
-                name="posterDescription"
-                placeholder="{{ textMessages.IntroductionPosterDescription }}"
-              />
+              <input matInput name="posterDescription"
+                    [disabled]="isDisabled"
+                    [(ngModel)]="introduction.posterDescription"
+                    placeholder="{{ textMessages.IntroductionPosterDescription }}"/>
             </mat-form-field>
 
             <div class="wide-position">
               <app-file-uploader
-                [disabled]="isDisabled"
-                [filename]="introduction.posterUrl"
-                (uploadFiles)="uploadFile($event)"
-                (deleteFile)="deleteFile()"
-              >
+                  [disabled]="isDisabled"
+                  [filename]="introduction.posterUrl"
+                  (uploadFiles)="uploadFile($event)"
+                  (deleteFile)="deleteFile()">
               </app-file-uploader>
             </div>
           </form>
@@ -75,11 +55,7 @@
 
       <mat-tab label="{{ textMessages.ExternalUrls }}">
         <div fxLayout="column" fxLayoutAlign="space-around stretch">
-          <table
-            #externalUrlsTable
-            mat-table
-            [dataSource]="introduction.externalUrls"
-          >
+          <table mat-table #externalUrlsTable [dataSource]="introduction.externalUrls">
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef>
                 {{ textMessages.ExternalUrlName }}
@@ -156,11 +132,11 @@
   </div>
 
   <div fxLayout="row" fxLayoutAlign="end center">
-    <app-button [isDisabled]="isDisabled" (Click)="refresh()">{{
-      textMessages.GenericRefresh
-    }}</app-button>
-    <app-button [isDisabled]="isDisabled" (Click)="save()">{{
-      textMessages.GenericSave
-    }}</app-button>
+    <app-button [isDisabled]="isDisabled" (Click)="refresh()">
+      {{ textMessages.GenericRefresh }}
+    </app-button>
+    <app-button [isDisabled]="isDisabled" (Click)="save()">
+      {{ textMessages.GenericSave }}
+    </app-button>
   </div>
 </div>

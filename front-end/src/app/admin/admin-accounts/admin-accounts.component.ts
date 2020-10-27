@@ -42,7 +42,7 @@ export class AdminAccountsComponent implements OnInit, OnDestroy {
     this.paging$.subscribe((value) => this.refreshAccounts(value));
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.paging$.unsubscribe();
   }
 

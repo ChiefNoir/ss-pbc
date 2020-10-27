@@ -8,7 +8,7 @@ import { PublicService } from '../../core/services/public.service';
 import { ResourcesService } from '../../core/services/resources.service';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface'
+import { Incident } from '../../shared/incident.interface';
 import { Category } from '../../shared/category.model';
 import { Paging } from '../../shared/paging-info.model';
 import { ProjectPreview } from '../../shared/project-preview.model';

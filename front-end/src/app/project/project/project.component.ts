@@ -10,7 +10,7 @@ import { PublicService } from '../../core/services/public.service';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { Project } from '../../shared/project.model';
 import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface'
+import { Incident } from '../../shared/incident.interface';
 
 @Component({
   selector: 'app-project-list',

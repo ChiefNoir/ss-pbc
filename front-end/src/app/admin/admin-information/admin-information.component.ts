@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+import { ResourcesService } from '../../core/services/resources.service';
+import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'
-import { MessageDescription, MessageType } from '../../shared/message/message.component';
-import { AuthGuard } from '../../core/services/auth.guard';
-import { ResourcesService } from '../../core/services/resources.service';
 
 import { Information } from '../information.interface';
 import { PrivateService } from '../private.service';
+import { AuthGuard } from '../../core/services/auth.guard';
 
 @Component({
   selector: 'app-admin-information',

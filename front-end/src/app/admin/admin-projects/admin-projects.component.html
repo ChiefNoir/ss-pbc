@@ -2,7 +2,7 @@
 
   <table mat-table [dataSource]="projects">
     <ng-container matColumnDef="code">
-      <th mat-header-cell *matHeaderCellDef> {{textMessages.ProjectCode}} </th>
+      <th mat-header-cell *matHeaderCellDef> {{ textMessages.ProjectCode }} </th>
       <td mat-cell *matCellDef="let item"> {{ item.code }} </td>
 
       <td mat-footer-cell *matFooterCellDef> {{ textMessages.GenericCreateNew }} </td>
@@ -17,7 +17,7 @@
 
     <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef> {{ textMessages.ProjectCategory }} </th>
-      <td mat-cell *matCellDef="let item"> {{item.category.displayName}} </td>
+      <td mat-cell *matCellDef="let item"> {{ item.category.displayName }} </td>
 
       <td mat-footer-cell *matFooterCellDef>  </td>
     </ng-container>
@@ -41,9 +41,9 @@
 
 <div *ngIf="projects$ | async as projects">
   <app-paginator *ngIf="paging$ | async as paging"
-  [paging]="paging"
-        (changePage)="skipPage($event)"
-        (nextPageClick)="skipPage(1)"
-        (previousPageClick)="skipPage(-1)">
+                [paging]="paging"
+                (changePage)="skipPage($event)"
+                (nextPageClick)="skipPage(1)"
+                (previousPageClick)="skipPage(-1)">
   </app-paginator>
 </div>

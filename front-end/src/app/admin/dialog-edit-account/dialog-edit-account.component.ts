@@ -38,23 +38,19 @@ export class DialogEditAccountComponent implements OnInit
     this.privateService.getRoles()
                 .subscribe
                 (
-                  succeeded => this.handleRoles(succeeded),
-                  rejected => this.handleError(rejected.message)
+                  win => this.handleRoles(win),
+                  fail => this.handleError(fail.message)
                 );
 
-    if (this.accountId)
-    {
+    if (this.accountId) {
       this.message$.next({type: MessageType.Spinner });
-      this.privateService.getAccount(this.accountId)
-                  .subscribe
-                  (
-                    succeeded =>
-                    {
-                      this.message$.next({text: this.textMessages.LoadComplete, type: MessageType.Info });
-                      this.handleAccount(succeeded);
-                    },
-                    rejected => this.handleError(rejected.message)
-                  );
+      this.privateService
+          .getAccount(this.accountId)
+          .subscribe(
+            win => {
+              this.message$.next({text: this.textMessages.LoadComplete, type: MessageType.Info });
+              this.handleAccount(win);},
+            rejected => this.handleError(rejected.message));
     }
     else
     {
@@ -69,16 +65,13 @@ export class DialogEditAccountComponent implements OnInit
     this.disableInput$.next(true);
     this.message$.next({text: this.textMessages.SaveInProgress, type: MessageType.Spinner });
 
-    this.privateService.saveAccount(this.account$.value)
-                .subscribe
-                (
-                  succeeded =>
-                  {
-                    this.message$.next({text: this.textMessages.SaveComplete, type: MessageType.Info });
-                    this.handleAccount(succeeded);
-                  },
-                  rejected => this.handleError(rejected.message)
-                );
+    this.privateService
+        .saveAccount(this.account$.value)
+        .subscribe(
+          win => {
+            this.message$.next({text: this.textMessages.SaveComplete, type: MessageType.Info });
+            this.handleAccount(win);},
+          fail => this.handleError(fail.message));
   }
 
   public delete(): void
@@ -86,12 +79,11 @@ export class DialogEditAccountComponent implements OnInit
     this.disableInput$.next(true);
     this.message$.next({text: this.textMessages.DeleteInProgress, type: MessageType.Spinner });
 
-    this.privateService.deleteAccount(this.account$.value)
-                .subscribe
-                (
-                  win => this.handleDelete(win),
-                  fail => this.handleError(fail)
-                );
+    this.privateService
+        .deleteAccount(this.account$.value)
+        .subscribe(
+          win => this.handleDelete(win),
+          fail => this.handleError(fail));
   }
 
   public close(): void
@@ -101,8 +93,7 @@ export class DialogEditAccountComponent implements OnInit
 
   private handleDelete(result: RequestResult<boolean>): void
   {
-    if (result.isSucceed)
-    {
+    if (result.isSucceed){  
       this.account$.next(null);
       this.title$.next(this.textMessages.AccountDelete);
       this.message$.next({text: this.textMessages.DeleteComplete, type: MessageType.Info });

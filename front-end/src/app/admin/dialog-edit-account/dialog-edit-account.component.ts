@@ -32,14 +32,12 @@ export class DialogEditAccountComponent implements OnInit {
     this.accountId = data;
   }
 
-  public ngOnInit(): void
-  {
-    this.privateService.getRoles()
-                .subscribe
-                (
-                  win => this.handleRoles(win),
-                  fail => this.handleError(fail.message)
-                );
+  public ngOnInit(): void {
+    this.privateService
+        .getRoles()
+        .subscribe(
+          win => this.handleRoles(win),
+          fail => this.handleError(fail.message));
 
     if (this.accountId) {
       this.message$.next({type: MessageType.Spinner });
@@ -51,16 +49,14 @@ export class DialogEditAccountComponent implements OnInit {
               this.handleAccount(win);},
             rejected => this.handleError(rejected.message));
     }
-    else
-    {
+    else {
       this.title$.next(this.textMessages.AccountCreate);
       this.disableInput$.next(false);
       this.account$.next(new Account());
     }
   }
 
-  public save(): void
-  {
+  public save(): void {
     this.disableInput$.next(true);
     this.message$.next({text: this.textMessages.SaveInProgress, type: MessageType.Spinner });
 
@@ -73,8 +69,7 @@ export class DialogEditAccountComponent implements OnInit {
           fail => this.handleError(fail.message));
   }
 
-  public delete(): void
-  {
+  public delete(): void {
     this.disableInput$.next(true);
     this.message$.next({text: this.textMessages.DeleteInProgress, type: MessageType.Spinner });
 
@@ -85,13 +80,11 @@ export class DialogEditAccountComponent implements OnInit {
           fail => this.handleError(fail));
   }
 
-  public close(): void
-  {
+  public close(): void {
     this.dialog.close();
   }
 
-  private handleDelete(result: RequestResult<boolean>): void
-  {
+  private handleDelete(result: RequestResult<boolean>): void {
     if (result.isSucceed) {
       this.account$.next(null);
       this.title$.next(this.textMessages.AccountDelete);

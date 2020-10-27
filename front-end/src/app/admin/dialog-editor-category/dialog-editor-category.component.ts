@@ -1,15 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
+
 import { PublicService } from '../../core/services/public.service';
 import { ResourcesService } from '../../core/services/resources.service';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface';
 import { Category } from '../../shared/category.model';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {
-  MessageDescription,
-  MessageType,
-} from '../../shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/message/message.component';
+
 import { PrivateService } from '../private.service';
 
 @Component({
@@ -20,23 +19,9 @@ import { PrivateService } from '../private.service';
 export class DialogEditorCategoryComponent implements OnInit {
   private categoryId: number;
 
-  public category$: BehaviorSubject<Category> = new BehaviorSubject<Category>(
-    null
-  );
-  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    true
-  );
-  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<
-    MessageDescription
-  >(null);
-  public title$: BehaviorSubject<string> = new BehaviorSubject<string>(
-    'Category properties'
-  );
-
-  public systemCategoryMessage: MessageDescription = {
-    text: this.textMessages.CategorySystemWarning,
-    type: MessageType.Info,
-  };
+  public category$: BehaviorSubject<Category> = new BehaviorSubject<Category>(null);
+  public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
 
   constructor(
     private service: PrivateService,
@@ -50,14 +35,11 @@ export class DialogEditorCategoryComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.categoryId) {
-      this.publicService.getCategory(this.categoryId).subscribe(
-        (succeeded) =>
-          this.handleCategory(succeeded, {
-            text: this.textMessages.LoadComplete,
-            type: MessageType.Info,
-          }),
-        (rejected) => this.handleError(rejected.message)
-      );
+      this.publicService
+          .getCategory(this.categoryId)
+          .subscribe(
+            win => this.handleCategory(win, {text: this.textMessages.LoadComplete, type: MessageType.Info }),
+            fail => this.handleError(fail.message));
     } else {
       this.disableInput$.next(false);
       this.category$.next(new Category());
@@ -66,37 +48,28 @@ export class DialogEditorCategoryComponent implements OnInit {
 
   public save(): void {
     this.disableInput$.next(true);
-    this.message$.next({
-      text: this.textMessages.SaveInProgress,
-      type: MessageType.Spinner,
-    });
+    this.message$.next({text: this.textMessages.SaveInProgress, type: MessageType.Spinner});
 
-    this.service.saveCategory(this.category$.value).subscribe(
-      (succeeded) => {
-        this.message$.next({
-          text: this.textMessages.SaveInProgress,
-          type: MessageType.Info,
-        });
-        this.handleCategory(succeeded, {
-          text: this.textMessages.SaveComplete,
-          type: MessageType.Info,
-        });
-      },
-      (rejected) => this.handleError(rejected.message)
+    this.service
+        .saveCategory(this.category$.value)
+        .subscribe(
+          win => {
+            this.message$.next({ text: this.textMessages.SaveInProgress, type: MessageType.Info});
+            this.handleCategory(win, {text: this.textMessages.SaveComplete, type: MessageType.Info}); },
+          fail => this.handleError(fail.message)
     );
   }
 
   public delete(): void {
-    this.message$.next({
-      text: this.textMessages.DeleteInProgress,
-      type: MessageType.Spinner,
-    });
+    this.message$.next({text: this.textMessages.DeleteInProgress, type: MessageType.Spinner });
     this.disableInput$.next(true);
 
-    this.service.deleteCategory(this.category$.value).subscribe(
-      (win) => this.handleDelete(win),
-      (fail) => this.handleError(fail)
-    );
+    this.service
+        .deleteCategory(this.category$.value)
+        .subscribe(
+          win => this.handleDelete(win),
+          fail => this.handleError(fail)
+        );
   }
 
   public close(): void {
@@ -106,24 +79,17 @@ export class DialogEditorCategoryComponent implements OnInit {
   private handleDelete(result: RequestResult<boolean>): void {
     if (result.isSucceed) {
       this.category$.next(null);
-      this.message$.next({
-        text: this.textMessages.DeleteComplete,
-        type: MessageType.Info,
-      });
+      this.message$.next({text: this.textMessages.DeleteComplete, type: MessageType.Info});
     } else {
       this.handleIncident(result.error);
     }
   }
 
-  private handleCategory(
-    result: RequestResult<Category>,
-    description: MessageDescription
-  ): void {
+  private handleCategory(result: RequestResult<Category>, description: MessageDescription): void {
     this.disableInput$.next(false);
 
     if (result.isSucceed) {
       this.category$.next(result.data);
-      this.title$.next('Edit "' + result.data.code + '" category');
       this.message$.next(description);
     } else {
       this.handleIncident(result.error);

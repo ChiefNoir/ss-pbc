@@ -50,6 +50,7 @@ export class ResourcesService {
   public CategoryType = 'Type';
   public CategoryTypeGeneric = 'Generic';
   public CategoryTypeSystem = 'System';
+  public CategoryProperties = 'Category properties';
   public CategorySystemWarning = 'You can\'t delete system category';
 
   public Project = 'Project';

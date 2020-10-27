@@ -1,5 +1,5 @@
 <mat-dialog-content>
-  <h2 *ngIf="title$ | async as title" class="title">{{ title }}</h2>
+  <h2 class="title">{{ textMessages.CategoryProperties }}</h2>
 
   <div class="content" *ngIf="category$ | async as category">
     <div fxLayout="column" fxLayoutAlign="space-around center">
@@ -21,12 +21,6 @@
           placeholder="Display name"
         />
       </mat-form-field>
-    </div>
-  </div>
-
-  <div *ngIf="category$ | async as category">
-    <div *ngIf="category.isEverything">
-      <app-message [message]="systemCategoryMessage"></app-message>
     </div>
   </div>
 

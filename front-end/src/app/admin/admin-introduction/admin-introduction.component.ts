@@ -8,10 +8,10 @@ import { Introduction } from '../../introduction/introduction.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';
-import { AuthGuard } from '../../core/services/auth.guard';
-import { Router } from '@angular/router';
 import { ResourcesService } from '../../core/services/resources.service';
 import { PrivateService } from '../private.service';
+import { Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin-introduction',
@@ -19,30 +19,30 @@ import { PrivateService } from '../private.service';
   styleUrls: ['./admin-introduction.component.scss'],
 })
 export class AdminIntroductionComponent implements OnInit {
-  public columnsInner: string[] = ['name', 'url', 'btn'];
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
 
   public introduction$: BehaviorSubject<Introduction> = new BehaviorSubject<Introduction>(null);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>({ text: 'Loading', type: MessageType.Spinner });
+  public columnsInner: string[] = ['name', 'url', 'btn'];
   public isDisabled: boolean = false;
 
   public constructor(
     private service: PrivateService,
     public textMessages: ResourcesService,
     private publicService: PublicService,
-    private authGuard: AuthGuard,
-    private router: Router
-  ) {}
+    titleService: Title
+  ) {
+    titleService.setTitle(environment.siteName);
+  }
 
   public ngOnInit(): void {
     this.introduction$.next(null);
-
-      this.publicService.getIntroduction().subscribe((x: RequestResult<Introduction>) => {
-        this.handle(x, { text: this.textMessages.LoadComplete, type: MessageType.Info })
-      },
-      error => {
-        this.handleError(error);
-      });
+    
+    this.publicService
+        .getIntroduction()
+        .subscribe(
+          win => this.handle(win, { text: this.textMessages.LoadComplete, type: MessageType.Info }),
+          fail => this.handleError(fail));
   }
 
   public addExternalUrl(): void {
@@ -59,30 +59,24 @@ export class AdminIntroductionComponent implements OnInit {
     this.message$.next({ text:  this.textMessages.SaveInProgress, type: MessageType.Spinner });
     this.isDisabled = true;
 
-    this.service.saveIntroduction(this.introduction$.value).subscribe(
-      (result) =>
-        this.handle(result, {
-          text:  this.textMessages.SaveComplete,
-          type: MessageType.Info,
-        }),
-      (reject) => this.handleError(reject)
-    );
+    this.service
+        .saveIntroduction(this.introduction$.value)
+        .subscribe(
+          win => this.handle(win, {text: this.textMessages.SaveComplete, type: MessageType.Info}),
+          fail => this.handleError(fail));
   }
 
   public refresh(): void {
     this.introduction$.next(null);
 
-    this.publicService.getIntroduction()
-    .subscribe((x: RequestResult<Introduction>) => {
-      this.handle(x, { text: 'Load complete', type: MessageType.Info })
-    },
-    error => {
-      //this.notificationService.printErrorMessage(error);
-    });
-
+    this.publicService
+        .getIntroduction()
+        .subscribe(
+          win => this.handle(win, { text: 'Load complete', type: MessageType.Info }),
+          fail => this.handleError(fail));
   }
 
-  public uploadFile(files: File[]) {
+  public uploadFile(files: File[]): void {
     if (!files || files.length === 0 || !files[0]) {
       return;
     }
@@ -97,7 +91,7 @@ export class AdminIntroductionComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  public deleteFile() {
+  public deleteFile(): void {
     this.introduction$.value.posterPreview = '';
     this.introduction$.value.posterToUpload = null;
     this.introduction$.value.posterUrl = '';
@@ -113,10 +107,7 @@ export class AdminIntroductionComponent implements OnInit {
     this.externalUrlsTable.renderRows();
   }
 
-  private handle(
-    result: RequestResult<Introduction>,
-    description: MessageDescription
-  ): void {
+  private handle(result: RequestResult<Introduction>, description: MessageDescription): void {
     if (result.isSucceed) {
       this.introduction$.next(result.data);
       this.message$.next(description);

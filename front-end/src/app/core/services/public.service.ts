@@ -42,11 +42,8 @@ export class PublicService {
       .get<RequestResult<Project>>(this.endpoint + 'projects/' + code);
   }
 
-  public getProjectsPreview(
-    start: number,
-    length: number,
-    categoryCode: string
-  ): Observable<RequestResult<Array<ProjectPreview>>> {
+  public getProjectsPreview(start: number, length: number, categoryCode: string)
+    : Observable<RequestResult<Array<ProjectPreview>>> {
     const categoryParam =
       typeof categoryCode !== 'undefined' && categoryCode
         ? '&categorycode=' + categoryCode
@@ -55,10 +52,8 @@ export class PublicService {
     return this.httpClient
       .get<RequestResult<Array<ProjectPreview>>>(
         this.endpoint +
-          'projects/search?start=' +
-          start +
-          '&length=' +
-          length +
+          'projects/search?start=' + start +
+          '&length=' + length +
           categoryParam
       );
   }

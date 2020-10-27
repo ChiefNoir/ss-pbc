@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { PublicService } from '../../core/services/public.service';
 import { ResourcesService } from '../../core/services/resources.service';
 import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface'
+import { Incident } from '../../shared/incident.interface';
 import { Category } from '../../shared/category.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {

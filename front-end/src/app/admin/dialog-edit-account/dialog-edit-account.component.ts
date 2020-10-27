@@ -93,61 +93,50 @@ export class DialogEditAccountComponent implements OnInit
 
   private handleDelete(result: RequestResult<boolean>): void
   {
-    if (result.isSucceed){  
+    if (result.isSucceed) {
       this.account$.next(null);
       this.title$.next(this.textMessages.AccountDelete);
       this.message$.next({text: this.textMessages.DeleteComplete, type: MessageType.Info });
     }
-    else
-    {
+    else {
       this.handleError(result.error);
     }
   }
 
-  private handleAccount(result: RequestResult<Account>): void
-  {
+  private handleAccount(result: RequestResult<Account>): void {
     this.disableInput$.next(false);
 
-    if (result.isSucceed)
-    {
+    if (result.isSucceed) {
       this.account$.next(result.data);
       this.title$.next(this.textMessages.AccountEdit + '　”'　+　result.data.login + '”');
     }
-    else
-    {
+    else {
       this.handleIncident(result.error);
     }
   }
 
-  private handleRoles(result: RequestResult<string[]>): void
-  {
-    if (result.isSucceed)
-    {
+  private handleRoles(result: RequestResult<string[]>): void {
+    if (result.isSucceed) {
       this.roles$.next(result.data);
     }
-    else
-    {
+    else {
       this.handleIncident(result.error);
     }
   }
 
-  private handleIncident(error: Incident): void
-  {
+  private handleIncident(error: Incident): void {
     this.disableInput$.next(false);
 
     this.message$.next({text: error.message, type: MessageType.Error });
   }
 
-  private handleError(error: any): void
-  {
+  private handleError(error: any): void {
     this.disableInput$.next(false);
 
-    if (error.name !== undefined)
-    {
+    if (error.name !== undefined) {
       this.message$.next({text: error.name, type: MessageType.Error });
     }
-    else
-    {
+    else {
       this.message$.next({text: error, type: MessageType.Error });
     }
   }

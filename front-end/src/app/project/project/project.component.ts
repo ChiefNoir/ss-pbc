@@ -37,10 +37,11 @@ export class ProjectComponent {
     this.project$.next(null);
 
     const code = this.activeRoute.snapshot.paramMap.get('code');
-    this.service.getProject(code).subscribe(
-      (win) => this.handleProject(win),
-      (fail) => this.handleError(fail)
-    );
+    this.service
+        .getProject(code)
+        .subscribe(
+          win => this.handleProject(win),
+          fail => this.handleError(fail));
   }
 
   private handleProject(result: RequestResult<Project>): void {
@@ -49,11 +50,13 @@ export class ProjectComponent {
         this.router.navigate(['/404']);
       }
 
-      this.titleService.setTitle(
-        result.data?.displayName +
-          this.textMessages.TitleSeparator +
-          environment.siteName
+      this.titleService
+          .setTitle(
+            result.data?.displayName +
+            this.textMessages.TitleSeparator +
+            environment.siteName
       );
+
       this.project$.next(result.data);
     } else {
       this.handleIncident(result.error);

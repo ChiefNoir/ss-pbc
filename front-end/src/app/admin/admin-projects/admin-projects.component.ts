@@ -59,8 +59,8 @@ export class AdminProjectsComponent implements OnInit, OnDestroy {
 
     if (!paging) {
       this.service.getEverythingCategory().subscribe(
-        (win) => this.handleCategory(win),
-        (fail) => this.handleError(fail)
+        win => this.handleCategory(win),
+        fail => this.handleError(fail)
       );
 
       return;
@@ -120,7 +120,6 @@ export class AdminProjectsComponent implements OnInit, OnDestroy {
   }
 
   private handleError(error: any): void {
-
     if (error.name !== undefined) {
       this.message$.next({ text: error.name, type: MessageType.Error });
     } else {

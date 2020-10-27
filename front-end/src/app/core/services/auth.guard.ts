@@ -88,14 +88,8 @@ export class AuthGuard implements CanActivate {
       return null;
     }
 
-    const role =
-      tokenPayload[
-        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-      ];
-    const name =
-      tokenPayload[
-        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
-      ];
+    const role = tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    const name = tokenPayload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
 
     return new TokenData(role, name);
   }
@@ -106,6 +100,7 @@ class TokenData {
     this.role = role;
     this.name = name;
   }
+
   public role: string;
   public name: string;
 }

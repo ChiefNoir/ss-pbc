@@ -1,17 +1,17 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { MatTable } from '@angular/material/table';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { PublicService } from '../../core/services/public.service';
+import { PrivateService } from '../private.service';
+import { ResourcesService } from '../../core/services/resources.service';
+import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'
-import { Introduction } from '../../introduction/introduction.model';
-import { MessageDescription, MessageType } from '../../shared/message/message.component';
+import { Introduction } from '../../shared/introduction.model';
 import { ExternalUrl } from '../../shared/external-url.model';
-import { MatTable } from '@angular/material/table';
-import { ResourcesService } from '../../core/services/resources.service';
-import { PrivateService } from '../private.service';
-import { Title } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin-introduction',

@@ -29,12 +29,10 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private authGuard: AuthGuard,
     private router: Router,
-    titleService: Title,
-    public textMessages: ResourcesService
+    public textMessages: ResourcesService,
+    titleService: Title
   ) {
-    titleService.setTitle(
-      this.textMessages.TitlePageLogin + environment.siteName
-    );
+    titleService.setTitle(this.textMessages.TitlePageLogin + environment.siteName);
   }
 
   public ngOnInit(): void {
@@ -48,10 +46,11 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.login(this.login.value, this.password.value).subscribe(
-      (result) => this.handleLoginResult(result),
-      (reject) => this.handleError(reject)
-    );
+    this.authService
+        .login(this.login.value, this.password.value)
+        .subscribe(
+          win => this.handleLoginResult(win),
+          fail => this.handleError(fail));
   }
 
   private handleLoginResult(result: RequestResult<Identity>): void {

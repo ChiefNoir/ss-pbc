@@ -8,10 +8,10 @@ import { ResourcesService } from '../../../core/services/resources.service';
 })
 export class FileUploaderComponent {
   @Output()
-  public uploadFiles = new EventEmitter<File[]>();
+  public uploadFiles: EventEmitter<File[]> = new EventEmitter<File[]>();
 
   @Output()
-  public deleteFile = new EventEmitter();
+  public deleteFile: EventEmitter<any> = new EventEmitter();
 
   @Input()
   public filename: string;

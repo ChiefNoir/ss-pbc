@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
-
 import { environment } from 'src/environments/environment';
+
 import { PublicService } from '../../core/services/public.service';
+import { ResourcesService } from '../../core/services/resources.service';
+import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'
 import { Category } from '../../shared/category.model';
-import { MatDialog } from '@angular/material/dialog';
+
 import { DialogEditorCategoryComponent } from '../dialog-editor-category/dialog-editor-category.component';
-import { MessageType, MessageDescription } from '../../shared/message/message.component';
-import { ResourcesService } from '../../core/services/resources.service';
 
 @Component({
   selector: 'app-admin-categories',
@@ -29,10 +30,10 @@ export class AdminCategoriesComponent implements OnInit {
   ];
 
   public constructor(
-    private service: PublicService,
     public textMessages: ResourcesService,
-    titleService: Title,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private service: PublicService,
+    titleService: Title
   ) {
     titleService.setTitle(environment.siteName);
   }
@@ -51,14 +52,13 @@ export class AdminCategoriesComponent implements OnInit {
       data: categoryId,
     });
 
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(() => this.refreshCategories());
+    dialogRef.afterClosed()
+             .toPromise()
+             .then(() => this.refreshCategories());
   }
 
   private refreshCategories(): void {
-    // there is no paging in the categories, because there will be not many categories
+    // NOTE: there is no paging for categories, because there will be not THAT many categories
     this.service.getCategories().subscribe(
       (win) => this.handleCategories(win),
       (fail) => this.handleError(fail)

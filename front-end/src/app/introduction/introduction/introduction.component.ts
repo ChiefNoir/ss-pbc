@@ -6,7 +6,7 @@ import { ResourcesService } from '../../core/services/resources.service';
 import { Introduction } from '../../shared/introduction.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface'
+import { Incident } from '../../shared/incident.interface';
 import { environment } from 'src/environments/environment';
 
 @Component({

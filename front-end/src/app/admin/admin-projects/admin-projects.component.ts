@@ -1,17 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-
-import { environment } from 'src/environments/environment';
-import { PublicService } from '../../core/services/public.service';
+import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogEditProjectComponent } from '../dialog-edit-project/dialog-edit-project.component';
-import { ProjectPreview } from '../../projects/project-preview.model';
-import { MessageType, MessageDescription } from '../../shared/message/message.component';
+import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+import { PublicService } from '../../core/services/public.service';
 import { ResourcesService } from '../../core/services/resources.service';
-import { Paging } from '../../shared/paging-info.model';
+import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'
 import { Category } from '../../shared/category.model';
+import { Paging } from '../../shared/paging-info.model';
+import { ProjectPreview } from '../../shared/project-preview.model';
+
+import { DialogEditProjectComponent } from '../dialog-edit-project/dialog-edit-project.component';
 
 @Component({
   selector: 'app-admin-projects',
@@ -27,8 +29,11 @@ export class AdminProjectsComponent implements OnInit, OnDestroy {
   public constructor(
     private service: PublicService,
     public dialog: MatDialog,
-    public textMessages: ResourcesService
-  ) {}
+    public textMessages: ResourcesService,
+    titleService: Title
+  ) {
+    titleService.setTitle(environment.siteName);
+  }
 
   public ngOnInit(): void {
     this.paging$.subscribe((value) => this.refreshProjects(value));

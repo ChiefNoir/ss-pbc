@@ -37,7 +37,7 @@ export class AdminIntroductionComponent implements OnInit {
 
   public ngOnInit(): void {
     this.introduction$.next(null);
-    
+
     this.publicService
         .getIntroduction()
         .subscribe(

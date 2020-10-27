@@ -7,17 +7,14 @@
       <div class="description">
         <b>{{ textMessages.AccountLogin }}</b> {{ introduction.login }} <br />
         <b>{{ textMessages.AccountRole }}</b> {{ introduction.role }}<br />
-        <b>{{ textMessages.AdminApiVersion }}</b> {{ introduction.apiVersion
-        }}<br />
+        <b>{{ textMessages.AdminApiVersion }}</b> {{ introduction.apiVersion }}<br />
       </div>
 
       <h1 class="headline">{{ textMessages.AdminControls }}</h1>
       <mat-divider></mat-divider>
 
       <div class="extension">
-        <app-button (Click)="logout()">{{
-          textMessages.DoLoginOut
-        }}</app-button>
+        <app-button (Click)="logout()">{{ textMessages.DoLoginOut }}</app-button>
       </div>
     </div>
 

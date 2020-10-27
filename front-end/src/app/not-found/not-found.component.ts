@@ -13,8 +13,6 @@ export class NotFoundComponent {
     titleService: Title,
     public textMessages: ResourcesService
   ) {
-    titleService.setTitle(
-      this.textMessages.TitlePageNotFound + environment.siteName
-    );
+    titleService.setTitle(this.textMessages.TitlePageNotFound + environment.siteName);
   }
 }

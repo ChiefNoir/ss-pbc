@@ -10,10 +10,7 @@ import { Paging } from '../../shared/paging-info.model';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface';
 
-import {
-  MessageDescription,
-  MessageType,
-} from '../../shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { environment } from 'src/environments/environment';
 import { ResourcesService } from '../../core/services/resources.service';
 
@@ -35,9 +32,7 @@ export class ProjectsListComponent implements OnDestroy, OnInit {
     titleService: Title,
     public textMessages: ResourcesService
   ) {
-    titleService.setTitle(
-      this.textMessages.TitleProjects + environment.siteName
-    );
+    titleService.setTitle(this.textMessages.TitleProjects + environment.siteName);
   }
 
   public ngOnInit(): void {
@@ -56,13 +51,15 @@ export class ProjectsListComponent implements OnDestroy, OnInit {
     this.projects$.next(null);
     this.categories$.next(null);
 
-    this.service.getCategories().subscribe(
-      (win) => this.handleCategorie(win),
-      (fail) => this.handleError(fail)
+    this.service
+        .getCategories()
+        .subscribe(
+          win => this.handleCategorie(win),
+          fail => this.handleError(fail)
     );
   }
 
-  private refreshCategories(categories: Category[]) {
+  private refreshCategories(categories: Category[]): void {
     const routeCategory = this.activeRoute.snapshot.paramMap.get('category');
     const selectedCategory = categories.find((x) => x.code === routeCategory);
     const everythingCategory = categories.find((x) => x.isEverything === true);
@@ -103,8 +100,8 @@ export class ProjectsListComponent implements OnDestroy, OnInit {
         paging.getSearchParam()
       )
       .subscribe(
-        (win) => this.handleProjects(win),
-        (fail) => this.handleError(fail)
+        win => this.handleProjects(win),
+        fail => this.handleError(fail)
       );
   }
 

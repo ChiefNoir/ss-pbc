@@ -1,22 +1,24 @@
 <div *ngIf="categories$ | async as categories; else loading">
   <table mat-table [dataSource]="categories">
     <ng-container matColumnDef="code">
-      <th mat-header-cell *matHeaderCellDef> {{textMessages.CategoryCode}} </th>
-      <td mat-cell *matCellDef="let item"> {{item.code}} </td>
+      <th mat-header-cell *matHeaderCellDef> {{ textMessages.CategoryCode }} </th>
+      <td mat-cell *matCellDef="let item"> {{ item.code }} </td>
 
-      <td mat-footer-cell *matFooterCellDef> {{textMessages.GenericCreateNew}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ textMessages.GenericCreateNew }} </td>
     </ng-container>
 
     <ng-container matColumnDef="displayName">
-      <th mat-header-cell *matHeaderCellDef> {{textMessages.CategoryName}} </th>
-      <td mat-cell *matCellDef="let item"> {{item.displayName}} </td>
+      <th mat-header-cell *matHeaderCellDef> {{ textMessages.CategoryName }} </th>
+      <td mat-cell *matCellDef="let item"> {{ item.displayName }} </td>
 
-      <td mat-footer-cell *matFooterCellDef>　</td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <ng-container matColumnDef="isEverything">
-      <th mat-header-cell *matHeaderCellDef> {{textMessages.CategoryType}} </th>
-      <td mat-cell *matCellDef="let item"> {{item.isEverything? textMessages.CategoryTypeSystem : textMessages.CategoryTypeGeneric }} </td>
+      <th mat-header-cell *matHeaderCellDef> {{ textMessages.CategoryType }} </th>
+      <td mat-cell *matCellDef="let item"> 
+        {{ item.isEverything? textMessages.CategoryTypeSystem : textMessages.CategoryTypeGeneric }}
+      </td>
 
       <td mat-footer-cell *matFooterCellDef> </td>
     </ng-container>
@@ -26,7 +28,6 @@
     <tr mat-footer-row *matFooterRowDef="getDisplayedColumns()" (click)="showDialog()"></tr>
   </table>
 </div>
-
 
 <ng-template #loading>
   <div *ngIf="message$ | async as msg">

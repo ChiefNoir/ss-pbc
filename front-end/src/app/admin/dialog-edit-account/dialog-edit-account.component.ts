@@ -14,8 +14,7 @@ import { PrivateService } from '../private.service';
   styleUrls: ['./dialog-edit-account.component.scss']
 })
 
-export class DialogEditAccountComponent implements OnInit
-{
+export class DialogEditAccountComponent implements OnInit {
   public account$: BehaviorSubject<Account> = new BehaviorSubject<Account>(null);
   public disableInput$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);

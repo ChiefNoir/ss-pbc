@@ -3,7 +3,7 @@ import { Project } from '../../shared/project.model';
 import { BehaviorSubject } from 'rxjs';
 import { PublicService } from '../../core/services/public.service';
 import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface'
+import { Incident } from '../../shared/incident.interface';
 import { Category } from '../../shared/category.model';
 import { ExternalUrl } from '../../shared/external-url.model';
 import { MatTable } from '@angular/material/table';

@@ -31,7 +31,7 @@ export class PrivateService implements HttpInterceptor  {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
-        if (err.status == 401 || err.status == 403) {
+        if (err.status === 401 || err.status === 403) {
           this.storage.removeToken();
           this.router.navigate(['/login']);
         } else {

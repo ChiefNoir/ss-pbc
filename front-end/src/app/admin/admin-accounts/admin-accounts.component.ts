@@ -2,20 +2,18 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+import { Account } from '../account.model';
+import { PrivateService } from '../private.service';
+import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-account.component';
+
+import { ResourcesService } from '../../core/services/resources.service';
 
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface'
-import { MessageDescription, MessageType } from '../../shared/message/message.component';
-
-import { Account } from '../account.model';
-
-import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-account.component';
 import { Paging } from '../../shared/paging-info.model';
-
-import { ResourcesService } from '../../core/services/resources.service';
-import { PrivateService } from '../private.service';
-
-import { environment } from 'src/environments/environment';
+import { MessageDescription, MessageType } from '../../shared/message/message.component';
 
 @Component({
   selector: 'app-admin-accounts',
@@ -39,7 +37,10 @@ export class AdminAccountsComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.refreshAccounts(null);
-    this.paging$.subscribe((value) => this.refreshAccounts(value));
+    this.paging$.subscribe
+    (
+      x => this.refreshAccounts(x)
+    );
   }
 
   public ngOnDestroy(): void {
@@ -47,9 +48,10 @@ export class AdminAccountsComponent implements OnInit, OnDestroy {
   }
 
   private refreshPaging(): void {
-    this.service.countAccount().subscribe(
-      (win) => this.handlePaging(win, this.paging$),
-      (fail) => this.handleError(fail)
+    this.service.countAccount().subscribe
+    (
+      win => this.handlePaging(win, this.paging$),
+      fail => this.handleError(fail)
     );
   }
 
@@ -59,15 +61,16 @@ export class AdminAccountsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.service
-      .getAccounts(
-        paging.getCurrentPage() * environment.paging.maxUsers,
-        environment.paging.maxUsers
-      )
-      .subscribe(
-        (result) => this.handleAccounts(result),
-        (reject) => this.handleError(reject)
-      );
+    this.service.getAccounts
+    (
+      paging.getCurrentPage() * environment.paging.maxUsers,
+      environment.paging.maxUsers
+    )
+    .subscribe
+    (
+        win => this.handleAccounts(win),
+        fail => this.handleError(fail)
+    );
   }
 
   public changePage(page: number): void {
@@ -90,21 +93,19 @@ export class AdminAccountsComponent implements OnInit, OnDestroy {
       data: id,
     });
 
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(
-        // TODO: it is a full refresh
-        () => this.refreshAccounts(this.paging$.value)
-      );
+    dialogRef.afterClosed()
+             .toPromise()
+             .then
+             (
+               // TODO: it is a full refresh
+               () => this.refreshAccounts(this.paging$.value)
+             );
   }
 
-  private handlePaging(
-    result: RequestResult<number>,
-    content: BehaviorSubject<Paging<null>>
-  ): void {
+  private handlePaging(result: RequestResult<number>, content: BehaviorSubject<Paging<null>>): void {
     if (result.isSucceed) {
       const currentPage = content?.value?.getCurrentPage() ?? 0;
+      
       content.next(
         new Paging(currentPage, environment.paging.maxUsers, result.data)
       );

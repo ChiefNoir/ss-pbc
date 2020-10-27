@@ -13,10 +13,8 @@ export class AuthService {
 
   public login(login: string, password: string): Observable<RequestResult<Identity>> {
     return this.httpClient
-      .post<RequestResult<Identity>>(this.endpoint + 'login', {
-        login,
-        password,
-      });
+               .post<RequestResult<Identity>>(
+                 this.endpoint + 'login', { login, password}
+               );
   }
-
 }

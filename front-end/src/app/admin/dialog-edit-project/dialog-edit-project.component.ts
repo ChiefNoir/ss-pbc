@@ -1,16 +1,19 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { Project } from '../../shared/project.model';
 import { BehaviorSubject } from 'rxjs';
+import { MatTable } from '@angular/material/table';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { PublicService } from '../../core/services/public.service';
+import { ResourcesService } from '../../core/services/resources.service';
+
+import { Project } from '../../shared/project.model';
 import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface';
 import { Category } from '../../shared/category.model';
 import { ExternalUrl } from '../../shared/external-url.model';
-import { MatTable } from '@angular/material/table';
-import { MessageType, MessageDescription } from '../../shared/message/message.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ResourcesService } from '../../core/services/resources.service';
 import { GalleryImage } from '../../shared/gallery-image.model';
+import { MessageType, MessageDescription } from '../../shared/message/message.component';
+
 import { PrivateService } from '../private.service';
 
 @Component({
@@ -19,8 +22,6 @@ import { PrivateService } from '../private.service';
   styleUrls: ['./dialog-edit-project.component.scss'],
 })
 export class DialogEditProjectComponent implements OnInit {
-  private code: string;
-
   @ViewChild('externalUrlsTable') externalUrlsTable: MatTable<any>;
   @ViewChild('galleryImagesTable') galleryImagesTable: MatTable<any>;
 
@@ -32,6 +33,8 @@ export class DialogEditProjectComponent implements OnInit {
   public message$: BehaviorSubject<MessageDescription> = new BehaviorSubject<MessageDescription>(null);
   public project$: BehaviorSubject<Project> = new BehaviorSubject<Project>(null);
 
+  private code: string;
+
   constructor(
     private service: PrivateService,
     public textMessages: ResourcesService,
@@ -42,7 +45,7 @@ export class DialogEditProjectComponent implements OnInit {
     this.code = projectCode;
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.refresh();
   }
 
@@ -50,37 +53,33 @@ export class DialogEditProjectComponent implements OnInit {
     this.disableInput$.next(true);
     this.message$.next({ type: MessageType.Spinner });
 
-    this.publicService.getCategories().subscribe(
-      (categorySucceeded) => {
-        this.categories$.next(
-          categorySucceeded.data.filter(
-            (category) => category.isEverything === false
-          )
-        );
+    this.publicService
+        .getCategories()
+        .subscribe
+        (
+          categoryWin =>
+          {
+            this.categories$.next
+            (
+              categoryWin.data.filter(x => x.isEverything === false)
+            );
 
-        if (this.code) {
-          this.publicService.getProject(this.code).subscribe(
-            (win) =>
-              this.handleProject(win, {
-                text: this.textMessages.LoadComplete,
-                type: MessageType.Info,
-              }),
-            (fail) => this.handleError(fail)
-          );
-        } else {
-          const prj = new Project();
-          prj.category = categorySucceeded.data.filter(
-            (category) => category.isEverything === false
-          )[0];
-          this.project$.next(prj);
-          this.message$.next({
-            text: this.textMessages.InitializationComplete,
-            type: MessageType.Info,
-          });
-          this.disableInput$.next(false);
-        }
-      },
-      (categoryRejected) => this.handleError(categoryRejected)
+            if (this.code) {
+              this.publicService
+                  .getProject(this.code)
+                  .subscribe(
+                    win =>
+                      this.handleProject(win, {text: this.textMessages.LoadComplete, type: MessageType.Info}),
+                    fail => this.handleError(fail));
+            } else {
+              const prj = new Project();
+              prj.category = categoryWin.data.filter(x => x.isEverything === false)[0];
+              this.project$.next(prj);
+
+              this.message$.next({text: this.textMessages.InitializationComplete, type: MessageType.Info});
+              this.disableInput$.next(false); }
+          },
+          categoryFail => this.handleError(categoryFail)
     );
   }
 
@@ -105,40 +104,32 @@ export class DialogEditProjectComponent implements OnInit {
 
   public save(): void {
     this.disableInput$.next(true);
-    this.message$.next({
-      text: this.textMessages.SaveInProgress,
-      type: MessageType.Spinner,
-    });
+    this.message$.next({text: this.textMessages.SaveInProgress, type: MessageType.Spinner});
 
-    this.service.saveProject(this.project$.value).subscribe(
-      (win) => {
-        this.handleProject(win, {
-          text: this.textMessages.SaveComplete,
-          type: MessageType.Info,
-        });
-      },
-      (fail) => this.handleError(fail)
-    );
+    this.service
+        .saveProject(this.project$.value)
+        .subscribe(
+          win => {
+            this.handleProject(win, {text: this.textMessages.SaveComplete, type: MessageType.Info}); },
+          fail => this.handleError(fail));
   }
 
   public delete(): void {
     this.disableInput$.next(true);
-    this.message$.next({
-      text: this.textMessages.DeleteInProgress,
-      type: MessageType.Info,
-    });
+    this.message$.next({text: this.textMessages.DeleteInProgress, type: MessageType.Info});
 
-    this.service.deleteProject(this.project$.value).subscribe(
-      (win) => this.handleDelete(win),
-      (fail) => this.handleError(fail)
-    );
+    this.service
+        .deleteProject(this.project$.value)
+        .subscribe(
+          win => this.handleDelete(win),
+          fail => this.handleError(fail));
   }
 
   public close(): void {
     this.dialog.close();
   }
 
-  public selectFile(files: File[]) {
+  public selectFile(files: File[]): void {
     if (files.length === 0) {
       return;
     }
@@ -147,15 +138,14 @@ export class DialogEditProjectComponent implements OnInit {
       const file = files[0];
 
       const reader = new FileReader();
-      reader.onload = (e) =>
-        (this.project$.value.posterPreview = reader.result as string);
+      reader.onload = (e) => this.project$.value.posterPreview = reader.result as string;
 
       this.project$.value.posterToUpload = files[0];
       reader.readAsDataURL(file);
     }
   }
 
-  public selectGalleryFile(files: File[], galleryImage: GalleryImage) {
+  public selectGalleryFile(files: File[], galleryImage: GalleryImage): void {
     if (files.length === 0) {
       return;
     }
@@ -164,15 +154,14 @@ export class DialogEditProjectComponent implements OnInit {
       const file = files[0];
 
       const reader = new FileReader();
-      reader.onload = (e) =>
-        (galleryImage.localPreview = reader.result as string);
+      reader.onload = (e) => galleryImage.localPreview = reader.result as string;
 
       galleryImage.readyToUpload = files[0];
       reader.readAsDataURL(file);
     }
   }
 
-  public deleteFile() {
+  public deleteFile(): void {
     this.project$.value.posterUrl = '';
     this.project$.value.posterPreview = '';
     this.project$.value.posterToUpload = null;
@@ -181,19 +170,13 @@ export class DialogEditProjectComponent implements OnInit {
   private handleDelete(result: RequestResult<boolean>): void {
     if (result.isSucceed) {
       this.project$.next(null);
-      this.message$.next({
-        text: this.textMessages.DeleteComplete,
-        type: MessageType.Info,
-      });
+      this.message$.next({text: this.textMessages.DeleteComplete, type: MessageType.Info});
     } else {
       this.handleError(result.error);
     }
   }
 
-  private handleProject(
-    result: RequestResult<Project>,
-    msg: MessageDescription
-  ): void {
+  private handleProject(result: RequestResult<Project>, msg: MessageDescription): void {
     if (result.isSucceed) {
       this.disableInput$.next(false);
       this.project$.next(result.data);
@@ -204,7 +187,7 @@ export class DialogEditProjectComponent implements OnInit {
   }
 
   public addGalleryImage(): void {
-    // hack for the times, when there is only img without anything
+    // hack for the times, when there is only one change: image
     const newItem = new GalleryImage();
     newItem.version = 0;
 

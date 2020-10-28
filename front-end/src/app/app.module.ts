@@ -7,7 +7,6 @@ import { DatePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
-import { NotFoundComponent } from './not-found/not-found.component';
 
 import { CoreModule } from './core/core.module';
 
@@ -24,7 +23,6 @@ import { NavigationCompactComponent } from './shared/navigation-compact/navigati
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    NotFoundComponent,
     NavigationComponent,
     NavigationCompactComponent
   ],

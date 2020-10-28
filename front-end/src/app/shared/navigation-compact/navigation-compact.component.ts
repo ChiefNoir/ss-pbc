@@ -18,7 +18,7 @@ export class NavigationCompactComponent {
   @Output()
   public HideClick: EventEmitter<void> = new EventEmitter<void>();
 
-  public closeClick() {
+  public closeClick(): void {
     this.HideClick.emit();
   }
 }

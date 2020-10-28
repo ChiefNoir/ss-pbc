@@ -21,7 +21,7 @@ export class NavigationComponent {
   @Output()
   public ShowSideNavigationClick: EventEmitter<void> = new EventEmitter<void>();
 
-  public menuClick() {
+  public menuClick(): void {
     this.ShowSideNavigationClick.emit();
   }
 }

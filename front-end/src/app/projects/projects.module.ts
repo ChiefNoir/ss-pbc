@@ -6,6 +6,7 @@ import { ProjectsRoutingModule } from './projects-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { ProjectsListComponent } from './project-list/projects-list.component';
+import { RootComponent } from './root/root.component';
 import { FilterCategoryComponent } from './filter-category/filter-category.component';
 import { ProjectPreviewComponent } from './project-preview/project-preview.component';
 import { ButtonCategoryComponent } from './button-category/button-category.component';
@@ -17,6 +18,7 @@ import { ButtonCategoryComponent } from './button-category/button-category.compo
     SharedModule
   ],
   declarations: [
+    RootComponent,
     ProjectsListComponent,
     FilterCategoryComponent,
     ProjectPreviewComponent,

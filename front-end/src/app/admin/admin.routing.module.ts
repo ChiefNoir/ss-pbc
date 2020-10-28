@@ -5,7 +5,7 @@ import { AuthGuard } from '../core/services/auth.guard';
 
 import { Roles } from './roles.enum';
 
-import { AdminComponent } from './admin/admin.component';
+import { RootComponent } from './root/root.component';
 import { AdminAccountsComponent } from './admin-accounts/admin-accounts.component';
 import { AdminCategoriesComponent } from './admin-categories/admin-categories.component';
 import { AdminInformationComponent } from './admin-information/admin-information.component';
@@ -15,7 +15,7 @@ import { AdminProjectsComponent } from './admin-projects/admin-projects.componen
 const routes: Route[] = [
   {
     path: '',
-    component: AdminComponent,
+    component: RootComponent,
     canActivate: [AuthGuard],
     pathMatch: 'prefix',
     data: {

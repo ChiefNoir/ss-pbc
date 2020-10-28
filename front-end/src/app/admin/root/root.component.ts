@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { AuthGuard } from '../../core/services/auth.guard';
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss'],
+  selector: 'app-root',
+  templateUrl: './root.component.html',
+  styleUrls: ['./root.component.scss'],
 })
-export class AdminComponent implements OnInit {
+export class RootComponent implements OnInit {
   public constructor(
     private router: Router,
     private authGuard: AuthGuard

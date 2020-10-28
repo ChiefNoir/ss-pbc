@@ -19,10 +19,6 @@ const routes: Routes = [
     loadChildren: () => import('./project/project.module').then(x => x.ProjectModule),
   },
   {
-    path: 'project/:code',
-    loadChildren: () => import('./project/project.module').then(x => x.ProjectModule),
-  },
-  {
     path: 'login',
     loadChildren: () => import('./auth/auth.module').then(x => x.AuthModule),
   },

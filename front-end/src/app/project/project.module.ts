@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProjectComponent } from './project/project.component';
+import { RootComponent } from './root/root.component';
+
 import { ProjectRoutingModule } from './project.routing.module';
 import { ProjectFullComponent } from './project-full/project-full.component';
 
@@ -15,6 +17,7 @@ import { CarouselComponent } from './carousel/carousel.component';
     SharedModule
   ],
   declarations: [
+    RootComponent,
     ProjectComponent,
     ProjectFullComponent,
     CarouselComponent

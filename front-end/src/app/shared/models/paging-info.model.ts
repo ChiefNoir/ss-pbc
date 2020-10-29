@@ -12,8 +12,8 @@ export class Paging<T> {
     searchParam: T = null
   ) {
     this.minPage = 0;
-    this.maxItems = maxItems;
-    this.maxItemsPerPage = maxItemsPerPage;
+    this.maxItems = Number(maxItems);
+    this.maxItemsPerPage = Number(maxItemsPerPage);
     this.searchParam = searchParam;
 
     if (currentPage > this.getMaxPage()) {
@@ -21,7 +21,7 @@ export class Paging<T> {
     } else if (currentPage < this.getMinPage()) {
       this.currentPage = this.getMinPage();
     } else {
-      this.currentPage = currentPage;
+      this.currentPage = Number(currentPage);
     }
   }
 

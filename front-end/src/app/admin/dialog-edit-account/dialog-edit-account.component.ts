@@ -9,7 +9,7 @@ import { RequestResult } from '../../shared/models/request-result.interface';
 import { Incident } from '../../shared/models/incident.interface';
 
 import { Account } from '../account.model';
-import { PrivateService } from '../private.service';
+import { PrivateService } from '../services/private.service';
 
 @Component({
   selector: 'app-dialog-edit-account.component',

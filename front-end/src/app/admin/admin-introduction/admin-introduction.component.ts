@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { PublicService } from '../../core/services/public.service';
-import { PrivateService } from '../private.service';
+import { PrivateService } from '../services/private.service';
 import { ResourcesService } from '../../core/services/resources.service';
 import { MessageDescription, MessageType } from '../../shared/components/message/message.component';
 import { RequestResult } from '../../shared/models/request-result.interface';

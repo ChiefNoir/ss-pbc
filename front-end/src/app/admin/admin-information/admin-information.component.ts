@@ -10,7 +10,7 @@ import { RequestResult } from '../../shared/models/request-result.interface';
 import { Incident } from '../../shared/models/incident.interface';
 
 import { Information } from '../information.interface';
-import { PrivateService } from '../private.service';
+import { PrivateService } from '../services/private.service';
 import { AuthGuard } from '../../core/services/auth.guard';
 
 @Component({

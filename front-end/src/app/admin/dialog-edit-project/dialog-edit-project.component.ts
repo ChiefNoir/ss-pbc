@@ -14,7 +14,7 @@ import { ExternalUrl } from '../../shared/models/external-url.model';
 import { GalleryImage } from '../../shared/models/gallery-image.model';
 import { MessageDescription, MessageType } from '../../shared/components/message/message.component';
 
-import { PrivateService } from '../private.service';
+import { PrivateService } from '../services/private.service';
 
 @Component({
   selector: 'app-dialog-edit-project.',

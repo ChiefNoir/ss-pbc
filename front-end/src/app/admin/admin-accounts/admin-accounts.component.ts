@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { Account } from '../account.model';
-import { PrivateService } from '../private.service';
+import { PrivateService } from '../services/private.service';
 import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-account.component';
 
 import { ResourcesService } from '../../core/services/resources.service';

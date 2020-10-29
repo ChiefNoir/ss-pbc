@@ -2,19 +2,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Account } from './account.model';
-import { Category } from '../shared/models/category.model';
-import { Information } from './information.interface';
-import { Introduction } from '../shared/models/introduction.model';
-import { Project } from '../shared/models/project.model';
-import { RequestResult } from '../shared/models/request-result.interface';
+import { Account } from '../account.model';
+import { Category } from '../../shared/models/category.model';
+import { Information } from '../information.interface';
+import { Introduction } from '../../shared/models/introduction.model';
+import { Project } from '../../shared/models/project.model';
+import { RequestResult } from '../../shared/models/request-result.interface';
 import { environment } from 'src/environments/environment';
-import { StorageService } from '../core/services/storage.service';
+import { StorageService } from '../../core/services/storage.service';
 import { DatePipe } from '@angular/common';
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { ServicesModule } from './services.module';
 
-@Injectable()
+@Injectable({ providedIn: ServicesModule })
 export class PrivateService implements HttpInterceptor  {
   private endpoint = environment.apiEndpoint;
 

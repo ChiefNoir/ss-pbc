@@ -9,7 +9,7 @@ import { Incident } from '../../shared/models/incident.interface';
 import { Category } from '../../shared/models/category.model';
 import { MessageDescription, MessageType } from '../../shared/components/message/message.component';
 
-import { PrivateService } from '../private.service';
+import { PrivateService } from '../services/private.service';
 
 @Component({
   selector: 'app-dialog-editor-category.component',

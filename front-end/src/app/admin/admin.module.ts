@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin.routing.module';
-import { PrivateService } from './private.service';
+import { PrivateService } from './services/private.service';
 
 import { AdminAccountsComponent } from './admin-accounts/admin-accounts.component';
 import { AdminCategoriesComponent } from './admin-categories/admin-categories.component';
@@ -26,12 +26,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 
+import { ServicesModule } from './services/services.module';
+
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     AdminRoutingModule,
 
+    ServicesModule,
     MatTableModule,
     MatTabsModule,
     MatDialogModule,
@@ -53,7 +56,6 @@ import { MatSelectModule } from '@angular/material/select';
     FileUploaderComponent,
   ],
   providers: [
-    PrivateService,
     MatDatepickerModule,
     MatNativeDateModule
   ]

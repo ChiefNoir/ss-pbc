@@ -10,7 +10,6 @@ import { AppRoutingModule } from './app.routing.module';
 
 import { SharedModule } from './shared/shared.module';
 
-import { OnlyIntModule } from './shared/only-int.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -29,7 +28,6 @@ import { NavigationCompactComponent } from './navigation-compact/navigation-comp
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    OnlyIntModule,
     SharedModule,
   ],
   providers: [

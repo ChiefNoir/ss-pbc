@@ -18,6 +18,8 @@ import { ResourcesService } from '../shared/services/resources.service';
 import { PublicService } from '../shared/services/public.service';
 import { StorageService } from '../shared/services/storage.service';
 
+import { OnlyIntDirective } from './directives/only-int.directive';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { StorageService } from '../shared/services/storage.service';
       ButtonContactComponent,
       MessageComponent,
       PaginatorComponent,
-      ButtonExternalUrlComponent
+      ButtonExternalUrlComponent,
+      OnlyIntDirective
     ],
   exports: [
     MaterialModule,
@@ -41,7 +44,8 @@ import { StorageService } from '../shared/services/storage.service';
     ButtonExternalUrlComponent,
     FormsModule,
     ReactiveFormsModule,
-    TextFieldModule
+    TextFieldModule,
+    OnlyIntDirective
   ],
   providers: [
     AuthGuard,

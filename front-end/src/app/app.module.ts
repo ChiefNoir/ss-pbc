@@ -9,19 +9,11 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 
 import { SharedModule } from './shared/shared.module';
-
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { NavigationCompactComponent } from './navigation-compact/navigation-compact.component';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    NavigationComponent,
-    NavigationCompactComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +21,7 @@ import { NavigationCompactComponent } from './navigation-compact/navigation-comp
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
+    CoreModule
   ],
   providers: [
     DatePipe,

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ResourcesService } from '../shared/services/resources.service';
+import { ResourcesService } from '../../../shared/services/resources.service';
 
 @Component({
   selector: 'app-footer',

@@ -1,6 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 import { AuthGuard } from './core/services/auth.guard';
 import { ResourcesService } from './core/services/resources.service';
 

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { ResourcesService } from '../../core/services/resources.service';
 import { PublicService } from '../../core/services/public.service';

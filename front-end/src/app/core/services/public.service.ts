@@ -7,7 +7,7 @@ import { Project } from '../../shared/models/project.model';
 import { ProjectPreview } from '../../shared/models/project-preview.interface';
 import { RequestResult } from '../../shared/models/request-result.interface';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

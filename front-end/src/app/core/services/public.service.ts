@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Category } from '../../shared/category.model';
 import { Introduction } from '../../shared/introduction.model';
 import { Project } from '../../shared/project.model';
-import { ProjectPreview } from '../../shared/project-preview.model';
+import { ProjectPreview } from '../../shared/project-preview.interface';
 import { RequestResult } from '../../shared/request-result.interface';
 
 import { environment } from 'src/environments/environment';

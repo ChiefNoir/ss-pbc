@@ -12,7 +12,7 @@ import { RequestResult } from '../../shared/request-result.interface';
 import { Incident } from '../../shared/incident.interface';
 import { Category } from '../../shared/category.model';
 import { Paging } from '../../shared/paging-info.model';
-import { ProjectPreview } from '../../shared/project-preview.model';
+import { ProjectPreview } from '../../shared/project-preview.interface';
 
 import { DialogEditProjectComponent } from '../dialog-edit-project/dialog-edit-project.component';
 

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ProjectPreview } from '../../shared/project-preview.model';
+import { ProjectPreview } from '../../shared/project-preview.interface';
 
 @Component({
   selector: 'app-project-preview',

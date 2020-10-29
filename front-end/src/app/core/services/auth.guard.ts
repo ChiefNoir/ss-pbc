@@ -16,9 +16,7 @@ export class AuthGuard implements CanActivate {
   public constructor(
     private router: Router,
     private storageService: StorageService
-  ) {
-    console.log('AuthGuard');
-  }
+  ) {}
 
   public isLoggedIn(): boolean {
     return this.getTokenData() !== null;

@@ -93,7 +93,5 @@ export class ResourcesService {
 
   public FooterCopyright = 'Chief';
 
-  constructor() {
-    console.log('ResourcesService');
-  }
+  constructor() { }
 }

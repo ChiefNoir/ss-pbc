@@ -14,9 +14,7 @@ import { Observable } from 'rxjs';
 export class PublicService {
   private endpoint = environment.apiEndpoint;
 
-  public constructor(private httpClient: HttpClient) {
-    console.log('PublicService');
-  }
+  public constructor(private httpClient: HttpClient) { }
 
   public getIntroduction(): Observable<RequestResult<Introduction>> {
     return this.httpClient

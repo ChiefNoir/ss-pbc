@@ -94,4 +94,8 @@ export class ResourcesService {
   public GenericDeleteFile = 'Delete file';
 
   public FooterCopyright = 'Chief';
+
+  constructor() {
+    console.log('ResourcesService');
+  }
 }

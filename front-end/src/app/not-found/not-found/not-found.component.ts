@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ResourcesService } from '../../shared/services/resources.service';
+import { ResourcesService } from '../../core/services/resources.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ResourcesService } from '../../services/resources.service';
+import { ResourcesService } from '../../../core/services/resources.service';
 import { Paging } from '../../models/paging-info.model';
 
 @Component({

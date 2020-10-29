@@ -4,14 +4,14 @@ import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { ResourcesService } from '../../shared/services/resources.service';
+import { ResourcesService } from '../../core/services/resources.service';
 import { MessageDescription, MessageType } from '../../shared/components/message/message.component';
 import { RequestResult } from '../../shared/models/request-result.interface';
 import { Incident } from '../../shared/models/incident.interface';
 
 import { Information } from '../information.interface';
 import { PrivateService } from '../private.service';
-import { AuthGuard } from '../../shared/services/auth.guard';
+import { AuthGuard } from '../../core/services/auth.guard';
 
 @Component({
   selector: 'app-admin-information',

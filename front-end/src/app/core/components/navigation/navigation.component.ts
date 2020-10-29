@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResourcesService } from '../../../shared/services/resources.service';
-import { AuthGuard } from '../../../shared/services/auth.guard';
+import { ResourcesService } from '../../services/resources.service';
+import { AuthGuard } from '../../services/auth.guard';
 import { environment } from 'src/environments/environment';
 
 @Component({

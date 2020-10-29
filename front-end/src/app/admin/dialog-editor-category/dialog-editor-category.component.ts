@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 
-import { PublicService } from '../../shared/services/public.service';
-import { ResourcesService } from '../../shared/services/resources.service';
+import { PublicService } from '../../core/services/public.service';
+import { ResourcesService } from '../../core/services/resources.service';
 import { RequestResult } from '../../shared/models/request-result.interface';
 import { Incident } from '../../shared/models/incident.interface';
 import { Category } from '../../shared/models/category.model';

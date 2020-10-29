@@ -1,8 +1,8 @@
 import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
-import { AuthGuard } from './shared/services/auth.guard';
-import { ResourcesService } from './shared/services/resources.service';
+import { AuthGuard } from './core/services/auth.guard';
+import { ResourcesService } from './core/services/resources.service';
 
 @Component({
   selector: 'app-root',

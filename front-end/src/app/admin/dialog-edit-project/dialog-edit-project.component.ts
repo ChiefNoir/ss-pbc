@@ -3,8 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { MatTable } from '@angular/material/table';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { PublicService } from '../../shared/services/public.service';
-import { ResourcesService } from '../../shared/services/resources.service';
+import { PublicService } from '../../core/services/public.service';
+import { ResourcesService } from '../../core/services/resources.service';
 
 import { Project } from '../../shared/models/project.model';
 import { RequestResult } from '../../shared/models/request-result.interface';

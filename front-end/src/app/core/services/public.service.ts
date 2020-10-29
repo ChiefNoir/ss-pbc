@@ -1,20 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Category } from '../models/category.model';
-import { Introduction } from '../models/introduction.model';
-import { Project } from '../models/project.model';
-import { ProjectPreview } from '../models/project-preview.interface';
-import { RequestResult } from '../models/request-result.interface';
+import { Category } from '../../shared/models/category.model';
+import { Introduction } from '../../shared/models/introduction.model';
+import { Project } from '../../shared/models/project.model';
+import { ProjectPreview } from '../../shared/models/project-preview.interface';
+import { RequestResult } from '../../shared/models/request-result.interface';
 
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PublicService {
   private endpoint = environment.apiEndpoint;
 
-  public constructor(private httpClient: HttpClient) {}
+  public constructor(private httpClient: HttpClient) {
+    console.log('PublicService');
+  }
 
   public getIntroduction(): Observable<RequestResult<Introduction>> {
     return this.httpClient

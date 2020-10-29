@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { ResourcesService } from '../../../shared/services/resources.service';
+import { ResourcesService } from '../../../core/services/resources.service';
 
 @Component({
   selector: 'app-file-uploader',

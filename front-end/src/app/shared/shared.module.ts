@@ -13,11 +13,6 @@ import { ButtonExternalUrlComponent } from './components/button-external-url/but
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextFieldModule } from '@angular/cdk/text-field';
 
-import { AuthGuard } from '../shared/services/auth.guard';
-import { ResourcesService } from '../shared/services/resources.service';
-import { PublicService } from '../shared/services/public.service';
-import { StorageService } from '../shared/services/storage.service';
-
 import { OnlyIntDirective } from './directives/only-int.directive';
 
 @NgModule({
@@ -47,11 +42,5 @@ import { OnlyIntDirective } from './directives/only-int.directive';
     TextFieldModule,
     OnlyIntDirective
   ],
-  providers: [
-    AuthGuard,
-    ResourcesService,
-    PublicService,
-    StorageService
-  ]
 })
 export class SharedModule {}

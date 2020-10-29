@@ -9,6 +9,11 @@ import { NavigationCompactComponent } from './components/navigation-compact/navi
 
 import { SharedModule } from '../shared/shared.module';
 
+import { ResourcesService } from '../core/services/resources.service';
+import { AuthGuard } from '../core/services/auth.guard';
+import { PublicService } from '../core/services/public.service';
+import { StorageService } from '../core/services/storage.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -26,6 +31,12 @@ import { SharedModule } from '../shared/shared.module';
     FooterComponent,
     NavigationComponent,
     NavigationCompactComponent,
+  ],
+  providers: [
+    ResourcesService,
+    PublicService,
+    StorageService,
+    AuthGuard
   ]
 })
 export class CoreModule {}

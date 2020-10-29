@@ -7,7 +7,7 @@ import { Roles } from '../../admin/roles.enum';
 
 // @ts-ignore
 import jwt_decode from 'jwt-decode';
-import { Identity } from '../models/identity.interface';
+import { Identity } from '../../shared/models/identity.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -16,7 +16,9 @@ export class AuthGuard implements CanActivate {
   public constructor(
     private router: Router,
     private storageService: StorageService
-  ) {}
+  ) {
+    console.log('AuthGuard');
+  }
 
   public isLoggedIn(): boolean {
     return this.getTokenData() !== null;

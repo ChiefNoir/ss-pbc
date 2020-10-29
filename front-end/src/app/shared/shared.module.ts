@@ -23,12 +23,12 @@ import { OnlyIntDirective } from './directives/only-int.directive';
   ],
   declarations: [
     ButtonComponent,
-      ButtonContactComponent,
-      MessageComponent,
-      PaginatorComponent,
-      ButtonExternalUrlComponent,
-      OnlyIntDirective
-    ],
+    ButtonContactComponent,
+    MessageComponent,
+    PaginatorComponent,
+    ButtonExternalUrlComponent,
+    OnlyIntDirective
+  ],
   exports: [
     MaterialModule,
     FlexLayoutModule,

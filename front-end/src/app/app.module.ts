@@ -16,7 +16,7 @@ import { OnlyIntModule } from './shared/only-int.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { NavigationCompactComponent } from './shared/navigation-compact/navigation-compact.component';
+import { NavigationCompactComponent } from './navigation-compact/navigation-compact.component';
 
 @NgModule({
   declarations: [

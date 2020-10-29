@@ -19,11 +19,25 @@ import { FileUploaderComponent } from './shared/file-uploader/file-uploader.comp
 
 import { SharedModule } from '../shared/shared.module';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     AdminRoutingModule,
-    SharedModule
+
+    MatTableModule,
+    MatTabsModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: [
     RootComponent,
@@ -36,10 +50,12 @@ import { SharedModule } from '../shared/shared.module';
     DialogEditProjectComponent,
     DialogEditorCategoryComponent,
     DialogEditAccountComponent,
-    FileUploaderComponent
+    FileUploaderComponent,
   ],
   providers: [
-    PrivateService
+    PrivateService,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class AdminModule {}

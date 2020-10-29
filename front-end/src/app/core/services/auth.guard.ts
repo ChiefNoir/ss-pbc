@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
 
-import { Roles } from '../../admin/roles.enum';
+import { Roles } from '../../shared/models/roles.enum';
 
 // @ts-ignore
 import jwt_decode from 'jwt-decode';

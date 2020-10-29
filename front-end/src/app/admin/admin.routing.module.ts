@@ -3,7 +3,7 @@ import { RouterModule, Route } from '@angular/router';
 
 import { AuthGuard } from '../core/services/auth.guard';
 
-import { Roles } from './roles.enum';
+import { Roles } from '../shared/models/roles.enum';
 
 import { RootComponent } from './root/root.component';
 import { AdminAccountsComponent } from './admin-accounts/admin-accounts.component';

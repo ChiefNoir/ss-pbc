@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class StorageService {
   private readonly localStorage: Storage = window.localStorage;
   private readonly tokenName: string = 'AuthorizationToken';

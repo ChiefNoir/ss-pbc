@@ -13,7 +13,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
 import { OnlyIntModule } from './shared/only-int.module';
-import { HeaderComponent } from './shared/header/header.component';
+import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavigationComponent } from './shared/navigation/navigation.component';
 import { NavigationCompactComponent } from './shared/navigation-compact/navigation-compact.component';

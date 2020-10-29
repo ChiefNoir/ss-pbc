@@ -4,9 +4,9 @@ import { BehaviorSubject } from 'rxjs';
 
 import { PublicService } from '../../core/services/public.service';
 import { ResourcesService } from '../../core/services/resources.service';
-import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface';
-import { Category } from '../../shared/category.model';
+import { RequestResult } from '../../shared/models/request-result.interface';
+import { Incident } from '../../shared/models/incident.interface';
+import { Category } from '../../shared/models/category.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
 
 import { PrivateService } from '../private.service';

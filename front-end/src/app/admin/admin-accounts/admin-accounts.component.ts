@@ -10,9 +10,9 @@ import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-a
 
 import { ResourcesService } from '../../core/services/resources.service';
 
-import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface'
-import { Paging } from '../../shared/paging-info.model';
+import { RequestResult } from '../../shared/models/request-result.interface';
+import { Incident } from '../../shared/models/incident.interface'
+import { Paging } from '../../shared/models/paging-info.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
 
 @Component({

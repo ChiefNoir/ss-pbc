@@ -7,9 +7,9 @@ import { environment } from 'src/environments/environment';
 import { PublicService } from '../../core/services/public.service';
 import { ResourcesService } from '../../core/services/resources.service';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
-import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface';
-import { Category } from '../../shared/category.model';
+import { RequestResult } from '../../shared/models/request-result.interface';
+import { Incident } from '../../shared/models/incident.interface';
+import { Category } from '../../shared/models/category.model';
 
 import { DialogEditorCategoryComponent } from '../dialog-editor-category/dialog-editor-category.component';
 

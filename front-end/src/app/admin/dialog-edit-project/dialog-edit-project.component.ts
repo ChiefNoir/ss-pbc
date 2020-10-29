@@ -6,12 +6,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PublicService } from '../../core/services/public.service';
 import { ResourcesService } from '../../core/services/resources.service';
 
-import { Project } from '../../shared/project.model';
-import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface';
-import { Category } from '../../shared/category.model';
-import { ExternalUrl } from '../../shared/external-url.model';
-import { GalleryImage } from '../../shared/gallery-image.model';
+import { Project } from '../../shared/models/project.model';
+import { RequestResult } from '../../shared/models/request-result.interface';
+import { Incident } from '../../shared/models/incident.interface';
+import { Category } from '../../shared/models/category.model';
+import { ExternalUrl } from '../../shared/models/external-url.model';
+import { GalleryImage } from '../../shared/models/gallery-image.model';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
 
 import { PrivateService } from '../private.service';

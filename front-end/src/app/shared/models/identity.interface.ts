@@ -1,4 +1,4 @@
-import { Account } from '../admin/account.model';
+import { Account } from '../../admin/account.model';
 
 export interface Identity {
   account: Account;

@@ -1,4 +1,4 @@
-import { ExternalUrl } from '../shared/external-url.model';
+import { ExternalUrl } from './external-url.model';
 
 export class Introduction {
   public title: string;

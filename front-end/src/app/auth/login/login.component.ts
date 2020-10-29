@@ -6,11 +6,11 @@ import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface';
+import { RequestResult } from '../../shared/models/request-result.interface';
+import { Incident } from '../../shared/models/incident.interface';
 import { MessageDescription, MessageType} from '../../shared/message/message.component';
 
-import { Identity } from '../../shared/identity.interface';
+import { Identity } from '../../shared/models/identity.interface';
 import { AuthService } from '../auth.service';
 import { AuthGuard } from '../../core/services/auth.guard';
 import { ResourcesService } from '../../core/services/resources.service';

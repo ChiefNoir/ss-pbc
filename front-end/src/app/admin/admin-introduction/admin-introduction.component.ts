@@ -8,10 +8,10 @@ import { PublicService } from '../../core/services/public.service';
 import { PrivateService } from '../private.service';
 import { ResourcesService } from '../../core/services/resources.service';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
-import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface';
-import { Introduction } from '../../shared/introduction.model';
-import { ExternalUrl } from '../../shared/external-url.model';
+import { RequestResult } from '../../shared/models/request-result.interface';
+import { Incident } from '../../shared/models/incident.interface';
+import { Introduction } from '../../shared/models/introduction.model';
+import { ExternalUrl } from '../../shared/models/external-url.model';
 
 @Component({
   selector: 'app-admin-introduction',

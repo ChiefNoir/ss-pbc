@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ExternalUrl } from '../../shared/external-url.model';
+import { ExternalUrl } from '../models/external-url.model';
 
 @Component({
   selector: 'app-button-external-url',

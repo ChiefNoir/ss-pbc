@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Category } from '../../shared/category.model';
-import { Introduction } from '../../shared/introduction.model';
-import { Project } from '../../shared/project.model';
-import { ProjectPreview } from '../../shared/project-preview.interface';
-import { RequestResult } from '../../shared/request-result.interface';
+import { Category } from '../../shared/models/category.model';
+import { Introduction } from '../../shared/models/introduction.model';
+import { Project } from '../../shared/models/project.model';
+import { ProjectPreview } from '../../shared/models/project-preview.interface';
+import { RequestResult } from '../../shared/models/request-result.interface';
 
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';

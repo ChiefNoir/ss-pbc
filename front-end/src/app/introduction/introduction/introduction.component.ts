@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { PublicService } from '../../core/services/public.service';
 import { ResourcesService } from '../../core/services/resources.service';
-import { Introduction } from '../../shared/introduction.model';
+import { Introduction } from '../../shared/models/introduction.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
-import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface';
+import { RequestResult } from '../../shared/models/request-result.interface';
+import { Incident } from '../../shared/models/incident.interface';
 import { environment } from 'src/environments/environment';
 
 @Component({

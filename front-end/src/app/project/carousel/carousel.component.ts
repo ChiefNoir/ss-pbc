@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GalleryImage } from '../../shared/gallery-image.model';
+import { GalleryImage } from '../../shared/models/gallery-image.model';
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Category } from '../../shared/category.model';
+import { Category } from '../../shared/models/category.model';
 import { Router } from '@angular/router';
 
 @Component({

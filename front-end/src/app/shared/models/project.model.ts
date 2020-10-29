@@ -1,6 +1,6 @@
-import { ExternalUrl } from '../shared/external-url.model';
-import { Category } from '../shared/category.model';
-import { GalleryImage } from '../shared/gallery-image.model';
+import { ExternalUrl } from './external-url.model';
+import { Category } from './category.model';
+import { GalleryImage } from './gallery-image.model';
 
 export class Project {
   public id: number;

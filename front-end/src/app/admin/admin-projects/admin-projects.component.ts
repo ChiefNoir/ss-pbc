@@ -8,11 +8,11 @@ import { PublicService } from '../../core/services/public.service';
 import { ResourcesService } from '../../core/services/resources.service';
 
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
-import { RequestResult } from '../../shared/request-result.interface';
-import { Incident } from '../../shared/incident.interface';
-import { Category } from '../../shared/category.model';
-import { Paging } from '../../shared/paging-info.model';
-import { ProjectPreview } from '../../shared/project-preview.interface';
+import { RequestResult } from '../../shared/models/request-result.interface';
+import { Incident } from '../../shared/models/incident.interface';
+import { Category } from '../../shared/models/category.model';
+import { Paging } from '../../shared/models/paging-info.model';
+import { ProjectPreview } from '../../shared/models/project-preview.interface';
 
 import { DialogEditProjectComponent } from '../dialog-edit-project/dialog-edit-project.component';
 

@@ -12,7 +12,7 @@ import { Incident } from '../../shared/models/incident.interface';
 import { Category } from '../../shared/models/category.model';
 import { ExternalUrl } from '../../shared/models/external-url.model';
 import { GalleryImage } from '../../shared/models/gallery-image.model';
-import { MessageType, MessageDescription } from '../../shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/components/message/message.component';
 
 import { PrivateService } from '../private.service';
 

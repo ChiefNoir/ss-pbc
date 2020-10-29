@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ResourcesService } from '../../shared/services/resources.service';
 
-import { MessageDescription, MessageType } from '../../shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/components/message/message.component';
 import { RequestResult } from '../../shared/models/request-result.interface';
 import { Incident } from '../../shared/models/incident.interface';
 

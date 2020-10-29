@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ResourcesService } from '../services/resources.service';
-import { Paging } from '../models/paging-info.model';
+import { ResourcesService } from '../../services/resources.service';
+import { Paging } from '../../models/paging-info.model';
 
 @Component({
   selector: 'app-paginator',

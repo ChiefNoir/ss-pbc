@@ -7,7 +7,7 @@ import { ResourcesService } from '../../shared/services/resources.service';
 import { RequestResult } from '../../shared/models/request-result.interface';
 import { Incident } from '../../shared/models/incident.interface';
 import { Category } from '../../shared/models/category.model';
-import { MessageDescription, MessageType } from '../../shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/components/message/message.component';
 
 import { PrivateService } from '../private.service';
 

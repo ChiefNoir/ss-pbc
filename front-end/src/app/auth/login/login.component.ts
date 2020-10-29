@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 
 import { RequestResult } from '../../shared/models/request-result.interface';
 import { Incident } from '../../shared/models/incident.interface';
-import { MessageDescription, MessageType} from '../../shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/components/message/message.component';
 
 import { Identity } from '../../shared/models/identity.interface';
 import { AuthService } from '../auth.service';

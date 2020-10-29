@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { PublicService } from '../../shared/services/public.service';
 import { PrivateService } from '../private.service';
 import { ResourcesService } from '../../shared/services/resources.service';
-import { MessageType, MessageDescription } from '../../shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/components/message/message.component';
 import { RequestResult } from '../../shared/models/request-result.interface';
 import { Incident } from '../../shared/models/incident.interface';
 import { Introduction } from '../../shared/models/introduction.model';

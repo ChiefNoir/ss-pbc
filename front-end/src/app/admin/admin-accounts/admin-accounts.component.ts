@@ -11,9 +11,9 @@ import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-a
 import { ResourcesService } from '../../shared/services/resources.service';
 
 import { RequestResult } from '../../shared/models/request-result.interface';
-import { Incident } from '../../shared/models/incident.interface'
+import { Incident } from '../../shared/models/incident.interface';
 import { Paging } from '../../shared/models/paging-info.model';
-import { MessageDescription, MessageType } from '../../shared/message/message.component';
+import { MessageDescription, MessageType } from '../../shared/components/message/message.component';
 
 @Component({
   selector: 'app-admin-accounts',

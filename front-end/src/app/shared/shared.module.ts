@@ -13,6 +13,11 @@ import { ButtonExternalUrlComponent } from './button-external-url/button-externa
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextFieldModule } from '@angular/cdk/text-field';
 
+import { AuthGuard } from '../shared/services/auth.guard';
+import { ResourcesService } from '../shared/services/resources.service';
+import { PublicService } from '../shared/services/public.service';
+import { StorageService } from '../shared/services/storage.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -37,6 +42,12 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     FormsModule,
     ReactiveFormsModule,
     TextFieldModule
+  ],
+  providers: [
+    AuthGuard,
+    ResourcesService,
+    PublicService,
+    StorageService
   ]
 })
 export class SharedModule {}

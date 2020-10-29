@@ -8,8 +8,6 @@ import { DatePipe } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 
-import { CoreModule } from './core/core.module';
-
 import { SharedModule } from './shared/shared.module';
 
 import { OnlyIntModule } from './shared/only-int.module';
@@ -33,7 +31,6 @@ import { NavigationCompactComponent } from './navigation-compact/navigation-comp
     HttpClientModule,
     OnlyIntModule,
     SharedModule,
-    CoreModule,
   ],
   providers: [
     DatePipe,

@@ -7,7 +7,7 @@ import { Roles } from '../../admin/roles.enum';
 
 // @ts-ignore
 import jwt_decode from 'jwt-decode';
-import { Identity } from '../../shared/models/identity.interface';
+import { Identity } from '../models/identity.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {

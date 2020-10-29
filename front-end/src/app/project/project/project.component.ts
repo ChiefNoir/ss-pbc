@@ -5,8 +5,8 @@ import { Title } from '@angular/platform-browser';
 
 import { environment } from 'src/environments/environment';
 
-import { ResourcesService } from '../../core/services/resources.service';
-import { PublicService } from '../../core/services/public.service';
+import { ResourcesService } from '../../shared/services/resources.service';
+import { PublicService } from '../../shared/services/public.service';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { Project } from '../../shared/models/project.model';
 import { RequestResult } from '../../shared/models/request-result.interface';

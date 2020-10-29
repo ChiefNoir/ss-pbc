@@ -8,7 +8,7 @@ import { Account } from '../account.model';
 import { PrivateService } from '../private.service';
 import { DialogEditAccountComponent } from '../dialog-edit-account/dialog-edit-account.component';
 
-import { ResourcesService } from '../../core/services/resources.service';
+import { ResourcesService } from '../../shared/services/resources.service';
 
 import { RequestResult } from '../../shared/models/request-result.interface';
 import { Incident } from '../../shared/models/incident.interface'

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { ResourcesService } from '../../core/services/resources.service';
+import { ResourcesService } from '../../shared/services/resources.service';
 
 import { MessageDescription, MessageType } from '../../shared/message/message.component';
 import { RequestResult } from '../../shared/models/request-result.interface';

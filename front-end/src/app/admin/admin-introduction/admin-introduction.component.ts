@@ -4,9 +4,9 @@ import { MatTable } from '@angular/material/table';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { PublicService } from '../../core/services/public.service';
+import { PublicService } from '../../shared/services/public.service';
 import { PrivateService } from '../private.service';
-import { ResourcesService } from '../../core/services/resources.service';
+import { ResourcesService } from '../../shared/services/resources.service';
 import { MessageType, MessageDescription } from '../../shared/message/message.component';
 import { RequestResult } from '../../shared/models/request-result.interface';
 import { Incident } from '../../shared/models/incident.interface';

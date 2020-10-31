@@ -53,7 +53,7 @@ describe('IntroductionComponent', () => {
         expect(component).toBeTruthy();
       });
 
-    it('should display spinner', () => {
+    it('should have spinner', () => {
         const fixture = TestBed.createComponent(IntroductionComponent);
         const component = fixture.componentInstance;
 

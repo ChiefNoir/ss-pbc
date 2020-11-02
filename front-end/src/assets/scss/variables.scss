@@ -1,8 +1,6 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
-@import url('https://fonts.cdnfonts.com/css/dejavu-serif');
-@import url('https://fonts.cdnfonts.com/css/dreamwalker');
-@import url('https://fonts.cdnfonts.com/css/stash');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Roboto&family=Kaushan+Script&display=swap');
 
 $color-core: #000000;
 
@@ -18,9 +16,9 @@ $color-control-active: $color-text-highlighted;
 $color-control-text: #bebebe;
 $color-control-active-text-highlighted: #2f3136;
 
-$font-core: 'DejaVu Serif', sans-serif;
-$font-header: 'Dreamwalker', sans-serif;
-$font-neon: 'Stash Vintage', sans-serif;
+$font-core: 'Roboto', sans-serif;
+$font-header: 'Abril Fatface', cursive;
+$font-neon: 'Kaushan Script', cursive;
 
 $shadow-text: 2px 2px 3px black;
 $color-container-transparent: rgba(32, 34, 37, 0.9);

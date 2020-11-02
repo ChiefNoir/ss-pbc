@@ -11,7 +11,6 @@ namespace Abstractions.API
     [Route("api/v1/")]
     public abstract class PrivateControllerBase : ControllerBase
     {
-        //TODO: replace [FromForm] to [FromBody], change rile handling
         [HttpPost("introduction"), DisableRequestSizeLimit]
         [Authorize(Roles = Restrictions.EditorRoles)]
         public abstract Task<IActionResult> SaveIntroductionAsync([FromForm] Introduction introduction);
@@ -53,7 +52,6 @@ namespace Abstractions.API
         [Authorize(Roles = Restrictions.AuthorizedRoles)]
         public abstract IActionResult GetInformationAsync();
 
-        //TODO: replace [FromForm] to [FromBody], change rile handling
         [HttpPost("project"), DisableRequestSizeLimit]
         [Authorize(Roles = Restrictions.EditorRoles)]
         public abstract Task<IActionResult> SaveProjectAsync([FromForm] Project project);

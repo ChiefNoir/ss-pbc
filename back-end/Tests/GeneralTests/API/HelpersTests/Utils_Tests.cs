@@ -9,11 +9,11 @@ namespace GeneralTests.API.HelpersTests
     {
 
         [Theory]
-        [InlineData("cute.jpg", "https://localhost:44386/files/cute.jpg")]
-        [InlineData("cute.png", "https://localhost:44386/files/cute.png")]
-        [InlineData("cute.doc", "https://localhost:44386/files/cute.doc")]
-        [InlineData("cute.xlst", "https://localhost:44386/files/cute.xlst")]
-        [InlineData("cute.exe", "https://localhost:44386/files/cute.exe")]
+        [InlineData("cute.jpg", "https://localhost:44386/work_files/cute.jpg")]
+        [InlineData("cute.png", "https://localhost:44386/work_files/cute.png")]
+        [InlineData("cute.doc", "https://localhost:44386/work_files/cute.doc")]
+        [InlineData("cute.xlst", "https://localhost:44386/work_files/cute.xlst")]
+        [InlineData("cute.exe", "https://localhost:44386/work_files/cute.exe")]
         internal void AppendUrlToName_Valid(string name, string expected)
         {
             var result = Utils.AppendUrlToName(Storage.CreateConfiguration(), name);

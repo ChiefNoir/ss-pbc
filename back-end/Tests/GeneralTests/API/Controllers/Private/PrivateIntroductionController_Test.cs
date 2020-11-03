@@ -2,10 +2,13 @@
 using Abstractions.Model.System;
 using Abstractions.Supervision;
 using GeneralTests.SharedUtils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Xunit;
 
@@ -52,7 +55,7 @@ namespace GeneralTests.API.Controllers.Private
                             {
                                 Id = 1,
                                 DisplayName = "GitHub",
-                                Url = "New value https://github.com/ChiefNoir",
+                                Url = "https://github.com/ChiefNoir",
                                 Version = 1
                             }
                         }
@@ -194,6 +197,10 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator
+                        .CreateValid(context, null);
+                    
+
                     var updateResponse =
                     (
                         await api.SaveIntroductionAsync(update) as JsonResult
@@ -201,6 +208,8 @@ namespace GeneralTests.API.Controllers.Private
 
                     GenericChecks.CheckSucceed(updateResponse);
                     Compare(updateResponse.Data, expected);
+                    Assert.Equal(expected.PosterUrl, updateResponse.Data.PosterUrl);
+
 
                     var apiPublic = Storage.CreatePublicController(context);
                     var getResponse =
@@ -210,6 +219,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     GenericChecks.CheckSucceed(getResponse);
                     Compare(getResponse.Data, expected);
+                    Assert.Equal(expected.PosterUrl, getResponse.Data.PosterUrl);
 
                 }
                 catch (Exception)
@@ -250,24 +260,94 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
+        [Fact]
+        internal async void UpdateIntroduction_AddFile_Valid()
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var update = new Introduction
+                    {
+                        Content = "The service is on-line. Congratulations.",
+                        Title = "Hello",
+                        PosterDescription = "des",
+                        PosterUrl = @"Files/untitled.png",
+                        Version = 0
+                    };
+
+                    FormFileCollection ffcollection = null;
+
+                    var stream = File.OpenRead(update.PosterUrl);
+                    ffcollection = new FormFileCollection
+                    {
+                        new FormFile(stream, 0, stream.Length, "introduction[posterToUpload]", "untitled.png")
+                    };
+
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator
+                        .CreateValid(context, ffcollection);
+
+
+                    var updateResponse =
+                    (
+                        await api.SaveIntroductionAsync(update) as JsonResult
+                    ).Value as ExecutionResult<Introduction>;
+
+                    GenericChecks.CheckSucceed(updateResponse);
+
+                    Assert.NotNull(updateResponse.Data.PosterUrl);
+
+                    var config = Storage.CreateConfiguration();
+                    var pathStart = config.GetSection("Kestrel:Endpoints:Https:Url").Get<string>()
+                        + "/" + config.GetSection("Location:FileStorage").Get<string>();
+
+                    Assert.StartsWith(pathStart, updateResponse.Data.PosterUrl);
+
+                    var storagePath = config.GetSection("Location:FileStorage").Get<string>();
+
+                    var ss = File.Exists(Path.Combine(storagePath, Path.GetFileName(updateResponse.Data.PosterUrl)));
+
+                    Assert.True(ss);
+
+                    var apiPublic = Storage.CreatePublicController(context);
+                    var getResponse =
+                    (
+                        await apiPublic.GetIntroductionAsync() as JsonResult
+                    ).Value as ExecutionResult<Introduction>;
+
+                    GenericChecks.CheckSucceed(getResponse);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushData();
+                }
+            }
+        }
+
+
         private void Compare(Introduction result, Introduction expectedItem)
         {
-            Assert.Equal(result.Title, expectedItem.Title);
-            Assert.Equal(result.Content, expectedItem.Content);
-            Assert.Equal(result.PosterDescription, expectedItem.PosterDescription);
-            Assert.Equal(result.PosterUrl, expectedItem.PosterUrl);
-            Assert.Equal(result.Version, expectedItem.Version);
+            Assert.Equal(expectedItem.Title, result.Title);
+            Assert.Equal(expectedItem.Content, result.Content);
+            Assert.Equal(expectedItem.PosterDescription, result.PosterDescription);
 
-            Assert.Equal(result.ExternalUrls.Count(), expectedItem.ExternalUrls.Count());
+            Assert.Equal(expectedItem.Version, result.Version);
+
+            Assert.Equal(expectedItem.ExternalUrls.Count(), result.ExternalUrls.Count());
 
             foreach (var item in expectedItem.ExternalUrls)
             {
                 var resultItem = result.ExternalUrls.FirstOrDefault(x => x.DisplayName == item.DisplayName);
                 //because it's the only property we have to distinguish urls
 
-                Assert.Equal(resultItem.DisplayName, resultItem.DisplayName);
-                Assert.Equal(resultItem.Url, resultItem.Url);
-                Assert.Equal(resultItem.Version, resultItem.Version);
+                Assert.Equal(resultItem.DisplayName, item.DisplayName);
+                Assert.Equal(resultItem.Url, item.Url);
+                Assert.Equal(resultItem.Version, item.Version);
             }
         }
     }

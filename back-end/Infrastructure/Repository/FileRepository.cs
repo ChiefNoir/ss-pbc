@@ -37,6 +37,7 @@ namespace Infrastructure.Repository
                    );
             }
 
+            CheckFileStorageDirectory(_fileStorage);
 
             var filename = GenerateFileName() + Path.GetExtension(file.FileName);
 
@@ -54,6 +55,14 @@ namespace Infrastructure.Repository
         private static string GenerateFileName()
         {
             return DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private static void CheckFileStorageDirectory(string path)
+        {
+            if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), path)))
+                return;
+
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), path));
         }
     }
 }

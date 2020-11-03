@@ -73,15 +73,8 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var httpContext = new DefaultHttpContext();
-                    httpContext.Request.Headers["Authorization"] = token;
-                    var controllerContext = new ControllerContext()
-                    {
-                        HttpContext = httpContext,
-                    };
-
                     var api = Storage.CreatePrivateController(context);
-                    api.ControllerContext = controllerContext;
+                    api.ControllerContext = ControllerContextCreator.CreateInvalid(token);
 
                     var response =
                     (

@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Security
 {
-    /// <summary> JWT Toke manager </summary>
+    /// <summary> JWT Token manager </summary>
     public class TokenManager : ITokenManager
     {
         private readonly IConfiguration _configuration;

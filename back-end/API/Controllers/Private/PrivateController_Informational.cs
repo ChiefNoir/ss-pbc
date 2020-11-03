@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Security.Extensions;
 using System.Linq;
 using System.Reflection;
-using System.Security;
 
 namespace API.Controllers.Private
 {
@@ -12,8 +11,7 @@ namespace API.Controllers.Private
     {
         public override IActionResult GetInformationAsync()
         {
-            var result = _supervisor.SafeExecute(
-                () =>
+            var result = _supervisor.SafeExecute(() =>
             {
                 var token = Request.Headers["Authorization"].ToString();
                 var claims = _tokenManager.ValidateToken(token.Split(' ').Last());

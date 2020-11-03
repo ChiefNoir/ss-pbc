@@ -377,6 +377,8 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
+
                     var apiPublic = Storage.CreatePublicController(context);
 
                     var response =
@@ -421,8 +423,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
-                    var apiPublic = Storage.CreatePublicController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
 
+                    var apiPublic = Storage.CreatePublicController(context);
                     var response =
                     (
                         await api.SaveCategoryAsync(update) as JsonResult
@@ -453,8 +456,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
-                    var apiPublic = Storage.CreatePublicController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
 
+                    var apiPublic = Storage.CreatePublicController(context);
                     var response =
                     (
                         await api.SaveCategoryAsync(create) as JsonResult
@@ -497,9 +501,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
+
                     var apiPublic = Storage.CreatePublicController(context);
-
-
                     var response =
                     (
                         await api.SaveCategoryAsync(create) as JsonResult
@@ -531,8 +535,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
-                    var apiPublic = Storage.CreatePublicController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
 
+                    var apiPublic = Storage.CreatePublicController(context);
                     var response =
                     (
                         await api.DeleteCategoryAsync(category) as JsonResult
@@ -572,8 +577,9 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
-                    var apiPublic = Storage.CreatePublicController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
 
+                    var apiPublic = Storage.CreatePublicController(context);
                     var response =
                     (
                         await api.DeleteCategoryAsync(category) as JsonResult

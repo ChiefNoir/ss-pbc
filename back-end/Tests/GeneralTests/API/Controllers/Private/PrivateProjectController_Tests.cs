@@ -1820,19 +1820,20 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiPrivate = Storage.CreatePrivateController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
 
                     var response =
                     (
-                        await apiPrivate.DeleteProjectAsync(project) as JsonResult
+                        await api.DeleteProjectAsync(project) as JsonResult
                     ).Value as ExecutionResult<bool>;
                     GenericChecks.CheckSucceed(response);
                     Assert.True(response.Data);
 
-                    var apiProjectPublic = Storage.CreatePublicController(context);
+                    var apiPublic = Storage.CreatePublicController(context);
                     var responseGet =
                     (
-                        await apiProjectPublic.GetProjectAsync(project.Code) as JsonResult
+                        await apiPublic.GetProjectAsync(project.Code) as JsonResult
                     ).Value as ExecutionResult<Project>;
                     GenericChecks.CheckFail(responseGet);
 
@@ -1871,11 +1872,12 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiPrivate = Storage.CreatePrivateController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
 
                     var response =
                     (
-                        await apiPrivate.DeleteProjectAsync(project) as JsonResult
+                        await api.DeleteProjectAsync(project) as JsonResult
                     ).Value as ExecutionResult<bool>;
                     GenericChecks.CheckFail(response);
                 }
@@ -1899,19 +1901,20 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiPrivate = Storage.CreatePrivateController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
                     var response =
                     (
-                        await apiPrivate.SaveProjectAsync(project) as JsonResult
+                        await api.SaveProjectAsync(project) as JsonResult
                     ).Value as ExecutionResult<Project>;
                     GenericChecks.CheckSucceed(response);
 
                     Compare(project, response.Data);
 
-                    var apiCategoryPublic = Storage.CreatePublicController(context);
+                    var apiPublic = Storage.CreatePublicController(context);
                     var responseGetCategory =
                     (
-                        await apiCategoryPublic.GetCategoryAsync(project.Category.Id.Value) as JsonResult
+                        await apiPublic.GetCategoryAsync(project.Category.Id.Value) as JsonResult
                     ).Value as ExecutionResult<Category>;
                     GenericChecks.CheckSucceed(responseGetCategory);
 
@@ -1919,7 +1922,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var responseGetCategoryEverything =
                     (
-                        await apiCategoryPublic.GetCategoryEverythingAsync() as JsonResult
+                        await apiPublic.GetCategoryEverythingAsync() as JsonResult
                     ).Value as ExecutionResult<Category>;
                     GenericChecks.CheckSucceed(responseGetCategoryEverything);
                     Assert.Equal(project.Category.TotalProjects + 1, responseGetCategoryEverything.Data.TotalProjects);
@@ -1944,10 +1947,12 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiPrivate = Storage.CreatePrivateController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
+
                     var response =
                     (
-                        await apiPrivate.SaveProjectAsync(project) as JsonResult
+                        await api.SaveProjectAsync(project) as JsonResult
                     ).Value as ExecutionResult<Project>;
                     GenericChecks.CheckFail(response);
                 }
@@ -1971,10 +1976,11 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    var apiPrivate = Storage.CreatePrivateController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
                     var response =
                     (
-                        await apiPrivate.SaveProjectAsync(project) as JsonResult
+                        await api.SaveProjectAsync(project) as JsonResult
                     ).Value as ExecutionResult<Project>;
                     GenericChecks.CheckSucceed(response);
 
@@ -2001,10 +2007,12 @@ namespace GeneralTests.API.Controllers.Private
                 {
                     Storage.RunSql("insert into project (code, display_name, category_id) values ('nice','temp',6);");
 
-                    var apiPrivate = Storage.CreatePrivateController(context);
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
+
                     var response =
                     (
-                        await apiPrivate.SaveProjectAsync(project) as JsonResult
+                        await api.SaveProjectAsync(project) as JsonResult
                     ).Value as ExecutionResult<Project>;
                     GenericChecks.CheckFail(response);
                 }

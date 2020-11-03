@@ -3,10 +3,13 @@ using Abstractions.Model;
 using Abstractions.Model.System;
 using Abstractions.Supervision;
 using GeneralTests.SharedUtils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Xunit;
 
@@ -2015,6 +2018,90 @@ namespace GeneralTests.API.Controllers.Private
                         await api.SaveProjectAsync(project) as JsonResult
                     ).Value as ExecutionResult<Project>;
                     GenericChecks.CheckFail(response);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    context.FlushData();
+                }
+            }
+        }
+
+
+        [Fact]
+        internal async void CreateProjectWithFiles_Valid()
+        {
+            using (var context = Storage.CreateContext())
+            {
+                try
+                {
+                    var project = new Project
+                    {
+                        Id = null,
+                        Code = "cute",
+                        DisplayName = "Brand new project",
+                        Description = "Not that smart and pretty long description.",
+                        DescriptionShort = "The smart and short description.",
+                        PosterDescription = null,
+                        PosterUrl = @"Files/untitled.png",
+                        ReleaseDate = null,
+                        GalleryImages = new []
+                        {
+                            new GalleryImage()
+                        },
+                        Category = new Category
+                        {
+                            Id = 6,
+                            Code = "s",
+                            DisplayName = "Software",
+                            IsEverything = false,
+                            TotalProjects = 1,
+                            Version = 0
+                        },
+                        Version = 0,
+                    };
+
+                    var streamPoster = File.OpenRead(project.PosterUrl);
+                    var streamGallery = File.OpenRead(project.PosterUrl);
+
+                    var ffcollection = new FormFileCollection
+                    {
+                        new FormFile(streamPoster, 0, streamPoster.Length, "project[posterToUpload]", "untitled.png"),
+                        new FormFile(streamGallery, 0, streamPoster.Length, "project[galleryImages][0][readyToUpload]", "untitled.png"),
+                    };
+
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, ffcollection);
+                    
+                    var response =
+                    (
+                        await api.SaveProjectAsync(project) as JsonResult
+                    ).Value as ExecutionResult<Project>;
+                    GenericChecks.CheckSucceed(response);
+
+                    Assert.NotNull(response.Data.PosterUrl);
+
+                    var config = Storage.CreateConfiguration();
+                    var pathStart = config.GetSection("Kestrel:Endpoints:Https:Url").Get<string>()
+                        + "/" + config.GetSection("Location:FileStorage").Get<string>();
+
+                    Assert.StartsWith(pathStart, response.Data.PosterUrl);
+
+                    var storagePath = config.GetSection("Location:FileStorage").Get<string>();
+                    var fileExists = File.Exists(Path.Combine(storagePath, Path.GetFileName(response.Data.PosterUrl)));
+                    Assert.True(fileExists);
+
+
+
+                    Assert.NotNull(response.Data.GalleryImages[0]);
+                    Assert.StartsWith(pathStart, response.Data.GalleryImages[0].ImageUrl);
+
+
+                    var galleryExists = File.Exists(Path.Combine(storagePath, Path.GetFileName(response.Data.GalleryImages[0].ImageUrl)));
+                    Assert.True(galleryExists);
                 }
                 catch (Exception)
                 {

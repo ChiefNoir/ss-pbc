@@ -1,7 +1,5 @@
 ﻿using Abstractions.API;
-using Abstractions.IRepository;
 using Abstractions.Model.Queries;
-using Abstractions.Supervision;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

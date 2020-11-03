@@ -71,12 +71,6 @@ namespace API.Controllers.Private
                 () =>
                 {
                     return RoleNames.GetRoles();
-                    //TODO: make a method or something
-                    return typeof(RoleNames)
-                            .GetFields(BindingFlags.Static | BindingFlags.Public)
-                            .Where(x => x.IsLiteral)
-                            .Select(x => x.GetValue(null)?.ToString())
-                            .ToList();
                 }
             );
 

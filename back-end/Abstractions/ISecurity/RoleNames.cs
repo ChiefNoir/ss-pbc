@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Abstractions.ISecurity
 {
@@ -8,5 +9,14 @@ namespace Abstractions.ISecurity
         public const string Admin = "admin";
 
         public const string Demo = "demo";
+
+        public static List<string> GetRoles()
+        {
+            return new List<string>
+            {
+                Admin,
+                Demo
+            };
+        }
     }
 }

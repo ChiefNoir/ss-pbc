@@ -179,11 +179,7 @@ namespace Infrastructure.Repository
                     );
             }
 
-            var allRoles = typeof(RoleNames)
-                            .GetFields(BindingFlags.Static | BindingFlags.Public)
-                            .Where(x => x.IsLiteral)
-                            .Select(x => x.GetValue(null)?.ToString())
-                            .ToList();
+            var allRoles = RoleNames.GetRoles();
             
             if (!allRoles.Contains(account.Role))
             {
@@ -256,11 +252,7 @@ namespace Infrastructure.Repository
                     );
             }
 
-            var allRoles = typeof(RoleNames)
-                            .GetFields(BindingFlags.Static | BindingFlags.Public)
-                            .Where(x => x.IsLiteral)
-                            .Select(x => x.GetValue(null)?.ToString())
-                            .ToList();
+            var allRoles = RoleNames.GetRoles();
 
             if (!allRoles.Contains(account.Role))
             {

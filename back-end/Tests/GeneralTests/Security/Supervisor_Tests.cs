@@ -34,7 +34,7 @@ namespace GeneralTests.Security
             _tokenMock.Setup(x => x.ValidateToken("SecurityTokenException")).Returns(() => throw new SecurityTokenException());
             _tokenMock.Setup(x => x.ValidateToken("IPrincipal-null")).Returns<IPrincipal>(null);
 
-            _supervisor = new Supervisor(_tokenMock.Object, _logger.Object);
+            _supervisor = new Supervisor(_logger.Object);
         }
 
 

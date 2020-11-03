@@ -17,7 +17,7 @@ namespace Security
     {
         private readonly ILogger<Supervisor> _logger;
 
-        public Supervisor(ITokenManager tokenManager, ILogger<Supervisor> logger)
+        public Supervisor(ILogger<Supervisor> logger)
         {
             _logger = logger;
         }

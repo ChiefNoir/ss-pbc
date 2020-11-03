@@ -79,10 +79,8 @@ namespace GeneralTests.SharedUtils
 
         internal static PublicController CreatePublicController(DataContext context)
         {
-            var config = CreateConfiguration();
-            var tokenManager = new TokenManager(config);
             var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
+            var sup = new Supervisor(logger.Object);
 
             var catRep = new CategoryRepository(context);
             var intrRep = new IntroductionRepository(context);
@@ -97,7 +95,7 @@ namespace GeneralTests.SharedUtils
             var tokenManager = new TokenManager(config);
             var hashManager = new HashManager(config);
             var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
+            var sup = new Supervisor(logger.Object);
 
             var accRep = new AccountRepository(context, config, hashManager);
 
@@ -113,7 +111,7 @@ namespace GeneralTests.SharedUtils
             var tokenManager = new TokenManager(config);
             var hashManager = new HashManager(config);
             var logger = new Mock<ILogger<Supervisor>>();
-            var sup = new Supervisor(tokenManager, logger.Object);
+            var sup = new Supervisor(logger.Object);
 
 
             var accRep = new AccountRepository(context, config, hashManager);

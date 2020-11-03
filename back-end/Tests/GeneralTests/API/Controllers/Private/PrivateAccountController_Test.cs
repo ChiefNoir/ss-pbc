@@ -449,13 +449,14 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(Roles))]
-        internal void GetRolesAsync_Valid(string[] expectedRoles)
+        internal async void GetRolesAsync_Valid(string[] expectedRoles)
         {
             using (var context = Storage.CreateContext())
             {
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
 
                     var response =
                     (
@@ -492,9 +493,10 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    Storage.RunSql(sql);
-
                     var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
+
+                    Storage.RunSql(sql);
 
                     var response =
                     (
@@ -502,7 +504,7 @@ namespace GeneralTests.API.Controllers.Private
                     ).Value as ExecutionResult<int>;
                     GenericChecks.CheckSucceed(response);
 
-                    Assert.Equal(sql.Length, response.Data);
+                    Assert.Equal(sql.Length + 1, response.Data);
                 }
                 catch (Exception)
                 {
@@ -524,6 +526,8 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
+
                     var addResult =
                     (
                         await api.SaveAccountAsync(account) as JsonResult
@@ -558,15 +562,8 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
-                    //NOTE: creating a first valid account
-                    var auth = Storage.CreateGatewayController(context);
-                    var identity =
-                    (
-                        await auth.LoginAsync(new Credentials { Login = "sa", Password = "sa" }) as JsonResult
-                    ).Value as ExecutionResult<Identity>;
-                    GenericChecks.CheckSucceed(identity);
-
                     var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
                     var addResult =
                     (
                         await api.SaveAccountAsync(account) as JsonResult
@@ -593,9 +590,11 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
+
                     Storage.RunSql(sql);
 
-                    var api = Storage.CreatePrivateController(context);
                     var delResult =
                     (
                         await api.DeleteAccountAsync(account) as JsonResult
@@ -628,9 +627,11 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
+
                     Storage.RunSql(sql);
 
-                    var api = Storage.CreatePrivateController(context);
                     var delResult =
                     (
                         await api.DeleteAccountAsync(account) as JsonResult
@@ -657,9 +658,11 @@ namespace GeneralTests.API.Controllers.Private
             {
                 try
                 {
+                    var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
+
                     Storage.RunSql(sql);
 
-                    var api = Storage.CreatePrivateController(context);
                     var getResult =
                     (
                         await api.GetAccountAsync(expected.Id.Value) as JsonResult

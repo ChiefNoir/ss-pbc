@@ -275,10 +275,8 @@ namespace GeneralTests.API.Controllers.Private
                         Version = 0
                     };
 
-                    FormFileCollection ffcollection = null;
-
                     var stream = File.OpenRead(update.PosterUrl);
-                    ffcollection = new FormFileCollection
+                    var ffcollection = new FormFileCollection
                     {
                         new FormFile(stream, 0, stream.Length, "introduction[posterToUpload]", "untitled.png")
                     };
@@ -304,10 +302,8 @@ namespace GeneralTests.API.Controllers.Private
                     Assert.StartsWith(pathStart, updateResponse.Data.PosterUrl);
 
                     var storagePath = config.GetSection("Location:FileStorage").Get<string>();
-
-                    var ss = File.Exists(Path.Combine(storagePath, Path.GetFileName(updateResponse.Data.PosterUrl)));
-
-                    Assert.True(ss);
+                    var fileExists = File.Exists(Path.Combine(storagePath, Path.GetFileName(updateResponse.Data.PosterUrl)));
+                    Assert.True(fileExists);
 
                     var apiPublic = Storage.CreatePublicController(context);
                     var getResponse =

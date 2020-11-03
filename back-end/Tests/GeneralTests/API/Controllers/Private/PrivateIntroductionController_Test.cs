@@ -197,10 +197,8 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
-                    api.ControllerContext = await ControllerContextCreator
-                        .CreateValid(context, null);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
                     
-
                     var updateResponse =
                     (
                         await api.SaveIntroductionAsync(update) as JsonResult
@@ -242,6 +240,7 @@ namespace GeneralTests.API.Controllers.Private
                 try
                 {
                     var api = Storage.CreatePrivateController(context);
+                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
                     var updateResponse =
                     (
                         await api.SaveIntroductionAsync(update) as JsonResult

@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GeneralTests.API.Controllers.Public
@@ -102,7 +103,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(DefaultCategories))]
-        internal async void GetCategories(Category[] expectedCategories)
+        internal async Task GetCategoriesAsync(Category[] expectedCategories)
         {
             using (var context = Storage.CreateContext())
             {
@@ -135,7 +136,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(DefaultCategories))]
-        internal async void GetCategory_Valid(Category[] expectedCategory)
+        internal async Task GetCategory_ValidAsync(Category[] expectedCategory)
         {
             using (var context = Storage.CreateContext())
             {
@@ -169,7 +170,7 @@ namespace GeneralTests.API.Controllers.Public
         [Theory]
         [InlineData(10)]
         [InlineData(-10)]
-        internal async void GetCategory_Invalid(int id)
+        internal async Task GetCategory_InvalidAsync(int id)
         {
             using (var context = Storage.CreateContext())
             {
@@ -199,7 +200,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(DefaultEverythinCategory))]
-        internal async void GetEverythingCategory(Category expected)
+        internal async Task GetEverythingCategoryAsync(Category expected)
         {
             using (var context = Storage.CreateContext())
             {

@@ -18,31 +18,31 @@
 }
 
 @keyframes spin-with-click {
-  000% { transform: rotate(0deg) }
+  000% { transform: rotate(0deg); }
 
-  001% { transform: rotate(45deg) }
-  010% { transform: rotate(45deg) }
+  001% { transform: rotate(45deg); }
+  010% { transform: rotate(45deg); }
 
-  011% { transform: rotate(90deg) }
-  024% { transform: rotate(90deg) }
+  011% { transform: rotate(90deg); }
+  024% { transform: rotate(90deg); }
 
-  025% { transform: rotate(135deg) }
-  036% { transform: rotate(135deg) }
+  025% { transform: rotate(135deg); }
+  036% { transform: rotate(135deg); }
 
-  037% { transform: rotate(180deg) }
-  048% { transform: rotate(180deg) }
+  037% { transform: rotate(180deg); }
+  048% { transform: rotate(180deg); }
 
-  049% { transform: rotate(225deg) }
-  060% { transform: rotate(225deg) }
+  049% { transform: rotate(225deg); }
+  060% { transform: rotate(225deg); }
 
-  061% { transform: rotate(270deg) }
-  072% { transform: rotate(270deg) }
+  061% { transform: rotate(270deg); }
+  072% { transform: rotate(270deg); }
 
-  073% { transform: rotate(315deg) }
-  084% { transform: rotate(315deg) }
+  073% { transform: rotate(315deg); }
+  084% { transform: rotate(315deg); }
 
-  085% { transform: rotate(360deg) }
-  100% { transform: rotate(360deg) }
+  085% { transform: rotate(360deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @keyframes neon-blink {

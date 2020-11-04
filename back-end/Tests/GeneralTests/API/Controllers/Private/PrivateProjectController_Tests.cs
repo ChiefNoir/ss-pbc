@@ -1,6 +1,4 @@
-﻿using Abstractions.ISecurity;
-using Abstractions.Model;
-using Abstractions.Model.System;
+﻿using Abstractions.Model;
 using Abstractions.Supervision;
 using GeneralTests.SharedUtils;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GeneralTests.API.Controllers.Private
@@ -1572,252 +1571,10 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-        class ValidUpdateWithoutExpected : IEnumerable<object[]>
-        {
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                yield return new object[]
-                {
-                    new Project
-                    {
-                        Id = 1,
-                        Code = "placeholder_code",
-                        DisplayName = "Brand new project",
-                        Description = "Not that smart and pretty long description.",
-                        DescriptionShort ="The smart and short description.",
-                        PosterDescription = null,
-                        PosterUrl = null,
-                        ReleaseDate = null,
-                        GalleryImages = new List<GalleryImage>()
-                        {
-                            new GalleryImage
-                            {
-                                Id = 1,
-                                ExtraUrl = null,
-                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
-                                Version = 0
-                            }
-                        },
-                        ExternalUrls = new List<ExternalUrl>()
-                        {
-                            new ExternalUrl
-                            {
-                                Id = 2,
-                                DisplayName = "GitHub",
-                                Url = "https://github.com/ChiefNoir",
-                                Version = 0
-                            }
-                        },
-                        Category = new Category
-                        {
-                            Id = 6,
-                            Code = "s",
-                            DisplayName = "Software",
-                            IsEverything = false,
-                            TotalProjects = 1,
-                            Version = 0
-                        },
-                        Version = 0,
-                    },
-                };
-
-                yield return new object[]
-                {
-                    new Project
-                    {
-                        Id = 1,
-                        Code = "placeholder_code",
-                        DisplayName = "Brand new project",
-                        Description = "Not that smart and pretty long description.",
-                        DescriptionShort ="The smart and short description.",
-                        PosterDescription = null,
-                        PosterUrl = null,
-                        ReleaseDate = null,
-                        GalleryImages = new List<GalleryImage>()
-                        {
-                            new GalleryImage
-                            {
-                                Id = 1,
-                                ExtraUrl = null,
-                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
-                                Version = 0
-                            }
-                        },
-                        ExternalUrls = new List<ExternalUrl>(),
-                        Category = new Category
-                        {
-                            Id = 6,
-                            Code = "s",
-                            DisplayName = "Software",
-                            IsEverything = false,
-                            TotalProjects = 1,
-                            Version = 0
-                        },
-                        Version = 0,
-                    },
-                };
-
-                yield return new object[]
-                {
-                    new Project
-                    {
-                        Id = 1,
-                        Code = "placeholder_code",
-                        DisplayName = "Brand new project",
-                        Description = "Not that smart and pretty long description.",
-                        DescriptionShort ="The smart and short description.",
-                        PosterDescription = null,
-                        PosterUrl = null,
-                        ReleaseDate = null,
-                        GalleryImages = new List<GalleryImage>(),
-                        ExternalUrls = new List<ExternalUrl>(),
-                        Category = new Category
-                        {
-                            Id = 6,
-                            Code = "s",
-                            DisplayName = "Software",
-                            IsEverything = false,
-                            TotalProjects = 1,
-                            Version = 0
-                        },
-                        Version = 0,
-                    },
-                };
-
-                yield return new object[]
-                {
-                    new Project
-                    {
-                        Id = 1,
-                        Code = "placeholder_code",
-                        DisplayName = "Brand new project",
-                        Description = "Not that smart and pretty long description.",
-                        DescriptionShort ="The smart and short description.",
-                        PosterDescription = null,
-                        PosterUrl = null,
-                        ReleaseDate = null,
-                        GalleryImages = new List<GalleryImage>()
-                        {
-                            new GalleryImage
-                            {
-                                Id = 1,
-                                ExtraUrl = null,
-                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
-                                Version = 0
-                            }
-                        },
-                        ExternalUrls = new List<ExternalUrl>(),
-                        Category = new Category
-                        {
-                            Id = 2,
-                            Code = "vg",
-                            DisplayName = "Games",
-                            IsEverything = false,
-                            TotalProjects = 1,
-                            Version = 0
-                        },
-                        Version = 0,
-                    },
-                };
-
-                yield return new object[]
-                {
-                    new Project
-                    {
-                        Id = 1,
-                        Code = "placeholder_code",
-                        DisplayName = "Brand new project",
-                        Description = "Not that smart and pretty long description.",
-                        DescriptionShort ="The smart and short description.",
-                        PosterDescription = null,
-                        PosterUrl = null,
-                        ReleaseDate = null,
-                        GalleryImages = new List<GalleryImage>()
-                        {
-                            new GalleryImage
-                            {
-                                Id = 1,
-                                ExtraUrl = null,
-                                ImageUrl = "https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png",
-                                Version = 0
-                            }
-                        },
-                        ExternalUrls = new List<ExternalUrl>()
-                        {
-                            new ExternalUrl
-                            {
-                                Id = null,
-                                DisplayName = "cute",
-                                Url = "https://github.com/",
-                            }
-                        },
-                        Category = new Category
-                        {
-                            Id = 6,
-                            Code = "s",
-                            DisplayName = "Software",
-                            IsEverything = false,
-                            TotalProjects = 1,
-                            Version = 0
-                        },
-                        Version = 0,
-                    },
-                };
-
-                yield return new object[]
-                {
-                    new Project
-                    {
-                        Id = 1,
-                        Code = "placeholder_code",
-                        DisplayName = "Brand new project",
-                        Description = "Not that smart and pretty long description.",
-                        DescriptionShort ="The smart and short description.",
-                        PosterDescription = null,
-                        PosterUrl = null,
-                        ReleaseDate = null,
-                        GalleryImages = new List<GalleryImage>()
-                        {
-                            new GalleryImage
-                            {
-                                Id = null,
-                                ExtraUrl = null,
-                                ImageUrl = "something",
-                                Version = 0
-                            }
-                        },
-                        ExternalUrls = new List<ExternalUrl>()
-                        {
-                            new ExternalUrl
-                            {
-                                Id = 2,
-                                DisplayName = "GitHub",
-                                Url = "https://github.com/ChiefNoir",
-                                Version = 0
-                            }
-                        },
-                        Category = new Category
-                        {
-                            Id = 6,
-                            Code = "s",
-                            DisplayName = "Software",
-                            IsEverything = false,
-                            TotalProjects = 1,
-                            Version = 0
-                        },
-                        Version = 0,
-                    },
-                };
-
-            }
-        }
-
         // --
         [Theory]
         [ClassData(typeof(DefaultProjects))]
-        internal async void DeleteProject_Valid(Project project)
+        internal async Task DeleteProject_ValidAsync(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -1869,7 +1626,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InvalidDelete))]
-        internal async void DeleteProject_Invalid(Project project)
+        internal async Task DeleteProject_InvalidAsync(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -1898,7 +1655,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(NewProjects))]
-        internal async void CreateProject_Valid(Project project)
+        internal async Task CreateProject_ValidAsync(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -1944,7 +1701,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InvalidNew))]
-        internal async void CreateProject_Invalid(Project project)
+        internal async Task CreateProject_InvalidAsync(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -1973,7 +1730,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(ValidUpdate))]
-        internal async void UpdateProject_Valid(Project project, Project expected)
+        internal async Task UpdateProject_ValidAsync(Project project, Project expected)
         {
             using (var context = Storage.CreateContext())
             {
@@ -2002,7 +1759,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InvalidUpdate))]
-        internal async void UpdateProject_Invalid(Project project)
+        internal async Task UpdateProject_InvalidAsync(Project project)
         {
             using (var context = Storage.CreateContext())
             {
@@ -2032,7 +1789,7 @@ namespace GeneralTests.API.Controllers.Private
 
 
         [Fact]
-        internal async void CreateProjectWithFiles_Valid()
+        internal async Task CreateProjectWithFiles_ValidAsync()
         {
             using (var context = Storage.CreateContext())
             {

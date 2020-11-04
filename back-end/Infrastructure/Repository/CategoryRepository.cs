@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
@@ -40,19 +41,52 @@ namespace Infrastructure.Repository
                            .ToArrayAsync();
         }
 
-        public Task<Category> GetAsync(int id)
+        public async Task<Category> GetAsync(int id)
         {
-            return FirstOrDefaultAsync(x => x.Id == id);
+            var result = await _context.CategoriesWithTotalProjects
+                                       .AsNoTracking()
+                                       .FirstOrDefaultAsync(x => x.Id == id);
+            if (result == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CategoryDoesNotExist, "")
+                    );
+            }
+
+            return DataConverter.ToCategory(result);
         }
 
-        public Task<Category> GetAsync(string code)
+        public async Task<Category> GetAsync(string code)
         {
-            return FirstOrDefaultAsync(x => x.Code == code);
+            var result = await _context.CategoriesWithTotalProjects
+                                       .AsNoTracking()
+                                       .FirstOrDefaultAsync(x => x.Code == code);
+            if (result == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CategoryDoesNotExist, code)
+                    );
+            }
+
+            return DataConverter.ToCategory(result);
         }
 
-        public Task<Category> GetTechnicalAsync()
+        public async Task<Category> GetTechnicalAsync()
         {
-            return FirstOrDefaultAsync(x => x.IsEverything);
+            var result = await _context.CategoriesWithTotalProjects
+                                       .AsNoTracking()
+                                       .FirstOrDefaultAsync(x => x.IsEverything);
+            if (result == null)
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.CategoryDoesNotExist, "")
+                    );
+            }
+
+            return DataConverter.ToCategory(result);
         }
 
 
@@ -96,27 +130,6 @@ namespace Infrastructure.Repository
             var categoryWithProject = await _context.CategoriesWithTotalProjects.FirstOrDefaultAsync(x => x.Id == dbItem.Id);
             return DataConverter.ToCategory(categoryWithProject);
         }
-
-        private async Task<Category> FirstOrDefaultAsync(Expression<Func<DataModel.CategoryWithTotalProjects, bool>> predicate)
-        {
-            var result = await _context.CategoriesWithTotalProjects
-                                       .AsNoTracking()
-                                       .Where(predicate)
-                                       .Select(x => DataConverter.ToCategory(x))
-                                       .FirstOrDefaultAsync();
-            if (result == null)
-            {
-                throw new InconsistencyException
-                    (
-                        string.Format(Resources.TextMessages.CategoryDoesNotExist, "")
-                    );
-            }
-
-            return result;
-        }
-
-
-
 
 
         private void CheckBeforeDelete(DataModel.Category dbItem, Category category)

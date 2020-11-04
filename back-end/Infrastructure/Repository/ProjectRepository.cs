@@ -38,9 +38,22 @@ namespace Infrastructure.Repository
         }
 
 
-        public Task<Project> GetAsync(string code)
+        public async Task<Project> GetAsync(string code)
         {
-            return FirstOrDefaultAsync(x => x.Code == code);
+            var result = await _context.Projects
+                                       .AsNoTracking()
+                                       .Include(x => x.Category)
+                                       .Include(x => x.GalleryImages)
+                                       .Include(x => x.ExternalUrls)
+                                       .ThenInclude(x => x.ExternalUrl)
+                                       .FirstOrDefaultAsync(x => x.Code == code);
+
+            if (result == null)
+            {
+                throw new InconsistencyException(Resources.TextMessages.ProjectDoesNotExist);
+            }
+
+            return DataConverter.ToProject(result);
         }
 
 
@@ -85,7 +98,20 @@ namespace Infrastructure.Repository
             await _context.Projects.AddAsync(dbItem);
             await _context.SaveChangesAsync();
 
-            return await FirstOrDefaultAsync(x => x.Id == dbItem.Id);
+            var result = await _context.Projects
+                                       .AsNoTracking()
+                                       .Include(x => x.Category)
+                                       .Include(x => x.GalleryImages)
+                                       .Include(x => x.ExternalUrls)
+                                       .ThenInclude(x => x.ExternalUrl)
+                                       .FirstOrDefaultAsync(x => x.Id == dbItem.Id);
+
+            if (result == null)
+            {
+                throw new InconsistencyException(Resources.TextMessages.ProjectDoesNotExist);
+            }
+
+            return DataConverter.ToProject(result);
         }
 
         private async Task<Project> UpdateAsync(Project project)
@@ -102,7 +128,8 @@ namespace Infrastructure.Repository
             Merge(dbItem, project);
 
             await _context.SaveChangesAsync();
-            return await FirstOrDefaultAsync(x => x.Id == dbItem.Id);
+
+            return DataConverter.ToProject(dbItem);
         }
 
 
@@ -368,29 +395,6 @@ namespace Infrastructure.Repository
                         string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Image of the Gallery Image")
                     );
             }
-        }
-
-
-
-
-        private async Task<Project> FirstOrDefaultAsync(Expression<Func<DataModel.Project, bool>> predicate)
-        {
-            var result = await _context.Projects
-                                       .AsNoTracking()
-                                       .Include(x=>x.Category)
-                                       .Include(x=>x.GalleryImages)
-                                       .Include(x=>x.ExternalUrls)
-                                       .ThenInclude(x=>x.ExternalUrl)
-                                       .Where(predicate)
-                                       .Select(x => DataConverter.ToProject(x))
-                                       .FirstOrDefaultAsync();
-
-            if (result == null)
-            {
-                throw new InconsistencyException(Resources.TextMessages.ProjectDoesNotExist);
-            }
-
-            return result;
         }
 
     }

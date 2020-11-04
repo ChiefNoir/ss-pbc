@@ -26,22 +26,24 @@ namespace GeneralTests
                 });
 
             // Build and start the IHost
-            using var host = await hostBuilder.StartAsync();
-            try
+            using (var host = await hostBuilder.StartAsync())
             {
-                using var client = host.GetTestClient();
-                using var response = await client.GetAsync(url);
-                response.EnsureSuccessStatusCode(); // Status Code 200-299
-                Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                await host.StopAsync();
-                host.Dispose();
+                try
+                {
+                    using var client = host.GetTestClient();
+                    using var response = await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode(); // Status Code 200-299
+                    Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    await host.StopAsync();
+                    host.Dispose();
+                }
             }
         }
     }

@@ -253,7 +253,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(DefaultProjects))]
-        internal async Task GetProject_Valid(Project expected)
+        internal async Task GetProject_ValidAsync(Project expected)
         {
             using (var context = Storage.CreateContext())
             {
@@ -284,7 +284,7 @@ namespace GeneralTests.API.Controllers.Public
         [InlineData(null)]
         [InlineData("")]
         [InlineData("qwerty")]
-        internal async Task GetProject_InValid(string code)
+        internal async Task GetProject_InValidAsync(string code)
         {
             using (var context = Storage.CreateContext())
             {
@@ -312,7 +312,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(ValidProjectsPreview))]
-        internal async Task GetProjectsPreview_Valid(string sql, Paging paging, ProjectSearch projectSearch, ProjectPreview[] expectedProjects)
+        internal async Task GetProjectsPreview_ValidAsync(string sql, Paging paging, ProjectSearch projectSearch, ProjectPreview[] expectedProjects)
         {
             using (var context = Storage.CreateContext())
             {
@@ -350,7 +350,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(InvalidProjectsPreview))]
-        internal async Task GetProjectsPreview_InValid(Paging paging, ProjectSearch projectSearch)
+        internal async Task GetProjectsPreview_InValidAsync(Paging paging, ProjectSearch projectSearch)
         {
             using (var context = Storage.CreateContext())
             {
@@ -378,7 +378,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(InvalidEmptyProjectsPreview))]
-        internal async Task GetProjectsPreview_InValidEmpty(Paging paging, ProjectSearch projectSearch)
+        internal async Task GetProjectsPreview_InValidEmptyAsync(Paging paging, ProjectSearch projectSearch)
         {
             using (var context = Storage.CreateContext())
             {

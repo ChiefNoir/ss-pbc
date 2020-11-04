@@ -82,27 +82,27 @@ mat-form-field {
 
 // [Mat-form-field]
 ::ng-deep.mat-form-field-label {
-  /*color or text in the inputs*/
+  // color or text in the inputs
   color: $color-text !important;
 }
 
 ::ng-deep.mat-form-field-underline {
-  /*color of underline*/
+  // color of underline
   background-color: $color-control-active-text-highlighted !important;
 }
 
 ::ng-deep.mat-form-field-ripple {
-  /*color of underline when focused*/
+  // color of underline when focused
   background-color: $color-text !important;
 }
 
 .mat-focused ::ng-deep.mat-form-field-label {
-  /*change color of focused placeholder*/
+  // change color of focused placeholder
   color: $color-text !important;
 }
 
 ::ng-deep .mat-form-field-empty.mat-form-field-label {
-  /*change color of placeholder*/
+  // change color of placeholder
   color: $color-text !important;
   font-style: italic;
 }

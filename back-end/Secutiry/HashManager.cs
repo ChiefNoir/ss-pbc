@@ -38,9 +38,13 @@ namespace Security
 
             byte[] salt;
             if (string.IsNullOrEmpty(hexSalt))
+            {
                 salt = GenerateRandomArray(128);
+            }
             else
+            {
                 salt = HexConverter.ToByteArray(hexSalt);
+            }
 
             var result = CalcSaltedHash(text, salt);
 

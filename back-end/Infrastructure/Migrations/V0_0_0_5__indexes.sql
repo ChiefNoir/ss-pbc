@@ -1,4 +1,4 @@
 ﻿-- Category
-create unique index on category (is_everything) 
-    where is_everything = true;
+CREATE UNIQUE INDEX ON category (is_everything) 
+    WHERE is_everything = TRUE;
 -- --------------------------------------------------------------

@@ -1,23 +1,23 @@
-﻿-- Category with total projects in thaat category
+﻿-- Category with total projects in that category
 CREATE VIEW categories_with_projects_total_v AS
 (
-	select 
-		c.*, coalesce(sm.total, 0) as total_projects
-	from 
+	SELECT 
+		c.*, COALESCE(sm.total, 0) AS total_projects
+	FROM 
 		category c
-		left join
+		LEFT JOIN
 		(
-			select
-				coalesce(category_id, (select id from category where is_everything = true limit 1) ) as id, 
-				count(1) as total
-			from 
+			SELECT
+				COALESCE(category_id, (SELECT id FROM category WHERE is_everything = TRUE LIMIT 1) ) AS id, 
+				COUNT(1) AS total
+			FROM 
 				project 
-			group by
-				rollup(category_id)
+			GROUP BY
+				ROLLUP(category_id)
 		) sm 
-	on 
+	ON 
 		c.id = sm.id
-	order by 
-		total desc
+	ORDER BY 
+		total DESC
 );
 -- --------------------------------------------------------------

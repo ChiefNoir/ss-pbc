@@ -1,36 +1,36 @@
 ﻿-- Categories
-insert into category(code, display_name, is_everything)
-	values ('all', 'Everything', true);
+INSERT INTO category(code, display_name, is_everything)
+	VALUES ('all', 'Everything', TRUE);
 
-insert into category(code, display_name)
-	values ('vg', 'Games');
+INSERT INTO category(code, display_name)
+	VALUES ('vg', 'Games');
 
-insert into category(code, display_name)
-	values ('ma', 'Comics');
+INSERT INTO category(code, display_name)
+	VALUES ('ma', 'Comics');
 
-insert into category(code, display_name)
-	values ('lit', 'Stories');
+INSERT INTO category(code, display_name)
+	VALUES ('lit', 'Stories');
 
-insert into category(code, display_name)
-	values ('bg', 'Tabletop');
+INSERT INTO category(code, display_name)
+	VALUES ('bg', 'Tabletop');
 
-insert into category(code, display_name)
-	values ('s', 'Software');
+INSERT INTO category(code, display_name)
+	VALUES ('s', 'Software');
 -- --------------------------------------------------------------
 
 -- Introduction
-insert into introduction(title, content)
-	values ('Hello', 'The service is on-line. Congratulations.');
+INSERT INTO introduction(title, content)
+	VALUES ('Hello', 'The service is on-line. Congratulations.');
 
-insert into external_url (display_name, url)
-	values ('GitHub', 'https://github.com/ChiefNoir');
+INSERT INTO external_url (display_name, url)
+	VALUES ('GitHub', 'https://github.com/ChiefNoir');
 
-insert into introduction_to_external_url(introduction_id, external_url_id)
-	values (1, 1);
+INSERT INTO introduction_to_external_url(introduction_id, external_url_id)
+	VALUES (1, 1);
 -- --------------------------------------------------------------
 
 -- Sample project
-insert into project
+INSERT INTO project
 (
 	code, 
 	display_name, 
@@ -38,7 +38,7 @@ insert into project
 	description_short, 
 	description
 )
-values
+VALUES
 (
 	'placeholder_code',
 	'Brand new project',
@@ -47,12 +47,12 @@ values
 	'Not that smart and pretty long description.'
 );
 
-insert into external_url (display_name, url)
-	values ('GitHub', 'https://github.com/ChiefNoir');
+INSERT INTO external_url (display_name, url)
+	VALUES ('GitHub', 'https://github.com/ChiefNoir');
 
-insert into project_to_external_url(project_id, external_url_id)
-	values (1, 2);
+INSERT INTO project_to_external_url(project_id, external_url_id)
+	VALUES (1, 2);
 
-insert into gallery_image (extra_url, image_url, project_id)
-	values (null, 'https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png', 1);
+INSERT INTO gallery_image (extra_url, image_url, project_id)
+	VALUES (NULL, 'https://raw.githubusercontent.com/ChiefNoir/BusinessCard/master/front-end/BusinessSite/src/assets/images/placeholder-wide.png', 1);
 -- --------------------------------------------------------------

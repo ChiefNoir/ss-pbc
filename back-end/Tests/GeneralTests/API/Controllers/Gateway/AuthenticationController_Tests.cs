@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GeneralTests.API.Controllers.Gateway
@@ -59,31 +60,6 @@ namespace GeneralTests.API.Controllers.Gateway
             }
         }
 
-        class InvalidTokens : IEnumerable<object[]>
-        {
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                yield return new object[]
-                {
-                    string.Empty
-                };
-                yield return new object[]
-                {
-                    null
-                };
-                yield return new object[]
-                {
-                    "bad-token"
-                };
-                yield return new object[]
-                {
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic2EiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIm5iZiI6MTYwMTk5Njk3MSwiZXhwIjoxNjAxOTk4NzcxLCJpc3MiOiJJc3N1ZXJOYW1lIiwiYXVkIjoiQXVkaWVuY2UtMSJ9.DCbppW8SqvL1QJS2BIO2qlplZv-UHqI2_NP_Za0KDzA"
-                };
-            }
-        }
-
         private readonly Account DefaultAccount = new Account
         {
             Id = 1,
@@ -96,7 +72,7 @@ namespace GeneralTests.API.Controllers.Gateway
 
         [Theory]
         [InlineData("sa", "sa")]
-        internal async void LoginAsync_Valid_Empty(string login, string password)
+        internal async Task LoginAsync_Valid_EmptyAsync(string login, string password)
         {
             using (var context = Storage.CreateContext())
             {
@@ -133,7 +109,7 @@ namespace GeneralTests.API.Controllers.Gateway
 
         [Theory]
         [ClassData(typeof(InvalidLogins))]
-        internal async void LoginAsync_Invalid(Credentials credentials)
+        internal async Task LoginAsync_InvalidAsync(Credentials credentials)
         {
             using (var context = Storage.CreateContext())
             {

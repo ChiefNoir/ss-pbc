@@ -233,7 +233,7 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(category.DisplayName))
                     );
             }
 
@@ -241,7 +241,7 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, category.GetType().Name)
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, nameof(category))
                     );
             }
 

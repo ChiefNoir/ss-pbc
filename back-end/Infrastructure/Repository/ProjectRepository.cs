@@ -150,7 +150,7 @@ namespace Infrastructure.Repository
 
         private void Merge(DataModel.Project dbProject, IEnumerable<ExternalUrl> externalUrls)
         {
-            foreach (var item in dbProject?.ExternalUrls ?? new List<DataModel.ProjectExternalUrl>())
+            foreach (var item in dbProject.ExternalUrls ?? new List<DataModel.ProjectExternalUrl>())
             {
                 var remoteItem = externalUrls?.FirstOrDefault(x => x.Id.HasValue && x.Id == item.ExternalUrlId);
 
@@ -174,7 +174,7 @@ namespace Infrastructure.Repository
 
         private void Merge(DataModel.Project dbProject, IEnumerable<GalleryImage> galleryImages)
         {
-            foreach (var item in dbProject?.GalleryImages ?? new List<DataModel.GalleryImage>())
+            foreach (var item in dbProject.GalleryImages ?? new List<DataModel.GalleryImage>())
             {
                 var remoteItem = galleryImages?.FirstOrDefault(x => x.Id.HasValue && x.Id == item.Id);
 
@@ -198,7 +198,7 @@ namespace Infrastructure.Repository
 
 
 
-        private void CheckBeforeDelete(DataModel.Project dbItem, Project project)
+        private static void CheckBeforeDelete(DataModel.Project dbItem, Project project)
         {
             if (project.Id == null)
             {

@@ -1,11 +1,11 @@
 ﻿using Abstractions.Model;
-using Abstractions.Model.System;
 using Abstractions.Supervision;
 using GeneralTests.SharedUtils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 
@@ -370,7 +370,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(ValidUpdate))]
-        internal async void Save_Valid(Category update, Category expected)
+        internal async Task Save_ValidAsync(Category update, Category expected)
         {
             using (var context = Storage.CreateContext())
             {
@@ -416,7 +416,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InValidUpdate))]
-        internal async void Save_InValid(Category update)
+        internal async Task Save_InValidAsync(Category update)
         {
             using (var context = Storage.CreateContext())
             {
@@ -425,7 +425,6 @@ namespace GeneralTests.API.Controllers.Private
                     var api = Storage.CreatePrivateController(context);
                     api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
 
-                    var apiPublic = Storage.CreatePublicController(context);
                     var response =
                     (
                         await api.SaveCategoryAsync(update) as JsonResult
@@ -449,7 +448,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(ValidCreate))]
-        internal async void Create_Valid(Category create, Category expected)
+        internal async Task Create_ValidAsync(Category create, Category expected)
         {
             using (var context = Storage.CreateContext())
             {
@@ -494,7 +493,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InValidCreate))]
-        internal async void Create_InValid(Category create)
+        internal async Task Create_InValidAsync(Category create)
         {
             using (var context = Storage.CreateContext())
             {
@@ -503,7 +502,6 @@ namespace GeneralTests.API.Controllers.Private
                     var api = Storage.CreatePrivateController(context);
                     api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
 
-                    var apiPublic = Storage.CreatePublicController(context);
                     var response =
                     (
                         await api.SaveCategoryAsync(create) as JsonResult
@@ -528,7 +526,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(ValidDelete))]
-        internal async void Delete_Valid(Category category)
+        internal async Task Delete_ValidAsync(Category category)
         {
             using (var context = Storage.CreateContext())
             {
@@ -570,7 +568,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InValidDelete))]
-        internal async void Delete_InValid(Category category)
+        internal async Task Delete_InValidAsync(Category category)
         {
             using (var context = Storage.CreateContext())
             {
@@ -579,7 +577,6 @@ namespace GeneralTests.API.Controllers.Private
                     var api = Storage.CreatePrivateController(context);
                     api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
 
-                    var apiPublic = Storage.CreatePublicController(context);
                     var response =
                     (
                         await api.DeleteCategoryAsync(category) as JsonResult

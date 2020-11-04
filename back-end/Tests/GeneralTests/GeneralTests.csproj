@@ -6,6 +6,26 @@
     <IsPackable>false</IsPackable>
 
     <OutputType>Library</OutputType>
+
+    <Version>0.0.0.1</Version>
+
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+
+    <FileVersion>0.0.0.1</FileVersion>
+
+    <NeutralLanguage>en</NeutralLanguage>
+
+    <Authors>Stanislav "Chief" Shevtsov</Authors>
+
+    <Company>Fireplace of Despair</Company>
+
+    <Copyright>Stanislav "Chief" Shevtsov</Copyright>
+
+    <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
+
+    <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
+
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

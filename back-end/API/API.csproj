@@ -13,6 +13,8 @@
     <StartupObject>API.Program</StartupObject>
     <UserSecretsId>3426c725-01eb-41b1-9dfa-b3619149ebc0</UserSecretsId>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <Copyright>Stanislav "Chief" Shevtsov</Copyright>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

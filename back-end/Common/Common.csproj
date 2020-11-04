@@ -11,6 +11,8 @@
     <FileVersion>0.0.0.0</FileVersion>
     <Version>0.0.0.1</Version>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <Copyright>Stanislav "Chief" Shevtsov</Copyright>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
 </Project>

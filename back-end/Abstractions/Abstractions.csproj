@@ -10,6 +10,8 @@
     <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
     <NeutralLanguage>en</NeutralLanguage>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <Copyright>Stanislav "Chief" Shevtsov</Copyright>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

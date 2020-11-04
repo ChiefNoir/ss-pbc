@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Infrastructure.Resources
+﻿namespace Infrastructure.Resources
 {
     /// <summary> User-friendly messages</summary>
     static class TextMessages

@@ -69,7 +69,6 @@ namespace API
 
             services.AddLogging(builder =>
             {
-                //builder.SetMinimumLevel(LogLevel.Information);
                 builder.AddNLog("nlog.config");
             });
         }

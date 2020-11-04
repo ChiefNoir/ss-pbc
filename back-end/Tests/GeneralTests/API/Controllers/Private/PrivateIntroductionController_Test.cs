@@ -1,5 +1,4 @@
 ﻿using Abstractions.Model;
-using Abstractions.Model.System;
 using Abstractions.Supervision;
 using GeneralTests.SharedUtils;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GeneralTests.API.Controllers.Private
@@ -190,7 +190,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(GenerateValidSave))]
-        internal async void UpdateIntroduction_Valid(Introduction update, Introduction expected)
+        internal async Task UpdateIntroduction_ValidAsync(Introduction update, Introduction expected)
         {
             using (var context = Storage.CreateContext())
             {
@@ -233,7 +233,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(GenerateInValidSave))]
-        internal async void UpdateIntroduction_Invalid(Introduction update)
+        internal async Task UpdateIntroduction_InvalidAsync(Introduction update)
         {
             using (var context = Storage.CreateContext())
             {
@@ -260,7 +260,7 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Fact]
-        internal async void UpdateIntroduction_AddFile_Valid()
+        internal async Task UpdateIntroduction_AddFile_ValidAsync()
         {
             using (var context = Storage.CreateContext())
             {

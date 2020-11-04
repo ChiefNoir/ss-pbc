@@ -63,7 +63,5 @@ namespace Security
 
             return result;
         }
-
     }
-
 }

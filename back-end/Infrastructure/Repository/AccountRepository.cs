@@ -58,14 +58,14 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.WasAlreadyDeleted, result.GetType().Name)
+                        string.Format(Resources.TextMessages.WasAlreadyDeleted, "Account")
                     );
             }
 
             return result;
         }
 
-        public async Task<Account> GetAsync(string login, string password)
+        public async Task<Account> GetAsync(string login, string plainTextPassword)
         {
             // This is the primary method for user verification
             // so, if there is no users in the db, we must create new one:
@@ -82,7 +82,7 @@ namespace Infrastructure.Repository
                                        .AsNoTracking()
                                        .FirstOrDefaultAsync(x => x.Login == login);
 
-            CheckAccount(dbItem, login, password, _hashManager);
+            CheckAccount(dbItem, login, plainTextPassword, _hashManager);
 
             return new Account
             {

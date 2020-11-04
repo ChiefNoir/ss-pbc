@@ -23,14 +23,14 @@ mat-form-field {
 
 ::ng-deep.mat-dialog-container {
   background-color: $color-control;
-  padding: 0px;
+  padding: 0;
 
   @include flat-shadow($color-core);
 }
 
 ::ng-deep.mat-dialog-content {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 ::ng-deep.mat-form-field-disabled .mat-form-field-underline {

@@ -43,7 +43,7 @@
 //[Content container]
 ::ng-deep.mat-dialog-container {
   background-color: $color-control;
-  padding: 0px;
+  padding: 0;
 
   @include flat-shadow($color-core);
 }
@@ -52,8 +52,8 @@
 
 // [Mat-dialog]
 ::ng-deep.mat-dialog-content {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 // end of [Mat-dialog]
 

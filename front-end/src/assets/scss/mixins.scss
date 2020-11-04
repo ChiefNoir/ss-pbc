@@ -1,5 +1,5 @@
 @mixin flat-shadow($color) {
-  box-shadow: 4px 4px 0px -2px $color;
+  box-shadow: 4px 4px 0 -2px $color;
 }
 
 @mixin text-retro-shadow($color) {

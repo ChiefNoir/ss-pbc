@@ -256,7 +256,7 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.CantDeleteSystemCategory)
+                        Resources.TextMessages.CantDeleteSystemCategory
                     );
             }
             if (category.IsEverything && _context.Categories.Any(x => x.Id != category.Id && x.IsEverything))

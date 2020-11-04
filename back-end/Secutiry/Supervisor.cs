@@ -1,15 +1,8 @@
 ﻿using Abstractions.Model.System;
 using Abstractions.Supervision;
-using Microsoft.IdentityModel.Tokens;
-using Security.Resources;
-using System;
-using System.Security.Principal;
-using System.Threading.Tasks;
-using Abstractions.ISecurity;
-using System.Security;
-using System.Linq;
-using Security.Extensions;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace Security
 {

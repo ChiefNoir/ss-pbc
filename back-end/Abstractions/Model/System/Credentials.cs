@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Abstractions.Model.System
+﻿namespace Abstractions.Model.System
 {
     public class Credentials
     {

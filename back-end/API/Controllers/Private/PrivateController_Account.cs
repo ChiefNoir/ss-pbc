@@ -1,13 +1,8 @@
 ﻿using Abstractions.API;
-using Abstractions.IRepository;
 using Abstractions.ISecurity;
 using Abstractions.Model;
 using Abstractions.Model.Queries;
-using Abstractions.Supervision;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Private

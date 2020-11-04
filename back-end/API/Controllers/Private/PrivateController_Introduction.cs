@@ -1,11 +1,8 @@
 ﻿using Abstractions.API;
-using Abstractions.IRepository;
 using Abstractions.Model;
-using Abstractions.Supervision;
 using API.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 

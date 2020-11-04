@@ -40,10 +40,10 @@ namespace Abstractions.Model
 
 
         /// <summary> URL for the external resources for the project </summary>
-        public IEnumerable<ExternalUrl> ExternalUrls { get; set; }
+        public IList<ExternalUrl> ExternalUrls { get; set; }
 
         /// <summary> Projects gallery </summary>
-        public IEnumerable<GalleryImage> GalleryImages { get; set; }
+        public IList<GalleryImage> GalleryImages { get; set; }
 
     }
 }

@@ -101,22 +101,22 @@ namespace Infrastructure.Converters
             };
         }
 
-        private static IEnumerable<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<ProjectExternalUrl> externalUrls)
+        private static IList<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<ProjectExternalUrl> externalUrls)
         {
             var result = new List<Abstractions.Model.ExternalUrl>();
 
             if (externalUrls == null || !externalUrls.Any())
                 return result;
 
-            return externalUrls.Select(ToExternalUrl);
+            return externalUrls.Select(ToExternalUrl).ToList();
         }
 
-        private static IEnumerable<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<IntroductionExternalUrl> items)
+        private static IList<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<IntroductionExternalUrl> items)
         {
             if (items == null || !items.Any())
                 return new List<Abstractions.Model.ExternalUrl>();
 
-            return items.Select(ToExternalUrl);
+            return items.Select(ToExternalUrl).ToList();
         }
 
         private static Abstractions.Model.ExternalUrl ToExternalUrl(IntroductionExternalUrl item)

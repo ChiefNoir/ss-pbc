@@ -39,7 +39,9 @@ namespace API.Controllers.Private
         private void HandleFiles(Project project, IFormFileCollection files)
         {
             if (files == null || !files.Any())
+            {
                 return;
+            }
 
             var poster = files.FirstOrDefault(x => x.Name == "project[posterToUpload]");
             if (poster != null)

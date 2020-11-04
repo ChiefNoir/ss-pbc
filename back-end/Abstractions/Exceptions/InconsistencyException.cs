@@ -9,13 +9,20 @@ namespace Abstractions.Exceptions
     /// <summary> Represents the potential inconsistency error in the storage </summary>
     public class InconsistencyException : Exception
     {
-        public InconsistencyException(string message, Exception innerException = null):base(message, innerException)
+        public InconsistencyException() : base()
         {
         }
 
-        protected InconsistencyException(SerializationInfo info, StreamingContext context):base(info, context)
+        public InconsistencyException(string message) : base(message)
         {
-            throw new NotImplementedException();
+        }
+
+        public InconsistencyException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected InconsistencyException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }

@@ -33,18 +33,6 @@ namespace GeneralTests.SharedUtils
             };
         }
 
-        public static ControllerContext CreateInvalid(string token)
-        {
-            var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers["Authorization"] = token;
-
-            return new ControllerContext()
-            {
-                HttpContext = httpContext,
-            };
-        }
-
-
         public static async Task<ControllerContext> CreateValid(DataContext context, FormFileCollection files)
         {
             var apiAuth = Storage.CreateGatewayController(context);
@@ -70,7 +58,16 @@ namespace GeneralTests.SharedUtils
             };
         }
 
+        public static ControllerContext CreateInvalid(string token)
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers["Authorization"] = token;
 
+            return new ControllerContext()
+            {
+                HttpContext = httpContext,
+            };
+        }
 
     }
 }

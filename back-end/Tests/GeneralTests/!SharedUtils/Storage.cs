@@ -1,6 +1,5 @@
 ﻿using Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System;
@@ -24,7 +23,7 @@ namespace GeneralTests.SharedUtils
             builder.UseNpgsql(CreateConfiguration().GetConnectionString(connectionName));
 
             var options = builder.Options;
-            var context = new DataContext(options);
+            var context = new DataContext(options, null);
 
             return context;
         }

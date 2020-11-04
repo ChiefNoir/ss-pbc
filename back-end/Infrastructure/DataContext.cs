@@ -1,5 +1,6 @@
 ﻿using Infrastructure.DataModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
@@ -13,8 +14,9 @@ namespace Infrastructure
     /// <summary>Entity framework data context </summary>
     public class DataContext : DbContext
     {
-        private static bool _isMigrationsDone;
+        private static volatile bool _isMigrationsDone;
         private static readonly object _migrationLock = new object();
+        private readonly ILogger<DataContext> _logger;
 
 
         internal DbSet<Account> Accounts { get; set; }
@@ -27,8 +29,10 @@ namespace Infrastructure
         internal DbSet<Project> Projects { get; set; }
         internal DbSet<ProjectExternalUrl> ProjectExternalUrls { get; set; }
 
-        public DataContext(DbContextOptions options) : base(options)
+        public DataContext(DbContextOptions options, ILogger<DataContext> logger) : base(options)
         {
+            _logger = logger;
+
             if (Database.ProviderName == "Microsoft.EntityFrameworkCore.InMemory")
                 return;
 
@@ -43,7 +47,14 @@ namespace Infrastructure
                 MigrateDatabase(Database.GetDbConnection());
             }
         }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProjectExternalUrl>().HasKey(sc => new { sc.ProjectId, sc.ExternalUrlId });
+            modelBuilder.Entity<IntroductionExternalUrl>().HasKey(sc => new { sc.IntroductionId, sc.ExternalUrlId });
+        }
 
+        /// <summary> [WARNING] Remove all tables from database</summary>
         internal void FlushData()
         {
             using (var connection = Database.GetDbConnection())
@@ -51,7 +62,7 @@ namespace Infrastructure
                 try
                 {
                     var command = connection.CreateCommand();
-                    command.CommandText = 
+                    command.CommandText =
                         "DO $$ DECLARE tabname RECORD; " +
                         "BEGIN " +
                             "FOR tabname IN(SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) " +
@@ -62,11 +73,8 @@ namespace Infrastructure
 
                     connection.Open();
                     command.ExecuteNonQuery();
-                    _isMigrationsDone = false;
-                }
-                catch (Exception)
-                {
-                    throw;
+
+                    MigrationUndone();
                 }
                 finally
                 {
@@ -76,13 +84,7 @@ namespace Infrastructure
         }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ProjectExternalUrl>().HasKey(sc => new { sc.ProjectId, sc.ExternalUrlId });
-            modelBuilder.Entity<IntroductionExternalUrl>().HasKey(sc => new { sc.IntroductionId, sc.ExternalUrlId });
-        }
-
-        private static void MigrateDatabase(IDbConnection connection)
+        private void MigrateDatabase(IDbConnection connection)
         {
             try
             {
@@ -94,13 +96,24 @@ namespace Infrastructure
                 };
 
                 evolve.Migrate();
-                _isMigrationsDone = true;
+
+                MigrationDone();
             }
-            catch (Exception)
+            catch (Exception ee)
             {
-                //TODO: log error, Database migration failed.
+                _logger.LogError(ee, "Database migration failed");
                 throw;
             }
+        }
+
+        private static void MigrationUndone()
+        {
+            _isMigrationsDone = false;
+        }
+
+        private static void MigrationDone()
+        {
+            _isMigrationsDone = true;
         }
     }
 }

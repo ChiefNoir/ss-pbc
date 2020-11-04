@@ -71,7 +71,7 @@
 
       transition: all 0.1s 0.1s ease;
     }
-    
+
     &::after {
       background: $color-text;
       bottom: 0;
@@ -105,16 +105,16 @@
 
 .active {
   &::before {
-    height: 100% !important ;
+    height: 100% !important;
   }
 
   &::after {
-    height: 100% !important ;
+    height: 100% !important;
   }
 
   .content {
     &::before {
-      width: 100% !important ;
+      width: 100% !important;
     }
   }
 

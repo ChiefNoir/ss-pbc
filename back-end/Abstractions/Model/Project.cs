@@ -43,7 +43,7 @@ namespace Abstractions.Model
         public IEnumerable<ExternalUrl> ExternalUrls { get; set; }
 
         /// <summary> Projects gallery </summary>
-        public IList<GalleryImage> GalleryImages { get; set; }
+        public IEnumerable<GalleryImage> GalleryImages { get; set; }
 
     }
 }

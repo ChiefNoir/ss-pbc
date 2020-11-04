@@ -2096,11 +2096,11 @@ namespace GeneralTests.API.Controllers.Private
 
 
 
-                    Assert.NotNull(response.Data.GalleryImages[0]);
-                    Assert.StartsWith(pathStart, response.Data.GalleryImages[0].ImageUrl);
+                    Assert.NotNull(response.Data.GalleryImages.FirstOrDefault());
+                    Assert.StartsWith(pathStart, response.Data.GalleryImages.FirstOrDefault()?.ImageUrl);
 
 
-                    var galleryExists = File.Exists(Path.Combine(storagePath, Path.GetFileName(response.Data.GalleryImages[0].ImageUrl)));
+                    var galleryExists = File.Exists(Path.Combine(storagePath, Path.GetFileName(response.Data.GalleryImages.FirstOrDefault()?.ImageUrl)));
                     Assert.True(galleryExists);
                 }
                 catch (Exception)

@@ -4,6 +4,7 @@ using GeneralTests.SharedUtils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GeneralTests.API.Controllers.Private
@@ -11,7 +12,7 @@ namespace GeneralTests.API.Controllers.Private
     public class PrivateInformationalController_Test
     {
         [Fact]
-        internal async void GetInformation()
+        internal async Task GetInformationAsync()
         {
             using (var context = Storage.CreateContext())
             {

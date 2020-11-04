@@ -14,7 +14,7 @@ mat-form-field {
     width: 90%;
     margin-left: 5%;
     margin-right: 5%;
-  }
+}
 
 
 .wide-position {
@@ -40,7 +40,7 @@ form {
 }
 
 ::ng-deep.mat-error,
-::ng-deep.mat-placeholder-required  {
+::ng-deep.mat-placeholder-required {
   color: $color-text-highlighted !important;
 }
 
@@ -101,8 +101,7 @@ table {
   cursor: pointer;
 }
 
-::ng-deep .mat-focused .mat-form-field-label
-{
+::ng-deep .mat-focused .mat-form-field-label {
   // color or focused hint text in the inputs
   color: $color-text !important;
 }
@@ -125,29 +124,29 @@ table {
 ::ng-deep.mat-tab-label-content {
   color: $color-text !important;
 }
-::ng-deep.mat-ink-bar{
+::ng-deep.mat-ink-bar {
   background-color: $color-control-text !important;
 }
 
 
-::ng-deep.mat-select-value-text{
+::ng-deep.mat-select-value-text {
   color: $color-text !important;
 }
 ::ng-deep.mat-select-panel {
   background: $color-control !important;
 }
-::ng-deep.mat-option-text{
+::ng-deep.mat-option-text {
   color: $color-text !important;
 }
-::ng-deep.mat-select-arrow{
-  color: $color-text !important;
-}
-
-::ng-deep.mat-datepicker-toggle-default-icon{
+::ng-deep.mat-select-arrow {
   color: $color-text !important;
 }
 
-::ng-deep.mat-calendar{
+::ng-deep.mat-datepicker-toggle-default-icon {
+  color: $color-text !important;
+}
+
+::ng-deep.mat-calendar {
   background: $color-control !important;
   color: $color-text !important;
 }
@@ -155,11 +154,11 @@ table {
 ::ng-deep.mat-calendar-body-cell-content,
 ::ng-deep.mat-calendar-body-label,
 ::ng-deep.mat-calendar-table,
-::ng-deep.mat-calendar-table-header
-{
+::ng-deep.mat-calendar-table-header {
   color: $color-text !important;
 }
-::ng-deep.mat-calendar-body-selected{
+
+::ng-deep.mat-calendar-body-selected {
   background-color: $color-content!important;
 }
 

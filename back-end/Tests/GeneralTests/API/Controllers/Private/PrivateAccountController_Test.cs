@@ -1,5 +1,4 @@
-﻿using Abstractions.ISecurity;
-using Abstractions.Model;
+﻿using Abstractions.Model;
 using Abstractions.Model.Queries;
 using Abstractions.Model.System;
 using Abstractions.Supervision;
@@ -9,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GeneralTests.API.Controllers.Private
@@ -176,57 +176,6 @@ namespace GeneralTests.API.Controllers.Private
                             Id = 8, Login = "login8", Password = null, Role = "role8", Version = 0
                         }
                     }
-                };
-            }
-        }
-
-        class InsertWithPagingAndBadToken : IEnumerable<object[]>
-        {
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                yield return new object[]
-                {
-                    //(id:1) is for default sa@sa
-                    "INSERT INTO account (id, login, password, salt, role) VALUES (2, 'login2', 'password2', 'salt2', 'role2'); "
-                    + " INSERT INTO account (id, login, password, salt, role) VALUES (3, 'login3', 'password3', 'salt3', 'role3'); "
-                    + " INSERT INTO account (id, login, password, salt, role) VALUES (4, 'login4', 'password4', 'salt4', 'role4'); "
-                    ,
-                    new Paging
-                    {
-                        Start = 1,
-                        Length = 2
-                    },
-                    ""
-                };
-                yield return new object[]
-                 {
-                    //(id:1) is for default sa@sa
-                    "INSERT INTO account (id, login, password, salt, role) VALUES (2, 'login2', 'password2', 'salt2', 'role2'); "
-                    + " INSERT INTO account (id, login, password, salt, role) VALUES (3, 'login3', 'password3', 'salt3', 'role3'); "
-                    + " INSERT INTO account (id, login, password, salt, role) VALUES (4, 'login4', 'password4', 'salt4', 'role4'); "
-                    ,
-                    new Paging
-                    {
-                        Start = 1,
-                        Length = 2
-                    },
-                    null
-                 };
-                yield return new object[]
-                {
-                    //(id:1) is for default sa@sa
-                    "INSERT INTO account (id, login, password, salt, role) VALUES (2, 'login2', 'password2', 'salt2', 'role2'); "
-                    + " INSERT INTO account (id, login, password, salt, role) VALUES (3, 'login3', 'password3', 'salt3', 'role3'); "
-                    + " INSERT INTO account (id, login, password, salt, role) VALUES (4, 'login4', 'password4', 'salt4', 'role4'); "
-                    ,
-                    new Paging
-                    {
-                        Start = 1,
-                        Length = 2
-                    },
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic2EiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIm5iZiI6MTYwMTk5Njk3MSwiZXhwIjoxNjAxOTk4NzcxLCJpc3MiOiJJc3N1ZXJOYW1lIiwiYXVkIjoiQXVkaWVuY2UtMSJ9.DCbppW8SqvL1QJS2BIO2qlplZv-UHqI2_NP_Za0KDzA"
                 };
             }
         }
@@ -449,7 +398,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(Roles))]
-        internal async void GetRolesAsync_Valid(string[] expectedRoles)
+        internal async Task GetRolesAsync_ValidAsync(string[] expectedRoles)
         {
             using (var context = Storage.CreateContext())
             {
@@ -487,7 +436,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(SqlInsert))]
-        internal async void CountAsync_Valid(string[] sql)
+        internal async Task CountAsync_ValidAsync(string[] sql)
         {
             using (var context = Storage.CreateContext())
             {
@@ -519,7 +468,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(ValidAdd))]
-        internal async void AddAccountAsync_Valid(Account account)
+        internal async Task AddAccountAsync_ValidAsync(Account account)
         {
             using (var context = Storage.CreateContext())
             {
@@ -556,7 +505,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InvalidAdd))]
-        internal async void AddAccountAsync_InValid(Account account)
+        internal async Task AddAccountAsync_InValidAsync(Account account)
         {
             using (var context = Storage.CreateContext())
             {
@@ -584,7 +533,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(SqlInsertWithResults))]
-        internal async void DeleteAccountAsync_Valid(string sql, Account account)
+        internal async Task DeleteAccountAsync_ValidAsync(string sql, Account account)
         {
             using (var context = Storage.CreateContext())
             {
@@ -621,7 +570,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InsertWithInvalidDelete))]
-        internal async void DeleteAccountAsync_InValid(string sql, Account account)
+        internal async Task DeleteAccountAsync_InValidAsync(string sql, Account account)
         {
             using (var context = Storage.CreateContext())
             {
@@ -652,7 +601,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(SqlInsertWithResults))]
-        internal async void GetAccountAsync_Valid(string sql, Account expected)
+        internal async Task GetAccountAsync_ValidAsync(string sql, Account expected)
         {
             using (var context = Storage.CreateContext())
             {
@@ -684,7 +633,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InsertWithInvalidGet))]
-        internal async void GetAccountAsync_InValid(string sql, int id)
+        internal async Task GetAccountAsync_InValidAsync(string sql, int id)
         {
             using (var context = Storage.CreateContext())
             {
@@ -714,7 +663,7 @@ namespace GeneralTests.API.Controllers.Private
 
 
         [Fact]
-        internal async void UpdateAcountAsync_Valid()
+        internal async Task UpdateAcountAsync_ValidAsync()
         {
             using (var context = Storage.CreateContext())
             {
@@ -762,7 +711,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InvalidUpdate))]
-        internal async void UpdateAcountAsync_InValid(Account account)
+        internal async Task UpdateAcountAsync_InValidAsync(Account account)
         {
             using (var context = Storage.CreateContext())
             {
@@ -805,7 +754,7 @@ namespace GeneralTests.API.Controllers.Private
 
         [Theory]
         [ClassData(typeof(InsertWithPagingAndResults))]
-        internal async void GetAccountsAsyncPaging_Valid(string sql, Paging paging, Account[] expected)
+        internal async Task GetAccountsAsyncPaging_ValidAsync(string sql, Paging paging, Account[] expected)
         {
             using (var context = Storage.CreateContext())
             {
@@ -841,7 +790,7 @@ namespace GeneralTests.API.Controllers.Private
         }
 
         [Fact]
-        internal async void UpdatePasswordAsync_Valid()
+        internal async Task UpdatePasswordAsync_ValidAsync()
         {
             using (var context = Storage.CreateContext())
             {

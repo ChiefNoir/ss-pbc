@@ -29,7 +29,7 @@
 
     transition: all 0.3s ease;
   }
-  &:after {
+  &::after {
     background: $color-text;
     content: "";
     position: absolute;
@@ -67,7 +67,7 @@
 
       transition: all 0.3s ease;
     }
-    &:after {
+    &::after {
       background: $color-text;
       bottom: 0;
       content: "";

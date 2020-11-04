@@ -31,10 +31,10 @@
   .description ::ng-deep span {
     position: relative;
     white-space: pre;
-    &:after {
-      background: black;
+    &::after {
+      background: $color-shadow;
       border-radius: 0.1em;
-      box-shadow: 0 0 1px rgba(0,0,0,0.35);
+      box-shadow: 0 0 1px $color-shadow;
       content: " ";
       width: 100%;
       height: 1.2em;

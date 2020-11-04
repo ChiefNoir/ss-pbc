@@ -8,8 +8,7 @@
   margin-bottom: 5px;
 }
 
-.content
-{
+.content {
   background-color: $table-row !important;
   color: $color-text !important;
 
@@ -30,13 +29,11 @@
     }
   }
   
-  .small-gallery 
-  {
+  .small-gallery {
     width: 100%;
     height: 300px; 
     object-fit: contain; 
   }
-  
 }
 
 
@@ -142,6 +139,7 @@ mat-form-field {
 {
   color: $color-text !important;
 }
+
 ::ng-deep.mat-calendar-body-selected{
   background-color: $color-content!important;
 }

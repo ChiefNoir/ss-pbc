@@ -309,7 +309,7 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(project.Code))
                     );
             }
 
@@ -317,7 +317,7 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(project.DisplayName))
                     );
             }
 
@@ -333,7 +333,7 @@ namespace Infrastructure.Repository
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.PropertyDuplicate, "Code")
+                        string.Format(Resources.TextMessages.PropertyDuplicate, nameof(project.Code))
                     );
             }
 
@@ -348,7 +348,7 @@ namespace Infrastructure.Repository
                 {
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, updated.GetType().Name)
+                        string.Format(Resources.TextMessages.ItemWasAlreadyChanged, nameof(updated))
                     );
                 }
             }
@@ -372,16 +372,20 @@ namespace Infrastructure.Repository
             foreach (var item in project.ExternalUrls ?? new List<ExternalUrl>())
             {
                 if (string.IsNullOrEmpty(item.DisplayName))
+                {
                     throw new InconsistencyException
                     (
                         string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name of the External URL")
                     );
+                }
 
                 if (string.IsNullOrEmpty(item.Url))
+                {
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "URL of the External URL")
+                       string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "URL of the External URL")
                     );
+                }
             }
 
             foreach (var item in project.GalleryImages ?? new List<GalleryImage>())

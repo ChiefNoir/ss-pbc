@@ -106,7 +106,9 @@ namespace Infrastructure.Converters
             var result = new List<Abstractions.Model.ExternalUrl>();
 
             if (externalUrls == null || !externalUrls.Any())
+            {
                 return result;
+            }
 
             return externalUrls.Select(ToExternalUrl).ToList();
         }
@@ -114,7 +116,9 @@ namespace Infrastructure.Converters
         private static IList<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<IntroductionExternalUrl> items)
         {
             if (items == null || !items.Any())
+            {
                 return new List<Abstractions.Model.ExternalUrl>();
+            }
 
             return items.Select(ToExternalUrl).ToList();
         }
@@ -135,7 +139,9 @@ namespace Infrastructure.Converters
             var result = new List<Abstractions.Model.GalleryImage>();
 
             if (items == null || !items.Any())
+            {
                 return result;
+            }
 
             return items.Select(ToGalleryImage).ToList();
         }

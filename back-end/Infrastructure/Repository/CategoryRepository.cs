@@ -90,7 +90,9 @@ namespace Infrastructure.Repository
         public Task<Category> SaveAsync(Category item)
         {
             if (item.Id == null)
+            {
                 return CreateAsync(item);
+            }
 
             return UpdateAsync(item);
         }

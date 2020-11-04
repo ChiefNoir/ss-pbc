@@ -25,10 +25,14 @@ namespace Security
         public HashResult Hash(string plainText, string hexSalt = null)
         {
             if (string.IsNullOrEmpty(plainText))
+            {
                 throw new ArgumentException("plainText must have value", nameof(plainText));
+            }
 
             if (hexSalt != null && string.IsNullOrEmpty(hexSalt))
+            {
                 throw new ArgumentException("hexSalt must have value", nameof(hexSalt));
+            }
 
             var text = AddExtraSalt
             (
@@ -47,7 +51,6 @@ namespace Security
             }
 
             var result = CalcSaltedHash(text, salt);
-
             return new HashResult
             {
                 HexHash = HexConverter.ToHexString(result),

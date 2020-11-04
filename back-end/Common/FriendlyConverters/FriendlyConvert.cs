@@ -17,18 +17,21 @@ namespace Common.FriendlyConverters
         public static string BytesToString(long byteCount, string[] suffices = null)
         {
             if (byteCount < 0)
+            {
                 throw new ArgumentException("byteCount can't be less than 0", nameof(byteCount));
-
+            }
             if (suffices != null && suffices.Length != 7)
+            {
                 throw new ArgumentException("Suffices must have at 7 values: B, KB, MB, GB, TB, PB, EB", nameof(suffices));
-
+            }
             if (suffices == null || suffices.Length == 0)
             {
                 suffices = new[] { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
             }
-
             if (byteCount == 0)
+            {
                 return $"0 {suffices[0]}";
+            }
 
             var bytes = Math.Abs(byteCount);
             var place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));

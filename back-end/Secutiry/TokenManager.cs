@@ -27,16 +27,16 @@ namespace Security
         /// <returns>JWT token</returns>
         public string CreateToken(string login, params string[] roles)
         {
-            if(string.IsNullOrEmpty(login))
-                throw new ArgumentException("Login can't be null or empty", nameof(login));
-
-            if (roles == null || !roles.Any() || roles.All(x => string.IsNullOrEmpty(x)))
-                throw new ArgumentException("Roles can't be null or empty", nameof(roles));
-
-            var claims = new List<Claim>
+            if (string.IsNullOrEmpty(login))
             {
-                new Claim(ClaimTypes.Name, login)
-            };
+                throw new ArgumentException("Login can't be null or empty", nameof(login));
+            }
+            if (roles == null || !roles.Any() || roles.All(x => string.IsNullOrEmpty(x)))
+            {
+                throw new ArgumentException("Roles can't be null or empty", nameof(roles));
+            }
+
+            var claims = new List<Claim>{ new Claim(ClaimTypes.Name, login) };
 
             foreach (var item in roles.Where(x => !string.IsNullOrEmpty(x)))
             {
@@ -93,7 +93,9 @@ namespace Security
         public IPrincipal ValidateToken(string token)
         {
             if (string.IsNullOrEmpty(token))
+            {
                 throw new ArgumentException("Token can't be null or empty", nameof(token));
+            }
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = CreateTokenValidationParameters(_configuration);

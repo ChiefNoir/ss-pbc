@@ -28,7 +28,6 @@ namespace Infrastructure.Repository
 
             CheckBeforeDelete(dbItem, project);
 
-
             _context.Projects.Remove(dbItem);
             var rows = await _context.SaveChangesAsync();
             return rows == 1;
@@ -79,10 +78,8 @@ namespace Infrastructure.Repository
             {
                 return CreateAsync(project);
             }
-            else
-            {
-                return UpdateAsync(project);
-            }
+
+            return UpdateAsync(project);
         }
 
         
@@ -114,11 +111,11 @@ namespace Infrastructure.Repository
         private async Task<Project> UpdateAsync(Project project)
         {
             var dbItem = _context.Projects
-                                .Include(x => x.Category)
-                                .Include(x => x.GalleryImages)
-                                .Include(x => x.ExternalUrls)
-                                .ThenInclude(x => x.ExternalUrl)
-                                .FirstOrDefault(x => x.Id == project.Id);
+                                 .Include(x => x.Category)
+                                 .Include(x => x.GalleryImages)
+                                 .Include(x => x.ExternalUrls)
+                                 .ThenInclude(x => x.ExternalUrl)
+                                 .FirstOrDefault(x => x.Id == project.Id);
 
             CheckBeforeUpdate(dbItem, project);
 
@@ -153,7 +150,6 @@ namespace Infrastructure.Repository
             foreach (var item in dbProject.ExternalUrls ?? new List<DataModel.ProjectExternalUrl>())
             {
                 var remoteItem = externalUrls?.FirstOrDefault(x => x.Id.HasValue && x.Id == item.ExternalUrlId);
-
                 if (remoteItem == null)
                 {
                     _context.ExternalUrls.Remove(item.ExternalUrl);
@@ -272,25 +268,31 @@ namespace Infrastructure.Repository
             foreach (var item in project.ExternalUrls ?? new List<ExternalUrl>())
             {
                 if (string.IsNullOrEmpty(item.DisplayName))
+                {
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name of the External URL")
+                       string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name of the External URL")
                     );
+                }
 
                 if (string.IsNullOrEmpty(item.Url))
+                {
                     throw new InconsistencyException
                     (
                         string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "URL of the External URL")
                     );
+                }
             }
 
             foreach (var item in project.GalleryImages ?? new List<GalleryImage>())
             {
                 if (string.IsNullOrEmpty(item.ImageUrl))
+                {
                     throw new InconsistencyException
                     (
                         string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Image of the Gallery Image")
                     );
+                }
             }
 
         }
@@ -342,7 +344,9 @@ namespace Infrastructure.Repository
                 var updated = project.ExternalUrls.FirstOrDefault(x => x.Id == item.ExternalUrlId);
 
                 if (updated == null)
+                {
                     continue;
+                }
 
                 if (item.ExternalUrl.Version != updated.Version)
                 {
@@ -358,7 +362,9 @@ namespace Infrastructure.Repository
             {
                 var updatedGalleryItem = project.GalleryImages?.FirstOrDefault(x => x.Id == dbGalleryitem.Id);
                 if (updatedGalleryItem == null)
+                {
                     continue;
+                }
 
                 if (dbGalleryitem.Version != updatedGalleryItem.Version)
                 {
@@ -391,10 +397,12 @@ namespace Infrastructure.Repository
             foreach (var item in project.GalleryImages ?? new List<GalleryImage>())
             {
                 if (string.IsNullOrEmpty(item.ImageUrl))
+                {
                     throw new InconsistencyException
                     (
                         string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Image of the Gallery Image")
                     );
+                }
             }
         }
 

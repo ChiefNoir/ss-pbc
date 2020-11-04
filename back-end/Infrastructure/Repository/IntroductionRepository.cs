@@ -62,7 +62,9 @@ namespace Infrastructure.Repository
         private void Merge(DataModel.Introduction dbItem, IEnumerable<ExternalUrl> newExternalUrls)
         {
             if (newExternalUrls == null)
+            {
                 newExternalUrls = new List<ExternalUrl>();
+            }
 
             var toRemove = dbItem.ExternalUrls.Where(eu => !newExternalUrls.Any(x => eu.ExternalUrlId == x.Id)).ToList();
             foreach (var item in toRemove)
@@ -108,7 +110,9 @@ namespace Infrastructure.Repository
                 var updated = introduction.ExternalUrls?.FirstOrDefault(x => x.Id == item.ExternalUrlId);
 
                 if (updated == null)
+                {
                     continue;
+                }
 
                 if (item.ExternalUrl.Version != updated.Version)
                 {

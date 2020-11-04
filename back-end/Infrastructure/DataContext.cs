@@ -33,16 +33,13 @@ namespace Infrastructure
         {
             _logger = logger;
 
-            if (Database.ProviderName == "Microsoft.EntityFrameworkCore.InMemory")
-                return;
+            if (Database.ProviderName == "Microsoft.EntityFrameworkCore.InMemory") { return; }
 
-            if (_isMigrationsDone) 
-                return;
+            if (_isMigrationsDone) { return; }
 
             lock (_migrationLock)
             {
-                if (_isMigrationsDone)
-                    return;
+                if (_isMigrationsDone) { return; }
 
                 MigrateDatabase(Database.GetDbConnection());
             }

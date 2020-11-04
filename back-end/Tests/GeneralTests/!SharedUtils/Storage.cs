@@ -31,7 +31,9 @@ namespace GeneralTests.SharedUtils
         public static void RunSql(string[] sql)
         {
             if (sql == null || !sql.Any())
+            {
                 return;
+            }
 
             foreach (var item in sql)
             {
@@ -42,7 +44,9 @@ namespace GeneralTests.SharedUtils
         public static void RunSql(string sql)
         {
             if (string.IsNullOrEmpty(sql))
+            {
                 return;
+            }
 
             using (var connection = new Npgsql.NpgsqlConnection(CreateConfiguration().GetConnectionString(connectionName)))
             {
@@ -68,9 +72,7 @@ namespace GeneralTests.SharedUtils
 
         public static IConfiguration CreateConfiguration()
         {
-            var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.test.json")
-                .Build();
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.test.json").Build();
             return config;
         }
 

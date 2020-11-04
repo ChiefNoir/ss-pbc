@@ -13,7 +13,9 @@ namespace Common.Converters
         public static byte[] ToByteArray(string hexString)
         {
             if (string.IsNullOrEmpty(hexString))
+            {
                 return Array.Empty<byte>();
+            }
 
             var outputLength = hexString.Length / 2;
             var output = new byte[outputLength];
@@ -33,7 +35,9 @@ namespace Common.Converters
         public static string ToHexString(byte[] array)
         {
             if (array == null || array.Length == 0)
+            {
                 return string.Empty;
+            }
 
             var hex = new StringBuilder(array.Length * 2);
             foreach (var item in array)

@@ -18,12 +18,16 @@ namespace GeneralTests.SharedMocks
             var claimsIdentity = Identity as ClaimsIdentity;
 
             if (claimsIdentity?.Claims == null || !claimsIdentity.Claims.Any())
+            {
                 return false;
+            }
 
             foreach (var item in claimsIdentity.Claims)
             {
                 if (item.Value == role)
+                {
                     return true;
+                }
             }
 
             return false;

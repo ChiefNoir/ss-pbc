@@ -56,7 +56,9 @@ namespace API.Controllers.Private
                 var filename = _fileRepository.Save(item);
                 var index = ParseIndex(item.Name);
                 if (index == -1)
+                {
                     continue;
+                }
 
                 project.GalleryImages[index].ImageUrl = Utils.AppendUrlToName(_configuration, filename);
             }

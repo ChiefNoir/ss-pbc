@@ -32,7 +32,9 @@ namespace Infrastructure.Converters
         private static IEnumerable<GalleryImage> ToGalleryImage(IEnumerable<Abstractions.Model.GalleryImage> items)
         {
             if (items == null)
+            {
                 return new List<GalleryImage>();
+            }
 
             return items.Select(ToGalleryImage);
         }
@@ -117,7 +119,9 @@ namespace Infrastructure.Converters
         private static IEnumerable<ProjectExternalUrl> ToProjectExternalUrls(IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
         {
             if (externalUrls == null)
+            {
                 return new List<ProjectExternalUrl>();
+            }
 
             return externalUrls.Select(ToProjectExternalUrl);
         }

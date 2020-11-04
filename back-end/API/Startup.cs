@@ -114,10 +114,10 @@ namespace API
 
         private static void CheckFileStorageDirectory(string path)
         {
-            if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), path)))
-                return;
-
-            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), path));
+            if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), path)))
+            {
+                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), path));
+            }
         }
     }
 }

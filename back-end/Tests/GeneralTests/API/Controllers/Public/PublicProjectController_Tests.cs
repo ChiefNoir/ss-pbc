@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GeneralTests.API.Controllers.Public
@@ -252,7 +253,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(DefaultProjects))]
-        internal async void GetProject_Valid(Project expected)
+        internal async Task GetProject_Valid(Project expected)
         {
             using (var context = Storage.CreateContext())
             {
@@ -283,7 +284,7 @@ namespace GeneralTests.API.Controllers.Public
         [InlineData(null)]
         [InlineData("")]
         [InlineData("qwerty")]
-        internal async void GetProject_InValid(string code)
+        internal async Task GetProject_InValid(string code)
         {
             using (var context = Storage.CreateContext())
             {
@@ -311,7 +312,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(ValidProjectsPreview))]
-        internal async void GetProjectsPreview_Valid(string sql, Paging paging, ProjectSearch projectSearch, ProjectPreview[] expectedProjects)
+        internal async Task GetProjectsPreview_Valid(string sql, Paging paging, ProjectSearch projectSearch, ProjectPreview[] expectedProjects)
         {
             using (var context = Storage.CreateContext())
             {
@@ -349,7 +350,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(InvalidProjectsPreview))]
-        internal async void GetProjectsPreview_InValid(Paging paging, ProjectSearch projectSearch)
+        internal async Task GetProjectsPreview_InValid(Paging paging, ProjectSearch projectSearch)
         {
             using (var context = Storage.CreateContext())
             {
@@ -377,7 +378,7 @@ namespace GeneralTests.API.Controllers.Public
 
         [Theory]
         [ClassData(typeof(InvalidEmptyProjectsPreview))]
-        internal async void GetProjectsPreview_InValidEmpty(Paging paging, ProjectSearch projectSearch)
+        internal async Task GetProjectsPreview_InValidEmpty(Paging paging, ProjectSearch projectSearch)
         {
             using (var context = Storage.CreateContext())
             {

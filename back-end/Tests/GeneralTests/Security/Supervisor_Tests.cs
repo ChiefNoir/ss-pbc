@@ -69,7 +69,7 @@ namespace GeneralTests.Security
         [Theory]
         [InlineData("text")]
         [InlineData("")]
-        public async void SafeExecuteAsync_Valid(string value)
+        public async Task SafeExecuteAsync_Valid(string value)
         {
             var result = await _supervisor.SafeExecuteAsync(() => Task.FromResult(value));
 
@@ -78,7 +78,7 @@ namespace GeneralTests.Security
         }
 
         [Fact]
-        public async void SafeExecuteAsync_Invalid()
+        public async Task SafeExecuteAsync_Invalid()
         {
             var resultString = await _supervisor.SafeExecuteAsync<string>(() => throw new Exception("One"));
 

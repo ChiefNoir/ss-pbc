@@ -195,7 +195,7 @@ namespace GeneralTests.API.Controllers.Public
                     new Paging {Start = 0, Length = 2 },
                     new ProjectSearch { CategoryCode = "bg"},
 
-                    new ProjectPreview [] {}
+                    new ProjectPreview {}
                 };
             }
         }

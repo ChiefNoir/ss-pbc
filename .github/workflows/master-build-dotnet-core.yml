@@ -71,7 +71,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/BusinessCard/BusinessCard/front-end/dist/dist/publish-front.zip
+          asset_path: /home/runner/work/BusinessCard/BusinessCard/front-end/dist/publish-front.zip
           asset_name: BusinessCard-frontend-${{ steps.get_version.outputs.projectVersion }}-master.zip
           asset_content_type: application/zip           
         

@@ -31,7 +31,7 @@ jobs:
           dotnet publish -c Release
       
       - name: Create zip
-        run: cd /home/runner/back-end/API/bin/Release/netcoreapp3.1/publish/; zip -r publish.zip .
+        run: cd /home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/netcoreapp3.1/publish/; zip -r publish.zip .
       
       - name: Get version
         id: get_version
@@ -63,6 +63,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/BusinessCard/back-end/API/bin/Release/netcoreapp3.1/publish.zip
+          asset_path: /home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/netcoreapp3.1/publish/publish.zip
           asset_name: BusinessCard-backend-${{ steps.get_version.outputs.projectVersion }}-master.zip
           asset_content_type: application/zip      

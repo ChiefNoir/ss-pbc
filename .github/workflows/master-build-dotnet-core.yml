@@ -13,12 +13,6 @@ jobs:
         node-version: [10.x]
 
     steps:
-      - uses: actions/checkout@v1
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-           dotnet-version: 3.1.101
-
       - name: Cache node modules
         uses: actions/cache@v1
         with:
@@ -39,7 +33,39 @@ jobs:
       - name: Create zip
         run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/; zip -r publish-front.zip .
         
-        
+      - name: Get version
+        id: get_version
+        uses: chiefnoir/gaction-version-getter@v2
+        with:
+            projectPath: '/home/runner/work/BusinessCard/BusinessCard/front-end/package.json'
+
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYY-MM-DD-HH-mm
+
+      - name: Create Back-end release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.current-time.outputs.formattedTime }}-${{ steps.get_version.outputs.projectVersion }}-master
+          release_name: BusinessCard-master
+          draft: false
+          prerelease: true
+          
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/netcoreapp3.1/publish/publish.zip
+          asset_name: BusinessCard-backend-${{ steps.get_version.outputs.projectVersion }}-master.zip
+          asset_content_type: application/zip           
         
         
         

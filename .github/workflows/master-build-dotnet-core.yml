@@ -1,4 +1,4 @@
-name: Build .NET Core
+name: Publish
 
 on:
   push:
@@ -8,6 +8,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
 
     steps:
       - uses: actions/checkout@v1
@@ -16,53 +19,19 @@ jobs:
         with:
            dotnet-version: 3.1.101
 
-      - name: Install dependencies
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install and npm run build
         run: |
-          cd ./back-end/
-          dotnet restore
-      - name: Build
-        run: |
-          cd ./back-end/
-          dotnet build --configuration Release --no-restore
-      
-      - name: Publish
-        run: |
-          cd ./back-end/API/
-          dotnet publish -c Release
-      
-      - name: Create zip
-        run: cd /home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/netcoreapp3.1/publish/; zip -r publish.zip .
-      
-      - name: Get version
-        id: get_version
-        uses: chiefnoir/gaction-version-getter@v1
-        with:
-            projectPath: '/home/runner/work/BusinessCard/BusinessCard/back-end/API/API.csproj'
-
-      - name: Get current time
-        uses: 1466587594/get-current-time@v2
-        id: current-time
-        with:
-          format: YYYY-MM-DD-HH-mm
-
-      - name: Create Back-end release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.get_version.outputs.projectVersion }}-${{ steps.current-time.outputs.formattedTime }}-master
-          release_name: BusinessCard_backend-${{ steps.get_version.outputs.projectVersion }}-master
-          draft: false
-          prerelease: false
-          
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/netcoreapp3.1/publish/publish.zip
-          asset_name: BusinessCard-backend-${{ steps.get_version.outputs.projectVersion }}-master.zip
-          asset_content_type: application/zip      
+          cd ./front-end/
+          npm i
+          npm run build:prod

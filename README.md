@@ -1,6 +1,9 @@
-![Build Status](https://github.com/ChiefNoir/BusinessCard/workflows/Build%20.NET%20Core/badge.svg?branch=master)
+![Build Status](https://github.com/ChiefNoir/BusinessCard/workflows/Master%20Build%20.NET%20Core/badge.svg?branch=master)
+![Build Status](https://github.com/ChiefNoir/BusinessCard/workflows/Master%20Build%20Angular/badge.svg?branch=master)
 ![CodeQL](https://github.com/ChiefNoir/BusinessCard/workflows/CodeQL/badge.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ChiefNoir/BusinessCard/badge.svg?branch=master)](https://coveralls.io/github/ChiefNoir/BusinessCard?branch=master)
+
+![Publish](https://github.com/ChiefNoir/BusinessCard/workflows/Master%20Publish/badge.svg?branch=master)
 
 # BusinessCard
 

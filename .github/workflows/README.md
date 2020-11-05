@@ -1,10 +1,16 @@
 # Continuous Integration
 
-- master-tests
-	Run tests for Back-end project
+- master-test-core
+	Run tests for back-end project and get test coverage
 
-- master-build-dotnet-core
-	Build and publish release for back-end project
+- master-build-core
+	Build back-end project
 
-- codeql-analysis
-	Run CodeQL on Back-end and Front-end
+- master-build-angular
+	Build front-end project
+
+- master-publish
+	Publish back-end and front-end projects from master branch to the [Releases](https://github.com/ChiefNoir/BusinessCard/releases)
+
+- master-codeql
+	Run [CodeQL](https://securitylab.github.com/tools/codeql) on back-end and front-end

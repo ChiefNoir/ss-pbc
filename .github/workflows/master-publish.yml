@@ -1,4 +1,4 @@
-name: Publish
+name: "Master Publish"
 
 on:
   push:
@@ -14,11 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-           dotnet-version: 3.1.101
-
+      
       - name: Cache node modules
         uses: actions/cache@v1
         with:
@@ -40,20 +36,13 @@ jobs:
       
       - name: Create zip
         run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/; zip -r publish-front.zip .
-        
-      - name: Get version
-        id: get_version_front
-        uses: chiefnoir/gaction-version-getter@v2
-        with:
-            projectPath: '/home/runner/work/BusinessCard/BusinessCard/front-end/package.json'
 
-      - name: Get current time
-        uses: 1466587594/get-current-time@v2
-        id: current-time
+# .net core section:
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
         with:
-          format: YYYY-MM-DD-HH-mm
-
-#
+           dotnet-version: 3.1.101
+           
       - name: Install dependencies
         run: |
           cd ./back-end/
@@ -77,15 +66,27 @@ jobs:
         with:
             projectPath: '/home/runner/work/BusinessCard/BusinessCard/back-end/API/API.csproj'
 
-#
+# --------------
+
+      - name: Get version
+        id: get_version_front
+        uses: chiefnoir/gaction-version-getter@v2
+        with:
+            projectPath: '/home/runner/work/BusinessCard/BusinessCard/front-end/package.json'
+
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYY-MM-DD-HH:mm
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v2
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.current-time.outputs.formattedTime }}-${{ steps.get_version_front.outputs.projectVersion }}-master
+          tag_name: ${{ steps.current-time.outputs.formattedTime }}-master
           release_name: BusinessCard-master
           draft: false
           prerelease: true
@@ -109,12 +110,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: /home/runner/work/BusinessCard/BusinessCard/front-end/dist/publish-front.zip
-          asset_name: BusinessCard-frontend-${{ steps.get_version.outputs.projectVersion }}-master.zip
+          asset_name: BusinessCard-frontend-${{ steps.get_version_front.outputs.projectVersion }}-master.zip
           asset_content_type: application/zip           
-        
-        
-        
-        
-        
-        
-        

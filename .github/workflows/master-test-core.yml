@@ -1,4 +1,4 @@
-name: "Master Test .Net Core"
+name: "Test back-end"
 
 on:
   push:

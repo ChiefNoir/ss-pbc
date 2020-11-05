@@ -1,4 +1,4 @@
-name: "Master Build Angular"
+name: "Build front-end"
 
 on:
   push:

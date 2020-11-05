@@ -70,7 +70,7 @@ jobs:
 
       - name: Get version
         id: get_version_front
-        uses: chiefnoir/gaction-version-getter@v2
+        uses: chiefnoir/gaction-version-getter@v1
         with:
             projectPath: '/home/runner/work/BusinessCard/BusinessCard/front-end/package.json'
 

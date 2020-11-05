@@ -26,7 +26,9 @@ jobs:
           dotnet build --configuration Release --no-restore
       
       - name: Publish
-        run: dotnet publish
+        run: |
+          cd ./back-end/
+          dotnet publish
       
       - name: Create zip
         run: cd ./back-end/API/bin/Release/netcoreapp3.1/publish/; zip -r publish.zip .

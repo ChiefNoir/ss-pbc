@@ -1,15 +1,12 @@
 ﻿using Abstractions.Model;
 using Abstractions.Supervision;
-using API.Controllers.Public;
 using GeneralTests.SharedUtils;
-using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Security;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GeneralTests.API.Controllers.Public
@@ -49,7 +46,7 @@ namespace GeneralTests.API.Controllers.Public
         
         [Theory]
         [ClassData(typeof(Defaults))]
-        internal async void GetIntroduction_Test(Introduction expected)
+        internal async Task GetIntroduction_Test(Introduction expected)
         {
             using (var context = Storage.CreateContext())
             {

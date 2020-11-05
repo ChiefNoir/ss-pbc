@@ -1,4 +1,4 @@
-name: "Master Build .NET Core"
+name: "Master Build Angular"
 
 on:
   push:

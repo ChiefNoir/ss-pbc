@@ -28,7 +28,7 @@ jobs:
       - name: Publish
         run: |
           cd ./back-end/API/
-          dotnet publish
+          dotnet publish -c Release
       
       - name: Create zip
         run: cd ./back-end/API/bin/Release/netcoreapp3.1/publish/; zip -r publish.zip .

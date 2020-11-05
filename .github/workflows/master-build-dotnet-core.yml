@@ -31,24 +31,20 @@ jobs:
           dotnet publish -c Release
       
       - name: Create zip
-        run: cd ./back-end/API/bin/Release/netcoreapp3.1/publish/; zip -r publish.zip .
+        run: cd /home/runner/back-end/API/bin/Release/netcoreapp3.1/publish/; zip -r publish.zip .
       
       - name: Get version
         id: get_version
         uses: chiefnoir/gaction-version-getter@v1
         with:
             projectPath: '/home/runner/work/BusinessCard/BusinessCard/back-end/API/API.csproj'
-      - name: Show version
-        run: echo "The version is ${{ steps.get_version.outputs.projectVersion }}"      
 
       - name: Get current time
         uses: 1466587594/get-current-time@v2
         id: current-time
         with:
-          format: YYYYMMDD-HH-mm
-      - name: Show time
-        run: echo "The time is ${{ steps.current-time.outputs.formattedTime }}"         
-      
+          format: YYYY-MM-DD-HH-mm
+
       - name: Create Back-end release
         id: create_release
         uses: actions/create-release@v1

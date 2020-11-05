@@ -27,7 +27,7 @@ jobs:
       
       - name: Publish
         run: |
-          cd ./back-end/
+          cd ./back-end/API/
           dotnet publish
       
       - name: Create zip
@@ -37,7 +37,7 @@ jobs:
         id: get_version
         uses: chiefnoir/gaction-version-getter@v1
         with:
-            projectPath: '/home/runner/work/BusinessCard/back-end/API/API.csproj'
+            projectPath: './BusinessCard/back-end/API/API.csproj'
       - name: Show version
         run: echo "The version is ${{ steps.get_version.outputs.projectVersion }}"      
 
@@ -67,6 +67,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/BusinessCard/back-end/API/bin/Release/netcoreapp3.1/publish/publish.zip
+          asset_path: ./BusinessCard/back-end/API/bin/Release/netcoreapp3.1/publish/publish.zip
           asset_name: BusinessCard-backend-${{ steps.get_version.outputs.projectVersion }}-master.zip
           asset_content_type: application/zip      

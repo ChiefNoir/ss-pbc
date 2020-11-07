@@ -83,7 +83,7 @@ export class AuthGuard implements CanActivate {
     }
 
     const tokenPayload = jwt_decode(token);
-    if (Date.now() >= tokenPayload.exp * 1000) {
+    if (this.tokenExpired(token)) {
       this.storageService.removeToken();
       return null;
     }
@@ -92,6 +92,11 @@ export class AuthGuard implements CanActivate {
     const name = tokenPayload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
 
     return new TokenData(role, name);
+  }
+
+  private tokenExpired(token: string) {
+    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+    return (Math.floor((new Date()).getTime() / 1000)) >= expiry;
   }
 }
 

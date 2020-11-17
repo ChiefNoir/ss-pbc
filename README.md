@@ -20,12 +20,12 @@ For the change of pace, for the playing around and for the developing new skills
 - [babel](https://babeljs.io/)
 
 ## Back-end
-- [.Net Core 3.1](https://dotnet.microsoft.com/download)
-- [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/3.1.3/)
+- [.Net 5.0](https://dotnet.microsoft.com/download)
+- [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/)
 - [Evolve](https://www.nuget.org/packages/Evolve/)
   - It provides migrations in plain sql. In the future it will be usefull, when I need to run some custom scripts.
   - No overhead, simple support and simple usage.
-- [JwtBearer](https://github.com/dotnet/aspnetcore/tree/844a82e37cae48af2ab2ee4f39b41283e6bb4f0e)
+- [JwtBearer](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer)
 - [NLog](https://nlog-project.org/)
 
 ### Testing

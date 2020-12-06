@@ -97,27 +97,27 @@ jobs:
 # end of ".net core section"
 
 # angular
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
+    - name: Cache node modules
+      uses: actions/cache@v1
+      with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
+    - name: Node ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
           node-version: ${{ matrix.node-version }}
 
-      - name: npm install and npm run build
-        run: |
+    - name: npm install and npm run build
+      run: |
           cd ./front-end/
           npm i
           npm run build -prod
       
-      - name: Create zip
-        run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/; zip -r publish-front.zip .
+    - name: Create zip
+      run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/; zip -r publish-front.zip .
 
     # - name: Stop nginx
       # uses: appleboy/ssh-action@master
@@ -179,15 +179,3 @@ jobs:
         # passphrase: ${{ secrets.PASSPHRASE }}  
         # script: sudo systemctl start nginx
 # end of angular
-
-
-
-
-
-
-
-
-
-
-
-

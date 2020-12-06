@@ -1,0 +1,193 @@
+name: "Deploy"
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+# .net core
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100
+    - name: Install dependencies
+      run: |
+          cd ./back-end/
+          dotnet restore
+    - name: Build
+      run: |
+          cd ./back-end/
+          dotnet build --configuration Release --no-restore
+    - name: Publish
+      run: |
+          cd ./back-end/API/
+          dotnet publish -c Release
+
+    - name: Create zip
+      run: cd /home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/net5.0/publish/; zip -r publish.zip .
+
+    # - name: Stop service
+      # uses: appleboy/ssh-action@master
+      # with:
+        # host: ${{ secrets.HOST }}
+        # USERNAME: ${{ secrets.USERNAME }}
+        # PORT: ${{ secrets.PORT }}
+        # KEY: ${{ secrets.SSHKEY }}
+        # passphrase: ${{ secrets.PASSPHRASE }}  
+        # script: sudo systemctl stop kestrel-business-card.service
+
+    - name: Clean folder
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}  
+        script: rm -rf /www/business-card-api/* !(appsettings.json)
+
+    - name: Copy single file to remote
+      uses: garygrossgarten/github-action-scp@release
+      with:
+          local: "/home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/net5.0/publish/publish.zip"
+          remote: "/www/business-card-api/publish.zip"
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          privateKey: ${{ secrets.SSHKEY }}
+          passphrase: ${{ secrets.PASSPHRASE }} 
+          
+    - name: unzip
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}  
+        script: unzip /www/business-card-api/publish.zip -d /www/business-card-api/
+
+    - name: Clean publish
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}  
+        script: rm /www/business-card-api/publish.zip
+
+    # - name: Start service
+      # uses: appleboy/ssh-action@master
+      # with:
+        # host: ${{ secrets.HOST }}
+        # USERNAME: ${{ secrets.USERNAME }}
+        # PORT: ${{ secrets.PORT }}
+        # KEY: ${{ secrets.SSHKEY }}
+        # passphrase: ${{ secrets.PASSPHRASE }}  
+        # script: sudo systemctl start kestrel-business-card.service
+
+# end of ".net core section"
+
+# angular
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: npm install and npm run build
+        run: |
+          cd ./front-end/
+          npm i
+          npm run build -prod
+      
+      - name: Create zip
+        run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/; zip -r publish-front.zip .
+
+    # - name: Stop nginx
+      # uses: appleboy/ssh-action@master
+      # with:
+        # host: ${{ secrets.HOST }}
+        # USERNAME: ${{ secrets.USERNAME }}
+        # PORT: ${{ secrets.PORT }}
+        # KEY: ${{ secrets.SSHKEY }}
+        # passphrase: ${{ secrets.PASSPHRASE }}  
+        # script: sudo systemctl stop nginx
+
+    - name: Clean folder
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}  
+        script: rm -rf /www/business-card-web/* 
+
+    - name: Copy single file to remote
+      uses: garygrossgarten/github-action-scp@release
+      with:
+          local: "/home/runner/work/BusinessCard/BusinessCard/front-end/dist/publish.zip"
+          remote: "/www/business-card-web/publish.zip"
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          privateKey: ${{ secrets.SSHKEY }}
+          passphrase: ${{ secrets.PASSPHRASE }} 
+          
+    - name: unzip
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}  
+        script: unzip /www/business-card-web/publish.zip -d /www/business-card-web/
+
+    - name: Clean publish
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}  
+        script: rm /www/business-card-web/publish.zip
+
+    # - name: Start nginx
+      # uses: appleboy/ssh-action@master
+      # with:
+        # host: ${{ secrets.HOST }}
+        # USERNAME: ${{ secrets.USERNAME }}
+        # PORT: ${{ secrets.PORT }}
+        # KEY: ${{ secrets.SSHKEY }}
+        # passphrase: ${{ secrets.PASSPHRASE }}  
+        # script: sudo systemctl start nginx
+# end of angular
+
+
+
+
+
+
+
+
+
+
+
+

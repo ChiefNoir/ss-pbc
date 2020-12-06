@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -79,17 +80,20 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseRouting();
             app.UseCors
-                (
-                    options => options.SetIsOriginAllowed(x => _ = true)
-                                      .AllowAnyMethod()
-                                      .AllowAnyHeader()
-                                      .AllowCredentials()
-                );
+            (
+                options => options.SetIsOriginAllowed(x => _ = true)
+                                  .AllowAnyMethod()
+                                  .AllowAnyHeader()
+                                  .AllowCredentials()
+            );
 
 
             var path = configuration.GetSection("Location:FileStorage").Get<string>();

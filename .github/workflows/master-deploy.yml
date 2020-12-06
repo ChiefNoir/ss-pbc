@@ -52,7 +52,7 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
         passphrase: ${{ secrets.PASSPHRASE }}  
-        script: rm -rf /www/business-card-api/* !(appsettings.json)
+        script: rm -rf !(appsettings.json) /www/business-card-api/* 
 
     - name: Copy single file to remote
       uses: garygrossgarten/github-action-scp@release

@@ -4,7 +4,7 @@ export const environment = {
   authEndpoint: '',
   siteName: 'Fireplace Of Despair',
   paging: {
-    maxUsers: 3,
-    maxProjects: 3
+    maxUsers: 10,
+    maxProjects: 10
   }
 };

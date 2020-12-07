@@ -138,7 +138,7 @@ jobs:
     - name: Copy single file to remote
       uses: garygrossgarten/github-action-scp@release
       with:
-          local: "/home/runner/work/BusinessCard/BusinessCard/front-end/dist/publish.zip"
+          local: "/home/runner/work/BusinessCard/BusinessCard/front-end/dist/publish-front.zip"
           remote: "/www/business-card-web/publish.zip"
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}

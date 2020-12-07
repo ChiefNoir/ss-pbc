@@ -133,7 +133,7 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
         passphrase: ${{ secrets.PASSPHRASE }}  
-        script: cd /www/business-card-web/; rm -rf 
+        script: rm -rf /www/business-card-web/*; 
 
     - name: Copy single file to remote
       uses: garygrossgarten/github-action-scp@release

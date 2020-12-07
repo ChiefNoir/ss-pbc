@@ -52,7 +52,7 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
         passphrase: ${{ secrets.PASSPHRASE }}  
-        script: cd /www/business-card-api/; rm -rf !(appsettings.json)
+        script: shopt -s extglob; cd /www/business-card-api/; rm -rf !(appsettings.json)
 
     - name: Copy single file to remote
       uses: garygrossgarten/github-action-scp@release

@@ -35,7 +35,7 @@ jobs:
           npm run build -prod
       
       - name: Create zip
-        run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/; zip -r publish-front.zip .
+        run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/BusinessSite/; zip -r publish-front.zip .
 
 # .net core section:
       - name: Setup .NET Core

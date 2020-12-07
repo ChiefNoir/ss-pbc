@@ -113,7 +113,7 @@ jobs:
           npm run build -prod
       
     - name: Create zip
-      run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/BusinessCard/; zip -r publish-front.zip .
+      run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/BusinessSite/; zip -r publish-front.zip .
 
     # - name: Stop nginx
       # uses: appleboy/ssh-action@master

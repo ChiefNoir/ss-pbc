@@ -52,7 +52,7 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
         passphrase: ${{ secrets.PASSPHRASE }}  
-        script: rm -rf !(appsettings.json) /www/business-card-api/* 
+        script: cd /www/business-card-api/; rm -rf !(appsettings.json)
 
     - name: Copy single file to remote
       uses: garygrossgarten/github-action-scp@release
@@ -137,7 +137,7 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
         passphrase: ${{ secrets.PASSPHRASE }}  
-        script: rm -rf /www/business-card-web/* 
+        script: cd /www/business-card-web/; rm -rf 
 
     - name: Copy single file to remote
       uses: garygrossgarten/github-action-scp@release

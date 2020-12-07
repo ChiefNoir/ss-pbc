@@ -1,3 +1,6 @@
+![Deploy](https://github.com/ChiefNoir/BusinessCard/workflows/Deploy/badge.svg?branch=master)
+[![Website status](https://img.shields.io/website-up-down-green-red/https/laborecke.de.svg?label=Website%20status)](https://fireplace-of-despair.org)
+
 ![Publish](https://github.com/ChiefNoir/BusinessCard/workflows/Publish/badge.svg?branch=master)
 ![CodeQL](https://github.com/ChiefNoir/BusinessCard/workflows/CodeQL/badge.svg?branch=master)
 

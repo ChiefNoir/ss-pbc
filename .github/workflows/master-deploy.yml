@@ -22,15 +22,11 @@ jobs:
       run: |
           cd ./back-end/
           dotnet restore
-    - name: Build
-      run: |
-          cd ./back-end/
-          dotnet build --configuration Release --no-restore
     - name: Publish
       run: |
           cd ./back-end/API/
           dotnet publish -c Release
-
+          
     - name: Create zip
       run: cd /home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/net5.0/publish/; zip -r publish.zip .
 
@@ -72,7 +68,7 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
         passphrase: ${{ secrets.PASSPHRASE }}  
-        script: unzip /www/business-card-api/publish.zip -d /www/business-card-api/
+        script: unzip -n /www/business-card-api/publish.zip -d /www/business-card-api/
 
     - name: Clean publish
       uses: appleboy/ssh-action@master

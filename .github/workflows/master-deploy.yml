@@ -30,15 +30,15 @@ jobs:
     - name: Create zip
       run: cd /home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/net5.0/publish/; zip -r publish.zip .
 
-    # - name: Stop service
-      # uses: appleboy/ssh-action@master
-      # with:
-        # host: ${{ secrets.HOST }}
-        # USERNAME: ${{ secrets.USERNAME }}
-        # PORT: ${{ secrets.PORT }}
-        # KEY: ${{ secrets.SSHKEY }}
-        # passphrase: ${{ secrets.PASSPHRASE }}  
-        # script: sudo systemctl stop kestrel-business-card.service
+    - name: Stop service
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}  
+        script: sudo systemctl stop kestrel-business-card.service
 
     - name: Clean folder
       uses: appleboy/ssh-action@master
@@ -115,15 +115,15 @@ jobs:
     - name: Create zip
       run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/BusinessSite/; zip -r publish-front.zip .
 
-    # - name: Stop nginx
-      # uses: appleboy/ssh-action@master
-      # with:
-        # host: ${{ secrets.HOST }}
-        # USERNAME: ${{ secrets.USERNAME }}
-        # PORT: ${{ secrets.PORT }}
-        # KEY: ${{ secrets.SSHKEY }}
-        # passphrase: ${{ secrets.PASSPHRASE }}  
-        # script: sudo systemctl stop nginx
+    - name: Stop nginx
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}  
+        script: sudo systemctl stop nginx
 
     - name: Clean folder
       uses: appleboy/ssh-action@master

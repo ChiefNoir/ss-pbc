@@ -17,11 +17,13 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using NLog.Extensions.Logging;
 using Security;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 
 namespace API
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         private IConfiguration Configuration { get; }

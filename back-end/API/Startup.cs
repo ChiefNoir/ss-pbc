@@ -35,6 +35,7 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
             services.AddResponseCompression();
             services.Configure<GzipCompressionProviderOptions>(options =>
             {

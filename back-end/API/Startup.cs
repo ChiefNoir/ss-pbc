@@ -102,7 +102,7 @@ namespace API
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), path)),
+                FileProvider = new PhysicalFileProvider(path),
                 RequestPath = new PathString("/" + path)
             });
 
@@ -118,9 +118,9 @@ namespace API
 
         private static void CheckFileStorageDirectory(string path)
         {
-            if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), path)))
+            if (!Directory.Exists(path))
             {
-                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), path));
+                Directory.CreateDirectory(path);
             }
         }
     }

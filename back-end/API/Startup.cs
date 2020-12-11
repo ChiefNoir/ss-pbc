@@ -17,6 +17,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using NLog.Extensions.Logging;
 using Security;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
@@ -98,8 +99,7 @@ namespace API
                                   .AllowCredentials()
             );
 
-
-            var path = configuration.GetSection("Location:FileStorage").Get<string>();
+            var path = configuration["Location:FileStorage"];
             CheckFileStorageDirectory(path);
 
             app.UseStaticFiles();

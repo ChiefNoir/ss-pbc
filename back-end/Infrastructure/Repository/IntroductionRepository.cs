@@ -25,6 +25,7 @@ namespace Infrastructure.Repository
             return _context.Introductions
                            .Include(x => x.ExternalUrls)
                            .ThenInclude(x => x.ExternalUrl)
+                           .OrderBy(x => x.Id)
                            .AsNoTracking()
                            .Select(x => DataConverter.ToIntroduction(x))
                            .FirstOrDefaultAsync();
@@ -36,6 +37,7 @@ namespace Infrastructure.Repository
             var dbItem = await _context.Introductions
                                        .Include(x => x.ExternalUrls)
                                        .ThenInclude(x => x.ExternalUrl)
+                                       .OrderBy(x => x.Id)
                                        .FirstOrDefaultAsync();
 
             CheckBeforeUpdate(dbItem, item);

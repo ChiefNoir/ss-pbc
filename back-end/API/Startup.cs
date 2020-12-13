@@ -17,7 +17,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using NLog.Extensions.Logging;
 using Security;
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
@@ -88,7 +87,6 @@ namespace API
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-            // app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseRouting();
             app.UseCors

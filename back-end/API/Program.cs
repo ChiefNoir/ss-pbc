@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -16,19 +17,18 @@ namespace API
 
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json", false, true)
+                .Build();
+
             return Host.CreateDefaultBuilder(args)
                        .ConfigureWebHostDefaults(webBuilder =>
                        {
                            webBuilder.UseStartup<Startup>();
                            webBuilder.UseUrls();
+                           webBuilder.UseConfiguration(configuration);
                            webBuilder.UseKestrel();
-                           webBuilder.ConfigureKestrel(serverOptions =>
-                           {
-                               serverOptions.ConfigureEndpointDefaults(listenOptions =>
-                               {
-                                   listenOptions.UseHttps();
-                               });
-                           });
                        });
         }
     }

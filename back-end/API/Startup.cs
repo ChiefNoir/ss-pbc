@@ -88,7 +88,7 @@ namespace API
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseRouting();
             app.UseCors
@@ -106,7 +106,7 @@ namespace API
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(path),
-                RequestPath = new PathString("/" + path)
+                RequestPath = new PathString(configuration["StaticFilesRequestPath"])
             });
 
 

@@ -1842,23 +1842,13 @@ namespace GeneralTests.API.Controllers.Private
                     Assert.NotNull(response.Data.PosterUrl);
 
                     var config = Storage.CreateConfiguration();
-                    var pathStart = config.GetSection("Kestrel:Endpoints:Https:Url").Get<string>()
-                        + "/" + config.GetSection("Location:FileStorage").Get<string>();
+                    var pathStart = config.GetSection("Endpoint").Get<string>()
+                        + "/" + config.GetSection("Location:StaticFilesRequestPath").Get<string>();
 
                     Assert.StartsWith(pathStart, response.Data.PosterUrl);
 
-                    var storagePath = config.GetSection("Location:FileStorage").Get<string>();
-                    var fileExists = File.Exists(Path.Combine(storagePath, Path.GetFileName(response.Data.PosterUrl)));
-                    Assert.True(fileExists);
-
-
-
                     Assert.NotNull(response.Data.GalleryImages.FirstOrDefault());
                     Assert.StartsWith(pathStart, response.Data.GalleryImages.FirstOrDefault()?.ImageUrl);
-
-
-                    var galleryExists = File.Exists(Path.Combine(storagePath, Path.GetFileName(response.Data.GalleryImages.FirstOrDefault()?.ImageUrl)));
-                    Assert.True(galleryExists);
                 }
                 catch (Exception)
                 {

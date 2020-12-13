@@ -110,7 +110,7 @@ jobs:
       run: |
           cd ./front-end/
           npm i
-          ng build --prod
+          npm run build -- --prod
       
     - name: Create zip
       run: cd /home/runner/work/BusinessCard/BusinessCard/front-end/dist/BusinessSite/; zip -r publish-front.zip .

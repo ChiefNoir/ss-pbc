@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'https://localhost:44386/api/v1/',
-  authEndpoint: 'https://localhost:44386/api/v1/',
+  apiEndpoint: 'http://localhost:5000/api/v1/',
+  authEndpoint: 'http://localhost:5000/api/v1/',
   siteName: 'Fireplace Of Despair (dev)',
   paging: {
     maxUsers: 3,

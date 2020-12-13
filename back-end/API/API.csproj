@@ -29,9 +29,5 @@
     <ProjectReference Include="..\Secutiry\Security.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="files\" />
-  </ItemGroup>
-
 
 </Project>

@@ -30,6 +30,7 @@ For the change of pace, for the playing around and for the developing new skills
   - No overhead, simple support and simple usage.
 - [JwtBearer](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer)
 - [NLog](https://nlog-project.org/)
+- [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)
 
 ### Testing
 - [xUnit](https://xunit.net/)

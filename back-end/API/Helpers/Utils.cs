@@ -10,7 +10,7 @@ namespace API.Helpers
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            return $"{configuration["Endpoint"]}/{configuration["Location:StaticFilesRequestPath"]}/{name}";
+            return $"{configuration["Endpoint"]}{configuration["Location:StaticFilesRequestPath"]}/{name}";
         }
     }
 }

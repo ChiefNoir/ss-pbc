@@ -1843,7 +1843,7 @@ namespace GeneralTests.API.Controllers.Private
 
                     var config = Storage.CreateConfiguration();
                     var pathStart = config.GetSection("Endpoint").Get<string>()
-                        + "/" + config.GetSection("Location:StaticFilesRequestPath").Get<string>();
+                         + config.GetSection("Location:StaticFilesRequestPath").Get<string>();
 
                     Assert.StartsWith(pathStart, response.Data.PosterUrl);
 

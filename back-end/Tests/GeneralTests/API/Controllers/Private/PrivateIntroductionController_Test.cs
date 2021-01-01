@@ -296,7 +296,7 @@ namespace GeneralTests.API.Controllers.Private
                     Assert.NotNull(updateResponse.Data.PosterUrl);
 
                     var config = Storage.CreateConfiguration();
-                    var pathStart = config["Endpoint"] + "/" + config["Location:StaticFilesRequestPath"];
+                    var pathStart = config["Endpoint"] + config["Location:StaticFilesRequestPath"];
 
                     Assert.StartsWith(pathStart, updateResponse.Data.PosterUrl);
 

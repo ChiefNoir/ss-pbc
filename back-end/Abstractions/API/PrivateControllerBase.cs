@@ -2,6 +2,7 @@
 using Abstractions.Model;
 using Abstractions.Model.Queries;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace Abstractions.API
     {
         [HttpPost("introduction"), DisableRequestSizeLimit]
         [Authorize(Roles = Restrictions.EditorRoles)]
+        [EnableCors]
         public abstract Task<IActionResult> SaveIntroductionAsync([FromForm] Introduction introduction);
 
         [HttpPost("accounts")]
@@ -54,6 +56,7 @@ namespace Abstractions.API
 
         [HttpPost("project"), DisableRequestSizeLimit]
         [Authorize(Roles = Restrictions.EditorRoles)]
+        [EnableCors]
         public abstract Task<IActionResult> SaveProjectAsync([FromForm] Project project);
 
         [HttpDelete("project"), DisableRequestSizeLimit]

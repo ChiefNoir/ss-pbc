@@ -38,6 +38,13 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy(DefaultPolicy, builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddOptions();
             services.AddResponseCompression();
             services.Configure<GzipCompressionProviderOptions>(options =>
@@ -46,13 +53,7 @@ namespace API
             });
 
             services.AddControllers();
-            services.AddCors(o => o.AddPolicy(DefaultPolicy, builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
-
+            
             services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString(DefaultConnectionString)));
             
             services.AddTransient<ICategoryRepository, CategoryRepository>();

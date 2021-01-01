@@ -104,7 +104,7 @@ namespace API
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(path),
-                RequestPath = new PathString(configuration["StaticFilesRequestPath"])
+                RequestPath = new PathString(configuration["Location:StaticFilesRequestPath"])
             });
 
 

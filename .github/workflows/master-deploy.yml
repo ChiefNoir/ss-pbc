@@ -86,15 +86,15 @@ jobs:
         passphrase: ${{ secrets.PASSPHRASE }}  
         script: rm /www/business-card-api/publish.zip
 
-    # - name: Start service
-      # uses: appleboy/ssh-action@master
-      # with:
-        # host: ${{ secrets.HOST }}
-        # USERNAME: ${{ secrets.USERNAME }}
-        # PORT: ${{ secrets.PORT }}
-        # KEY: ${{ secrets.SSHKEY }}
-        # passphrase: ${{ secrets.PASSPHRASE }}  
-        # script: sudo systemctl start kestrel-business-card-api.service
+    - name: Start service
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}  
+        script: sudo systemctl start kestrel-business-card-api.service
 
 # end of ".net core section"
 
@@ -171,13 +171,13 @@ jobs:
         passphrase: ${{ secrets.PASSPHRASE }}  
         script: rm /www/business-card-web/publish.zip
 
-    # - name: Start nginx
-      # uses: appleboy/ssh-action@master
-      # with:
-        # host: ${{ secrets.HOST }}
-        # USERNAME: ${{ secrets.USERNAME }}
-        # PORT: ${{ secrets.PORT }}
-        # KEY: ${{ secrets.SSHKEY }}
-        # passphrase: ${{ secrets.PASSPHRASE }}  
-        # script: sudo systemctl start nginx
+    - name: Start nginx
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}  
+        script: sudo systemctl start nginx
 # end of angular

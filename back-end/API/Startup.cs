@@ -26,6 +26,9 @@ namespace API
     [ExcludeFromCodeCoverage]
     public class Startup
     {
+        private const string DefaultPolicy = "Default";
+        private const string DefaultConnectionString = "Default";
+
         private IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -43,9 +46,14 @@ namespace API
             });
 
             services.AddControllers();
-            services.AddCors();
+            services.AddCors(o => o.AddPolicy(DefaultPolicy, builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
 
-            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString(DefaultConnectionString)));
             
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProjectRepository, ProjectRepository>();
@@ -89,13 +97,7 @@ namespace API
             });
             app.UseResponseCompression();
             app.UseRouting();
-            app.UseCors
-            (
-                options => options.SetIsOriginAllowed(x => _ = true)
-                                  .AllowAnyMethod()
-                                  .AllowAnyHeader()
-                                  .AllowCredentials()
-            );
+            app.UseCors(DefaultPolicy);
 
             var path = configuration["Location:FileStorage"];
             CheckFileStorageDirectory(path);

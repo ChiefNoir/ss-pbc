@@ -26,7 +26,6 @@ namespace API
     [ExcludeFromCodeCoverage]
     public class Startup
     {
-        private const string DefaultPolicy = "Default";
         private const string DefaultConnectionString = "Default";
 
         private IConfiguration Configuration { get; }
@@ -90,8 +89,9 @@ namespace API
             app.UseCors
             (
                 options => options.AllowAnyOrigin()
-                                  .AllowAnyHeader()
                                   .AllowAnyMethod()
+                                  .AllowAnyHeader()
+                                  
             );
 
 

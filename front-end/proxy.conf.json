@@ -1,0 +1,6 @@
+{
+    "/api": {
+      "target": "https://api.fireplace-of-despair.org",
+      "secure": false
+    }
+  }

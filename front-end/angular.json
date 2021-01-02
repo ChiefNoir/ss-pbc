@@ -72,7 +72,8 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "BusinessSite:build:production"
+              "browserTarget": "BusinessSite:build:production",
+              "proxyConfig": "proxy.conf.json"
             }
           }
         },

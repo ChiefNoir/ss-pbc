@@ -37,7 +37,6 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
             services.AddOptions();
             services.AddResponseCompression();
             services.Configure<GzipCompressionProviderOptions>(options =>
@@ -90,10 +89,8 @@ namespace API
             (
                 options => options.AllowAnyOrigin()
                                   .AllowAnyMethod()
-                                  .AllowAnyHeader()
-                                  
+                                  .AllowAnyHeader()               
             );
-
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {

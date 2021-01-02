@@ -38,13 +38,7 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o => o.AddPolicy(DefaultPolicy, builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
-
+            services.AddCors();
             services.AddOptions();
             services.AddResponseCompression();
             services.Configure<GzipCompressionProviderOptions>(options =>
@@ -92,13 +86,21 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors
+            (
+                options => options.AllowAnyOrigin()
+                                  .AllowAnyHeader()
+                                  .AllowAnyMethod()
+            );
+
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
             app.UseResponseCompression();
             app.UseRouting();
-            app.UseCors(DefaultPolicy);
 
             var path = configuration["Location:FileStorage"];
             CheckFileStorageDirectory(path);

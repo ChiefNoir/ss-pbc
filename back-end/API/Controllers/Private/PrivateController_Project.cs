@@ -1,7 +1,6 @@
 ﻿using Abstractions.API;
 using Abstractions.Model;
 using API.Helpers;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,7 +12,6 @@ namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        [EnableCors("Default")]
         public override async Task<IActionResult> SaveProjectAsync([FromForm] Project project)
         {
             var result = await _supervisor.SafeExecuteAsync

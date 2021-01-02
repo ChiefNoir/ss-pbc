@@ -2,7 +2,6 @@
 using Abstractions.Model;
 using Abstractions.Model.Queries;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

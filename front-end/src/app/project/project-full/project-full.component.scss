@@ -65,6 +65,25 @@
     }
     .content {
       margin-top: 20px;
-    }
+
+     ::ng-deep a {
+        color: $color-text;
+        text-decoration: underline;
+        
+        &:visited{
+          color: $color-text;
+          text-decoration: none;
+          opacity: 0.42;
+        }
+        &:hover{
+          opacity: 0.7;
+          text-decoration: underline;
+        }
+        &:active{
+          opacity: 1;
+          text-decoration: none;
+        }
+      }
+    }  
   }
 }

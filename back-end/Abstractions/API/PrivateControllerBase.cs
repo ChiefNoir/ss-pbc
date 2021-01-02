@@ -14,7 +14,6 @@ namespace Abstractions.API
     {
         [HttpPost("introduction"), DisableRequestSizeLimit]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        [EnableCors("Default")]
         public abstract Task<IActionResult> SaveIntroductionAsync([FromForm] Introduction introduction);
 
         [HttpPost("accounts")]
@@ -56,7 +55,6 @@ namespace Abstractions.API
 
         [HttpPost("project"), DisableRequestSizeLimit]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        [EnableCors("Default")]
         public abstract Task<IActionResult> SaveProjectAsync([FromForm] Project project);
 
         [HttpDelete("project"), DisableRequestSizeLimit]

@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyVersion>0.0.0.1</AssemblyVersion>
-    <Version>0.0.0.1</Version>
-    <FileVersion>0.0.0.1</FileVersion>
+    <AssemblyVersion>0.0.0.2</AssemblyVersion>
+    <Version>0.0.0.2</Version>
+    <FileVersion>0.0.0.2</FileVersion>
     <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
     <Company>Fireplace of Despair</Company>

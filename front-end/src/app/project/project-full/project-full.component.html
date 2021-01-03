@@ -13,7 +13,6 @@
       <div *ngIf="project.externalUrls.length > 0">
         <app-button-external-url 
                   *ngFor="let item of project.externalUrls"
-                  role="list"
                   [externalUrl]="item">
           </app-button-external-url>
       </div>

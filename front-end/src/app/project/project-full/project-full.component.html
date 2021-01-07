@@ -6,6 +6,7 @@
         [ngClass.sm]="{'top-panel': true}"
         [ngClass.xs]="{'top-panel': true}">
       <img class="poster" 
+           alt="{{(project.posterDescription || '')}}"
            src="{{(project.posterUrl || '/assets/images/placeholder-wide.png')}}"/>
       
       <mat-divider></mat-divider>

@@ -71,7 +71,7 @@ export class ResourcesService {
   public Introduction = 'Introduction';
   public IntroductionContent = 'content';
   public IntroductionExternalUrls = 'Meet me on the other site';
-  public IntroductionPoster = 'poster';
+  public IntroductionPoster = 'Poster';
   public IntroductionPosterDescription = 'poster description';
   public IntroductionTitle = 'title';
 

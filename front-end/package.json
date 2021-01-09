@@ -26,7 +26,7 @@
     "@auth0/angular-jwt": "^5.0.2",
     "jwt-decode": "^3.1.2",
     "rxjs": "~6.5.4",
-    "tslib": "^2.0.3",
+    "tslib": "^2.1.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -36,7 +36,7 @@
     "@types/jasmine": "^3.6.2",
     "@types/jasminewd2": "~2.0.3",
     "@types/jwt-decode": "^2.2.1",
-    "@types/node": "^12.19.11",
+    "@types/node": "^12.19.12",
     "codelyzer": "^6.0.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",

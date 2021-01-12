@@ -1,16 +1,16 @@
 <div *ngIf="introduction$ | async as introduction; else loading" fxLayout="row" class="container">
 
   <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
-    
+
     <h1 class="headline"> {{ introduction.title }} </h1>
     <mat-divider></mat-divider>
-        
+
     <div class="description" [innerHtml]="introduction.content"></div>
-    
+
     <div *ngIf="introduction.externalUrls.length > 0">
       <h1 class="headline"> {{textMessages.IntroductionExternalUrls}}</h1>
       <mat-divider></mat-divider>
-    
+
       <div class="extension"  fxLayout="row" fxLayoutAlign="space-evenly center">
         <app-button-contact
               *ngFor="let item of introduction.externalUrls"
@@ -18,12 +18,13 @@
         </app-button-contact>
       </div>
     </div>
-  
+
   </div>
-    
-  <img class="poster" 
-       alt="{{ introduction.posterDescription}}" 
-       fxFlex="30" 
+
+  <img class="poster"
+       fxHide.lt-md="true"
+       alt="{{ introduction.posterDescription}}"
+       fxFlex="30"
        src="{{(introduction.posterUrl || '/assets/images/placeholder-tall.png')}}"/>
 </div>
 

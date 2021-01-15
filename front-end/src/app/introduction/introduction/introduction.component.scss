@@ -50,16 +50,15 @@
     margin-right: 20px;
     margin-top: 10px;
     object-fit: cover;
-    object-position: 100% 0%;
     filter: grayscale(100%);
-    
+
     transition: all 0.5s ease;
     @include flat-shadow($color-core);
 
     &:hover
     {
      filter: grayscale(40%);
-    } 
+    }
   }
 
   .extension {

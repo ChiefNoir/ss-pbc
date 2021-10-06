@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Data;
+using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -81,7 +82,7 @@ namespace Infrastructure
         }
 
 
-        private void MigrateDatabase(IDbConnection connection)
+        private void MigrateDatabase(DbConnection connection)
         {
             try
             {
@@ -98,7 +99,7 @@ namespace Infrastructure
             }
             catch (Exception ee)
             {
-                _logger.LogError(ee, "Database migration failed");
+                _logger?.LogError(ee, "Database migration failed");
                 throw;
             }
         }

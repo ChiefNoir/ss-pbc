@@ -18,6 +18,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using NLog.Extensions.Logging;
 using Security;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
@@ -110,7 +111,7 @@ namespace API
                 RequestPath = new PathString(configuration["Location:StaticFilesRequestPath"])
             });
 
-
+            
             app.UseAuthentication();
             app.UseAuthorization();
 

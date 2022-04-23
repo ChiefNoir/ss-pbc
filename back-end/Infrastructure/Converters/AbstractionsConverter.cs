@@ -1,5 +1,6 @@
 ﻿using Infrastructure.DataModel;
 using Infrastructure.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -70,7 +71,7 @@ namespace Infrastructure.Converters
                 DisplayName = project.DisplayName,
                 PosterDescription = project.PosterDescription,
                 PosterUrl = project.PosterUrl,
-                ReleaseDate = project.ReleaseDate,
+                ReleaseDate = project.ReleaseDate == null ? null : DateTime.SpecifyKind(project.ReleaseDate.Value, DateTimeKind.Utc),
                 Version = project.Version,
                 CategoryId = project.Category.Id.Value,
                 ExternalUrls = new List<ProjectExternalUrl>(),

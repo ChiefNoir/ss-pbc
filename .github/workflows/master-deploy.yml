@@ -34,7 +34,7 @@ jobs:
           dotnet publish -c Release
           
     - name: Create zip
-      run: cd /home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/net5.0/publish/; zip -r publish.zip .
+      run: cd /home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/net6.0/publish/; zip -r publish.zip .
 
     - name: Stop service
       uses: appleboy/ssh-action@master
@@ -59,7 +59,7 @@ jobs:
     - name: Copy single file to remote
       uses: garygrossgarten/github-action-scp@release
       with:
-          local: "/home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/net5.0/publish/publish.zip"
+          local: "/home/runner/work/BusinessCard/BusinessCard/back-end/API/bin/Release/net6.0/publish/publish.zip"
           remote: "/www/business-card-api/publish.zip"
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}

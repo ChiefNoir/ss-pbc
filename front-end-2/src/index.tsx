@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { Navigation } from './features/navigation'
+import { Navigation } from './ui/navigation'
 import reportWebVitals from './reportWebVitals';
 import Header from './features/ui/header/header'
 import Footer from './features/ui/footer/footer'
 import { BrowserRouter } from "react-router-dom";
 
-import App from './App';
+import AppRouter from './AppRouter';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,8 +18,8 @@ root.render(
     <Header/>
 
     <BrowserRouter>
-      <App/>
-      </BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
 
     <Footer/>
   </React.StrictMode>

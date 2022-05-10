@@ -17,13 +17,15 @@ Personal website for showcasing pet-projects and stuff.
 For the change of pace, for the playing around and for the developing new skills.
 
 ## Front-end
-- [Angular](https://angular.io/)
-- [Angular Material](https://material.angular.io/)
-- [flex-layout](https://github.com/angular/flex-layout)
-- [babel](https://babeljs.io/)
+<!-- - [Angular](https://angular.io/) -->
+<!-- - [Angular Material](https://material.angular.io/) -->
+<!-- - [flex-layout](https://github.com/angular/flex-layout) -->
+<!-- - [babel](https://babeljs.io/) -->
+- [React](https://reactjs.org/)
+- [React Redux](https://react-redux.js.org/)
 
 ## Back-end
-- [.Net 5.0](https://dotnet.microsoft.com/download)
+- [.Net 6.0](https://dotnet.microsoft.com/download)
 - [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/)
 - [Evolve](https://www.nuget.org/packages/Evolve/)
   - It provides migrations in plain sql. In the future it will be usefull, when I need to run some custom scripts.

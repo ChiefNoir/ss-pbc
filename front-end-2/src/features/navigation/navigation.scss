@@ -1,0 +1,53 @@
+@import "../../assets/scss/variables.scss";
+@import "../../assets/scss/mixins";
+@import "../../assets/scss/animations";
+
+.navigation {
+  height: 40px;
+
+  a {
+    color: $color-text;
+    font-size: 25px;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  a:hover {
+    color: $color-text-highlighted;
+    text-shadow: $shadow-text;
+    background-color: $color-container-transparent;
+  }
+  .active {
+    background-color: $color-container;
+  }
+}
+
+.mobile {
+  height: 40px;
+  background: $color-container !important;
+  width: 100%;
+  color: $color-text;
+  cursor: pointer;
+
+  a {    
+    font-size: 30px;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+  }
+
+  svg {
+    fill: $color-text;
+  }
+
+  &:hover svg,
+  &:hover
+  {
+    color: $color-text-highlighted;
+    text-shadow: $shadow-text;
+    fill: $color-text-highlighted !important;
+  }
+}

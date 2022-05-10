@@ -2,12 +2,6 @@ import React from 'react';
 import logo from '../../../src/logo.svg';
 import './introduction.css';
 
-const Something = () => {
-  return (
-    <div></div>
-  )
-}
-
 function Introduction() {
   let something = "Somthinw";
   return (

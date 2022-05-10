@@ -6,6 +6,7 @@ import { NotFound } from './features/not-found';
 import { Navigation } from './features/navigation'
 import reportWebVitals from './reportWebVitals';
 import Header from './features/ui/header/header'
+import Footer from './features/ui/footer/footer'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,6 +16,7 @@ root.render(
     <Header/>
     <Navigation />
     <Introduction />
+    <Footer/>
   </React.StrictMode>
 );
 

@@ -1,0 +1,12 @@
+@mixin flat-shadow($color) {
+    box-shadow: 4px 4px 0 -2px $color;
+  }
+  
+  @mixin text-retro-shadow($color) {
+    text-shadow: 4px 3px 0 $color;
+  }
+  
+  @mixin neon-sign($glowColor, $shadowColor) {
+    text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em $glowColor, 0 0 0.5em #ff0000, 0 0 0.1em $glowColor, 0 10px 3px $shadowColor;
+  }
+  

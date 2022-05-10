@@ -1,21 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { Introduction } from './features/introduction';
-import { NotFound } from './features/not-found';
 import { Navigation } from './features/navigation'
 import reportWebVitals from './reportWebVitals';
 import Header from './features/ui/header/header'
 import Footer from './features/ui/footer/footer'
+import { BrowserRouter } from "react-router-dom";
+
+import App from './App';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <Header/>
-    <Navigation />
-    <Introduction />
+
+    <BrowserRouter>
+      <App/>
+      </BrowserRouter>
+
     <Footer/>
   </React.StrictMode>
 );

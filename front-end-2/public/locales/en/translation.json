@@ -1,4 +1,5 @@
 {
+    "header":"Fireplace of Despair",
     "welcome": "Welcome to the tutorial",
     "navigate":"aaaavigate",
     "date_format_one": "{{-date, YYYY/MM/DD}}",

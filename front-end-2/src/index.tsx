@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import { Introduction } from './features/introduction';
+import { NotFound } from './features/not-found';
+import { Navigation } from './features/navigation'
 import reportWebVitals from './reportWebVitals';
+import Header from './features/ui/header/header'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Header/>
+    <Navigation />
+    <Introduction />
   </React.StrictMode>
 );
 

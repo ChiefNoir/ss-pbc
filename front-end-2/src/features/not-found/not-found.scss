@@ -1,0 +1,31 @@
+@import "../../assets/scss/variables.scss";
+@import "../../assets/scss/mixins";
+@import "../../assets/scss/animations";
+
+.container {
+
+  color: $color-text;
+
+  align-content: center;
+  text-align: center;
+
+ // @include flat-shadow($color-core);
+}
+
+.neon {
+  font-family: $font-neon;
+  color: $color-neon;
+  font-size: 90px;
+
+  @include neon-sign($color-neon-glow, $color-neon-shadow);
+}
+
+.neon .blink3s {
+  display: inline-block;
+  animation: neon-blink linear infinite 5s;
+}
+
+.neon .blink5s {
+  display: inline-block;
+  animation: neon-blink linear infinite 3s;
+}

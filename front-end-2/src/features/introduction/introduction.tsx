@@ -1,11 +1,14 @@
 import React from 'react';
 import logo from '../../../src/logo.svg';
 import './introduction.css';
+import Navigation from '../ui/navigation/navigation';
 
 function Introduction() {
   let something = "Somthinw";
   return (
     <div className="App">
+      <Navigation />
+      
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

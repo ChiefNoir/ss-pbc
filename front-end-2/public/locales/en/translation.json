@@ -1,6 +1,11 @@
 {
     "header":"Fireplace of Despair",
     "FooterCopyright":"Chief",
+    "Navigation":{
+        "Home": "Home",
+        "Projects": "Projects",
+        "Login": "Login"
+    },
 
 
     "welcome": "Welcome to the tutorial",

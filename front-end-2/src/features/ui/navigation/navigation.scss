@@ -1,9 +1,12 @@
 @import "/public/assets/scss/variables.scss";
-@import "/public/assets/scss/mixins";
-@import "/public/assets/scss/animations";
+@import "/public/assets/scss/mixins.scss";
 
 .navigation {
   height: 40px;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   a {
     color: $color-text;
@@ -12,6 +15,7 @@
     padding-left: 10px;
     padding-right: 10px;
     text-decoration: none;
+    text-transform: capitalize; 
     cursor: pointer;
   }
   a:hover {

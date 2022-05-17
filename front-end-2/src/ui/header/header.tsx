@@ -1,13 +1,10 @@
 import './header.scss';
-import { useTranslation } from "react-i18next";
-import "../../locales/i18n";
 import { Link } from 'react-router-dom';
 
 function Header() {
-  const { t } = useTranslation();
   return (
     <div className="header">
-      <Link to='/'>{t("header")}</Link>
+      <Link to='/'>{process.env.REACT_APP_API_AUTH_ENDPOINT}</Link>
     </div>
   );
 }

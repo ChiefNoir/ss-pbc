@@ -3,15 +3,25 @@ import {Route, Routes} from 'react-router-dom';
 // import Page404 from "./pages/404Page";
 // import HomePage from "./pages/HomePage";
 // import SubPage from './pages/SubPage';
-import { Introduction } from './features/introduction';
+import { Introduction } from './pages/introduction';
 import { NotFound } from './pages/not-found';
 import { Loader } from './ui/loader';
 import loadable from 'react-loadable';
 
-// const LoadableComponent = loadable({
-//     loader: () => import('./pages/not-found/not-found'),
-//         loading: Loader
-//   });
+const LoadingPage = () => (
+    <div>
+        <p>
+            Page is loading
+        </p>
+    </div>
+);
+
+const AsyncPages = {
+    myAsyncSubPage: loadable({
+        loader: () => import('./pages/introduction/introduction'),
+        loading: LoadingPage
+    })
+};
 const AppRouter = () => (
 
     <Routes>
@@ -25,3 +35,4 @@ const AppRouter = () => (
 );
 
 export default AppRouter;
+

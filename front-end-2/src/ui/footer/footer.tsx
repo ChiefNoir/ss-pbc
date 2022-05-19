@@ -6,7 +6,6 @@ function Footer() {
   const { t } = useTranslation();
   return (
     <footer>{ t('FooterCopyright') } © { new Date().getFullYear() }</footer>
-
   );
 }
 

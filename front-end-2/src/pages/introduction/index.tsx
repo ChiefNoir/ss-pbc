@@ -1,3 +1,3 @@
-import Introduction from "./introduction";
+import IntroductionPage from "./introductionPage";
 
-export { Introduction };
+export { IntroductionPage };

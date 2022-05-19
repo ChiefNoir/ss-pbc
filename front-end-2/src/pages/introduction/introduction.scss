@@ -1,82 +1,82 @@
-@import "/public/assets/scss/variables.scss";
-@import "/public/assets/scss/mixins.scss";
+// @import "/public/assets/scss/variables.scss";
+// @import "/public/assets/scss/mixins.scss";
 
-.container
-{
-  background-color: $color-control;
-  display: inline-block;
-  min-height: 600px;
-  position: relative;
+// .container
+// {
+//   background-color: $color-control;
+//   display: inline-block;
+//   min-height: 600px;
+//   position: relative;
 
 
-  flex-direction:column;
+//   flex-direction:column;
 
-  @include flat-shadow($color-core);
+//   @include flat-shadow($color-core);
 
-  .headline {
-    color: $color-text;
-    font-size: 25px;
-    font-size: x-large;
-    font-weight: 500;
-    margin-left: 20px;
-    margin-top: 10px;
-  }
+//   .headline {
+//     color: $color-text;
+//     font-size: 25px;
+//     font-size: x-large;
+//     font-weight: 500;
+//     margin-left: 20px;
+//     margin-top: 10px;
+//   }
 
-  .description {
-    color: $color-text;
-    font-size: large;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 10px;
-  }
+//   .description {
+//     color: $color-text;
+//     font-size: large;
+//     margin-bottom: 20px;
+//     margin-left: 20px;
+//     margin-right: 20px;
+//     margin-top: 10px;
+//   }
 
-  .description ::ng-deep span {
-    position: relative;
-    white-space: pre;
-    &::after {
-      background: $color-shadow;
-      border-radius: 0.1em;
-      box-shadow: 0 0 1px $color-shadow;
-      content: " ";
-      width: 100%;
-      height: 1.2em;
-      left: 0;
-      position: absolute ;
-      transform: skewY(-5deg) rotate(5deg) ;
-    }
-  }
+//   .description ::ng-deep span {
+//     position: relative;
+//     white-space: pre;
+//     &::after {
+//       background: $color-shadow;
+//       border-radius: 0.1em;
+//       box-shadow: 0 0 1px $color-shadow;
+//       content: " ";
+//       width: 100%;
+//       height: 1.2em;
+//       left: 0;
+//       position: absolute ;
+//       transform: skewY(-5deg) rotate(5deg) ;
+//     }
+//   }
 
-  .poster {
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 10px;
-    object-fit: cover;
-    filter: grayscale(100%);
+//   .poster {
+//     margin-bottom: 20px;
+//     margin-left: 20px;
+//     margin-right: 20px;
+//     margin-top: 10px;
+//     object-fit: cover;
+//     filter: grayscale(100%);
 
-    transition: all 0.5s ease;
-    @include flat-shadow($color-core);
+//     transition: all 0.5s ease;
+//     @include flat-shadow($color-core);
 
-    &:hover
-    {
-     filter: grayscale(40%);
-    }
-  }
+//     &:hover
+//     {
+//      filter: grayscale(40%);
+//     }
+//   }
 
-  .extension {
-    color: $color-text;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 10px;
-  }
+//   .extension {
+//     color: $color-text;
+//     flex-wrap: wrap;
+//     margin-bottom: 20px;
+//     margin-left: 20px;
+//     margin-right: 20px;
+//     margin-top: 10px;
+//   }
 
-  .mat-divider {
-    border-top-color: $color-text;
-    border-top-width: 2px;
-    margin-left: 0;
-    margin-right: 0;
-  }
-}
+//   .mat-divider {
+//     border-top-color: $color-text;
+//     border-top-width: 2px;
+//     margin-left: 0;
+//     margin-right: 0;
+//   }
+// }

@@ -4,6 +4,7 @@ import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import Header from './ui/header/header'
 import Footer from './ui/footer/footer'
+import {NotFound} from './pages/not-found/index'
 import { BrowserRouter } from "react-router-dom";
 
 import AppRouter from './AppRouter';
@@ -13,15 +14,13 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    
+  <div>
     <BrowserRouter>
       <Header/>
       <AppRouter />
     </BrowserRouter>
-
-    <Footer/>
-  </React.StrictMode>
+     <Footer/> 
+  </div>
 );
 
 // If you want to start measuring performance in your app, pass a function

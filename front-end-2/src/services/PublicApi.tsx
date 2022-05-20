@@ -1,5 +1,5 @@
 import * as axios from "axios";
-import { Introduction, ExecutionResult } from "../models";
+import { Introduction, ExecutionResult } from "../models/_index";
 
 export default class PublicApi {
 

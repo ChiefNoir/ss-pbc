@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import './introduction.scss';
-import { Introduction, ExecutionResult } from '../../models'
+import { Introduction, ExecutionResult } from '../../models/_index'
 import PublicApi from '../../services/PublicApi';
 
 function IntroductionPage() {

@@ -1,8 +1,10 @@
+import { Incident } from './_index'
+
 type ExecutionResult<T> =
 {
     isSucceed: boolean;
     data: T;
-    //Incident Error;
+    error: Incident;
 }
 
 export default ExecutionResult;

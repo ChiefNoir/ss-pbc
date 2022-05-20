@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
-import Header from './ui/header/header'
-import Footer from './ui/footer/footer'
-import {NotFound} from './pages/not-found/index'
+import { Header, Footer } from './ui/_index'
 import { BrowserRouter } from "react-router-dom";
 
 import AppRouter from './AppRouter';

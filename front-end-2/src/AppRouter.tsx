@@ -1,7 +1,6 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
-import IntroductionPage  from './pages/introduction/introductionPage';
-import { NotFound } from './pages/not-found';
+import { NotFound, IntroductionPage } from './pages/_index'
 
 const AppRouter = () => (
     <Routes>

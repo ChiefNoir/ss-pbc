@@ -1,5 +1,8 @@
-import Introduction from "./Introduction";
 import ExecutionResult from "./ExecutionResult";
-import Incident from "./Incident";
+export type { ExecutionResult };
 
-export type { Introduction, ExecutionResult, Incident };
+import Incident from "./Incident";
+export type { Incident };
+
+import Introduction from "./Introduction";
+export type { Introduction };

@@ -4,7 +4,6 @@
 
 .header {
   padding-bottom: 15px;
-  padding-top: 15px;
   text-align: center;
 
   &:hover {
@@ -14,7 +13,6 @@
   a {
     font-family: $font-header;
     font-size: 70px;
-    font-weight: bold;
     line-height: 1;
     text-decoration: none;
     text-transform: uppercase;

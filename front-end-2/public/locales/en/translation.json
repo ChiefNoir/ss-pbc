@@ -1,17 +1,15 @@
 {
-    "header":"Fireplace of Despair",
-    "FooterCopyright":"Chief",
+    "Header":"Fireplace of Despair",
+    "Footer": {
+        "Copyright":"Chief"
+    },
+    "Introduction": {
+        "Introduction":"Introduction",
+        "ExternalUrls":"Meet me on the other site"
+    },
     "Navigation":{
         "Home": "Home",
         "Projects": "Projects",
         "Login": "Login"
-    },
-
-
-    "welcome": "Welcome to the tutorial",
-    "navigate":"aaaavigate",
-    "date_format_one": "{{-date, YYYY/MM/DD}}",
-    "date_format_two": "{{date, DD-MM-YYYY}}",
-    "keyWithCount": "Anne has bought {{count}} book",
-    "keyWithCount_plural": "Anne has bought {{count}} books"
+    }
 }

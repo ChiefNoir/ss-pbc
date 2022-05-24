@@ -1,0 +1,21 @@
+@import "/public/assets/scss/variables.scss";
+@import "/public/assets/scss/mixins.scss";
+@import "/public/assets/scss/animations.scss";
+
+.container {
+  background-color: $table-row;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  .loading {
+    align-items: center;
+
+    img {
+      width: 120px;
+      height: 120px;
+
+      animation: spin-with-click 11s linear infinite;
+    }
+  }
+}

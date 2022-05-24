@@ -1,6 +1,6 @@
 import './buttonContact.scss';
 
-function ButtonContact(key:any, url: string, displayName: string) {
+function ButtonContact(key: any, url: string, displayName: string) {
   return (
     <a className="button-contact"
        rel="noreferrer noopener"

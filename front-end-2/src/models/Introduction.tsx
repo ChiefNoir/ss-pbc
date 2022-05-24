@@ -1,7 +1,6 @@
 import { ExternalUrl } from './_index';
 
-type Introduction = 
-{
+export type Introduction = {
   title: string;
   content: string;
   posterUrl: string;
@@ -9,5 +8,3 @@ type Introduction =
   externalUrls: Array<ExternalUrl>;
   version: number;
 }
-
-export default Introduction;

@@ -5,7 +5,7 @@ import "../../locales/i18n";
 function Footer() {
   const { t } = useTranslation();
   return (
-    <footer>{ t('FooterCopyright') } © { new Date().getFullYear() }</footer>
+    <footer>{ t('Footer.Copyright') } © { new Date().getFullYear() }</footer>
   );
 }
 

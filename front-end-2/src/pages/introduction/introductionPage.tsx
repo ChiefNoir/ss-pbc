@@ -1,9 +1,13 @@
-import React, { useState, useEffect }  from 'react';
+import { useState, useEffect }  from 'react';
 import './introduction.scss';
-import { Introduction, ExecutionResult } from '../../models/_index'
+import { useTranslation } from "react-i18next";
+import { Introduction } from '../../models/_index'
+import { Loader, ButtonContact } from '../../ui/_index'
 import PublicApi from '../../services/PublicApi';
 
+
 function IntroductionPage() {
+  const { t } = useTranslation();
   const [introduction, setIntroduction] = useState<Introduction | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -19,28 +23,42 @@ function IntroductionPage() {
     fetchData();
   }, []);
 
-  return (
-    <div>
-      {loading? 
-    <div>loading</div>  
-    :
-    <div>
-
-      <div>
-        <h1 >{ introduction?.title } </h1>
-        {/* <mat-divider></mat-divider> */}
-        <div dangerouslySetInnerHTML={{__html: introduction?.content || ''}}></div>
+  if(loading)
+  {
+    return <Loader />;
+  }
+  else
+  {
+    return (
+    <div className="introduction-container">
+      <div className='introduction-content'>
+        <h1 className="introduction-headline"> { introduction?.title } </h1>
+        <hr/>
+        <div className="introduction-description" 
+             dangerouslySetInnerHTML={{__html: introduction?.content || ''}}>
+        </div>
+        
+        {
+        (introduction?.externalUrls?.length ?? 0) > 0 &&
+        <div>
+          <h1 className="introduction-headline"> {t('Introduction.ExternalUrls')} </h1>
+          <hr/>
+          <div className="introduction-extension">
+            { introduction?.externalUrls.map
+              (object => 
+                { return ButtonContact(object.id, object.url, object.displayName)})
+            }
+          </div>
+        </div>
+        }
       </div>
-    
-    <img 
-      //  src={(introduction?.posterUrl || '/assets/images/placeholder-tall.png')}/>
-      src={'/assets/images/placeholder-tall.png'}/>
+      
+      <img className="introduction-poster"
+           alt={ introduction?.posterDescription}
+           src={('/assets/images/placeholder-tall.png')}/>
     </div>
-    }
-</div>
-
-
-  );
+    );
+  }
 }
 
 export default IntroductionPage;

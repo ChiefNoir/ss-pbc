@@ -15,9 +15,11 @@ root.render(
   <div>
     <BrowserRouter>
       <Header/>
-      <AppRouter />
+      <div className='routerContainer'>
+        <AppRouter />
+      </div>
     </BrowserRouter>
-     <Footer/> 
+    <Footer/> 
   </div>
 );
 

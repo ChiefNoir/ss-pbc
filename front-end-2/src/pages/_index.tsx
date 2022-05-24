@@ -1,5 +1,5 @@
 import IntroductionPage from "./introduction/introductionPage";
-import NotFound from "./not-found/not-found";
+import NotFoundPage from "./NotFoundPage/NotFoundPage";
 
 export { IntroductionPage };
-export { NotFound };
+export { NotFoundPage };

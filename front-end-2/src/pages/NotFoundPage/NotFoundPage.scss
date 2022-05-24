@@ -1,0 +1,24 @@
+@import "/public/assets/scss/variables";
+@import "/public/assets/scss/mixins";
+@import "/public/assets/scss/animations";
+
+.container-not-found {
+  text-align: center;
+
+  .neon {
+    font-family: $font-neon;
+    color: $color-neon;
+    font-size: 90px;
+    @include neon-sign($color-neon-glow, $color-neon-shadow);
+
+    .blink3s {
+      display: inline-block;
+      animation: neon-blink linear infinite 5s;
+    }
+
+    .blink5s {
+      display: inline-block;
+      animation: neon-blink linear infinite 3s;
+    }
+  }
+}

@@ -1,10 +1,9 @@
-import { useState, useEffect }  from 'react';
-import './introduction.scss';
+import { useState, useEffect }  from "react";
+import "./introductionPage.scss";
 import { useTranslation } from "react-i18next";
-import { Introduction } from '../../models/_index'
-import { Loader, ButtonContact, Navigation } from '../../ui/_index'
-import PublicApi from '../../services/PublicApi';
-
+import { Introduction } from "../../models/_index"
+import { Loader, ButtonContact, Navigation } from "../../ui/_index"
+import PublicApi from "../../services/PublicApi";
 
 function IntroductionPage() {
   const { t } = useTranslation();
@@ -19,9 +18,7 @@ function IntroductionPage() {
       setLoading(false);
     };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(() => { fetchData(); }, []);
 
   if(loading)
   {
@@ -31,17 +28,17 @@ function IntroductionPage() {
   {
     return (
     <div className="introduction-container">
-      <div className='introduction-content'>
+      <div className="introduction-content">
         <h1 className="introduction-headline"> { introduction?.title } </h1>
         <hr/>
         <div className="introduction-description" 
-             dangerouslySetInnerHTML={{__html: introduction?.content || ''}}>
+             dangerouslySetInnerHTML={{__html: introduction?.content || ""}}>
         </div>
         
         {
         (introduction?.externalUrls?.length ?? 0) > 0 &&
         <div>
-          <h1 className="introduction-headline"> {t('Introduction.ExternalUrls')} </h1>
+          <h1 className="introduction-headline"> {t("Introduction.ExternalUrls")} </h1>
           <hr/>
           <div className="introduction-extension">
             { introduction?.externalUrls.map
@@ -55,7 +52,7 @@ function IntroductionPage() {
       
       <img className="introduction-poster"
            alt={ introduction?.posterDescription}
-           src={('/assets/images/placeholder-tall.png')}/>
+           src={(introduction?.posterUrl ?? "/assets/images/placeholder-tall.png")}/>
     </div>
     );
   }

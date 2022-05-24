@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
-import { Header, Footer } from './ui/_index'
+import { Header, Footer, Navigation } from './ui/_index'
 import { BrowserRouter } from "react-router-dom";
 
 import AppRouter from './AppRouter';
@@ -15,6 +15,7 @@ root.render(
   <div>
     <BrowserRouter>
       <Header/>
+      <Navigation />
       <div className='routerContainer'>
         <AppRouter />
       </div>

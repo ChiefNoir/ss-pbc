@@ -60,9 +60,17 @@ namespace Infrastructure.Repository
                 throw new InconsistencyException(Resources.TextMessages.WrongPagingQuery);
             }
 
-            var category = await _categoryRepository.GetAsync(categoryCode);
+            var isEverything = true;
+            var categoryId = -1;
+
+            if(!string.IsNullOrEmpty(categoryCode))
+            {
+                var category = await _categoryRepository.GetAsync(categoryCode);
+                categoryId = category.Id.Value;
+            }
+
             return await _context.Projects
-                                 .Where(x => category.IsEverything || x.CategoryId == category.Id)
+                                 .Where(x => isEverything || x.CategoryId == categoryId)
                                  .OrderByDescending(x => x.ReleaseDate)
                                  .Skip(start)
                                  .Take(length)

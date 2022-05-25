@@ -63,6 +63,7 @@ namespace Infrastructure.Repository
             var isEverything = true;
             var categoryId = -1;
 
+            // TODO: Test coverage!
             if(!string.IsNullOrEmpty(categoryCode))
             {
                 var category = await _categoryRepository.GetAsync(categoryCode);

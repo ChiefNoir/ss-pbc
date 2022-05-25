@@ -67,6 +67,7 @@ namespace Infrastructure.Repository
             {
                 var category = await _categoryRepository.GetAsync(categoryCode);
                 categoryId = category.Id.Value;
+                isEverything = false;
             }
 
             return await _context.Projects

@@ -69,8 +69,8 @@ namespace Security
             var plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
             plainText.CopyTo(plainTextWithSaltBytes, 0);
             salt.CopyTo(plainTextWithSaltBytes, plainText.Length);
-            
-            using (var algorithm = new SHA384CryptoServiceProvider())
+
+            using (var algorithm = SHA384.Create())
             {
                 return algorithm.ComputeHash(plainTextWithSaltBytes);
             }
@@ -81,7 +81,7 @@ namespace Security
         /// <returns><see cref="byte"/> array filled with random numbers </returns>
         private static byte[] GenerateRandomArray(int size)
         {
-            using (var rngCsp = new RNGCryptoServiceProvider())
+            using (var rngCsp = RandomNumberGenerator.Create())
             {
                 var result = new byte[size];
                 rngCsp.GetNonZeroBytes(result);

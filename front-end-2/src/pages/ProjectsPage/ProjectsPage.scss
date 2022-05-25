@@ -2,3 +2,8 @@
 @import "/public/assets/scss/mixins";
 @import "/public/assets/scss/animations";
 
+.projects-categories-filter {
+    display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}

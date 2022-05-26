@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Category, ProjectPreview } from '../../services/models/_index';
 import PublicApi from '../../services/PublicApi';
 import { Loader } from '../../ui/_index';
@@ -7,22 +8,30 @@ import ProjectPreviewComponent from './features/ProjectPreview/ProjectPreview';
 import './ProjectsPage.scss';
 
 function ProjectsPage() {
+  const [loading, setLoading] = useState(true);
+
   const [projects, setProjects] = useState<Array<ProjectPreview>>();
   const [categories, setCategories] = useState<Array<Category>>();
-  const [loading, setLoading] = useState(true);
+  const { category }= useParams();
+  const { page } = useParams();
 
   const fetchData = async () => {
     setLoading(true);
-    const projectsResponse = await PublicApi.getProjects(0, 100, undefined);
-    const categoriesResponse = await PublicApi.getCategories();
+
+    const pageNumber = parseInt(page ?? '0') || 0;
+    const projectsResponse = await PublicApi.getProjects(pageNumber, category);
+
+    if(categories == undefined)
+    {
+      const categoriesResponse = await PublicApi.getCategories();
+      setCategories(categoriesResponse.data.data);
+    }
 
     setProjects(projectsResponse.data.data);
-    setCategories(categoriesResponse.data.data);
-
     setLoading(false);
   };
 
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => { fetchData(); }, [category, page]);
 
   if(loading)
   {

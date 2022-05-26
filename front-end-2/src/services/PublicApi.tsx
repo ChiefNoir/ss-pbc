@@ -13,6 +13,8 @@ export default class PublicApi {
           Accept: "application/json",
         },
       });
+
+      
     };
   
     public static async getIntroduction()
@@ -25,13 +27,19 @@ export default class PublicApi {
         return await this.init().get<ExecutionResult<Array<Category>>>("/categories");
     };
 
-    public static async getProjects(start: number, length: number, categoryCode: string | undefined)
+    public static async getProjects(page: number, categoryCode: string | undefined)
     {
+      const length : number = parseInt(process.env.REACT_APP_PAGING_PROJECTS_MAX ?? '10');
+      const start : number = length * page;
+
       const categoryParam = categoryCode !== undefined && categoryCode
       ? '&categorycode=' + categoryCode
       : '';
 
-        return await this.init().get<ExecutionResult<Array<ProjectPreview>>>('projects/search?start=' + start +
-        '&length=' + length + categoryParam);
+        return await this.init().get<ExecutionResult<Array<ProjectPreview>>>
+        ('projects/search?'
+        + 'start=' + start 
+        + '&length=' + length 
+        + categoryParam);
     };
 }

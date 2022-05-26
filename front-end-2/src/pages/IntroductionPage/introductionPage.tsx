@@ -9,22 +9,22 @@ function IntroductionPage() {
   const [introduction, setIntroduction] = useState<Introduction>();
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
+  useEffect(() => {
+    const fetchIntroduction = async () => {
       setLoading(true);
+  
       var result = await PublicApi.getIntroduction();
 
       setIntroduction(result.data.data);
       setLoading(false);
-    };
+    };  
+    
+    fetchIntroduction();
+  }, []);
 
-  useEffect(() => { fetchData(); }, []);
-
-  if(loading)
-  {
+  if(loading) {
     return <Loader />;
-  }
-  else
-  {
+  } else {
     return <IntroductionComponent introduction={introduction as Introduction} />
   }
 }

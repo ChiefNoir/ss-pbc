@@ -1,6 +1,5 @@
 import * as axios from "axios";
-import { Introduction, ExecutionResult } from "../models/_index";
-import { Category, ProjectPreview } from "./models/_index"
+import { Introduction, ExecutionResult, Category, ProjectPreview } from "./";
 
 export default class PublicApi {
 

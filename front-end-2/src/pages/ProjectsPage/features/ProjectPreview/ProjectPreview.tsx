@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ProjectPreview } from '../../../../services/models/_index';
+import { ProjectPreview } from '../../../../services';
 import './ProjectPreview.scss';
 
 function createRouterLink(project: ProjectPreview): string {

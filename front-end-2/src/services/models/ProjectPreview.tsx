@@ -1,4 +1,4 @@
-import { Category } from './_index';
+import { Category } from './Category';
 
 export type ProjectPreview = {
   code: string;

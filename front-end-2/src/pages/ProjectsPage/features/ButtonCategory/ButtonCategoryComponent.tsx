@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Category } from '../../../../services/models/_index';
+import { Category } from '../../../../services';
 import './ButtonCategoryComponent.scss';
 
 const ButtonCategoryComponent: FunctionComponent<{category: Category}> = (props) => {

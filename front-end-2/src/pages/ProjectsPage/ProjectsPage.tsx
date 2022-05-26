@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Category, ProjectPreview } from '../../services/models/_index';
-import PublicApi from '../../services/PublicApi';
+import { PublicApi, Category, ProjectPreview } from '../../services';
 import { Loader } from '../../ui';
 import ButtonCategoryComponent from './features/ButtonCategory/ButtonCategoryComponent';
 import ProjectPreviewComponent from './features/ProjectPreview/ProjectPreview';

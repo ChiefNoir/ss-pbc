@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ExternalUrl, Introduction } from '../../../../models/_index';
+import { ExternalUrl, Introduction } from '../../../../services';
 import { ButtonContact } from '../_index';
 import './IntroductionComponent.scss';
 

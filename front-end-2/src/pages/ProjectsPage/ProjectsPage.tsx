@@ -20,33 +20,40 @@ function ProjectsPage() {
   const [categories, setCategories] = useState<Array<Category>>();
   const [selectedCategory, setCategory] = useState<Category>();
 
-  const fetchData = async () => {
-    setLoading(true);
 
+
+  useEffect(() => { 
     
-
-    var tmpCategories = categories || [];
-
-    if(categories === undefined) {
-      const categoriesResponse = await PublicApi.getCategories();
-      tmpCategories = categoriesResponse.data.data;
-      setCategories(tmpCategories);
-    }
-
-    if(categoryCode === undefined) {
-      setCategory(tmpCategories.find(x => x.isEverything));
-    } else {
-      setCategory(tmpCategories.find(x => x.code === categoryCode));
-    }
-
+    const fetchData = async () => {
+      setLoading(true);
   
-    const projectsResponse = await PublicApi.getProjects(Convert.ToRestrictedNumber(page, 1), categoryCode);
+      
+  
+      var tmpCategories = categories || [];
+  
+      if(categories === undefined) {
+        const categoriesResponse = await PublicApi.getCategories();
+        tmpCategories = categoriesResponse.data.data;
+        setCategories(tmpCategories);
+      }
+  
+      if(categoryCode === undefined) {
+        setCategory(tmpCategories.find(x => x.isEverything));
+      } else {
+        setCategory(tmpCategories.find(x => x.code === categoryCode));
+      }
+  
+    
+      const projectsResponse = await PublicApi.getProjects(Convert.ToRestrictedNumber(page, 1), categoryCode);
+  
+      setProjects(projectsResponse.data.data);
+      setLoading(false);
+    };
 
-    setProjects(projectsResponse.data.data);
-    setLoading(false);
-  };
 
-  useEffect(() => { fetchData(); }, [categoryCode, page]);
+
+    fetchData(); 
+  }, [categoryCode, page]);
 
   if(loading)
   {

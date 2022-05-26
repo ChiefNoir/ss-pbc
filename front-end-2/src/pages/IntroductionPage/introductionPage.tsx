@@ -1,7 +1,7 @@
 import { useState, useEffect }  from "react";
 import "./introductionPage.scss";
 import { Introduction } from "../../models/_index"
-import { Loader } from "../../ui/_index"
+import { Loader } from "../../ui"
 import PublicApi from "../../services/PublicApi";
 import IntroductionComponent from "./features/introductionComponent/IntroductionComponent";
 

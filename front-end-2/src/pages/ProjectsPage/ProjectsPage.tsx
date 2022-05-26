@@ -2,20 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Category, ProjectPreview } from '../../services/models/_index';
 import PublicApi from '../../services/PublicApi';
-import { Loader } from '../../ui/_index';
+import { Loader } from '../../ui';
 import ButtonCategoryComponent from './features/ButtonCategory/ButtonCategoryComponent';
 import ProjectPreviewComponent from './features/ProjectPreview/ProjectPreview';
 import './ProjectsPage.scss';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import { useNavigate } from "react-router-dom";
-import { PaginationItem } from '@mui/material';
 
-function Calc(totalProjects: number): number
-{
-  var projectPerPage = parseInt(process.env.REACT_APP_PAGING_PROJECTS_MAX || '0') || 1;
-  return Math.ceil(totalProjects / projectPerPage)
-}
+import { Pagination, PaginationItem } from '@mui/material';
+import { Convert, Calc } from '../../helpers'
 
 function ProjectsPage() {
   const [loading, setLoading] = useState(true);
@@ -30,38 +23,28 @@ function ProjectsPage() {
   const fetchData = async () => {
     setLoading(true);
 
-    var pageNumber = parseInt(page ?? '1') || 1;
-    if(pageNumber == 0)
-      pageNumber = 1;
     
 
-    var ss: Array<Category>;
-    ss = categories || [];
+    var tmpCategories = categories || [];
 
-    if(categories == undefined) {
+    if(categories === undefined) {
       const categoriesResponse = await PublicApi.getCategories();
-      ss = categoriesResponse.data.data;
-      setCategories(ss);
+      tmpCategories = categoriesResponse.data.data;
+      setCategories(tmpCategories);
     }
 
-    if(categoryCode == undefined) {
-      setCategory
-      (
-        ss.find(x => x.isEverything)
-      );
-    }
-    else {
-      setCategory
-      (
-        ss.find(x => x.code === categoryCode)
-      );
+    if(categoryCode === undefined) {
+      setCategory(tmpCategories.find(x => x.isEverything));
+    } else {
+      setCategory(tmpCategories.find(x => x.code === categoryCode));
     }
 
-    const projectsResponse = await PublicApi.getProjects(pageNumber, categoryCode);
+  
+    const projectsResponse = await PublicApi.getProjects(Convert.ToRestrictedNumber(page, 1), categoryCode);
 
     setProjects(projectsResponse.data.data);
     setLoading(false);
-  };//end of fetchData
+  };
 
   useEffect(() => { fetchData(); }, [categoryCode, page]);
 
@@ -77,9 +60,9 @@ function ProjectsPage() {
         {          
           categories?.filter(x => x.totalProjects > 0).map
           (
-            (item: Category) =>
+            x =>
             {
-              return <ButtonCategoryComponent key={item.id} category={item} />
+              return <ButtonCategoryComponent key={x.id} category={x} />
             }
           )
         }
@@ -87,35 +70,25 @@ function ProjectsPage() {
         {
           projects?.map
           (
-            (item: ProjectPreview) => 
+            x => 
             {
-              return <ProjectPreviewComponent key={item.code} project={item} />
+              return <ProjectPreviewComponent key={x.code} project={x} />
             }
           )
         }
 
-        {Calc(selectedCategory?.totalProjects ?? 0) > 1 &&
-          
+        {Calc.Pages(selectedCategory?.totalProjects ?? 0) > 1 &&
           <div className='projects-paging'>
-            <Stack spacing={2}>
-              <Pagination page={ parseInt(page || '1', 10)}
-                          count={ Calc(selectedCategory?.totalProjects ?? 0)} 
-                          //onChange= { handleChange }
-                          size = "large"
-                          shape="rounded" 
-                          
-                          renderItem={(item) => (
-                            <PaginationItem
-                              component={Link}
-                              to={`/projects/${selectedCategory?.code}/${item.page}`}
-                              {...item}
-                            />
-                          )}
-                          
-                          />
-            </Stack>
+            <Pagination page={ Convert.ToRestrictedNumber(page, 1)}
+                        count={ Calc.Pages(selectedCategory?.totalProjects ?? 0)} 
+                        size = "large"
+                        shape="rounded" 
+                        renderItem={(item) => (
+                            <PaginationItem component={Link}
+                                            to={`/projects/${selectedCategory?.code}/${item.page}`}
+                                            {...item} /> )} 
+                />
           </div>
-          
         }
       </div>
     );

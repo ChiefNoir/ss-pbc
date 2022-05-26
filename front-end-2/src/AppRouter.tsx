@@ -1,6 +1,5 @@
-import React from 'react';
-import {Route, Routes, Navigate } from 'react-router-dom';
-import { NotFoundPage, IntroductionPage, ProjectsPage } from './pages/_index'
+import {Route, Routes } from 'react-router-dom';
+import { NotFoundPage, IntroductionPage, ProjectsPage } from './pages'
 
 const AppRouter = () => (
     <Routes>

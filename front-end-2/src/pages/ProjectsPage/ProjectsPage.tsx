@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Category, ProjectPreview } from '../../services/models/_index';
 import PublicApi from '../../services/PublicApi';
 import { Loader } from '../../ui/_index';
@@ -9,6 +9,7 @@ import './ProjectsPage.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from "react-router-dom";
+import { PaginationItem } from '@mui/material';
 
 function Calc(totalProjects: number): number
 {
@@ -25,14 +26,6 @@ function ProjectsPage() {
   const [projects, setProjects] = useState<Array<ProjectPreview>>();
   const [categories, setCategories] = useState<Array<Category>>();
   const [selectedCategory, setCategory] = useState<Category>();
-
-  let navigate = useNavigate();
-
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    //setPage(value);
-
-    navigate(selectedCategory?.code +'/'+ value);
-  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -107,9 +100,19 @@ function ProjectsPage() {
             <Stack spacing={2}>
               <Pagination page={ parseInt(page || '1', 10)}
                           count={ Calc(selectedCategory?.totalProjects ?? 0)} 
-                          onChange= { handleChange }
+                          //onChange= { handleChange }
                           size = "large"
-                          shape="rounded" />
+                          shape="rounded" 
+                          
+                          renderItem={(item) => (
+                            <PaginationItem
+                              component={Link}
+                              to={`/projects/${selectedCategory?.code}/${item.page}`}
+                              {...item}
+                            />
+                          )}
+                          
+                          />
             </Stack>
           </div>
           

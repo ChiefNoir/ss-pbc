@@ -1,3 +1,13 @@
+# BusinessCard Front-end
+
+## Dependencies
+- [React](https://reactjs.org/)
+- [React-router](https://reactrouter.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [i18next](https://www.i18next.com/)
+- [Mui Material UI](https://mui.com/)
+- [Emotion](https://emotion.sh/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

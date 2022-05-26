@@ -7,8 +7,8 @@ const AppRouter = () => (
         <Route path='/' element={<IntroductionPage />} />
 
         <Route path="projects" element={<ProjectsPage />}>
-          <Route path=":category" element={<ProjectsPage />} />
-          <Route path=":category/:page" element={<ProjectsPage />} />
+          <Route path=":categoryCode" element={<ProjectsPage />} />
+          <Route path=":categoryCode/:page" element={<ProjectsPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />

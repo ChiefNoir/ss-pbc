@@ -6,32 +6,71 @@ import { Loader } from '../../ui/_index';
 import ButtonCategoryComponent from './features/ButtonCategory/ButtonCategoryComponent';
 import ProjectPreviewComponent from './features/ProjectPreview/ProjectPreview';
 import './ProjectsPage.scss';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import { useNavigate } from "react-router-dom";
+
+function Calc(totalProjects: number): number
+{
+  var projectPerPage = parseInt(process.env.REACT_APP_PAGING_PROJECTS_MAX || '0') || 1;
+  return Math.ceil(totalProjects / projectPerPage)
+}
 
 function ProjectsPage() {
   const [loading, setLoading] = useState(true);
 
+  const { categoryCode }= useParams();
+  const { page } = useParams();
+
   const [projects, setProjects] = useState<Array<ProjectPreview>>();
   const [categories, setCategories] = useState<Array<Category>>();
-  const { category }= useParams();
-  const { page } = useParams();
+  const [selectedCategory, setCategory] = useState<Category>();
+
+  let navigate = useNavigate();
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    //setPage(value);
+
+    navigate(selectedCategory?.code +'/'+ value);
+  };
 
   const fetchData = async () => {
     setLoading(true);
 
-    const pageNumber = parseInt(page ?? '0') || 0;
-    const projectsResponse = await PublicApi.getProjects(pageNumber, category);
+    var pageNumber = parseInt(page ?? '1') || 1;
+    if(pageNumber == 0)
+      pageNumber = 1;
+    
 
-    if(categories == undefined)
-    {
+    var ss: Array<Category>;
+    ss = categories || [];
+
+    if(categories == undefined) {
       const categoriesResponse = await PublicApi.getCategories();
-      setCategories(categoriesResponse.data.data);
+      ss = categoriesResponse.data.data;
+      setCategories(ss);
     }
+
+    if(categoryCode == undefined) {
+      setCategory
+      (
+        ss.find(x => x.isEverything)
+      );
+    }
+    else {
+      setCategory
+      (
+        ss.find(x => x.code === categoryCode)
+      );
+    }
+
+    const projectsResponse = await PublicApi.getProjects(pageNumber, categoryCode);
 
     setProjects(projectsResponse.data.data);
     setLoading(false);
-  };
+  };//end of fetchData
 
-  useEffect(() => { fetchData(); }, [category, page]);
+  useEffect(() => { fetchData(); }, [categoryCode, page]);
 
   if(loading)
   {
@@ -61,9 +100,26 @@ function ProjectsPage() {
             }
           )
         }
+
+        {Calc(selectedCategory?.totalProjects ?? 0) > 1 &&
+          
+          <div className='projects-paging'>
+            <Stack spacing={2}>
+              <Pagination page={ parseInt(page || '1', 10)}
+                          count={ Calc(selectedCategory?.totalProjects ?? 0)} 
+                          onChange= { handleChange }
+                          size = "large"
+                          shape="rounded" />
+            </Stack>
+          </div>
+          
+        }
       </div>
     );
   }
+
+ 
 }
+
 
 export default ProjectsPage;

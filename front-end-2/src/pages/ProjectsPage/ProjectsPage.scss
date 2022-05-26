@@ -3,7 +3,20 @@
 @import "/public/assets/scss/animations";
 
 .projects-categories-filter {
-    display: flex;
+	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+}
+
+.projects-paging {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.MuiButtonBase-root {
+	color: inherit !important;
+}
+.Mui-selected {
+	background-color: $color-control-active !important;
 }

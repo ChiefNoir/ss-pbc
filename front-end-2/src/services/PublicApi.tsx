@@ -30,7 +30,7 @@ export default class PublicApi {
     public static async getProjects(page: number, categoryCode: string | undefined)
     {
       const length : number = parseInt(process.env.REACT_APP_PAGING_PROJECTS_MAX ?? '10');
-      const start : number = length * page;
+      const start : number = length * (page - 1);
 
       const categoryParam = categoryCode !== undefined && categoryCode
       ? '&categorycode=' + categoryCode

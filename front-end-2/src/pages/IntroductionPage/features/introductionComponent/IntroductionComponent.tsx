@@ -13,7 +13,7 @@ const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (
       <h1 className="introduction-headline"> { props.introduction?.title } </h1>
         <hr/>
         <div className="introduction-description" 
-             dangerouslySetInnerHTML={{__html: props.introduction?.content || ""}}>
+             dangerouslySetInnerHTML={{__html: props.introduction?.content ?? ""}}>
         </div>
         
         {

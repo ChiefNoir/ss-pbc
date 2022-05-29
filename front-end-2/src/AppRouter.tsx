@@ -1,5 +1,5 @@
 import {Route, Routes } from 'react-router-dom';
-import { NotFoundPage, IntroductionPage, ProjectsPage } from './pages'
+import { NotFoundPage, IntroductionPage, ProjectsPage, ProjectPage } from './pages'
 
 const AppRouter = () => (
     <Routes>
@@ -9,6 +9,8 @@ const AppRouter = () => (
           <Route path=":categoryCode" element={<ProjectsPage />} />
           <Route path=":categoryCode/:page" element={<ProjectsPage />} />
         </Route>
+
+        <Route path='project/:projectCode' element={<ProjectPage />} />
 
         <Route path="*" element={<NotFoundPage />} />
     </Routes>

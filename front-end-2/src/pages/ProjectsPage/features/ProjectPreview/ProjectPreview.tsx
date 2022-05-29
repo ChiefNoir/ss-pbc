@@ -11,7 +11,7 @@ const ProjectPreviewComponent: FunctionComponent<{project: ProjectPreview}> = (p
   return (
   <div className="container-project-preview">
     <img className={props.project.releaseDate ? 'poster' : 'poster grayscale-filter'}
-         src={ props.project.posterUrl || '/assets/images/placeholder-wide.png' }
+         src={ props.project.posterUrl ?? '/assets/images/placeholder-wide.png' }
          alt={ props.project.posterDescription }/>
     
     <div className="content">

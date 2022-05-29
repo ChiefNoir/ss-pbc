@@ -1,0 +1,38 @@
+@import "/public/assets/scss/variables";
+@import "/public/assets/scss/mixins";
+@import "/public/assets/scss/animations";
+
+.container-project-main {
+    h1 {
+        padding-top: 5px;
+        margin-left: 10px;
+        margin-bottom: -5px;
+    }
+
+    .project-data {
+        display: flex;
+
+        .project-data-left-panel {
+            margin-top: 10px;
+            margin-left: 10px;
+
+            .poster {
+                object-fit: cover;
+                width: 300px;
+              }
+        }
+    
+        .project-data-right-panel {
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 20px;
+
+            flex-basis: 100%;
+
+            .project-description {
+                font-size: 20px;
+            }
+        }
+    }
+}

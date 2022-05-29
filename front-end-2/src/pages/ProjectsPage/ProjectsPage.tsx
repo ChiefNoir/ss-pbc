@@ -28,7 +28,7 @@ function ProjectsPage() {
   
       
   
-      var tmpCategories = categories || [];
+      var tmpCategories = categories ?? [];
   
       if(categories === undefined) {
         const categoriesResponse = await PublicApi.getCategories();

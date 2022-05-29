@@ -1,5 +1,6 @@
 import * as axios from "axios";
 import { Introduction, ExecutionResult, Category, ProjectPreview } from "./";
+import { Project } from "./models/Project";
 
 export default class PublicApi {
 
@@ -42,5 +43,9 @@ export default class PublicApi {
         + 'start=' + start 
         + '&length=' + length 
         + categoryParam);
+    };
+
+    public static async getProject(code: string | undefined) {
+        return await this.init().get<ExecutionResult<Project>>("/projects/" + code);
     };
 }

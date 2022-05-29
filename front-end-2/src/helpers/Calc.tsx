@@ -1,6 +1,6 @@
-import Convert from "./Convert";
+import { Convert } from "./Convert";
 
-export class Calc {
+class Calc {
     public static Pages(totalItems: number): number {
         const maxProjects = process.env.REACT_APP_PAGING_PROJECTS_MAX;
 
@@ -8,3 +8,5 @@ export class Calc {
         return Math.ceil(totalItems / projectPerPage)
     }
 }
+
+export { Calc };

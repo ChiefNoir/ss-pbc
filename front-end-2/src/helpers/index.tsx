@@ -1,4 +1,4 @@
-import Convert from "./Convert";
+import { Convert } from "./Convert";
 import { Calc } from "./Calc";
 import { Format } from "./Format";
 

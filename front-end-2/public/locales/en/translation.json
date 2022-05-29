@@ -11,5 +11,10 @@
         "Home": "Home",
         "Projects": "Projects",
         "Login": "Login"
+    },
+    "Project": {
+        "Category": "Category",
+        "ReleaseDate": "Release date",
+        "Description": "Description"
     }
 }

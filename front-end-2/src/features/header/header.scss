@@ -1,0 +1,36 @@
+@import "/public/assets/scss/variables.scss";
+
+.app-header {
+  margin-top: -15px;
+  text-align: center;
+  font-family: $font-header;
+  font-size: 70px;
+  text-shadow: 4px 3px 0 $color-shadow-text-light;
+  text-transform: uppercase;
+
+  &:hover {
+    animation: delayed-onetime-flicker 2s linear 2s;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@keyframes delayed-onetime-flicker {
+  000.00%  { opacity: 1; }
+  100.00%  { opacity: 1; }
+  041.99%  { opacity: 1; }
+  042.00%  { opacity: 0; }
+  043.00%  { opacity: 0; }
+  043.01%  { opacity: 1; }
+  045.99%  { opacity: 1; }
+  046.00%  { opacity: 0; }
+  046.90%  { opacity: 0; }
+  046.91%  { opacity: 1; }
+  051.99%  { opacity: 1; }
+  052.00%  { opacity: 0; }
+  052.80%  { opacity: 0; }
+  052.81%  { opacity: 1; }
+}

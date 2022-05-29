@@ -1,22 +1,5 @@
 @import "variables";
 
-@keyframes delayed-onetime-flicker {
-  000.00%  { opacity: 1; }
-  100.00%  { opacity: 1; }
-  041.99%  { opacity: 1; }
-  042.00%  { opacity: 0; }
-  043.00%  { opacity: 0; }
-  043.01%  { opacity: 1; }
-  045.99%  { opacity: 1; }
-  046.00%  { opacity: 0; }
-  046.90%  { opacity: 0; }
-  046.91%  { opacity: 1; }
-  051.99%  { opacity: 1; }
-  052.00%  { opacity: 0; }
-  052.80%  { opacity: 0; }
-  052.81%  { opacity: 1; }
-}
-
 @keyframes spin-with-click {
   000% { transform: rotate(0deg); }
 

@@ -9,8 +9,7 @@
     },
     "Navigation":{
         "Home": "Home",
-        "Projects": "Projects",
-        "Login": "Login"
+        "Projects": "Projects"
     },
     "Project": {
         "Category": "Category",

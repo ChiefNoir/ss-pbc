@@ -17,7 +17,6 @@ function Navigation() {
                className={({ isActive }) => (isActive ? " active" : "")}>
         {t("Navigation.Projects")}
       </NavLink>
-      <NavLink to='/login'>{t("Navigation.Login")}</NavLink>
   </div>
   )
 };

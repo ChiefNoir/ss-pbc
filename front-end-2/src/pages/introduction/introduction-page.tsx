@@ -1,8 +1,8 @@
 import { useState, useEffect }  from "react";
-import "./introductionPage.scss";
+import "./introduction-page.scss";
 import { Loader } from "../../ui"
 import { PublicApi, Introduction } from "../../services";
-import { IntroductionComponent } from "./features/";
+import { IntroductionComponent } from "./features";
 
 function IntroductionPage() {
   const [introduction, setIntroduction] = useState<Introduction>();
@@ -28,4 +28,4 @@ function IntroductionPage() {
   }
 }
 
-export default IntroductionPage;
+export { IntroductionPage };

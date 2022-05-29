@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import { Introduction } from "../../../../services";
-import { ButtonContact } from "..";
+
 import "./introduction-component.scss";
 
 const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (props) => {
@@ -23,7 +23,10 @@ const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (
         <hr/>
         <div className="container-introduction-content-extension">
           {props.introduction.externalUrls.map(
-            x => { return ButtonContact(x.id, x.url, x.displayName)})
+            x => { 
+              return <div></div>// ButtonContact(x.id, x.url, x.displayName)
+            }
+              )
           }
         </div>
       </div>}

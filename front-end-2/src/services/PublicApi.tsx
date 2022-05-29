@@ -2,7 +2,7 @@ import * as axios from "axios";
 import { Introduction, ExecutionResult, Category, ProjectPreview } from "./";
 import { Project } from "./models/Project";
 
-export default class PublicApi {
+class PublicApi {
 
     private static init()
     {
@@ -49,3 +49,5 @@ export default class PublicApi {
         return await this.init().get<ExecutionResult<Project>>("/projects/" + code);
     };
 }
+
+export { PublicApi };

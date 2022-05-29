@@ -1,4 +1,4 @@
-import PublicApi from "./PublicApi";
+import { PublicApi } from "./PublicApi";
 import { Category } from "./models/Category";
 import { ProjectPreview } from "./models/ProjectPreview";
 import { ExternalUrl } from "./models/ExternalUrl";

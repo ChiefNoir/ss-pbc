@@ -1,19 +1,19 @@
-import './navigation.scss';
+import "./navigation.scss";
 import { useTranslation } from "react-i18next";
 
 import "../../locales/i18n";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 function Navigation() {
   const { t } = useTranslation();
   return (
   <div className="navigation">
-      <NavLink to='/'
+      <NavLink to="/"
                className={({ isActive }) => (isActive ? " active" : "")}>
         {t("Navigation.Home")}
       </NavLink>
 
-      <NavLink to='/projects'
+      <NavLink to="/projects"
                className={({ isActive }) => (isActive ? " active" : "")}>
         {t("Navigation.Projects")}
       </NavLink>

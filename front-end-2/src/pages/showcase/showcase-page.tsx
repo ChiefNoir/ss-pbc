@@ -1,16 +1,16 @@
-import './showcase-page.scss';
-import { ButtonCategoryComponent, ProjectPreviewComponent } from './features/';
-import { Convert, Calc } from '../../helpers'
-import { Link, useSearchParams } from 'react-router-dom';
-import { Loader } from '../../ui';
-import { Pagination, PaginationItem } from '@mui/material';
-import { PublicApi, Category, ProjectPreview } from '../../services';
-import { useEffect, useState } from 'react';
+import "./showcase-page.scss";
+import { ButtonCategoryComponent, ProjectPreviewComponent } from "./features/";
+import { Convert, Calc } from "../../helpers"
+import { Link, useSearchParams } from "react-router-dom";
+import { Loader } from "../../ui";
+import { Pagination, PaginationItem } from "@mui/material";
+import { PublicApi, Category, ProjectPreview } from "../../services";
+import { useEffect, useState } from "react";
 
 function ShowcasePage() {
   const [searchParams] = useSearchParams();
-  const categoryCode = searchParams.get('category');
-  const page = searchParams.get('page') ?? '0';
+  const categoryCode = searchParams.get("category");
+  const page = searchParams.get("page") ?? "0";
 
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<Array<ProjectPreview>>();
@@ -52,7 +52,7 @@ function ShowcasePage() {
   {
     return (
       <div>
-        <div className='projects-categories-filter'>
+        <div className="projects-categories-filter">
         {          
           categories?.filter(x => x.totalProjects > 0).map
           (
@@ -63,7 +63,7 @@ function ShowcasePage() {
           )
         }
         </div>
-        <div className='showcase-projects'>
+        <div className="showcase-projects">
         {
           projects?.map
           (
@@ -76,7 +76,7 @@ function ShowcasePage() {
         </div>
 
         {Calc.Pages(selectedCategory?.totalProjects ?? 0) > 1 &&
-          <div className='projects-paging'>
+          <div className="projects-paging">
             <Pagination page={ Convert.ToRestrictedNumber(page, 1)}
                         count={ Calc.Pages(selectedCategory?.totalProjects ?? 0)} 
                         size = "large"

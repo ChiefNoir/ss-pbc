@@ -1,20 +1,20 @@
-import ReactDOM from 'react-dom/client';
-import './index.scss';
-import reportWebVitals from './reportWebVitals';
-import { Footer, Header } from './features'
-import { Navigation } from './ui'
+import ReactDOM from "react-dom/client";
+import "./index.scss";
+import reportWebVitals from "./reportWebVitals";
+import { Footer, Header } from "./features"
+import { Navigation } from "./ui"
 import { BrowserRouter } from "react-router-dom";
-import AppRouter from './AppRouter';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import AppRouter from "./AppRouter";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
   },
 });
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 
 root.render(
@@ -22,7 +22,7 @@ root.render(
     <BrowserRouter>
       <Header/>
       <Navigation />
-      <div className='routerContainer'>
+      <div className="routerContainer">
         <AppRouter />
       </div>
     </BrowserRouter>

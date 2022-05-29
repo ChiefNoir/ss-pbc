@@ -1,6 +1,6 @@
-import { ExternalUrl } from './ExternalUrl';
-import { Category } from './Category';
-import { GalleryImage } from './GalleryImage';
+import { ExternalUrl } from "./ExternalUrl";
+import { Category } from "./Category";
+import { GalleryImage } from "./GalleryImage";
 
 export type Project = {
   id: number;

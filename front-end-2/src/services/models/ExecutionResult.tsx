@@ -1,4 +1,4 @@
-import { Incident } from './Incident'
+import { Incident } from "./Incident"
 
 export type ExecutionResult<T> = {
     isSucceed: boolean;

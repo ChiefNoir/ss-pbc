@@ -1,4 +1,4 @@
-import './buttonContact.scss';
+import "./buttonContact.scss";
 
 function ButtonContact(key: any, url: string, displayName: string) {
   return (

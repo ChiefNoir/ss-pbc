@@ -31,17 +31,17 @@ export default class PublicApi {
     {
       if(page === 0) { page = 1;}
 
-      const length : number = parseInt(process.env.REACT_APP_PAGING_PROJECTS_MAX ?? '10');
+      const length : number = parseInt(process.env.REACT_APP_PAGING_PROJECTS_MAX ?? "10");
       const start : number = length * (page - 1);
 
       const categoryParam = categoryCode !== null && categoryCode
-      ? '&categorycode=' + categoryCode
-      : '';
+      ? "&categorycode=" + categoryCode
+      : "";
 
         return await this.init().get<ExecutionResult<Array<ProjectPreview>>>
-        ('projects/search?'
-        + 'start=' + start 
-        + '&length=' + length 
+        ("projects/search?"
+        + "start=" + start 
+        + "&length=" + length 
         + categoryParam);
     };
 

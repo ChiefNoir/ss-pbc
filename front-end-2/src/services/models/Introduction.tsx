@@ -1,4 +1,4 @@
-import { ExternalUrl } from './ExternalUrl';
+import { ExternalUrl } from "./ExternalUrl";
 
 export type Introduction = {
   title: string;

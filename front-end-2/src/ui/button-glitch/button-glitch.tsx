@@ -1,5 +1,5 @@
-import { FunctionComponent } from 'react';
-import './button-glitch.scss';
+import { FunctionComponent } from "react";
+import "./button-glitch.scss";
 
 const ButtonGlitch: FunctionComponent<{displayName: string, url:string}> = (props) => {
     return(

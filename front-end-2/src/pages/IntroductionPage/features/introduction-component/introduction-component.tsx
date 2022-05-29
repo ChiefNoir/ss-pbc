@@ -1,8 +1,8 @@
-import { FunctionComponent } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Introduction } from '../../../../services';
-import { ButtonContact } from '..';
-import './introduction-component.scss';
+import { FunctionComponent } from "react";
+import { useTranslation } from "react-i18next";
+import { Introduction } from "../../../../services";
+import { ButtonContact } from "..";
+import "./introduction-component.scss";
 
 const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (props) => {
   const { t } = useTranslation();

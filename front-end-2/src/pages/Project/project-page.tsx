@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { PublicApi, Project } from '../../services';
-import { Loader } from '../../ui';
-import { ProjectComponent } from './features';
-import './project-page.scss';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { PublicApi, Project } from "../../services";
+import { Loader } from "../../ui";
+import { ProjectComponent } from "./features";
+import "./project-page.scss";
 
 function ProjectPage() {
   const { projectCode } = useParams();

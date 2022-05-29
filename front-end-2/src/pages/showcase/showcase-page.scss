@@ -1,6 +1,4 @@
 @import "/public/assets/scss/variables";
-@import "/public/assets/scss/mixins";
-@import "/public/assets/scss/animations";
 
 .projects-categories-filter {
   display: flex;
@@ -17,16 +15,17 @@
   justify-content: center;
 }
 
-
 .projects-paging {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .MuiButtonBase-root {
-	color: inherit !important;
+  color: inherit !important;
 }
+
 .Mui-selected {
-	background-color: $color-control-active !important;
+  background-color: $color-control-active !important;
 }

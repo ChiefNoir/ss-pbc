@@ -27,14 +27,14 @@ export default class PublicApi {
         return await this.init().get<ExecutionResult<Array<Category>>>("/categories");
     };
 
-    public static async getProjects(page: number, categoryCode: string | undefined)
+    public static async getProjects(page: number, categoryCode: string | null)
     {
       if(page === 0) { page = 1;}
 
       const length : number = parseInt(process.env.REACT_APP_PAGING_PROJECTS_MAX ?? '10');
       const start : number = length * (page - 1);
 
-      const categoryParam = categoryCode !== undefined && categoryCode
+      const categoryParam = categoryCode !== null && categoryCode
       ? '&categorycode=' + categoryCode
       : '';
 

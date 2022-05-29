@@ -9,7 +9,7 @@ const ProjectPreviewComponent: FunctionComponent<{project: ProjectPreview}> = (p
 
   return (
   <Card sx={{ maxWidth: 300, minWidth: 300 }} >
-      <CardActionArea component={Link} to={`/project/${project.code}`} sx={{height: 400 }}>
+      <CardActionArea component={Link} to={`/projects/${project.code}`} sx={{height: 400 }}>
         <CardMedia
           className='project-preview-poster'
           component="img"

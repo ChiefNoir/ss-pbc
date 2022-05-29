@@ -6,11 +6,11 @@ const AppRouter = () => (
         <Route path='/' element={<IntroductionPage />} />
 
         <Route path="projects" element={<ShowcasePage />}>
-          <Route path=":categoryCode" element={<ShowcasePage />} />
-          <Route path=":categoryCode/:page" element={<ShowcasePage />} />
+          <Route path="?category=:categoryCode" element={<ShowcasePage />} />
+          <Route path="?category=:categoryCode&page=:page" element={<ShowcasePage />} />
         </Route>
 
-        <Route path='project/:projectCode' element={<ProjectPage />} />
+        <Route path='projects/:projectCode' element={<ProjectPage />} />
 
         <Route path="*" element={<NotFoundPage />} />
     </Routes>

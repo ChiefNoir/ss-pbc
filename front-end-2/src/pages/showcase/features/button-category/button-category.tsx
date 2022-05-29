@@ -9,7 +9,7 @@ const ButtonCategoryComponent: FunctionComponent<{category: Category}> = (props)
   const category = props.category;
 
   return (
-    <NavLink to={`/projects/${category.code}`}
+    <NavLink to={`/projects?category=${category.code}`}
              className = "button-flip"
              data-back = {`${t("Category.TotalCount")}: ${category.totalProjects}` }
              data-front = { category.displayName }>

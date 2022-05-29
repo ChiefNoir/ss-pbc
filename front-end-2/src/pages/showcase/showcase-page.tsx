@@ -1,24 +1,23 @@
 import './showcase-page.scss';
 import { ButtonCategoryComponent, ProjectPreviewComponent } from './features/';
 import { Convert, Calc } from '../../helpers'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Loader } from '../../ui';
 import { Pagination, PaginationItem } from '@mui/material';
 import { PublicApi, Category, ProjectPreview } from '../../services';
 import { useEffect, useState } from 'react';
 
 function ShowcasePage() {
+  const [searchParams] = useSearchParams();
+  const categoryCode = searchParams.get('category');
+  const page = searchParams.get('page') ?? '0';
+
   const [loading, setLoading] = useState(true);
-
-  const { categoryCode }= useParams();
-  const { page } = useParams();
-
   const [projects, setProjects] = useState<Array<ProjectPreview>>();
   const [categories, setCategories] = useState<Array<Category>>();
   const [selectedCategory, setCategory] = useState<Category>();
 
   useEffect(() => { 
-
     const fetchData = async () => {
       setLoading(true);
 
@@ -29,8 +28,8 @@ function ShowcasePage() {
         tmpCategories = categoriesResponse.data.data;
         setCategories(tmpCategories);
       }
-  
-      if(categoryCode === undefined) {
+
+      if(categoryCode === null) {
         setCategory(tmpCategories.find(x => x.isEverything));
       } else {
         setCategory(tmpCategories.find(x => x.code === categoryCode));
@@ -43,7 +42,7 @@ function ShowcasePage() {
     };
 
     fetchData(); 
-  }, [categoryCode, page]);
+  }, [searchParams]);
 
   if(loading)
   {
@@ -84,7 +83,7 @@ function ShowcasePage() {
                         shape="rounded" 
                         renderItem={(item) => (
                             <PaginationItem component={Link}
-                                            to={`/projects/${selectedCategory?.code}/${item.page}`}
+                                            to={`/projects/?category=${selectedCategory?.code}&page=${item.page}`}
                                             {...item} /> )} 
                 />
           </div>

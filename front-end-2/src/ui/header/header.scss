@@ -5,6 +5,7 @@
 .header {
   padding-bottom: 15px;
   text-align: center;
+  
 
   &:hover {
     animation: delayed-onetime-flicker 2s linear 2s;
@@ -14,6 +15,7 @@
     font-family: $font-header;
     font-size: 70px;
     line-height: 1;
+    color: inherit;
     text-decoration: none;
     text-transform: uppercase;
 

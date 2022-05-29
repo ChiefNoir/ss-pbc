@@ -1,36 +1,54 @@
-@import "/public/assets/scss/variables.scss";
+@import "/public/assets/scss/variables";
 
 .app-header {
-  margin-top: -15px;
   text-align: center;
   font-family: $font-header;
-  font-size: 70px;
-  text-shadow: 4px 3px 0 $color-shadow-text-light;
   text-transform: uppercase;
 
-  &:hover {
-    animation: delayed-onetime-flicker 2s linear 2s;
-  }
-
   a {
-    color: inherit;
+    position: relative;
+    display: inline-block;
+    font-size: 45px;
     text-decoration: none;
+    color: inherit;
+    z-index: 1;
+    
+    &:before,
+    &:after {
+        content:attr(data-content);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    
+    &:before {
+        color: #00ffff;
+        z-index: -1;
+    }
+  
+    &:after {
+        color: #ff00ff;
+        z-index: -2;
+    }
+    
+    &:hover {
+        &:before {
+            animation: glitchy 0.4s ease 0.4s infinite;
+        }
+        
+        &:after {
+            animation: glitchy 0.4s ease infinite reverse;
+        }
+    }
   }
 }
 
-@keyframes delayed-onetime-flicker {
-  000.00%  { opacity: 1; }
-  100.00%  { opacity: 1; }
-  041.99%  { opacity: 1; }
-  042.00%  { opacity: 0; }
-  043.00%  { opacity: 0; }
-  043.01%  { opacity: 1; }
-  045.99%  { opacity: 1; }
-  046.00%  { opacity: 0; }
-  046.90%  { opacity: 0; }
-  046.91%  { opacity: 1; }
-  051.99%  { opacity: 1; }
-  052.00%  { opacity: 0; }
-  052.80%  { opacity: 0; }
-  052.81%  { opacity: 1; }
+@keyframes glitchy {
+  0%   {transform: translate(-2px, 2px);}
+  25%  {transform: translate(-3px, -1px);}
+  50%  {transform: translate(4px, 2px);}
+  75%  {transform: translate(2px, -2px);}
+  100%  {transform: translate(-2px, 2px);}
 }

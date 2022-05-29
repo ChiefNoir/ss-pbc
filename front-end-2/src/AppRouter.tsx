@@ -1,5 +1,5 @@
 import {Route, Routes } from 'react-router-dom';
-import { NotFoundPage, IntroductionPage, ShowcasePage, ProjectPage } from './pages'
+import { ErrorNotFoundPage, IntroductionPage, ShowcasePage, ProjectPage } from './pages'
 
 const AppRouter = () => (
     <Routes>
@@ -12,7 +12,7 @@ const AppRouter = () => (
 
         <Route path='projects/:projectCode' element={<ProjectPage />} />
 
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<ErrorNotFoundPage />} />
     </Routes>
 );
 

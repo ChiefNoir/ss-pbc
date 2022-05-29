@@ -1,6 +1,6 @@
-import './NotFoundPage.scss';
+import './error-not-found-page.scss';
 
-function NotFoundPage() {
+function ErrorNotFoundPage() {
   return (
   <div className="container-not-found">
     <div className="neon">
@@ -9,4 +9,4 @@ function NotFoundPage() {
   );
 }
 
-export default NotFoundPage;
+export { ErrorNotFoundPage };

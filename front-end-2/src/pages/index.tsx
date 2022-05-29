@@ -1,9 +1,9 @@
 import IntroductionPage from "./IntroductionPage/introductionPage";
-import NotFoundPage from "./NotFoundPage/NotFoundPage";
+import { ErrorNotFoundPage } from "./error-not-found/error-not-found-page"
 import { ProjectPage } from "./project/project-page";
 import { ShowcasePage } from "./showcase/showcase-page"
 
 export { IntroductionPage };
-export { NotFoundPage };
+export { ErrorNotFoundPage };
 export { ShowcasePage };
 export { ProjectPage };

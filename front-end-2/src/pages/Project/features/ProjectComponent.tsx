@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Format } from '../../../helpers';
 import { Project } from '../../../services';
-import { GlitchButton } from './GlitchButton/GlitchButton';
+import { ButtonGlitch } from '../../../ui';
 import './ProjectComponent.scss';
 
 const ProjectComponent: FunctionComponent<{project: Project}> = (props) => {
@@ -23,7 +23,7 @@ const ProjectComponent: FunctionComponent<{project: Project}> = (props) => {
                     project.externalUrls?.map
                     (
                         x => { 
-                        return <GlitchButton key={x.id} displayName={x.displayName} url= {x.url} />
+                        return <ButtonGlitch key={x.id} displayName={x.displayName} url= {x.url} />
                         }
                     )
                 }

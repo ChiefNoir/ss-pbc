@@ -1,0 +1,116 @@
+@import "/public/assets/scss/variables";
+
+.glitch-button {
+  text-decoration: none;
+  color: inherit;
+
+  display: block;
+  position: relative;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 30px;
+  font-size: .75em;
+  letter-spacing: .35em;
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px solid $color-text;
+  transition: all .2s ease;
+  margin-bottom: 5px;
+
+  &:before, 
+  &:after {
+    content: attr(data-content);
+    position: absolute;
+    padding: 8px 0;
+    width: 100%;
+    clip: rect(0px, 0px, 0px, 0px);
+    background: $color-text;
+    color: $color-shadow-text-light;
+  }
+  
+  &:before {
+    left: -3px;
+    top: -2px;
+    text-shadow: 2px 0 $color-text;
+    box-shadow: 2px 0 $color-text;
+  }
+
+  &:after {
+    left: 2px;
+    bottom: -2px;
+    text-shadow: -1px 0 $color-text;
+    box-shadow: -1px 0 $color-text;
+  }
+
+  &:hover {
+    background: $color-text;
+    color: $color-container;
+  }
+
+  &:hover:before {
+      animation: glitch-animation 1.5s infinite linear alternate-reverse;
+  }
+  
+  &:hover:after {
+      animation: glitch-animation 2s infinite linear alternate;
+  }
+
+}
+
+@keyframes glitch-animation {
+  0% {
+    clip: rect(-3px, 600px, 0px, 0px);
+  }
+  5.88235% {
+    clip: rect(0px, 600px, 0px, 0px);
+  }
+  11.76471% {
+    clip: rect(-3px, 600px, 0px, 0px);
+  }
+  17.64706% {
+    clip: rect(-3px, 600px, 0px, 0px);
+  }
+  23.52941% {
+    clip: rect(100px, 600px, 100px, 0px);
+  }
+  29.41176% {
+    clip: rect(0px, 600px, 600px, 0px);
+  }
+  35.29412% {
+    clip: rect(100px, 600px, 0px, 0px);
+  }
+  41.17647% {
+    clip: rect(0px, 600px, 600px, 0px);
+  }
+  47.05882% {
+    clip: rect(100px, 600px, 0px, 0px);
+  }
+  52.94118% {
+    clip: rect(-3px, 600px, 0px, 0px);
+  }
+  58.82353% {
+    clip: rect(100px, 450px,100px, 0px);
+  }
+  64.70588% {
+    clip: rect(0px, 450px, 0px, 0px);
+  }
+  70.58824% {
+    clip: rect(100px, 450px, 100px, 0px);
+  }
+  76.47059% {
+    clip: rect(0px, 450px, 0px, 0px);
+  }
+  82.35294% {
+    clip: rect(0px, 450px, 0px, 0px);
+  }
+  88.23529% {
+    clip: rect(0px, 450px, 0px, 0px);
+  }
+  94.11765% {
+    clip: rect(0px, 450px, 0px, 0px);
+  }
+  100% {
+    clip: rect(0px, 450px, 0px, 0px);
+  }
+}

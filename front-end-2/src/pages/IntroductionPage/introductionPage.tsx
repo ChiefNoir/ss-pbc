@@ -2,7 +2,7 @@ import { useState, useEffect }  from "react";
 import "./introductionPage.scss";
 import { Loader } from "../../ui"
 import { PublicApi, Introduction } from "../../services";
-import IntroductionComponent from "./features/introductionComponent/IntroductionComponent";
+import { IntroductionComponent } from "./features/";
 
 function IntroductionPage() {
   const [introduction, setIntroduction] = useState<Introduction>();

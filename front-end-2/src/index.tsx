@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom/client';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
-import { Header } from './features'
-import { Footer, Navigation } from './ui'
+import { Footer, Header } from './features'
+import { Navigation } from './ui'
 import { BrowserRouter } from "react-router-dom";
 
 import AppRouter from './AppRouter';

@@ -1,5 +1,5 @@
 {
-    "Header":"Fireplace of Despair",
+    "Header": "Fireplace of Despair",
     "Footer": {
         "Copyright":"Chief"
     },
@@ -15,5 +15,8 @@
         "Category": "Category",
         "ReleaseDate": "Release date",
         "Description": "Description"
+    },
+    "Category": {
+        "TotalCount": "Total"
     }
 }

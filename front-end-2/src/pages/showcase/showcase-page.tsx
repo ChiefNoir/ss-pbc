@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { PublicApi, Category, ProjectPreview } from '../../services';
-import { Loader } from '../../ui';
-import ButtonCategoryComponent from './features/ButtonCategory/ButtonCategoryComponent';
-import ProjectPreviewComponent from './features/ProjectPreview/ProjectPreview';
-import './ProjectsPage.scss';
-
-import { Pagination, PaginationItem } from '@mui/material';
+import './showcase-page.scss';
+import { ButtonCategoryComponent, ProjectPreviewComponent } from './features/';
 import { Convert, Calc } from '../../helpers'
+import { Link, useParams } from 'react-router-dom';
+import { Loader } from '../../ui';
+import { Pagination, PaginationItem } from '@mui/material';
+import { PublicApi, Category, ProjectPreview } from '../../services';
+import { useEffect, useState } from 'react';
 
-function ProjectsPage() {
+function ShowcasePage() {
   const [loading, setLoading] = useState(true);
 
   const { categoryCode }= useParams();
@@ -19,17 +17,13 @@ function ProjectsPage() {
   const [categories, setCategories] = useState<Array<Category>>();
   const [selectedCategory, setCategory] = useState<Category>();
 
-
-
   useEffect(() => { 
-    
+
     const fetchData = async () => {
       setLoading(true);
-  
-      
-  
+
       var tmpCategories = categories ?? [];
-  
+
       if(categories === undefined) {
         const categoriesResponse = await PublicApi.getCategories();
         tmpCategories = categoriesResponse.data.data;
@@ -41,15 +35,12 @@ function ProjectsPage() {
       } else {
         setCategory(tmpCategories.find(x => x.code === categoryCode));
       }
-  
-    
+
       const projectsResponse = await PublicApi.getProjects(Convert.ToRestrictedNumber(page, 1), categoryCode);
-  
+
       setProjects(projectsResponse.data.data);
       setLoading(false);
     };
-
-
 
     fetchData(); 
   }, [categoryCode, page]);
@@ -73,6 +64,7 @@ function ProjectsPage() {
           )
         }
         </div>
+        <div className='showcase-projects'>
         {
           projects?.map
           (
@@ -82,6 +74,7 @@ function ProjectsPage() {
             }
           )
         }
+        </div>
 
         {Calc.Pages(selectedCategory?.totalProjects ?? 0) > 1 &&
           <div className='projects-paging'>
@@ -100,8 +93,6 @@ function ProjectsPage() {
     );
   }
 
- 
 }
 
-
-export default ProjectsPage;
+export { ShowcasePage };

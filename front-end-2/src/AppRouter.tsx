@@ -1,13 +1,13 @@
 import {Route, Routes } from 'react-router-dom';
-import { NotFoundPage, IntroductionPage, ProjectsPage, ProjectPage } from './pages'
+import { NotFoundPage, IntroductionPage, ShowcasePage, ProjectPage } from './pages'
 
 const AppRouter = () => (
     <Routes>
         <Route path='/' element={<IntroductionPage />} />
 
-        <Route path="projects" element={<ProjectsPage />}>
-          <Route path=":categoryCode" element={<ProjectsPage />} />
-          <Route path=":categoryCode/:page" element={<ProjectsPage />} />
+        <Route path="projects" element={<ShowcasePage />}>
+          <Route path=":categoryCode" element={<ShowcasePage />} />
+          <Route path=":categoryCode/:page" element={<ShowcasePage />} />
         </Route>
 
         <Route path='project/:projectCode' element={<ProjectPage />} />

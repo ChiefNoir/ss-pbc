@@ -3,10 +3,20 @@
 @import "/public/assets/scss/animations";
 
 .projects-categories-filter {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
+
+.showcase-projects {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 10px;
+  justify-content: center;
+}
+
 
 .projects-paging {
 	display: flex;

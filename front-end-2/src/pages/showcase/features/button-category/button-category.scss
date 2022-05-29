@@ -1,0 +1,49 @@
+@import "/public/assets/scss/variables";
+
+$speed: 0.5s;
+
+.button-flip {
+  outline: 0;
+  line-height: 40px;
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &:hover {
+    &:after{
+      transform: translateY(0) rotateX(0);
+    }
+    &:before{
+      transform: translateY(50%) rotateX(90deg);
+    }
+  }
+
+  &:after {
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: $color-container;
+    display: block;
+    transition: $speed;
+    position: absolute;
+    background: $color-text;
+    content: attr(data-back);
+    transform: translateY(-50%) rotateX(90deg);
+  }
+
+  &:before {
+    top: 0;
+    left: 0;
+    color: $color-text;
+    display: block;
+    padding: 0 30px;
+    line-height: 40px;
+    transition: $speed;
+    position: relative;
+    background: inherit;
+    content: attr(data-front);
+    transform: translateY(0) rotateX(0);
+  }
+}

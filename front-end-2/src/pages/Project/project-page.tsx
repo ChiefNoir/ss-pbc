@@ -31,4 +31,4 @@ function ProjectPage() {
   }
 }
 
-export default ProjectPage;
+export { ProjectPage };

@@ -4,15 +4,21 @@ import reportWebVitals from './reportWebVitals';
 import { Footer, Header } from './features'
 import { Navigation } from './ui'
 import { BrowserRouter } from "react-router-dom";
-
 import AppRouter from './AppRouter';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
-  <div>
+  <ThemeProvider theme={darkTheme}>
     <BrowserRouter>
       <Header/>
       <Navigation />
@@ -21,7 +27,7 @@ root.render(
       </div>
     </BrowserRouter>
     <Footer/> 
-  </div>
+  </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

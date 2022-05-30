@@ -42,7 +42,11 @@
   }
 
   .container-introduction-content-extension {
+    display: flex;
     flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 10px;
+    justify-content: center;
     margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 20px;

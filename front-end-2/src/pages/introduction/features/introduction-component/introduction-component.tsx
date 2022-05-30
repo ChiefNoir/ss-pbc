@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import { Introduction } from "../../../../services";
+import { ButtonGlitch } from "../../../../ui";
 
 import "./introduction-component.scss";
 
@@ -24,9 +25,8 @@ const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (
         <div className="container-introduction-content-extension">
           {props.introduction.externalUrls.map(
             x => { 
-              return <div></div>// ButtonContact(x.id, x.url, x.displayName)
-            }
-              )
+              return <ButtonGlitch key={x.id} displayName={x.displayName} url= {x.url} />
+            })
           }
         </div>
       </div>}

@@ -1,7 +1,15 @@
-@import "/public/assets/scss/variables.scss";
+@import "/public/assets/scss/variables";
 
 footer {
   background-color: $color-container;
-  padding: 15px;
-  text-align: center;
+  bottom: 0;
+  height: 30px;
+  position: fixed;
+  text-align: right;
+  width: 100%;
+
+  .footer-content {
+    margin-right: 13px;
+    margin-top: 5px;
+  }
 }

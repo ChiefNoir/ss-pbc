@@ -1,5 +1,5 @@
-import {Route, Routes } from "react-router-dom";
-import { ErrorNotFoundPage, IntroductionPage, ShowcasePage, ProjectPage } from "./pages"
+import { Route, Routes } from "react-router-dom";
+import { ErrorNotFoundPage, IntroductionPage, ShowcasePage, ProjectPage } from "./pages";
 
 const AppRouter = () => (
     <Routes>

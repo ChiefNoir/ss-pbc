@@ -1,8 +1,7 @@
 import "./navigation.scss";
-import { useTranslation } from "react-i18next";
-
-import "../../locales/i18n";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import "../../locales/i18n";
 
 function Navigation() {
   const { t } = useTranslation();

@@ -1,16 +1,9 @@
-@import "/public/assets/scss/variables.scss";
-@import "/public/assets/scss/mixins.scss";
+@import "/public/assets/scss/variables";
+@import "/public/assets/scss/mixins";
 
-html,
 body {
-  margin: 0;
   background: $color-core;
-  font-family: $font-core;
   color: $color-text;
-}
-
-.routerContainer {
-  background-color: $color-container;
-  width: 90%;
-  margin: auto;
+  font-family: $font-core;
+  margin: 0;
 }

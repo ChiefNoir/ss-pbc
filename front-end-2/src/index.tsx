@@ -21,9 +21,7 @@ root.render(
     <BrowserRouter>
       <Header/>
       <Navigation />
-      <div className="routerContainer">
-        <AppRouter />
-      </div>
+      <AppRouter />
     </BrowserRouter>
     <Footer/> 
   </ThemeProvider>

@@ -1,0 +1,11 @@
+@import "/public/assets/scss/variables";
+
+.core-layout-container {
+  background-color: $color-container;
+  margin-bottom: 29px;
+  margin-left: auto;
+  margin-right: auto;
+  //min-height: calc(100vh -header -navigation -footer); 
+  min-height: calc(100vh - 60px - 40px - 29px);
+  width: 90%;
+}

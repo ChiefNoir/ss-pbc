@@ -14,8 +14,8 @@ const ProjectComponent: FunctionComponent<{project: Project}> = (props) => {
 <div className="project-container">
     <h1>{project.displayName}</h1>
 
-    <div className="project-data">
-        <div className="project-data-left-panel">
+    <div className="project-container-content">
+        <div className="project-container-content-meta">
             <img className="poster" 
                 alt={(project.posterDescription ?? project.displayName)}
                 src={(project.posterUrl ?? "/assets/images/placeholder-wide.png")}/>
@@ -27,7 +27,7 @@ const ProjectComponent: FunctionComponent<{project: Project}> = (props) => {
             }
         </div>
 
-        <div className="project-data-right-panel">
+        <div className="project-container-content-description">
             <div><b>{t("Project.Category")}: </b>
             <NavLink to={`/projects?category=${project.category.code}`}>
             {project.category.displayName}

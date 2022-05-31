@@ -16,7 +16,7 @@ const ProjectComponent: FunctionComponent<{project: Project}> = (props) => {
 
     <div className="project-container-content">
         <div className="project-container-content-meta">
-            <img className="poster" 
+            <img className="project-container-content-poster" 
                 alt={(project.posterDescription ?? project.displayName)}
                 src={(project.posterUrl ?? "/assets/images/placeholder-wide.png")}/>
             {

@@ -28,18 +28,18 @@ const ProjectComponent: FunctionComponent<{project: Project}> = (props) => {
         </div>
 
         <div className="project-container-content-description">
-            <div><b>{t("Project.Category")}: </b>
+            <b>{t("Project.Category")}: </b>
             <NavLink to={`/projects?category=${project.category.code}`}>
-            {project.category.displayName}
+                {project.category.displayName}
             </NavLink>
-            </div>
-            <div><b>{t("Project.ReleaseDate")}: </b>{Format.ToDate(project.releaseDate)}</div>
+            <br/>
+            <b>{t("Project.ReleaseDate")}: </b>{Format.ToDate(project.releaseDate)}
             <hr/>
 
             <div className="project-description"
                  dangerouslySetInnerHTML={{__html: project.description ?? ""}}>
             </div>
-            <hr />
+
         </div>
     </div>
 </div>

@@ -4,13 +4,14 @@ import { Format } from "../../../../helpers";
 import { FunctionComponent } from "react";
 import { Project } from "../../../../services";
 import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
 
 const ProjectComponent: FunctionComponent<{project: Project}> = (props) => {
     const { t } = useTranslation();
     const project = props.project;
 
     return(
-<div className="container-project-main">
+<div className="project-container">
     <h1>{project.displayName}</h1>
 
     <div className="project-data">
@@ -27,13 +28,18 @@ const ProjectComponent: FunctionComponent<{project: Project}> = (props) => {
         </div>
 
         <div className="project-data-right-panel">
-            <div><b>{t("Project.Category")}: </b>{project.category.displayName}</div>
+            <div><b>{t("Project.Category")}: </b>
+            <NavLink to={`/projects?category=${project.category.code}`}>
+            {project.category.displayName}
+            </NavLink>
+            </div>
             <div><b>{t("Project.ReleaseDate")}: </b>{Format.ToDate(project.releaseDate)}</div>
             <hr/>
 
             <div className="project-description"
                  dangerouslySetInnerHTML={{__html: project.description ?? ""}}>
             </div>
+            <hr />
         </div>
     </div>
 </div>

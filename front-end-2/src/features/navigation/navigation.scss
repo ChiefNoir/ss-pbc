@@ -7,7 +7,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
 
   a {
     font-size: 25px;
@@ -18,12 +17,13 @@
     text-transform: capitalize; 
     cursor: pointer;
     color: inherit;
+
+    &:hover {
+      color: $color-text-highlighted;
+      text-shadow: $shadow-text;
+    }
   }
-  a:hover {
-    color: $color-text-highlighted;
-    text-shadow: $shadow-text;
-    background-color: $color-container-transparent;
-  }
+
   .active {
     background-color: $color-container;
   }

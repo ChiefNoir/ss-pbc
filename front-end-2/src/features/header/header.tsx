@@ -4,11 +4,8 @@ import { Link } from "react-router-dom";
 function Header() {
   return (
     <header>
-      <Link 
-            data-content={process.env.REACT_APP_API_AUTH_ENDPOINT}
-            to="/">
-            {process.env.REACT_APP_API_AUTH_ENDPOINT}
-      </Link>
+      <Link className="full-size" to="/"> {process.env.REACT_APP_NAME} </Link>
+      <Link className="small-size" to="/"> {process.env.REACT_APP_NAME_SHORT} </Link>
     </header>
   );
 }

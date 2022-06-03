@@ -1,4 +1,4 @@
 export type Incident = {
-    message : string;
-    detail: string;
+  message : string;
+  detail: string;
 }

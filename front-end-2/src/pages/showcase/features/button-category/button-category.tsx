@@ -15,6 +15,6 @@ const ButtonCategoryComponent: FunctionComponent<{category: Category}> = (props)
              data-front = { category.displayName }>
     </NavLink>
   );
-}
+};
 
 export { ButtonCategoryComponent };

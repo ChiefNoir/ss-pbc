@@ -12,22 +12,22 @@ function ProjectPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProject = async () => {
+    const fetchProject = async() => {
       setLoading(true);
-  
-      var result = await PublicApi.getProject(projectCode);
+
+      const result = await PublicApi.getProject(projectCode);
 
       setProject(result.data.data);
       setLoading(false);
-    };  
-    
+    };
+
     fetchProject();
   }, [projectCode]);
 
-  if(loading) {
+  if (loading) {
     return <Loader />;
   } else {
-    return <ProjectComponent project={project as Project} />
+    return <ProjectComponent project={project as Project} />;
   }
 }
 

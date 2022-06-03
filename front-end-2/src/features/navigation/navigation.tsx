@@ -17,7 +17,7 @@ function Navigation() {
         {t("Navigation.Projects")}
       </NavLink>
   </div>
-  )
+  );
 };
 
 export { Navigation };

@@ -1,15 +1,15 @@
 import ReactDOM from "react-dom/client";
 import "./index.scss";
 import { reportWebVitals } from "./reportWebVitals";
-import { Footer, Header, Navigation } from "./features"
+import { Footer, Header, Navigation } from "./features";
 import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./AppRouter";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const darkTheme = createTheme({
   palette: {
-    mode: "dark",
-  },
+    mode: "dark"
+  }
 });
 
 const root = ReactDOM.createRoot(
@@ -23,7 +23,7 @@ root.render(
       <Navigation />
       <AppRouter />
     </BrowserRouter>
-    <Footer/> 
+    <Footer/>
   </ThemeProvider>
 );
 

@@ -1,6 +1,6 @@
-import { useState, useEffect }  from "react";
+import { useState, useEffect } from "react";
 import "./introduction-page.scss";
-import { Loader } from "../../ui"
+import { Loader } from "../../ui";
 import { PublicApi, Introduction } from "../../services";
 import { IntroductionComponent } from "./features";
 
@@ -9,22 +9,22 @@ function IntroductionPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchIntroduction = async () => {
+    const fetchIntroduction = async() => {
       setLoading(true);
-  
-      var result = await PublicApi.getIntroduction();
+
+      const result = await PublicApi.getIntroduction();
 
       setIntroduction(result.data.data);
       setLoading(false);
-    };  
-    
+    };
+
     fetchIntroduction();
   }, []);
 
-  if(loading) {
+  if (loading) {
     return <Loader />;
   } else {
-    return <IntroductionComponent introduction={introduction as Introduction} />
+    return <IntroductionComponent introduction={introduction as Introduction} />;
   }
 }
 

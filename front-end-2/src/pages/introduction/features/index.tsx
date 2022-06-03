@@ -1,3 +1,3 @@
 import { IntroductionComponent } from "./introduction-component/introduction-component";
 
-export { IntroductionComponent }
+export { IntroductionComponent };

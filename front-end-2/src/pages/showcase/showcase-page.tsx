@@ -1,6 +1,6 @@
 import "./showcase-page.scss";
 import { ButtonCategoryComponent, ProjectPreviewComponent } from "./features/";
-import { Convert, Calc } from "../../helpers"
+import { Convert, Calc } from "../../helpers";
 import { Link, useSearchParams } from "react-router-dom";
 import { Loader } from "../../ui";
 import { Pagination, PaginationItem } from "@mui/material";
@@ -17,19 +17,19 @@ function ShowcasePage() {
   const [categories, setCategories] = useState<Array<Category>>();
   const [selectedCategory, setCategory] = useState<Category>();
 
-  useEffect(() => { 
-    const fetchData = async () => {
+  useEffect(() => {
+    const fetchData = async() => {
       setLoading(true);
 
-      var tmpCategories = categories ?? [];
+      let tmpCategories = categories ?? [];
 
-      if(categories === undefined) {
+      if (categories === undefined) {
         const categoriesResponse = await PublicApi.getCategories();
         tmpCategories = categoriesResponse.data.data;
         setCategories(tmpCategories);
       }
 
-      if(categoryCode === null) {
+      if (categoryCode === null) {
         setCategory(tmpCategories.find(x => x.isEverything));
       } else {
         setCategory(tmpCategories.find(x => x.code === categoryCode));
@@ -41,57 +41,49 @@ function ShowcasePage() {
       setLoading(false);
     };
 
-    fetchData(); 
+    fetchData();
   }, [searchParams]);
 
-  if(loading)
-  {
+  if (loading) {
     return <Loader />;
-  }
-  else
-  {
+  } else {
     return (
       <div>
         <div className="projects-categories-filter">
-        {          
-          categories?.filter(x => x.totalProjects > 0).map
-          (
-            x =>
-            {
-              return <ButtonCategoryComponent key={x.id} category={x} />
+        {
+          categories?.filter(x => x.totalProjects > 0).map(
+            x => {
+              return <ButtonCategoryComponent key={x.id} category={x} />;
             }
           )
         }
         </div>
         <div className="showcase-projects">
         {
-          projects?.map
-          (
-            x => 
-            {
-              return <ProjectPreviewComponent key={x.code} project={x} />
+          projects?.map(
+            x => {
+              return <ProjectPreviewComponent key={x.code} project={x} />;
             }
           )
         }
         </div>
 
-        {Calc.Pages(selectedCategory?.totalProjects ?? 0) > 1 &&
-          <div className="projects-paging">
+        {Calc.Pages(selectedCategory?.totalProjects ?? 0) > 1
+        && <div className="projects-paging">
             <Pagination page={ Convert.ToRestrictedNumber(page, 1)}
-                        count={ Calc.Pages(selectedCategory?.totalProjects ?? 0)} 
+                        count={ Calc.Pages(selectedCategory?.totalProjects ?? 0)}
                         size = "large"
-                        shape="rounded" 
+                        shape="rounded"
                         renderItem={(item) => (
                             <PaginationItem component={Link}
                                             to={`/projects/?category=${selectedCategory?.code}&page=${item.page}`}
-                                            {...item} /> )} 
+                                            {...item} />)}
                 />
           </div>
         }
       </div>
     );
-  }
-
+  };
 }
 
 export { ShowcasePage };

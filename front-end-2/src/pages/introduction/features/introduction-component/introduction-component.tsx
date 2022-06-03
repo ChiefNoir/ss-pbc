@@ -13,19 +13,19 @@ const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (
 
   <div className="introduction-content">
     <h1> { props.introduction.title } </h1>
-    <div className="introduction-content-description" 
-         dangerouslySetInnerHTML={{__html: props.introduction.content ?? ""}}>
+    <div className="introduction-content-description"
+         dangerouslySetInnerHTML={{ __html: props.introduction.content ?? "" }}>
     </div>
 
     {
-    props.introduction.externalUrls.length > 0 &&
-      <div className="introduction-content-urls">
+    props.introduction.externalUrls.length > 0
+    && <div className="introduction-content-urls">
         <h1> {t("Introduction.ExternalUrls")} </h1>
 
         <div className="introduction-content-urls-content">
           {props.introduction.externalUrls.map(
-            x => { 
-              return <ButtonGlitch key={x.id} displayName={x.displayName} url= {x.url} />
+            x => {
+              return <ButtonGlitch key={x.id} displayName={x.displayName} url= {x.url} />;
             })
           }
         </div>
@@ -39,6 +39,6 @@ const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (
 
 </div>
   );
-}
+};
 
 export { IntroductionComponent };

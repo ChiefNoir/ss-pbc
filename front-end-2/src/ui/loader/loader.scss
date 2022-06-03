@@ -5,10 +5,22 @@
   padding-top: 10px;
   text-align: center;
 
-  img {
+  svg {
     animation: spin-with-click 11s linear infinite;
-    height: 120px;
-    width: 120px;
+    height: 190px;
+    width: 190px;
+
+    #revolver-bullet-outer {
+      fill: $color-core;
+    }
+
+    #revolver-bullet-inner {
+      fill: $color-text-dark;
+    }
+
+    #revolver-chamber {
+      fill: $color-text;
+    }
   }
 }
 

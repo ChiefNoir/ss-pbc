@@ -9,33 +9,35 @@ const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (
   const { t } = useTranslation();
 
   return (
-  <div className="container-introduction">
+<div className="introduction-container">
 
-    <div className="container-introduction-content">
-      <h1> { props.introduction.title } </h1>
-      <hr/>
-      <div className="container-introduction-content-description" 
-           dangerouslySetInnerHTML={{__html: props.introduction.content ?? ""}}>
-      </div>
+  <div className="introduction-content">
+    <h1> { props.introduction.title } </h1>
+    <div className="introduction-content-description" 
+         dangerouslySetInnerHTML={{__html: props.introduction.content ?? ""}}>
+    </div>
 
-      {props.introduction.externalUrls.length > 0 &&
-      <div>
+    {
+    props.introduction.externalUrls.length > 0 &&
+      <div className="introduction-content-urls">
         <h1> {t("Introduction.ExternalUrls")} </h1>
-        <hr/>
-        <div className="container-introduction-content-extension">
+
+        <div className="introduction-content-urls-content">
           {props.introduction.externalUrls.map(
             x => { 
               return <ButtonGlitch key={x.id} displayName={x.displayName} url= {x.url} />
             })
           }
         </div>
-      </div>}
-    </div>
+      </div>
+      }
+  </div>
 
-    <img className="container-introduction-poster"
+  <img className="introduction-poster"
          alt={ props.introduction.posterDescription }
          src={(props.introduction.posterUrl ?? "/assets/images/placeholder-tall.png")}/>
-  </div>
+
+</div>
   );
 }
 

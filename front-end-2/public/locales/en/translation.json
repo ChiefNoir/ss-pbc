@@ -1,11 +1,14 @@
 {
-    "Header": "Fireplace of Despair",
+    "Header": {
+      "Full": "Fireplace of Despair",
+      "Short": "FoD"
+    },
     "Footer": {
-        "Copyright":"Chief"
+        "Copyright": "Chief"
     },
     "Introduction": {
-        "Introduction":"Introduction",
-        "ExternalUrls":"Meet me on the other site"
+        "Introduction": "Introduction",
+        "ExternalUrls": "Meet me on the other site"
     },
     "Navigation":{
         "Home": "Home",

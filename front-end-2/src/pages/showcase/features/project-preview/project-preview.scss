@@ -11,10 +11,10 @@
 }
 
 .project-preview-poster {
-  filter: grayscale(100%);
+  filter: grayscale(100%) contrast(130%);
   transition: all 0.5s ease;
 
   &:hover {
-    filter: grayscale(0);
+    filter: grayscale(0) contrast(100%);
   }
 }

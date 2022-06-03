@@ -9,6 +9,7 @@
     font-family: $font-neon;
     color: $color-neon;
     font-size: 90px;
+
     @include neon-sign($color-neon-glow, $color-neon-shadow);
 
     .blink3s {

@@ -13,13 +13,13 @@ header {
 
   @media (max-width: 650px) {
     .full-size {
-       display: none;
+      display: none;
     }
   }
-  
+
   @media (min-width: 650px) {
     .small-size {
       display: none;
-   }
+    }
   }
 }

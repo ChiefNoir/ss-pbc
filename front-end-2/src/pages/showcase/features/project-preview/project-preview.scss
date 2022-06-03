@@ -1,6 +1,7 @@
 @import "/public/assets/scss/variables";
 @import "/public/assets/scss/mixins";
 
+/* stylelint-disable-next-line selector-class-pattern */
 .MuiCard-root {
   border-radius: 0 !important;
 }

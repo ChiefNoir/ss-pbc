@@ -14,13 +14,12 @@
     padding-left: 10px;
     padding-right: 10px;
     text-decoration: none;
-    text-transform: capitalize; 
+    text-transform: capitalize;
     cursor: pointer;
     color: inherit;
 
     &:hover {
       color: $color-text-highlighted;
-      text-shadow: $shadow-text;
     }
   }
 
@@ -28,4 +27,3 @@
     background-color: $color-container;
   }
 }
-

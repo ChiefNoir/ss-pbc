@@ -22,10 +22,12 @@
   justify-content: center;
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
 .MuiButtonBase-root {
   color: inherit !important;
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
 .Mui-selected {
-  background-color: $color-control-active !important;
+  background-color: $color-text-highlighted !important;
 }

@@ -1,6 +1,6 @@
 import "./loader.scss";
 
-function Loader () {
+function Loader() {
   return (
   <div className="container-loading">
     <img src="/assets/images/revolver.png" alt="Loading"/>

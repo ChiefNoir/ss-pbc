@@ -1,6 +1,6 @@
 @import "/public/assets/scss/variables";
 
-$speed: 0.5s;
+$flip-speed: 0.5s;
 
 .button-flip {
   outline: 0;
@@ -11,39 +11,40 @@ $speed: 0.5s;
   text-decoration: none;
   text-transform: uppercase;
 
-  &:hover {
-    &:after{
-      transform: translateY(0) rotateX(0);
-    }
-    &:before{
-      transform: translateY(50%) rotateX(90deg);
-    }
-  }
-
-  &:after {
+  &::after {
     top: 0;
     left: 0;
     width: 100%;
     color: $color-container;
     display: block;
-    transition: $speed;
+    transition: $flip-speed;
     position: absolute;
     background: $color-text;
     content: attr(data-back);
     transform: translateY(-50%) rotateX(90deg);
   }
 
-  &:before {
+  &::before {
     top: 0;
     left: 0;
     color: $color-text;
     display: block;
     padding: 0 30px;
     line-height: 40px;
-    transition: $speed;
+    transition: $flip-speed;
     position: relative;
-    background: inherit;
+    background: $color-container;
     content: attr(data-front);
     transform: translateY(0) rotateX(0);
+  }
+
+  &:hover {
+    &::after {
+      transform: translateY(0) rotateX(0);
+    }
+
+    &::before {
+      transform: translateY(50%) rotateX(90deg);
+    }
   }
 }

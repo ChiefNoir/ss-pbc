@@ -1,45 +1,45 @@
 @import "/public/assets/scss/variables";
 
 .glitch-button {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  position: relative;
   background: none;
-  outline: none;
-  cursor: pointer;
-  padding: 8px 30px;
-  font-size: 20px;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: bold;
   border: 1px solid $color-text;
-  transition: all 0.2s ease;
+  color: inherit;
+  cursor: pointer;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
   margin-bottom: 5px;
+  outline: none;
+  padding: 8px 30px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
 
   &::before,
   &::after {
-    content: attr(data-content);
-    position: absolute;
-    padding: 8px 0;
-    width: 100%;
-    clip: rect(0px, 0px, 0px, 0px);
     background: $color-text;
+    clip: rect(0px, 0px, 0px, 0px);
     color: $color-text;
+    content: attr(data-content);
+    padding: 8px 0;
+    position: absolute;
+    width: 100%;
   }
 
   &::before {
-    left: -3px;
-    top: -2px;
-    text-shadow: 2px 0px $color-text;
     box-shadow: 2px 0px $color-text;
+    left: -3px;
+    text-shadow: 2px 0px $color-text;
+    top: -2px;
   }
 
   &::after {
-    left: 2px;
     bottom: -2px;
-    text-shadow: -1px 0px $color-text;
     box-shadow: -1px 0px $color-text;
+    left: 2px;
+    text-shadow: -1px 0px $color-text;
   }
 
   &:hover {
@@ -57,75 +57,22 @@
 }
 
 @keyframes glitch-animation {
-  0% {
-    clip: rect(-3px, 600px, 0px, 0px);
-  }
-
-  5.88235% {
-    clip: rect(0, 600px, 0px, 0px);
-  }
-
-  11.76471% {
-    clip: rect(-3px, 600px, 0px, 0px);
-  }
-
-  17.64706% {
-    clip: rect(-3px, 600px, 0px, 0px);
-  }
-
-  23.52941% {
-    clip: rect(100px, 600px, 100px, 0px);
-  }
-
-  29.41176% {
-    clip: rect(0px, 600px, 600px, 0px);
-  }
-
-  35.29412% {
-    clip: rect(100px, 600px, 0px, 0px);
-  }
-
-  41.17647% {
-    clip: rect(0px, 600px, 600px, 0px);
-  }
-
-  47.05882% {
-    clip: rect(100px, 600px, 0px, 0px);
-  }
-
-  52.94118% {
-    clip: rect(-3px, 600px, 0px, 0px);
-  }
-
-  58.82353% {
-    clip: rect(100px, 450px, 100px, 0px);
-  }
-
-  64.70588% {
-    clip: rect(0px, 450px, 0px, 0px);
-  }
-
-  70.58824% {
-    clip: rect(100px, 450px, 100px, 0px);
-  }
-
-  76.47059% {
-    clip: rect(0px, 450px, 0px, 0px);
-  }
-
-  82.35294% {
-    clip: rect(0px, 450px, 0px, 0px);
-  }
-
-  88.23529% {
-    clip: rect(0px, 450px, 0px, 0px);
-  }
-
-  94.11765% {
-    clip: rect(0px, 450px, 0px, 0px);
-  }
-
-  100% {
-    clip: rect(0px, 450px, 0px, 0px);
-  }
+  000% { clip: rect(-3px, 600px, 0px, 0px); }
+  005% { clip: rect(0, 600px, 0px, 0px); }
+  011% { clip: rect(-3px, 600px, 0px, 0px); }
+  017% { clip: rect(-3px, 600px, 0px, 0px); }
+  023% { clip: rect(100px, 600px, 100px, 0px); }
+  029% { clip: rect(0px, 600px, 600px, 0px); }
+  035% { clip: rect(100px, 600px, 0px, 0px); }
+  041% { clip: rect(0px, 600px, 600px, 0px); }
+  047% { clip: rect(100px, 600px, 0px, 0px); }
+  052% { clip: rect(-3px, 600px, 0px, 0px); }
+  058% { clip: rect(100px, 450px, 100px, 0px); }
+  064% { clip: rect(000px, 450px, 0px, 0px); }
+  070% { clip: rect(100px, 450px, 100px, 0px); }
+  076% { clip: rect(0px, 450px, 0px, 0px); }
+  082% { clip: rect(0px, 450px, 0px, 0px); }
+  088% { clip: rect(0px, 450px, 0px, 0px); }
+  094% { clip: rect(0px, 450px, 0px, 0px); }
+  100% { clip: rect(0px, 450px, 0px, 0px); }
 }

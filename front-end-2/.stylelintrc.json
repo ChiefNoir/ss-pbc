@@ -2,6 +2,7 @@
   "extends": "stylelint-config-standard-scss",
   "rules": {
     "length-zero-no-unit": null,
-    "color-hex-length":"long"
+    "color-hex-length":"long",
+    "declaration-block-single-line-max-declarations": 2
   }
 }

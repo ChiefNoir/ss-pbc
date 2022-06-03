@@ -3,6 +3,9 @@
       "Full": "Fireplace of Despair",
       "Short": "FoD"
     },
+    "Error": {
+      "PageNotFound": "404"
+    },
     "Footer": {
         "Copyright": "Chief"
     },

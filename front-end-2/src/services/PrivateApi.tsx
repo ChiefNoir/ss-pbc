@@ -1,5 +1,5 @@
 import * as axios from "axios";
-import { Credentials } from ".";
+import { Credentials, Information } from ".";
 import { ExecutionResult } from "./models/ExecutionResult";
 import { Identity } from "./models/Identity";
 
@@ -18,6 +18,10 @@ class PrivateApi {
   public static async login(credentials: Credentials) {
     return await this.init().post<ExecutionResult<Identity>>("/login", credentials);
   };
+
+  public static async getInformation() {
+    return await this.init().get<ExecutionResult<Information>>("/information");
+  }
 }
 
 export { PrivateApi };

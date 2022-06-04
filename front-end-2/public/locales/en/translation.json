@@ -24,5 +24,11 @@
     },
     "Category": {
         "TotalCount": "Total"
+    },
+    "Admin": {
+      "Credentials":"Credentials",
+      "DoLogin":"Enter",
+      "Login": "Login",
+      "Password": "Password"
     }
 }

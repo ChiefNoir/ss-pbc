@@ -22,8 +22,8 @@ root.render(
       <Header/>
       <Navigation />
       <AppRouter />
+      <Footer/>
     </BrowserRouter>
-    <Footer/>
   </ThemeProvider>
 );
 

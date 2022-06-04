@@ -6,6 +6,9 @@ import { Introduction } from "./models/Introduction";
 import { ExecutionResult } from "./models/ExecutionResult";
 import { Incident } from "./models/Incident";
 import { Project } from "./models/Project";
+import { Credentials } from "./models/Credentials";
+import { Account } from "./models/Account";
+import { Identity } from "./models/Identity";
 
 export { PublicApi };
 export type { Category };
@@ -15,3 +18,6 @@ export type { Introduction };
 export type { ExecutionResult };
 export type { Incident };
 export type { Project };
+export { Credentials };
+export type { Account };
+export type { Identity };

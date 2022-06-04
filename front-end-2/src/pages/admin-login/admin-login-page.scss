@@ -1,0 +1,45 @@
+@import "/public/assets/scss/variables";
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.container-login {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: stretch;
+  gap: 12px;
+
+  h1 {
+    margin-bottom: 0px;
+    margin-top: 0px;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: inherit;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .MuiInputBase-root.MuiOutlinedInput-root {
+    color: inherit;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .MuiInputLabel-root.Mui-focused {
+    color: inherit;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .MuiButton-root {
+    border-color: inherit;
+
+    &:hover {
+      border-color: $color-text-dark;
+    }
+  }
+}

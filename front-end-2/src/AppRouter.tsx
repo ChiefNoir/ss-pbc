@@ -1,19 +1,21 @@
 import { Route, Routes } from "react-router-dom";
-import { ErrorNotFoundPage, IntroductionPage, ShowcasePage, ProjectPage, CoreLayout } from "./pages";
+import * as Pages from "./pages";
 
 const AppRouter = () => (
   <Routes>
-    <Route path="/" element={<CoreLayout />} >
-      <Route path="*" element={<ErrorNotFoundPage />} />
+    <Route path="/" element={<Pages.CoreLayout />} >
+      <Route path="*" element={<Pages.ErrorNotFoundPage />} />
 
-      <Route index element={<IntroductionPage />} />
+      <Route index element={<Pages.IntroductionPage />} />
 
-      <Route path="projects/:projectCode" element={<ProjectPage />} />
+      <Route path="projects/:projectCode" element={<Pages.ProjectPage />} />
 
-      <Route path="projects" element={<ShowcasePage />}>
-        <Route path="?category=:categoryCode" element={<ShowcasePage />} />
-        <Route path="?category=:categoryCode&page=:page" element={<ShowcasePage />} />
+      <Route path="projects" element={<Pages.ShowcasePage />}>
+        <Route path="?category=:categoryCode" element={<Pages.ShowcasePage />} />
+        <Route path="?category=:categoryCode&page=:page" element={<Pages.ShowcasePage />} />
       </Route>
+
+      <Route path="login" element={<Pages.AdminLoginPage />} />
     </Route>
   </Routes>
 );

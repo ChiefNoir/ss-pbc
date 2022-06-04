@@ -5,11 +5,28 @@ footer {
   bottom: 0;
   height: 30px;
   position: fixed;
-  text-align: right;
   width: 100%;
 
   .footer-content {
     margin-right: 13px;
     margin-top: 5px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+
+    .footer-content-copyright {
+      margin-left: auto;
+    }
+
+    .footer-content-tool {
+      width: 20px;
+      margin-left: 5px;
+      fill: $color-text;
+      opacity: 0.2;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
 }

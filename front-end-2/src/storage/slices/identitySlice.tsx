@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Identity } from "../services";
-import { WebStorage } from "./sessionStorage";
+import { Identity } from "../../services";
+import { WebStorage } from "../webStorage";
 
-export const identitySlice = createSlice({
+const identitySlice = createSlice({
   name: "identity",
   initialState: {
     value: WebStorage.LoadIdentity()
@@ -20,5 +20,4 @@ export const identitySlice = createSlice({
 });
 
 export const { saveIdentity, deleteIdentity } = identitySlice.actions;
-
-export default identitySlice.reducer;
+export { identitySlice };

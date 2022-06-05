@@ -5,7 +5,7 @@ import { Footer, Header, Navigation } from "./features";
 import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./AppRouter";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import store from "./store/store";
+import { store } from "./storage";
 import { Provider } from "react-redux";
 
 const darkTheme = createTheme({

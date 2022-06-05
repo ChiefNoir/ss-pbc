@@ -5,7 +5,7 @@ import "../../locales/i18n";
 import { PrivateApi } from "../../services/PrivateApi";
 import { ChangeEvent, useState } from "react";
 import { Credentials } from "../../services";
-import { saveIdentity } from "../../store/";
+import { saveIdentity } from "../../storage";
 import { useDispatch } from "react-redux";
 
 function AdminLoginPage() {

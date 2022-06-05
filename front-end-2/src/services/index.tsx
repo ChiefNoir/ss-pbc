@@ -1,4 +1,5 @@
 import { PublicApi } from "./PublicApi";
+import { PrivateApi } from "./PrivateApi";
 import { Category } from "./models/Category";
 import { ProjectPreview } from "./models/ProjectPreview";
 import { ExternalUrl } from "./models/ExternalUrl";
@@ -12,6 +13,7 @@ import { Identity } from "./models/Identity";
 import { Information } from "./models/Information";
 
 export { PublicApi };
+export { PrivateApi };
 export type { Category };
 export type { ProjectPreview };
 export type { ExternalUrl };

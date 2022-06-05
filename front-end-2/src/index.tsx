@@ -5,6 +5,8 @@ import { Footer, Header, Navigation } from "./features";
 import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./AppRouter";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import store from "./store/store";
+import { Provider } from "react-redux";
 
 const darkTheme = createTheme({
   palette: {
@@ -17,14 +19,16 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <ThemeProvider theme={darkTheme}>
-    <BrowserRouter>
-      <Header/>
-      <Navigation />
-      <AppRouter />
-      <Footer/>
-    </BrowserRouter>
-  </ThemeProvider>
+  <Provider store={store}>
+    <ThemeProvider theme={darkTheme}>
+      <BrowserRouter>
+        <Header/>
+        <Navigation />
+        <AppRouter />
+        <Footer/>
+      </BrowserRouter>
+    </ThemeProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

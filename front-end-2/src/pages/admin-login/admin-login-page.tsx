@@ -5,9 +5,12 @@ import "../../locales/i18n";
 import { PrivateApi } from "../../services/PrivateApi";
 import { ChangeEvent, useState } from "react";
 import { Credentials } from "../../services";
+import { saveIdentity } from "../../store/";
+import { useDispatch } from "react-redux";
 
 function AdminLoginPage() {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,7 +28,7 @@ function AdminLoginPage() {
     const result = await PrivateApi.login(credentials as Credentials);
 
     if (result.data.isSucceed) {
-      alert("!");
+      dispatch(saveIdentity(result.data.data));
     } else {
       setError(result.data.error.message);
       setLoading(false);

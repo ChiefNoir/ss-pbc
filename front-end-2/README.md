@@ -3,10 +3,14 @@
 ## Dependencies
 - [React](https://reactjs.org/)
 - [React-router](https://reactrouter.com/)
+- [React-redux](https://react-redux.js.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [i18next](https://www.i18next.com/)
 - [Mui Material UI](https://mui.com/)
 - [Emotion](https://emotion.sh/)
+- [axios](https://axios-http.com/)
+- [eslint](https://eslint.org/)
+- [stylelint](https://stylelint.io/)
 
 # Getting Started with Create React App
 

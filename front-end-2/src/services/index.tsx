@@ -9,6 +9,7 @@ import { Project } from "./models/Project";
 import { Credentials } from "./models/Credentials";
 import { Account } from "./models/Account";
 import { Identity } from "./models/Identity";
+import { Information } from "./models/Information";
 
 export { PublicApi };
 export type { Category };
@@ -21,3 +22,4 @@ export type { Project };
 export { Credentials };
 export type { Account };
 export type { Identity };
+export type { Information };

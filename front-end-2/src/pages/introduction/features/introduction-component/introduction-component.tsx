@@ -1,13 +1,10 @@
 import { FunctionComponent } from "react";
-import { useTranslation } from "react-i18next";
 import { Introduction } from "../../../../services";
 import { ButtonGlitch } from "../../../../ui";
 
 import "./introduction-component.scss";
 
 const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (props) => {
-  const { t } = useTranslation();
-
   return (
 <div className="introduction-container">
 
@@ -20,8 +17,6 @@ const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (
     {
     props.introduction.externalUrls.length > 0
     && <div className="introduction-content-urls">
-        <h1> {t("Introduction.ExternalUrls")} </h1>
-
         <div className="introduction-content-urls-content">
           {props.introduction.externalUrls.map(
             x => {

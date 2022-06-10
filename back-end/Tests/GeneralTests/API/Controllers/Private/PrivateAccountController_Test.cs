@@ -433,39 +433,6 @@ namespace GeneralTests.API.Controllers.Private
             }
         }
 
-
-        [Theory]
-        [ClassData(typeof(SqlInsert))]
-        internal async Task CountAsync_ValidAsync(string[] sql)
-        {
-            using (var context = Storage.CreateContext())
-            {
-                try
-                {
-                    var api = Storage.CreatePrivateController(context);
-                    api.ControllerContext = await ControllerContextCreator.CreateValid(context, null);
-
-                    Storage.RunSql(sql);
-
-                    var response =
-                    (
-                        await api.CountAccountAsync() as JsonResult
-                    ).Value as ExecutionResult<int>;
-                    GenericChecks.CheckSucceed(response);
-
-                    Assert.Equal(sql.Length + 1, response.Data);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    context.FlushData();
-                }
-            }
-        }
-
         [Theory]
         [ClassData(typeof(ValidAdd))]
         internal async Task AddAccountAsync_ValidAsync(Account account)

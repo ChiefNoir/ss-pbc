@@ -21,7 +21,7 @@ namespace Abstractions.API
 
         [HttpGet("accounts")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public abstract Task<IActionResult> CountAccountAsync();
+        public abstract Task<IActionResult> GetAccountsAsync();
 
         [HttpDelete("accounts")]
         [Authorize(Roles = Restrictions.EditorRoles)]

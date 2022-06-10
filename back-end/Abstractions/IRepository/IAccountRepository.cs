@@ -22,6 +22,10 @@ namespace Abstractions.IRepository
         Task<Account> GetAsync(int id);
 
         /// <summary> Get existing <seealso cref="Account"/> </summary>
+        /// <returns> Array of <seealso cref="Account"/> </returns>
+        Task<Account[]> GetAsync();
+
+        /// <summary> Get existing <seealso cref="Account"/> </summary>
         /// <param name="login">Account login as plain text</param>
         /// <param name="plainTextPassword">Account password as plaint text</param>
         /// <returns>Existing <seealso cref="Account"/> or <b>null</b> </returns>

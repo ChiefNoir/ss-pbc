@@ -44,6 +44,15 @@ namespace Infrastructure.Repository
             return rows == 1;
         }
 
+        public async Task<Account[]> GetAsync()
+        {
+            var result = await _context.Accounts
+                                       .Select(x => DataConverter.ToAccount(x))
+                                       .AsNoTracking()
+                                       .ToArrayAsync();
+
+            return result;
+        }
 
         public async Task<Account> GetAsync(int id)
         {

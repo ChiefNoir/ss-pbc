@@ -19,12 +19,12 @@ namespace API.Controllers.Private
             return new JsonResult(result);
         }
 
-        public override async Task<IActionResult> CountAccountAsync()
+        public override async Task<IActionResult> GetAccountsAsync()
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () => _accountRepository.CountAsync()
-            );
+                () => _accountRepository.GetAsync()
+            );;
 
             return new JsonResult(result);
         }

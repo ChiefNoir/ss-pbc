@@ -5,6 +5,7 @@ import { ProjectPage } from "./project/project-page";
 import { ShowcasePage } from "./showcase/showcase-page";
 import { AdminLoginPage } from "./admin-login/admin-login-page";
 import { AdminIntroductionPage } from "./admin-introduction/admin-introduction-page";
+import { AdminAccountsPage } from "./admin-accounts/admin-accounts-page";
 
 export { CoreLayout };
 export { ErrorNotFoundPage };
@@ -13,3 +14,4 @@ export { ProjectPage };
 export { ShowcasePage };
 export { AdminLoginPage };
 export { AdminIntroductionPage };
+export { AdminAccountsPage };

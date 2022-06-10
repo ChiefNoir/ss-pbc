@@ -29,7 +29,7 @@
         "Projects": "Projects",
         "AdminIntroduction":"Introduction",
         "AdminProjects":"Projects",
-        "AdminUsers":"Users"
+        "AdminAccounts":"Accounts"
     },
     "Project": {
         "Category": "Category",
@@ -50,5 +50,12 @@
     "Information": {
       "Title": "Information",
       "ApiVersion": "API Version"
+    },
+    "Account": {
+      "this": "Account",
+      "Id": "Id",
+      "Login": "Login",
+      "Password":"Password",
+      "Role":"Role"
     }
 }

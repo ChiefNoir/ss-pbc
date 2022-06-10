@@ -15,9 +15,9 @@ function NavigationAdmin() {
                className={({ isActive }) => (isActive ? " active" : "")}>
         {t("Navigation.AdminProjects")}
       </NavLink>
-      <NavLink to="/admin/users"
+      <NavLink to="/admin/accounts"
                className={({ isActive }) => (isActive ? " active" : "")}>
-        {t("Navigation.AdminUsers")}
+        {t("Navigation.AdminAccounts")}
       </NavLink>
   </div>
   );

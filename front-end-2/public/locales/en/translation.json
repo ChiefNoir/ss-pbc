@@ -13,13 +13,15 @@
         "Introduction": "Introduction",
         "Content": "Content",
         "Poster": "Poster",
+        "PosterUrl": "Poster url",
         "PosterDescription": "Poster description",
         "ExternalUrls": {
           "ExternalUrls": "Meet me on the other site",
           "Id": "Id",
           "DisplayName": "Name",
           "Url": "Url",
-          "Version":"Version"
+          "Version":"Version",
+          "AddNew":"Add"
         }
     },
     "Navigation":{
@@ -38,7 +40,9 @@
       "Credentials":"Credentials",
       "DoLogin":"Enter",
       "Login": "Login",
-      "Password": "Password"
+      "Password": "Password",
+      "Save":"Save",
+      "Actions":"Actions"
     },
     "Information": {
       "Title": "Information",

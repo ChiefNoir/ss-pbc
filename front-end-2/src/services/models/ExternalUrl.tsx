@@ -4,5 +4,7 @@ export class ExternalUrl {
   url: string;
   version: number;
 
-  synthetic: number;
+  public constructor(init?:Partial<ExternalUrl>) {
+    Object.assign(this, init);
+  }
 }

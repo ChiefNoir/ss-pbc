@@ -1,12 +1,24 @@
 @import "/public/assets/scss/variables";
 
-.admin-introduction-content {
+.admin-introduction-container {
   display: flex;
   flex-direction: column;
+  padding-bottom: 20px;
 
   .admin-introduction-poster {
-    max-height: 300px;
+    max-height: 350px;
+    max-width: 200px;
     margin-bottom: 20px;
+  }
+
+  .admin-introduction-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 15px;
   }
 
   h1 {

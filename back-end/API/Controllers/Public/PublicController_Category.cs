@@ -25,15 +25,5 @@ namespace API.Controllers.Public
 
             return new JsonResult(result);
         }
-
-        public override async Task<IActionResult> GetCategoryEverythingAsync()
-        {
-            var result = await _supervisor.SafeExecuteAsync
-            (
-                () => _categoryRepository.GetTechnicalAsync()
-            );
-
-            return new JsonResult(result);
-        }
     }
 }

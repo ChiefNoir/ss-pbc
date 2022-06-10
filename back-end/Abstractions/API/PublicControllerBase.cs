@@ -17,9 +17,6 @@ namespace Abstractions.API
         [HttpGet("categories/{id}")]
         public abstract Task<IActionResult> GetCategoryAsync(int id);
 
-        [HttpGet("categories/everything")]
-        public abstract Task<IActionResult> GetCategoryEverythingAsync();
-
         [HttpGet("introduction")]
         public abstract Task<IActionResult> GetIntroductionAsync();
 

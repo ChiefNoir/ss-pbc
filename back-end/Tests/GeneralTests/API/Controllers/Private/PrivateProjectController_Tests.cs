@@ -1605,13 +1605,6 @@ namespace GeneralTests.API.Controllers.Private
                     GenericChecks.CheckSucceed(responseGetCategory);
 
                     Assert.Equal(0, responseGetCategory.Data.TotalProjects);
-
-                    var responseGetCategoryEverything =
-                    (
-                        await apiCategoryPublic.GetCategoryEverythingAsync() as JsonResult
-                    ).Value as ExecutionResult<Category>;
-                    GenericChecks.CheckSucceed(responseGetCategoryEverything);
-                    Assert.Equal(0, responseGetCategoryEverything.Data.TotalProjects);
                 }
                 catch (Exception)
                 {
@@ -1680,12 +1673,13 @@ namespace GeneralTests.API.Controllers.Private
 
                     Assert.Equal(project.Category.TotalProjects + 1, responseGetCategory.Data.TotalProjects);
 
-                    var responseGetCategoryEverything =
+                    var responseCat =
                     (
-                        await apiPublic.GetCategoryEverythingAsync() as JsonResult
-                    ).Value as ExecutionResult<Category>;
-                    GenericChecks.CheckSucceed(responseGetCategoryEverything);
-                    Assert.Equal(project.Category.TotalProjects + 1, responseGetCategoryEverything.Data.TotalProjects);
+                        await apiPublic.GetCategoriesAsync() as JsonResult
+                    ).Value as ExecutionResult<Category[]>;
+                    var responseGetCategoryEverything = responseCat.Data.First(x => x.IsEverything);
+
+                    Assert.Equal(project.Category.TotalProjects + 1, responseGetCategoryEverything.TotalProjects);
 
                 }
                 catch (Exception)

@@ -196,38 +196,6 @@ namespace GeneralTests.API.Controllers.Public
             }
         }
 
-
-
-        [Theory]
-        [ClassData(typeof(DefaultEverythinCategory))]
-        internal async Task GetEverythingCategoryAsync(Category expected)
-        {
-            using (var context = Storage.CreateContext())
-            {
-                try
-                {
-                    var api = Storage.CreatePublicController(context);
-
-                    var response =
-                    (
-                        await api.GetCategoryEverythingAsync() as JsonResult
-                    ).Value as ExecutionResult<Category>;
-
-                    GenericChecks.CheckSucceed(response);
-                    Compare(expected, response.Data);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    context.FlushData();
-                }
-            }
-        }
-
-
         private void Compare(Category expected, Category actual)
         {
             Assert.Equal(expected.Code, actual.Code);

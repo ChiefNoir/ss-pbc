@@ -10,13 +10,14 @@ namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        public override async Task<IActionResult> SaveIntroductionAsync([FromForm] Introduction introduction)
+        public override async Task<IActionResult> SaveIntroductionAsync([FromBody] Introduction introduction)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () =>
                 {
-                    HandleFiles(introduction, Request?.Form?.Files);
+                    // TODO: 
+                    // HandleFiles(introduction, Request?.Form?.Files);
                     return _introductionRepository.SaveAsync(introduction);
                 }
             );

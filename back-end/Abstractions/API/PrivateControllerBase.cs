@@ -13,7 +13,7 @@ namespace Abstractions.API
     {
         [HttpPost("introduction"), DisableRequestSizeLimit]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public abstract Task<IActionResult> SaveIntroductionAsync([FromForm] Introduction introduction);
+        public abstract Task<IActionResult> SaveIntroductionAsync([FromBody] Introduction introduction);
 
         [HttpPost("accounts")]
         [Authorize(Roles = Restrictions.EditorRoles)]

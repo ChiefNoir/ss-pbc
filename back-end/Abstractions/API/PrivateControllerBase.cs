@@ -48,10 +48,6 @@ namespace Abstractions.API
         [Authorize(Roles = Restrictions.EditorRoles)]
         public abstract Task<IActionResult> DeleteCategoryAsync([FromBody] Category category);
 
-        [HttpGet("information")]
-        [Authorize(Roles = Restrictions.AuthorizedRoles)]
-        public abstract IActionResult GetInformationAsync();
-
         [HttpPost("project"), DisableRequestSizeLimit]
         [Authorize(Roles = Restrictions.EditorRoles)]
         public abstract Task<IActionResult> SaveProjectAsync([FromForm] Project project);

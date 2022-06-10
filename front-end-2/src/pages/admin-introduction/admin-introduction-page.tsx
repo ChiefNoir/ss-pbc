@@ -5,6 +5,7 @@ import { PublicApi, Introduction, ExternalUrl, PrivateApi } from "../../services
 import { useTranslation } from "react-i18next";
 import { Button, Tab, Tabs, TextField } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridRenderCellParams, GridRowId, GridToolbarContainer } from "@mui/x-data-grid";
+import { NavigationAdmin } from "../../features";
 
 function AdminIntroductionPage() {
   const [introduction, setIntroduction] = useState<Introduction>(new Introduction());
@@ -79,7 +80,7 @@ function AdminIntroductionPage() {
   } else {
     return (
 <div className="admin-introduction-container">
-  <h1> {t("Introduction.Introduction")} </h1>
+  <NavigationAdmin />
   <Tabs value={selectedTab} onChange={handleChangeTab}>
     <Tab label={t("Introduction.Content")}/>
     <Tab label={t("Introduction.Poster")}/>

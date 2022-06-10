@@ -26,7 +26,10 @@
     },
     "Navigation":{
         "Home": "Home",
-        "Projects": "Projects"
+        "Projects": "Projects",
+        "AdminIntroduction":"Introduction",
+        "AdminProjects":"Projects",
+        "AdminUsers":"Users"
     },
     "Project": {
         "Category": "Category",

@@ -1,6 +1,5 @@
 import { ExternalUrl } from "./ExternalUrl";
 import { Category } from "./Category";
-import { GalleryImage } from "./GalleryImage";
 
 export type Project = {
   id: number;
@@ -14,7 +13,6 @@ export type Project = {
   descriptionShort: string;
 
   externalUrls: Array<ExternalUrl>;
-  galleryImages: Array<GalleryImage>;
 
   version: number;
 }

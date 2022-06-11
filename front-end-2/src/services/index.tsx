@@ -14,8 +14,8 @@ import { Information } from "./models/Information";
 
 export { PublicApi };
 export { PrivateApi };
-export type { Category };
-export type { ProjectPreview };
+export { Category };
+export { ProjectPreview };
 export { ExternalUrl };
 export { Introduction };
 export type { ExecutionResult };

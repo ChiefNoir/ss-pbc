@@ -1,4 +1,4 @@
-export type Category = {
+class Category {
   id: number;
   code: string;
   displayName: string;
@@ -6,3 +6,5 @@ export type Category = {
   totalProjects: number;
   version: number;
 }
+
+export { Category };

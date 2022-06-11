@@ -1,6 +1,6 @@
 import { Category } from "./Category";
 
-export type ProjectPreview = {
+class ProjectPreview {
   code: string;
   displayName: string;
   releaseDate: Date;
@@ -9,3 +9,5 @@ export type ProjectPreview = {
   category: Category;
   description: string;
 }
+
+export { ProjectPreview };

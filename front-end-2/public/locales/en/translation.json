@@ -32,9 +32,19 @@
         "AdminAccounts":"Accounts"
     },
     "Project": {
-        "Category": "Category",
+        "Code": "Code",
+        "DisplayName": "Display Name",
         "ReleaseDate": "Release date",
-        "Description": "Description"
+        "PosterUrl": "Poster url",
+        "PosterDescription":"Poster Description",
+        "Category": "Category",
+        "Description": "Description",
+        "DescriptionShort":"Description Short",
+        "ExternalUrls": "External Urls",
+        "Actions":{
+          "Add": "Add",
+          "Edit": "Edit" 
+        }
     },
     "Category": {
         "TotalCount": "Total"

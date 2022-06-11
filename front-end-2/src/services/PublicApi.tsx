@@ -22,8 +22,6 @@ class PublicApi {
   };
 
   public static async getProjects(page: number, categoryCode: string | null) {
-    if (page === 0) { page = 1; }
-
     const length : number = parseInt(process.env.REACT_APP_PAGING_PROJECTS_MAX ?? "10");
     const start : number = length * (page - 1);
 

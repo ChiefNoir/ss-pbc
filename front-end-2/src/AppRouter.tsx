@@ -19,6 +19,7 @@ const AppRouter = () => (
       <Route path="admin/intro" element={<Pages.AdminIntroductionPage />} />
       <Route path="admin/accounts" element={<Pages.AdminAccountsPage />} />
       <Route path="admin/projects" element={<Pages.AdminProjectsPage />} />
+      <Route path="admin/categories" element={<Pages.AdminCategoriesPage />} />
     </Route>
   </Routes>
 );

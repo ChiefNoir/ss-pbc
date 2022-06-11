@@ -29,7 +29,8 @@
         "Projects": "Projects",
         "AdminIntroduction":"Introduction",
         "AdminProjects":"Projects",
-        "AdminAccounts":"Accounts"
+        "AdminAccounts":"Accounts",
+        "AdminCategories":"Categories"
     },
     "Project": {
         "Code": "Code",
@@ -47,7 +48,11 @@
         }
     },
     "Category": {
-        "TotalCount": "Total"
+        "Id": "Id",
+        "Code":"Code",
+        "DisplayName":"Display Name",
+        "IsEverything":"Is Everything",
+        "TotalProjects": "Total Projects"
     },
     "Admin": {
       "Credentials":"Credentials",

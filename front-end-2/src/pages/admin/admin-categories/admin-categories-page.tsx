@@ -1,10 +1,10 @@
 import "./admin-categories-page.scss";
 import { useTranslation } from "react-i18next";
-import "../../locales/i18n";
+import "../../../locales/i18n";
 import { useEffect, useState } from "react";
-import { Category, PublicApi } from "../../services";
+import { Category, PublicApi } from "../../../services";
 import { DataGrid, GridActionsCellItem, GridRenderCellParams, GridToolbarContainer } from "@mui/x-data-grid";
-import { NavigationAdmin } from "../../features";
+import { NavigationAdmin } from "../../../features";
 import { Button } from "@mui/material";
 
 function AdminCategoriesPage() {

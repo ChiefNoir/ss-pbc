@@ -1,5 +1,5 @@
 import { Button, TextField } from "@mui/material";
-import "./admin-login-page.scss";
+import "./login-page.scss";
 import { useTranslation } from "react-i18next";
 import "../../locales/i18n";
 import { PrivateApi } from "../../services/PrivateApi";
@@ -8,7 +8,7 @@ import { Credentials } from "../../services";
 import { saveIdentity } from "../../storage";
 import { useDispatch } from "react-redux";
 
-function AdminLoginPage() {
+function LoginPage() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -50,4 +50,4 @@ function AdminLoginPage() {
   );
 }
 
-export { AdminLoginPage };
+export { LoginPage };

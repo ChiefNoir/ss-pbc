@@ -15,7 +15,8 @@ const AppRouter = () => (
         <Route path="?category=:categoryCode&page=:page" element={<Pages.ShowcasePage />} />
       </Route>
 
-      <Route path="login" element={<Pages.AdminLoginPage />} />
+      <Route path="login" element={<Pages.LoginPage />} />
+
       <Route path="admin/intro" element={<Pages.AdminIntroductionPage />} />
       <Route path="admin/accounts" element={<Pages.AdminAccountsPage />} />
       <Route path="admin/projects" element={<Pages.AdminProjectsPage />} />

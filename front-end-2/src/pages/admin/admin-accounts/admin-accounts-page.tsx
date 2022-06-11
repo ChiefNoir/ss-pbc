@@ -1,13 +1,13 @@
 import "./admin-accounts-page.scss";
 import { useTranslation } from "react-i18next";
-import "../../locales/i18n";
-import { PrivateApi } from "../../services/PrivateApi";
+import "../../../locales/i18n";
+import { PrivateApi } from "../../../services/PrivateApi";
 import { useEffect, useState } from "react";
-import { Loader } from "../../ui";
-import { Account } from "../../services";
+import { Loader } from "../../../ui";
+import { Account } from "../../../services";
 import { DataGrid, GridActionsCellItem, GridRenderCellParams, GridToolbarContainer } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
-import { NavigationAdmin } from "../../features";
+import { NavigationAdmin } from "../../../features";
 
 function AdminAccountsPage() {
   const { t } = useTranslation();

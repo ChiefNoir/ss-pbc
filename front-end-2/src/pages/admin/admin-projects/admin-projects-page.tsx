@@ -1,12 +1,12 @@
 import "./admin-projects-page.scss";
 import { useTranslation } from "react-i18next";
-import "../../locales/i18n";
+import "../../../locales/i18n";
 import { useEffect, useState } from "react";
-import { ProjectPreview, PublicApi } from "../../services";
+import { ProjectPreview, PublicApi } from "../../../services";
 import { DataGrid, GridActionsCellItem, GridRenderCellParams, GridToolbarContainer } from "@mui/x-data-grid";
-import { NavigationAdmin } from "../../features";
+import { NavigationAdmin } from "../../../features";
 import { Button } from "@mui/material";
-import { Calc, Convert } from "../../helpers";
+import { Calc, Convert } from "../../../helpers";
 
 function AdminProjectsPage() {
   const { t } = useTranslation();

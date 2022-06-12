@@ -6,11 +6,14 @@ import { Category, PublicApi } from "../../../services";
 import { DataGrid, GridActionsCellItem, GridRenderCellParams, GridToolbarContainer } from "@mui/x-data-grid";
 import { NavigationAdmin } from "../../../features";
 import { Button } from "@mui/material";
+import { EditCategoryDialog } from "./features/edit-category";
 
 function AdminCategoriesPage() {
   const { t } = useTranslation();
   const [isLoading, setLoading] = useState(false);
   const [categories, setCategories] = useState(Array<Category>);
+  const [alef, setCategory] = useState(new Category());
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async() => {
@@ -25,27 +28,40 @@ function AdminCategoriesPage() {
     fetchData();
   }, []);
 
+  function Merge(category: Category) {
+    const ss = categories.filter(x => x.id !== category.id).concat(category);
+    setCategories(ss);
+  }
+
+  function Remove(category: Category) {
+    const ss = categories.filter(x => x.id !== category.id);
+    setCategories(ss);
+  }
+
   function GridToolbar() {
     return (
       <GridToolbarContainer>
-        <Button onClick={ addProject } variant="text">
-          { t("Project.Actions.Add") }
+        <Button onClick={ addCategory } variant="text">
+          { t("Admin.Add") }
         </Button>
       </GridToolbarContainer>
     );
   }
 
-  function addProject() {
-    console.log("addProject");
+  function addCategory() {
+    setCategory(new Category());
+    setOpen(true);
   }
 
-  function editProject(code: string) {
-    console.log(`editProject: ${code}`);
+  function editCategory(id: number) {
+    setCategory(categories!.find(x => x.id === id)!);
+    setOpen(true);
   }
 
   return (
 <div>
   <NavigationAdmin />
+  <EditCategoryDialog category={alef} isOpen ={open} setOpen = {setOpen} merge={Merge} remove = {Remove} />
   <div style={{ display: "flex", height: "100%" }}>
     <DataGrid style={{ width: "100%" }} autoHeight
               getRowId={(row) => row.code}
@@ -60,7 +76,6 @@ function AdminCategoriesPage() {
                 Toolbar: GridToolbar
               }}
               columns={[
-                { field: "id", headerName: t("Category.Id"), width: 200 },
                 { field: "code", headerName: t("Category.Code"), width: 200 },
                 { field: "displayName", headerName: t("Category.DisplayName"), flex: 1 },
                 { field: "isEverything", headerName: t("Category.IsEverything"), width: 200 },
@@ -75,9 +90,9 @@ function AdminCategoriesPage() {
                     <GridActionsCellItem
                         showInMenu = {true}
                         key={`edit-button-${params.row.code}`}
-                        label={ t("Project.Actions.Edit") }
+                        label={ t("Admin.Edit") }
                         onClick={() => {
-                          editProject(params.row.code);
+                          editCategory(params.row.id!);
                         }}/>
                     ];
                   }

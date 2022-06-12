@@ -48,6 +48,7 @@
         }
     },
     "Category": {
+      "this": "Category",
         "Id": "Id",
         "Code":"Code",
         "DisplayName":"Display Name",
@@ -60,6 +61,10 @@
       "Login": "Login",
       "Password": "Password",
       "Save":"Save",
+      "Cancel":"Cancel",
+      "Delete": "Delete",
+      "Add": "Add",
+      "Edit": "Edit",
       "Actions":"Actions"
     },
     "Information": {

@@ -1,5 +1,5 @@
 import * as axios from "axios";
-import { Account, Credentials, Information, Introduction } from ".";
+import { Account, Category, Credentials, Information, Introduction } from ".";
 import { store } from "../storage";
 import { ExecutionResult } from "./models/ExecutionResult";
 import { Identity } from "./models/Identity";
@@ -15,7 +15,7 @@ class PrivateApi {
         Accept: "application/json",
         ContentType: "application/json",
         Authorization: `Bearer ${identity?.token}`
-      }
+      },
     });
   };
 
@@ -33,6 +33,14 @@ class PrivateApi {
 
   public static async saveIntroduction(intro: Introduction) {
     return await this.init().post<ExecutionResult<Introduction>>("/introduction", intro);
+  }
+
+  public static async saveCategory(category: Category) {
+    return await this.init().post<ExecutionResult<Category>>("/category", category);
+  }
+
+  public static async deleteCategory(category: Category) {
+    return await this.init().delete<ExecutionResult<boolean>>("/category", { data: category });
   }
 }
 

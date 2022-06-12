@@ -1,5 +1,5 @@
 class Category {
-  id: number;
+  id: number | null = null;
   code: string;
   displayName: string;
   isEverything: boolean;

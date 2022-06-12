@@ -21,6 +21,10 @@ class PublicApi {
     return await this.init().get<ExecutionResult<Array<Category>>>("/categories");
   };
 
+  public static async getCategory(id: number) {
+    return await this.init().get<ExecutionResult<Category>>(`/category/${id}`);
+  };
+
   public static async getProjects(page: number, categoryCode: string | null) {
     const length : number = parseInt(process.env.REACT_APP_PAGING_PROJECTS_MAX ?? "10");
     const start : number = length * (page - 1);

@@ -4,10 +4,6 @@ import { IntroductionPage } from "./introduction/introduction-page";
 import { ProjectPage } from "./project/project-page";
 import { ShowcasePage } from "./showcase/showcase-page";
 import { LoginPage } from "./login/login-page";
-import { AdminIntroductionPage } from "./admin/admin-introduction/admin-introduction-page";
-import { AdminAccountsPage } from "./admin/admin-accounts/admin-accounts-page";
-import { AdminProjectsPage } from "./admin/admin-projects/admin-projects-page";
-import { AdminCategoriesPage } from "./admin/admin-categories/admin-categories-page";
 
 export { CoreLayout };
 export { ErrorNotFoundPage };
@@ -15,7 +11,3 @@ export { IntroductionPage };
 export { ProjectPage };
 export { ShowcasePage };
 export { LoginPage };
-export { AdminIntroductionPage };
-export { AdminAccountsPage };
-export { AdminProjectsPage };
-export { AdminCategoriesPage };

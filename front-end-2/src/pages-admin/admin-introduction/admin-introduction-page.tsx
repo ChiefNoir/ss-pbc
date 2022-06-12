@@ -1,11 +1,11 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import "./admin-introduction-page.scss";
-import { Loader, TabPanel } from "../../../ui";
-import { PublicApi, Introduction, ExternalUrl, PrivateApi } from "../../../services";
+import { Loader, TabPanel } from "../../ui";
+import { PublicApi, Introduction, ExternalUrl, PrivateApi } from "../../services";
 import { useTranslation } from "react-i18next";
 import { Button, Tab, Tabs, TextField } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridRenderCellParams, GridRowId, GridToolbarContainer } from "@mui/x-data-grid";
-import { NavigationAdmin } from "../../../features";
+import { NavigationAdmin } from "../../features";
 
 function AdminIntroductionPage() {
   const [introduction, setIntroduction] = useState<Introduction>(new Introduction());

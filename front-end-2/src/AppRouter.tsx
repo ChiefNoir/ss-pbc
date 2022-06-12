@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import * as Pages from "./pages";
+import * as PagesAdmin from "./pages-admin";
 
 const AppRouter = () => (
   <Routes>
@@ -17,10 +18,10 @@ const AppRouter = () => (
 
       <Route path="login" element={<Pages.LoginPage />} />
 
-      <Route path="admin/intro" element={<Pages.AdminIntroductionPage />} />
-      <Route path="admin/accounts" element={<Pages.AdminAccountsPage />} />
-      <Route path="admin/projects" element={<Pages.AdminProjectsPage />} />
-      <Route path="admin/categories" element={<Pages.AdminCategoriesPage />} />
+      <Route path="admin/intro" element={<PagesAdmin.AdminIntroductionPage />} />
+      <Route path="admin/accounts" element={<PagesAdmin.AdminAccountsPage />} />
+      <Route path="admin/projects" element={<PagesAdmin.AdminProjectsPage />} />
+      <Route path="admin/categories" element={<PagesAdmin.AdminCategoriesPage />} />
     </Route>
   </Routes>
 );

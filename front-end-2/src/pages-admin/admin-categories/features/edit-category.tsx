@@ -2,9 +2,9 @@ import * as React from "react";
 import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { useEffect, useState, FunctionComponent, ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { Category, PrivateApi } from "../../../../services";
+import { Category, PrivateApi } from "../../../services";
 import "./edit-category.scss";
-import { Loader } from "../../../../ui";
+import { Loader } from "../../../ui";
 
 const EditCategoryDialog: FunctionComponent<
 {

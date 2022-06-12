@@ -31,6 +31,10 @@ class PrivateApi {
     return await this.init().get<ExecutionResult<Account[]>>("/accounts");
   }
 
+  public static async getRoles() {
+    return await this.init().get<ExecutionResult<string[]>>("/roles");
+  }
+
   public static async saveIntroduction(intro: Introduction) {
     return await this.init().post<ExecutionResult<Introduction>>("/introduction", intro);
   }
@@ -41,6 +45,14 @@ class PrivateApi {
 
   public static async deleteCategory(category: Category) {
     return await this.init().delete<ExecutionResult<boolean>>("/category", { data: category });
+  }
+
+  public static async saveAccount(account: Account) {
+    return await this.init().post<ExecutionResult<Account>>("/accounts", account);
+  }
+
+  public static async deleteAccount(account: Account) {
+    return await this.init().delete<ExecutionResult<boolean>>("/accounts", { data: account });
   }
 }
 

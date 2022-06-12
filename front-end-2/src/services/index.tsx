@@ -22,6 +22,6 @@ export type { ExecutionResult };
 export type { Incident };
 export type { Project };
 export { Credentials };
-export type { Account };
+export { Account };
 export type { Identity };
 export type { Information };

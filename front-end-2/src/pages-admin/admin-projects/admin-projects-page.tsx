@@ -70,7 +70,6 @@ function AdminProjectsPage() {
 
   return (
 <div>
-  <NavigationAdmin />
   <EditProjectDialog projectCode={selectedProjectCode} isOpen ={isDialogOpen}
                          setOpen={setIsDialogOpen} merge={merge} remove={remove} />
     <DataGrid style={{ width: "100%" }} autoHeight

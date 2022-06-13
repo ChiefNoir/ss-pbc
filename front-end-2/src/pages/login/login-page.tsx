@@ -7,6 +7,7 @@ import { ChangeEvent, useState } from "react";
 import { Credentials } from "../../services";
 import { saveIdentity } from "../../storage";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const { t } = useTranslation();
@@ -15,6 +16,8 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [credentials, setCred] = useState<Credentials>(new Credentials());
+
+  const navigate = useNavigate();
 
   function handleChange(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
     setCred((prevState: Credentials) => ({
@@ -29,6 +32,7 @@ function LoginPage() {
 
     if (result.data.isSucceed) {
       dispatch(saveIdentity(result.data.data));
+      navigate("/admin");
     } else {
       setError(result.data.error.message);
       setLoading(false);

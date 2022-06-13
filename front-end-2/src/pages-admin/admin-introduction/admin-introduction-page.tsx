@@ -106,7 +106,6 @@ function AdminIntroductionPage() {
   } else {
     return (
 <div className="admin-introduction-container">
-  <NavigationAdmin />
   <Tabs value={selectedTab} onChange={handleChangeTab}>
     <Tab label={t("Introduction.Content")}/>
     <Tab label={t("Introduction.Poster")}/>

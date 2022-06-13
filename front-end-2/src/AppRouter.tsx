@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import * as Pages from "./pages";
 import * as PagesAdmin from "./pages-admin";
 
@@ -17,11 +17,15 @@ const AppRouter = () => (
       </Route>
 
       <Route path="login" element={<Pages.LoginPage />} />
+    </Route>
 
-      <Route path="admin/intro" element={<PagesAdmin.AdminIntroductionPage />} />
-      <Route path="admin/accounts" element={<PagesAdmin.AdminAccountsPage />} />
-      <Route path="admin/projects" element={<PagesAdmin.AdminProjectsPage />} />
-      <Route path="admin/categories" element={<PagesAdmin.AdminCategoriesPage />} />
+    <Route path="/admin" element={<PagesAdmin.AdminLayout />} >
+      <Route path="" element={<Navigate to="intro" replace />} />
+
+      <Route path="intro" element={<PagesAdmin.AdminIntroductionPage />} />
+      <Route path="accounts" element={<PagesAdmin.AdminAccountsPage />} />
+      <Route path="projects" element={<PagesAdmin.AdminProjectsPage />} />
+      <Route path="categories" element={<PagesAdmin.AdminCategoriesPage />} />
     </Route>
   </Routes>
 );

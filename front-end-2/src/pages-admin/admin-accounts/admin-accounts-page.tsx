@@ -61,7 +61,6 @@ function AdminAccountsPage() {
 
   return (
     <div>
-      <NavigationAdmin />
       <EditAccountDialog account={selectedAccount} isOpen ={isDialogOpen}
                          setOpen={setIsDialogOpen} merge={Merge} remove={Remove} />
 

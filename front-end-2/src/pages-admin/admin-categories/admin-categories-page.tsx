@@ -60,7 +60,6 @@ function AdminCategoriesPage() {
 
   return (
 <div>
-  <NavigationAdmin />
   <EditCategoryDialog category={alef} isOpen ={open} setOpen = {setOpen} merge={Merge} remove = {Remove} />
   <div style={{ display: "flex", height: "100%" }}>
     <DataGrid style={{ width: "100%" }} autoHeight

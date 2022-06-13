@@ -2,6 +2,7 @@
 using Abstractions.Model;
 using Abstractions.Model.Queries;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -48,13 +49,16 @@ namespace Abstractions.API
         [Authorize(Roles = Restrictions.EditorRoles)]
         public abstract Task<IActionResult> DeleteCategoryAsync([FromBody] Category category);
 
-        [HttpPost("project"), DisableRequestSizeLimit]
+        [HttpPost("project")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public abstract Task<IActionResult> SaveProjectAsync([FromForm] Project project);
+        public abstract Task<IActionResult> SaveProjectAsync([FromBody] Project project);
 
-        [HttpDelete("project"), DisableRequestSizeLimit]
+        [HttpDelete("project")]
         [Authorize(Roles = Restrictions.EditorRoles)]
         public abstract Task<IActionResult> DeleteProjectAsync([FromBody] Project project);
 
+        [HttpPost("upload"), DisableRequestSizeLimit]
+        [Authorize(Roles = Restrictions.EditorRoles)]
+        public abstract IActionResult Upload([FromForm] IFormFile File);
     }
 }

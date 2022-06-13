@@ -41,6 +41,7 @@ namespace Infrastructure.Repository
 
             var fullPath = Path.Combine(_fileStorage, filename);
 
+            // TODO: make async
             using (var stream = new FileStream(fullPath, FileMode.Create))
             {
                 file.CopyTo(stream);

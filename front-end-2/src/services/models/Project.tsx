@@ -1,11 +1,11 @@
 import { ExternalUrl } from "./ExternalUrl";
 import { Category } from "./Category";
 
-export type Project = {
-  id: number;
+class Project {
+  id: number | null;
   code: string;
   displayName: string;
-  releaseDate: Date;
+  releaseDate: Date | null;
   posterUrl: string;
   posterDescription: string;
   category: Category;
@@ -15,4 +15,13 @@ export type Project = {
   externalUrls: Array<ExternalUrl>;
 
   version: number;
+
+  // front-only
+  public posterPreview: string;
+
+  public constructor() {
+    this.externalUrls = new Array<ExternalUrl>();
+  }
 }
+
+export { Project };

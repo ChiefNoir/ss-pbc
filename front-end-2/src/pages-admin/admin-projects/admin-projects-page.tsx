@@ -2,17 +2,20 @@ import "./admin-projects-page.scss";
 import { useTranslation } from "react-i18next";
 import "../../locales/i18n";
 import { useEffect, useState } from "react";
-import { ProjectPreview, PublicApi } from "../../services";
+import { Project, ProjectPreview, PublicApi } from "../../services";
 import { DataGrid, GridActionsCellItem, GridRenderCellParams, GridToolbarContainer } from "@mui/x-data-grid";
 import { NavigationAdmin } from "../../features";
 import { Button } from "@mui/material";
 import { Calc, Convert } from "../../helpers";
+import { EditProjectDialog } from "./features/edit-project";
 
 function AdminProjectsPage() {
   const { t } = useTranslation();
   const [isLoading, setLoading] = useState(false);
   const [projects, setProjects] = useState(Array<ProjectPreview>);
+  const [selectedProjectCode, setSelectedProjectCode] = useState<string | null>(null);
   const [page, setPage] = useState(0);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [rowCountState, setRowCountState] = useState(0);
   const projectPerPage = Convert.ToRestrictedNumber(process.env.REACT_APP_PAGING_PROJECTS_MAX, 1);
 
@@ -38,29 +41,42 @@ function AdminProjectsPage() {
   function GridToolbar() {
     return (
       <GridToolbarContainer>
-        <Button onClick={ addProject } variant="text">
-          { t("Project.Actions.Add") }
+        <Button onClick={ add } variant="text">
+          { t("Admin.Add") }
         </Button>
       </GridToolbarContainer>
     );
   }
 
-  function addProject() {
-    console.log("addProject");
+  function merge(project: Project) {
+    // const tmp = accounts.filter(x => x.id !== account.id).concat(account);
+    // setAccounts(tmp);
   }
 
-  function editProject(code: string) {
-    console.log(`editProject: ${code}`);
+  function remove(project: Project) {
+    // const tmp = accounts.filter(x => x.id !== account.id);
+    // setAccounts(tmp);
+  }
+
+  function add() {
+    setSelectedProjectCode(null);
+    setIsDialogOpen(true);
+  }
+
+  function edit(code: string) {
+    setSelectedProjectCode(code);
+    setIsDialogOpen(true);
   }
 
   return (
 <div>
   <NavigationAdmin />
-  <div style={{ display: "flex", height: "100%" }}>
+  <EditProjectDialog projectCode={selectedProjectCode} isOpen ={isDialogOpen}
+                         setOpen={setIsDialogOpen} merge={merge} remove={remove} />
     <DataGrid style={{ width: "100%" }} autoHeight
               getRowId={(row) => row.code}
               rows={projects}
-              rowCount={rowCountState}
+              rowCount={projects.length}
               page={page} pageSize={projectPerPage}
               rowsPerPageOptions = {[projectPerPage]}
               onPageChange={(newPage) => setPage(newPage)}
@@ -91,16 +107,15 @@ function AdminProjectsPage() {
                     <GridActionsCellItem
                         showInMenu = {true}
                         key={`edit-button-${params.row.code}`}
-                        label={ t("Project.Actions.Edit") }
+                        label={ t("Admin.Edit") }
                         onClick={() => {
-                          editProject(params.row.code);
+                          edit(params.row.code);
                         }}/>
                     ];
                   }
                 }
               ]}
     />
-      </div>
 
 </div>
   );

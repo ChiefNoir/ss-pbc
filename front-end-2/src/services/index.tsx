@@ -20,7 +20,7 @@ export { ExternalUrl };
 export { Introduction };
 export type { ExecutionResult };
 export type { Incident };
-export type { Project };
+export { Project };
 export { Credentials };
 export { Account };
 export type { Identity };

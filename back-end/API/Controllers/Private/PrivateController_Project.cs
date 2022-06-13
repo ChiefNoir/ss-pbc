@@ -4,6 +4,7 @@ using API.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -12,13 +13,12 @@ namespace API.Controllers.Private
 {
     public partial class PrivateController : PrivateControllerBase
     {
-        public override async Task<IActionResult> SaveProjectAsync([FromForm] Project project)
+        public override async Task<IActionResult> SaveProjectAsync([FromBody] Project project)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () =>
                 {
-                    HandleFiles(project, Request?.Form?.Files);
                     return _projectRepository.SaveAsync(project);
                 }
             );
@@ -79,6 +79,21 @@ namespace API.Controllers.Private
             }
 
             return -1;
+        }
+
+        public override IActionResult Upload([FromForm] IFormFile file)
+        {
+            var result = _supervisor.SafeExecute
+            (
+                () =>
+                {
+                    var fileName = _fileRepository.Save(file);
+
+                    return Utils.AppendUrlToName(_configuration, fileName);
+                }
+            );
+
+            return new JsonResult(result);
         }
     }
 }

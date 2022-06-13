@@ -1,5 +1,5 @@
 import * as axios from "axios";
-import { Account, Category, Credentials, Information, Introduction } from ".";
+import { Account, Category, Credentials, Information, Introduction, Project } from ".";
 import { store } from "../storage";
 import { ExecutionResult } from "./models/ExecutionResult";
 import { Identity } from "./models/Identity";
@@ -15,7 +15,7 @@ class PrivateApi {
         Accept: "application/json",
         ContentType: "application/json",
         Authorization: `Bearer ${identity?.token}`
-      },
+      }
     });
   };
 
@@ -23,12 +23,16 @@ class PrivateApi {
     return await this.init().post<ExecutionResult<Identity>>("/login", credentials);
   };
 
-  public static async getInformation() {
-    return await this.init().get<ExecutionResult<Information>>("/information");
-  }
-
   public static async getAccounts() {
     return await this.init().get<ExecutionResult<Account[]>>("/accounts");
+  }
+
+  public static async saveAccount(account: Account) {
+    return await this.init().post<ExecutionResult<Account>>("/accounts", account);
+  }
+
+  public static async deleteAccount(account: Account) {
+    return await this.init().delete<ExecutionResult<boolean>>("/accounts", { data: account });
   }
 
   public static async getRoles() {
@@ -47,12 +51,19 @@ class PrivateApi {
     return await this.init().delete<ExecutionResult<boolean>>("/category", { data: category });
   }
 
-  public static async saveAccount(account: Account) {
-    return await this.init().post<ExecutionResult<Account>>("/accounts", account);
+  public static async deleteProject(project: Project) {
+    return await this.init().delete<ExecutionResult<boolean>>("/project", { data: project });
   }
 
-  public static async deleteAccount(account: Account) {
-    return await this.init().delete<ExecutionResult<boolean>>("/accounts", { data: account });
+  public static async saveProject(project: Project) {
+    return await this.init().post<ExecutionResult<Project>>("/project", project);
+  }
+
+  public static async upload(file: Blob) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    return await this.init().post<ExecutionResult<string>>("/upload", formData);
   }
 }
 

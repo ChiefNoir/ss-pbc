@@ -1,5 +1,9 @@
 class Format {
-  public static ToDate(value: Date): string {
+  public static ToDate(value: Date | null): string {
+    if (value === null) {
+      return "";
+    }
+
     const dt = new Date(value);
 
     return `${dt.getFullYear()}

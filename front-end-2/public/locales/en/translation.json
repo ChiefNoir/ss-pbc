@@ -33,6 +33,7 @@
         "AdminCategories":"Categories"
     },
     "Project": {
+        "this": "Project",
         "Code": "Code",
         "DisplayName": "Display Name",
         "ReleaseDate": "Release date",
@@ -42,10 +43,15 @@
         "Description": "Description",
         "DescriptionShort":"Description Short",
         "ExternalUrls": "External Urls",
-        "Actions":{
-          "Add": "Add",
-          "Edit": "Edit" 
-        }
+        "GeneralInformation": "General Information",
+        "Poster":"Poster"
+    },
+    "ExternalUrl": {
+      "this":"External url",
+      "Id":"Id",
+      "DisplayName":"Display Name",
+      "Url":"Url",
+      "Version":"Version"
     },
     "Category": {
       "this": "Category",
@@ -65,7 +71,8 @@
       "Delete": "Delete",
       "Add": "Add",
       "Edit": "Edit",
-      "Actions":"Actions"
+      "Actions":"Actions",
+      "Upload":"Upload"
     },
     "Information": {
       "Title": "Information",

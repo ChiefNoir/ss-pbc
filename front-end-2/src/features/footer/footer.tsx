@@ -12,7 +12,7 @@ function Footer() {
     <footer>
       <div className="footer-content">
         <div>
-          <Link to="/login">
+          <Link to="/login" title={t("Account.Login")} aria-label={t("Account.Login")}>
             <svg className={`footer-content-tool ${identity === null ? "" : "active"}`}
             version="1.1" viewBox="0 0 302 302" xmlns="http://www.w3.org/2000/svg">
               <path d="m266.12 0c-9.6062-0.028617-45.569 0.126-114.63 0-61.193 0.126-105.51 0.019413-111.91 0-5.522 30.225-16.649 149.32-16.649 149.32 0 51.596 83.36 126.99 115.95 153.04 12.862 5e-3 14.224-0.0187 25.427 0 32.603-26.067 115.73-101.46 115.73-153.04 0 1e-3 -8.3997-119.1-13.923-149.32zm-19.63 159.71v6h-190s3e-6 -2.687 0-6l-3.9e-5 -57.107c-2e-6 -3.313 3.9e-5 -6.0006 3.9e-5 -6.0006h190v6z"/>

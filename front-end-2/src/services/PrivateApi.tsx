@@ -39,7 +39,15 @@ class PrivateApi {
     return await this.init().get<ExecutionResult<string[]>>("/roles");
   }
 
-  public static async saveIntroduction(intro: Introduction) {
+  public static async saveIntroduction(introduction: Introduction) {
+    const intro = introduction;
+
+    intro.externalUrls.forEach(x => {
+      if (x.id != null && x.id < 0) {
+        x.id = null;
+      }
+    });
+
     return await this.init().post<ExecutionResult<Introduction>>("/introduction", intro);
   }
 

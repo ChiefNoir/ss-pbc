@@ -29,6 +29,15 @@ function AdminIntroductionPage() {
 
   async function save() {
     setLoading(true);
+
+    if (introduction.posterNew) {
+      const newUrl = await PrivateApi.upload(introduction.posterNew!);
+
+      if (newUrl.data.isSucceed) {
+        introduction.posterUrl = newUrl.data.data;
+      }
+    }
+
     const result = await PrivateApi.saveIntroduction(introduction);
 
     setIntroduction(result.data.data);
@@ -37,7 +46,7 @@ function AdminIntroductionPage() {
 
   function addExternalUrl() {
     let minId = Math.min(...introduction.externalUrls.map(o => o.id!)) - 1;
-    if (minId === Infinity) {
+    if (minId === Infinity || minId >= 0) {
       minId = -1;
     }
 
@@ -61,6 +70,23 @@ function AdminIntroductionPage() {
     }));
   };
 
+  function processRowUpdate(newRow: ExternalUrl, oldRow: ExternalUrl): ExternalUrl | Promise<ExternalUrl> {
+    setIntroduction((prevState: Introduction) => ({
+      ...prevState!,
+      externalUrls: introduction.externalUrls.map(x => { return (x.id === oldRow.id ? newRow : x); })
+    }));
+
+    return newRow;
+  }
+
+  function handleFileSelect(event: any) {
+    setIntroduction((prevState: Introduction) => ({
+      ...prevState!,
+      posterPreview: URL.createObjectURL(event.target.files[0]),
+      posterNew: event.target.files[0]
+    }));
+  };
+
   function handleChangeTab(_event: React.SyntheticEvent, newValue: number) {
     setValueSelectedTab(newValue);
   };
@@ -69,7 +95,7 @@ function AdminIntroductionPage() {
     return (
       <GridToolbarContainer>
         <Button onClick={ addExternalUrl } variant="text">
-          { t("Introduction.ExternalUrls.AddNew")}
+          { t("Admin.Add")}
         </Button>
       </GridToolbarContainer>
     );
@@ -84,7 +110,7 @@ function AdminIntroductionPage() {
   <Tabs value={selectedTab} onChange={handleChangeTab}>
     <Tab label={t("Introduction.Content")}/>
     <Tab label={t("Introduction.Poster")}/>
-    <Tab label={t("Introduction.ExternalUrls.ExternalUrls")}/>
+    <Tab label={t("Introduction.ExternalUrls")}/>
   </Tabs>
 
   <TabPanel value={selectedTab} index={0}>
@@ -101,6 +127,12 @@ function AdminIntroductionPage() {
     <div className="admin-introduction-content">
       <img className="admin-introduction-poster"
            src={introduction.posterPreview || introduction.posterUrl}/>
+
+      <Button component="label">
+        {t("Admin.Upload")} {t("Introduction.Poster")}
+        <input type="file" hidden onChange={handleFileSelect}/>
+      </Button>
+
       <TextField value={introduction.posterUrl}
                  label={t("Introduction.PosterUrl")}
                  fullWidth/>
@@ -111,20 +143,20 @@ function AdminIntroductionPage() {
   </TabPanel>
 
   <TabPanel value={selectedTab} index={2}>
-    <DataGrid style={{ height: 420, width: "100%", padding: 0 }}
+    <DataGrid style={{ width: "100%" }} autoHeight
         rows={introduction.externalUrls}
         page={page}
         onPageChange={(newPage) => setPage(newPage)}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        experimentalFeatures={{ newEditingApi: true }}
+        processRowUpdate={processRowUpdate}
         components={{
           Toolbar: CustomToolbar
         }}
         columns={[
-          { field: "id", headerName: t("Introduction.ExternalUrls.Id"), editable: false },
-          { field: "displayName", flex: 0.6, headerName: t("Introduction.ExternalUrls.DisplayName"), type: "string", editable: true },
-          { field: "url", flex: 1, headerName: t("Introduction.ExternalUrls.Url"), type: "string", editable: true },
-          { field: "version", headerName: t("Introduction.ExternalUrls.Version"), type: "string", editable: false },
+          { field: "displayName", flex: 0.6, headerName: t("ExternalUrl.DisplayName"), type: "string", editable: true },
+          { field: "url", flex: 1, headerName: t("ExternalUrl.Url"), type: "string", editable: true }, 
           {
             field: "",
             headerName: t("Admin.Actions"),
@@ -137,7 +169,6 @@ function AdminIntroductionPage() {
                   onClick={() => {
                     deleteExternalUrl(params.row.id!);
                   }}
-                  color="inherit"
                 />
               ];
             }

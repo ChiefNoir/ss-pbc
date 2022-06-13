@@ -162,9 +162,6 @@ const EditProjectDialog: FunctionComponent<
   }
 
   function processRowUpdate(newRow: ExternalUrl, oldRow: ExternalUrl): ExternalUrl | Promise<ExternalUrl> {
-    console.log(`oldRow: ${oldRow.displayName}`);
-    console.log(`newRow: ${newRow.displayName}`);
-
     setProject((prevState: Project | null) => ({
       ...prevState!,
       externalUrls: project!.externalUrls.map(x => { return (x.id === oldRow.id ? newRow : x); })

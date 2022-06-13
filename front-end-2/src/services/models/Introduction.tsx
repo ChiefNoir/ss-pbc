@@ -10,6 +10,7 @@ class Introduction {
 
   // front-only
   public posterPreview: string;
+  public posterNew: Blob | undefined;
 }
 
 export { Introduction };

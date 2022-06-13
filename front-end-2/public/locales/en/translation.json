@@ -15,14 +15,7 @@
         "Poster": "Poster",
         "PosterUrl": "Poster url",
         "PosterDescription": "Poster description",
-        "ExternalUrls": {
-          "ExternalUrls": "Meet me on the other site",
-          "Id": "Id",
-          "DisplayName": "Name",
-          "Url": "Url",
-          "Version":"Version",
-          "AddNew":"Add"
-        }
+        "ExternalUrls": "External Urls"
     },
     "Navigation":{
         "Home": "Home",

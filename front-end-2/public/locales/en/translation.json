@@ -57,6 +57,7 @@
     "Admin": {
       "Credentials":"Credentials",
       "DoLogin":"Enter",
+      "DoLogout":"Log out",
       "Login": "Login",
       "Password": "Password",
       "Save":"Save",
@@ -77,5 +78,8 @@
       "Login": "Login",
       "Password":"Password",
       "Role":"Role"
+    },
+    "Messages":{
+      "LoggedIn":"You are logged in."
     }
 }

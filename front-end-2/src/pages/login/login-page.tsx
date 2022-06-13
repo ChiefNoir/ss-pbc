@@ -5,9 +5,10 @@ import "../../locales/i18n";
 import { PrivateApi } from "../../services/PrivateApi";
 import { ChangeEvent, useState } from "react";
 import { Credentials } from "../../services";
-import { saveIdentity } from "../../storage";
+import { saveIdentity, deleteIdentity, store } from "../../storage";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { NavigationAdmin } from "../../features";
 
 function LoginPage() {
   const { t } = useTranslation();
@@ -38,6 +39,21 @@ function LoginPage() {
       setLoading(false);
     }
   };
+
+  function doLogout() {
+    dispatch(deleteIdentity());
+    navigate("/");
+  }
+
+  if (store.getState().identity.value) {
+    return (
+      <div className="container-login">
+        <NavigationAdmin />
+        <b>{t("Messages.LoggedIn")}</b>
+        <Button onClick={doLogout} variant="outlined"> {t("Admin.DoLogout")} </Button>
+      </div>
+    );
+  }
 
   return (
     <div className={`container-login ${loading ? "disabled" : ""}`} aria-disabled = {loading}>

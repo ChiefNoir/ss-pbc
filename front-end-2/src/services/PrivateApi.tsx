@@ -23,6 +23,10 @@ class PrivateApi {
     return await this.init().post<ExecutionResult<Identity>>("/login", credentials);
   };
 
+  public static async ping() {
+    return await this.init().post<ExecutionResult<Identity>>("/ping_valid");
+  }
+
   public static async getAccounts() {
     return await this.init().get<ExecutionResult<Account[]>>("/accounts");
   }

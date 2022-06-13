@@ -19,7 +19,7 @@ const AppRouter = () => (
       <Route path="login" element={<Pages.LoginPage />} />
     </Route>
 
-    <Route path="/admin" element={<PagesAdmin.AdminLayout />} >
+    <Route path="/admin" element={ <PagesAdmin.AdminLayout /> } >
       <Route path="" element={<Navigate to="intro" replace />} />
 
       <Route path="intro" element={<PagesAdmin.AdminIntroductionPage />} />

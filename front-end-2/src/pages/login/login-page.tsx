@@ -40,7 +40,7 @@ function LoginPage() {
     }
   };
 
-  function doLogout() {
+  async function doLogout() {
     dispatch(deleteIdentity());
     navigate("/");
   }

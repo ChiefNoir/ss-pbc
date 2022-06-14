@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import "../../locales/i18n";
 import { PrivateApi } from "../../services/PrivateApi";
 import { ChangeEvent, useState } from "react";
-import { Credentials } from "../../services";
+import { Credentials, Incident } from "../../services";
 import { saveIdentity, deleteIdentity, store } from "../../storage";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [incident, setIncident] = useState<Incident | null>(null);
   const [credentials, setCred] = useState<Credentials>(new Credentials());
 
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function LoginPage() {
     }));
   };
 
-  const doLogin = async() => {
+  async function doLogin() {
     setLoading(true);
     const result = await PrivateApi.login(credentials as Credentials);
 
@@ -35,7 +35,7 @@ function LoginPage() {
       dispatch(saveIdentity(result.data.data));
       navigate("/admin");
     } else {
-      setError(result.data.error.message);
+      setIncident(result.data.error);
       setLoading(false);
     }
   };
@@ -56,14 +56,17 @@ function LoginPage() {
   }
 
   return (
-    <div className={`container-login ${loading ? "disabled" : ""}`} aria-disabled = {loading}>
+    <div className={`container-login ${loading ? "disabled" : ""}`}
+         aria-disabled = {loading}>
       <h1> {t("Admin.Credentials")} </h1>
-      <b> { error } </b>
-      <TextField value = {credentials.login} label= {t("Admin.Login")} variant="outlined"
-                 name="login"
+      <b> { incident?.message } </b>
+      <TextField label= {t("Admin.Login")}
+                 value = {credentials.login}
+                 name="login" variant="outlined"
                  onChange = { handleChange }/>
-      <TextField value={credentials.password} label= {t("Admin.Password")} type="password" variant="outlined"
-                 name="password"
+      <TextField label= {t("Admin.Password")}
+                 value={credentials.password}
+                 name="password" type="password" variant="outlined"
                  onChange = { handleChange }/>
       <Button onClick={doLogin} variant="outlined"> {t("Admin.DoLogin")} </Button>
     </div>

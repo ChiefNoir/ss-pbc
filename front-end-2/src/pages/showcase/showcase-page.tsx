@@ -2,40 +2,54 @@ import "./showcase-page.scss";
 import { ButtonCategoryComponent, ProjectPreviewComponent } from "./features/";
 import { Convert, Calc } from "../../helpers";
 import { Link, useSearchParams } from "react-router-dom";
-import { Loader } from "../../ui";
+import { ErrorComponent, Loader } from "../../ui";
 import { Pagination, PaginationItem } from "@mui/material";
-import { PublicApi, Category, ProjectPreview } from "../../services";
+import { PublicApi, Category, ProjectPreview, Incident } from "../../services";
 import { useEffect, useState } from "react";
 
 function ShowcasePage() {
   const [searchParams] = useSearchParams();
   const categoryCode = searchParams.get("category");
-  const page = searchParams.get("page") ?? "0";
+  const pageNumber = Convert.ToRestrictedNumber(searchParams.get("page"), 1);
 
   const [loading, setLoading] = useState(true);
-  const [projects, setProjects] = useState<Array<ProjectPreview>>();
-  const [categories, setCategories] = useState<Array<Category>>();
-  const [selectedCategory, setCategory] = useState<Category>();
+  const [projects, setProjects] = useState<ProjectPreview[] | null>(null);
+  const [categories, setCategories] = useState<Category[] | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category>();
+  const [incident, setIncident] = useState<Incident|null>(null);
 
   useEffect(() => {
     const fetchData = async() => {
+      setIncident(null);
       setLoading(true);
 
-      let tmpCategories = categories ?? [];
+      let tmpCategories = categories ?? null;
 
-      if (categories === undefined) {
+      if (tmpCategories === null) {
         const categoriesResponse = await PublicApi.getCategories();
+
+        if (!categoriesResponse.data.isSucceed) {
+          setIncident(categoriesResponse.data.error);
+          setLoading(false);
+          return;
+        }
+
         tmpCategories = categoriesResponse.data.data;
         setCategories(tmpCategories);
       }
 
       if (categoryCode === null) {
-        setCategory(tmpCategories.find(x => x.isEverything));
+        setSelectedCategory(tmpCategories.find(x => x.isEverything));
       } else {
-        setCategory(tmpCategories.find(x => x.code === categoryCode));
+        setSelectedCategory(tmpCategories.find(x => x.code === categoryCode));
       }
 
-      const projectsResponse = await PublicApi.getProjects(Convert.ToRestrictedNumber(page, 1), categoryCode);
+      const projectsResponse = await PublicApi.getProjects(pageNumber, categoryCode);
+      if (!projectsResponse.data.isSucceed) {
+        setIncident(projectsResponse.data.error);
+        setLoading(false);
+        return;
+      }
 
       setProjects(projectsResponse.data.data);
       setLoading(false);
@@ -46,44 +60,48 @@ function ShowcasePage() {
 
   if (loading) {
     return <Loader />;
-  } else {
-    return (
-      <div className="showcase-container">
-        <div className="showcase-filter">
-        {
-          categories?.filter(x => x.totalProjects > 0).map(
-            x => {
-              return <ButtonCategoryComponent key={x.id} category={x} />;
-            }
-          )
-        }
-        </div>
-        <div className="showcase-projects">
-        {
-          projects?.map(
-            x => {
-              return <ProjectPreviewComponent key={x.code} project={x} />;
-            }
-          )
-        }
-        </div>
+  }
 
-        {Calc.Pages(selectedCategory?.totalProjects ?? 0) > 1
-        && <div className="showcase-paging">
-            <Pagination page={ Convert.ToRestrictedNumber(page, 1)}
-                        count={ Calc.Pages(selectedCategory?.totalProjects ?? 0)}
-                        size = "large"
-                        shape="rounded"
-                        renderItem={(item) => (
-                            <PaginationItem component={Link}
-                                            to={`/projects/?category=${selectedCategory?.code}&page=${item.page}`}
-                                            {...item} />)}
-                />
-          </div>
-        }
+  if (incident) {
+    return <ErrorComponent message={incident.message} detail={incident.detail}/>;
+  }
+
+  return (
+    <div className="showcase-container">
+      <div className="showcase-filter">
+      {
+        categories?.filter(x => x.totalProjects > 0).map(
+          x => {
+            return <ButtonCategoryComponent key={`category-btn-${x.id}`} category={x} />;
+          }
+        )
+      }
       </div>
-    );
-  };
+      <div className="showcase-projects">
+      {
+        projects?.map(
+          x => {
+            return <ProjectPreviewComponent key={`project-cared-${x.code}`} project={x} />;
+          }
+        )
+      }
+      </div>
+
+      {Calc.Pages(selectedCategory?.totalProjects ?? 0) > 1
+      && <div className="showcase-paging">
+          <Pagination page={pageNumber}
+                      count={Calc.Pages(selectedCategory?.totalProjects ?? 0)}
+                      size = "large"
+                      shape="rounded"
+                      renderItem={(item) => (
+                          <PaginationItem component={Link}
+                                          to={`/projects/?category=${selectedCategory?.code}&page=${item.page}`}
+                                          {...item} />)}
+              />
+        </div>
+      }
+    </div>
+  );
 }
 
 export { ShowcasePage };

@@ -11,6 +11,7 @@ function IntroductionPage() {
 
   useEffect(() => {
     const fetchData = async() => {
+      setIncident(null);
       setLoading(true);
 
       const result = await PublicApi.getIntroduction();

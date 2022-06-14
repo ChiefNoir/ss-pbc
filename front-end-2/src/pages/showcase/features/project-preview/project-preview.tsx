@@ -1,29 +1,26 @@
-import { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 import { ProjectPreview } from "../../../../services";
+import { Card, CardActionArea, CardMedia, CardContent } from "@mui/material";
 import "./project-preview.scss";
-import { Card, CardActionArea, CardMedia, CardContent, Typography } from "@mui/material";
 
-const ProjectPreviewComponent: FunctionComponent<{project: ProjectPreview}> = (props) => {
+function ProjectPreviewComponent(props: {project: ProjectPreview}) {
   const project = props.project;
 
   return (
-  <Card sx={{ maxWidth: 300, minWidth: 300 }} >
-      <CardActionArea component={Link} to={`/projects/${project.code}`} sx={{ height: 400 }}>
-        <CardMedia
-          className="project-preview-poster"
-          component="img"
-          height="140"
-          image={ project.posterUrl }
-          alt={ project.description }
-        />
+  <Card className="project-preview" >
+      <CardActionArea className="project-preview-card"
+                      component={Link} to={`/projects/${project.code}`}>
+        <CardMedia className="project-preview-poster"
+                   component="img" height="140"
+                   image={project.posterUrl}
+                   alt={project.displayName} />
         <CardContent>
-          <Typography className="project-preview-title" gutterBottom variant="h5" component="div">
-            { project.displayName }
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-          { project.description }
-          </Typography>
+          <h3 className="project-preview-title">
+            {project.displayName}
+          </h3>
+          <div>
+            { project.description }
+          </div>
         </CardContent>
       </CardActionArea>
     </Card>

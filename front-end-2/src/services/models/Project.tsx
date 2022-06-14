@@ -12,7 +12,7 @@ class Project {
   description: string;
   descriptionShort: string;
 
-  externalUrls: Array<ExternalUrl>;
+  externalUrls: ExternalUrl[];
 
   version: number;
 
@@ -20,7 +20,7 @@ class Project {
   public posterPreview: string;
 
   public constructor() {
-    this.externalUrls = new Array<ExternalUrl>();
+    this.externalUrls = [];
   }
 }
 

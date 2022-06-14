@@ -18,7 +18,7 @@ class PublicApi {
   };
 
   public static async getCategories() {
-    return await this.init().get<ExecutionResult<Array<Category>>>("/categories");
+    return await this.init().get<ExecutionResult<Category[]>>("/categories");
   };
 
   public static async getCategory(id: number) {
@@ -33,7 +33,7 @@ class PublicApi {
       ? "&categorycode=" + categoryCode
       : "";
 
-    return await this.init().get<ExecutionResult<Array<ProjectPreview>>>(
+    return await this.init().get<ExecutionResult<ProjectPreview[]>>(
       "projects/search?"
       + "start=" + start
       + "&length=" + length

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { PublicApi, Project } from "../../services";
-import { Loader } from "../../ui";
+import { PublicApi, Project, Incident } from "../../services";
+import { ErrorComponent, Loader } from "../../ui";
 import { ProjectComponent } from "./features";
 import "./project-page.scss";
 
@@ -10,14 +10,19 @@ function ProjectPage() {
 
   const [project, setProject] = useState<Project>();
   const [loading, setLoading] = useState(true);
+  const [incident, setIncident] = useState<Incident | null>(null);
 
   useEffect(() => {
     const fetchProject = async() => {
       setLoading(true);
 
       const result = await PublicApi.getProject(projectCode);
+      if (result.data.isSucceed) {
+        setProject(result.data.data);
+      } else {
+        setIncident(result.data.error);
+      }
 
-      setProject(result.data.data);
       setLoading(false);
     };
 
@@ -26,9 +31,13 @@ function ProjectPage() {
 
   if (loading) {
     return <Loader />;
-  } else {
-    return <ProjectComponent project={project as Project} />;
   }
+
+  if (incident) {
+    return <ErrorComponent message={incident.message} detail={incident.detail}/>;
+  }
+
+  return <ProjectComponent project={project!} />;
 }
 
 export { ProjectPage };

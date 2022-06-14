@@ -81,7 +81,6 @@
       "Role":"Role"
     },
     "Messages":{
-      "LoggedIn": "You are logged in.",
-      "ReloadPage": "Try reloading page"
+      "LoggedIn": "You are logged in."
     }
 }

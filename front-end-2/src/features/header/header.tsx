@@ -7,8 +7,8 @@ function Header() {
   const { t } = useTranslation();
   return (
   <header>
-    <Link className="full-size" to="/"> {t("Header.Full")} </Link>
-    <Link className="small-size" to="/"> {t("Header.Short")} </Link>
+    <Link className="full-size" to="/"><b>{t("Header.Full")}</b></Link>
+    <Link className="small-size" to="/"><b>{t("Header.Short")}</b></Link>
   </header>
   );
 }

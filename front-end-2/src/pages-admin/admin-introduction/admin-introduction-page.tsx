@@ -125,7 +125,7 @@ function AdminIntroductionPage() {
   <TabPanel value={selectedTab} index={1}>
     <div className="admin-introduction-content">
       <img className="admin-introduction-poster"
-           src={introduction.posterPreview || introduction.posterUrl}/>
+           src={introduction.posterPreview ?? introduction.posterUrl}/>
 
       <Button component="label">
         {t("Admin.Upload")} {t("Introduction.Poster")}

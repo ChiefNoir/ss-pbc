@@ -1,31 +1,40 @@
 import { useState, useEffect } from "react";
-import "./introduction-page.scss";
-import { Loader } from "../../ui";
-import { PublicApi, Introduction } from "../../services";
+import { ErrorComponent, Loader } from "../../ui";
+import { PublicApi, Introduction, Incident } from "../../services";
 import { IntroductionComponent } from "./features";
+import "./introduction-page.scss";
 
 function IntroductionPage() {
-  const [introduction, setIntroduction] = useState<Introduction>();
-  const [loading, setLoading] = useState(true);
+  const [introduction, setIntroduction] = useState<Introduction | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [incident, setIncident] = useState<Incident | null>(null);
 
   useEffect(() => {
-    const fetchIntroduction = async() => {
+    const fetchData = async() => {
       setLoading(true);
 
       const result = await PublicApi.getIntroduction();
+      if (result.data.isSucceed) {
+        setIntroduction(result.data.data);
+      } else {
+        setIncident(result.data.error);
+      }
 
-      setIntroduction(result.data.data);
       setLoading(false);
     };
 
-    fetchIntroduction();
+    fetchData();
   }, []);
 
   if (loading) {
     return <Loader />;
-  } else {
-    return <IntroductionComponent introduction={introduction as Introduction} />;
   }
+
+  if (incident) {
+    return <ErrorComponent message={incident.message} detail={incident.detail}/>;
+  }
+
+  return <IntroductionComponent introduction={introduction!} />;
 }
 
 export { IntroductionPage };

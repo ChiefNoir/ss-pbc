@@ -1,0 +1,11 @@
+@import "/public/assets/scss/variables";
+
+.container-error {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+
+  h2 {
+    color: $color-text-highlighted;
+  }
+}

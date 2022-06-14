@@ -48,8 +48,8 @@ function ShowcasePage() {
     return <Loader />;
   } else {
     return (
-      <div>
-        <div className="projects-categories-filter">
+      <div className="showcase-container">
+        <div className="showcase-filter">
         {
           categories?.filter(x => x.totalProjects > 0).map(
             x => {
@@ -69,7 +69,7 @@ function ShowcasePage() {
         </div>
 
         {Calc.Pages(selectedCategory?.totalProjects ?? 0) > 1
-        && <div className="projects-paging">
+        && <div className="showcase-paging">
             <Pagination page={ Convert.ToRestrictedNumber(page, 1)}
                         count={ Calc.Pages(selectedCategory?.totalProjects ?? 0)}
                         size = "large"

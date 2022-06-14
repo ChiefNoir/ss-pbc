@@ -52,7 +52,8 @@
         "Code":"Code",
         "DisplayName":"Display Name",
         "IsEverything":"Is Everything",
-        "TotalProjects": "Total Projects"
+        "TotalProjects": "Total Projects",
+        "TotalProjectsShort": "Total"
     },
     "Admin": {
       "Credentials":"Credentials",
@@ -80,6 +81,7 @@
       "Role":"Role"
     },
     "Messages":{
-      "LoggedIn":"You are logged in."
+      "LoggedIn": "You are logged in.",
+      "ReloadPage": "Try reloading page"
     }
 }

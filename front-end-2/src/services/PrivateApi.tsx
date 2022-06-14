@@ -1,5 +1,5 @@
 import * as axios from "axios";
-import { Account, Category, Credentials, Information, Introduction, Project } from ".";
+import { Account, Category, Credentials, Introduction, Project } from ".";
 import { store } from "../storage";
 import { ExecutionResult } from "./models/ExecutionResult";
 import { Identity } from "./models/Identity";

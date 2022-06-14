@@ -19,20 +19,19 @@ function AdminAccountsPage() {
 
   useEffect(() => {
     const fetchData = async() => {
-      setLoading(true);
-
       const result = await PrivateApi.getAccounts();
       if (result.data.isSucceed) {
         setAccounts(result.data.data);
       } else {
         setIncident(result.data.error);
       }
-
-      setLoading(false);
     };
 
+    setLoading(true);
     setIncident(null);
+
     fetchData();
+    setLoading(false);
   }, []);
 
   function CustomToolbar() {

@@ -4,7 +4,6 @@ import "../../locales/i18n";
 import { useEffect, useState } from "react";
 import { Project, ProjectPreview, PublicApi } from "../../services";
 import { DataGrid, GridActionsCellItem, GridRenderCellParams, GridToolbarContainer } from "@mui/x-data-grid";
-import { NavigationAdmin } from "../../features";
 import { Button } from "@mui/material";
 import { Calc, Convert } from "../../helpers";
 import { EditProjectDialog } from "./features/edit-project";

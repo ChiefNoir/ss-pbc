@@ -4,7 +4,6 @@ import "../../locales/i18n";
 import { useEffect, useState } from "react";
 import { Category, PublicApi } from "../../services";
 import { DataGrid, GridActionsCellItem, GridRenderCellParams, GridToolbarContainer } from "@mui/x-data-grid";
-import { NavigationAdmin } from "../../features";
 import { Button } from "@mui/material";
 import { EditCategoryDialog } from "./features/edit-category";
 

@@ -1,13 +1,20 @@
 @import "/public/assets/scss/variables";
 
-/* stylelint-disable-next-line selector-class-pattern */
-.MuiCard-root {
-  border-radius: 0 !important;
+.project-preview {
+  max-width: 300px;
+  min-width: 300px;
+  color: inherit !important;
+}
+
+.project-preview-card {
+  height: 400px;
 }
 
 .project-preview-title {
   color: $color-text;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
+  margin-top: -9px;
+  margin-bottom: 10px;
 }
 
 .project-preview-poster {

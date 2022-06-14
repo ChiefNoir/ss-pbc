@@ -41,7 +41,7 @@ function AdminCategoriesPage() {
     return (
       <GridToolbarContainer>
         <Button onClick={ addCategory } variant="text">
-          { t("Admin.Add") }
+          { t("Actions.Add") }
         </Button>
       </GridToolbarContainer>
     );
@@ -82,13 +82,13 @@ function AdminCategoriesPage() {
                   field: "",
                   width: 70,
                   sortable: false,
-                  headerName: t("Admin.Actions"),
+                  headerName: t("Actions.this"),
                   renderCell: (params: GridRenderCellParams<any, Category, any>) => {
                     return [
                     <GridActionsCellItem
                         showInMenu = {true}
                         key={`edit-button-${params.row.code}`}
-                        label={ t("Admin.Edit") }
+                        label={ t("Actions.Edit") }
                         onClick={() => {
                           editCategory(params.row.id!);
                         }}/>

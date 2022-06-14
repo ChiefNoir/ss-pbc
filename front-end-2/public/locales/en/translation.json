@@ -1,86 +1,80 @@
 {
-    "Header": {
-      "Full": "Fireplace of Despair",
-      "Short": "FoD"
-    },
-    "Error": {
-      "PageNotFound": "404"
-    },
-    "Footer": {
-        "Copyright": "Chief"
-    },
-    "Introduction": {
-        "Introduction": "Introduction",
-        "Content": "Content",
-        "Poster": "Poster",
-        "PosterUrl": "Poster url",
-        "PosterDescription": "Poster description",
-        "ExternalUrls": "External Urls"
-    },
-    "Navigation":{
-        "Home": "Home",
-        "Projects": "Projects",
-        "AdminIntroduction":"Introduction",
-        "AdminProjects":"Projects",
-        "AdminAccounts":"Accounts",
-        "AdminCategories":"Categories"
-    },
-    "Project": {
-        "this": "Project",
-        "Code": "Code",
-        "DisplayName": "Display Name",
-        "ReleaseDate": "Release date",
-        "PosterUrl": "Poster url",
-        "PosterDescription":"Poster Description",
-        "Category": "Category",
-        "Description": "Description",
-        "DescriptionShort":"Description Short",
-        "ExternalUrls": "External Urls",
-        "GeneralInformation": "General Information",
-        "Poster":"Poster"
-    },
-    "ExternalUrl": {
-      "this":"External url",
-      "Id":"Id",
-      "DisplayName":"Display Name",
-      "Url":"Url",
-      "Version":"Version"
-    },
-    "Category": {
-      "this": "Category",
-        "Id": "Id",
-        "Code":"Code",
-        "DisplayName":"Display Name",
-        "IsEverything":"Is Everything",
-        "TotalProjects": "Total Projects",
-        "TotalProjectsShort": "Total"
-    },
-    "Admin": {
-      "Credentials":"Credentials",
-      "DoLogin":"Enter",
-      "DoLogout":"Log out",
-      "Login": "Login",
-      "Password": "Password",
-      "Save":"Save",
-      "Cancel":"Cancel",
-      "Delete": "Delete",
-      "Add": "Add",
-      "Edit": "Edit",
-      "Actions":"Actions",
-      "Upload":"Upload"
-    },
-    "Information": {
-      "Title": "Information",
-      "ApiVersion": "API Version"
-    },
-    "Account": {
-      "this": "Account",
-      "Id": "Id",
-      "Login": "Login",
-      "Password":"Password",
-      "Role":"Role"
-    },
-    "Messages":{
-      "LoggedIn": "You are logged in."
-    }
+  "Header": {
+    "Full": "Fireplace of Despair",
+    "Short": "FoD"
+  },
+  "Footer": {
+    "Copyright": "Chief"
+  },
+  "Error": {
+    "PageNotFound": "404"
+  },
+  "Message":{
+    "LoggedIn": "You are logged in."
+  },
+  "Introduction": {
+    "this": "Introduction",
+    "Content": "Content",
+    "Poster": "Poster",
+    "PosterUrl": "Poster url",
+    "PosterDescription": "Poster description",
+    "ExternalUrls": "External Urls"
+  },
+  "Navigation":{
+    "Home": "Home",
+    "Projects": "Projects",
+    "AdminIntroduction":"Introduction",
+    "AdminProjects":"Projects",
+    "AdminAccounts":"Accounts",
+    "AdminCategories":"Categories"
+  },
+  "Project": {
+    "this": "Project",
+    "Code": "Code",
+    "DisplayName": "Display Name",
+    "ReleaseDate": "Release date",
+    "Poster":"Poster",
+    "PosterUrl": "Poster url",
+    "PosterDescription":"Poster Description",
+    "Category": "Category",
+    "Description": "Description",
+    "DescriptionShort":"Description Short",
+    "ExternalUrls": "External Urls",
+    "GeneralInformation": "General Information"
+  },
+  "ExternalUrl": {
+    "this":"External url",
+    "DisplayName":"Display Name",
+    "Url":"Url"
+  },
+  "Category": {
+    "this": "Category",
+    "Code":"Code",
+    "DisplayName":"Display Name",
+    "IsEverything":"Is Everything",
+    "TotalProjects": "Total Projects",
+    "TotalProjectsShort": "Total"
+  },
+  "Credentials":{
+    "this":"Credentials",
+    "Login":"Login",
+    "Password":"Password"
+  },
+  "Actions": {
+    "this":"Actions",
+    "DoLogin":"Login",
+    "DoLogout":"Logout",
+    "Upload":"Upload",
+    "Save":"Save",
+    "Cancel":"Cancel",
+    "Delete": "Delete",
+    "Add": "Add",
+    "Edit": "Edit"
+  },
+  "Account": {
+    "this": "Account",
+    "Login": "Login",
+    "Password":"Password",
+    "Role":"Role"
+  }
 }

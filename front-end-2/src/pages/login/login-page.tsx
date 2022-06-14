@@ -49,8 +49,8 @@ function LoginPage() {
     return (
       <div className="container-login">
         <NavigationAdmin />
-        <b>{t("Messages.LoggedIn")}</b>
-        <Button onClick={doLogout} variant="outlined"> {t("Admin.DoLogout")} </Button>
+        <b>{t("Message.LoggedIn")}</b>
+        <Button onClick={doLogout} variant="outlined"> {t("Actions.DoLogout")} </Button>
       </div>
     );
   }
@@ -58,17 +58,17 @@ function LoginPage() {
   return (
     <div className={`container-login ${loading ? "disabled" : ""}`}
          aria-disabled = {loading}>
-      <h1> {t("Admin.Credentials")} </h1>
+      <h1> {t("Credentials.this")} </h1>
       <b> { incident?.message } </b>
-      <TextField label= {t("Admin.Login")}
+      <TextField label= {t("Credentials.Login")}
                  value = {credentials.login}
                  name="login" variant="outlined"
                  onChange = { handleChange }/>
-      <TextField label= {t("Admin.Password")}
+      <TextField label= {t("Credentials.Password")}
                  value={credentials.password}
                  name="password" type="password" variant="outlined"
                  onChange = { handleChange }/>
-      <Button onClick={doLogin} variant="outlined"> {t("Admin.DoLogin")} </Button>
+      <Button onClick={doLogin} variant="outlined"> {t("Actions.DoLogin")} </Button>
     </div>
   );
 }

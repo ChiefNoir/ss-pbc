@@ -103,11 +103,11 @@ const EditCategoryDialog: FunctionComponent<
         </DialogContent>
           }
         <DialogActions>
-          <Button onClick={handleClose}> {t("Admin.Cancel")} </Button>
+          <Button onClick={handleClose}> {t("Actions.Cancel")} </Button>
           {(!category?.isEverything && category?.id)
-          && <Button onClick={handleDelete}> {t("Admin.Delete")} </Button>
+          && <Button onClick={handleDelete}> {t("Actions.Delete")} </Button>
           }
-          <Button onClick={handleSave}> {t("Admin.Save")} </Button>
+          <Button onClick={handleSave}> {t("Actions.Save")} </Button>
         </DialogActions>
       </Dialog>
     </div>

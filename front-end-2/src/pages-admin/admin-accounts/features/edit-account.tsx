@@ -100,7 +100,7 @@ const EditAccountDialog: FunctionComponent<
         fullWidth={true}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description">
-        <DialogTitle id="scroll-dialog-title">{t("Admin.Edit") + ": " + t("Account.this")} </DialogTitle>
+        <DialogTitle id="scroll-dialog-title">{t("Actions.Edit") + ": " + t("Account.this")} </DialogTitle>
         {isLoading
         && <Loader />
         }
@@ -131,9 +131,9 @@ const EditAccountDialog: FunctionComponent<
         </DialogContent>
           }
         <DialogActions>
-          <Button onClick={handleClose}> {t("Admin.Cancel")} </Button>
-          <Button onClick={handleDelete}> {t("Admin.Delete")} </Button>
-          <Button onClick={handleSave}> {t("Admin.Save")} </Button>
+          <Button onClick={handleClose}> {t("Actions.Cancel")} </Button>
+          <Button onClick={handleDelete}> {t("Actions.Delete")} </Button>
+          <Button onClick={handleSave}> {t("Actions.Save")} </Button>
         </DialogActions>
       </Dialog>
     </div>

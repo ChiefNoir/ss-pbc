@@ -41,7 +41,7 @@ function AdminProjectsPage() {
     return (
       <GridToolbarContainer>
         <Button onClick={ add } variant="text">
-          { t("Admin.Add") }
+          { t("Actions.Add") }
         </Button>
       </GridToolbarContainer>
     );
@@ -99,13 +99,13 @@ function AdminProjectsPage() {
                   field: "",
                   width: 70,
                   sortable: false,
-                  headerName: t("Admin.Actions"),
+                  headerName: t("Actions.this"),
                   renderCell: (params: GridRenderCellParams<any, ProjectPreview, any>) => {
                     return [
                     <GridActionsCellItem
                         showInMenu = {true}
                         key={`edit-button-${params.row.code}`}
-                        label={ t("Admin.Edit") }
+                        label={ t("Actions.Edit") }
                         onClick={() => {
                           edit(params.row.code);
                         }}/>

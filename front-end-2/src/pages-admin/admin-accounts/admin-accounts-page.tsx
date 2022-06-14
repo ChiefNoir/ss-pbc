@@ -32,7 +32,7 @@ function AdminAccountsPage() {
     return (
       <GridToolbarContainer>
         <Button onClick={ addAccount } variant="text">
-          { t("Introduction.ExternalUrls.AddNew")}
+          { t("Actions.Add")}
         </Button>
       </GridToolbarContainer>
     );
@@ -81,13 +81,13 @@ function AdminAccountsPage() {
         field: "",
         width: 70,
         sortable: false,
-        headerName: t("Admin.Actions"),
+        headerName: t("Actions.this"),
         renderCell: (params: GridRenderCellParams<any, Account, any>) => {
           return [
             <GridActionsCellItem
             showInMenu = {true}
             key={`delete-button-${params.row.id}`}
-            label={ t("Admin.Edit") }
+            label={ t("Actions.Edit") }
               onClick={() => {
                 editAccount(params.row.id!);
               }}

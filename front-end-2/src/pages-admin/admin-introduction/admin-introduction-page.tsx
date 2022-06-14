@@ -94,7 +94,7 @@ function AdminIntroductionPage() {
     return (
       <GridToolbarContainer>
         <Button onClick={ addExternalUrl } variant="text">
-          { t("Admin.Add")}
+          { t("Actions.Add")}
         </Button>
       </GridToolbarContainer>
     );
@@ -127,7 +127,7 @@ function AdminIntroductionPage() {
            src={introduction.posterPreview ?? introduction.posterUrl}/>
 
       <Button component="label">
-        {t("Admin.Upload")} {t("Introduction.Poster")}
+        {t("Actions.Upload")} {t("Introduction.Poster")}
         <input type="file" hidden onChange={handleFileSelect}/>
       </Button>
 
@@ -157,13 +157,13 @@ function AdminIntroductionPage() {
           { field: "url", flex: 1, headerName: t("ExternalUrl.Url"), type: "string", editable: true }, 
           {
             field: "",
-            headerName: t("Admin.Actions"),
+            headerName: t("Actions.this"),
             renderCell: (params: GridRenderCellParams<any, ExternalUrl, any>) => {
               return [
                 <GridActionsCellItem
                 showInMenu = {true}
                 key={`delete-button-${params.row.id}`}
-                  label="Delete"
+                  label= {t("Actions.Delete")}
                   onClick={() => {
                     deleteExternalUrl(params.row.id!);
                   }}
@@ -176,7 +176,7 @@ function AdminIntroductionPage() {
       />
   </TabPanel>
 
-  <Button onClick={save} variant="outlined"> {t("Admin.Save")} </Button>
+  <Button onClick={save} variant="outlined"> {t("Actions.Save")} </Button>
 </div>);
   }
 }

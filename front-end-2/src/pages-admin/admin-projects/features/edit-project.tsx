@@ -155,7 +155,7 @@ const EditProjectDialog: FunctionComponent<
     return (
       <GridToolbarContainer>
         <Button onClick={ addExternalUrl } variant="text">
-          { t("Admin.Add")}
+          { t("Actions.Add")}
         </Button>
       </GridToolbarContainer>
     );
@@ -177,7 +177,7 @@ const EditProjectDialog: FunctionComponent<
         fullWidth={true}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description">
-        <DialogTitle id="scroll-dialog-title">{t("Admin.Edit") + ": " + t("Project.this")} </DialogTitle>
+        <DialogTitle id="scroll-dialog-title">{t("Actions.Edit") + ": " + t("Project.this")} </DialogTitle>
         {isLoading
         && <Loader />
         }
@@ -262,7 +262,7 @@ const EditProjectDialog: FunctionComponent<
                  src={project.posterPreview || project.posterUrl}/>
 
               <Button component="label">
-                {t("Admin.Upload")} {t("Project.Poster")}
+                {t("Actions.Upload")} {t("Project.Poster")}
                 <input type="file" hidden onChange={handleFileSelect}/>
               </Button>
 
@@ -295,13 +295,13 @@ const EditProjectDialog: FunctionComponent<
           { field: "url", flex: 1, headerName: t("ExternalUrl.Url"), type: "string", editable: true },
           {
             field: "",
-            headerName: t("Admin.Actions"),
+            headerName: t("Actions.this"),
             renderCell: (params: GridRenderCellParams<any, ExternalUrl, any>) => {
               return [
                 <GridActionsCellItem
                 showInMenu = {true}
                 key={`delete-button-${params.row.id}`}
-                  label="Delete"
+                  label={t("Actions.Delete")}
                   onClick={() => {
                     deleteExternalUrl(params.row.id!);
                   }}
@@ -317,9 +317,9 @@ const EditProjectDialog: FunctionComponent<
         </DialogContent>
           }
         <DialogActions>
-          <Button onClick={handleClose}> {t("Admin.Cancel")} </Button>
-          <Button onClick={handleDelete}> {t("Admin.Delete")} </Button>
-          <Button onClick={handleSave}> {t("Admin.Save")} </Button>
+          <Button onClick={handleClose}> {t("Actions.Cancel")} </Button>
+          <Button onClick={handleDelete}> {t("Actions.Delete")} </Button>
+          <Button onClick={handleSave}> {t("Actions.Save")} </Button>
         </DialogActions>
       </Dialog>
     </div>

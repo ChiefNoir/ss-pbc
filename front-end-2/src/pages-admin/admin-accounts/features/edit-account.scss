@@ -1,11 +1,6 @@
 @import "/public/assets/scss/variables";
 
-.container-edit-account {
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-content: stretch;
-  gap: 12px;
+.edit-account-error {
+  text-align: center;
+  color: $color-text-highlighted;
 }

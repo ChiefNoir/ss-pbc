@@ -1,92 +1,109 @@
-import * as React from "react";
 import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Select, MenuItem, SelectChangeEvent } from "@mui/material";
-import { useEffect, useState, FunctionComponent, ChangeEvent } from "react";
+import { useEffect, useState, ChangeEvent, Dispatch, SetStateAction, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Account, Category, PrivateApi } from "../../../services";
+import { Account, Incident, PrivateApi } from "../../../services";
 import "./edit-account.scss";
 import { Loader } from "../../../ui";
 
-const EditAccountDialog: FunctionComponent<
-{
-  account: Account | null,
-  isOpen: boolean,
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>,
-  merge:(account: Account) => void,
-  remove:(account: Account) => void
-}> = (props) => {
+function EditAccountDialog(props: {
+              account: Account | null,
+              isOpen: boolean,
+              setOpen: Dispatch<SetStateAction<boolean>>,
+              mergeAccount:(account: Account) => void,
+              removeAccount:(account: Account) => void}) {
   const { t } = useTranslation();
-  const open = props.isOpen;
-  const setOpen = props.setOpen;
   const [account, setAccount] = useState<Account|null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [roles, setRoles] = useState(Array<string>);
+  const [incident, setIncident] = useState<Incident|null>(null);
+  const [roles, setRoles] = useState<string[]>([]);
 
-  const handleClose = () => {
+  const open = props.isOpen;
+  const setOpen = props.setOpen;
+  const mergeAccount = props.mergeAccount;
+  const removeAccount = props.removeAccount;
+  const descriptionElementRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (open) {
+        const { current: descriptionElement } = descriptionElementRef;
+        if (descriptionElement !== null) {
+          descriptionElement.focus();
+        }
+
+        let tmpRoles = roles ?? [];
+        if (tmpRoles.length === 0) {
+          setIsLoading(true);
+          const rolesResponse = await PrivateApi.getRoles();
+          if (rolesResponse.data.isSucceed) {
+            tmpRoles = rolesResponse.data.data;
+            setRoles(rolesResponse.data.data);
+          } else {
+            setIncident(rolesResponse.data.error);
+            setIsLoading(false);
+            return;
+          }
+        }
+
+        if (props.account === null) {
+          setAccount(new Account({ role: tmpRoles[1] }));
+        } else {
+          setAccount(props.account);
+        }
+
+        setIsLoading(false);
+      }
+    }
+
+    setIncident(null);
+    setAccount(null);
+    setIsLoading(false);
+
+    fetchData();
+  }, [open]);
+
+  function closeDialog() {
     setOpen(false);
   };
 
-  async function handleDelete() {
+  async function deleteAccount() {
+    setIncident(null);
     setIsLoading(true);
 
     const result = await PrivateApi.deleteAccount(account!);
 
     if (result.data.isSucceed) {
-      props.remove(account!);
+      removeAccount(account!);
+      setOpen(false);
+    } else {
+      setIncident(result.data.error);
+      setIsLoading(false);
     }
-
-    setOpen(false);
   }
 
-  async function handleSave() {
+  async function saveAccount() {
+    setIncident(null);
     setIsLoading(true);
 
     const result = await PrivateApi.saveAccount(account!);
-
     if (result.data.isSucceed) {
-      props.merge(result.data.data);
+      mergeAccount(result.data.data);
       setAccount(result.data.data);
+    } else {
+      setIncident(result.data.error);
     }
 
     setIsLoading(false);
   }
-  const handleThing = (event: SelectChangeEvent) => {
+
+  function handleRoleChange(event: SelectChangeEvent) {
     setAccount((prevState: Account|null) => ({
       ...prevState!,
       role: event.target.value as string
     }));
   };
 
-  const descriptionElementRef = React.useRef<HTMLElement>(null);
-  useEffect(() => {
-    const fetchData = async() => {
-      setAccount(null);
-      setIsLoading(false);
-
-      if (open) {
-        const { current: descriptionElement } = descriptionElementRef;
-        if (descriptionElement !== null) {
-          descriptionElement.focus();
-        }
-        if (roles.length === 0) {
-          setIsLoading(true);
-          const tmp = await PrivateApi.getRoles();
-          setRoles(tmp.data.data);
-          setIsLoading(false);
-        }
-
-        if (props.account === null) {
-          console.log(roles);
-          setAccount(new Account({ role: roles[0] }));
-        } else {
-          setAccount(props.account);
-        }
-      }
-    };
-
-    fetchData();
-  }, [open]);
-
-  function handleChange(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
+  function handleFieldChange(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
     setAccount((prevState: Account|null) => ({
       ...prevState!,
       [e.target.name]: e.target.value
@@ -94,49 +111,44 @@ const EditAccountDialog: FunctionComponent<
   };
 
   return (
-    <div>
-      <Dialog open={open} onClose={handleClose}
-        scroll="paper"
-        fullWidth={true}
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description">
-        <DialogTitle id="scroll-dialog-title">{t("Actions.Edit") + ": " + t("Account.this")} </DialogTitle>
-        {isLoading
-        && <Loader />
-        }
+  <div>
+    <Dialog open={open} onClose={closeDialog}
+            scroll="paper" fullWidth={true}>
+      <DialogTitle>
+          {t("Actions.Edit") + ": " + t("Account.this")}
+      </DialogTitle>
 
-        { !isLoading && account !== null
-        && <DialogContent dividers={true} className="container-edit-category" >
+      { incident !== null && <div className="edit-account-error"> {incident.message}</div>}
 
-          <TextField fullWidth={true}
-                     value={account!.login} label={t("Account.Login")} variant="outlined"
-                     name="login"
-                     onChange = { handleChange }/>
+      { isLoading && <Loader />}
 
-          <TextField fullWidth={true}
-                     value={account!.password || ""} label={t("Account.Password")} variant="outlined"
-                     name="password"
-                     onChange = { handleChange }/>
-          <Select fullWidth={true} value={account!.role}
-                  label={t("Account.Role")}
-                  onChange= { handleThing}
-                  >
-            {roles?.map(x => {
-              return (
-            <MenuItem key={x} value={x}>
-              {x ?? x}
-            </MenuItem>);
-            })}
-            </Select>
+      { !isLoading && account !== null
+      && <DialogContent dividers={true} className="container-edit-category">
+          <TextField label={t("Account.Login")} fullWidth={true} variant="outlined"
+                     value={account.login} name="login"
+                     onChange={handleFieldChange}/>
+
+          <TextField label={t("Account.Password")} fullWidth={true} variant="outlined"
+                     value={account.password || ""} name="password"
+                     onChange={handleFieldChange }/>
+
+          <Select label={t("Account.Role")} fullWidth={true}
+                  value={account.role}
+                  onChange= {handleRoleChange}>
+              {roles?.map(x => {
+                return (<MenuItem key={`role-id-${x}`} value={x}> {x} </MenuItem>);
+              })}
+          </Select>
         </DialogContent>
-          }
-        <DialogActions>
-          <Button onClick={handleClose}> {t("Actions.Cancel")} </Button>
-          <Button onClick={handleDelete}> {t("Actions.Delete")} </Button>
-          <Button onClick={handleSave}> {t("Actions.Save")} </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+      }
+
+      <DialogActions>
+        <Button onClick={closeDialog}> {t("Actions.Cancel")} </Button>
+        <Button onClick={deleteAccount}> {t("Actions.Delete")} </Button>
+        <Button onClick={saveAccount}> {t("Actions.Save")} </Button>
+      </DialogActions>
+    </Dialog>
+  </div>
   );
 };
 

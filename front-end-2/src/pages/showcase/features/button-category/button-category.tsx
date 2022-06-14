@@ -1,10 +1,9 @@
-import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { Category } from "../../../../services";
 import "./button-category.scss";
 
-const ButtonCategoryComponent: FunctionComponent<{category: Category}> = (props) => {
+function ButtonCategoryComponent(props: {category: Category}) {
   const { t } = useTranslation();
   const category = props.category;
 

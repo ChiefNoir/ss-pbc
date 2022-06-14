@@ -5,6 +5,7 @@ import "../../locales/i18n";
 
 function Navigation() {
   const { t } = useTranslation();
+
   return (
   <div className="navigation">
       <NavLink to="/"

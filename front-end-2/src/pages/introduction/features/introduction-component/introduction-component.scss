@@ -11,21 +11,17 @@
       margin-top: 15px;
       margin-left: 15px;
       margin-right: 15px;
+      margin-bottom: 25px;
     }
 
     .introduction-content-urls {
-      margin-top: 25px;
-
-      .introduction-content-urls-content {
-        margin-top: 15px;
-        margin-left: 15px;
-        margin-right: 15px;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        row-gap: 10px;
-        column-gap: 10px;
-      }
+      margin-left: 15px;
+      margin-right: 15px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      row-gap: 10px;
+      column-gap: 10px;
     }
   }
 

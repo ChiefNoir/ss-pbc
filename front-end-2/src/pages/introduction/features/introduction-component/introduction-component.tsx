@@ -17,15 +17,13 @@ const IntroductionComponent: FunctionComponent<{introduction: Introduction}> = (
     {
     props.introduction.externalUrls.length > 0
     && <div className="introduction-content-urls">
-        <div className="introduction-content-urls-content">
-          {props.introduction.externalUrls.map(
-            x => {
-              return <ButtonGlitch key={x.id} displayName={x.displayName} url= {x.url} />;
-            })
-          }
-        </div>
-      </div>
+      {props.introduction.externalUrls.map(
+        x => {
+          return <ButtonGlitch key={x.id} displayName={x.displayName} url= {x.url} />;
+        })
       }
+      </div>
+    }
   </div>
 
   <img className="introduction-poster"

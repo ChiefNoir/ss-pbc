@@ -108,4 +108,4 @@ function AdminCategoriesPage() {
   );
 }
 
-export { AdminCategoriesPage };
+export default AdminCategoriesPage;

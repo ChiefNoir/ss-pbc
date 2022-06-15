@@ -1,6 +1,28 @@
+import React, { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import * as Pages from "./pages";
-import * as PagesAdmin from "./pages-admin";
+import { Loader } from "./ui";
+
+const AdminLayout = lazy(() =>
+  import("./pages-admin")
+    .then(({ AdminLayout }) => ({ default: AdminLayout }))
+);
+const AdminAccountsPage = lazy(() =>
+  import("./pages-admin")
+    .then(({ AdminAccountsPage }) => ({ default: AdminAccountsPage }))
+);
+const AdminCategoriesPage = lazy(() =>
+  import("./pages-admin")
+    .then(({ AdminCategoriesPage }) => ({ default: AdminCategoriesPage }))
+);
+const AdminIntroductionPage = lazy(() =>
+  import("./pages-admin")
+    .then(({ AdminIntroductionPage }) => ({ default: AdminIntroductionPage }))
+);
+const AdminProjectsPage = lazy(() =>
+  import("./pages-admin")
+    .then(({ AdminProjectsPage }) => ({ default: AdminProjectsPage }))
+);
 
 const AppRouter = () => (
   <Routes>
@@ -19,13 +41,29 @@ const AppRouter = () => (
       <Route path="login" element={<Pages.LoginPage />} />
     </Route>
 
-    <Route path="/admin" element={ <PagesAdmin.AdminLayout /> } >
+    <Route path="/admin" element={
+                            <React.Suspense fallback={<Loader/>}>
+                              <AdminLayout />
+                            </React.Suspense>}>
+
       <Route path="" element={<Navigate to="intro" replace />} />
 
-      <Route path="intro" element={<PagesAdmin.AdminIntroductionPage />} />
-      <Route path="accounts" element={<PagesAdmin.AdminAccountsPage />} />
-      <Route path="projects" element={<PagesAdmin.AdminProjectsPage />} />
-      <Route path="categories" element={<PagesAdmin.AdminCategoriesPage />} />
+      <Route path="intro" element={
+                            <React.Suspense fallback={<Loader/>}>
+                              <AdminIntroductionPage />
+                            </React.Suspense>} />
+      <Route path="accounts" element={
+                            <React.Suspense fallback={<Loader/>}>
+                              <AdminAccountsPage />
+                            </React.Suspense>} />
+      <Route path="projects" element={
+                            <React.Suspense fallback={<Loader/>}>
+                              <AdminProjectsPage />
+                            </React.Suspense>} />
+      <Route path="categories" element={
+                            <React.Suspense fallback={<Loader/>}>
+                              <AdminCategoriesPage />
+                            </React.Suspense>} />
     </Route>
   </Routes>
 );

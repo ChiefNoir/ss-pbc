@@ -159,7 +159,7 @@ function AdminIntroductionPage() {
         pageSize={5} rowsPerPageOptions={[5]}
         experimentalFeatures={{ newEditingApi: true }}
         processRowUpdate={handleRowUpdate}
-        components={{Toolbar: CustomToolbar}}
+        components={{ Toolbar: CustomToolbar }}
         columns={[
           { field: "displayName", flex: 0.6, headerName: t("ExternalUrl.DisplayName"), type: "string", editable: true },
           { field: "url", flex: 1, headerName: t("ExternalUrl.Url"), type: "string", editable: true },
@@ -172,7 +172,7 @@ function AdminIntroductionPage() {
                         showInMenu={true}
                         key={`delete-external-link-button-${params.row.id}`}
                         label={t("Actions.Delete")}
-                        onClick={() => {deleteExternalUrl(params.row.id!);}}/>
+                        onClick={() => { deleteExternalUrl(params.row.id!); }}/>
               ];
             }
           }
@@ -185,4 +185,4 @@ function AdminIntroductionPage() {
 </div>);
 }
 
-export { AdminIntroductionPage };
+export default AdminIntroductionPage;

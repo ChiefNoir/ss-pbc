@@ -128,4 +128,4 @@ function AdminProjectsPage() {
   );
 }
 
-export { AdminProjectsPage };
+export default AdminProjectsPage;

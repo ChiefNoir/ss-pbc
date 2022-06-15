@@ -104,4 +104,4 @@ function AdminAccountsPage() {
   );
 }
 
-export { AdminAccountsPage };
+export default AdminAccountsPage;

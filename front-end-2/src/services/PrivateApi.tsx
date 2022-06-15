@@ -23,10 +23,6 @@ class PrivateApi {
     return await this.init().post<ExecutionResult<Identity>>("/login", credentials);
   };
 
-  public static async ping() {
-    return await this.init().post<ExecutionResult<Identity>>("/ping_valid");
-  }
-
   public static async getAccounts() {
     return await this.init().get<ExecutionResult<Account[]>>("/accounts");
   }
@@ -68,6 +64,18 @@ class PrivateApi {
   }
 
   public static async saveProject(project: Project) {
+    const prj = project;
+
+    if (prj.id !== null && prj.id < 0) {
+      prj.id = null;
+    }
+
+    prj.externalUrls.forEach(x => {
+      if (x.id != null && x.id < 0) {
+        x.id = null;
+      }
+    });
+
     return await this.init().post<ExecutionResult<Project>>("/project", project);
   }
 

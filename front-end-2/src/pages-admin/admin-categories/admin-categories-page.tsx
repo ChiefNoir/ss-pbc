@@ -82,7 +82,7 @@ function AdminCategoriesPage() {
               rows={categories} rowCount={categories.length}
               page={0} pageSize={100} rowsPerPageOptions = {[100]}
               loading={isLoading}
-              components={{Toolbar: GridToolbar}}
+              components={{ Toolbar: GridToolbar }}
               columns={[
                 { field: "code", headerName: t("Category.Code"), width: 200 },
                 { field: "displayName", headerName: t("Category.DisplayName"), flex: 1 },

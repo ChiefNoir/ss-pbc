@@ -6,11 +6,12 @@ import "./edit-account.scss";
 import { Loader } from "../../../ui";
 
 function EditAccountDialog(props: {
-              account: Account | null,
-              isOpen: boolean,
-              setOpen: Dispatch<SetStateAction<boolean>>,
-              mergeAccount:(account: Account) => void,
-              removeAccount:(account: Account) => void}) {
+  account: Account | null,
+  isOpen: boolean,
+  setOpen: Dispatch<SetStateAction<boolean>>,
+  mergeAccount:(account: Account) => void,
+  removeAccount:(account: Account) => void}
+) {
   const { t } = useTranslation();
   const [account, setAccount] = useState<Account|null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);

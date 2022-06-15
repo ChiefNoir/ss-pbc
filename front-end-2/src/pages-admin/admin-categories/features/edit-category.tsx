@@ -11,7 +11,8 @@ function EditCategoryDialog(props: {
   isOpen: boolean,
   setOpen: React.Dispatch<React.SetStateAction<boolean>>,
   merge:(category: Category) => void,
-  remove:(category: Category) => void}) {
+  remove:(category: Category) => void}
+) {
   const { t } = useTranslation();
   const [category, setCategory] = useState<Category|null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);

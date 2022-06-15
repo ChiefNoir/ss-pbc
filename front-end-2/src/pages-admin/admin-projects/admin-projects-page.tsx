@@ -2,7 +2,7 @@ import "./admin-projects-page.scss";
 import { useTranslation } from "react-i18next";
 import "../../locales/i18n";
 import { useEffect, useState } from "react";
-import { Project, ProjectPreview, PublicApi } from "../../services";
+import { Incident, Project, ProjectPreview, PublicApi } from "../../services";
 import { DataGrid, GridActionsCellItem, GridRenderCellParams, GridToolbarContainer } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import { Calc, Convert } from "../../helpers";
@@ -11,8 +11,9 @@ import { EditProjectDialog } from "./features/edit-project";
 function AdminProjectsPage() {
   const { t } = useTranslation();
   const [isLoading, setLoading] = useState(false);
-  const [projects, setProjects] = useState(Array<ProjectPreview>);
-  const [selectedProjectCode, setSelectedProjectCode] = useState<string | null>(null);
+  const [projects, setProjects] = useState<ProjectPreview[]>([]);
+  const [selectedProjectCode, setSelectedProjectCode] = useState<string|null>(null);
+  const [incident, setIncident] = useState<Incident|null>(null);
   const [page, setPage] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [rowCountState, setRowCountState] = useState(0);
@@ -20,22 +21,34 @@ function AdminProjectsPage() {
 
   useEffect(() => {
     const fetchData = async() => {
-      setLoading(true);
-
-      if (rowCountState === 0) {
-        const categoriesResponse = await PublicApi.getCategories();
-        const totalCount = Calc.Pages(categoriesResponse.data.data.find(x => x.isEverything)!.totalProjects);
-        setRowCountState(totalCount);
+      let pg = page;
+      if (pg < 0) {
+        pg = 0;
+        setPage(0);
       }
 
-      const result = await PublicApi.getProjects(page + 1, null);
+      const catResponse = await PublicApi.getCategories();
+      if (!catResponse.data.isSucceed) {
+        setIncident(catResponse.data.error);
+        return;
+      }
+      const totalPages = Calc.Pages(catResponse.data.data.find(x => x.isEverything)!.totalProjects);
+      setRowCountState(totalPages);
 
-      setProjects(result.data.data);
-      setLoading(false);
+      const prjResponse = await PublicApi.getProjects(pg + 1, null);
+      if (prjResponse.data.isSucceed) {
+        setIncident(catResponse.data.error);
+        return;
+      }
+
+      setProjects(prjResponse.data.data);
     };
 
+    setLoading(true);
     fetchData();
-  }, [page, setRowCountState]);
+
+    setLoading(false);
+  }, [page]);
 
   function GridToolbar() {
     return (
@@ -48,13 +61,11 @@ function AdminProjectsPage() {
   }
 
   function merge(project: Project) {
-    // const tmp = accounts.filter(x => x.id !== account.id).concat(account);
-    // setAccounts(tmp);
+    setPage(-1); // TODO: it is just refresh
   }
 
   function remove(project: Project) {
-    // const tmp = accounts.filter(x => x.id !== account.id);
-    // setAccounts(tmp);
+    setPage(-1); // TODO: it is just refresh
   }
 
   function add() {
@@ -70,20 +81,19 @@ function AdminProjectsPage() {
   return (
 <div>
   <EditProjectDialog projectCode={selectedProjectCode} isOpen ={isDialogOpen}
-                         setOpen={setIsDialogOpen} merge={merge} remove={remove} />
+                     setOpen={setIsDialogOpen} merge={merge} remove={remove} />
+    {incident !== null && <div className="edit-category-error"> {incident.message}</div>}
     <DataGrid style={{ width: "100%" }} autoHeight
               getRowId={(row) => row.code}
               rows={projects}
-              rowCount={projects.length}
+              rowCount={rowCountState}
               page={page} pageSize={projectPerPage}
               rowsPerPageOptions = {[projectPerPage]}
               onPageChange={(newPage) => setPage(newPage)}
               loading={isLoading}
               pagination
               paginationMode="server"
-              components={{
-                Toolbar: GridToolbar
-              }}
+              components={{ Toolbar: GridToolbar }}
               columns={[
                 { field: "code", headerName: t("Project.Code"), width: 200 },
                 { field: "displayName", headerName: t("Project.DisplayName"), flex: 1 },
@@ -114,7 +124,6 @@ function AdminProjectsPage() {
                 }
               ]}
     />
-
 </div>
   );
 }

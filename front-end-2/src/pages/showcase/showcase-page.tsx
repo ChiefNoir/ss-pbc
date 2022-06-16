@@ -12,7 +12,6 @@ function ShowcasePage() {
   const categoryCode = searchParams.get("category");
   const pageNumber = Convert.ToRestrictedNumber(searchParams.get("page"), 1);
 
-  const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<ProjectPreview[] | null>(null);
   const [categories, setCategories] = useState<Category[] | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category>();
@@ -21,7 +20,6 @@ function ShowcasePage() {
   useEffect(() => {
     const fetchData = async() => {
       setIncident(null);
-      setLoading(true);
 
       let tmpCategories = categories ?? null;
 
@@ -30,12 +28,10 @@ function ShowcasePage() {
 
         if (!categoriesResponse.data.isSucceed) {
           setIncident(categoriesResponse.data.error);
-          setLoading(false);
           return;
         }
 
         tmpCategories = categoriesResponse.data.data;
-        setCategories(tmpCategories);
       }
 
       if (categoryCode === null) {
@@ -47,20 +43,17 @@ function ShowcasePage() {
       const projectsResponse = await PublicApi.getProjects(pageNumber, categoryCode);
       if (!projectsResponse.data.isSucceed) {
         setIncident(projectsResponse.data.error);
-        setLoading(false);
         return;
       }
 
+      if (categories === null) {
+        setCategories(tmpCategories);
+      }
       setProjects(projectsResponse.data.data);
-      setLoading(false);
     };
 
     fetchData();
   }, [searchParams]);
-
-  if (loading) {
-    return <Loader />;
-  }
 
   if (incident) {
     return <ErrorComponent message={incident.message} detail={incident.detail}/>;
@@ -69,21 +62,22 @@ function ShowcasePage() {
   return (
     <div className="showcase-container">
       <div className="showcase-filter">
-      {
-        categories?.filter(x => x.totalProjects > 0).map(
+      {categories != null
+        && (categories?.filter(x => x.totalProjects > 0).map(
           x => {
             return <ButtonCategoryComponent key={`category-btn-${x.id}`} category={x} />;
           }
-        )
+        ))
       }
       </div>
       <div className="showcase-projects">
-      {
-        projects?.map(
+      {projects != null
+        ? projects?.map(
           x => {
             return <ProjectPreviewComponent key={`project-cared-${x.code}`} project={x} />;
           }
         )
+        : (<Loader />)
       }
       </div>
 

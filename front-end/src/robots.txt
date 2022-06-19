@@ -1,5 +1,0 @@
-# robots.txt for https://fireplace-of-despair.org/
-
-User-agent: *
-Disallow: /login/*
-Disallow: /admin/*

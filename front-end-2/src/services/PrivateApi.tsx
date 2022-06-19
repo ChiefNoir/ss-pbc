@@ -43,7 +43,8 @@ class PrivateApi {
     const intro = introduction;
 
     intro.externalUrls.forEach(x => {
-      if (x.id != null && x.id < 0) {
+      // Hack: fix it
+      if (x.id != null && isNaN(+x.id)) {
         x.id = null;
       }
     });
@@ -66,12 +67,14 @@ class PrivateApi {
   public static async saveProject(project: Project) {
     const prj = project;
 
-    if (prj.id !== null && prj.id < 0) {
+    // Hack: fix it
+    if (prj.id !== null && isNaN(+prj.id)) {
       prj.id = null;
     }
 
     prj.externalUrls.forEach(x => {
-      if (x.id != null && x.id < 0) {
+      // Hack: fix it
+      if (x.id != null && isNaN(+x.id)) {
         x.id = null;
       }
     });

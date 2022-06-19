@@ -2,7 +2,7 @@ import { ExternalUrl } from "./ExternalUrl";
 import { Category } from "./Category";
 
 class Project {
-  id: number | null;
+  id: string | null;
   code: string;
   displayName: string;
   releaseDate: Date | null;

@@ -154,14 +154,12 @@ function EditProjectDialog(props:
   }
 
   function addExternalUrl() {
-    let minId = Math.min(...project!.externalUrls.map(x => x.id!)) - 1;
-    if (minId === Infinity || minId === 0) {
-      minId = -1;
-    }
+    // Hack: fix it
+    const nextId = project!.externalUrls.length + 1;
 
     setProject((prevState: Project | null) => ({
       ...prevState!,
-      externalUrls: project!.externalUrls.concat(new ExternalUrl({ id: minId }))
+      externalUrls: project!.externalUrls.concat(new ExternalUrl({ id: nextId.toString() }))
     }));
   };
 

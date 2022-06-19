@@ -59,7 +59,7 @@ function AdminAccountsPage() {
     setIsDialogOpen(true);
   }
 
-  function editAccount(id: number) {
+  function editAccount(id: string) {
     setSelectedAccount(accounts!.find(x => x.id === id)!);
     setIsDialogOpen(true);
   }

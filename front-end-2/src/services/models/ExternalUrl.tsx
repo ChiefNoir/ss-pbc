@@ -1,5 +1,5 @@
 export class ExternalUrl {
-  id: number | null;
+  id: string | null;
   displayName: string;
   url: string;
   version: number;

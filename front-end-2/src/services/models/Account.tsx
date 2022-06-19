@@ -1,5 +1,5 @@
 class Account {
-  id: number | null = null;
+  id: string | null = null;
   login: string;
   password: string;
   role: string = "";

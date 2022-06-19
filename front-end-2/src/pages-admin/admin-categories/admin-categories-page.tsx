@@ -47,7 +47,7 @@ function AdminCategoriesPage() {
     );
   }
 
-  function edit(id: number) {
+  function edit(id: string) {
     setCategory(categories!.find(x => x.id === id)!);
     setOpen(true);
   }

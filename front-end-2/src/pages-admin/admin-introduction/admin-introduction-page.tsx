@@ -57,14 +57,12 @@ function AdminIntroductionPage() {
   }
 
   function addExternalUrl() {
-    let minId = Math.min(...introduction.externalUrls.map(o => o.id!)) - 1;
-    if (minId === Infinity || minId >= 0) {
-      minId = -1;
-    }
+    // Hack: fix it
+    const nextId = introduction.externalUrls.length + 1;
 
     setIntroduction((prevState: Introduction) => ({
       ...prevState,
-      externalUrls: introduction.externalUrls.concat(new ExternalUrl({ id: minId }))
+      externalUrls: introduction.externalUrls.concat(new ExternalUrl({ id: nextId.toString() }))
     }));
   };
 

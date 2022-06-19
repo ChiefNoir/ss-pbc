@@ -1,17 +1,19 @@
-﻿using Infrastructure.DataModel;
+﻿using Infrastructure.Models;
 using Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Security.Models;
 
 namespace Infrastructure.Converters
 {
     internal static class AbstractionsConverter
     {
-        internal static Account ToAccount(Abstractions.Model.Account account, Abstractions.Model.HashResult hashedPassword)
+        internal static Account ToAccount(Abstractions.Models.Account account, HashResult hashedPassword)
         {
             return new Account
             {
+                Id = account.Id == null ? Guid.NewGuid() : account.Id,
                 Login = account.Login,
                 Password = hashedPassword.HexHash,
                 Salt = hashedPassword.HexSalt,
@@ -19,7 +21,7 @@ namespace Infrastructure.Converters
             };
         }
 
-        internal static Category ToCategory(Abstractions.Model.Category category)
+        internal static Category ToCategory(Abstractions.Models.Category category)
         {
             return new Category
             {
@@ -30,41 +32,22 @@ namespace Infrastructure.Converters
         }
 
 
-        private static IEnumerable<GalleryImage> ToGalleryImage(IEnumerable<Abstractions.Model.GalleryImage> items)
+        internal static IntroductionToExternalUrl ToIntroductionExternalUrl(Abstractions.Models.ExternalUrl item)
         {
-            if (items == null)
-            {
-                return new List<GalleryImage>();
-            }
+            var ext = ToExternalUrl(item);
 
-            return items.Select(ToGalleryImage);
-        }
-
-        internal static GalleryImage ToGalleryImage(Abstractions.Model.GalleryImage item)
-        {
-            return new GalleryImage
+            return new IntroductionToExternalUrl
             {
-                Id = item.Id ?? 0,
-                ExtraUrl = item.ExtraUrl,
-                ImageUrl = item.ImageUrl,
-                Version = item.Version
+                ExternalUrl = ext,
+                ExternalUrlId = ext!.Id!.Value,
             };
         }
 
-        internal static IntroductionExternalUrl ToIntroductionExternalUrl(Abstractions.Model.ExternalUrl item)
-        {
-            return new IntroductionExternalUrl
-            {
-                ExternalUrl = ToExternalUrl(item),
-                ExternalUrlId = item.Id ?? 0
-            };
-        }
-
-        internal static Project ToProject(Abstractions.Model.Project project)
+        internal static Project ToProject(Abstractions.Models.Project project)
         {
             var dbProject = new Project
             {
-                Id = project.Id ?? 0,
+                Id = project.Id ?? Guid.NewGuid(),
                 Code = Sanitizer.SanitizeCode(project.Code),
                 Description = project.Description,
                 DescriptionShort = project.DescriptionShort,
@@ -74,54 +57,45 @@ namespace Infrastructure.Converters
                 ReleaseDate = project.ReleaseDate == null ? null : DateTime.SpecifyKind(project.ReleaseDate.Value, DateTimeKind.Utc),
                 Version = project.Version,
                 CategoryId = project.Category.Id.Value,
-                ExternalUrls = new List<ProjectExternalUrl>(),
-                GalleryImages = new List<GalleryImage>()
+                ExternalUrls = new List<ProjectToExternalUrl>()
             };
 
             foreach (var item in ToProjectExternalUrls(project.ExternalUrls))
             {
                 item.Project = dbProject;
-                item.ProjectId = dbProject.Id;
+                item.ProjectId = dbProject.Id.Value;
 
                 dbProject.ExternalUrls.Add(item);
-            }
-
-            foreach (var item in ToGalleryImage(project.GalleryImages))
-            {
-                item.Project = dbProject;
-                item.ProjectId = dbProject.Id;
-
-                dbProject.GalleryImages.Add(item);
             }
 
             return dbProject;
         }
 
-        internal static ProjectExternalUrl ToProjectExternalUrl(Abstractions.Model.ExternalUrl externalUrl)
+        internal static ProjectToExternalUrl ToProjectExternalUrl(Abstractions.Models.ExternalUrl externalUrl)
         {
-            return new ProjectExternalUrl
+            return new ProjectToExternalUrl
             {
                 ExternalUrl = ToExternalUrl(externalUrl),
-                ExternalUrlId = externalUrl.Id ?? 0
+                ExternalUrlId = externalUrl.Id ?? Guid.NewGuid()
             };
         }
-        
-        private static ExternalUrl ToExternalUrl(Abstractions.Model.ExternalUrl externalUrl)
+
+        private static ExternalUrl ToExternalUrl(Abstractions.Models.ExternalUrl externalUrl)
         {
             return new ExternalUrl
             {
-                Id = externalUrl.Id ?? 0,
+                Id = externalUrl.Id ?? Guid.NewGuid(),
                 DisplayName = externalUrl.DisplayName,
                 Url = externalUrl.Url,
                 Version = externalUrl.Version
             };
         }
 
-        private static IEnumerable<ProjectExternalUrl> ToProjectExternalUrls(IEnumerable<Abstractions.Model.ExternalUrl> externalUrls)
+        private static IEnumerable<ProjectToExternalUrl> ToProjectExternalUrls(IEnumerable<Abstractions.Models.ExternalUrl> externalUrls)
         {
             if (externalUrls == null)
             {
-                return new List<ProjectExternalUrl>();
+                return new List<ProjectToExternalUrl>();
             }
 
             return externalUrls.Select(ToProjectExternalUrl);

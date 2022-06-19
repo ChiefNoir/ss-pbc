@@ -1,46 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Library</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <Authors>Stanislav "Chief" Shevtsov</Authors>
     <Company>Fireplace of Despair</Company>
+    <Copyright>Stanislav "Chief" Shevtsov</Copyright>
     <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
-    <Version>0.0.0.1</Version>
-    <NeutralLanguage>en</NeutralLanguage>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <Copyright>Stanislav "Chief" Shevtsov</Copyright>
     <RepositoryType>git</RepositoryType>
+    <NeutralLanguage>en</NeutralLanguage>
+    <AssemblyVersion>0.0.1.0</AssemblyVersion>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Migrations\V0_0_0_1__init_tables.sql" />
-    <None Remove="Migrations\V0_0_0_2__init_constraints.sql" />
-    <None Remove="Migrations\V0_0_0_3__init_view.sql" />
-    <None Remove="Migrations\V0_0_0_4__init_default.sql" />
-    <None Remove="Migrations\V0_0_0_5__indexes.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\V0_0_0_1__init_tables.sql" />
-    <EmbeddedResource Include="Migrations\V0_0_0_5__indexes.sql" />
-    <EmbeddedResource Include="Migrations\V0_0_0_4__init_default.sql" />
-    <EmbeddedResource Include="Migrations\V0_0_0_3__init_view.sql" />
-    <EmbeddedResource Include="Migrations\V0_0_0_2__init_constraints.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Evolve" Version="3.0.0" />
+    <PackageReference Include="FluentMigrator" Version="3.3.2" />
+    <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
+    <PackageReference Include="FluentMigrator.Runner.Postgres" Version="3.3.2" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
-    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Security\Security.csproj" />
   </ItemGroup>
 
 </Project>

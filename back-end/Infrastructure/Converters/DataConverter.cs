@@ -1,4 +1,4 @@
-﻿using Infrastructure.DataModel;
+﻿using Infrastructure.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,9 +6,9 @@ namespace Infrastructure.Converters
 {
     internal static class DataConverter
     {
-        internal static Abstractions.Model.Account ToAccount(Account item)
+        internal static Abstractions.Models.Account ToAccount(Account item)
         {
-            return new Abstractions.Model.Account
+            return new Abstractions.Models.Account
             {
                 Id = item.Id,
                 Login = item.Login,
@@ -18,9 +18,9 @@ namespace Infrastructure.Converters
             };
         }
 
-        internal static Abstractions.Model.Category ToCategory(CategoryWithTotalProjects category)
+        internal static Abstractions.Models.Category ToCategory(CategoryWithTotalProjects category)
         {
-            return new Abstractions.Model.Category
+            return new Abstractions.Models.Category
             {
                 Id = category.Id,
                 Code = category.Code,
@@ -31,9 +31,9 @@ namespace Infrastructure.Converters
             };
         }
 
-        internal static Abstractions.Model.Category ToCategory(Category category)
+        internal static Abstractions.Models.Category ToCategory(Category category)
         {
-            return new Abstractions.Model.Category
+            return new Abstractions.Models.Category
             {
                 Id = category.Id,
                 Code = category.Code,
@@ -44,9 +44,9 @@ namespace Infrastructure.Converters
             };
         }
 
-        internal static Abstractions.Model.Introduction ToIntroduction(Introduction item)
+        internal static Abstractions.Models.Introduction ToIntroduction(Introduction item)
         {
-            return new Abstractions.Model.Introduction
+            return new Abstractions.Models.Introduction
             {
                 Content = item.Content,
                 Title = item.Title,
@@ -57,9 +57,9 @@ namespace Infrastructure.Converters
             };
         }
 
-        internal static Abstractions.Model.Project ToProject(Project project)
+        internal static Abstractions.Models.Project ToProject(Project project)
         {
-            return new Abstractions.Model.Project
+            return new Abstractions.Models.Project
             {
                 Id = project.Id,
                 Code = project.Code,
@@ -72,13 +72,12 @@ namespace Infrastructure.Converters
                 Version = project.Version,
                 Category = ToCategory(project.Category),
                 ExternalUrls = ToExternalUrl(project.ExternalUrls),
-                GalleryImages = ToGalleryImage(project.GalleryImages)
             };
         }
-        
-        internal static Abstractions.Model.ProjectPreview ToProjectPreview(Project project)
+
+        internal static Abstractions.Models.ProjectPreview ToProjectPreview(Project project)
         {
-            return new Abstractions.Model.ProjectPreview
+            return new Abstractions.Models.ProjectPreview
             {
                 Code = project.Code,
                 Description = project.DescriptionShort,
@@ -89,10 +88,10 @@ namespace Infrastructure.Converters
                 Category = ToCategory(project.Category)
             };
         }
-        
-        private static Abstractions.Model.ExternalUrl ToExternalUrl(ProjectExternalUrl dbEntity)
+
+        private static Abstractions.Models.ExternalUrl ToExternalUrl(ProjectToExternalUrl dbEntity)
         {
-            return new Abstractions.Model.ExternalUrl
+            return new Abstractions.Models.ExternalUrl
             {
                 DisplayName = dbEntity.ExternalUrl.DisplayName,
                 Id = dbEntity.ExternalUrl.Id,
@@ -101,9 +100,9 @@ namespace Infrastructure.Converters
             };
         }
 
-        private static IList<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<ProjectExternalUrl> externalUrls)
+        private static IList<Abstractions.Models.ExternalUrl> ToExternalUrl(ICollection<ProjectToExternalUrl> externalUrls)
         {
-            var result = new List<Abstractions.Model.ExternalUrl>();
+            var result = new List<Abstractions.Models.ExternalUrl>();
 
             if (externalUrls == null || !externalUrls.Any())
             {
@@ -113,19 +112,19 @@ namespace Infrastructure.Converters
             return externalUrls.Select(ToExternalUrl).ToList();
         }
 
-        private static IList<Abstractions.Model.ExternalUrl> ToExternalUrl(ICollection<IntroductionExternalUrl> items)
+        private static IList<Abstractions.Models.ExternalUrl> ToExternalUrl(ICollection<IntroductionToExternalUrl> items)
         {
             if (items == null || !items.Any())
             {
-                return new List<Abstractions.Model.ExternalUrl>();
+                return new List<Abstractions.Models.ExternalUrl>();
             }
 
             return items.Select(ToExternalUrl).ToList();
         }
 
-        private static Abstractions.Model.ExternalUrl ToExternalUrl(IntroductionExternalUrl item)
+        private static Abstractions.Models.ExternalUrl ToExternalUrl(IntroductionToExternalUrl item)
         {
-            return new Abstractions.Model.ExternalUrl
+            return new Abstractions.Models.ExternalUrl
             {
                 Id = item.ExternalUrl.Id,
                 DisplayName = item.ExternalUrl.DisplayName,
@@ -134,27 +133,5 @@ namespace Infrastructure.Converters
             };
         }
 
-        private static IList<Abstractions.Model.GalleryImage> ToGalleryImage(ICollection<GalleryImage> items)
-        {
-            var result = new List<Abstractions.Model.GalleryImage>();
-
-            if (items == null || !items.Any())
-            {
-                return result;
-            }
-
-            return items.Select(ToGalleryImage).ToList();
-        }
-
-        private static Abstractions.Model.GalleryImage ToGalleryImage(GalleryImage item)
-        {
-            return new Abstractions.Model.GalleryImage
-            {
-                Id = item.Id,
-                ExtraUrl = item.ExtraUrl,
-                ImageUrl = item.ImageUrl,
-                Version = item.Version
-            };
-        }
     }
 }

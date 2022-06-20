@@ -9,7 +9,7 @@ using System.Collections;
 namespace GeneralTests.SSPBC.GatewayControllers
 {
     [Collection("database_sensitive")]
-    public class GatewayController__Tests
+    public sealed class GatewayController__Tests
     {
         private readonly Account DefaultAccount = new()
         {
@@ -19,42 +19,7 @@ namespace GeneralTests.SSPBC.GatewayControllers
             Version = 0
         };
 
-        [Theory]
-        [InlineData("sa", "sa")]
-        internal async Task LoginAsync_Valid_EmptyAsync(string login, string password)
-        {
-            using (var context = Initializer.CreateDataContext())
-            {
-                try
-                {
-                    context.Migrator.MigrateUp();
-
-                    var api = Initializer.CreateGatewayController(context);
-
-                    var response =
-                    (
-                        (JsonResult) await api.LoginAsync(new Credentials { Login = login, Password = password })
-                    ).Value as ExecutionResult<Identity>;
-
-                    Validator.CheckSucceed(response!);
-                    Validator.Compare(DefaultAccount, response!.Data!.Account);
-
-                    Assert.Equal
-                    (
-                        Initializer.CreateConfiguration().GetSection("Token:LifeTime").Get<int>(),
-                        response.Data.TokenLifeTimeMinutes
-                    );
-                    Assert.NotNull(response.Data.Token);
-
-                }
-                finally
-                {
-                    context.Migrator.MigrateDown(0);
-                }
-            }
-        }
-
-        class InvalidLogins : IEnumerable<object[]>
+        private class InvalidLogins : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -96,6 +61,41 @@ namespace GeneralTests.SSPBC.GatewayControllers
                 {
                     new Credentials{ Login = string.Empty, Password = string.Empty }
                 };
+            }
+        }
+
+        [Theory]
+        [InlineData("sa", "sa")]
+        internal async Task LoginAsync_Valid_EmptyAsync(string login, string password)
+        {
+            using (var context = Initializer.CreateDataContext())
+            {
+                try
+                {
+                    context.Migrator.MigrateUp();
+
+                    var api = Initializer.CreateGatewayController(context);
+
+                    var response =
+                    (
+                        (JsonResult) await api.LoginAsync(new Credentials { Login = login, Password = password })
+                    ).Value as ExecutionResult<Identity>;
+
+                    Validator.CheckSucceed(response!);
+                    Validator.Compare(DefaultAccount, response!.Data!.Account);
+
+                    Assert.Equal
+                    (
+                        Initializer.CreateConfiguration().GetSection("Token:LifeTime").Get<int>(),
+                        response.Data.TokenLifeTimeMinutes
+                    );
+                    Assert.NotNull(response.Data.Token);
+
+                }
+                finally
+                {
+                    context.Migrator.MigrateDown(0);
+                }
             }
         }
 

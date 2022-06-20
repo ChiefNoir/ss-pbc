@@ -6,9 +6,9 @@ using System.Collections;
 namespace GeneralTests.SSPBC.PublicControllers
 {
     [Collection("database_sensitive")]
-    public class PublicControllerIntroduction__Tests
+    public sealed class PublicControllerIntroduction__Tests
     {
-        class DefaultIntroduction_EmptyDatabase : IEnumerable<object[]>
+        private class DefaultIntroduction_EmptyDatabase : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

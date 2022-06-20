@@ -7,9 +7,9 @@ using System.Collections;
 namespace GeneralTests.SSPBC.PublicControllers
 {
     [Collection("database_sensitive")]
-    public class PublicControllerCategory__Tests
+    public sealed class PublicControllerCategory__Tests
     {
-        class DefaultCategories_EmptyDatabase : IEnumerable<object[]>
+        private class DefaultCategories_EmptyDatabase : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -33,7 +33,7 @@ namespace GeneralTests.SSPBC.PublicControllers
             }
         }
 
-        class InvalidIds_EmptyDatabase : IEnumerable<object[]>
+        private class InvalidIds_EmptyDatabase : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

@@ -2,7 +2,7 @@
 
 namespace GeneralTests.Infrastructure
 {
-    public class FriendlyConvert_Tests
+    public sealed class FriendlyConvert_Tests
     {
         [Theory]
         [InlineData(00, "0 B")]

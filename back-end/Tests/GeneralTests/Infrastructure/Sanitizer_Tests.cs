@@ -2,7 +2,7 @@
 
 namespace GeneralTests.Infrastructure
 {
-    public class Sanitizer_Tests
+    public sealed class Sanitizer_Tests
     {
         [Theory]
         [InlineData("12", "12")]

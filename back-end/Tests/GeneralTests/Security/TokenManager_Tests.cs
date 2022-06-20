@@ -2,7 +2,7 @@
 
 namespace GeneralTests.Security
 {
-    public class TokenManager_Tests
+    public sealed class TokenManager_Tests
     {
         private readonly TokenManager _tokenManager;
 

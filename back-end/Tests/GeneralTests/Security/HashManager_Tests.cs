@@ -2,7 +2,7 @@
 
 namespace GeneralTests.Security
 {
-    public class HashManager_Tests
+    public sealed class HashManager_Tests
     {
         [Theory]
         [InlineData("12")]

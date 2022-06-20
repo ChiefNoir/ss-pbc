@@ -6,7 +6,7 @@ using SSPBC.Models;
 namespace GeneralTests.SSPBC.PublicControllers
 {
     [Collection("database_sensitive")]
-    public class PublicControllerProjectPreview__Tests
+    public sealed class PublicControllerProjectPreview__Tests
     {
         [Fact]
         internal async Task GetProjectsPreviewAsync()

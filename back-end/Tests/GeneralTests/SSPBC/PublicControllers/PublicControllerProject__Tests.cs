@@ -5,7 +5,7 @@ using Security.Models;
 namespace GeneralTests.SSPBC.PublicControllers
 {
     [Collection("database_sensitive")]
-    public class PublicControllerProject__Tests
+    public sealed class PublicControllerProject__Tests
     {
         [Fact]
         internal async Task GetProjectsAsync__Valid()

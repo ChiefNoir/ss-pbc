@@ -2,7 +2,7 @@
 
 namespace GeneralTests.SSPBC.Helpers
 {
-    public class Utils_Tests
+    public sealed class Utils_Tests
     {
         [Theory]
         [InlineData("cute.jpg", "http://localhost:5000/static/cute.jpg")]

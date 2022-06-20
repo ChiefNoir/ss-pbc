@@ -4,9 +4,9 @@ using System.Text;
 
 namespace GeneralTests.Security.Helpers
 {
-    public class HexConverter_Tests
+    public sealed class HexConverter_Tests
     {
-        class ValidPlainText : IEnumerable<object[]>
+        private class ValidPlainText : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -40,7 +40,7 @@ namespace GeneralTests.Security.Helpers
             }
         }
 
-        class InValidByteArrayText : IEnumerable<object[]>
+        private class InValidByteArrayText : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

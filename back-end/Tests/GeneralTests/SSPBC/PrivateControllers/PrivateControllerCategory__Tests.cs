@@ -7,9 +7,9 @@ using System.Collections;
 namespace GeneralTests.SSPBC.PrivateControllers
 {
     [Collection("database_sensitive")]
-    public class PrivateControllerCategory__Tests
+    public sealed class PrivateControllerCategory__Tests
     {
-        class ValidCreate : IEnumerable<object[]>
+        private class ValidCreate : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -60,7 +60,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
             }
         }
 
-        class InvalidCreate : IEnumerable<object[]>
+        private class InvalidCreate : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -135,28 +135,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
             }
         }
 
-        class ValidDelete : IEnumerable<object[]>
-        {
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                yield return new object[]
-                {
-                    new Category
-                    {
-                        Id = null,
-                        Code = "cute",
-                        DisplayName = "Cute things",
-                        IsEverything = false,
-                        TotalProjects = 0,
-                        Version = 0,
-                    }
-                };
-            }
-        }
-
-        class InvalidDelete : IEnumerable<object[]>
+        private class InvalidDelete : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -229,10 +208,6 @@ namespace GeneralTests.SSPBC.PrivateControllers
                     var category = responsePublic!.Data!.First(x => x.Code == create.Code);
                     Validator.Compare(expected, category);
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
                 finally
                 {
                     context.Migrator.MigrateDown(0);
@@ -258,10 +233,6 @@ namespace GeneralTests.SSPBC.PrivateControllers
 
                     Validator.CheckFail(response!);
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
                 finally
                 {
                     context.Migrator.MigrateDown(0);
@@ -286,10 +257,6 @@ namespace GeneralTests.SSPBC.PrivateControllers
                     ).Value as ExecutionResult<bool>;
 
                     Validator.CheckFail(response!);
-                }
-                catch (Exception)
-                {
-                    throw;
                 }
                 finally
                 {

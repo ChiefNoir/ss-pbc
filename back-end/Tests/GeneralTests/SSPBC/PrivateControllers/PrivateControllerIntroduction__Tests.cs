@@ -6,7 +6,7 @@ using System.Collections;
 namespace GeneralTests.SSPBC.PrivateControllers
 {
     [Collection("database_sensitive")]
-    public class PrivateControllerIntroduction__Tests
+    public sealed class PrivateControllerIntroduction__Tests
     {
         private class GenerateValidSave : IEnumerable<object[]>
         {

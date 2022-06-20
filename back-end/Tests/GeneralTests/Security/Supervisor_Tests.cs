@@ -2,7 +2,7 @@
 
 namespace GeneralTests.Security
 {
-    public class Supervisor_Tests
+    public sealed class Supervisor_Tests
     {
         private readonly Supervisor _supervisor = new Supervisor();
 

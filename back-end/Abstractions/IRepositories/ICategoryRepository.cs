@@ -1,5 +1,4 @@
 ﻿using Abstractions.Models;
-using System.Threading.Tasks;
 
 namespace Abstractions.IRepositories
 {

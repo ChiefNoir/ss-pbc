@@ -3,10 +3,8 @@ using Abstractions.Models;
 using Abstractions.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Security;
 using SSPBC.Helpers;
-using SSPBC.Models;
 
 namespace SSPBC.Controllers
 {

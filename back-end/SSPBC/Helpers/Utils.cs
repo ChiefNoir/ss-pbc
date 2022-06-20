@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-
-namespace SSPBC.Helpers
+﻿namespace SSPBC.Helpers
 {
     public static class Utils
     {

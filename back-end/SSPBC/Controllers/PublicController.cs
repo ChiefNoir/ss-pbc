@@ -24,7 +24,7 @@ namespace SSPBC.Controllers
             _projectRepository = projectRepository;
         }
 
-        
+
         [AllowAnonymous]
         [ApiVersion("1.0")]
         [HttpGet("categories")]

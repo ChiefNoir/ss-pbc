@@ -161,7 +161,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
 
                     var updateResponse =
                     (
-                        (JsonResult) await api.SaveIntroductionAsync(update)
+                        (JsonResult)await api.SaveIntroductionAsync(update)
                     ).Value as ExecutionResult<Introduction>;
 
                     Validator.CheckSucceed(updateResponse!);
@@ -170,7 +170,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
                     var apiPublic = Initializer.CreatePublicController(context);
                     var getResponse =
                     (
-                        (JsonResult) await apiPublic.GetIntroductionAsync()
+                        (JsonResult)await apiPublic.GetIntroductionAsync()
                     ).Value as ExecutionResult<Introduction>;
 
                     Validator.CheckSucceed(getResponse!);

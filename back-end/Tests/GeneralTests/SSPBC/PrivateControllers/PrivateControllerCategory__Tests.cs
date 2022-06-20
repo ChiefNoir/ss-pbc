@@ -193,7 +193,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
                     var api = Initializer.CreatePrivateController(context);
                     var response =
                     (
-                        (JsonResult) await api.SaveCategoryAsync(create)
+                        (JsonResult)await api.SaveCategoryAsync(create)
                     ).Value as ExecutionResult<Category>;
 
                     Validator.CheckSucceed(response!);
@@ -228,7 +228,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
                     var api = Initializer.CreatePrivateController(context);
                     var response =
                     (
-                        (JsonResult) await api.SaveCategoryAsync(update)
+                        (JsonResult)await api.SaveCategoryAsync(update)
                     ).Value as ExecutionResult<Category>;
 
                     Validator.CheckFail(response!);

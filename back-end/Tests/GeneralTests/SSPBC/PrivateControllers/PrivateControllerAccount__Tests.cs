@@ -135,7 +135,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
                     ).Value as ExecutionResult<List<string>>;
 
                     Validator.CheckSucceed(response!);
-                    Validator.Compare(RoleNames.GetRoles(), response!.Data!);                    
+                    Validator.Compare(RoleNames.GetRoles(), response!.Data!);
                 }
                 catch (Exception)
                 {
@@ -159,7 +159,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
                 {
                     context.Migrator.MigrateUp();
 
-                    var api = Initializer.CreatePrivateController(context);                    
+                    var api = Initializer.CreatePrivateController(context);
                     var resultSave =
                     (
                         (JsonResult)await api.SaveAccountAsync(account)
@@ -172,7 +172,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
                     var gateway = Initializer.CreateGatewayController(context);
                     var resultLogin =
                     (
-                        (JsonResult)await gateway.LoginAsync(new Credentials { Login = account.Login, Password = account.Password})
+                        (JsonResult)await gateway.LoginAsync(new Credentials { Login = account.Login, Password = account.Password })
                     ).Value as ExecutionResult<Identity>;
                     Validator.CheckSucceed(resultLogin!);
                 }
@@ -269,10 +269,10 @@ namespace GeneralTests.SSPBC.PrivateControllers
                     Validator.CheckSucceed(resultGet!);
                     Validator.Compare(new[] { DefaultAccount }, resultGet!.Data!);
 
-                    
+
                     var resultDel =
                     (
-                        (JsonResult) await api.DeleteAccountAsync(resultGet!.Data![0])
+                        (JsonResult)await api.DeleteAccountAsync(resultGet!.Data![0])
                     ).Value as ExecutionResult<bool>;
                     Validator.CheckSucceed(resultDel!);
 

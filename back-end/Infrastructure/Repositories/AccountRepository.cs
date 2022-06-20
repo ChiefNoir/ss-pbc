@@ -6,9 +6,7 @@ using Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Security;
-using System.Linq;
 using System.Security;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {

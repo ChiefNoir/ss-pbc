@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Infrastructure.Converters
+﻿namespace Infrastructure.Converters
 {
     /// <summary> Convert values to friendly ones </summary>
     public static class FriendlyConvert

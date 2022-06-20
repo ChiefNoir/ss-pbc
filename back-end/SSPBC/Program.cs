@@ -20,7 +20,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors();
 
-builder.Services.AddApiVersioning(o => {
+builder.Services.AddApiVersioning(o =>
+{
     o.ReportApiVersions = true;
     o.AssumeDefaultVersionWhenUnspecified = true;
     o.DefaultApiVersion = new ApiVersion(1, 0);

@@ -78,7 +78,7 @@ namespace GeneralTests.SSPBC.GatewayControllers
 
                     var response =
                     (
-                        (JsonResult) await api.LoginAsync(new Credentials { Login = login, Password = password })
+                        (JsonResult)await api.LoginAsync(new Credentials { Login = login, Password = password })
                     ).Value as ExecutionResult<Identity>;
 
                     Validator.CheckSucceed(response!);
@@ -113,7 +113,7 @@ namespace GeneralTests.SSPBC.GatewayControllers
 
                     var response =
                     (
-                        (JsonResult) await api.LoginAsync(credentials)
+                        (JsonResult)await api.LoginAsync(credentials)
                     ).Value as ExecutionResult<Identity>;
 
                     Validator.CheckFail(response!);

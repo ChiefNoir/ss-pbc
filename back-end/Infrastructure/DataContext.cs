@@ -1,12 +1,6 @@
 ﻿using Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Data;
-using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("GeneralTests")]
@@ -22,7 +16,7 @@ namespace Infrastructure
 
         internal DbSet<Introduction> Introductions { get; set; }
         internal DbSet<IntroductionToExternalUrl> IntroductionExternalUrls { get; set; }
-        
+
         internal DbSet<Project> Projects { get; set; }
         internal DbSet<ProjectToExternalUrl> ProjectExternalUrls { get; set; }
 

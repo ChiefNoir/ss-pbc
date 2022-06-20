@@ -2,13 +2,13 @@
 
 namespace Infrastructure.Migrations
 {
-	[Migration(197001010000, "Initialize database")]
-	public class M19700101_Init : Migration
-	{
-		public override void Up()
-		{
-			Execute.Sql(
-				@"CREATE TABLE introduction 
+    [Migration(197001010000, "Initialize database")]
+    public class M19700101_Init : Migration
+    {
+        public override void Up()
+        {
+            Execute.Sql(
+                @"CREATE TABLE introduction 
                 (
 	                id uuid NOT NULL UNIQUE,
 	                title TEXT,
@@ -20,8 +20,8 @@ namespace Infrastructure.Migrations
 					PRIMARY KEY(id)
                 );");
 
-			Execute.Sql(
-				@"CREATE TABLE category 
+            Execute.Sql(
+                @"CREATE TABLE category 
                 (
 	                id uuid NOT NULL UNIQUE,
 	                code varchar(128) NOT NULL UNIQUE,
@@ -31,18 +31,18 @@ namespace Infrastructure.Migrations
 
 					PRIMARY KEY(id)
                 );");
-			Execute.Sql(
-				@"ALTER TABLE category ADD CONSTRAINT CK_category_code__only_latin_and_numbers
+            Execute.Sql(
+                @"ALTER TABLE category ADD CONSTRAINT CK_category_code__only_latin_and_numbers
 						CHECK (code ~* '^[a-z0-9_.-]*$');");
 
-			Execute.Sql(
-				@"ALTER TABLE category ADD CONSTRAINT CK_category_code__only_lowercase
+            Execute.Sql(
+                @"ALTER TABLE category ADD CONSTRAINT CK_category_code__only_lowercase
 						CHECK (code = LOWER(code));");
 
 
 
-			Execute.Sql(
-				@"CREATE TABLE project
+            Execute.Sql(
+                @"CREATE TABLE project
 				(
 					id uuid NOT NULL UNIQUE,
 					code VARCHAR(128) NOT NULL UNIQUE,
@@ -57,16 +57,16 @@ namespace Infrastructure.Migrations
 
 					PRIMARY KEY(id)
 				);");
-			Execute.Sql(
-				@"ALTER TABLE project ADD CONSTRAINT CK_project_code__only_latin_and_numbers
+            Execute.Sql(
+                @"ALTER TABLE project ADD CONSTRAINT CK_project_code__only_latin_and_numbers
 						CHECK (code ~* '^[a-z0-9_.-]*$');");
 
-			Execute.Sql(
-				@"ALTER TABLE project ADD CONSTRAINT CK_project_code__only_lowercase
+            Execute.Sql(
+                @"ALTER TABLE project ADD CONSTRAINT CK_project_code__only_lowercase
 						CHECK (code = LOWER(Code));");
 
-			Execute.Sql(
-				@"CREATE TABLE external_url
+            Execute.Sql(
+                @"CREATE TABLE external_url
 				(
 					id uuid NOT NULL UNIQUE,
 					url VARCHAR(2000) NOT NULL,
@@ -76,8 +76,8 @@ namespace Infrastructure.Migrations
 					PRIMARY KEY(id)
 				);");
 
-			Execute.Sql(
-				@"CREATE TABLE account
+            Execute.Sql(
+                @"CREATE TABLE account
 				(
 					id uuid NOT NULL UNIQUE,
 					login VARCHAR(256) NOT NULL UNIQUE,
@@ -90,8 +90,8 @@ namespace Infrastructure.Migrations
 				);");
 
 
-			Execute.Sql(
-				@"CREATE TABLE project_to_external_url
+            Execute.Sql(
+                @"CREATE TABLE project_to_external_url
 				(
 					project_id uuid REFERENCES project (id) ON DELETE CASCADE,
 					external_url_id uuid REFERENCES external_url (id) ON DELETE CASCADE,
@@ -99,8 +99,8 @@ namespace Infrastructure.Migrations
 					PRIMARY KEY(project_id, external_url_id)
 				);");
 
-			Execute.Sql(
-				@"CREATE TABLE introduction_to_external_url
+            Execute.Sql(
+                @"CREATE TABLE introduction_to_external_url
 				(
 					introduction_id uuid REFERENCES introduction (id) ON DELETE CASCADE,
 					external_url_id uuid REFERENCES external_url (id) ON DELETE CASCADE,
@@ -108,8 +108,8 @@ namespace Infrastructure.Migrations
 					PRIMARY KEY(introduction_id, external_url_id)
 				);");
 
-			Execute.Sql(
-				@"CREATE VIEW categories_with_projects_total_v AS
+            Execute.Sql(
+                @"CREATE VIEW categories_with_projects_total_v AS
 				(
 					SELECT 
 						c.*, COALESCE(sm.total, 0) AS total_projects
@@ -130,20 +130,20 @@ namespace Infrastructure.Migrations
 					ORDER BY 
 						total DESC
 				);");
-		}
+        }
 
-		public override void Down()
-		{
-			Execute.Sql("DROP TABLE IF EXISTS project_to_external_url CASCADE;");
-			Execute.Sql("DROP TABLE IF EXISTS introduction_to_external_url CASCADE;");
+        public override void Down()
+        {
+            Execute.Sql("DROP TABLE IF EXISTS project_to_external_url CASCADE;");
+            Execute.Sql("DROP TABLE IF EXISTS introduction_to_external_url CASCADE;");
 
-			Execute.Sql("DROP TABLE IF EXISTS introduction CASCADE;");
-			Execute.Sql("DROP TABLE IF EXISTS category CASCADE;");
-			Execute.Sql("DROP TABLE IF EXISTS project CASCADE;");
-			Execute.Sql("DROP TABLE IF EXISTS external_url CASCADE;");
-			Execute.Sql("DROP TABLE IF EXISTS account CASCADE;");
+            Execute.Sql("DROP TABLE IF EXISTS introduction CASCADE;");
+            Execute.Sql("DROP TABLE IF EXISTS category CASCADE;");
+            Execute.Sql("DROP TABLE IF EXISTS project CASCADE;");
+            Execute.Sql("DROP TABLE IF EXISTS external_url CASCADE;");
+            Execute.Sql("DROP TABLE IF EXISTS account CASCADE;");
 
-			Execute.Sql("DROP VIEW IF EXISTS categories_with_projects_total_v CASCADE;");
-		}
-	}
+            Execute.Sql("DROP VIEW IF EXISTS categories_with_projects_total_v CASCADE;");
+        }
+    }
 }

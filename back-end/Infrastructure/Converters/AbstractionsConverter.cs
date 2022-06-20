@@ -1,8 +1,5 @@
-﻿using Infrastructure.Models;
-using Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Infrastructure.Helpers;
+using Infrastructure.Models;
 using Security.Models;
 
 namespace Infrastructure.Converters

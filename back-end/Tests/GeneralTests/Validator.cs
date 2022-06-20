@@ -32,8 +32,8 @@ namespace GeneralTests
             Assert.NotNull(response.Error);
         }
 
-        internal static void CheckSucceed<T>(ExecutionResult<T> response, bool allowDefault = false) 
-            where T: notnull
+        internal static void CheckSucceed<T>(ExecutionResult<T> response, bool allowDefault = false)
+            where T : notnull
         {
             Assert.NotNull(response);
             Assert.True(response!.IsSucceed);

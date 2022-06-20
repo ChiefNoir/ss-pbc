@@ -79,7 +79,7 @@ namespace GeneralTests.SSPBC.PublicControllers
 
                     var response =
                     (
-                        (JsonResult) await api.GetCategoriesAsync()
+                        (JsonResult)await api.GetCategoriesAsync()
                     ).Value as ExecutionResult<Category[]>;
 
                     Validator.CheckSucceed(response!);

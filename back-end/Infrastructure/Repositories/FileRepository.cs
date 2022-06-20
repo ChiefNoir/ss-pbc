@@ -2,9 +2,7 @@
 using Infrastructure.Converters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Globalization;
-using System.IO;
 
 namespace Infrastructure.Repositories
 {

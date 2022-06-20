@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Security.Models
+﻿namespace Security.Models
 {
     /// <summary> Result of the function execution</summary>
     /// <typeparam name="T">Type of the result</typeparam>

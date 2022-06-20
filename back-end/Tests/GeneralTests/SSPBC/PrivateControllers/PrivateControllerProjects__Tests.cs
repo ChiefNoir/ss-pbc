@@ -63,7 +63,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
 
                     var createCategory =
                     (
-                        (JsonResult) await api.SaveCategoryAsync(new Category { Code = "code", DisplayName = "DisplayName", Version = 0 })
+                        (JsonResult)await api.SaveCategoryAsync(new Category { Code = "code", DisplayName = "DisplayName", Version = 0 })
                     ).Value as ExecutionResult<Category>;
                     Validator.CheckSucceed(createCategory!);
 

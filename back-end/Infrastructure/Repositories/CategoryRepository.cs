@@ -3,11 +3,6 @@ using Abstractions.IRepositories;
 using Abstractions.Models;
 using Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
@@ -43,7 +38,7 @@ namespace Infrastructure.Repositories
 
         public async Task<Category> GetAsync(Guid? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 throw new InconsistencyException
                     (

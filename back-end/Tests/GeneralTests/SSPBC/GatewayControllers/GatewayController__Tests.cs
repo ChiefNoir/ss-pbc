@@ -11,7 +11,7 @@ namespace GeneralTests.SSPBC.GatewayControllers
     [Collection("database_sensitive")]
     public class GatewayController__Tests
     {
-        private readonly Account DefaultAccount = new Account
+        private readonly Account DefaultAccount = new()
         {
             Login = "sa",
             Password = "sa",

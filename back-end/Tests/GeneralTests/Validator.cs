@@ -51,7 +51,6 @@ namespace GeneralTests
 
         internal static void Compare(Category expected, Category actual)
         {
-            Assert.Equal(expected.Id, actual.Id);
             Assert.Equal(expected.Code, actual.Code);
             Assert.Equal(expected.DisplayName, actual.DisplayName);
             Assert.Equal(expected.IsEverything, actual.IsEverything);

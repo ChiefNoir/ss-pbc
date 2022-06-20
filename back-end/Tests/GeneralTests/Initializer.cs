@@ -1,13 +1,9 @@
 ﻿using Infrastructure;
 using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Security;
-using Security.Models;
 using SSPBC.Controllers;
-using SSPBC.Models;
 
 namespace GeneralTests
 {
@@ -28,37 +24,6 @@ namespace GeneralTests
             context.Migrator.MigrateDown(0);
 
             return context;
-        }
-
-        public static async Task<ControllerContext> CreateControllerContext_Valid(DataContext context)
-        {
-            var apiAuth = Initializer.CreateGatewayController(context);
-            var identity =
-            (
-                (JsonResult) await apiAuth.LoginAsync
-                (
-                    new Credentials { Login = "sa", Password = "sa" }
-                )
-            ).Value as ExecutionResult<Identity>;
-
-            var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers["Authorization"] = identity!.Data!.Token;
-
-            return new ControllerContext()
-            {
-                HttpContext = httpContext,
-            };
-        }
-
-        public static ControllerContext CreateControllerContext_Invalid(string token)
-        {
-            var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers["Authorization"] = token;
-
-            return new ControllerContext()
-            {
-                HttpContext = httpContext,
-            };
         }
 
         public static PublicController CreatePublicController(DataContext context)

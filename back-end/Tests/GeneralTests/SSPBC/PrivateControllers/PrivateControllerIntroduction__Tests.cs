@@ -126,39 +126,23 @@ namespace GeneralTests.SSPBC.PrivateControllers
             }
         }
 
-        [Theory]
-        [ClassData(typeof(GenerateValidSave))]
-        internal async Task UpdateIntroduction_InvalidCredentialsAsync(Introduction update, Introduction expected)
+        private class GenerateInvalidSave : IEnumerable<object[]>
         {
-            using (var context = Initializer.CreateDataContext())
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
             {
-                try
+                yield return new object[]
                 {
-                    context.Migrator.MigrateUp();
-
-                    var api = Initializer.CreatePrivateController(context);
-                    api.ControllerContext = Initializer.CreateControllerContext_Invalid("");
-
-                    var updateResponse =
-                    (
-                        (JsonResult)await api.SaveIntroductionAsync(update)
-                    ).Value as ExecutionResult<Introduction>;
-
-                    Validator.CheckFail(updateResponse!);
-
-                    var apiPublic = Initializer.CreatePublicController(context);
-                    var getResponse =
-                    (
-                        (JsonResult)await apiPublic.GetIntroductionAsync()
-                    ).Value as ExecutionResult<Introduction>;
-
-                    Validator.CheckSucceed(getResponse!);
-                    Validator.CompareOpposite(getResponse!.Data!, expected);
-                }
-                finally
-                {
-                    context.Migrator.MigrateDown(0);
-                }
+                    new Introduction
+                    {
+                        Content = "Well. Congratulations.",
+                        Title = "Hello?",
+                        PosterDescription = "des",
+                        PosterUrl = "url",
+                        Version = 10,
+                    }
+                };
             }
         }
 
@@ -174,7 +158,6 @@ namespace GeneralTests.SSPBC.PrivateControllers
                     context.Migrator.MigrateUp();
 
                     var api = Initializer.CreatePrivateController(context);
-                    api.ControllerContext = await Initializer.CreateControllerContext_Valid(context);
 
                     var updateResponse =
                     (
@@ -183,7 +166,6 @@ namespace GeneralTests.SSPBC.PrivateControllers
 
                     Validator.CheckSucceed(updateResponse!);
                     Validator.Compare(updateResponse!.Data!, expected);
-
 
                     var apiPublic = Initializer.CreatePublicController(context);
                     var getResponse =
@@ -194,6 +176,41 @@ namespace GeneralTests.SSPBC.PrivateControllers
                     Validator.CheckSucceed(getResponse!);
                     Validator.Compare(getResponse!.Data!, expected);
 
+                }
+                finally
+                {
+                    context.Migrator.MigrateDown(0);
+                }
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(GenerateInvalidSave))]
+        internal async Task UpdateIntroduction_InValidAsync(Introduction update)
+        {
+            using (var context = Initializer.CreateDataContext())
+            {
+                try
+                {
+                    context.Migrator.MigrateUp();
+
+                    var api = Initializer.CreatePrivateController(context);
+
+                    var updateResponse =
+                    (
+                        (JsonResult)await api.SaveIntroductionAsync(update)
+                    ).Value as ExecutionResult<Introduction>;
+
+                    Validator.CheckFail(updateResponse!);
+
+                    var apiPublic = Initializer.CreatePublicController(context);
+                    var getResponse =
+                    (
+                        (JsonResult)await apiPublic.GetIntroductionAsync()
+                    ).Value as ExecutionResult<Introduction>;
+
+                    Validator.CheckSucceed(getResponse!);
+                    Validator.CompareOpposite(getResponse!.Data!, update);
                 }
                 finally
                 {

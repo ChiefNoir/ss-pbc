@@ -206,12 +206,6 @@ namespace GeneralTests.SSPBC.PrivateControllers
                         (JsonResult)await api.SaveAccountAsync(account)
                     ).Value as ExecutionResult<Account>;
                     Validator.CheckFail(resultSave!);
-                    
-                    var resultLogin =
-                    (
-                        (JsonResult)await gateway.LoginAsync(new Credentials { Login = account.Login, Password = account.Password })
-                    ).Value as ExecutionResult<Identity>;
-                    Validator.CheckFail(resultLogin!);
                 }
                 finally
                 {

@@ -141,5 +141,16 @@ namespace GeneralTests
             Assert.Null(actual.Password);
             Assert.Equal(expected.Version, actual.Version);
         }
+
+        internal static void Compare(IEnumerable<string> expected, IEnumerable<string> actual)
+        {
+            Assert.Equal(expected.Count(), actual.Count());
+
+            foreach (var item in expected)
+            {
+                var act = actual.First(x => x == item);
+                Assert.Equal(item, act);
+            }
+        }
     }
 }

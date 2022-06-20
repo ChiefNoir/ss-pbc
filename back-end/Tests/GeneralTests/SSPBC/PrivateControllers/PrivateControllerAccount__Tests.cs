@@ -1,6 +1,5 @@
 ﻿using Abstractions.Models;
 using Abstractions.Security;
-using Infrastructure.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using Security.Models;
 using SSPBC.Models;
@@ -11,6 +10,14 @@ namespace GeneralTests.SSPBC.PrivateControllers
     [Collection("database_sensitive")]
     public sealed class PrivateControllerAccount__Tests
     {
+        private readonly Account DefaultAccount = new()
+        {
+            Login = "sa",
+            Password = "sa",
+            Role = RoleNames.Admin,
+            Version = 0
+        };
+
         private class ValidAdd : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -86,6 +93,26 @@ namespace GeneralTests.SSPBC.PrivateControllers
                         Login = "admin",
                         Password = "admin",
                         Role = "something"
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = null,
+                        Login = "sa",
+                        Password = "sa",
+                        Role = "admin"
+                    }
+                };
+                yield return new object[]
+                {
+                    new Account
+                    {
+                        Id = null,
+                        Login = "sa",
+                        Password = "sa",
+                        Role = "demo"
                     }
                 };
             }
@@ -165,16 +192,21 @@ namespace GeneralTests.SSPBC.PrivateControllers
                 try
                 {
                     context.Migrator.MigrateUp();
+                    var gateway = Initializer.CreateGatewayController(context);
+                    var response =
+                    (
+                        (JsonResult)await gateway.LoginAsync(new() { Login = DefaultAccount.Login, Password = DefaultAccount.Password })
+                    ).Value as ExecutionResult<Identity>;
+                    Validator.CheckSucceed(response!);
+                    Validator.Compare(DefaultAccount, response!.Data!.Account);
 
                     var api = Initializer.CreatePrivateController(context);
                     var resultSave =
                     (
                         (JsonResult)await api.SaveAccountAsync(account)
                     ).Value as ExecutionResult<Account>;
-
                     Validator.CheckFail(resultSave!);
-
-                    var gateway = Initializer.CreateGatewayController(context);
+                    
                     var resultLogin =
                     (
                         (JsonResult)await gateway.LoginAsync(new Credentials { Login = account.Login, Password = account.Password })
@@ -187,5 +219,122 @@ namespace GeneralTests.SSPBC.PrivateControllers
                 }
             }
         }
+
+        [Fact]
+        internal async Task GetAccountsAsync_ValidAsync()
+        {
+            using (var context = Initializer.CreateDataContext())
+            {
+                try
+                {
+                    context.Migrator.MigrateUp();
+
+                    var gateway = Initializer.CreateGatewayController(context);
+                    var response =
+                    (
+                        (JsonResult)await gateway.LoginAsync(new() { Login = DefaultAccount.Login, Password = DefaultAccount.Password })
+                    ).Value as ExecutionResult<Identity>;
+
+                    var api = Initializer.CreatePrivateController(context);
+                    var resultSave =
+                    (
+                        (JsonResult)await api.GetAccountsAsync()
+                    ).Value as ExecutionResult<Account[]>;
+
+                    Validator.CheckSucceed(resultSave!);
+                    Validator.Compare(new[] { DefaultAccount }, resultSave!.Data!);
+                }
+                finally
+                {
+                    context.Migrator.MigrateDown(0);
+                }
+            }
+        }
+
+        [Fact]
+        internal async Task DeleteAccountsAsync_ValidAsync()
+        {
+            using (var context = Initializer.CreateDataContext())
+            {
+                try
+                {
+                    context.Migrator.MigrateUp();
+
+                    var gateway = Initializer.CreateGatewayController(context);
+                    var response =
+                    (
+                        (JsonResult)await gateway.LoginAsync(new() { Login = DefaultAccount.Login, Password = DefaultAccount.Password })
+                    ).Value as ExecutionResult<Identity>;
+
+                    var api = Initializer.CreatePrivateController(context);
+                    var resultGet =
+                    (
+                        (JsonResult)await api.GetAccountsAsync()
+                    ).Value as ExecutionResult<Account[]>;
+
+                    Validator.CheckSucceed(resultGet!);
+                    Validator.Compare(new[] { DefaultAccount }, resultGet!.Data!);
+
+                    
+                    var resultDel =
+                    (
+                        (JsonResult) await api.DeleteAccountAsync(resultGet!.Data![0])
+                    ).Value as ExecutionResult<bool>;
+                    Validator.CheckSucceed(resultDel!);
+
+                    var resultNextGet =
+                    (
+                        (JsonResult)await api.GetAccountsAsync()
+                    ).Value as ExecutionResult<Account[]>;
+
+                    Validator.CheckSucceed(resultNextGet!);
+                    Validator.Compare(Enumerable.Empty<Account>(), resultNextGet!.Data!);
+                }
+                finally
+                {
+                    context.Migrator.MigrateDown(0);
+                }
+            }
+        }
+
+        [Fact]
+        internal async Task GetAccountAsync_ValidAsync()
+        {
+            using (var context = Initializer.CreateDataContext())
+            {
+                try
+                {
+                    context.Migrator.MigrateUp();
+
+                    var gateway = Initializer.CreateGatewayController(context);
+                    _ =
+                    (
+                        (JsonResult)await gateway.LoginAsync(new() { Login = DefaultAccount.Login, Password = DefaultAccount.Password })
+                    ).Value as ExecutionResult<Identity>;
+
+                    var api = Initializer.CreatePrivateController(context);
+                    var resultGetAll =
+                    (
+                        (JsonResult)await api.GetAccountsAsync()
+                    ).Value as ExecutionResult<Account[]>;
+
+                    Validator.CheckSucceed(resultGetAll!);
+                    Validator.Compare(new[] { DefaultAccount }, resultGetAll!.Data!);
+
+                    var resultGet =
+                    (
+                        (JsonResult)await api.GetAccountAsync(resultGetAll!.Data![0].Id!.Value)
+                    ).Value as ExecutionResult<Account>;
+
+                    Validator.CheckSucceed(resultGet!);
+                    Validator.Compare(DefaultAccount, resultGet!.Data!);
+                }
+                finally
+                {
+                    context.Migrator.MigrateDown(0);
+                }
+            }
+        }
+
     }
 }

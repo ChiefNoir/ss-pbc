@@ -61,5 +61,6 @@ namespace GeneralTests
 
             return new PrivateController(accRep, catRep, conf, fileRep, intrRep, prjRep, sup, tokenManager);
         }
+
     }
 }

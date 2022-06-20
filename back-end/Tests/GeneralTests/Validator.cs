@@ -152,5 +152,16 @@ namespace GeneralTests
                 Assert.Equal(item, act);
             }
         }
+
+        internal static void Compare(IEnumerable<Account> expected, IEnumerable<Account> actual)
+        {
+            Assert.Equal(expected.Count(), actual.Count());
+
+            foreach (var item in expected)
+            {
+                var act = actual.First(x => x.Login == item.Login);
+                Compare(item, act);
+            }
+        }
     }
 }

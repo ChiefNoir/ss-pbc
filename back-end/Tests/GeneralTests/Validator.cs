@@ -110,6 +110,29 @@ namespace GeneralTests
             Compare(expected.Category, actual.Category);
         }
 
+        internal static void Compare(Project expected, Project actual)
+        {
+            Assert.Equal(expected.Code, actual.Code);
+            Assert.Equal(expected.Description, actual.Description);
+            Assert.Equal(expected.DescriptionShort, actual.DescriptionShort);
+            Assert.Equal(expected.DisplayName, actual.DisplayName);
+            Assert.Equal(expected.Version, actual.Version);
+
+            Assert.Equal(expected.PosterDescription, actual.PosterDescription);
+            Assert.Equal(expected.PosterUrl, actual.PosterUrl);
+            Assert.Equal(expected.ReleaseDate, actual.ReleaseDate);
+
+            Compare(expected.Category, actual.Category);
+            foreach (var expectedUrl in expected.ExternalUrls)
+            {
+                var actualUrl = actual.ExternalUrls.First(x => x.DisplayName == expectedUrl.DisplayName);
+
+                Assert.Equal(expectedUrl.DisplayName, actualUrl.DisplayName);
+                Assert.Equal(expectedUrl.Url, actualUrl.Url);
+                Assert.Equal(expectedUrl.Version, actualUrl.Version);
+            }
+        }
+
         internal static void Compare(IEnumerable<ProjectPreview> expected, IEnumerable<ProjectPreview> actual)
         {
             Assert.Equal(expected.Count(), actual.Count());

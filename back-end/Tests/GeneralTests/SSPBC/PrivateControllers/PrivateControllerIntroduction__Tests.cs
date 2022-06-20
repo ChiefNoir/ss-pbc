@@ -8,7 +8,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
     [Collection("database_sensitive")]
     public sealed class PrivateControllerIntroduction__Tests
     {
-        private class GenerateValidSave : IEnumerable<object[]>
+        private class ValidUpdate : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -126,7 +126,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
             }
         }
 
-        private class GenerateInvalidSave : IEnumerable<object[]>
+        private class InvalidUpdate : IEnumerable<object[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -148,7 +148,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
 
 
         [Theory]
-        [ClassData(typeof(GenerateValidSave))]
+        [ClassData(typeof(ValidUpdate))]
         internal async Task UpdateIntroduction_ValidAsync(Introduction update, Introduction expected)
         {
             using (var context = Initializer.CreateDataContext())
@@ -185,7 +185,7 @@ namespace GeneralTests.SSPBC.PrivateControllers
         }
 
         [Theory]
-        [ClassData(typeof(GenerateInvalidSave))]
+        [ClassData(typeof(InvalidUpdate))]
         internal async Task UpdateIntroduction_InValidAsync(Introduction update)
         {
             using (var context = Initializer.CreateDataContext())

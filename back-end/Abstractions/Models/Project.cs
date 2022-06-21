@@ -25,10 +25,10 @@ namespace Abstractions.Models
         public string DisplayName { get; set; } = string.Empty;
 
         /// <summary> Short description for the poster (mostly for the image alt-text) </summary>
-        public string PosterDescription { get; set; } = string.Empty;
+        public string? PosterDescription { get; set; }
 
         /// <summary> URL for the poster </summary>
-        public string PosterUrl { get; set; } = string.Empty;
+        public string? PosterUrl { get; set; }
 
         /// <summary> Release date </summary>
         public DateTime? ReleaseDate { get; set; }

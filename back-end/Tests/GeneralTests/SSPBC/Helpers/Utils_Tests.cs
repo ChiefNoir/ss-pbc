@@ -2,6 +2,7 @@
 
 namespace GeneralTests.SSPBC.Helpers
 {
+    [Trait("Category", "Unit")]
     public sealed class Utils_Tests
     {
         [Theory]

@@ -2,6 +2,7 @@
 
 namespace GeneralTests.Security
 {
+    [Trait("Category", "Unit")]
     public sealed class TokenManager_Tests
     {
         private readonly TokenManager _tokenManager;

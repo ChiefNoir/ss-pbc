@@ -2,6 +2,7 @@
 
 namespace GeneralTests.Security
 {
+    [Trait("Category", "Unit")]
     public sealed class HashManager_Tests
     {
         [Theory]

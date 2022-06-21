@@ -4,6 +4,7 @@ using System.Text;
 
 namespace GeneralTests.Security.Helpers
 {
+    [Trait("Category", "Unit")]
     public sealed class HexConverter_Tests
     {
         private class ValidPlainText : IEnumerable<object[]>

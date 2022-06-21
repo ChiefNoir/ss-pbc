@@ -2,6 +2,7 @@
 
 namespace GeneralTests.Infrastructure
 {
+    [Trait("Category", "Unit")]
     public sealed class Sanitizer_Tests
     {
         [Theory]

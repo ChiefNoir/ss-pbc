@@ -7,7 +7,7 @@ using SSPBC.Controllers;
 
 namespace GeneralTests
 {
-    internal class Initializer
+    internal static class Initializer
     {
         private const string connectionName = "Default";
 
@@ -61,6 +61,5 @@ namespace GeneralTests
 
             return new PrivateController(accRep, catRep, conf, fileRep, intrRep, prjRep, sup, tokenManager);
         }
-
     }
 }

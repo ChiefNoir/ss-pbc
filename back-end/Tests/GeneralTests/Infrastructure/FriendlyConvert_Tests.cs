@@ -2,6 +2,7 @@
 
 namespace GeneralTests.Infrastructure
 {
+    [Trait("Category", "Unit")]
     public sealed class FriendlyConvert_Tests
     {
         [Theory]

@@ -1,0 +1,79 @@
+@import "/public/assets/scss/variables";
+
+.glitch-button {
+  background: none;
+  border: 1px solid $color-text;
+  color: inherit;
+  cursor: pointer;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  outline: none;
+  padding: 8px 30px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+
+  &::before,
+  &::after {
+    background: $color-text;
+    clip: rect(0px, 0px, 0px, 0px);
+    color: $color-text;
+    content: attr(data-content);
+    padding: 8px 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  &::before {
+    box-shadow: 2px 0px $color-text;
+    left: -3px;
+    text-shadow: 2px 0px $color-text;
+    top: -2px;
+  }
+
+  &::after {
+    bottom: -2px;
+    box-shadow: -1px 0px $color-text;
+    left: 2px;
+    text-shadow: -1px 0px $color-text;
+  }
+
+  &:focus,
+  &:hover {
+    background: $color-text;
+    color: $color-container;
+  }
+
+  &:hover::before {
+    animation: glitch-animation 1.5s infinite linear alternate-reverse;
+  }
+
+  &:hover::after {
+    animation: glitch-animation 2s infinite linear alternate;
+  }
+}
+
+@keyframes glitch-animation {
+  000% { clip: rect(-3px, 600px, 0px, 0px); }
+  005% { clip: rect(0, 600px, 0px, 0px); }
+  011% { clip: rect(-3px, 600px, 0px, 0px); }
+  017% { clip: rect(-3px, 600px, 0px, 0px); }
+  023% { clip: rect(100px, 600px, 100px, 0px); }
+  029% { clip: rect(0px, 600px, 600px, 0px); }
+  035% { clip: rect(100px, 600px, 0px, 0px); }
+  041% { clip: rect(0px, 600px, 600px, 0px); }
+  047% { clip: rect(100px, 600px, 0px, 0px); }
+  052% { clip: rect(-3px, 600px, 0px, 0px); }
+  058% { clip: rect(100px, 450px, 100px, 0px); }
+  064% { clip: rect(000px, 450px, 0px, 0px); }
+  070% { clip: rect(100px, 450px, 100px, 0px); }
+  076% { clip: rect(0px, 450px, 0px, 0px); }
+  082% { clip: rect(0px, 450px, 0px, 0px); }
+  088% { clip: rect(0px, 450px, 0px, 0px); }
+  094% { clip: rect(0px, 450px, 0px, 0px); }
+  100% { clip: rect(0px, 450px, 0px, 0px); }
+}

@@ -1,0 +1,35 @@
+@import "/public/assets/scss/variables";
+/* stylelint-disable selector-class-pattern */
+
+.MuiInputBase-root.MuiOutlinedInput-root {
+  color: inherit !important;
+}
+
+.Mui-focused {
+  color: $color-text-light !important;
+}
+
+.MuiButton-root {
+  border-color: inherit;
+  border: 1px solid $color-text-light !important;
+
+  &:hover {
+    border-color: $color-text-dark;
+  }
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: $color-text-light !important;
+}
+
+.MuiButtonBase-root {
+  color: inherit !important;
+}
+
+.MuiTabs-indicator {
+  background-color: $color-text-highlighted !important;
+}
+
+.MuiCard-root {
+  border-radius: 0 !important;
+}

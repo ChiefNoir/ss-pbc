@@ -1,0 +1,25 @@
+@import "/public/assets/scss/variables";
+
+.showcase-container {
+  .showcase-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .showcase-projects {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 10px;
+    justify-content: center;
+  }
+
+  .showcase-paging {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

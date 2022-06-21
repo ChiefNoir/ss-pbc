@@ -1,0 +1,28 @@
+@import "/public/assets/scss/variables";
+
+.navigation {
+  height: 40px;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  a {
+    font-size: 25px;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+    text-transform: capitalize;
+    cursor: pointer;
+    color: inherit;
+
+    &:hover {
+      color: $color-text-highlighted;
+    }
+  }
+
+  .active {
+    background-color: $color-container;
+  }
+}

@@ -1,0 +1,17 @@
+@import "/public/assets/scss/variables";
+
+.admin-introduction-poster {
+  max-height: 350px;
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
+.admin-introduction-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}

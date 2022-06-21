@@ -1,33 +1,26 @@
 # Back-end
+This is REST API for website.
 
 ## Projects
-### Abstractions
-Represents general application layout as an abstraction.
-All public models, interfaces and abstract classes of the application goes here.
-
-### API
-API implementation. 
-
-### Common
-Common things which do not have place in the other projects
-
-### Infrastructure
-Implementations of the IRepositories and database/filesystem interaction.
+### SSPBC
+The main entry point and a very generic WepAPI.
 
 ### Secutiry
-Implementations of the security interfaces: token management, enciption and validation. 
+Security and supervision.
+Token management, hashing. 
+
+### Infrastructure
+All repositories and interactions with database
+
+### Abstractions
+Core abstractions and basic application layout. 
 
 ### Tests/GeneralTests
-Application tests.
+Unit and e2e tests.
+Most of the tests requires a ready-to-use database. 
+Most of the test cases are simulates user stories: look at projects, create, edit. Everything with operational database.
 
-## Tech
-- [.Net 5.0](https://dotnet.microsoft.com/download)
-- [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/)
-- [Evolve](https://www.nuget.org/packages/Evolve/)
-- [JwtBearer](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer)
-- [NLog](https://www.nuget.org/packages/NLog.Web.AspNetCore/)
-- [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)
-- [xUnit](https://xunit.net/)
-- [Moq](https://github.com/moq/moq4)
-- [coverlet.collector](https://www.nuget.org/packages/coverlet.collector)
-- [coverlet.msbuild](https://www.nuget.org/packages/coverlet.msbuild/)
+# Requirements
+- [Microsoft Visual Studio Community 2022](https://visualstudio.microsoft.com/vs/community/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [dotnet 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)

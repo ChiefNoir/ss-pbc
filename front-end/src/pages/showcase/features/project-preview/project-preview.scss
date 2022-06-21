@@ -1,0 +1,27 @@
+@import "/public/assets/scss/variables";
+
+.project-preview {
+  max-width: 300px;
+  min-width: 300px;
+  color: inherit !important;
+}
+
+.project-preview-card {
+  height: 400px;
+}
+
+.project-preview-title {
+  color: $color-text;
+  font-weight: 700 !important;
+  margin-top: -9px;
+  margin-bottom: 10px;
+}
+
+.project-preview-poster {
+  filter: grayscale(100%) contrast(130%);
+  transition: all 0.5s ease;
+
+  &:hover {
+    filter: grayscale(0) contrast(100%);
+  }
+}

@@ -1,19 +1,15 @@
-﻿using System;
-using System.Linq;
-using Abstractions.ISecurity;
-using GeneralTests.SharedUtils;
-using Security;
-using Xunit;
+﻿using Security;
 
 namespace GeneralTests.Security
 {
-    public class TokenManager_Tests
+    [Trait("Category", "Unit")]
+    public sealed class TokenManager_Tests
     {
-        private readonly ITokenManager _tokenManager;
+        private readonly TokenManager _tokenManager;
 
         public TokenManager_Tests()
         {
-            _tokenManager = new TokenManager(Storage.CreateConfiguration());
+            _tokenManager = new TokenManager(Initializer.CreateConfiguration());
         }
 
         [Theory]

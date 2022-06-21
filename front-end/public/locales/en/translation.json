@@ -1,0 +1,80 @@
+{
+  "Header": {
+    "Full": "Fireplace of Despair",
+    "Short": "FoD"
+  },
+  "Footer": {
+    "Copyright": "Chief"
+  },
+  "Error": {
+    "PageNotFound": "404"
+  },
+  "Message":{
+    "LoggedIn": "You are logged in."
+  },
+  "Introduction": {
+    "this": "Introduction",
+    "Content": "Content",
+    "Poster": "Poster",
+    "PosterUrl": "Poster url",
+    "PosterDescription": "Poster description",
+    "ExternalUrls": "External Urls"
+  },
+  "Navigation":{
+    "Home": "Home",
+    "Projects": "Projects",
+    "AdminIntroduction":"Introduction",
+    "AdminProjects":"Projects",
+    "AdminAccounts":"Accounts",
+    "AdminCategories":"Categories"
+  },
+  "Project": {
+    "this": "Project",
+    "Code": "Code",
+    "DisplayName": "Display Name",
+    "ReleaseDate": "Release date",
+    "Poster":"Poster",
+    "PosterUrl": "Poster url",
+    "PosterDescription":"Poster Description",
+    "Category": "Category",
+    "Description": "Description",
+    "DescriptionShort":"Description Short",
+    "ExternalUrls": "External Urls",
+    "GeneralInformation": "General Information"
+  },
+  "ExternalUrl": {
+    "this":"External url",
+    "DisplayName":"Display Name",
+    "Url":"Url"
+  },
+  "Category": {
+    "this": "Category",
+    "Code":"Code",
+    "DisplayName":"Display Name",
+    "IsEverything":"Is Everything",
+    "TotalProjects": "Total Projects",
+    "TotalProjectsShort": "Total"
+  },
+  "Credentials":{
+    "this":"Credentials",
+    "Login":"Login",
+    "Password":"Password"
+  },
+  "Actions": {
+    "this":"Actions",
+    "DoLogin":"Login",
+    "DoLogout":"Logout",
+    "Upload":"Upload",
+    "Save":"Save",
+    "Cancel":"Cancel",
+    "Delete": "Delete",
+    "Add": "Add",
+    "Edit": "Edit"
+  },
+  "Account": {
+    "this": "Account",
+    "Login": "Login",
+    "Password":"Password",
+    "Role":"Role"
+  }
+}

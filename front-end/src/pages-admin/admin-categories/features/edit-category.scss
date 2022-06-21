@@ -1,0 +1,16 @@
+@import "/public/assets/scss/variables";
+
+.container-edit-category {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: stretch;
+  gap: 12px;
+}
+
+.edit-category-error {
+  text-align: center;
+  color: $color-text-highlighted;
+}

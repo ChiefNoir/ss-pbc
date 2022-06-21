@@ -12,33 +12,30 @@
 
 
 # BusinessCard
+This is my personal website.
+And it was built almost at an enterprise level.
 
-Personal website for showcasing pet-projects and stuff. 
-For the change of pace, for the playing around and for the developing new skills.
+# System architecture
+%Place for image%
 
 ## Front-end
-<!-- - [Angular](https://angular.io/) -->
-<!-- - [Angular Material](https://material.angular.io/) -->
-<!-- - [flex-layout](https://github.com/angular/flex-layout) -->
-<!-- - [babel](https://babeljs.io/) -->
 - [React](https://reactjs.org/)
 - [React Redux](https://react-redux.js.org/)
+- [MUI](https://mui.com/)
+- [i18next](https://www.i18next.com/)
+- [TypeScript] (https://www.typescriptlang.org/)
 
 ## Back-end
-- [.Net 6.0](https://dotnet.microsoft.com/download)
+- [.Net Core 6](https://dotnet.microsoft.com/download)
+- [EntityFrameworkCore](https://dotnet.microsoft.com/download)
 - [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/)
-- [Evolve](https://www.nuget.org/packages/Evolve/)
-  - It provides migrations in plain sql. In the future it will be usefull, when I need to run some custom scripts.
-  - No overhead, simple support and simple usage.
-- [JwtBearer](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer)
-- [NLog](https://nlog-project.org/)
-- [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)
-
-### Testing
+- [FluentMigrator](https://fluentmigrator.github.io/)
+- [Jwt](https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet)
 - [xUnit](https://xunit.net/)
-- [Moq](https://github.com/moq/moq4)
-- [coverlet.collector](https://www.nuget.org/packages/coverlet.collector)
-- [coverlet.msbuild](https://www.nuget.org/packages/coverlet.msbuild/)
 
-### Database
+## Database
 - [PostgreSQL](https://www.postgresql.org/)
+
+## CI/CD
+- [GitHub Action](https://github.com/features/actions)
+- [Docker](https://www.docker.com/)

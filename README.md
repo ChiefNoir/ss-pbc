@@ -11,7 +11,7 @@
 ![Build Status](https://github.com/ChiefNoir/BusinessCard/workflows/Build%20front-end/badge.svg?branch=master)
 
 
-# BusinessCard
+# SSPBC
 This is my personal website.
 And it was built almost at an enterprise level.
 

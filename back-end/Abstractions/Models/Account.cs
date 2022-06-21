@@ -16,7 +16,7 @@ namespace Abstractions.Models
         public string? Password { get; set; }
 
         /// <summary> Role <seealso cref="RoleNames"/></summary>
-        public string Role { get; set; } = string.Empty;
+        public string? Role { get; set; }
 
         /// <summary> Entity version </summary>
         public long Version { get; set; }

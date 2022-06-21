@@ -7,33 +7,33 @@ namespace GeneralTests.Security.Helpers
     [Trait("Category", "Unit")]
     public sealed class HexConverter_Tests
     {
-        private class ValidPlainText : IEnumerable<object[]>
+        private class ValidPlainText : IEnumerable<object?[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-            public IEnumerator<object[]> GetEnumerator()
+            public IEnumerator<object?[]> GetEnumerator()
             {
-                yield return new object[]
+                yield return new object?[]
                 {
                     "plainText",
                     "706c61696e54657874"
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
                     "706c61696e54657874",
                     "373036633631363936653534363537383734"
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
                     "long plain text",
                     "6c6f6e6720706c61696e2074657874"
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
                     string.Empty,
                     string.Empty
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
                     null,
                     string.Empty

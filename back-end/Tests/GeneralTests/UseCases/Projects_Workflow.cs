@@ -190,7 +190,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
                     Validator.CheckSucceed(responseGetProjectsPreview);
-                    Assert.Equal(0, responseGetProjectsPreview.Data.Length);
+                    Assert.Empty(responseGetProjectsPreview.Data);
                     // *****************************
 
                     // Step 4: Check category
@@ -327,7 +327,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
                     Validator.CheckSucceed(responseGetProjectsPreview);
-                    Assert.Equal(1, responseGetProjectsPreview.Data.Length);
+                    Assert.Single(responseGetProjectsPreview.Data);
 
                     var preview = new ProjectPreview
                     {
@@ -378,7 +378,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
                     Validator.CheckSucceed(responseGetProjectsPreview);
-                    Assert.Equal(1, responseGetProjectsPreview.Data.Length);
+                    Assert.Single(responseGetProjectsPreview.Data);
 
                     preview = new ProjectPreview
                     {
@@ -435,7 +435,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
                     Validator.CheckSucceed(responseGetProjectsPreview);
-                    Assert.Equal(1, responseGetProjectsPreview.Data.Length);
+                    Assert.Single(responseGetProjectsPreview.Data);
 
                     preview = new ProjectPreview
                     {
@@ -482,7 +482,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
                     Validator.CheckSucceed(responseGetProjectsPreview);
-                    Assert.Equal(1, responseGetProjectsPreview.Data.Length);
+                    Assert.Single(responseGetProjectsPreview.Data);
 
                     preview = new ProjectPreview
                     {
@@ -529,7 +529,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
                     Validator.CheckSucceed(responseGetProjectsPreview);
-                    Assert.Equal(1, responseGetProjectsPreview.Data.Length);
+                    Assert.Single(responseGetProjectsPreview.Data);
 
                     preview = new ProjectPreview
                     {
@@ -741,7 +741,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
                     Validator.CheckSucceed(responseGetProjectsPreview);
-                    Assert.Equal(0, responseGetProjectsPreview.Data.Length);
+                    Assert.Empty(responseGetProjectsPreview.Data);
                     // *****************************
 
                     // Step 4: Check category

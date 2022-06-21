@@ -21,7 +21,6 @@ namespace GeneralTests
             var builder = new DbContextOptionsBuilder<DataContext>();
             builder.UseNpgsql(CreateConfiguration().GetConnectionString(connectionName));
             var context = new DataContext(builder.Options);
-            context.Migrator.MigrateDown(0);
 
             return context;
         }

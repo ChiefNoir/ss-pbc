@@ -6,8 +6,8 @@ using System.Collections;
 
 namespace GeneralTests.UseCases
 {
-    [Trait("Category", "Work-flow")]
-    [Collection("database_sensitive")]
+    [Trait("Category", "e2e")]
+    [CollectionDefinition("database_sensitive", DisableParallelization = true)]
     public sealed class Account_Workflow
     {
         private class ValidAdd : IEnumerable<object[]>

@@ -4,8 +4,8 @@ using System.Collections;
 
 namespace GeneralTests.UseCases
 {
-    [Collection("database_sensitive")]
-    [Trait("Category", "Work-flow")]
+    [Trait("Category", "e2e")]
+    [CollectionDefinition("database_sensitive", DisableParallelization = true)]
     public sealed class Gateway_Workflow
     {
         private class InvalidLogins : IEnumerable<object?[]>

@@ -3,7 +3,8 @@ using System.Collections;
 
 namespace GeneralTests.UseCases
 {
-    [Trait("Category", "Work-flow")]
+    [Trait("Category", "e2e")]
+    [CollectionDefinition("database_sensitive", DisableParallelization = true)]
     public sealed class FileOperations_Workflow
     {
         private class FormFileInvalid : IEnumerable<object[]>

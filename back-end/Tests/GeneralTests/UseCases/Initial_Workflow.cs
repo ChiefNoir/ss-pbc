@@ -5,8 +5,8 @@ using SSPBC.Models;
 
 namespace GeneralTests.UseCases
 {
-    [Trait("Category", "General lookup")]
-    [Collection("database_sensitive")]
+    [Trait("Category", "e2e")]
+    [CollectionDefinition("database_sensitive", DisableParallelization = true)]
     public sealed class Initial_Workflow
     {
         [Fact]

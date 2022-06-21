@@ -14,9 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+#if DEBUG
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+#endif
+
 
 builder.Services.AddCors();
 
@@ -86,6 +90,5 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<DataContext>();
     context.Migrator.MigrateUp();
 }
-
 
 app.Run();

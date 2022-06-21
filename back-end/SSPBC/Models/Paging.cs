@@ -9,15 +9,5 @@ namespace SSPBC.Models
 
         [FromQuery(Name = "length")]
         public int Length { get; set; }
-
-        public Paging()
-        {
-        }
-
-        public Paging(int start, int length)
-        {
-            Start = start;
-            Length = length;
-        }
     }
 }

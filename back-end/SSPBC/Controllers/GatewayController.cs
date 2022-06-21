@@ -3,6 +3,7 @@ using Abstractions.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Security;
+using Security.Models;
 using SSPBC.Models;
 
 namespace SSPBC.Controllers
@@ -28,7 +29,7 @@ namespace SSPBC.Controllers
         [AllowAnonymous]
         [ApiVersion("1.0")]
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] Credentials credentials)
+        public async Task<ActionResult<ExecutionResult<Identity>>> LoginAsync([FromBody] Credentials credentials)
         {
             var result = await _supervisor.SafeExecuteAsync(async () =>
             {
@@ -42,7 +43,7 @@ namespace SSPBC.Controllers
                 };
             });
 
-            return new JsonResult(result);
+            return result;
         }
     }
 }

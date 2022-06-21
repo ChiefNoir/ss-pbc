@@ -28,10 +28,10 @@ namespace Infrastructure.Models
         public string DisplayName { get; set; }
 
         [Column("poster_description")]
-        public string PosterDescription { get; set; }
+        public string? PosterDescription { get; set; }
 
         [Column("poster_url")]
-        public string PosterUrl { get; set; }
+        public string? PosterUrl { get; set; }
 
         [Column("release_date")]
         public DateTime? ReleaseDate { get; set; }

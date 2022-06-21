@@ -19,7 +19,7 @@
         internal const string MustBeOnlyOne = "{0} must be only one";
 
         /// <summary> Can't delete category, there are {0} projects within {1} category </summary>
-        internal const string CantDeleteNotEmptyCategory = "Can't delete category, there are {0} projects within {1} category";
+        internal const string CantDeleteNotEmptyCategory = "Can't delete category, there are some projects within {0} category";
 
         /// <summary> Can't update new {0} </summary>
         internal const string CantUpdateNewItem = "Can't update new {0}";

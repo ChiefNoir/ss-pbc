@@ -76,23 +76,6 @@ namespace Infrastructure.Repositories
             return DataConverter.ToCategory(result);
         }
 
-        public async Task<Category> GetTechnicalAsync()
-        {
-            var result = await _context.CategoriesWithTotalProjects
-                                       .AsNoTracking()
-                                       .FirstOrDefaultAsync(x => x.IsEverything);
-            if (result == null)
-            {
-                throw new InconsistencyException
-                    (
-                        string.Format(Resources.TextMessages.CategoryDoesNotExist, "")
-                    );
-            }
-
-            return DataConverter.ToCategory(result);
-        }
-
-
         public Task<Category> SaveAsync(Category item)
         {
             if (item.Id == null)
@@ -133,6 +116,7 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             var categoryWithProject = await _context.CategoriesWithTotalProjects.FirstOrDefaultAsync(x => x.Id == dbItem.Id);
+            _context.Entry(categoryWithProject!).Reload(); // Hack, EF returning data from cache
             return DataConverter.ToCategory(categoryWithProject);
         }
 
@@ -168,16 +152,15 @@ namespace Infrastructure.Repositories
                 throw new InconsistencyException(Resources.TextMessages.CantDeleteSystemCategory);
             }
 
-            var catWithProjects = _context.CategoriesWithTotalProjects.FirstOrDefault(x => x.Id == category.Id);
-            if (catWithProjects.TotalProjects > 0)
+            var projects = _context.Projects.Any(x => x.CategoryId == category.Id);
+            if (projects)
             {
                 throw new InconsistencyException
                     (
                         string.Format
                         (
                             Resources.TextMessages.CantDeleteNotEmptyCategory,
-                            catWithProjects.TotalProjects,
-                            catWithProjects.DisplayName
+                            dbItem.DisplayName
                         )
                     );
             }

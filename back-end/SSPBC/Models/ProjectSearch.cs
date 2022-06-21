@@ -6,15 +6,5 @@ namespace SSPBC.Models
     {
         [FromQuery(Name = "categorycode")]
         public string? CategoryCode { get; set; } = null;
-
-        public ProjectSearch()
-        {
-
-        }
-
-        public ProjectSearch(string categoryCode)
-        {
-            CategoryCode = categoryCode;
-        }
     }
 }

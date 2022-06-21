@@ -27,7 +27,7 @@ namespace Infrastructure.Repositories
 
             _context.Projects.Remove(dbItem);
             var rows = await _context.SaveChangesAsync();
-            return rows == 1;
+            return true;
         }
 
 
@@ -59,7 +59,6 @@ namespace Infrastructure.Repositories
             var isEverything = true;
             var categoryId = Guid.Empty;
 
-            // TODO: Test coverage!
             if (!string.IsNullOrEmpty(categoryCode))
             {
                 var category = await _categoryRepository.GetAsync(categoryCode);
@@ -148,26 +147,34 @@ namespace Infrastructure.Repositories
             Merge(dbProject, project.ExternalUrls);
         }
 
-        private void Merge(Models.Project dbProject, IEnumerable<ExternalUrl> externalUrls)
+        private void Merge(Models.Project dbItem, IEnumerable<ExternalUrl> newExternalUrls)
         {
-            foreach (var item in dbProject.ExternalUrls ?? new List<Models.ProjectToExternalUrl>())
+            var toRemove = dbItem.ExternalUrls.Where(eu => !newExternalUrls.Any(x => eu.ExternalUrlId == x.Id)).ToList();
+            foreach (var item in toRemove)
             {
-                var remoteItem = externalUrls?.FirstOrDefault(x => x.Id.HasValue && x.Id == item.ExternalUrlId);
-                if (remoteItem == null)
-                {
-                    _context.ExternalUrls.Remove(item.ExternalUrl);
-                }
-                else
-                {
-                    item.ExternalUrl.DisplayName = remoteItem.DisplayName;
-                    item.ExternalUrl.Url = remoteItem.Url;
-                    item.ExternalUrl.Version++;
-                }
+                dbItem.ExternalUrls.Remove(item);
+
+                _context.ExternalUrls.Remove(item.ExternalUrl);
+                _context.ProjectExternalUrls.Remove(item);
             }
 
-            foreach (var item in externalUrls?.Where(x => x.Id == null) ?? new List<ExternalUrl>())
+            var toAdd = newExternalUrls.Where(x => x.Id == null);
+            foreach (var item in toAdd)
             {
-                dbProject.ExternalUrls.Add(AbstractionsConverter.ToProjectExternalUrl(item));
+                var add = AbstractionsConverter.ToProjectExternalUrl(item);
+
+                _context.ExternalUrls.Add(add.ExternalUrl);
+                dbItem.ExternalUrls.Add(add);
+            }
+
+            var toUpdate = newExternalUrls.Where(x => x.Id.HasValue);
+            foreach (var item in toUpdate)
+            {
+                var upd = dbItem.ExternalUrls.FirstOrDefault(x => x.ExternalUrlId == item.Id.Value);
+
+                upd.ExternalUrl.DisplayName = item.DisplayName;
+                upd.ExternalUrl.Url = item.Url;
+                upd.ExternalUrl.Version++;
             }
         }
 
@@ -209,11 +216,19 @@ namespace Infrastructure.Repositories
                     );
             }
 
-            if (string.IsNullOrEmpty(project.DisplayName))
+            if (string.IsNullOrEmpty(project.Description))
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Description")
+                    );
+            }
+
+            if (string.IsNullOrEmpty(project.DescriptionShort))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DescriptionShort")
                     );
             }
 
@@ -233,6 +248,13 @@ namespace Infrastructure.Repositories
                     );
             }
 
+            if (string.IsNullOrEmpty(project.DisplayName))
+            {
+                throw new InconsistencyException
+                    (
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
+                    );
+            }
 
             if (_context.Projects.Any(x => x.Code == project.Code))
             {

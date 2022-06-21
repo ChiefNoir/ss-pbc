@@ -1,7 +1,9 @@
 ﻿using Abstractions.IRepositories;
+using Abstractions.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Security;
+using Security.Models;
 using SSPBC.Models;
 
 namespace SSPBC.Controllers
@@ -28,66 +30,67 @@ namespace SSPBC.Controllers
         [AllowAnonymous]
         [ApiVersion("1.0")]
         [HttpGet("categories")]
-        public async Task<IActionResult> GetCategoriesAsync()
+        public async Task<ActionResult<ExecutionResult<Category[]>>> GetCategoriesAsync()
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _categoryRepository.GetAsync()
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [AllowAnonymous]
         [ApiVersion("1.0")]
         [HttpGet("categories/{id}")]
-        public async Task<IActionResult> GetCategoryAsync(Guid? id)
+        public async Task<ActionResult<ExecutionResult<Category>>> GetCategoryAsync(Guid? id)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _categoryRepository.GetAsync(id)
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [AllowAnonymous]
         [ApiVersion("1.0")]
         [HttpGet("introduction")]
-        public async Task<IActionResult> GetIntroductionAsync()
+        public async Task<ActionResult<ExecutionResult<Introduction>>> GetIntroductionAsync()
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _introductionRepository.GetAsync()
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [AllowAnonymous]
         [ApiVersion("1.0")]
         [HttpGet("projects/{code}")]
-        public async Task<IActionResult> GetProjectAsync(string code)
+        public async Task<ActionResult<ExecutionResult<Project>>> GetProjectAsync(string code)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _projectRepository.GetAsync(code)
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [AllowAnonymous]
         [ApiVersion("1.0")]
         [HttpGet("projects/search")]
-        public async Task<IActionResult> GetProjectsPreviewAsync([FromQuery] Paging paging, [FromQuery] ProjectSearch searchQuery)
+        public async Task<ActionResult<ExecutionResult<ProjectPreview[]>>>
+            GetProjectsPreviewAsync([FromQuery] Paging paging, [FromQuery] ProjectSearch searchQuery)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _projectRepository.GetPreviewAsync(paging.Start, paging.Length, searchQuery.CategoryCode)
             );
 
-            return new JsonResult(result);
+            return result;
         }
     }
 }

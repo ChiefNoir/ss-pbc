@@ -13,7 +13,7 @@ namespace Abstractions.Models
         public string Login { get; set; }
 
         /// <summary> Password as a hex string </summary>
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         /// <summary> Role <seealso cref="RoleNames"/></summary>
         public string Role { get; set; }

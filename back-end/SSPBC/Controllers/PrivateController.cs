@@ -4,6 +4,7 @@ using Abstractions.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Security;
+using Security.Models;
 using SSPBC.Helpers;
 
 namespace SSPBC.Controllers
@@ -37,59 +38,59 @@ namespace SSPBC.Controllers
         [HttpPost("accounts")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<IActionResult> SaveAccountAsync([FromBody] Account account)
+        public async Task<ActionResult<ExecutionResult<Account>>> SaveAccountAsync([FromBody] Account account)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _accountRepository.SaveAsync(account)
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [HttpGet("accounts")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<IActionResult> GetAccountsAsync()
+        public async Task<ActionResult<ExecutionResult<Account[]>>> GetAccountsAsync()
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _accountRepository.GetAsync()
             ); ;
 
-            return new JsonResult(result);
+            return result;
         }
 
         [HttpDelete("accounts")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<IActionResult> DeleteAccountAsync([FromBody] Account account)
+        public async Task<ActionResult<ExecutionResult<bool>>> DeleteAccountAsync([FromBody] Account account)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _accountRepository.DeleteAsync(account)
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [HttpGet("accounts/{id}")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<IActionResult> GetAccountAsync(Guid id)
+        public async Task<ActionResult<ExecutionResult<Account>>> GetAccountAsync(Guid id)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _accountRepository.GetAsync(id)
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [HttpGet("roles")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public IActionResult GetRoles()
+        public ActionResult<ExecutionResult<List<string>>> GetRoles()
         {
             var result = _supervisor.SafeExecute
             (
@@ -99,39 +100,39 @@ namespace SSPBC.Controllers
                 }
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [HttpPost("category")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<IActionResult> SaveCategoryAsync([FromBody] Category category)
+        public async Task<ActionResult<ExecutionResult<Category>>> SaveCategoryAsync([FromBody] Category category)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _categoryRepository.SaveAsync(category)
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [HttpDelete("category")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<IActionResult> DeleteCategoryAsync([FromBody] Category category)
+        public async Task<ActionResult<ExecutionResult<bool>>> DeleteCategoryAsync([FromBody] Category category)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _categoryRepository.DeleteAsync(category)
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [HttpPost("introduction")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<IActionResult> SaveIntroductionAsync([FromBody] Introduction introduction)
+        public async Task<ActionResult<ExecutionResult<Introduction>>> SaveIntroductionAsync([FromBody] Introduction introduction)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -141,13 +142,13 @@ namespace SSPBC.Controllers
                 }
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [HttpPost("project")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<IActionResult> SaveProjectAsync([FromBody] Project project)
+        public async Task<ActionResult<ExecutionResult<Project>>> SaveProjectAsync([FromBody] Project project)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
@@ -157,26 +158,26 @@ namespace SSPBC.Controllers
                 }
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [HttpDelete("project")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<IActionResult> DeleteProjectAsync([FromBody] Project project)
+        public async Task<ActionResult<ExecutionResult<bool>>> DeleteProjectAsync([FromBody] Project project)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
                 () => _projectRepository.DeleteAsync(project)
             );
 
-            return new JsonResult(result);
+            return result;
         }
 
         [HttpPost("upload"), DisableRequestSizeLimit]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public IActionResult Upload([FromForm] IFormFile file)
+        public ActionResult<ExecutionResult<string>> Upload([FromForm] IFormFile file)
         {
             var result = _supervisor.SafeExecute
             (
@@ -188,7 +189,7 @@ namespace SSPBC.Controllers
                 }
             );
 
-            return new JsonResult(result);
+            return result;
         }
     }
 }

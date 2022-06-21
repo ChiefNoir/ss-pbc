@@ -25,6 +25,9 @@ namespace Infrastructure
         public DataContext(DbContextOptions options) : base(options)
         {
             Migrator = new Migrator(Database.GetConnectionString());
+
+            //TODO: fix it
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

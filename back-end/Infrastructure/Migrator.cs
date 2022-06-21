@@ -5,7 +5,7 @@ namespace Infrastructure
 {
     public sealed class Migrator
     {
-        private string _connectionString = string.Empty;
+        private readonly string _connectionString = string.Empty;
 
         public Migrator(string connectionString)
         {

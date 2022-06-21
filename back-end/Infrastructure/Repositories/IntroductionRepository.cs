@@ -24,7 +24,7 @@ namespace Infrastructure.Repositories
                            .ThenInclude(x => x.ExternalUrl)
                            .AsNoTracking()
                            .Select(x => DataConverter.ToIntroduction(x))
-                           .FirstOrDefaultAsync();
+                           .FirstAsync();
         }
 
 
@@ -36,12 +36,12 @@ namespace Infrastructure.Repositories
                                        .OrderBy(x => x.Id)
                                        .FirstOrDefaultAsync();
 
-            CheckBeforeUpdate(dbItem, item);
+            CheckBeforeUpdate(dbItem!, item);
 
-            Merge(dbItem, item);
+            Merge(dbItem!, item);
             await _context.SaveChangesAsync();
 
-            return DataConverter.ToIntroduction(dbItem);
+            return DataConverter.ToIntroduction(dbItem!);
         }
 
 
@@ -59,11 +59,6 @@ namespace Infrastructure.Repositories
 
         private void Merge(Models.Introduction dbItem, IEnumerable<ExternalUrl> newExternalUrls)
         {
-            if (newExternalUrls == null)
-            {
-                newExternalUrls = new List<ExternalUrl>();
-            }
-
             var toRemove = dbItem.ExternalUrls.Where(eu => !newExternalUrls.Any(x => eu.ExternalUrlId == x.Id)).ToList();
             foreach (var item in toRemove)
             {
@@ -85,7 +80,7 @@ namespace Infrastructure.Repositories
             var toUpdate = newExternalUrls.Where(x => x.Id.HasValue);
             foreach (var item in toUpdate)
             {
-                var upd = dbItem.ExternalUrls.FirstOrDefault(x => x.ExternalUrlId == item.Id.Value);
+                var upd = dbItem.ExternalUrls.First(x => x.ExternalUrlId == item.Id.Value);
 
                 upd.ExternalUrl.DisplayName = item.DisplayName;
                 upd.ExternalUrl.Url = item.Url;

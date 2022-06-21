@@ -6,17 +6,22 @@ namespace Infrastructure.Migrations
     public class M197101010000_Default : Migration
     {
         internal static Guid categoryId = new("A4517F51-9C85-4850-BE3F-F196742925D2");
-        internal static Guid introductionId = new("00000000-0000-0000-0000-000000000000");
+        internal static string categoryDisplayName = "Everything";
+        internal static string categoryCode = "all";
+
+        internal static Guid introductionId = new("4FFC4CC3-C51A-4619-901A-D0BAA9D702BC");
+        internal static string introductionTitle = "Hello";
+        internal static string introductionContent = "The service is on-line. Congratulations.";
 
         public override void Up()
         {
             Execute.Sql(
                 $@"INSERT INTO category(id, code, display_name, is_everything)
-                    VALUES ('{categoryId}', 'all', 'Everything', TRUE);");
+                    VALUES ('{categoryId}', '{categoryCode}', '{categoryDisplayName}', TRUE);");
 
             Execute.Sql(
                 $@"INSERT INTO introduction(id, title, content)
-                    VALUES ('{introductionId}', 'Hello', 'The service is on-line. Congratulations.');");
+                    VALUES ('{introductionId}', '{introductionTitle}', '{introductionContent}');");
         }
 
         public override void Down()

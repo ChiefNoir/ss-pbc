@@ -25,10 +25,6 @@ namespace Abstractions.IRepositories
         /// <returns><seealso cref="Category"/>  or <b>null</b> </returns>
         Task<Category> GetAsync(string code);
 
-        /// <summary>Get technical <seealso cref="Category"/> for filtering by everything</summary>
-        /// <returns>Everything <seealso cref="Category"/> </returns>
-        Task<Category> GetTechnicalAsync();
-
         /// <summary>Save item to the storage </summary>
         /// <param name="item">New or updated <seealso cref="Category"/> </param>
         /// <returns>Created or updated <seealso cref="Category"/> </returns>

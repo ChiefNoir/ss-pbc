@@ -7,7 +7,7 @@ namespace Infrastructure.Helpers
         /// <summary>Remove everything illegal from project/category code</summary>
         /// <param name="code">Project/category code</param>
         /// <returns>Sanitized code</returns>
-        internal static string SanitizeCode(string code)
+        internal static string? SanitizeCode(string code)
         {
             if (string.IsNullOrEmpty(code))
             {

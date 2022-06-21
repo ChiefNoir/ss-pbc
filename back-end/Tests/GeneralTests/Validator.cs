@@ -24,10 +24,10 @@ namespace GeneralTests
             where T : notnull
         {
             Assert.NotNull(response);
-            Assert.True(response!.IsSucceed);
-            Assert.Null(response!.Error);
+            Assert.True(response.IsSucceed);
+            Assert.Null(response.Error);
 
-            Assert.NotEqual(default, response!.Data);
+            Assert.NotEqual(default, response.Data);
         }
 
         internal static void Compare(Category expected, Category actual)

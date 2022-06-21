@@ -11,6 +11,6 @@
         public bool IsSucceed { get; set; }
 
         /// <summary> Execution incident </summary>
-        public Incident Error { get; set; }
+        public Incident? Error { get; set; }
     }
 }

@@ -29,16 +29,16 @@ namespace SSPBC.Controllers
         [AllowAnonymous]
         [ApiVersion("1.0")]
         [HttpPost("login")]
-        public async Task<ActionResult<ExecutionResult<Identity>>> LoginAsync([FromBody] Credentials credentials)
+        public async Task<ActionResult<ExecutionResult<Identity>>> LoginAsync([FromBody] string login, [FromBody] string password)
         {
             var result = await _supervisor.SafeExecuteAsync(async () =>
             {
-                var user = await _accountRepository.GetAsync(credentials.Login, credentials.Password);
+                var user = await _accountRepository.GetAsync(login, password);
 
                 return new Identity
                 {
                     Account = user,
-                    Token = _tokenManager.CreateToken(credentials.Login, user.Role),
+                    Token = _tokenManager.CreateToken(login, user.Role),
                     TokenLifeTimeMinutes = _configuration.GetSection("Token:LifeTime").Get<int>()
                 };
             });

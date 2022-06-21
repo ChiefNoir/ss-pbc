@@ -5,7 +5,7 @@ namespace GeneralTests.Security
     [Trait("Category", "Unit")]
     public sealed class Supervisor_Tests
     {
-        private readonly Supervisor _supervisor = new Supervisor();
+        private readonly Supervisor _supervisor = new();
 
         [Theory]
         [InlineData(-1)]

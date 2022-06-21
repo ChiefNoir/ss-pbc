@@ -46,10 +46,10 @@ namespace Infrastructure.Converters
         {
             return new Abstractions.Models.Introduction
             {
-                Content = item.Content,
-                Title = item.Title,
-                PosterDescription = item.PosterDescription,
-                PosterUrl = item.PosterUrl,
+                Content = item.Content ?? string.Empty,
+                Title = item.Title ?? string.Empty,
+                PosterDescription = item.PosterDescription ?? string.Empty,
+                PosterUrl = item.PosterUrl ?? string.Empty,
                 Version = item.Version,
                 ExternalUrls = ToExternalUrl(item.ExternalUrls)
             };
@@ -64,8 +64,8 @@ namespace Infrastructure.Converters
                 Description = project.Description,
                 DescriptionShort = project.DescriptionShort,
                 DisplayName = project.DisplayName,
-                PosterUrl = project.PosterUrl,
-                PosterDescription = project.PosterDescription,
+                PosterUrl = project.PosterUrl ?? string.Empty,
+                PosterDescription = project.PosterDescription ?? string.Empty,
                 ReleaseDate = project.ReleaseDate,
                 Version = project.Version,
                 Category = ToCategory(project.Category),
@@ -80,7 +80,7 @@ namespace Infrastructure.Converters
                 Code = project.Code,
                 Description = project.DescriptionShort,
                 DisplayName = project.DisplayName,
-                PosterDescription = project.PosterDescription,
+                PosterDescription = project.PosterDescription ?? string.Empty,
                 PosterUrl = project.PosterUrl,
                 ReleaseDate = project.ReleaseDate,
                 Category = ToCategory(project.Category)

@@ -25,8 +25,8 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetIntroductionAsync()
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetIntroduction!);
-                    Validator.Compare(Default.Introduction, publiGetIntroduction!.Data!);
+                    Validator.CheckSucceed(publiGetIntroduction);
+                    Validator.Compare(Default.Introduction, publiGetIntroduction.Data);
                     //
 
                     //
@@ -35,8 +35,8 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoriesAsync()
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetCategories!);
-                    Validator.Compare(new[] { Default.Category }, publiGetCategories!.Data!);
+                    Validator.CheckSucceed(publiGetCategories);
+                    Validator.Compare(new[] { Default.Category }, publiGetCategories.Data);
                     //
 
                     //
@@ -45,8 +45,8 @@ namespace GeneralTests.UseCases
                        await apiPublic.GetCategoryAsync(Default.Category.Id)
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetCategory!);
-                    Validator.Compare(Default.Category, publiGetCategory!.Data!);
+                    Validator.CheckSucceed(publiGetCategory);
+                    Validator.Compare(Default.Category, publiGetCategory.Data);
                     //
 
                     //
@@ -55,8 +55,8 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetProjectsPreviewAsync!);
-                    Validator.Compare(Enumerable.Empty<ProjectPreview>(), publiGetProjectsPreviewAsync!.Data!);
+                    Validator.CheckSucceed(publiGetProjectsPreviewAsync);
+                    Validator.Compare(Enumerable.Empty<ProjectPreview>(), publiGetProjectsPreviewAsync.Data);
                     //
 
                     //
@@ -64,11 +64,11 @@ namespace GeneralTests.UseCases
 
                     var responseLogin =
                     (
-                       await apiGateway.LoginAsync(new Credentials { Login = Default.Account.Login, Password = Default.Account.Password })
+                       await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
                     ).Value;
 
-                    Validator.CheckSucceed(responseLogin!);
-                    Validator.Compare(Default.Account, responseLogin!.Data!.Account);
+                    Validator.CheckSucceed(responseLogin);
+                    Validator.Compare(Default.Account, responseLogin.Data.Account);
 
                     Assert.Equal
                     (
@@ -85,8 +85,8 @@ namespace GeneralTests.UseCases
                         apiPrivate.GetRoles()
                     ).Value;
 
-                    Validator.CheckSucceed(responseRoles!);
-                    Validator.Compare(RoleNames.GetRoles(), responseRoles!.Data!);
+                    Validator.CheckSucceed(responseRoles);
+                    Validator.Compare(RoleNames.GetRoles(), responseRoles.Data);
                     //
 
                     //
@@ -95,8 +95,8 @@ namespace GeneralTests.UseCases
                         await apiPrivate.GetAccountsAsync()
                     ).Value;
 
-                    Validator.CheckSucceed(resultGetAccounts!);
-                    Validator.Compare(new[] { Default.Account }, resultGetAccounts!.Data!);
+                    Validator.CheckSucceed(resultGetAccounts);
+                    Validator.Compare(new[] { Default.Account }, resultGetAccounts.Data);
                     //
                 }
                 finally

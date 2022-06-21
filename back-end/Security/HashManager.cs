@@ -20,7 +20,7 @@ namespace Security
         /// <param name="plainText"> Plain text </param>
         /// <param name="hexSalt"> Salt as hex string. If hexSalt is null, the new salt will be created</param>
         /// <returns>Hash as hex string and hashed string</returns>
-        public HashResult Hash(string plainText, string hexSalt = null)
+        public HashResult Hash(string plainText, string? hexSalt = null)
         {
             if (string.IsNullOrEmpty(plainText))
             {

@@ -36,7 +36,7 @@ namespace Infrastructure.Converters
             return new IntroductionToExternalUrl
             {
                 ExternalUrl = ext,
-                ExternalUrlId = ext!.Id!.Value,
+                ExternalUrlId = ext.Id.Value,
             };
         }
 

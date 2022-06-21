@@ -10,10 +10,10 @@ namespace Abstractions.Models
         public Guid? Id { get; set; }
 
         /// <summary> Unique category code</summary>
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         /// <summary> Friendly category name </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
 
         /// <summary> Is category technical for filtering by all</summary>
         public bool IsEverything { get; set; }

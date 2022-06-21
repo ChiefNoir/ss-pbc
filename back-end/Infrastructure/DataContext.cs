@@ -6,19 +6,18 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("GeneralTests")]
 namespace Infrastructure
 {
-    [ExcludeFromCodeCoverage]
     public class DataContext : DbContext
     {
-        internal DbSet<Account> Accounts { get; set; }
-        internal DbSet<Category> Categories { get; set; }
-        internal DbSet<CategoryWithTotalProjects> CategoriesWithTotalProjects { get; set; }
-        internal DbSet<ExternalUrl> ExternalUrls { get; set; }
+        internal DbSet<Account> Accounts => Set<Account>();
+        internal DbSet<Category> Categories => Set<Category>();
+        internal DbSet<CategoryWithTotalProjects> CategoriesWithTotalProjects => Set<CategoryWithTotalProjects>();
+        internal DbSet<ExternalUrl> ExternalUrls => Set<ExternalUrl>();
 
-        internal DbSet<Introduction> Introductions { get; set; }
-        internal DbSet<IntroductionToExternalUrl> IntroductionExternalUrls { get; set; }
+        internal DbSet<Introduction> Introductions => Set<Introduction>();
+        internal DbSet<IntroductionToExternalUrl> IntroductionExternalUrls => Set<IntroductionToExternalUrl>();
 
-        internal DbSet<Project> Projects { get; set; }
-        internal DbSet<ProjectToExternalUrl> ProjectExternalUrls { get; set; }
+        internal DbSet<Project> Projects => Set<Project>();
+        internal DbSet<ProjectToExternalUrl> ProjectExternalUrls => Set<ProjectToExternalUrl>();
 
         public Migrator Migrator { get; set; }
 

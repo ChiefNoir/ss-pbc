@@ -12,6 +12,8 @@ namespace GeneralTests
             Content = M197101010000_Default.introductionContent,
             ExternalUrls = new List<ExternalUrl>(),
             Version = 0,
+            PosterUrl = string.Empty,
+            PosterDescription = string.Empty
         };
 
         internal static readonly Account Account = new()

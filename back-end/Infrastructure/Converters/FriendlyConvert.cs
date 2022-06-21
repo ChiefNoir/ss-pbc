@@ -12,7 +12,7 @@
         /// </remarks>
         /// <returns>User-friendly string, ex.:  '10 Mb'</returns>
         /// <exception cref="ArgumentException" />
-        public static string BytesToString(long byteCount, string[] suffices = null)
+        public static string BytesToString(long byteCount, string[]? suffices = null)
         {
             if (byteCount < 0)
             {

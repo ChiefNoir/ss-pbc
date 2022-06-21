@@ -37,8 +37,8 @@ namespace GeneralTests
             (
                 await apiPrivate.SaveProjectAsync(prj)
             ).Value;
-            Validator.CheckSucceed(responseSaveProject!);
-            Validator.Compare(prj, responseSaveProject!.Data!);
+            Validator.CheckSucceed(responseSaveProject);
+            Validator.Compare(prj, responseSaveProject.Data);
             // *****************************
 
             // Step 3: Check project (by code)
@@ -46,8 +46,8 @@ namespace GeneralTests
             (
                 await apiPublic.GetProjectAsync(prj.Code)
             ).Value;
-            Validator.CheckSucceed(responseGetProject!);
-            Validator.Compare(prj, responseGetProject!.Data!);
+            Validator.CheckSucceed(responseGetProject);
+            Validator.Compare(prj, responseGetProject.Data);
             // *****************************
 
             // Step 4: Check project preview
@@ -55,8 +55,8 @@ namespace GeneralTests
             (
                 await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
             ).Value;
-            Validator.CheckSucceed(responseGetProjectsPreview!);
-            Assert.Equal(category.TotalProjects + 1, responseGetProjectsPreview!.Data!.Length!);
+            Validator.CheckSucceed(responseGetProjectsPreview);
+            Assert.Equal(category.TotalProjects + 1, responseGetProjectsPreview.Data.Length);
 
             var preview = new ProjectPreview
             {
@@ -69,7 +69,7 @@ namespace GeneralTests
                 ReleaseDate = prj.ReleaseDate
             };
 
-            Validator.Compare(preview, responseGetProjectsPreview!.Data!.First(x => x.Code == prj.Code));
+            Validator.Compare(preview, responseGetProjectsPreview.Data.First(x => x.Code == prj.Code));
             // *****************************
 
             // Step 5: Check category
@@ -77,8 +77,8 @@ namespace GeneralTests
             (
                 await apiPublic.GetCategoryAsync(category.Id)
             ).Value;
-            Validator.CheckSucceed(responseGetCategory!);
-            Assert.Equal(category.TotalProjects + 1, responseGetCategory!.Data!.TotalProjects);
+            Validator.CheckSucceed(responseGetCategory);
+            Assert.Equal(category.TotalProjects + 1, responseGetCategory.Data.TotalProjects);
             // *****************************
 
             // Step 6: Check category==all
@@ -86,12 +86,12 @@ namespace GeneralTests
             (
                 await apiPublic.GetCategoryAsync(Default.Category.Id)
             ).Value;
-            Validator.CheckSucceed(responseGetCategoryDef!);
-            Assert.Equal(category.TotalProjects + 1, responseGetCategoryDef!.Data!.TotalProjects);
+            Validator.CheckSucceed(responseGetCategoryDef);
+            Assert.Equal(category.TotalProjects + 1, responseGetCategoryDef.Data.TotalProjects);
             // *****************************
 
             var result = await apiPublic.GetProjectAsync(prj.Code);
-            return result!.Value!.Data!;
+            return result.Value.Data;
         }
 
         public static async Task<Category> CreateNewCategory(DataContext context, string? categoryCode = null)
@@ -103,8 +103,8 @@ namespace GeneralTests
             (
                 await apiPublic.GetCategoriesAsync()
             ).Value;
-            Validator.CheckSucceed(responseGetCategories!);
-            var category = responseGetCategories!.Data!.FirstOrDefault(x => x.Code == (categoryCode ?? newCategoryCode));
+            Validator.CheckSucceed(responseGetCategories);
+            var category = responseGetCategories.Data.FirstOrDefault(x => x.Code == (categoryCode ?? newCategoryCode));
 
             if (category == null)
             {
@@ -121,9 +121,9 @@ namespace GeneralTests
                 (
                     await apiPrivate.SaveCategoryAsync(category)
                 ).Value;
-                Validator.CheckSucceed(responseSaveCategory!);
-                Validator.Compare(category, responseSaveCategory!.Data!);
-                category = responseSaveCategory!.Data!;
+                Validator.CheckSucceed(responseSaveCategory);
+                Validator.Compare(category, responseSaveCategory.Data);
+                category = responseSaveCategory.Data;
                 // *****************************
             }
 
@@ -132,9 +132,9 @@ namespace GeneralTests
             (
                 await apiPublic.GetCategoriesAsync()
             ).Value;
-            Validator.CheckSucceed(responseGetCategories!);
+            Validator.CheckSucceed(responseGetCategories);
 
-            var existingCategory = responseGetCategories!.Data!.First(x => x.Code == category.Code);
+            var existingCategory = responseGetCategories.Data.First(x => x.Code == category.Code);
             Validator.Compare(category, existingCategory);
             // *****************************
 

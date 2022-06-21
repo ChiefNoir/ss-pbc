@@ -10,25 +10,25 @@ namespace Abstractions.Models
         public Guid? Id { get; set; }
 
         /// <summary> Project category </summary>
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
 
         /// <summary> Project unique code </summary>
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         /// <summary> Description </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         /// <summary> Description </summary>
-        public string DescriptionShort { get; set; }
+        public string DescriptionShort { get; set; } = string.Empty;
 
         /// <summary> Friendly name</summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
 
         /// <summary> Short description for the poster (mostly for the image alt-text) </summary>
-        public string PosterDescription { get; set; }
+        public string PosterDescription { get; set; } = string.Empty;
 
         /// <summary> URL for the poster </summary>
-        public string PosterUrl { get; set; }
+        public string PosterUrl { get; set; } = string.Empty;
 
         /// <summary> Release date </summary>
         public DateTime? ReleaseDate { get; set; }
@@ -38,6 +38,6 @@ namespace Abstractions.Models
 
 
         /// <summary> URL for the external resources for the project </summary>
-        public IList<ExternalUrl> ExternalUrls { get; set; }
+        public IList<ExternalUrl> ExternalUrls { get; set; } = new List<ExternalUrl>();
     }
 }

@@ -116,7 +116,7 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             var categoryWithProject = await _context.CategoriesWithTotalProjects.FirstOrDefaultAsync(x => x.Id == dbItem.Id);
-            _context.Entry(categoryWithProject!).Reload(); // Hack, EF returning data from cache
+            _context.Entry(categoryWithProject).Reload(); // Hack, EF returning data from cache
             return DataConverter.ToCategory(categoryWithProject);
         }
 

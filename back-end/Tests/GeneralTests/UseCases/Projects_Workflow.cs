@@ -37,8 +37,8 @@ namespace GeneralTests.UseCases
                                     )
                         ).Value;
 
-                        Validator.CheckSucceed(publicGetProjectsPreview!);
-                        Validator.Compare(Enumerable.Empty<ProjectPreview>(), publicGetProjectsPreview!.Data!);
+                        Validator.CheckSucceed(publicGetProjectsPreview);
+                        Validator.Compare(Enumerable.Empty<ProjectPreview>(), publicGetProjectsPreview.Data);
                     }
                     // *****************************
 
@@ -47,10 +47,10 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetCategoriesAsync()
                     ).Value;
-                    Validator.CheckSucceed(publicGetCategories!);
-                    Validator.Compare(new[] { Default.Category }, publicGetCategories!.Data!);
+                    Validator.CheckSucceed(publicGetCategories);
+                    Validator.Compare(new[] { Default.Category }, publicGetCategories.Data);
 
-                    var defaultProject = publicGetCategories!.Data!.First();
+                    var defaultProject = publicGetCategories.Data.First();
                     Assert.Equal(0, defaultProject.TotalProjects);
                     // *****************************
 
@@ -66,8 +66,8 @@ namespace GeneralTests.UseCases
                                     )
                         ).Value;
 
-                        Validator.CheckSucceed(publicGetProjectsPreview!);
-                        Validator.Compare(Enumerable.Empty<ProjectPreview>(), publicGetProjectsPreview!.Data!);
+                        Validator.CheckSucceed(publicGetProjectsPreview);
+                        Validator.Compare(Enumerable.Empty<ProjectPreview>(), publicGetProjectsPreview.Data);
                     }
                     // *****************************
                 }
@@ -109,8 +109,8 @@ namespace GeneralTests.UseCases
                                     )
                         ).Value;
 
-                    Validator.CheckSucceed(publicGetProjectsPreview!);
-                    Validator.Compare(Enumerable.Empty<ProjectPreview>(), publicGetProjectsPreview!.Data!);
+                    Validator.CheckSucceed(publicGetProjectsPreview);
+                    Validator.Compare(Enumerable.Empty<ProjectPreview>(), publicGetProjectsPreview.Data);
                     // *****************************
 
 
@@ -119,14 +119,14 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetCategoriesAsync()
                     ).Value;
-                    Validator.CheckSucceed(publicGetCategories!);
-                    Validator.Compare(new[] { Default.Category }, publicGetCategories!.Data!);
+                    Validator.CheckSucceed(publicGetCategories);
+                    Validator.Compare(new[] { Default.Category }, publicGetCategories.Data);
 
-                    var defaultProject = publicGetCategories!.Data!.First();
+                    var defaultProject = publicGetCategories.Data.First();
                     Assert.Equal(0, defaultProject.TotalProjects);
                     // *****************************
 
-                    await Creator.CreateNewProject(context!, "code");
+                    await Creator.CreateNewProject(context, "code");
                 }
                 finally
                 {
@@ -162,18 +162,18 @@ namespace GeneralTests.UseCases
                     var apiPublic = Initializer.CreatePublicController(context);
                     var apiPrivate = Initializer.CreatePrivateController(context);
 
-                    var prj = await Creator.CreateNewProject(context!, "code");
+                    var prj = await Creator.CreateNewProject(context, "code");
                     var newCategory =
                     (
                         await apiPublic.GetCategoryAsync(prj.Category.Id)
-                    ).Value!.Data;
+                    ).Value.Data;
 
                     // Step 5: Delete project
                     var responseDeleteProject =
                     (
                         await apiPrivate.DeleteProjectAsync(prj)
                     ).Value;
-                    Validator.CheckSucceed(responseDeleteProject!);
+                    Validator.CheckSucceed(responseDeleteProject);
                     // *****************************
 
                     // Step 4: Check project (by code)
@@ -181,7 +181,7 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectAsync(prj.Code)
                     ).Value;
-                    Validator.CheckFail(responseGetProject!);
+                    Validator.CheckFail(responseGetProject);
                     // *****************************
 
                     // Step 4: Check project preview
@@ -189,8 +189,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
-                    Validator.CheckSucceed(responseGetProjectsPreview!);
-                    Assert.Equal(0, responseGetProjectsPreview!.Data!.Length!);
+                    Validator.CheckSucceed(responseGetProjectsPreview);
+                    Assert.Equal(0, responseGetProjectsPreview.Data.Length);
                     // *****************************
 
                     // Step 4: Check category
@@ -198,8 +198,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetCategoryAsync(newCategory.Id)
                     ).Value;
-                    Validator.CheckSucceed(responseGetCategory!);
-                    Assert.Equal(0, responseGetCategory!.Data!.TotalProjects);
+                    Validator.CheckSucceed(responseGetCategory);
+                    Assert.Equal(0, responseGetCategory.Data.TotalProjects);
                     // *****************************
 
                     // Step 4: Check category==all
@@ -207,8 +207,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetCategoryAsync(Default.Category.Id)
                     ).Value;
-                    Validator.CheckSucceed(responseGetCategoryDef!);
-                    Assert.Equal(0, responseGetCategoryDef!.Data!.TotalProjects);
+                    Validator.CheckSucceed(responseGetCategoryDef);
+                    Assert.Equal(0, responseGetCategoryDef.Data.TotalProjects);
                     // *****************************
                 }
                 finally
@@ -255,8 +255,8 @@ namespace GeneralTests.UseCases
                                     )
                         ).Value;
 
-                    Validator.CheckSucceed(publicGetProjectsPreview!);
-                    Validator.Compare(Enumerable.Empty<ProjectPreview>(), publicGetProjectsPreview!.Data!);
+                    Validator.CheckSucceed(publicGetProjectsPreview);
+                    Validator.Compare(Enumerable.Empty<ProjectPreview>(), publicGetProjectsPreview.Data);
                     // *****************************
 
                     // Step 2: Request categories an empty database (Total projects count in system category = 0)
@@ -264,10 +264,10 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetCategoriesAsync()
                     ).Value;
-                    Validator.CheckSucceed(publicGetCategories!);
-                    Validator.Compare(new[] { Default.Category }, publicGetCategories!.Data!);
+                    Validator.CheckSucceed(publicGetCategories);
+                    Validator.Compare(new[] { Default.Category }, publicGetCategories.Data);
 
-                    var defaultProject = publicGetCategories!.Data!.First();
+                    var defaultProject = publicGetCategories.Data.First();
                     Assert.Equal(0, defaultProject.TotalProjects);
                     // *****************************
 
@@ -284,9 +284,9 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveCategoryAsync(newCategory)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveCategory!);
-                    Validator.Compare(newCategory, responseSaveCategory!.Data!);
-                    newCategory = responseSaveCategory!.Data!;
+                    Validator.CheckSucceed(responseSaveCategory);
+                    Validator.Compare(newCategory, responseSaveCategory.Data);
+                    newCategory = responseSaveCategory.Data;
                     // *****************************
 
                     // Step 3: Create new project and assign it to the new category
@@ -305,9 +305,9 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveProject!);
+                    Validator.CheckSucceed(responseSaveProject);
                     prj.Category.TotalProjects = -1;
-                    Validator.Compare(prj, responseSaveProject!.Data!);
+                    Validator.Compare(prj, responseSaveProject.Data);
                     // *****************************
 
                     // Step 4: Check project (by code)
@@ -315,10 +315,10 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectAsync(prj.Code)
                     ).Value;
-                    Validator.CheckSucceed(responseGetProject!);
+                    Validator.CheckSucceed(responseGetProject);
                     prj.Category.TotalProjects = -1;
-                    Validator.Compare(prj, responseGetProject!.Data!);
-                    prj = responseGetProject!.Data!;
+                    Validator.Compare(prj, responseGetProject.Data);
+                    prj = responseGetProject.Data;
                     // *****************************
 
                     // Step 4: Check project preview
@@ -326,8 +326,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
-                    Validator.CheckSucceed(responseGetProjectsPreview!);
-                    Assert.Equal(1, responseGetProjectsPreview!.Data!.Length!);
+                    Validator.CheckSucceed(responseGetProjectsPreview);
+                    Assert.Equal(1, responseGetProjectsPreview.Data.Length);
 
                     var preview = new ProjectPreview
                     {
@@ -340,7 +340,7 @@ namespace GeneralTests.UseCases
                         ReleaseDate = prj.ReleaseDate
                     };
 
-                    Validator.Compare(preview, responseGetProjectsPreview!.Data![0]);
+                    Validator.Compare(preview, responseGetProjectsPreview.Data[0]);
                     // *****************************
 
                     // Step 6: Edit project 
@@ -356,10 +356,10 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveProject!);
+                    Validator.CheckSucceed(responseSaveProject);
                     prj.Category.TotalProjects = -1;
                     prj.Version++;
-                    Validator.Compare(prj, responseSaveProject!.Data!);
+                    Validator.Compare(prj, responseSaveProject.Data);
                     // *****************************
 
                     // Step 4: Check project (by code)
@@ -367,9 +367,9 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectAsync(prj.Code)
                     ).Value;
-                    Validator.CheckSucceed(responseGetProject!);
+                    Validator.CheckSucceed(responseGetProject);
                     prj.Category.TotalProjects = -1;
-                    Validator.Compare(prj, responseGetProject!.Data!);
+                    Validator.Compare(prj, responseGetProject.Data);
                     // *****************************
 
                     // Step 4: Check project preview
@@ -377,8 +377,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
-                    Validator.CheckSucceed(responseGetProjectsPreview!);
-                    Assert.Equal(1, responseGetProjectsPreview!.Data!.Length!);
+                    Validator.CheckSucceed(responseGetProjectsPreview);
+                    Assert.Equal(1, responseGetProjectsPreview.Data.Length);
 
                     preview = new ProjectPreview
                     {
@@ -391,8 +391,8 @@ namespace GeneralTests.UseCases
                         ReleaseDate = prj.ReleaseDate
                     };
 
-                    Validator.Compare(preview, responseGetProjectsPreview!.Data![0]);
-                    prj = responseGetProject!.Data!;
+                    Validator.Compare(preview, responseGetProjectsPreview.Data[0]);
+                    prj = responseGetProject.Data;
                     // *****************************
 
                     // Step 6: Edit project 
@@ -413,10 +413,10 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveProject!);
+                    Validator.CheckSucceed(responseSaveProject);
                     prj.Category.TotalProjects = -1;
                     prj.Version++;
-                    Validator.Compare(prj, responseSaveProject!.Data!);
+                    Validator.Compare(prj, responseSaveProject.Data);
                     // *****************************
 
                     // Step 4: Check project (by code)
@@ -424,9 +424,9 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectAsync(prj.Code)
                     ).Value;
-                    Validator.CheckSucceed(responseGetProject!);
+                    Validator.CheckSucceed(responseGetProject);
                     prj.Category.TotalProjects = -1;
-                    Validator.Compare(prj, responseGetProject!.Data!);
+                    Validator.Compare(prj, responseGetProject.Data);
                     // *****************************
 
                     // Step 4: Check project preview
@@ -434,8 +434,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
-                    Validator.CheckSucceed(responseGetProjectsPreview!);
-                    Assert.Equal(1, responseGetProjectsPreview!.Data!.Length!);
+                    Validator.CheckSucceed(responseGetProjectsPreview);
+                    Assert.Equal(1, responseGetProjectsPreview.Data.Length);
 
                     preview = new ProjectPreview
                     {
@@ -448,8 +448,8 @@ namespace GeneralTests.UseCases
                         ReleaseDate = prj.ReleaseDate
                     };
 
-                    Validator.Compare(preview, responseGetProjectsPreview!.Data![0]);
-                    prj = responseGetProject!.Data!;
+                    Validator.Compare(preview, responseGetProjectsPreview.Data[0]);
+                    prj = responseGetProject.Data;
                     // *****************************
 
                     // Step 6: Edit project 
@@ -459,11 +459,11 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveProject!);
+                    Validator.CheckSucceed(responseSaveProject);
                     prj.Category.TotalProjects = -1;
                     prj.Version++;
                     prj.ExternalUrls.ToList().ForEach(x => x.Version++);
-                    Validator.Compare(prj, responseSaveProject!.Data!);
+                    Validator.Compare(prj, responseSaveProject.Data);
                     // *****************************
 
                     // Step 4: Check project (by code)
@@ -471,9 +471,9 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectAsync(prj.Code)
                     ).Value;
-                    Validator.CheckSucceed(responseGetProject!);
+                    Validator.CheckSucceed(responseGetProject);
                     prj.Category.TotalProjects = -1;
-                    Validator.Compare(prj, responseGetProject!.Data!);
+                    Validator.Compare(prj, responseGetProject.Data);
                     // *****************************
 
                     // Step 4: Check project preview
@@ -481,8 +481,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
-                    Validator.CheckSucceed(responseGetProjectsPreview!);
-                    Assert.Equal(1, responseGetProjectsPreview!.Data!.Length!);
+                    Validator.CheckSucceed(responseGetProjectsPreview);
+                    Assert.Equal(1, responseGetProjectsPreview.Data.Length);
 
                     preview = new ProjectPreview
                     {
@@ -495,8 +495,8 @@ namespace GeneralTests.UseCases
                         ReleaseDate = prj.ReleaseDate
                     };
 
-                    Validator.Compare(preview, responseGetProjectsPreview!.Data![0]);
-                    prj = responseGetProject!.Data!;
+                    Validator.Compare(preview, responseGetProjectsPreview.Data[0]);
+                    prj = responseGetProject.Data;
                     // *****************************
 
                     // Step 6: Edit project 
@@ -506,11 +506,11 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveProject!);
+                    Validator.CheckSucceed(responseSaveProject);
                     prj.Category.TotalProjects = -1;
                     prj.Version++;
                     prj.ExternalUrls.ToList().ForEach(x => x.Version++);
-                    Validator.Compare(prj, responseSaveProject!.Data!);
+                    Validator.Compare(prj, responseSaveProject.Data);
                     // *****************************
 
                     // Step 4: Check project (by code)
@@ -518,9 +518,9 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectAsync(prj.Code)
                     ).Value;
-                    Validator.CheckSucceed(responseGetProject!);
+                    Validator.CheckSucceed(responseGetProject);
                     prj.Category.TotalProjects = -1;
-                    Validator.Compare(prj, responseGetProject!.Data!);
+                    Validator.Compare(prj, responseGetProject.Data);
                     // *****************************
 
                     // Step 4: Check project preview
@@ -528,8 +528,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
-                    Validator.CheckSucceed(responseGetProjectsPreview!);
-                    Assert.Equal(1, responseGetProjectsPreview!.Data!.Length!);
+                    Validator.CheckSucceed(responseGetProjectsPreview);
+                    Assert.Equal(1, responseGetProjectsPreview.Data.Length);
 
                     preview = new ProjectPreview
                     {
@@ -542,8 +542,8 @@ namespace GeneralTests.UseCases
                         ReleaseDate = prj.ReleaseDate
                     };
 
-                    Validator.Compare(preview, responseGetProjectsPreview!.Data![0]);
-                    prj = responseGetProject!.Data!;
+                    Validator.Compare(preview, responseGetProjectsPreview.Data[0]);
+                    prj = responseGetProject.Data;
                     // *****************************
                 }
                 finally
@@ -703,9 +703,9 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveCategoryAsync(newCategory)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveCategory!);
-                    Validator.Compare(newCategory, responseSaveCategory!.Data!);
-                    newCategory = responseSaveCategory!.Data!;
+                    Validator.CheckSucceed(responseSaveCategory);
+                    Validator.Compare(newCategory, responseSaveCategory.Data);
+                    newCategory = responseSaveCategory.Data;
                     // *****************************
 
                     // Step 3: Create new project and assign it to the new category
@@ -713,7 +713,7 @@ namespace GeneralTests.UseCases
 
                     if (project.Category == null)
                     {
-                        prj.Category = newCategory!;
+                        prj.Category = newCategory;
                     }
                     if (project.Category?.Code == "null")
                     {
@@ -724,7 +724,7 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
-                    Validator.CheckFail(responseSaveProject!);
+                    Validator.CheckFail(responseSaveProject);
                     // *****************************
 
                     // Step 4: Check project (by code)
@@ -732,7 +732,7 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectAsync(prj.Code)
                     ).Value;
-                    Validator.CheckFail(responseGetProject!);
+                    Validator.CheckFail(responseGetProject);
                     // *****************************
 
                     // Step 4: Check project preview
@@ -740,8 +740,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
                     ).Value;
-                    Validator.CheckSucceed(responseGetProjectsPreview!);
-                    Assert.Equal(0, responseGetProjectsPreview!.Data!.Length!);
+                    Validator.CheckSucceed(responseGetProjectsPreview);
+                    Assert.Equal(0, responseGetProjectsPreview.Data.Length);
                     // *****************************
 
                     // Step 4: Check category
@@ -749,8 +749,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetCategoryAsync(newCategory.Id)
                     ).Value;
-                    Validator.CheckSucceed(responseGetCategory!);
-                    Assert.Equal(0, responseGetCategory!.Data!.TotalProjects);
+                    Validator.CheckSucceed(responseGetCategory);
+                    Assert.Equal(0, responseGetCategory.Data.TotalProjects);
                     // *****************************
 
                     // Step 4: Check category==all
@@ -758,8 +758,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetCategoryAsync(Default.Category.Id)
                     ).Value;
-                    Validator.CheckSucceed(responseGetCategoryDef!);
-                    Assert.Equal(0, responseGetCategoryDef!.Data!.TotalProjects);
+                    Validator.CheckSucceed(responseGetCategoryDef);
+                    Assert.Equal(0, responseGetCategoryDef.Data.TotalProjects);
                     // *****************************
                 }
                 finally
@@ -778,7 +778,7 @@ namespace GeneralTests.UseCases
                 {
                     context.Migrator.MigrateUp();
                     var ethaloneCode = "code";
-                    _ = await Creator.CreateNewProject(context!, ethaloneCode);
+                    _ = await Creator.CreateNewProject(context, ethaloneCode);
 
                     var apiPublic = Initializer.CreatePublicController(context);
                     var apiPrivate = Initializer.CreatePrivateController(context);
@@ -788,14 +788,14 @@ namespace GeneralTests.UseCases
                         var failPrj =
                         (
                             await apiPublic.GetProjectAsync(ethaloneCode)
-                        ).Value!.Data!;
+                        ).Value.Data;
 
                         failPrj.Id = Guid.NewGuid();
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)
                         ).Value;
-                        Validator.CheckFail(responseSaveProject!);
+                        Validator.CheckFail(responseSaveProject);
                     }
                     // *****************************
 
@@ -804,14 +804,14 @@ namespace GeneralTests.UseCases
                         var failPrj =
                         (
                             await apiPublic.GetProjectAsync(ethaloneCode)
-                        ).Value!.Data!;
+                        ).Value.Data;
 
                         failPrj.Code = string.Empty;
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)
                         ).Value;
-                        Validator.CheckFail(responseSaveProject!);
+                        Validator.CheckFail(responseSaveProject);
                     }
                     // *****************************
 
@@ -820,14 +820,14 @@ namespace GeneralTests.UseCases
                         var failPrj =
                         (
                             await apiPublic.GetProjectAsync(ethaloneCode)
-                        ).Value!.Data!;
+                        ).Value.Data;
 
                         failPrj.Version++;
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)
                         ).Value;
-                        Validator.CheckFail(responseSaveProject!);
+                        Validator.CheckFail(responseSaveProject);
                     }
                     // *****************************
 
@@ -836,31 +836,31 @@ namespace GeneralTests.UseCases
                         var failPrj =
                         (
                             await apiPublic.GetProjectAsync(ethaloneCode)
-                        ).Value!.Data!;
+                        ).Value.Data;
 
                         failPrj.DisplayName = string.Empty;
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)
                         ).Value;
-                        Validator.CheckFail(responseSaveProject!);
+                        Validator.CheckFail(responseSaveProject);
                     }
                     // *****************************
 
                     // 
                     {
-                        _ = await Creator.CreateNewProject(context!, "ss");
+                        _ = await Creator.CreateNewProject(context, "ss");
                         var failPrj =
                         (
                             await apiPublic.GetProjectAsync(ethaloneCode)
-                        ).Value!.Data!;
+                        ).Value.Data;
 
                         failPrj.Code = "ss";
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)
                         ).Value;
-                        Validator.CheckFail(responseSaveProject!);
+                        Validator.CheckFail(responseSaveProject);
                     }
                     // *****************************
                 }
@@ -888,42 +888,42 @@ namespace GeneralTests.UseCases
                         var prj =
                         (
                             await apiPublic.GetProjectAsync(code)
-                        ).Value!.Data!;
+                        ).Value.Data;
 
                         prj.Id = null;
                         var responseSaveProject =
                         (
                             await apiPrivate.DeleteProjectAsync(prj)
                         ).Value;
-                        Validator.CheckFail(responseSaveProject!);
+                        Validator.CheckFail(responseSaveProject);
                     }
 
                     {
                         var prj =
                         (
                             await apiPublic.GetProjectAsync(code)
-                        ).Value!.Data!;
+                        ).Value.Data;
 
                         prj.Id = Guid.NewGuid();
                         var responseSaveProject =
                         (
                             await apiPrivate.DeleteProjectAsync(prj)
                         ).Value;
-                        Validator.CheckFail(responseSaveProject!);
+                        Validator.CheckFail(responseSaveProject);
                     }
 
                     {
                         var prj =
                         (
                             await apiPublic.GetProjectAsync(code)
-                        ).Value!.Data!;
+                        ).Value.Data;
 
                         prj.Version++;
                         var responseSaveProject =
                         (
                             await apiPrivate.DeleteProjectAsync(prj)
                         ).Value;
-                        Validator.CheckFail(responseSaveProject!);
+                        Validator.CheckFail(responseSaveProject);
                     }
                 }
                 finally

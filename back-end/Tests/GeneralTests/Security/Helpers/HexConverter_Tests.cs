@@ -41,18 +41,18 @@ namespace GeneralTests.Security.Helpers
             }
         }
 
-        private class InValidByteArrayText : IEnumerable<object[]>
+        private class InValidByteArrayText : IEnumerable<object?[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-            public IEnumerator<object[]> GetEnumerator()
+            public IEnumerator<object?[]> GetEnumerator()
             {
-                yield return new object[]
+                yield return new object?[]
                 {
                     null,
                     string.Empty
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
                     Array.Empty<byte>(),
                     string.Empty

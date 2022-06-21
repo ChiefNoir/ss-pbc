@@ -36,12 +36,12 @@ namespace Infrastructure.Repositories
                                        .OrderBy(x => x.Id)
                                        .FirstOrDefaultAsync();
 
-            CheckBeforeUpdate(dbItem!, item);
+            CheckBeforeUpdate(dbItem, item);
 
-            Merge(dbItem!, item);
+            Merge(dbItem, item);
             await _context.SaveChangesAsync();
 
-            return DataConverter.ToIntroduction(dbItem!);
+            return DataConverter.ToIntroduction(dbItem);
         }
 
 

@@ -8,54 +8,50 @@ namespace GeneralTests.UseCases
     [Trait("Category", "Work-flow")]
     public sealed class Gateway_Workflow
     {
-        private class InvalidLogins : IEnumerable<object[]>
+        private class InvalidLogins : IEnumerable<object?[]>
         {
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-            public IEnumerator<object[]> GetEnumerator()
+            public IEnumerator<object?[]> GetEnumerator()
             {
-                yield return new object[]
+                yield return new object?[]
                 {
-                            new Credentials{ Login = "sa", Password = null }
+                    "sa", null
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
-                            new Credentials{ Login = "sa", Password = string.Empty }
+                    "sa",string.Empty
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
-                            new Credentials{ Login = "sa", Password = "wrong" }
+                    "sa", "wrong"
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
-                            new Credentials{ Login = string.Empty, Password = "sa" }
+                    string.Empty, "sa"
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
-                            new Credentials{ Login = null, Password = "sa" }
+                    null, "sa"
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
-                            new Credentials{ Login = string.Empty, Password = "sa" }
+                    "admin", "sa"
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
-                            new Credentials{ Login = "admin", Password = "sa" }
+                    null, null
                 };
-                yield return new object[]
+                yield return new object?[]
                 {
-                            new Credentials{ Login = null, Password = null }
-                };
-                yield return new object[]
-                {
-                            new Credentials{ Login = string.Empty, Password = string.Empty }
+                    string.Empty, string.Empty
                 };
             }
         }
 
         [Theory]
         [ClassData(typeof(InvalidLogins))]
-        internal async Task Login_Negative(Credentials credentials)
+        internal async Task Login_Negative(string login, string password)
         {
             using (var context = Initializer.CreateDataContext())
             {
@@ -67,11 +63,11 @@ namespace GeneralTests.UseCases
 
                     var response =
                     (
-                        await api.LoginAsync(credentials)
+                        await api.LoginAsync(login, password)
                     ).Value;
 
-                    Validator.CheckFail(response!);
-                    Assert.Null(response!.Data);
+                    Validator.CheckFail(response);
+                    Assert.Null(response.Data);
                 }
                 finally
                 {
@@ -93,11 +89,11 @@ namespace GeneralTests.UseCases
 
                     var response =
                     (
-                        await api.LoginAsync(new Credentials { Login = Default.Account.Login, Password = Default.Account.Login })
+                        await api.LoginAsync(Default.Account.Login, Default.Account.Password)
                     ).Value;
 
-                    Validator.CheckSucceed(response!);
-                    Validator.Compare(Default.Account, response!.Data!.Account);
+                    Validator.CheckSucceed(response);
+                    Validator.Compare(Default.Account, response.Data.Account);
 
                     Assert.Equal
                     (

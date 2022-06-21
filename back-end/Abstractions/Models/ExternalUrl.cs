@@ -10,10 +10,10 @@ namespace Abstractions.Models
         public Guid? Id { get; set; }
 
         /// <summary> Friendly name for URL </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
 
         /// <summary> URL to the external recourse </summary>
-        public string Url { get; set; }
+        public string Url { get; set; } = string.Empty;
 
         /// <summary> Entity version </summary>
         public long Version { get; set; }

@@ -29,8 +29,8 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoriesAsync()
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetCategories!);
-                    Validator.Compare(new[] { Default.Category }, publiGetCategories!.Data!);
+                    Validator.CheckSucceed(publiGetCategories);
+                    Validator.Compare(new[] { Default.Category }, publiGetCategories.Data);
                     // *****************************
 
                     // Step 2: Request category by id
@@ -39,8 +39,8 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoryAsync(Default.Category.Id)
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetCategory!);
-                    Validator.Compare(Default.Category, publiGetCategory!.Data!);
+                    Validator.CheckSucceed(publiGetCategory);
+                    Validator.Compare(Default.Category, publiGetCategory.Data);
                     // *****************************
                 }
                 finally
@@ -71,7 +71,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoryAsync(Guid.Empty)
                     ).Value;
 
-                    Validator.CheckFail(publiGetCategory!);
+                    Validator.CheckFail(publiGetCategory);
                     // *****************************
 
                     // Step 2: Request category by invalid id
@@ -80,7 +80,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoryAsync(Guid.NewGuid())
                     ).Value;
 
-                    Validator.CheckFail(publiGetCategory!);
+                    Validator.CheckFail(publiGetCategory);
                     // *****************************
 
                     // Step 2: Request category by invalid id
@@ -89,7 +89,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoryAsync(null)
                     ).Value;
 
-                    Validator.CheckFail(publiGetCategory!);
+                    Validator.CheckFail(publiGetCategory);
                     // *****************************
                 }
                 finally
@@ -128,9 +128,9 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveCategoryAsync(newCategory)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveCategory!);
-                    Validator.Compare(newCategory, responseSaveCategory!.Data!);
-                    newCategory = responseSaveCategory!.Data!;
+                    Validator.CheckSucceed(responseSaveCategory);
+                    Validator.Compare(newCategory, responseSaveCategory.Data);
+                    newCategory = responseSaveCategory.Data;
                     // *****************************
 
                     // Step 1: and save
@@ -140,11 +140,11 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveCategoryAsync(newCategory)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveCategory!);
+                    Validator.CheckSucceed(responseSaveCategory);
 
                     newCategory.Version++;
-                    Validator.Compare(newCategory, responseSaveCategory!.Data!);
-                    newCategory = responseSaveCategory!.Data!;
+                    Validator.Compare(newCategory, responseSaveCategory.Data);
+                    newCategory = responseSaveCategory.Data;
                     // *****************************
 
                     // Step 2: Request categories
@@ -154,8 +154,8 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoriesAsync()
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetCategories!);
-                    Validator.Compare(new[] { Default.Category, newCategory }, publiGetCategories!.Data!);
+                    Validator.CheckSucceed(publiGetCategories);
+                    Validator.Compare(new[] { Default.Category, newCategory }, publiGetCategories.Data);
                     // *****************************
 
                     // Step 2: Request category by id
@@ -164,8 +164,8 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoryAsync(newCategory.Id)
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetCategory!);
-                    Validator.Compare(newCategory, publiGetCategory!.Data!);
+                    Validator.CheckSucceed(publiGetCategory);
+                    Validator.Compare(newCategory, publiGetCategory.Data);
                     // *****************************
                 }
                 finally
@@ -206,9 +206,9 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveCategoryAsync(newCategory)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveCategory!);
-                    Validator.Compare(newCategory, responseSaveCategory!.Data!);
-                    newCategory = responseSaveCategory!.Data!;
+                    Validator.CheckSucceed(responseSaveCategory);
+                    Validator.Compare(newCategory, responseSaveCategory.Data);
+                    newCategory = responseSaveCategory.Data;
                     // *****************************
 
                     // Step 2: Delete category
@@ -216,7 +216,7 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.DeleteCategoryAsync(newCategory)
                     ).Value;
-                    Validator.CheckSucceed(responseDeleteCategory!);
+                    Validator.CheckSucceed(responseDeleteCategory);
                     // *****************************
 
                     // Step 3: Request category by id
@@ -225,7 +225,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoryAsync(newCategory.Id)
                     ).Value;
 
-                    Validator.CheckFail(publiGetCategory!);
+                    Validator.CheckFail(publiGetCategory);
                     // *****************************
 
                     // Step 4: Request all categories
@@ -234,8 +234,8 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoriesAsync()
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetCategories!);
-                    Validator.Compare(new[] { Default.Category }, publiGetCategories!.Data!);
+                    Validator.CheckSucceed(publiGetCategories);
+                    Validator.Compare(new[] { Default.Category }, publiGetCategories.Data);
                     // *****************************
                 }
                 finally
@@ -262,7 +262,7 @@ namespace GeneralTests.UseCases
                         Id = null,
                         Code = "cute",
                         DisplayName = "Cute things",
-                        IsEverything = true, // (sic!)
+                        IsEverything = true, // (here)
                         Version = 0,
                     }
                 };
@@ -271,7 +271,7 @@ namespace GeneralTests.UseCases
                     new Category
                     {
                         Id = null,
-                        Code = "all", // (sic!)
+                        Code = "all", // (here)
                         DisplayName = "Cute things",
                         IsEverything = false,
                         Version = 0,
@@ -282,18 +282,7 @@ namespace GeneralTests.UseCases
                     new Category
                     {
                         Id = null,
-                        Code = null, // (sic!)
-                        DisplayName = "Cute things",
-                        IsEverything = false,
-                        Version = 0,
-                    },
-                };
-                yield return new object[]
-                {
-                    new Category
-                    {
-                        Id = null,
-                        Code = string.Empty, // (sic!)
+                        Code = string.Empty, // (here)
                         DisplayName = "Cute things",
                         IsEverything = false,
                         Version = 0,
@@ -305,7 +294,7 @@ namespace GeneralTests.UseCases
                     {
                         Id = null,
                         Code = "cute",
-                        DisplayName = null,// (sic!)
+                        DisplayName = null,// (here)
                         IsEverything = false,
                         Version = 0,
                     },
@@ -316,7 +305,7 @@ namespace GeneralTests.UseCases
                     {
                         Id = null,
                         Code = "cute",
-                        DisplayName = string.Empty, // (sic!)
+                        DisplayName = string.Empty, // (here)
                         IsEverything = false,
                         Version = 0,
                     },
@@ -329,7 +318,7 @@ namespace GeneralTests.UseCases
                         Code = Default.Category.Code,
                         DisplayName = Default.Category.DisplayName,
                         IsEverything = true,
-                        Version = 10, // (sic!)
+                        Version = 10, // (here)
                     },
                 };
                 yield return new object[]
@@ -339,7 +328,7 @@ namespace GeneralTests.UseCases
                         Id = Default.Category.Id,
                         Code = Default.Category.Code,
                         DisplayName = Default.Category.DisplayName,
-                        IsEverything = false, // (sic!)
+                        IsEverything = false, // (here)
                         Version = 0,
                     },
                 };
@@ -364,7 +353,7 @@ namespace GeneralTests.UseCases
                     // Step 1: Create/update category and fail to save
                     var response = (await api.SaveCategoryAsync(update)).Value;
 
-                    Validator.CheckFail(response!);
+                    Validator.CheckFail(response);
                     // *****************************
                 }
                 finally
@@ -388,7 +377,7 @@ namespace GeneralTests.UseCases
                         Id = Default.Category.Id,
                         Code = Default.Category.Code,
                         DisplayName = Default.Category.DisplayName,
-                        IsEverything = true, // (sic!)
+                        IsEverything = true, // (here)
                         Version = 0,
                     }
                 };
@@ -399,8 +388,8 @@ namespace GeneralTests.UseCases
                         Id = Default.Category.Id,
                         Code = Default.Category.Code,
                         DisplayName = Default.Category.DisplayName,
-                        IsEverything = true, // (sic!)
-                        Version = 10, // (sic!)
+                        IsEverything = true, // (here)
+                        Version = 10, // (here)
                     }
                 };
                 yield return new object[]
@@ -444,7 +433,7 @@ namespace GeneralTests.UseCases
 
                     // Step 1: Create/update category and fail to save
                     var response = (await api.DeleteCategoryAsync(update)).Value;
-                    Validator.CheckFail(response!);
+                    Validator.CheckFail(response);
                     // *****************************
                 }
                 finally
@@ -469,7 +458,7 @@ namespace GeneralTests.UseCases
                         Code = Default.Category.Code,
                         DisplayName = Default.Category.DisplayName,
                         IsEverything = true,
-                        Version = 10, // (sic!)
+                        Version = 10, // (here)
                     }
                 };
                 yield return new object[]
@@ -477,7 +466,7 @@ namespace GeneralTests.UseCases
                     new Category
                     {
                         Id = Default.Category.Id,
-                        Code = null, // (sic!)
+                        Code = null, // (here)
                         DisplayName = Default.Category.DisplayName,
                         IsEverything = true,
                         Version = 0,
@@ -488,7 +477,7 @@ namespace GeneralTests.UseCases
                     new Category
                     {
                         Id = Default.Category.Id,
-                        Code = string.Empty, // (sic!)
+                        Code = string.Empty, // (here)
                         DisplayName = Default.Category.DisplayName,
                         IsEverything = true,
                         Version = 0,
@@ -500,7 +489,7 @@ namespace GeneralTests.UseCases
                     {
                         Id = Default.Category.Id,
                         Code = Default.Category.Code,
-                        DisplayName = string.Empty,  // (sic!)
+                        DisplayName = string.Empty,  // (here)
                         IsEverything = true,
                         Version = 0,
                     }
@@ -511,7 +500,7 @@ namespace GeneralTests.UseCases
                     {
                         Id = Default.Category.Id,
                         Code = Default.Category.Code,
-                        DisplayName = null,  // (sic!)
+                        DisplayName = null,  // (here)
                         IsEverything = true,
                         Version = 0,
                     }
@@ -520,7 +509,7 @@ namespace GeneralTests.UseCases
                 {
                     new Category
                     {
-                        Id = Guid.NewGuid(),// (sic!)
+                        Id = Guid.NewGuid(),// (here)
                         Code = Default.Category.Code,
                         DisplayName = "red",
                         IsEverything = true,
@@ -532,7 +521,7 @@ namespace GeneralTests.UseCases
                     new Category
                     {
                         Id = Default.Category.Id,
-                        Code = "code", // (sic!)
+                        Code = "code", // (here)
                         DisplayName = "things",
                         IsEverything = true,
                         Version = 0,
@@ -556,12 +545,12 @@ namespace GeneralTests.UseCases
                     context.Migrator.MigrateUp();
                     var api = Initializer.CreatePrivateController(context);
                     var filler = (await api.SaveCategoryAsync(new Category { Code = "code", DisplayName = "name" })).Value;
-                    Validator.CheckSucceed(filler!);
+                    Validator.CheckSucceed(filler);
 
                     // Step 1: Create/update category and fail to save
                     var response = (await api.SaveCategoryAsync(update)).Value;
 
-                    Validator.CheckFail(response!);
+                    Validator.CheckFail(response);
                     // *****************************
                 }
                 finally
@@ -591,15 +580,15 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveCategoryAsync(new Category { Code = "code", DisplayName = "name" })
                     ).Value;
-                    Validator.CheckSucceed(responseSaveCategoryAsync!);
+                    Validator.CheckSucceed(responseSaveCategoryAsync);
                     //*****************************
 
                     // Step 2: Set new Category to IsEverything = true
-                    var newCat = responseSaveCategoryAsync!.Data!;
+                    var newCat = responseSaveCategoryAsync.Data;
                     newCat.IsEverything = true;
 
                     var response = (await apiPrivate.SaveCategoryAsync(newCat)).Value;
-                    Validator.CheckFail(response!);
+                    Validator.CheckFail(response);
                     // *****************************
                 }
                 finally
@@ -634,8 +623,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveCategoryAsync(new Category { Code = "code", DisplayName = "name" })
                     ).Value;
-                    Validator.CheckSucceed(responseSaveCategory!);
-                    var newCat = responseSaveCategory!.Data!;
+                    Validator.CheckSucceed(responseSaveCategory);
+                    var newCat = responseSaveCategory.Data;
                     //*****************************
 
                     // Step 2: Create new project, assign it to the category, save
@@ -651,7 +640,7 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveProject!);
+                    Validator.CheckSucceed(responseSaveProject);
                     // *****************************
 
                     // Step 3: Fail to delete category
@@ -659,7 +648,7 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.DeleteCategoryAsync(newCat)
                     ).Value;
-                    Validator.CheckFail(responseDeleteCategory!);
+                    Validator.CheckFail(responseDeleteCategory);
                     // *****************************
 
                     // Step 4: Request category
@@ -669,8 +658,8 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoryAsync(newCat.Id)
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetCategory!);
-                    Validator.Compare(newCat, publiGetCategory!.Data!);
+                    Validator.CheckSucceed(publiGetCategory);
+                    Validator.Compare(newCat, publiGetCategory.Data);
                     // *****************************
 
 
@@ -679,10 +668,10 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetProjectAsync("prj")
                     ).Value;
-                    Validator.CheckSucceed(publiGetProject!);
+                    Validator.CheckSucceed(publiGetProject);
 
                     prj.Category.TotalProjects = -1; // TODO: fix it
-                    Validator.Compare(prj, publiGetProject!.Data!);
+                    Validator.Compare(prj, publiGetProject.Data);
                     // *****************************
                 }
                 finally

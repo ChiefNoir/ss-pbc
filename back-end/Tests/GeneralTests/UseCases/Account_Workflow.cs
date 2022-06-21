@@ -85,23 +85,23 @@ namespace GeneralTests.UseCases
                         await api.SaveAccountAsync(account)
                     ).Value;
 
-                    Validator.CheckSucceed(resultSaveAccount!);
-                    Validator.Compare(account, resultSaveAccount!.Data!);
+                    Validator.CheckSucceed(resultSaveAccount);
+                    Validator.Compare(account, resultSaveAccount.Data);
                     // *****************************
 
                     // Step 2: Login with new account
                     var gateway = Initializer.CreateGatewayController(context);
                     var resultLogin =
                     (
-                        await gateway.LoginAsync(new Credentials { Login = account.Login, Password = account.Password })
+                        await gateway.LoginAsync(account.Login, account.Password)
                     ).Value;
-                    Validator.CheckSucceed(resultLogin!);
+                    Validator.CheckSucceed(resultLogin);
                     Assert.Equal
                     (
                         Initializer.CreateConfiguration().GetSection("Token:LifeTime").Get<int>(),
-                        resultLogin!.Data!.TokenLifeTimeMinutes
+                        resultLogin.Data.TokenLifeTimeMinutes
                     );
-                    Assert.NotNull(resultLogin!.Data.Token);
+                    Assert.NotNull(resultLogin.Data.Token);
                     // *****************************
                 }
                 finally
@@ -122,18 +122,8 @@ namespace GeneralTests.UseCases
                     new Account
                     {
                         Id = null,
-                        Login = null, // (sic!)
-                        Password = "pswrd",
-                        Role = "demo"
-                    }
-                };
-                yield return new object[]
-                {
-                    new Account
-                    {
-                        Id = null,
                         Login = "admin",
-                        Password = null, // (sic!)
+                        Password = null, // (here)
                         Role = "demo"
                     }
                 };
@@ -144,7 +134,7 @@ namespace GeneralTests.UseCases
                         Id = null,
                         Login = "admin",
                         Password = "admin",
-                        Role = null // (sic!)
+                        Role = "something" // (here)
                     }
                 };
                 yield return new object[]
@@ -152,17 +142,7 @@ namespace GeneralTests.UseCases
                     new Account
                     {
                         Id = null,
-                        Login = "admin",
-                        Password = "admin",
-                        Role = "something" // (sic!)
-                    }
-                };
-                yield return new object[]
-                {
-                    new Account
-                    {
-                        Id = null,
-                        Login = "sa", // (sic!)
+                        Login = "sa", // (here)
                         Password = "sa",
                         Role = RoleNames.Admin,
                     }
@@ -173,7 +153,7 @@ namespace GeneralTests.UseCases
                     new Account
                     {
                         Id = null,
-                        Login = string.Empty, // (sic!)
+                        Login = string.Empty, // (here)
                         Password = "pswrd",
                         Role = "demo"
                     }
@@ -184,7 +164,7 @@ namespace GeneralTests.UseCases
                     {
                         Id = null,
                         Login = "admin",
-                        Password = string.Empty, // (sic!)
+                        Password = string.Empty, // (here)
                         Role = "demo"
                     }
                 };
@@ -195,14 +175,14 @@ namespace GeneralTests.UseCases
                         Id = null,
                         Login = "admin",
                         Password = "admin",
-                        Role = string.Empty // (sic!)
+                        Role = string.Empty // (here)
                     }
                 };
                 yield return new object[]
                 {
                     new Account
                     {
-                        Id = Guid.NewGuid(),  // (sic!)
+                        Id = Guid.NewGuid(),  // (here)
                         Login = "admin",
                         Password = "admin",
                         Role = RoleNames.Admin
@@ -230,10 +210,10 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var response =
                     (
-                        await gateway.LoginAsync(new() { Login = Default.Account.Login, Password = Default.Account.Password })
+                        await gateway.LoginAsync(Default.Account.Login, Default.Account.Password)
                     ).Value;
-                    Validator.CheckSucceed(response!);
-                    Validator.Compare(Default.Account, response!.Data!.Account);
+                    Validator.CheckSucceed(response);
+                    Validator.Compare(Default.Account, response.Data.Account);
                     // *****************************
 
                     // Step 2: Try to add invalid account
@@ -242,7 +222,7 @@ namespace GeneralTests.UseCases
                     (
                         await api.SaveAccountAsync(account)
                     ).Value;
-                    Validator.CheckFail(resultSave!);
+                    Validator.CheckFail(resultSave);
                     // *****************************
                 }
                 finally
@@ -262,7 +242,7 @@ namespace GeneralTests.UseCases
                 {
                     new Account
                     {
-                        Login = string.Empty, // (sic!)
+                        Login = string.Empty, // (here)
                         Password = Default.Account.Password,
                         Role = Default.Account.Role
                     }
@@ -273,7 +253,7 @@ namespace GeneralTests.UseCases
                     {
                         Login = Default.Account.Login,
                         Password = Default.Account.Password,
-                        Role = string.Empty, // (sic!)
+                        Role = string.Empty, // (here)
                     }
                 };
                 yield return new object[]
@@ -283,7 +263,7 @@ namespace GeneralTests.UseCases
                         Id = Default.Account.Id,
                         Login = Default.Account.Login,
                         Password = Default.Account.Password,
-                        Role = "nothing" // (sic!)
+                        Role = "nothing" // (here)
                     }
                 };
                 yield return new object[]
@@ -293,14 +273,14 @@ namespace GeneralTests.UseCases
                         Login = Default.Account.Login,
                         Password = "Default.Account.Password",
                         Role = Default.Account.Role,
-                        Version = 10, // (sic!)
+                        Version = 10, // (here)
                     }
                 };
                 yield return new object[]
                 {
                     new Account
                     {
-                        Login = "qq",// (sic!)
+                        Login = "qq",// (here)
                         Password = "Default.Account.Password",
                         Role = Default.Account.Role,
                         Version = 0,
@@ -329,10 +309,10 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var response =
                     (
-                        await gateway.LoginAsync(new() { Login = Default.Account.Login, Password = Default.Account.Password })
+                        await gateway.LoginAsync(Default.Account.Login,Default.Account.Password)
                     ).Value;
-                    Validator.CheckSucceed(response!);
-                    Validator.Compare(Default.Account, response!.Data!.Account);
+                    Validator.CheckSucceed(response);
+                    Validator.Compare(Default.Account, response.Data.Account);
                     // *****************************
 
                     // Step 2: Create filler account for tests
@@ -341,7 +321,7 @@ namespace GeneralTests.UseCases
                     (
                         await api.SaveAccountAsync(new Account { Login = "qq", Password = "qq", Role = RoleNames.Demo })
                     ).Value;
-                    Validator.CheckSucceed(fillerSave!);
+                    Validator.CheckSucceed(fillerSave);
                     // *****************************
 
                     // Step 3: Try to update default account with invalid data
@@ -350,7 +330,7 @@ namespace GeneralTests.UseCases
                     (
                         await api.SaveAccountAsync(account)
                     ).Value;
-                    Validator.CheckFail(resultSave!);
+                    Validator.CheckFail(resultSave);
                     // *****************************
                 }
                 finally
@@ -378,20 +358,20 @@ namespace GeneralTests.UseCases
                     var gateway = Initializer.CreateGatewayController(context);
                     var responseLogin =
                     (
-                        await gateway.LoginAsync(new() { Login = Default.Account.Login, Password = Default.Account.Password })
+                        await gateway.LoginAsync(Default.Account.Login, Default.Account.Password)
                     ).Value;
-                    Validator.CheckSucceed(responseLogin!);
+                    Validator.CheckSucceed(responseLogin);
                     // *****************************
 
                     // Step 2: Request account by id
                     var api = Initializer.CreatePrivateController(context);
                     var resultGetAccount =
                     (
-                        await api.GetAccountAsync(responseLogin!.Data!.Account!.Id!.Value)
+                        await api.GetAccountAsync(responseLogin.Data.Account.Id.Value)
                     ).Value;
 
-                    Validator.CheckSucceed(resultGetAccount!);
-                    Validator.Compare(Default.Account, resultGetAccount!.Data!);
+                    Validator.CheckSucceed(resultGetAccount);
+                    Validator.Compare(Default.Account, resultGetAccount.Data);
                     // *****************************
                 }
                 finally
@@ -419,9 +399,9 @@ namespace GeneralTests.UseCases
                     var gateway = Initializer.CreateGatewayController(context);
                     var responseLogin =
                     (
-                        await gateway.LoginAsync(new() { Login = Default.Account.Login, Password = Default.Account.Password })
+                        await gateway.LoginAsync(Default.Account.Login, Default.Account.Password)
                     ).Value;
-                    Validator.CheckSucceed(responseLogin!);
+                    Validator.CheckSucceed(responseLogin);
                     // *****************************
 
                     // Step 2: Request account by id
@@ -431,7 +411,7 @@ namespace GeneralTests.UseCases
                         await api.GetAccountAsync(Guid.NewGuid())
                     ).Value;
 
-                    Validator.CheckFail(resultGetAccount!);
+                    Validator.CheckFail(resultGetAccount);
                     // *****************************
                 }
                 finally
@@ -462,43 +442,43 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(new() { Login = Default.Account.Login, Password = Default.Account.Password })
+                        await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
                     ).Value;
-                    Validator.CheckSucceed(responseLogin!);
+                    Validator.CheckSucceed(responseLogin);
                     // *****************************
 
                     // Step 2: Try to delete account and fail
-                    var acc = responseLogin!.Data!.Account;
-                    var accId = responseLogin!.Data!.Account.Id;
+                    var acc = responseLogin.Data.Account;
+                    var accId = responseLogin.Data.Account.Id;
                     acc.Id = null;
 
                     var resultDel =
                     (
                         await apiPrivate.DeleteAccountAsync(acc)
                     ).Value;
-                    Validator.CheckFail(resultDel!);
+                    Validator.CheckFail(resultDel);
                     // *****************************
 
                     // Step 2: Try to delete account and fail
-                    acc = responseLogin!.Data!.Account;
+                    acc = responseLogin.Data.Account;
                     acc.Id = Guid.NewGuid();
 
                     resultDel =
                     (
                         await apiPrivate.DeleteAccountAsync(acc)
                     ).Value;
-                    Validator.CheckFail(resultDel!);
+                    Validator.CheckFail(resultDel);
                     // *****************************
 
                     // Step 2: Try to delete account and fail (version)
-                    acc = responseLogin!.Data!.Account;
+                    acc = responseLogin.Data.Account;
                     acc.Id = accId;
                     acc.Version++;
                     resultDel =
                     (
                         await apiPrivate.DeleteAccountAsync(acc)
                     ).Value;
-                    Validator.CheckFail(resultDel!);
+                    Validator.CheckFail(resultDel);
                     // *****************************
                 }
                 finally
@@ -527,27 +507,27 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(new() { Login = Default.Account.Login, Password = Default.Account.Password })
+                        await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
                     ).Value;
-                    Validator.CheckSucceed(responseLogin!);
-                    Validator.Compare(Default.Account, responseLogin!.Data!.Account);
+                    Validator.CheckSucceed(responseLogin);
+                    Validator.Compare(Default.Account, responseLogin.Data.Account);
                     // *****************************
 
                     // Step 2: Try to delete account
-                    var acc = responseLogin!.Data!.Account;
+                    var acc = responseLogin.Data.Account;
                     var resultDel =
                     (
                         await apiPrivate.DeleteAccountAsync(acc)
                     ).Value;
-                    Validator.CheckSucceed(resultDel!);
+                    Validator.CheckSucceed(resultDel);
 
                     var resultNextGet =
                     (
                         await apiPrivate.GetAccountsAsync()
                     ).Value;
 
-                    Validator.CheckSucceed(resultNextGet!);
-                    Validator.Compare(Enumerable.Empty<Account>(), resultNextGet!.Data!);
+                    Validator.CheckSucceed(resultNextGet);
+                    Validator.Compare(Enumerable.Empty<Account>(), resultNextGet.Data);
                     // *****************************
 
                 }
@@ -579,12 +559,12 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(new() { Login = Default.Account.Login, Password = Default.Account.Password })
+                        await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
                     ).Value;
-                    Validator.CheckSucceed(responseLogin!);
-                    Validator.Compare(Default.Account, responseLogin!.Data!.Account);
+                    Validator.CheckSucceed(responseLogin);
+                    Validator.Compare(Default.Account, responseLogin.Data.Account);
 
-                    var account = responseLogin!.Data!.Account;
+                    var account = responseLogin.Data.Account;
                     // *****************************
 
                     // Step 2: Change password
@@ -593,25 +573,25 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveAccountAsync(account)
                     ).Value;
-                    Validator.CheckSucceed(resultSave!);
+                    Validator.CheckSucceed(resultSave);
                     account.Version++;
-                    Validator.Compare(account, resultSave!.Data!);
+                    Validator.Compare(account, resultSave.Data);
                     // *****************************
 
                     // Step 3: Login with a new password (win)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(new() { Login = account.Login, Password = account.Password })
+                        await apiGateway.LoginAsync(account.Login, account.Password)
                     ).Value;
-                    Validator.CheckSucceed(responseLogin!);
+                    Validator.CheckSucceed(responseLogin);
                     // *****************************
 
                     // Step 4: Login with an old password (fail)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(new() { Login = account.Login, Password = Default.Account.Password })
+                        await apiGateway.LoginAsync(account.Login, Default.Account.Password)
                     ).Value;
-                    Validator.CheckFail(responseLogin!);
+                    Validator.CheckFail(responseLogin);
                     // *****************************
                 }
                 finally
@@ -642,12 +622,12 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(new() { Login = Default.Account.Login, Password = Default.Account.Password })
+                        await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
                     ).Value;
-                    Validator.CheckSucceed(responseLogin!);
-                    Validator.Compare(Default.Account, responseLogin!.Data!.Account);
+                    Validator.CheckSucceed(responseLogin);
+                    Validator.Compare(Default.Account, responseLogin.Data.Account);
 
-                    var account = responseLogin!.Data!.Account;
+                    var account = responseLogin.Data.Account;
                     // *****************************
 
                     // Step 2: Change login
@@ -656,25 +636,25 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveAccountAsync(account)
                     ).Value;
-                    Validator.CheckSucceed(resultSave!);
+                    Validator.CheckSucceed(resultSave);
                     account.Version++;
-                    Validator.Compare(account, resultSave!.Data!);
+                    Validator.Compare(account, resultSave.Data);
                     // *****************************
 
                     // Step 3: Step 3: Login with a new login (win)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(new() { Login = account.Login, Password = Default.Account.Password })
+                        await apiGateway.LoginAsync(account.Login, Default.Account.Password)
                     ).Value;
-                    Validator.CheckSucceed(responseLogin!);
+                    Validator.CheckSucceed(responseLogin);
                     // *****************************
 
                     // Step 4: Login with an old login (fail)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(new() { Login = Default.Account.Login, Password = Default.Account.Password })
+                        await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
                     ).Value;
-                    Validator.CheckFail(responseLogin!);
+                    Validator.CheckFail(responseLogin);
                     // *****************************
                 }
                 finally

@@ -27,8 +27,8 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetIntroductionAsync()
                     ).Value;
 
-                    Validator.CheckSucceed(publiGetIntroduction!);
-                    Validator.Compare(Default.Introduction, publiGetIntroduction!.Data!);
+                    Validator.CheckSucceed(publiGetIntroduction);
+                    Validator.Compare(Default.Introduction, publiGetIntroduction.Data);
                     // *****************************
                 }
                 finally
@@ -60,12 +60,12 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetIntroductionAsync()
                     ).Value;
 
-                    Validator.CheckSucceed(responseIntroduction!);
-                    Validator.Compare(Default.Introduction, responseIntroduction!.Data!);
+                    Validator.CheckSucceed(responseIntroduction);
+                    Validator.Compare(Default.Introduction, responseIntroduction.Data);
                     // ****************************
 
                     // Step 2: Edit basic and save
-                    var newIntroduction = responseIntroduction!.Data!;
+                    var newIntroduction = responseIntroduction.Data;
                     newIntroduction.Title = "Brand new title";
                     newIntroduction.Content = "Brand new content";
                     newIntroduction.PosterDescription = "Brand new poster description";
@@ -82,11 +82,11 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveIntroductionAsync(newIntroduction)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveIntroduction!);
+                    Validator.CheckSucceed(responseSaveIntroduction);
 
                     newIntroduction.Version++;
-                    Validator.Compare(newIntroduction, responseSaveIntroduction!.Data!);
-                    newIntroduction = responseSaveIntroduction!.Data!;
+                    Validator.Compare(newIntroduction, responseSaveIntroduction.Data);
+                    newIntroduction = responseSaveIntroduction.Data;
                     // ****************************
 
                     // Step 3: Request introduction
@@ -94,8 +94,8 @@ namespace GeneralTests.UseCases
                     (
                         await apiPublic.GetIntroductionAsync()
                     ).Value;
-                    Validator.CheckSucceed(responseSaveIntroduction!);
-                    Validator.Compare(newIntroduction, responseIntroduction!.Data!);
+                    Validator.CheckSucceed(responseSaveIntroduction);
+                    Validator.Compare(newIntroduction, responseIntroduction.Data);
                     // ****************************
 
                     //Extra
@@ -106,12 +106,12 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveIntroductionAsync(newIntroduction)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveIntroduction!);
+                    Validator.CheckSucceed(responseSaveIntroduction);
 
                     newIntroduction.Version++;
                     newIntroduction.ExternalUrls.ToList().ForEach(x => x.Version++);
-                    Validator.Compare(newIntroduction, responseSaveIntroduction!.Data!);
-                    newIntroduction = responseSaveIntroduction!.Data!;
+                    Validator.Compare(newIntroduction, responseSaveIntroduction.Data);
+                    newIntroduction = responseSaveIntroduction.Data;
                     // --
 
                     newIntroduction.ExternalUrls.ToList().ForEach(x => x.DisplayName += "-extra");
@@ -120,12 +120,12 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveIntroductionAsync(newIntroduction)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveIntroduction!);
+                    Validator.CheckSucceed(responseSaveIntroduction);
 
                     newIntroduction.Version++;
                     newIntroduction.ExternalUrls.ToList().ForEach(x => x.Version++);
-                    Validator.Compare(newIntroduction, responseSaveIntroduction!.Data!);
-                    newIntroduction = responseSaveIntroduction!.Data!;
+                    Validator.Compare(newIntroduction, responseSaveIntroduction.Data);
+                    newIntroduction = responseSaveIntroduction.Data;
                     // --
                     newIntroduction.ExternalUrls = new List<ExternalUrl>();
 
@@ -133,11 +133,11 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveIntroductionAsync(newIntroduction)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveIntroduction!);
+                    Validator.CheckSucceed(responseSaveIntroduction);
 
                     newIntroduction.Version++;
-                    Validator.Compare(newIntroduction, responseSaveIntroduction!.Data!);
-                    newIntroduction = responseSaveIntroduction!.Data!;
+                    Validator.Compare(newIntroduction, responseSaveIntroduction.Data);
+                    newIntroduction = responseSaveIntroduction.Data;
                     // --
 
                     // ****************************
@@ -171,12 +171,12 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetIntroductionAsync()
                     ).Value;
 
-                    Validator.CheckSucceed(responseIntroduction!);
-                    Validator.Compare(Default.Introduction, responseIntroduction!.Data!);
+                    Validator.CheckSucceed(responseIntroduction);
+                    Validator.Compare(Default.Introduction, responseIntroduction.Data);
                     // ****************************
 
                     // Step 2: Edit and save
-                    var newIntroduction = responseIntroduction!.Data!;
+                    var newIntroduction = responseIntroduction.Data;
                     newIntroduction.Title = "Brand new title";
                     newIntroduction.Content = "Brand new content";
                     newIntroduction.PosterDescription = "Brand new poster description";
@@ -193,11 +193,11 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveIntroductionAsync(newIntroduction)
                     ).Value;
-                    Validator.CheckSucceed(responseSaveIntroduction!);
+                    Validator.CheckSucceed(responseSaveIntroduction);
 
                     newIntroduction.Version++;
-                    Validator.Compare(newIntroduction, responseSaveIntroduction!.Data!);
-                    newIntroduction = responseSaveIntroduction!.Data!;
+                    Validator.Compare(newIntroduction, responseSaveIntroduction.Data);
+                    newIntroduction = responseSaveIntroduction.Data;
                     // ****************************
 
                     // Step 3: Edit, wrong version
@@ -206,7 +206,7 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveIntroductionAsync(newIntroduction)
                     ).Value;
-                    Validator.CheckFail(responseSaveIntroduction!);
+                    Validator.CheckFail(responseSaveIntroduction);
 
                     // Step 3: Edit, wrong version
                     newIntroduction.Version = 1;
@@ -215,7 +215,7 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveIntroductionAsync(newIntroduction)
                     ).Value;
-                    Validator.CheckFail(responseSaveIntroduction!);
+                    Validator.CheckFail(responseSaveIntroduction);
                     // ****************************
 
                     // Step 3: Edit, wrong version
@@ -226,7 +226,7 @@ namespace GeneralTests.UseCases
                     (
                         await apiPrivate.SaveIntroductionAsync(newIntroduction)
                     ).Value;
-                    Validator.CheckFail(responseSaveIntroduction!);
+                    Validator.CheckFail(responseSaveIntroduction);
                     // ****************************
                 }
                 finally

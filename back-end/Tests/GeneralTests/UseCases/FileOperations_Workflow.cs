@@ -37,7 +37,7 @@ namespace GeneralTests.UseCases
                 var apiPrivate = Initializer.CreatePrivateController(context);
 
                 var responseUpload = apiPrivate.Upload(form).Value;
-                Validator.CheckFail(responseUpload!);
+                Validator.CheckFail(responseUpload);
             }
         }
     }

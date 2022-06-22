@@ -19,10 +19,10 @@ function AdminCategoriesPage() {
   useEffect(() => {
     const fetchData = async() => {
       const result = await PublicApi.getCategories();
-      if (result.data.isSucceed) {
-        setCategories(result.data.data);
+      if (result.isSucceed) {
+        setCategories(result.data);
       } else {
-        setIncident(result.data.error);
+        setIncident(result.error);
       }
     };
 

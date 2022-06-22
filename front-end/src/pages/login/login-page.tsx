@@ -31,11 +31,11 @@ function LoginPage() {
     setLoading(true);
     const result = await PrivateApi.login(credentials as Credentials);
 
-    if (result.data.isSucceed) {
-      dispatch(saveIdentity(result.data.data));
+    if (result.isSucceed) {
+      dispatch(saveIdentity(result.data));
       navigate("/admin");
     } else {
-      setIncident(result.data.error);
+      setIncident(result.error);
       setLoading(false);
     }
   };

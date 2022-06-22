@@ -13,10 +13,10 @@ function ProjectPage() {
   useEffect(() => {
     const fetchData = async() => {
       const result = await PublicApi.getProject(projectCode);
-      if (result.data.isSucceed) {
-        setProject(result.data.data);
+      if (result.isSucceed) {
+        setProject(result.data);
       } else {
-        setIncident(result.data.error);
+        setIncident(result.error);
       }
     };
 

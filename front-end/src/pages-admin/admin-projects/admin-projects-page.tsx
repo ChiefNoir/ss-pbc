@@ -28,20 +28,20 @@ function AdminProjectsPage() {
       }
 
       const catResponse = await PublicApi.getCategories();
-      if (!catResponse.data.isSucceed) {
-        setIncident(catResponse.data.error);
+      if (!catResponse.isSucceed) {
+        setIncident(catResponse.error);
         return;
       }
-      const totalPages = Calc.Pages(catResponse.data.data.find(x => x.isEverything)!.totalProjects);
+      const totalPages = Calc.Pages(catResponse.data.find(x => x.isEverything)!.totalProjects);
       setRowCountState(totalPages);
 
       const prjResponse = await PublicApi.getProjects(pg + 1, null);
-      if (prjResponse.data.isSucceed) {
-        setIncident(catResponse.data.error);
+      if (prjResponse.isSucceed) {
+        setIncident(catResponse.error);
         return;
       }
 
-      setProjects(prjResponse.data.data);
+      setProjects(prjResponse.data);
     };
 
     setLoading(true);

@@ -20,10 +20,10 @@ function AdminAccountsPage() {
   useEffect(() => {
     const fetchData = async() => {
       const result = await PrivateApi.getAccounts();
-      if (result.data.isSucceed) {
-        setAccounts(result.data.data);
+      if (result.isSucceed) {
+        setAccounts(result.data);
       } else {
-        setIncident(result.data.error);
+        setIncident(result.error);
       }
     };
 

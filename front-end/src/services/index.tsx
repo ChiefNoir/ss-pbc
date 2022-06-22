@@ -20,6 +20,6 @@ export { ExternalUrl };
 export { Introduction };
 export { Project };
 export { ProjectPreview };
-export type { ExecutionResult };
+export { ExecutionResult };
 export type { Identity };
-export type { Incident };
+export { Incident };

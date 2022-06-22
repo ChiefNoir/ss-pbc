@@ -11,10 +11,10 @@ function IntroductionPage() {
   useEffect(() => {
     const fetchData = async() => {
       const result = await PublicApi.getIntroduction();
-      if (result.data.isSucceed) {
-        setIntroduction(result.data.data);
+      if (result.isSucceed) {
+        setIntroduction(result.data);
       } else {
-        setIncident(result.data.error);
+        setIncident(result.error);
       }
     };
 

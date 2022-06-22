@@ -3,6 +3,7 @@ import { Account, Category, Credentials, Introduction, Project } from ".";
 import { store } from "../storage";
 import { ExecutionResult } from "./models/ExecutionResult";
 import { Identity } from "./models/Identity";
+import { Utils } from "./Utils";
 
 class PrivateApi {
   private static init() {
@@ -20,23 +21,53 @@ class PrivateApi {
   };
 
   public static async login(credentials: Credentials) {
-    return await this.init().post<ExecutionResult<Identity>>("/login", credentials);
+    return await this.init().post<ExecutionResult<Identity>>("/login", credentials)
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<Identity>(error);
+      });
   };
 
   public static async getAccounts() {
-    return await this.init().get<ExecutionResult<Account[]>>("/accounts");
+    return await this.init().get<ExecutionResult<Account[]>>("/accounts")
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<Account[]>(error);
+      });
   }
 
   public static async saveAccount(account: Account) {
-    return await this.init().post<ExecutionResult<Account>>("/accounts", account);
+    return await this.init().post<ExecutionResult<Account>>("/accounts", account)
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<Account>(error);
+      });
   }
 
   public static async deleteAccount(account: Account) {
-    return await this.init().delete<ExecutionResult<boolean>>("/accounts", { data: account });
+    return await this.init().delete<ExecutionResult<boolean>>("/accounts", { data: account })
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<boolean>(error);
+      });
   }
 
   public static async getRoles() {
-    return await this.init().get<ExecutionResult<string[]>>("/roles");
+    return await this.init().get<ExecutionResult<string[]>>("/roles")
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<string[]>(error);
+      });
   }
 
   public static async saveIntroduction(introduction: Introduction) {
@@ -49,19 +80,43 @@ class PrivateApi {
       }
     });
 
-    return await this.init().post<ExecutionResult<Introduction>>("/introduction", intro);
+    return await this.init().post<ExecutionResult<Introduction>>("/introduction", intro)
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<Introduction>(error);
+      });
   }
 
   public static async saveCategory(category: Category) {
-    return await this.init().post<ExecutionResult<Category>>("/category", category);
+    return await this.init().post<ExecutionResult<Category>>("/category", category)
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<Category>(error);
+      });
   }
 
   public static async deleteCategory(category: Category) {
-    return await this.init().delete<ExecutionResult<boolean>>("/category", { data: category });
+    return await this.init().delete<ExecutionResult<boolean>>("/category", { data: category })
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<boolean>(error);
+      });
   }
 
   public static async deleteProject(project: Project) {
-    return await this.init().delete<ExecutionResult<boolean>>("/project", { data: project });
+    return await this.init().delete<ExecutionResult<boolean>>("/project", { data: project })
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<boolean>(error);
+      });
   }
 
   public static async saveProject(project: Project) {
@@ -79,14 +134,26 @@ class PrivateApi {
       }
     });
 
-    return await this.init().post<ExecutionResult<Project>>("/project", project);
+    return await this.init().post<ExecutionResult<Project>>("/project", project)
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<Project>(error);
+      });
   }
 
   public static async upload(file: Blob) {
     const formData = new FormData();
     formData.append("file", file);
 
-    return await this.init().post<ExecutionResult<string>>("/upload", formData);
+    return await this.init().post<ExecutionResult<string>>("/upload", formData)
+      .then(response => {
+        return response.data;
+      })
+      .catch((error: axios.AxiosError) => {
+        return Utils.create<string>(error);
+      });
   }
 }
 

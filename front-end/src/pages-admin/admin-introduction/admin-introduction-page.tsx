@@ -17,10 +17,10 @@ function AdminIntroductionPage() {
   useEffect(() => {
     const fetchIntroduction = async() => {
       const result = await PublicApi.getIntroduction();
-      if (result.data.isSucceed) {
-        setIntroduction(result.data.data);
+      if (result.isSucceed) {
+        setIntroduction(result.data);
       } else {
-        setIncident(result.data.error);
+        setIncident(result.error);
       }
     };
 
@@ -37,20 +37,20 @@ function AdminIntroductionPage() {
     if (introduction.posterNew) {
       const newUrl = await PrivateApi.upload(introduction.posterNew!);
 
-      if (newUrl.data.isSucceed) {
-        introduction.posterUrl = newUrl.data.data;
+      if (newUrl.isSucceed) {
+        introduction.posterUrl = newUrl.data;
       } else {
-        setIncident(newUrl.data.error);
+        setIncident(newUrl.error);
         setLoading(false);
         return;
       }
     }
 
     const result = await PrivateApi.saveIntroduction(introduction);
-    if (result.data.isSucceed) {
-      setIntroduction(result.data.data);
+    if (result.isSucceed) {
+      setIntroduction(result.data);
     } else {
-      setIncident(result.data.error);
+      setIncident(result.error);
     }
 
     setLoading(false);

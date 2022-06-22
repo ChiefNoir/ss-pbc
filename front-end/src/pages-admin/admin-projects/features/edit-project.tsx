@@ -40,10 +40,10 @@ function EditProjectDialog(props:
         }
 
         const cat = await PublicApi.getCategories();
-        if (cat.data.isSucceed) {
-          setCategories(cat.data.data.filter(x => !x.isEverything));
+        if (cat.isSucceed) {
+          setCategories(cat.data.filter(x => !x.isEverything));
         } else {
-          setIncident(cat.data.error);
+          setIncident(cat.error);
           setIsLoading(false);
           return;
         }
@@ -51,11 +51,11 @@ function EditProjectDialog(props:
         if (props.projectCode === null) {
           const prj = new Project();
 
-          prj.category = cat.data.data!.find(x => !x.isEverything)!;
+          prj.category = cat.data.find(x => !x.isEverything)!;
           setProject(prj);
         } else {
           const tmp = await PublicApi.getProject(props.projectCode);
-          setProject(tmp.data.data);
+          setProject(tmp.data);
         }
       }
     };
@@ -91,11 +91,11 @@ function EditProjectDialog(props:
 
     const result = await PrivateApi.deleteProject(project!);
 
-    if (result.data.isSucceed) {
+    if (result.isSucceed) {
       props.remove(project!);
       setOpen(false);
     } else {
-      setIncident(result.data.error);
+      setIncident(result.error);
       setIsLoading(false);
     }
   }
@@ -108,21 +108,21 @@ function EditProjectDialog(props:
     if (selectedFile) {
       const newUrl = await PrivateApi.upload(selectedFile!);
 
-      if (newUrl.data.isSucceed) {
-        prj.posterUrl = newUrl.data.data;
+      if (newUrl.isSucceed) {
+        prj.posterUrl = newUrl.data;
       } else {
-        setIncident(newUrl.data.error);
+        setIncident(newUrl.error);
         setIsLoading(false);
         return;
       }
     }
 
     const result = await PrivateApi.saveProject(prj!);
-    if (result.data.isSucceed) {
-      props.merge(result.data.data);
-      setProject(result.data.data);
+    if (result.isSucceed) {
+      props.merge(result.data);
+      setProject(result.data);
     } else {
-      setIncident(result.data.error);
+      setIncident(result.error);
       setIsLoading(false);
       return;
     }

@@ -36,11 +36,11 @@ function EditAccountDialog(props: {
         if (tmpRoles.length === 0) {
           setIsLoading(true);
           const rolesResponse = await PrivateApi.getRoles();
-          if (rolesResponse.data.isSucceed) {
-            tmpRoles = rolesResponse.data.data;
-            setRoles(rolesResponse.data.data);
+          if (rolesResponse.isSucceed) {
+            tmpRoles = rolesResponse.data;
+            setRoles(rolesResponse.data);
           } else {
-            setIncident(rolesResponse.data.error);
+            setIncident(rolesResponse.error);
             setIsLoading(false);
             return;
           }
@@ -73,11 +73,11 @@ function EditAccountDialog(props: {
 
     const result = await PrivateApi.deleteAccount(account!);
 
-    if (result.data.isSucceed) {
+    if (result.isSucceed) {
       removeAccount(account!);
       setOpen(false);
     } else {
-      setIncident(result.data.error);
+      setIncident(result.error);
       setIsLoading(false);
     }
   }
@@ -87,11 +87,11 @@ function EditAccountDialog(props: {
     setIsLoading(true);
 
     const result = await PrivateApi.saveAccount(account!);
-    if (result.data.isSucceed) {
-      mergeAccount(result.data.data);
-      setAccount(result.data.data);
+    if (result.isSucceed) {
+      mergeAccount(result.data);
+      setAccount(result.data);
     } else {
-      setIncident(result.data.error);
+      setIncident(result.error);
     }
 
     setIsLoading(false);

@@ -26,12 +26,12 @@ function ShowcasePage() {
       if (tmpCategories === null) {
         const categoriesResponse = await PublicApi.getCategories();
 
-        if (!categoriesResponse.data.isSucceed) {
-          setIncident(categoriesResponse.data.error);
+        if (!categoriesResponse.isSucceed) {
+          setIncident(categoriesResponse.error);
           return;
         }
 
-        tmpCategories = categoriesResponse.data.data;
+        tmpCategories = categoriesResponse.data;
       }
 
       if (categoryCode === null) {
@@ -41,15 +41,15 @@ function ShowcasePage() {
       }
 
       const projectsResponse = await PublicApi.getProjects(pageNumber, categoryCode);
-      if (!projectsResponse.data.isSucceed) {
-        setIncident(projectsResponse.data.error);
+      if (!projectsResponse.isSucceed) {
+        setIncident(projectsResponse.error);
         return;
       }
 
       if (categories === null) {
         setCategories(tmpCategories);
       }
-      setProjects(projectsResponse.data.data);
+      setProjects(projectsResponse.data);
     };
 
     fetchData();

@@ -53,11 +53,11 @@ function EditCategoryDialog(props: {
 
     const result = await PrivateApi.deleteCategory(category!);
 
-    if (result.data.isSucceed) {
+    if (result.isSucceed) {
       props.remove(category!);
       setOpen(false);
     } else {
-      setIncident(result.data.error);
+      setIncident(result.error);
     }
 
     setIsLoading(false);
@@ -68,11 +68,11 @@ function EditCategoryDialog(props: {
 
     const result = await PrivateApi.saveCategory(category!);
 
-    if (result.data.isSucceed) {
-      props.merge(result.data.data);
-      setCategory(result.data.data);
+    if (result.isSucceed) {
+      props.merge(result.data);
+      setCategory(result.data);
     } else {
-      setIncident(result.data.error);
+      setIncident(result.error);
     }
 
     setIsLoading(false);

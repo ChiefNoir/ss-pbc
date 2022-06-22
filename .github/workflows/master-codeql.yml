@@ -1,16 +1,25 @@
-name: "CodeQL"
+name: "Code Scanning - Action"
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
   schedule:
-    - cron: '0 13 * * 3'
+    #        ┌───────────── minute (0 - 59)
+    #        │  ┌───────────── hour (0 - 23)
+    #        │  │ ┌───────────── day of the month (1 - 31)
+    #        │  │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    #        │  │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    #        │  │ │ │ │
+    #        │  │ │ │ │
+    #        │  │ │ │ │
+    #        *  * * * *
+    - cron: '1 23 * * 0'
 
 jobs:
-  analyze:
-    name: Analyze
+  CodeQL-Build:
+    # CodeQL runs on ubuntu-latest, windows-latest, and macos-latest
     runs-on: ubuntu-latest
 
     permissions:
@@ -25,40 +34,35 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: ${{ matrix.language }}
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        # Override language selection by uncommenting this and choosing your languages
+        # with:
+        #   languages: go, javascript, csharp, python, cpp, java
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-           dotnet-version: 6.0.x
-    - name: Install dependencies
-      run: |
-          cd ./back-end/
-          dotnet restore
-    - name: Build
-      run: |
+      # Autobuild attempts to build any compiled languages (C/C++, C#, or Java).
+      # If this step fails, then you should remove it and run the build manually (see below).
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      # ℹ️ Command-line programs to run using the OS shell.
+      # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+
+      # ✏️ If the Autobuild fails above, remove it and uncomment the following
+      #    three lines and modify them (or add more) to build your code if your
+      #    project uses a compiled language
+       - run: |
           cd ./back-end/
           dotnet build --configuration Release --no-restore
+      #- run: |
+      #     make bootstrap
+      #     make release
 
-    - name: Cache node modules
-      uses: actions/cache@v1
-      with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-    - name: Node ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-          node-version: ${{ matrix.node-version }}
-
-    - name: npm install and npm run build
-      run: |
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+       - run: |
           cd ./front-end/
-          npm i
           npm run build
 
       - name: Perform CodeQL Analysis

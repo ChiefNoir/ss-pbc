@@ -63,7 +63,7 @@ namespace GeneralTests
         {
             Assert.Equal(expected.Code, actual.Code);
             Assert.Equal(expected.Description, actual.Description);
-            Assert.Equal(expected.DisplayName, actual.DisplayName);
+            Assert.Equal(expected.Name, actual.Name);
 
             Assert.Equal(expected.PosterDescription, actual.PosterDescription);
             Assert.Equal(expected.PosterUrl, actual.PosterUrl);
@@ -77,7 +77,7 @@ namespace GeneralTests
             Assert.Equal(expected.Code, actual.Code);
             Assert.Equal(expected.Description, actual.Description);
             Assert.Equal(expected.DescriptionShort, actual.DescriptionShort);
-            Assert.Equal(expected.DisplayName, actual.DisplayName);
+            Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(expected.Version, actual.Version);
 
             Assert.Equal(expected.PosterDescription, actual.PosterDescription);

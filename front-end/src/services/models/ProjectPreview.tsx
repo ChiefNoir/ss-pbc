@@ -2,7 +2,7 @@ import { Category } from "./Category";
 
 class ProjectPreview {
   code: string;
-  displayName: string;
+  name: string;
   releaseDate: Date;
   posterUrl: string;
   posterDescription: string;

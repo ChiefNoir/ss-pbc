@@ -11,12 +11,12 @@ function ProjectComponent(props: {project: Project}) {
 
   return (
   <div className="project-container">
-    <h1>{project.displayName}</h1>
+    <h1>{project.name}</h1>
 
     <div className="project-container-content">
       <div className="project-container-content-meta">
         <img className="project-container-content-poster"
-             alt={(project.posterDescription ?? project.displayName)}
+             alt={(project.posterDescription ?? project.name)}
              src={(project.posterUrl ?? "/assets/images/placeholder-wide.png")}/>
         {
           project.externalUrls?.map(

@@ -203,9 +203,9 @@ function EditProjectDialog(props:
                          variant="outlined" fullWidth={true}
                          name="code" onChange = { handleFieldChange }/>
 
-              <TextField value={project.displayName || ""} label={t("Project.DisplayName")}
+              <TextField value={project.name || ""} label={t("Project.Name")}
                          variant="outlined" fullWidth={true}
-                         name="displayName" onChange = { handleFieldChange }/>
+                         name="name" onChange = { handleFieldChange }/>
 
               <FormControl fullWidth={true}>
                 <InputLabel>{t("Project.Category")}</InputLabel>

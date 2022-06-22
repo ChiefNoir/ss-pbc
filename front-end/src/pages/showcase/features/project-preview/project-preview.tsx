@@ -13,10 +13,10 @@ function ProjectPreviewComponent(props: {project: ProjectPreview}) {
         <CardMedia className="project-preview-poster"
                    component="img" height="140"
                    image={project.posterUrl}
-                   alt={project.displayName} />
+                   alt={project.name} />
         <CardContent>
           <h3 className="project-preview-title">
-            {project.displayName}
+            {project.name}
           </h3>
           <div>
             { project.description }

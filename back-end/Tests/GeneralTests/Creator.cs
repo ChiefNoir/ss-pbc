@@ -21,7 +21,7 @@ namespace GeneralTests
             var prj = new Project
             {
                 Code = code,
-                DisplayName = "name",
+                Name = "name",
                 Description = "Description",
                 PosterDescription = "Poster-Description",
                 PosterUrl = "http://localhost/image.png",
@@ -63,7 +63,7 @@ namespace GeneralTests
                 Category = prj.Category,
                 Code = prj.Code,
                 Description = prj.DescriptionShort,
-                DisplayName = prj.DisplayName,
+                Name = prj.Name,
                 PosterDescription = prj.PosterDescription,
                 PosterUrl = prj.PosterUrl,
                 ReleaseDate = prj.ReleaseDate

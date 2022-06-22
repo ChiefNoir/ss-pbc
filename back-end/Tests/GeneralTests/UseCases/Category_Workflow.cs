@@ -631,7 +631,7 @@ namespace GeneralTests.UseCases
                     var prj = new Project
                     {
                         Code = "prj",
-                        DisplayName = "name",
+                        Name = "name",
                         Description = "descr",
                         DescriptionShort = "descr short",
                         Category = newCat

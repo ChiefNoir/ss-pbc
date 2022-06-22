@@ -22,7 +22,7 @@ namespace Abstractions.Models
         public string DescriptionShort { get; set; } = string.Empty;
 
         /// <summary> Friendly name</summary>
-        public string DisplayName { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
         /// <summary> Short description for the poster (mostly for the image alt-text) </summary>
         public string? PosterDescription { get; set; }

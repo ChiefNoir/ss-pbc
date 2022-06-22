@@ -46,7 +46,7 @@ namespace Infrastructure.Migrations
 				(
 					id uuid NOT NULL UNIQUE,
 					code VARCHAR(128) NOT NULL UNIQUE,
-					display_name VARCHAR(128) NOT NULL,
+					name VARCHAR(128) NOT NULL,
 					release_date DATE, 
 					poster_url VARCHAR(2000) NULL,
 					poster_description VARCHAR(512) NULL,

@@ -4,7 +4,7 @@ import { Category } from "./Category";
 class Project {
   id: string | null;
   code: string;
-  displayName: string;
+  name: string;
   releaseDate: Date | null;
   posterUrl: string;
   posterDescription: string;

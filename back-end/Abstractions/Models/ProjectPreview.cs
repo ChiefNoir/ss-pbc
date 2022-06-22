@@ -16,7 +16,7 @@ namespace Abstractions.Models
         public string Description { get; set; } = string.Empty;
 
         /// <summary> Friendly name</summary>
-        public string DisplayName { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
         /// <summary> </summary>
         public string PosterDescription { get; set; } = string.Empty;

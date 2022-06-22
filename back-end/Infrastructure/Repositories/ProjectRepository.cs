@@ -138,7 +138,7 @@ namespace Infrastructure.Repositories
             dbProject.Code = project.Code;
             dbProject.Description = project.Description;
             dbProject.DescriptionShort = project.DescriptionShort;
-            dbProject.DisplayName = project.DisplayName;
+            dbProject.DisplayName = project.Name;
             dbProject.PosterDescription = project.PosterDescription;
             dbProject.PosterUrl = project.PosterUrl;
             dbProject.ReleaseDate = project.ReleaseDate;
@@ -248,7 +248,7 @@ namespace Infrastructure.Repositories
                     );
             }
 
-            if (string.IsNullOrEmpty(project.DisplayName))
+            if (string.IsNullOrEmpty(project.Name))
             {
                 throw new InconsistencyException
                     (
@@ -302,11 +302,11 @@ namespace Infrastructure.Repositories
                     );
             }
 
-            if (string.IsNullOrEmpty(project.DisplayName))
+            if (string.IsNullOrEmpty(project.Name))
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(project.DisplayName))
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(project.Name))
                     );
             }
 

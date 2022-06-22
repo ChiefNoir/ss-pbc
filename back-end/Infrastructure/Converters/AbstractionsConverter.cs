@@ -48,7 +48,7 @@ namespace Infrastructure.Converters
                 Code = Sanitizer.SanitizeCode(project.Code),
                 Description = project.Description,
                 DescriptionShort = project.DescriptionShort,
-                DisplayName = project.DisplayName,
+                DisplayName = project.Name,
                 PosterDescription = project.PosterDescription,
                 PosterUrl = project.PosterUrl,
                 ReleaseDate = project.ReleaseDate == null ? null : DateTime.SpecifyKind(project.ReleaseDate.Value, DateTimeKind.Utc),

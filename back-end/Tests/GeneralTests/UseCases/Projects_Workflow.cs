@@ -293,7 +293,7 @@ namespace GeneralTests.UseCases
                     var prj = new Project
                     {
                         Code = "prj",
-                        DisplayName = "name",
+                        Name = "name",
                         Description = "Description",
                         PosterDescription = "Poster-Description",
                         PosterUrl = "http://localhost/image.png",
@@ -334,7 +334,7 @@ namespace GeneralTests.UseCases
                         Category = prj.Category,
                         Code = prj.Code,
                         Description = prj.DescriptionShort,
-                        DisplayName = prj.DisplayName,
+                        Name = prj.Name,
                         PosterDescription = prj.PosterDescription,
                         PosterUrl = prj.PosterUrl,
                         ReleaseDate = prj.ReleaseDate
@@ -345,7 +345,7 @@ namespace GeneralTests.UseCases
 
                     // Step 6: Edit project 
                     prj.Code = "prj1";
-                    prj.DisplayName = "new name";
+                    prj.Name = "new name";
                     prj.Description = "Description-Description";
                     prj.PosterDescription = "Poster-Description Poster-Description";
                     prj.PosterUrl = "http://localhost/image90.png";
@@ -385,7 +385,7 @@ namespace GeneralTests.UseCases
                         Category = prj.Category,
                         Code = prj.Code,
                         Description = prj.DescriptionShort,
-                        DisplayName = prj.DisplayName,
+                        Name = prj.Name,
                         PosterDescription = prj.PosterDescription,
                         PosterUrl = prj.PosterUrl,
                         ReleaseDate = prj.ReleaseDate
@@ -397,7 +397,7 @@ namespace GeneralTests.UseCases
 
                     // Step 6: Edit project 
                     prj.Code = "prj1";
-                    prj.DisplayName = "new name";
+                    prj.Name = "new name";
                     prj.Description = "Description-Description";
                     prj.PosterDescription = "Poster-Description Poster-Description";
                     prj.PosterUrl = "http://localhost/image90.png";
@@ -442,7 +442,7 @@ namespace GeneralTests.UseCases
                         Category = prj.Category,
                         Code = prj.Code,
                         Description = prj.DescriptionShort,
-                        DisplayName = prj.DisplayName,
+                        Name = prj.Name,
                         PosterDescription = prj.PosterDescription,
                         PosterUrl = prj.PosterUrl,
                         ReleaseDate = prj.ReleaseDate
@@ -489,7 +489,7 @@ namespace GeneralTests.UseCases
                         Category = prj.Category,
                         Code = prj.Code,
                         Description = prj.DescriptionShort,
-                        DisplayName = prj.DisplayName,
+                        Name = prj.Name,
                         PosterDescription = prj.PosterDescription,
                         PosterUrl = prj.PosterUrl,
                         ReleaseDate = prj.ReleaseDate
@@ -536,7 +536,7 @@ namespace GeneralTests.UseCases
                         Category = prj.Category,
                         Code = prj.Code,
                         Description = prj.DescriptionShort,
-                        DisplayName = prj.DisplayName,
+                        Name = prj.Name,
                         PosterDescription = prj.PosterDescription,
                         PosterUrl = prj.PosterUrl,
                         ReleaseDate = prj.ReleaseDate
@@ -599,7 +599,7 @@ namespace GeneralTests.UseCases
                         Code = "code",
                         Description = "Description",
                         DescriptionShort = "Description short",
-                        DisplayName = "DisplayName",
+                        Name = "DisplayName",
                         Category = new Category() {Code = "null"}
                     }
                 };
@@ -610,7 +610,7 @@ namespace GeneralTests.UseCases
                         Code = "code",
                         Description = "Description",
                         DescriptionShort = "Description short",
-                        DisplayName = "DisplayName",
+                        Name = "DisplayName",
                         Category = new Category() {Code = "null"}
                     }
                 };
@@ -621,7 +621,7 @@ namespace GeneralTests.UseCases
                         Code = "code",
                         Description = "Description",
                         DescriptionShort = "Description short",
-                        DisplayName = "DisplayName",
+                        Name = "DisplayName",
                         Category = new Category() {Code = "nice"}
                     }
                 };
@@ -632,7 +632,7 @@ namespace GeneralTests.UseCases
                         Code = "code",
                         Description = "Description",
                         DescriptionShort = "Description short",
-                        DisplayName = "DisplayName",
+                        Name = "DisplayName",
                         Category = new Category() {Id = Guid.NewGuid(), Code = "nice"}
                     }
                 };
@@ -643,7 +643,7 @@ namespace GeneralTests.UseCases
                         Code = "code",
                         Description = "Description",
                         DescriptionShort = "Description short",
-                        DisplayName = "DisplayName",
+                        Name = "DisplayName",
                         ExternalUrls = new List<ExternalUrl>
                         {
                             new ExternalUrl{ DisplayName = string.Empty }
@@ -657,7 +657,7 @@ namespace GeneralTests.UseCases
                         Code = "code",
                         Description = "Description",
                         DescriptionShort = "Description short",
-                        DisplayName = "DisplayName",
+                        Name = "DisplayName",
                         ExternalUrls = new List<ExternalUrl>
                         {
                             new ExternalUrl{ DisplayName = "Display", Url = string.Empty }
@@ -838,7 +838,7 @@ namespace GeneralTests.UseCases
                             await apiPublic.GetProjectAsync(ethaloneCode)
                         ).Value.Data;
 
-                        failPrj.DisplayName = string.Empty;
+                        failPrj.Name = string.Empty;
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)

@@ -96,7 +96,7 @@ function AdminProjectsPage() {
               components={{ Toolbar: GridToolbar }}
               columns={[
                 { field: "code", headerName: t("Project.Code"), width: 200 },
-                { field: "displayName", headerName: t("Project.DisplayName"), flex: 1 },
+                { field: "name", headerName: t("Project.Name"), flex: 1 },
                 {
                   field: "category",
                   headerName: t("Project.Category"),

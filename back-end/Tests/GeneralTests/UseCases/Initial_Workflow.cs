@@ -64,7 +64,7 @@ namespace GeneralTests.UseCases
 
                     var responseLogin =
                     (
-                       await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
+                       await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
 
                     Validator.CheckSucceed(responseLogin);

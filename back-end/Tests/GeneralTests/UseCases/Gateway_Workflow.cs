@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Abstractions.Security;
+using Microsoft.Extensions.Configuration;
 using SSPBC.Models;
 using System.Collections;
 
@@ -63,7 +64,7 @@ namespace GeneralTests.UseCases
 
                     var response =
                     (
-                        await api.LoginAsync(login, password)
+                        await api.LoginAsync(new Credentials(login, password))
                     ).Value;
 
                     Validator.CheckFail(response);
@@ -89,7 +90,7 @@ namespace GeneralTests.UseCases
 
                     var response =
                     (
-                        await api.LoginAsync(Default.Account.Login, Default.Account.Password)
+                        await api.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
 
                     Validator.CheckSucceed(response);

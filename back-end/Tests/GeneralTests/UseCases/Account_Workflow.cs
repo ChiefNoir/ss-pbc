@@ -93,7 +93,7 @@ namespace GeneralTests.UseCases
                     var gateway = Initializer.CreateGatewayController(context);
                     var resultLogin =
                     (
-                        await gateway.LoginAsync(account.Login, account.Password)
+                        await gateway.LoginAsync(new Credentials(account.Login, account.Password))
                     ).Value;
                     Validator.CheckSucceed(resultLogin);
                     Assert.Equal
@@ -210,7 +210,7 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var response =
                     (
-                        await gateway.LoginAsync(Default.Account.Login, Default.Account.Password)
+                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(response);
                     Validator.Compare(Default.Account, response.Data.Account);
@@ -309,7 +309,7 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var response =
                     (
-                        await gateway.LoginAsync(Default.Account.Login,Default.Account.Password)
+                        await gateway.LoginAsync(new Credentials(Default.Account.Login,Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(response);
                     Validator.Compare(Default.Account, response.Data.Account);
@@ -358,7 +358,7 @@ namespace GeneralTests.UseCases
                     var gateway = Initializer.CreateGatewayController(context);
                     var responseLogin =
                     (
-                        await gateway.LoginAsync(Default.Account.Login, Default.Account.Password)
+                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     // *****************************
@@ -399,7 +399,7 @@ namespace GeneralTests.UseCases
                     var gateway = Initializer.CreateGatewayController(context);
                     var responseLogin =
                     (
-                        await gateway.LoginAsync(Default.Account.Login, Default.Account.Password)
+                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     // *****************************
@@ -442,7 +442,7 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
+                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     // *****************************
@@ -507,7 +507,7 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
+                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     Validator.Compare(Default.Account, responseLogin.Data.Account);
@@ -559,7 +559,7 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
+                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     Validator.Compare(Default.Account, responseLogin.Data.Account);
@@ -581,7 +581,7 @@ namespace GeneralTests.UseCases
                     // Step 3: Login with a new password (win)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(account.Login, account.Password)
+                        await apiGateway.LoginAsync(new Credentials(account.Login, account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     // *****************************
@@ -589,7 +589,7 @@ namespace GeneralTests.UseCases
                     // Step 4: Login with an old password (fail)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(account.Login, Default.Account.Password)
+                        await apiGateway.LoginAsync(new Credentials(account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckFail(responseLogin);
                     // *****************************
@@ -622,7 +622,7 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
+                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     Validator.Compare(Default.Account, responseLogin.Data.Account);
@@ -644,7 +644,7 @@ namespace GeneralTests.UseCases
                     // Step 3: Step 3: Login with a new login (win)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(account.Login, Default.Account.Password)
+                        await apiGateway.LoginAsync(new Credentials(account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     // *****************************
@@ -652,7 +652,7 @@ namespace GeneralTests.UseCases
                     // Step 4: Login with an old login (fail)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(Default.Account.Login, Default.Account.Password)
+                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckFail(responseLogin);
                     // *****************************

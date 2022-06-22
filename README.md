@@ -1,6 +1,6 @@
 [![Website status](https://img.shields.io/website?label=Website%20status&url=https%3A%2F%2Ffireplace-of-despair.org%2F)](https://fireplace-of-despair.org)
 
-![CodeQL](https://github.com/ChiefNoir/ss-pbc/workflows/CodeQL/badge.svg?branch=master)
+[![CodeQL](https://github.com/ChiefNoir/ss-pbc/actions/workflows/codeql.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/codeql.yml)
 
 ![Build status](https://github.com/ChiefNoir/ss-pbc/workflows/Build%20back-end/badge.svg?branch=master)
 ![Test status](https://github.com/ChiefNoir/ss-pbc/workflows/Test%20back-end/badge.svg?branch=master)

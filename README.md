@@ -1,14 +1,14 @@
-![Deploy](https://github.com/ChiefNoir/BusinessCard/workflows/Deploy/badge.svg?branch=master)
-![Publish](https://github.com/ChiefNoir/BusinessCard/workflows/Publish/badge.svg?branch=master)
+![Deploy](https://github.com/ChiefNoir/ss-pbc/workflows/Deploy/badge.svg?branch=master)
+![Publish](https://github.com/ChiefNoir/ss-pbc/workflows/Publish/badge.svg?branch=master)
 [![Website status](https://img.shields.io/website?label=Website%20status&url=https%3A%2F%2Ffireplace-of-despair.org%2F)](https://fireplace-of-despair.org)
 
-![CodeQL](https://github.com/ChiefNoir/BusinessCard/workflows/CodeQL/badge.svg?branch=master)
+![CodeQL](https://github.com/ChiefNoir/ss-pbc/workflows/CodeQL/badge.svg?branch=master)
 
-![Build status](https://github.com/ChiefNoir/BusinessCard/workflows/Build%20back-end/badge.svg?branch=master)
-![Test status](https://github.com/ChiefNoir/BusinessCard/workflows/Test%20back-end/badge.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/ChiefNoir/BusinessCard/badge.svg?branch=master)](https://coveralls.io/github/ChiefNoir/BusinessCard?branch=master)
+![Build status](https://github.com/ChiefNoir/ss-pbc/workflows/Build%20back-end/badge.svg?branch=master)
+![Test status](https://github.com/ChiefNoir/ss-pbc/workflows/Test%20back-end/badge.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ss-pbc/BusinessCard/badge.svg?branch=master)](https://coveralls.io/github/ChiefNoir/ss-pbc?branch=master)
 
-![Build Status](https://github.com/ChiefNoir/BusinessCard/workflows/Build%20front-end/badge.svg?branch=master)
+![Build Status](https://github.com/ChiefNoir/ss-pbc/workflows/Build%20front-end/badge.svg?branch=master)
 
 
 # SSPBC

@@ -54,5 +54,19 @@ jobs:
           cd ./back-end/
           dotnet build --configuration Release --no-restore
 
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Install dependencies
+      run: | 
+          cd ./front-end/
+          npm install
+      env:
+        CI: true
+    - name: Generate build
+      run: | 
+          cd ./front-end/
+          npm run build
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2

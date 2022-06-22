@@ -24,8 +24,8 @@ namespace Infrastructure.Models
         [Column("description_short")]
         public string DescriptionShort { get; set; }
 
-        [Column("display_name")]
-        public string DisplayName { get; set; }
+        [Column("name")]
+        public string Name { get; set; }
 
         [Column("poster_description")]
         public string? PosterDescription { get; set; }

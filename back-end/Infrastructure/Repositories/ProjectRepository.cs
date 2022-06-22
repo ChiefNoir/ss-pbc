@@ -138,7 +138,7 @@ namespace Infrastructure.Repositories
             dbProject.Code = project.Code;
             dbProject.Description = project.Description;
             dbProject.DescriptionShort = project.DescriptionShort;
-            dbProject.DisplayName = project.Name;
+            dbProject.Name = project.Name;
             dbProject.PosterDescription = project.PosterDescription;
             dbProject.PosterUrl = project.PosterUrl;
             dbProject.ReleaseDate = project.ReleaseDate;

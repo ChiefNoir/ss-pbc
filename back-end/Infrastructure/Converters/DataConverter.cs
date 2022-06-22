@@ -63,7 +63,7 @@ namespace Infrastructure.Converters
                 Code = project.Code,
                 Description = project.Description,
                 DescriptionShort = project.DescriptionShort,
-                Name = project.DisplayName,
+                Name = project.Name,
                 PosterUrl = project.PosterUrl,
                 PosterDescription = project.PosterDescription,
                 ReleaseDate = project.ReleaseDate,
@@ -79,7 +79,7 @@ namespace Infrastructure.Converters
             {
                 Code = project.Code,
                 Description = project.DescriptionShort,
-                Name = project.DisplayName,
+                Name = project.Name,
                 PosterDescription = project.PosterDescription ?? string.Empty,
                 PosterUrl = project.PosterUrl,
                 ReleaseDate = project.ReleaseDate,

@@ -21,7 +21,7 @@ And it was built almost at an enterprise level.
 - [React Redux](https://react-redux.js.org/)
 - [MUI](https://mui.com/)
 - [i18next](https://www.i18next.com/)
-- [TypeScript] (https://www.typescriptlang.org/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## Back-end
 - [.Net Core 6](https://dotnet.microsoft.com/download)

@@ -21,7 +21,6 @@ builder.Services.AddControllers();
     builder.Services.AddSwaggerGen();
 #endif
 
-
 builder.Services.AddCors();
 
 builder.Services.AddApiVersioning(o =>

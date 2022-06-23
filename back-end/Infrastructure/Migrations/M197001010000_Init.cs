@@ -32,14 +32,11 @@ namespace Infrastructure.Migrations
 					PRIMARY KEY(id)
                 );");
             Execute.Sql(
-                @"ALTER TABLE category ADD CONSTRAINT CK_category_code__only_latin_and_numbers
+				@"ALTER TABLE category ADD CONSTRAINT CHECK_category_code__only_latin_and_numbers
 						CHECK (code ~* '^[a-z0-9_.-]*$');");
-
             Execute.Sql(
-                @"ALTER TABLE category ADD CONSTRAINT CK_category_code__only_lowercase
+				@"ALTER TABLE category ADD CONSTRAINT CHECK_category_code__only_lowercase
 						CHECK (code = LOWER(code));");
-
-
 
             Execute.Sql(
                 @"CREATE TABLE project
@@ -58,11 +55,10 @@ namespace Infrastructure.Migrations
 					PRIMARY KEY(id)
 				);");
             Execute.Sql(
-                @"ALTER TABLE project ADD CONSTRAINT CK_project_code__only_latin_and_numbers
+				@"ALTER TABLE project ADD CONSTRAINT CHECK_project_code__only_latin_and_numbers
 						CHECK (code ~* '^[a-z0-9_.-]*$');");
-
             Execute.Sql(
-                @"ALTER TABLE project ADD CONSTRAINT CK_project_code__only_lowercase
+				@"ALTER TABLE project ADD CONSTRAINT CHECK_project_code__only_lowercase
 						CHECK (code = LOWER(Code));");
 
             Execute.Sql(
@@ -130,7 +126,9 @@ namespace Infrastructure.Migrations
 					ORDER BY 
 						total DESC
 				);");
-        }
+
+			Execute.Sql(@"CREATE INDEX project_releasedate_idx ON project(release_date ASC NULLS LAST);");
+		}
 
         public override void Down()
         {

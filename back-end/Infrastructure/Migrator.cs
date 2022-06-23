@@ -1,4 +1,5 @@
 ﻿using FluentMigrator.Runner;
+using Infrastructure.Migrations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure
@@ -17,10 +18,8 @@ namespace Infrastructure
             using (var scope = CreateServices(_connectionString).CreateScope())
             {
                 var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
-
+                
                 runner.ListMigrations();
-
-                // Execute the migrations
                 runner.MigrateUp();
             }
         }
@@ -32,8 +31,6 @@ namespace Infrastructure
                 var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
 
                 runner.ListMigrations();
-
-                // Execute the migrations
                 runner.MigrateDown(version);
             }
         }
@@ -42,17 +39,13 @@ namespace Infrastructure
         private static IServiceProvider CreateServices(string connectionString)
         {
             return new ServiceCollection()
-                // Add common FluentMigrator services
                 .AddFluentMigratorCore()
-                .ConfigureRunner(rb => rb
+                .ConfigureRunner(runner => runner
                     .AddPostgres()
-                    // Set the connection string
                     .WithGlobalConnectionString(connectionString)
-                    // Define the assembly containing the migrations
+                    .WithVersionTable(new VersionTable())
                     .ScanIn(typeof(Migrator).Assembly).For.Migrations())
-                // Enable logging to console in the FluentMigrator way
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
-                // Build the service provider
                 .BuildServiceProvider(false);
         }
     }

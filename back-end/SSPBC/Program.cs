@@ -1,6 +1,8 @@
+using Abstractions.ICache;
 using Abstractions.IRepositories;
 using Abstractions.Security;
 using Infrastructure;
+using Infrastructure.Cache;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
@@ -8,10 +10,9 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Security;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 
@@ -40,8 +41,15 @@ builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IIntroductionRepository, IntroductionRepository>();
 builder.Services.AddTransient<IFileRepository, FileRepository>();
 builder.Services.AddTransient<ITokenManager, TokenManager>();
+builder.Services.AddTransient<IDataCache, DataCache>();
 builder.Services.AddTransient<Supervisor>();
 builder.Services.AddTransient<HashManager>();
+
+var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis")); // host1:port1, host2:port2, ...
+options.Password = "redis";
+
+var multiplexer = ConnectionMultiplexer.Connect(options);
+builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -68,8 +76,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors(builder => builder.AllowAnyOrigin()
-                                          .AllowAnyMethod()
-                                          .AllowAnyHeader());
+                              .AllowAnyMethod()
+                              .AllowAnyHeader());
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {

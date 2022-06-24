@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Authors>Stanislav "Chief" Shevtsov</Authors>
+    <Company>Fireplace of Despair</Company>
+    <Copyright>Stanislav "Chief" Shevtsov</Copyright>
+    <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile></PackageReadmeFile>
+    <NeutralLanguage>en</NeutralLanguage>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.6.45" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

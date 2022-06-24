@@ -1,4 +1,5 @@
 ﻿using Abstractions.Exceptions;
+using Abstractions.ICache;
 using Abstractions.IRepositories;
 using Abstractions.Models;
 using Infrastructure.Converters;
@@ -9,22 +10,30 @@ namespace Infrastructure.Repositories
     public class IntroductionRepository : IIntroductionRepository
     {
         private readonly DataContext _context;
+        private readonly IDataCache _cache;
 
-
-        public IntroductionRepository(DataContext context)
+        public IntroductionRepository(DataContext context, IDataCache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
 
-        public Task<Introduction> GetAsync()
+        public async Task<Introduction> GetAsync()
         {
-            return _context.Introductions
+            var cachedItem = await _cache.GetIntroductionAsync();
+            if (cachedItem != null)
+                return cachedItem;
+
+            var dbItem = await _context.Introductions
                            .Include(x => x.ExternalUrls)
                            .ThenInclude(x => x.ExternalUrl)
                            .AsNoTracking()
                            .Select(x => DataConverter.ToIntroduction(x))
                            .FirstAsync();
+
+            await _cache.SaveIntroductionAsync(dbItem);
+            return dbItem;
         }
 
 
@@ -41,7 +50,10 @@ namespace Infrastructure.Repositories
             Merge(dbItem, item);
             await _context.SaveChangesAsync();
 
-            return DataConverter.ToIntroduction(dbItem);
+            var resultItem = DataConverter.ToIntroduction(dbItem);
+            await _cache.SaveIntroductionAsync(resultItem);
+
+            return resultItem;
         }
 
 

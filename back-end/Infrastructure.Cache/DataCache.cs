@@ -13,6 +13,11 @@ namespace Infrastructure.Cache
         private readonly string KeyCategories = $"Data:{CachedItemType.Categories}";
         private readonly string KeyProjectsPreview = $"Data:{CachedItemType.ProjectsPreview}";
 
+        public DataCache(IConnectionMultiplexer multiplexer)
+        {
+            _multiplexer = multiplexer;
+        }
+
         public DataCache(IConnectionMultiplexer multiplexer, string prefix)
         {
             _multiplexer = multiplexer;

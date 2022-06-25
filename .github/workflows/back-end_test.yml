@@ -57,7 +57,7 @@ jobs:
       - name: Test and cover
         run: |
           cd ./back-end/
-          dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+          dotnet test /p:CollectCoverage=true /p:ExcludeByFile="**/program.cs" /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
 
       - name: Publish coverage report to coveralls.io
         uses: coverallsapp/github-action@v1.0.1

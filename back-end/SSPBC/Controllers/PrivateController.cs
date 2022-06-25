@@ -21,9 +21,14 @@ namespace SSPBC.Controllers
         private readonly IIntroductionRepository _introductionRepository;
         private readonly IProjectRepository _projectRepository;
         private readonly Supervisor _supervisor;
-        private readonly ITokenManager _tokenManager;
 
-        public PrivateController(IAccountRepository accountRepository, ICategoryRepository categoryRepository, IConfiguration configuration, IFileRepository fileRepository, IIntroductionRepository introductionRepository, IProjectRepository projectRepository, Supervisor supervisor, ITokenManager tokenManager)
+        public PrivateController(IAccountRepository accountRepository,
+                                 ICategoryRepository categoryRepository, 
+                                 IConfiguration configuration,
+                                 IFileRepository fileRepository, 
+                                 IIntroductionRepository introductionRepository, 
+                                 IProjectRepository projectRepository, 
+                                 Supervisor supervisor)
         {
             _accountRepository = accountRepository;
             _categoryRepository = categoryRepository;
@@ -32,7 +37,6 @@ namespace SSPBC.Controllers
             _introductionRepository = introductionRepository;
             _projectRepository = projectRepository;
             _supervisor = supervisor;
-            _tokenManager = tokenManager;
         }
 
         [HttpPost("accounts")]

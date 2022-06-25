@@ -32,7 +32,7 @@ namespace Infrastructure.Repositories
                            .Select(x => DataConverter.ToIntroduction(x))
                            .FirstAsync();
 
-            await _cache.SaveIntroductionAsync(dbItem);
+            await _cache.SaveAsync(dbItem);
             return dbItem;
         }
 
@@ -51,7 +51,7 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             var resultItem = DataConverter.ToIntroduction(dbItem);
-            await _cache.SaveIntroductionAsync(resultItem);
+            await _cache.SaveAsync(resultItem);
 
             return resultItem;
         }

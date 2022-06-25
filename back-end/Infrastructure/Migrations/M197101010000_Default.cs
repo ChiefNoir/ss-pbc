@@ -1,8 +1,10 @@
 ﻿using FluentMigrator;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.Migrations
 {
     [Migration(197101010000, "Initialize default values")]
+    [ExcludeFromCodeCoverage]
     public class M197101010000_Default : Migration
     {
         internal static Guid categoryId = new("A4517F51-9C85-4850-BE3F-F196742925D2");

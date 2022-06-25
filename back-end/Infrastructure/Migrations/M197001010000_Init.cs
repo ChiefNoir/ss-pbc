@@ -1,9 +1,11 @@
 ﻿using FluentMigrator;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.Migrations
 {
     [Migration(197001010000, "Initialize database")]
-    public class M19700101_Init : Migration
+	[ExcludeFromCodeCoverage]
+	public class M19700101_Init : Migration
     {
         public override void Up()
         {

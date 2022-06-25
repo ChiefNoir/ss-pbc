@@ -1,8 +1,10 @@
 ﻿using FluentMigrator.Runner.VersionTableInfo;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.Migrations
 {
     [VersionTableMetaData]
+    [ExcludeFromCodeCoverage]
     public class VersionTable : IVersionTableMetaData
     {
         public string SchemaName => "public";

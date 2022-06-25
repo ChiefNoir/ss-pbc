@@ -99,7 +99,7 @@ namespace GeneralTests.UseCases
                     Assert.Equal
                     (
                         Initializer.CreateConfiguration().GetSection("Token:LifeTime").Get<int>(),
-                        resultLogin.Data.TokenLifeTimeMinutes
+                        resultLogin.Data!.TokenLifeTimeMinutes
                     );
                     Assert.NotNull(resultLogin.Data.Token);
                     // *****************************
@@ -215,7 +215,7 @@ namespace GeneralTests.UseCases
                         await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(response);
-                    Validator.Compare(Default.Account, response.Data.Account);
+                    Validator.Compare(Default.Account, response.Data!.Account);
                     // *****************************
 
                     // Step 2: Try to add invalid account
@@ -316,7 +316,7 @@ namespace GeneralTests.UseCases
                         await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(response);
-                    Validator.Compare(Default.Account, response.Data.Account);
+                    Validator.Compare(Default.Account, response.Data!.Account);
                     // *****************************
 
                     // Step 2: Create filler account for tests
@@ -372,7 +372,7 @@ namespace GeneralTests.UseCases
                     var api = Initializer.CreatePrivateController(context, cache);
                     var resultGetAccount =
                     (
-                        await api.GetAccountAsync(responseLogin.Data.Account.Id.Value)
+                        await api.GetAccountAsync(responseLogin.Data!.Account.Id!.Value)
                     ).Value;
 
                     Validator.CheckSucceed(resultGetAccount);
@@ -455,7 +455,7 @@ namespace GeneralTests.UseCases
                     // *****************************
 
                     // Step 2: Try to delete account and fail
-                    var acc = responseLogin.Data.Account;
+                    var acc = responseLogin.Data!.Account;
                     var accId = responseLogin.Data.Account.Id;
                     acc.Id = null;
 
@@ -518,7 +518,7 @@ namespace GeneralTests.UseCases
                         await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
-                    Validator.Compare(Default.Account, responseLogin.Data.Account);
+                    Validator.Compare(Default.Account, responseLogin.Data!.Account);
                     // *****************************
 
                     // Step 2: Try to delete account
@@ -571,7 +571,7 @@ namespace GeneralTests.UseCases
                         await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
-                    Validator.Compare(Default.Account, responseLogin.Data.Account);
+                    Validator.Compare(Default.Account, responseLogin.Data!.Account);
 
                     var account = responseLogin.Data.Account;
                     // *****************************
@@ -635,7 +635,7 @@ namespace GeneralTests.UseCases
                         await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
-                    Validator.Compare(Default.Account, responseLogin.Data.Account);
+                    Validator.Compare(Default.Account, responseLogin.Data!.Account);
 
                     var account = responseLogin.Data.Account;
                     // *****************************

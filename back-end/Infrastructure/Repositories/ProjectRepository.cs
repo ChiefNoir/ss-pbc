@@ -65,7 +65,10 @@ namespace Infrastructure.Repositories
             if (!string.IsNullOrEmpty(categoryCode))
             {
                 var category = await _categoryRepository.GetAsync(categoryCode);
-                categoryId = category.Id.Value;
+                if (category == null)
+                    throw new InconsistencyException(string.Format(Resources.TextMessages.CategoryDoesNotExist, categoryCode));
+
+                categoryId = category.Id!.Value;
                 isEverything = category.IsEverything;
             }
 
@@ -146,9 +149,12 @@ namespace Infrastructure.Repositories
 
         private void Merge(Models.Project dbProject, Project project)
         {
-            dbProject.Category = _context.Categories.FirstOrDefault(x => x.Code == project.Category.Code);
+            var category = _context.Categories.FirstOrDefault(x => x.Code == project.Category!.Code);
+            if (category == null)
+                throw new InconsistencyException(string.Format(Resources.TextMessages.CategoryDoesNotExist, project.Category!.Code));
 
-            dbProject.CategoryId = project.Category.Id.Value;
+            dbProject.Category = category;
+            dbProject.CategoryId = category.Id!.Value;
             dbProject.Code = project.Code;
             dbProject.Description = project.Description;
             dbProject.DescriptionShort = project.DescriptionShort;
@@ -184,9 +190,9 @@ namespace Infrastructure.Repositories
             var toUpdate = newExternalUrls.Where(x => x.Id.HasValue);
             foreach (var item in toUpdate)
             {
-                var upd = dbItem.ExternalUrls.FirstOrDefault(x => x.ExternalUrlId == item.Id.Value);
+                var upd = dbItem.ExternalUrls.FirstOrDefault(x => x.ExternalUrlId == item.Id!.Value);
 
-                upd.ExternalUrl.DisplayName = item.DisplayName;
+                upd!.ExternalUrl.DisplayName = item.DisplayName;
                 upd.ExternalUrl.Url = item.Url;
                 upd.ExternalUrl.Version++;
             }

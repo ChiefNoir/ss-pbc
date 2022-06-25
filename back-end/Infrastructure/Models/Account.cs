@@ -13,16 +13,16 @@ namespace Infrastructure.Models
         public Guid? Id { get; set; }
 
         [Column("login")]
-        public string Login { get; set; }
+        public string Login { get; set; } = string.Empty;
 
         [Column("password")]
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
 
         [Column("role")]
-        public string Role { get; set; }
+        public string Role { get; set; } = string.Empty;
 
         [Column("salt")]
-        public string Salt { get; set; }
+        public string Salt { get; set; } = string.Empty;
 
         [Column("version")]
         public long Version { get; set; }

@@ -97,7 +97,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetIntroductionAsync()
                     ).Value;
                     Validator.CheckSucceed(responseSaveIntroduction);
-                    Validator.Compare(newIntroduction, responseIntroduction.Data);
+                    Validator.Compare(newIntroduction, responseIntroduction!.Data);
                     // ****************************
 
                     //Extra

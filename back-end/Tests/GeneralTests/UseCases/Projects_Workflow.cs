@@ -168,8 +168,8 @@ namespace GeneralTests.UseCases
                     var prj = await Creator.CreateNewProject(context, cache, "code");
                     var newCategory =
                     (
-                        await apiPublic.GetCategoryAsync(prj.Category.Id)
-                    ).Value.Data;
+                        await apiPublic.GetCategoryAsync(prj.Category!.Id)
+                    ).Value!.Data;
 
                     // Step 5: Delete project
                     var responseDeleteProject =
@@ -199,10 +199,10 @@ namespace GeneralTests.UseCases
                     // Step 4: Check category
                     var responseGetCategory =
                     (
-                        await apiPublic.GetCategoryAsync(newCategory.Id)
+                        await apiPublic.GetCategoryAsync(newCategory!.Id)
                     ).Value;
                     Validator.CheckSucceed(responseGetCategory);
-                    Assert.Equal(0, responseGetCategory.Data.TotalProjects);
+                    Assert.Equal(0, responseGetCategory.Data!.TotalProjects);
                     // *****************************
 
                     // Step 4: Check category==all
@@ -211,7 +211,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoryAsync(Default.Category.Id)
                     ).Value;
                     Validator.CheckSucceed(responseGetCategoryDef);
-                    Assert.Equal(0, responseGetCategoryDef.Data.TotalProjects);
+                    Assert.Equal(0, responseGetCategoryDef.Data!.TotalProjects);
                     // *****************************
                 }
                 finally
@@ -339,7 +339,7 @@ namespace GeneralTests.UseCases
                         Code = prj.Code,
                         Description = prj.DescriptionShort,
                         Name = prj.Name,
-                        PosterDescription = prj.PosterDescription,
+                        PosterDescription = prj.PosterDescription!,
                         PosterUrl = prj.PosterUrl,
                         ReleaseDate = prj.ReleaseDate
                     };
@@ -361,7 +361,7 @@ namespace GeneralTests.UseCases
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
                     Validator.CheckSucceed(responseSaveProject);
-                    prj.Category.TotalProjects = -1;
+                    prj.Category!.TotalProjects = -1;
                     prj.Version++;
                     Validator.Compare(prj, responseSaveProject.Data);
                     // *****************************
@@ -418,7 +418,7 @@ namespace GeneralTests.UseCases
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
                     Validator.CheckSucceed(responseSaveProject);
-                    prj.Category.TotalProjects = -1;
+                    prj.Category!.TotalProjects = -1;
                     prj.Version++;
                     Validator.Compare(prj, responseSaveProject.Data);
                     // *****************************
@@ -464,7 +464,7 @@ namespace GeneralTests.UseCases
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
                     Validator.CheckSucceed(responseSaveProject);
-                    prj.Category.TotalProjects = -1;
+                    prj.Category!.TotalProjects = -1;
                     prj.Version++;
                     prj.ExternalUrls.ToList().ForEach(x => x.Version++);
                     Validator.Compare(prj, responseSaveProject.Data);
@@ -494,7 +494,7 @@ namespace GeneralTests.UseCases
                         Code = prj.Code,
                         Description = prj.DescriptionShort,
                         Name = prj.Name,
-                        PosterDescription = prj.PosterDescription,
+                        PosterDescription = prj.PosterDescription!,
                         PosterUrl = prj.PosterUrl,
                         ReleaseDate = prj.ReleaseDate
                     };
@@ -511,7 +511,7 @@ namespace GeneralTests.UseCases
                         await apiPrivate.SaveProjectAsync(prj)
                     ).Value;
                     Validator.CheckSucceed(responseSaveProject);
-                    prj.Category.TotalProjects = -1;
+                    prj.Category!.TotalProjects = -1;
                     prj.Version++;
                     prj.ExternalUrls.ToList().ForEach(x => x.Version++);
                     Validator.Compare(prj, responseSaveProject.Data);
@@ -541,7 +541,7 @@ namespace GeneralTests.UseCases
                         Code = prj.Code,
                         Description = prj.DescriptionShort,
                         Name = prj.Name,
-                        PosterDescription = prj.PosterDescription,
+                        PosterDescription = prj.PosterDescription!,
                         PosterUrl = prj.PosterUrl,
                         ReleaseDate = prj.ReleaseDate
                     };
@@ -755,7 +755,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoryAsync(newCategory.Id)
                     ).Value;
                     Validator.CheckSucceed(responseGetCategory);
-                    Assert.Equal(0, responseGetCategory.Data.TotalProjects);
+                    Assert.Equal(0, responseGetCategory.Data!.TotalProjects);
                     // *****************************
 
                     // Step 4: Check category==all
@@ -764,7 +764,7 @@ namespace GeneralTests.UseCases
                         await apiPublic.GetCategoryAsync(Default.Category.Id)
                     ).Value;
                     Validator.CheckSucceed(responseGetCategoryDef);
-                    Assert.Equal(0, responseGetCategoryDef.Data.TotalProjects);
+                    Assert.Equal(0, responseGetCategoryDef.Data!.TotalProjects);
                     // *****************************
                 }
                 finally
@@ -793,7 +793,7 @@ namespace GeneralTests.UseCases
                     {
                         var failPrj = (await apiPublic.GetProjectAsync(ethaloneCode)).Value!.Data;
 
-                        failPrj.Id = Guid.NewGuid();
+                        failPrj!.Id = Guid.NewGuid();
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)
@@ -807,9 +807,9 @@ namespace GeneralTests.UseCases
                         var failPrj =
                         (
                             await apiPublic.GetProjectAsync(ethaloneCode)
-                        ).Value.Data;
+                        ).Value!.Data;
 
-                        failPrj.Code = string.Empty;
+                        failPrj!.Code = string.Empty;
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)
@@ -823,9 +823,9 @@ namespace GeneralTests.UseCases
                         var failPrj =
                         (
                             await apiPublic.GetProjectAsync(ethaloneCode)
-                        ).Value.Data;
+                        ).Value!.Data;
 
-                        failPrj.Version++;
+                        failPrj!.Version++;
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)
@@ -839,9 +839,9 @@ namespace GeneralTests.UseCases
                         var failPrj =
                         (
                             await apiPublic.GetProjectAsync(ethaloneCode)
-                        ).Value.Data;
+                        ).Value!.Data;
 
-                        failPrj.Name = string.Empty;
+                        failPrj!.Name = string.Empty;
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)
@@ -856,9 +856,9 @@ namespace GeneralTests.UseCases
                         var failPrj =
                         (
                             await apiPublic.GetProjectAsync(ethaloneCode)
-                        ).Value.Data;
+                        ).Value!.Data;
 
-                        failPrj.Code = "ss";
+                        failPrj!.Code = "ss";
                         var responseSaveProject =
                         (
                             await apiPrivate.SaveProjectAsync(failPrj)
@@ -894,7 +894,7 @@ namespace GeneralTests.UseCases
                             await apiPublic.GetProjectAsync(code)
                         ).Value!.Data;
 
-                        prj.Id = null;
+                        prj!.Id = null;
                         var responseSaveProject =
                         (
                             await apiPrivate.DeleteProjectAsync(prj)
@@ -906,9 +906,9 @@ namespace GeneralTests.UseCases
                         var prj =
                         (
                             await apiPublic.GetProjectAsync(code)
-                        ).Value.Data;
+                        ).Value!.Data;
 
-                        prj.Id = Guid.NewGuid();
+                        prj!.Id = Guid.NewGuid();
                         var responseSaveProject =
                         (
                             await apiPrivate.DeleteProjectAsync(prj)
@@ -920,9 +920,9 @@ namespace GeneralTests.UseCases
                         var prj =
                         (
                             await apiPublic.GetProjectAsync(code)
-                        ).Value.Data;
+                        ).Value!.Data;
 
-                        prj.Version++;
+                        prj!.Version++;
                         var responseSaveProject =
                         (
                             await apiPrivate.DeleteProjectAsync(prj)

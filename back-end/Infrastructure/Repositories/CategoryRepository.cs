@@ -90,7 +90,7 @@ namespace Infrastructure.Repositories
         public async Task<Category> SaveAsync(Category item)
         {
             await _cache.FlushAsync(CachedItemType.Categories);
-            
+
             if (item.Id == null)
             {
                 return await CreateAsync(item);

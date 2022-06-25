@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Security;
 using StackExchange.Redis;
 
+const string KeyDatabase = "PostgreSQL";
+const string KeyCache = "Redis";
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -33,7 +36,7 @@ builder.Services.AddApiVersioning(o =>
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString(KeyDatabase));
 });
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
@@ -45,8 +48,8 @@ builder.Services.AddTransient<IDataCache, DataCache>();
 builder.Services.AddTransient<Supervisor>();
 builder.Services.AddTransient<HashManager>();
 
-var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis")); // host1:port1, host2:port2, ...
-options.Password = "redis";
+
+var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString(KeyCache));
 
 var multiplexer = ConnectionMultiplexer.Connect(options);
 builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
@@ -96,6 +99,13 @@ using (var scope = app.Services.CreateScope())
 
     var context = services.GetRequiredService<DataContext>();
     context.Migrator.MigrateUp();
+}
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<IDataCache>();
+    await context.FlushAsync();
 }
 
 app.Run();

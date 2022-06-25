@@ -344,7 +344,7 @@ namespace GeneralTests.UseCases
                         ReleaseDate = prj.ReleaseDate
                     };
 
-                    Validator.Compare(preview, responseGetProjectsPreview.Data[0]);
+                    Validator.Compare(preview, responseGetProjectsPreview.Data.First());
                     // *****************************
 
                     // Step 6: Edit project 
@@ -395,7 +395,7 @@ namespace GeneralTests.UseCases
                         ReleaseDate = prj.ReleaseDate
                     };
 
-                    Validator.Compare(preview, responseGetProjectsPreview.Data[0]);
+                    Validator.Compare(preview, responseGetProjectsPreview.Data.First());
                     prj = responseGetProject.Data;
                     // *****************************
 
@@ -452,7 +452,7 @@ namespace GeneralTests.UseCases
                         ReleaseDate = prj.ReleaseDate
                     };
 
-                    Validator.Compare(preview, responseGetProjectsPreview.Data[0]);
+                    Validator.Compare(preview, responseGetProjectsPreview.Data.First());
                     prj = responseGetProject.Data;
                     // *****************************
 
@@ -499,7 +499,7 @@ namespace GeneralTests.UseCases
                         ReleaseDate = prj.ReleaseDate
                     };
 
-                    Validator.Compare(preview, responseGetProjectsPreview.Data[0]);
+                    Validator.Compare(preview, responseGetProjectsPreview.Data.First());
                     prj = responseGetProject.Data;
                     // *****************************
 
@@ -546,7 +546,7 @@ namespace GeneralTests.UseCases
                         ReleaseDate = prj.ReleaseDate
                     };
 
-                    Validator.Compare(preview, responseGetProjectsPreview.Data[0]);
+                    Validator.Compare(preview, responseGetProjectsPreview.Data.First());
                     prj = responseGetProject.Data;
                     // *****************************
                 }

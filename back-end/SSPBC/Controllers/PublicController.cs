@@ -82,7 +82,7 @@ namespace SSPBC.Controllers
         [AllowAnonymous]
         [ApiVersion("1.0")]
         [HttpGet("projects/search")]
-        public async Task<ActionResult<ExecutionResult<ProjectPreview[]>>>
+        public async Task<ActionResult<ExecutionResult<IEnumerable<ProjectPreview>>>>
             GetProjectsPreviewAsync([FromQuery] Paging paging, [FromQuery] ProjectSearch searchQuery)
         {
             var result = await _supervisor.SafeExecuteAsync

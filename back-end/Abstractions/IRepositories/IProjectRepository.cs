@@ -21,7 +21,7 @@ namespace Abstractions.IRepositories
         /// <param name="length">Length</param>
         /// <param name="categoryCode">Category code</param>
         /// <returns><seealso cref="ProjectPreview"/></returns>
-        Task<ProjectPreview[]> GetPreviewAsync(int start, int length, string categoryCode);
+        Task<IEnumerable<ProjectPreview>> GetPreviewAsync(int start, int length, string categoryCode);
 
         /// <summary> Create or update <seealso cref="Project"/> </summary>
         /// <param name="project">New <seealso cref="Project"/> </param>

@@ -57,7 +57,7 @@ namespace GeneralTests
                 await apiPublic.GetProjectsPreviewAsync(new Paging { Start = 0, Length = 100 }, new ProjectSearch { CategoryCode = null })
             ).Value;
             Validator.CheckSucceed(responseGetProjectsPreview);
-            Assert.Equal(category.TotalProjects + 1, responseGetProjectsPreview.Data.Length);
+            Assert.Equal(category.TotalProjects + 1, responseGetProjectsPreview.Data.Count());
 
             var preview = new ProjectPreview
             {

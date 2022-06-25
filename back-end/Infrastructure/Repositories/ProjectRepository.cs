@@ -24,6 +24,7 @@ namespace Infrastructure.Repositories
         public async Task<bool> DeleteAsync(Project project)
         {
             await _cache.FlushAsync(CachedItemType.Categories);
+            await _cache.FlushAsync(CachedItemType.ProjectsPreview);
 
             var dbItem = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
 
@@ -51,7 +52,7 @@ namespace Infrastructure.Repositories
             return DataConverter.ToProject(result);
         }
 
-        public async Task<ProjectPreview[]> GetPreviewAsync(int start, int length, string categoryCode)
+        public async Task<IEnumerable<ProjectPreview>> GetPreviewAsync(int start, int length, string categoryCode)
         {
             if (length < 1 || start < 0)
             {
@@ -68,19 +69,30 @@ namespace Infrastructure.Repositories
                 isEverything = category.IsEverything;
             }
 
-            return await _context.Projects
-                                 .Where(x => isEverything || x.CategoryId == categoryId)
+            var cachedItems = await _cache.GetProjectPreviewAsync();
+            if (cachedItems == null)
+            {
+                var dbItems = await _context.Projects
                                  .OrderByDescending(x => x.ReleaseDate)
-                                 .Skip(start)
-                                 .Take(length)
                                  .Include(x => x.Category)
                                  .Select(x => DataConverter.ToProjectPreview(x))
                                  .ToArrayAsync();
+
+                await _cache.SaveAsync(dbItems);
+                cachedItems = dbItems;
+            }
+
+            return cachedItems.Where(x => isEverything || x.Category!.Id == categoryId)
+                                  .OrderByDescending(x => x.ReleaseDate)
+                                  .Skip(start)
+                                  .Take(length)
+                                  .ToList();
         }
 
         public async Task<Project> SaveAsync(Project project)
         {
             await _cache.FlushAsync(CachedItemType.Categories);
+            await _cache.FlushAsync(CachedItemType.ProjectsPreview);
 
             if (project.Id == null)
             {

@@ -11,6 +11,7 @@ namespace Infrastructure.Cache
 
         private readonly string KeyIntroduction = $"Data:{CachedItemType.Introduction}";
         private readonly string KeyCategories = $"Data:{CachedItemType.Categories}";
+        private readonly string KeyProjectsPreview = $"Data:{CachedItemType.ProjectsPreview}";
 
         public DataCache(IConnectionMultiplexer multiplexer, string prefix)
         {
@@ -29,16 +30,27 @@ namespace Infrastructure.Cache
             return await GetCollection<Category>(KeyCategories);
         }
 
-        public async Task<bool> SaveAsync(Introduction introduction)
+        public async Task<IEnumerable<ProjectPreview>?> GetProjectPreviewAsync()
         {
-            return await Save(KeyIntroduction, introduction);
+            return await GetCollection<ProjectPreview>(KeyProjectsPreview);
         }
 
-        public async Task<bool> SaveAsync(IEnumerable<Category> categories)
+
+
+        public async Task<bool> SaveAsync(Introduction item)
         {
-            return await Save(KeyCategories, categories);
+            return await Save(KeyIntroduction, item);
         }
 
+        public async Task<bool> SaveAsync(IEnumerable<Category> items)
+        {
+            return await Save(KeyCategories, items);
+        }
+
+        public async Task<bool> SaveAsync(IEnumerable<ProjectPreview> items)
+        {
+            return await Save(KeyProjectsPreview, items);
+        }
 
         public async Task FlushAsync()
         {
@@ -68,6 +80,11 @@ namespace Infrastructure.Cache
                 case CachedItemType.Introduction:
                     {
                         await db.KeyDeleteAsync(KeyIntroduction);
+                        break;
+                    }
+                case CachedItemType.ProjectsPreview:
+                    {
+                        await db.KeyDeleteAsync(KeyProjectsPreview);
                         break;
                     }
                 default:
@@ -116,5 +133,6 @@ namespace Infrastructure.Cache
 
             return await db.StringSetAsync(key, jsonString);
         }
+
     }
 }

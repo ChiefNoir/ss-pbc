@@ -1,6 +1,5 @@
 ﻿using Abstractions.Security;
 using Microsoft.Extensions.Configuration;
-using SSPBC.Models;
 using System.Collections;
 
 namespace GeneralTests.UseCases
@@ -54,7 +53,8 @@ namespace GeneralTests.UseCases
         [ClassData(typeof(InvalidLogins))]
         internal async Task Login_Negative(string login, string password)
         {
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
@@ -72,7 +72,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -80,7 +80,8 @@ namespace GeneralTests.UseCases
         [Fact]
         internal async Task Login_Positive()
         {
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
@@ -106,7 +107,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }

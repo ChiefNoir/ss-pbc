@@ -13,13 +13,14 @@ namespace GeneralTests.UseCases
             // Step 1: Request introduction
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
 
-                    var apiPublic = Initializer.CreatePublicController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
 
                     // Step 1: Request introduction
                     var publiGetIntroduction =
@@ -33,7 +34,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -47,14 +48,15 @@ namespace GeneralTests.UseCases
             // Step 3: Request introduction
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
 
                     // Step 1: Request introduction
-                    var apiPublic = Initializer.CreatePublicController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
                     var responseIntroduction =
                     (
                         await apiPublic.GetIntroductionAsync()
@@ -77,7 +79,7 @@ namespace GeneralTests.UseCases
                         new() { DisplayName = "ExternalUrl-DisplayName-2", Url = "http://localhost/ExternalUrl-URL-2" },
                     };
 
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
                     var responseSaveIntroduction =
                     (
                         await apiPrivate.SaveIntroductionAsync(newIntroduction)
@@ -144,7 +146,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -158,14 +160,15 @@ namespace GeneralTests.UseCases
             // Step 3: Edit, wrong version
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
 
                     // Step 1: Request introduction
-                    var apiPublic = Initializer.CreatePublicController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
                     var responseIntroduction =
                     (
                         await apiPublic.GetIntroductionAsync()
@@ -188,7 +191,7 @@ namespace GeneralTests.UseCases
                         new() { DisplayName = "ExternalUrl-DisplayName-2", Url = "http://localhost/ExternalUrl-URL-2" },
                     };
 
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
                     var responseSaveIntroduction =
                     (
                         await apiPrivate.SaveIntroductionAsync(newIntroduction)
@@ -231,7 +234,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }

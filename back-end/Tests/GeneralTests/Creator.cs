@@ -1,4 +1,5 @@
-﻿using Abstractions.Models;
+﻿using Abstractions.Cache;
+using Abstractions.Models;
 using Infrastructure;
 using SSPBC.Models;
 
@@ -8,13 +9,13 @@ namespace GeneralTests
     {
         private static readonly string newCategoryCode = "cute";
 
-        public static async Task<Project> CreateNewProject(DataContext context, string code, string? categoryCode = null)
+        public static async Task<Project> CreateNewProject(DataContext context, IDataCache cache, string code, string? categoryCode = null)
         {
-            var apiPublic = Initializer.CreatePublicController(context);
-            var apiPrivate = Initializer.CreatePrivateController(context);
+            var apiPublic = Initializer.CreatePublicController(context, cache);
+            var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
             // Step 1: Create/get category
-            var category = await CreateNewCategory(context, categoryCode);
+            var category = await CreateNewCategory(context, cache, categoryCode);
             // *****************************
 
             // Step 2: Create new project and assign it to the new category
@@ -94,10 +95,10 @@ namespace GeneralTests
             return result.Value.Data;
         }
 
-        public static async Task<Category> CreateNewCategory(DataContext context, string? categoryCode = null)
+        public static async Task<Category> CreateNewCategory(DataContext context, IDataCache cache, string? categoryCode = null)
         {
-            var apiPublic = Initializer.CreatePublicController(context);
-            var apiPrivate = Initializer.CreatePrivateController(context);
+            var apiPublic = Initializer.CreatePublicController(context, cache);
+            var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
             var responseGetCategories =
             (

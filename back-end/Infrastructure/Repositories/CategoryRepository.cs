@@ -1,4 +1,5 @@
-﻿using Abstractions.Exceptions;
+﻿using Abstractions.Cache;
+using Abstractions.Exceptions;
 using Abstractions.IRepositories;
 using Abstractions.Models;
 using Infrastructure.Converters;
@@ -9,10 +10,12 @@ namespace Infrastructure.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private readonly DataContext _context;
+        private readonly IDataCache _cache;
 
-        public CategoryRepository(DataContext context)
+        public CategoryRepository(DataContext context, IDataCache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
         public async Task<bool> DeleteAsync(Category category)
@@ -28,12 +31,20 @@ namespace Infrastructure.Repositories
         }
 
 
-        public Task<Category[]> GetAsync()
+        public async Task<IEnumerable<Category>> GetAsync()
         {
-            return _context.CategoriesWithTotalProjects
-                           .AsNoTracking()
-                           .Select(x => DataConverter.ToCategory(x))
-                           .ToArrayAsync();
+            var cacheItems = await _cache.GetCategoriesAsync();
+            if (cacheItems != null)
+                return cacheItems;
+
+            var dbItems = await _context.CategoriesWithTotalProjects
+                                    .AsNoTracking()
+                                    .Select(x => DataConverter.ToCategory(x))
+                                    .ToListAsync();
+
+            await _cache.SaveAsync(dbItems);
+
+            return dbItems;
         }
 
         public async Task<Category> GetAsync(Guid? id)
@@ -76,14 +87,16 @@ namespace Infrastructure.Repositories
             return DataConverter.ToCategory(result);
         }
 
-        public Task<Category> SaveAsync(Category item)
+        public async Task<Category> SaveAsync(Category item)
         {
+            await _cache.FlushAsync(CachedItemType.Categories);
+
             if (item.Id == null)
             {
-                return CreateAsync(item);
+                return await CreateAsync(item);
             }
 
-            return UpdateAsync(item);
+            return await UpdateAsync(item);
         }
 
 

@@ -1,6 +1,5 @@
-﻿using Abstractions.ICache;
+﻿using Abstractions.Cache;
 using Abstractions.Models;
-using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
 using System.Text.Json;
 
@@ -8,21 +7,16 @@ namespace Infrastructure.Cache
 {
     public class DataCache : IDataCache
     {
-        /* There are 3 chock points: 
-         *      1. Introduction
-         *      2. Categories
-         *      3. ProjectsPreview
-         */
-
         private readonly IConnectionMultiplexer _multiplexer;
 
-        private const string KeyIntroduction = "Data:Introduction";
-        private const string KeyCategories = "Data:Categories";
-        private const string KeyProjectPreview = "Data:ProjectPreview";
+        private readonly string KeyIntroduction = $"Data:{CachedItemType.Introduction}";
+        private readonly string KeyCategories = $"Data:{CachedItemType.Categories}";
 
-        public DataCache(IConnectionMultiplexer multiplexer)
+        public DataCache(IConnectionMultiplexer multiplexer, string prefix)
         {
             _multiplexer = multiplexer;
+            KeyIntroduction = prefix + KeyIntroduction;
+            KeyCategories = prefix + KeyCategories;
         }
 
         public async Task<Introduction?> GetIntroductionAsync()
@@ -35,11 +29,6 @@ namespace Infrastructure.Cache
             return await GetCollection<Category>(KeyCategories);
         }
 
-        public async Task<IEnumerable<ProjectPreview>?> GetProjectsPreviewAsync()
-        {
-            return await GetCollection<ProjectPreview>(KeyProjectPreview);
-        }
-
         public async Task<bool> SaveAsync(Introduction introduction)
         {
             return await Save(KeyIntroduction, introduction);
@@ -50,24 +39,49 @@ namespace Infrastructure.Cache
             return await Save(KeyCategories, categories);
         }
 
-        public async Task<bool> SaveAsync(IEnumerable<ProjectPreview> projectsPreview)
-        {
-            return await Save(KeyProjectPreview, projectsPreview);
-        }
 
         public async Task FlushAsync()
         {
-            var db = _multiplexer.GetDatabase();
+            if (!_multiplexer.IsConnected)
+                return;
 
-            await db.KeyDeleteAsync(KeyIntroduction);
-            await db.KeyDeleteAsync(KeyCategories);
-            await db.KeyDeleteAsync(KeyProjectPreview);
+            foreach (var item in (CachedItemType[])Enum.GetValues(typeof(CachedItemType)))
+            {
+                await FlushAsync(item);
+            }
         }
 
+        public async Task FlushAsync(CachedItemType itemType)
+        {
+            if (!_multiplexer.IsConnected)
+                return;
 
+            var db = _multiplexer.GetDatabase();
+
+            switch (itemType)
+            {
+                case CachedItemType.Categories:
+                    {
+                        await db.KeyDeleteAsync(KeyCategories);
+                        break;
+                    }
+                case CachedItemType.Introduction:
+                    {
+                        await db.KeyDeleteAsync(KeyIntroduction);
+                        break;
+                    }
+                default:
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(itemType));
+                    }
+            }
+        }
 
         private async Task<IEnumerable<T>?> GetCollection<T>(string key) where T : class
         {
+            if (!_multiplexer.IsConnected)
+                return null;
+
             var db = _multiplexer.GetDatabase();
             var result = await db.StringGetAsync(key);
 
@@ -79,6 +93,9 @@ namespace Infrastructure.Cache
 
         private async Task<T?> Get<T>(string key) where T : class
         {
+            if (!_multiplexer.IsConnected)
+                return null;
+
             var db = _multiplexer.GetDatabase();
             var result = await db.StringGetAsync(key);
 
@@ -90,6 +107,9 @@ namespace Infrastructure.Cache
 
         private async Task<bool> Save<T>(string key, T item)
         {
+            if (!_multiplexer.IsConnected)
+                return false;
+
             var db = _multiplexer.GetDatabase();
 
             var jsonString = JsonSerializer.Serialize(item);

@@ -18,7 +18,7 @@ namespace Infrastructure
             using (var scope = CreateServices(_connectionString).CreateScope())
             {
                 var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
-                
+
                 runner.ListMigrations();
                 runner.MigrateUp();
             }

@@ -17,13 +17,14 @@ namespace GeneralTests.UseCases
             // Step 3: Request projects preview from an empty database (with category code)
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var apiPublic = Initializer.CreatePublicController(context);
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Request projects preview from an empty database
                     for (int i = 0; i < 100; i++)
@@ -73,7 +74,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -92,12 +93,13 @@ namespace GeneralTests.UseCases
             // Step 4: Check category==all
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var apiPublic = Initializer.CreatePublicController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
 
                     // Step 1: Request projects preview from an empty database
                     var publicGetProjectsPreview =
@@ -126,11 +128,11 @@ namespace GeneralTests.UseCases
                     Assert.Equal(0, defaultProject.TotalProjects);
                     // *****************************
 
-                    await Creator.CreateNewProject(context, "code");
+                    await Creator.CreateNewProject(context, cache, "code");
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -154,15 +156,16 @@ namespace GeneralTests.UseCases
             // Step 5: Check category==all
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var apiPublic = Initializer.CreatePublicController(context);
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
-                    var prj = await Creator.CreateNewProject(context, "code");
+                    var prj = await Creator.CreateNewProject(context, cache, "code");
                     var newCategory =
                     (
                         await apiPublic.GetCategoryAsync(prj.Category.Id)
@@ -213,7 +216,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -237,13 +240,14 @@ namespace GeneralTests.UseCases
             // Step 6: Check category==all
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var apiPublic = Initializer.CreatePublicController(context);
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Request projects preview from an empty database
                     var publicGetProjectsPreview =
@@ -548,7 +552,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -682,13 +686,14 @@ namespace GeneralTests.UseCases
             // Step 4: Check category==all
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var apiPublic = Initializer.CreatePublicController(context);
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 3: Create new category
                     var newCategory = new Category
@@ -764,7 +769,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -772,23 +777,21 @@ namespace GeneralTests.UseCases
         [Fact]
         internal async Task EditProject_Negative()
         {
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
                     var ethaloneCode = "code";
-                    _ = await Creator.CreateNewProject(context, ethaloneCode);
+                    _ = await Creator.CreateNewProject(context, cache, ethaloneCode);
 
-                    var apiPublic = Initializer.CreatePublicController(context);
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // 
                     {
-                        var failPrj =
-                        (
-                            await apiPublic.GetProjectAsync(ethaloneCode)
-                        ).Value.Data;
+                        var failPrj = (await apiPublic.GetProjectAsync(ethaloneCode)).Value!.Data;
 
                         failPrj.Id = Guid.NewGuid();
                         var responseSaveProject =
@@ -849,7 +852,7 @@ namespace GeneralTests.UseCases
 
                     // 
                     {
-                        _ = await Creator.CreateNewProject(context, "ss");
+                        _ = await Creator.CreateNewProject(context, cache, "ss");
                         var failPrj =
                         (
                             await apiPublic.GetProjectAsync(ethaloneCode)
@@ -866,7 +869,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -874,21 +877,22 @@ namespace GeneralTests.UseCases
         [Fact]
         internal async Task Delete_Negative()
         {
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var apiPublic = Initializer.CreatePublicController(context);
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
                     var code = "code";
-                    _ = await Creator.CreateNewProject(context, code);
+                    _ = await Creator.CreateNewProject(context, cache, code);
 
                     {
                         var prj =
                         (
                             await apiPublic.GetProjectAsync(code)
-                        ).Value.Data;
+                        ).Value!.Data;
 
                         prj.Id = null;
                         var responseSaveProject =
@@ -928,7 +932,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }

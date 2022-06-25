@@ -30,7 +30,7 @@ namespace SSPBC.Controllers
         [AllowAnonymous]
         [ApiVersion("1.0")]
         [HttpGet("categories")]
-        public async Task<ActionResult<ExecutionResult<Category[]>>> GetCategoriesAsync()
+        public async Task<ActionResult<ExecutionResult<IEnumerable<Category>>>> GetCategoriesAsync()
         {
             var result = await _supervisor.SafeExecuteAsync
             (

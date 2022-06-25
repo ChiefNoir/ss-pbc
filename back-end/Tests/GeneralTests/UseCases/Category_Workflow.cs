@@ -15,13 +15,14 @@ namespace GeneralTests.UseCases
             // Step 2: Request category by id
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
 
-                    var apiPublic = Initializer.CreatePublicController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
 
                     // Step 1: Request categories
                     var publiGetCategories =
@@ -45,7 +46,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -57,13 +58,14 @@ namespace GeneralTests.UseCases
             // Step 1: Request category by invalid id
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
 
-                    var apiPublic = Initializer.CreatePublicController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
 
                     // Step 1: Request category by invalid id
                     var publiGetCategory =
@@ -94,7 +96,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -108,7 +110,8 @@ namespace GeneralTests.UseCases
             // Step 3: Request category by id
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
@@ -123,7 +126,7 @@ namespace GeneralTests.UseCases
                         Id = null
                     };
 
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
                     var responseSaveCategory =
                     (
                         await apiPrivate.SaveCategoryAsync(newCategory)
@@ -148,7 +151,7 @@ namespace GeneralTests.UseCases
                     // *****************************
 
                     // Step 2: Request categories
-                    var apiPublic = Initializer.CreatePublicController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
                     var publiGetCategories =
                     (
                         await apiPublic.GetCategoriesAsync()
@@ -170,7 +173,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -185,13 +188,14 @@ namespace GeneralTests.UseCases
             // Step 4: Request all categories
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var apiPrivate = Initializer.CreatePrivateController(context);
-                    var apiPublic = Initializer.CreatePublicController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
 
                     // Step 1: Create new category and save
                     var newCategory = new Category
@@ -240,7 +244,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -343,12 +347,13 @@ namespace GeneralTests.UseCases
             // Step 1: Create/update category and fail to save
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var api = Initializer.CreatePrivateController(context);
+                    var api = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Create/update category and fail to save
                     var response = (await api.SaveCategoryAsync(update)).Value;
@@ -358,7 +363,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -424,12 +429,13 @@ namespace GeneralTests.UseCases
             // Step 1: Fail to delete category
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var api = Initializer.CreatePrivateController(context);
+                    var api = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Create/update category and fail to save
                     var response = (await api.DeleteCategoryAsync(update)).Value;
@@ -438,7 +444,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -538,12 +544,13 @@ namespace GeneralTests.UseCases
             // Step 1: Fail to update category
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var api = Initializer.CreatePrivateController(context);
+                    var api = Initializer.CreatePrivateController(context, cache);
                     var filler = (await api.SaveCategoryAsync(new Category { Code = "code", DisplayName = "name" })).Value;
                     Validator.CheckSucceed(filler);
 
@@ -555,7 +562,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -568,12 +575,13 @@ namespace GeneralTests.UseCases
             // Step 2: Set new Category to IsEverything = true
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Fail to update category
                     var responseSaveCategoryAsync =
@@ -593,7 +601,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -610,13 +618,14 @@ namespace GeneralTests.UseCases
             // Step 5: Request project
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var apiPrivate = Initializer.CreatePrivateController(context);
-                    var apiPublic = Initializer.CreatePublicController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
 
                     // Step 1: Create and save new category
                     var responseSaveCategory =
@@ -676,7 +685,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
 

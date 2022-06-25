@@ -12,12 +12,13 @@ namespace GeneralTests.UseCases
         [Fact]
         internal async Task LookAt_CleanDatabase()
         {
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var apiPublic = Initializer.CreatePublicController(context);
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
 
                     //
                     var publiGetIntroduction =
@@ -79,7 +80,7 @@ namespace GeneralTests.UseCases
                     //
 
                     //
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
                     var responseRoles =
                     (
                         apiPrivate.GetRoles()
@@ -101,7 +102,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
 

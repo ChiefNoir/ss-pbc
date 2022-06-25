@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("GeneralTests")]

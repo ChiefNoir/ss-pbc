@@ -33,9 +33,10 @@ namespace GeneralTests.UseCases
         [ClassData(typeof(FormFileInvalid))]
         internal void UploadFile_Negative(FormFile form)
         {
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
-                var apiPrivate = Initializer.CreatePrivateController(context);
+                var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                 var responseUpload = apiPrivate.Upload(form).Value;
                 Validator.CheckFail(responseUpload);

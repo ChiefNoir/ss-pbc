@@ -13,7 +13,7 @@ namespace Abstractions.IRepositories
 
         /// <summary>Get all categories from storage</summary>
         /// <returns>All categories in the storage</returns>
-        Task<Category[]> GetAsync();
+        Task<IEnumerable<Category>> GetAsync();
 
         /// <summary> Get <seealso cref="Category"/> by id </summary>
         /// <param name="id">Category id</param>

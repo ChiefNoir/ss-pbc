@@ -1,4 +1,5 @@
-﻿using Abstractions.Exceptions;
+﻿using Abstractions.Cache;
+using Abstractions.Exceptions;
 using Abstractions.IRepositories;
 using Abstractions.Models;
 using Infrastructure.Converters;
@@ -9,18 +10,21 @@ namespace Infrastructure.Repositories
     public class ProjectRepository : IProjectRepository
     {
         private readonly DataContext _context;
+        private readonly IDataCache _cache;
         private readonly ICategoryRepository _categoryRepository;
 
-
-        public ProjectRepository(DataContext context, ICategoryRepository categoryRepository)
+        public ProjectRepository(DataContext context, ICategoryRepository categoryRepository, IDataCache cache)
         {
             _context = context;
             _categoryRepository = categoryRepository;
+            _cache = cache;
         }
 
 
         public async Task<bool> DeleteAsync(Project project)
         {
+            await _cache.FlushAsync(CachedItemType.Categories);
+
             var dbItem = await _context.Projects.FirstOrDefaultAsync(x => x.Id == project.Id);
 
             CheckBeforeDelete(dbItem, project);
@@ -29,7 +33,6 @@ namespace Infrastructure.Repositories
             var rows = await _context.SaveChangesAsync();
             return true;
         }
-
 
         public async Task<Project> GetAsync(string code)
         {
@@ -47,7 +50,6 @@ namespace Infrastructure.Repositories
 
             return DataConverter.ToProject(result);
         }
-
 
         public async Task<ProjectPreview[]> GetPreviewAsync(int start, int length, string categoryCode)
         {
@@ -76,17 +78,17 @@ namespace Infrastructure.Repositories
                                  .ToArrayAsync();
         }
 
-
-        public Task<Project> SaveAsync(Project project)
+        public async Task<Project> SaveAsync(Project project)
         {
+            await _cache.FlushAsync(CachedItemType.Categories);
+
             if (project.Id == null)
             {
-                return CreateAsync(project);
+                return await CreateAsync(project);
             }
 
-            return UpdateAsync(project);
+            return await UpdateAsync(project);
         }
-
 
 
         private async Task<Project> CreateAsync(Project project)

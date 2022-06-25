@@ -1,7 +1,6 @@
 ﻿using Abstractions.Models;
 using Abstractions.Security;
 using Microsoft.Extensions.Configuration;
-using SSPBC.Models;
 using System.Collections;
 
 namespace GeneralTests.UseCases
@@ -72,12 +71,13 @@ namespace GeneralTests.UseCases
             // Step 2: Login with new account
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
-                    var api = Initializer.CreatePrivateController(context);
+                    var api = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Create new account
                     var resultSaveAccount =
@@ -107,6 +107,7 @@ namespace GeneralTests.UseCases
                 finally
                 {
                     context.Migrator.MigrateDown(0);
+                    await cache.FlushAsync();
                 }
             }
         }
@@ -200,7 +201,8 @@ namespace GeneralTests.UseCases
             // Step 2: Try to add invalid account
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
@@ -217,7 +219,7 @@ namespace GeneralTests.UseCases
                     // *****************************
 
                     // Step 2: Try to add invalid account
-                    var api = Initializer.CreatePrivateController(context);
+                    var api = Initializer.CreatePrivateController(context, cache);
                     var resultSave =
                     (
                         await api.SaveAccountAsync(account)
@@ -228,6 +230,7 @@ namespace GeneralTests.UseCases
                 finally
                 {
                     context.Migrator.MigrateDown(0);
+                    await cache.FlushAsync();
                 }
             }
         }
@@ -299,7 +302,8 @@ namespace GeneralTests.UseCases
             // Step 3: Try to update default account with invalid data
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
@@ -309,14 +313,14 @@ namespace GeneralTests.UseCases
                     // Step 1: Login (initialize default account)
                     var response =
                     (
-                        await gateway.LoginAsync(new Credentials(Default.Account.Login,Default.Account.Password))
+                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
                     ).Value;
                     Validator.CheckSucceed(response);
                     Validator.Compare(Default.Account, response.Data.Account);
                     // *****************************
 
                     // Step 2: Create filler account for tests
-                    var api = Initializer.CreatePrivateController(context);
+                    var api = Initializer.CreatePrivateController(context, cache);
                     var fillerSave =
                     (
                         await api.SaveAccountAsync(new Account { Login = "qq", Password = "qq", Role = RoleNames.Demo })
@@ -335,7 +339,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -348,7 +352,8 @@ namespace GeneralTests.UseCases
             // Step 2: Request account by id
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
@@ -364,7 +369,7 @@ namespace GeneralTests.UseCases
                     // *****************************
 
                     // Step 2: Request account by id
-                    var api = Initializer.CreatePrivateController(context);
+                    var api = Initializer.CreatePrivateController(context, cache);
                     var resultGetAccount =
                     (
                         await api.GetAccountAsync(responseLogin.Data.Account.Id.Value)
@@ -376,7 +381,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -389,7 +394,8 @@ namespace GeneralTests.UseCases
             // Step 2: Request account by not a valid id
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
@@ -405,7 +411,7 @@ namespace GeneralTests.UseCases
                     // *****************************
 
                     // Step 2: Request account by id
-                    var api = Initializer.CreatePrivateController(context);
+                    var api = Initializer.CreatePrivateController(context, cache);
                     var resultGetAccount =
                     (
                         await api.GetAccountAsync(Guid.NewGuid())
@@ -416,7 +422,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -431,13 +437,14 @@ namespace GeneralTests.UseCases
             // Step 2: Try to delete account and fail (version)
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
                     var apiGateway = Initializer.CreateGatewayController(context);
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Login (initialize default account)
                     var responseLogin =
@@ -483,7 +490,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -496,13 +503,14 @@ namespace GeneralTests.UseCases
             // Step 2: Try to delete account
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
                     var apiGateway = Initializer.CreateGatewayController(context);
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Login (initialize default account)
                     var responseLogin =
@@ -533,7 +541,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -548,13 +556,14 @@ namespace GeneralTests.UseCases
             // Step 4: Login with an old password (fail)
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
                     var apiGateway = Initializer.CreateGatewayController(context);
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Login (initialize default account)
                     var responseLogin =
@@ -596,7 +605,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }
@@ -611,13 +620,14 @@ namespace GeneralTests.UseCases
             // Step 4: Login with an old login (fail)
             // *****************************
 
-            using (var context = Initializer.CreateDataContext())
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
             {
                 try
                 {
                     context.Migrator.MigrateUp();
                     var apiGateway = Initializer.CreateGatewayController(context);
-                    var apiPrivate = Initializer.CreatePrivateController(context);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Login (initialize default account)
                     var responseLogin =
@@ -659,7 +669,7 @@ namespace GeneralTests.UseCases
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
                 }
             }
         }

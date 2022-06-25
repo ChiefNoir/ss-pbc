@@ -1,4 +1,4 @@
-using Abstractions.ICache;
+using Abstractions.Cache;
 using Abstractions.IRepositories;
 using Abstractions.Security;
 using Infrastructure;
@@ -21,8 +21,8 @@ builder.Services.AddControllers();
 
 #if DEBUG
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 #endif
 
 builder.Services.AddCors();

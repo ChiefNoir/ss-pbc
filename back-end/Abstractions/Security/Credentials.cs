@@ -19,6 +19,6 @@ namespace Abstractions.Security
         {
             Login = login;
             Password = password;
-        }   
+        }
     }
 }

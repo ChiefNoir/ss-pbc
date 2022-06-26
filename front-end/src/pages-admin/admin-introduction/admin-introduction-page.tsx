@@ -145,8 +145,11 @@ function AdminIntroductionPage() {
 
         <TextField value={introduction.posterUrl} fullWidth
                    label={t("Introduction.PosterUrl")} />
-        <TextField value={introduction.posterDescription} fullWidth
-                   label={t("Introduction.PosterDescription")} />
+        <TextField label={t("Introduction.PosterDescription")}
+                   fullWidth
+                   name="posterDescription"
+                   value={introduction.posterDescription}
+                   onChange={handleFieldChange} />
       </div>
     </TabPanel>
 

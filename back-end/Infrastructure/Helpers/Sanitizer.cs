@@ -11,7 +11,7 @@ namespace Infrastructure.Helpers
         {
             if (string.IsNullOrEmpty(code))
             {
-                throw new ArgumentException(nameof(code));
+                throw new ArgumentNullException(nameof(code));
             }
 
             var rgx = new Regex("[^a-zA-Z0-9_-]", RegexOptions.Compiled | RegexOptions.CultureInvariant);
@@ -19,7 +19,7 @@ namespace Infrastructure.Helpers
 
             if (string.IsNullOrEmpty(result))
             {
-                throw new ArgumentException(nameof(code));
+                throw new ArgumentNullException(nameof(code));
             }
 
             return result;

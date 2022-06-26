@@ -123,15 +123,15 @@ namespace Infrastructure.Repositories
             CheckBeforeUpdate(dbAccount, item, _context);
 
             dbAccount.Login = item.Login;
-            dbAccount.Role = item.Role;
+            dbAccount.Role = item.Role!;
             dbAccount.Version++;
 
             if (!string.IsNullOrEmpty(item.Password))
             {
                 var hashedPassword = _hashManager.Hash(item.Password);
 
-                dbAccount.Password = hashedPassword.HexHash;
-                dbAccount.Salt = hashedPassword.HexSalt;
+                dbAccount.Password = hashedPassword.HexHash!;
+                dbAccount.Salt = hashedPassword.HexSalt!;
             }
 
             await _context.SaveChangesAsync();

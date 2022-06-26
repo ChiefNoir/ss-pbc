@@ -23,7 +23,7 @@ namespace GeneralTests.Infrastructure
         [InlineData("\\//")]
         public void SanitizeCode_Invalid(string input)
         {
-            Assert.Throws<ArgumentException>(delegate { Sanitizer.SanitizeCode(input); });
+            Assert.Throws<ArgumentNullException>(delegate { Sanitizer.SanitizeCode(input); });
         }
     }
 }

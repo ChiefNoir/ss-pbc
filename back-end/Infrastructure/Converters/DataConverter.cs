@@ -91,7 +91,7 @@ namespace Infrastructure.Converters
         {
             return new Abstractions.Models.ExternalUrl
             {
-                DisplayName = dbEntity.ExternalUrl.DisplayName,
+                DisplayName = dbEntity!.ExternalUrl!.DisplayName,
                 Id = dbEntity.ExternalUrl.Id,
                 Url = dbEntity.ExternalUrl.Url,
                 Version = dbEntity.ExternalUrl.Version
@@ -124,7 +124,7 @@ namespace Infrastructure.Converters
         {
             return new Abstractions.Models.ExternalUrl
             {
-                Id = item.ExternalUrl.Id,
+                Id = item!.ExternalUrl!.Id,
                 DisplayName = item.ExternalUrl.DisplayName,
                 Url = item.ExternalUrl.Url,
                 Version = item.ExternalUrl.Version

@@ -92,9 +92,9 @@ namespace Infrastructure.Repositories
             var toUpdate = newExternalUrls.Where(x => x.Id.HasValue);
             foreach (var item in toUpdate)
             {
-                var upd = dbItem.ExternalUrls.First(x => x.ExternalUrlId == item.Id.Value);
+                var upd = dbItem.ExternalUrls.First(x => x.ExternalUrlId == item!.Id!.Value);
 
-                upd.ExternalUrl.DisplayName = item.DisplayName;
+                upd!.ExternalUrl!.DisplayName = item.DisplayName;
                 upd.ExternalUrl.Url = item.Url;
                 upd.ExternalUrl.Version++;
             }
@@ -121,7 +121,7 @@ namespace Infrastructure.Repositories
                     continue;
                 }
 
-                if (item.ExternalUrl.Version != updated.Version)
+                if (item!.ExternalUrl!.Version != updated.Version)
                 {
                     throw new InconsistencyException
                     (

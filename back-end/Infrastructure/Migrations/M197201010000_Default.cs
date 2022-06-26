@@ -12,7 +12,7 @@ namespace Infrastructure.Migrations
         internal static string categoryCode = "all";
 
         internal static Guid introductionId = new("4FFC4CC3-C51A-4619-901A-D0BAA9D702BC");
-        internal static string introductionTitle = "Hello";
+        internal static string introductionTitle = "Welcome";
         internal static string introductionContent = "The service is on-line. Congratulations.";
 
         private const string _categoryTable = "category";

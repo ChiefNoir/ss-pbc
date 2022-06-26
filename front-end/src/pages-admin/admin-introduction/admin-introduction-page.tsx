@@ -143,8 +143,12 @@ function AdminIntroductionPage() {
           <input type="file" hidden onChange={handleFileSelect}/>
         </Button>
 
-        <TextField value={introduction.posterUrl} fullWidth
-                   label={t("Introduction.PosterUrl")} />
+        <TextField label={t("Introduction.PosterUrl")}
+                   fullWidth
+                   name="posterUrl"
+                   value={introduction.posterUrl}
+                   onChange={handleFieldChange}
+                   />
         <TextField label={t("Introduction.PosterDescription")}
                    fullWidth
                    name="posterDescription"

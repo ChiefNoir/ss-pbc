@@ -133,7 +133,7 @@ function EditProjectDialog(props:
   function handleChangeCategory(event: SelectChangeEvent) {
     setProject((prevState: Project | null) => ({
       ...prevState!,
-      role: event.target.value as string
+      category: categories?.filter(x => x.code === event.target.value as string)[0]!
     }));
   };
 
@@ -211,6 +211,7 @@ function EditProjectDialog(props:
                 <InputLabel>{t("Project.Category")}</InputLabel>
                 <Select value={project.category?.code} label={t("Project.Category")}
                         variant="outlined"
+                        name="category"
                         onChange= {handleChangeCategory}>
                       {categories?.map(x => {
                         return (

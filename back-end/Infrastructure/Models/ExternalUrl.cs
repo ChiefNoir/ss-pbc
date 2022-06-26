@@ -14,11 +14,11 @@ namespace Infrastructure.Models
 
         [Required]
         [Column("display_name")]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
 
         [Required]
         [Column("url")]
-        public string Url { get; set; }
+        public string Url { get; set; } = string.Empty;
 
         [Required]
         [Column("version")]

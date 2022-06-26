@@ -8,13 +8,22 @@ namespace GeneralTests.Infrastructure
         [Theory]
         [InlineData("12", "12")]
         [InlineData("SoMeCoDe", "somecode")]
-        [InlineData(null, null)]
-        [InlineData("", null)]
-        [InlineData("\\//", "")]
+        [InlineData("КрасныйSoMeCoDe", "somecode")]
         public void SanitizeCode_Valid(string input, string expected)
         {
             var result = Sanitizer.SanitizeCode(input);
             Assert.Equal(result, expected);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("красный")]
+        [InlineData("日本")]
+        [InlineData("\\//")]
+        public void SanitizeCode_Invalid(string input)
+        {
+            Assert.Throws<ArgumentException>(delegate { Sanitizer.SanitizeCode(input); });
         }
     }
 }

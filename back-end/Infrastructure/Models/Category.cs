@@ -13,10 +13,10 @@ namespace Infrastructure.Models
         public Guid? Id { get; set; }
 
         [Column("code")]
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         [Column("display_name")]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
 
         [Column("is_everything")]
         public bool IsEverything { get; set; }

@@ -8,10 +8,10 @@ namespace Infrastructure.Models
     internal class Introduction
     {
         [Column("id")]
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
 
         [Column("content")]
-        public string? Content { get; set; }
+        public string Content { get; set; } = string.Empty;
 
         [Column("poster_description")]
         public string? PosterDescription { get; set; }
@@ -20,11 +20,11 @@ namespace Infrastructure.Models
         public string? PosterUrl { get; set; }
 
         [Column("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [Column("version")]
         public long Version { get; set; }
 
-        public ICollection<IntroductionToExternalUrl> ExternalUrls { get; set; }
+        public ICollection<IntroductionToExternalUrl> ExternalUrls { get; set; } = new List<IntroductionToExternalUrl>();
     }
 }

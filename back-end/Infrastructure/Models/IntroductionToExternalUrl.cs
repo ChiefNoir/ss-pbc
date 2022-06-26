@@ -13,6 +13,6 @@ namespace Infrastructure.Models
         [Column("external_url_id")]
         public Guid ExternalUrlId { get; set; }
 
-        public ExternalUrl ExternalUrl { get; set; }
+        public ExternalUrl? ExternalUrl { get; set; }
     }
 }

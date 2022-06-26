@@ -16,16 +16,16 @@ namespace Infrastructure.Models
         public Guid CategoryId { get; set; }
 
         [Column("code")]
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         [Column("description")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Column("description_short")]
-        public string DescriptionShort { get; set; }
+        public string DescriptionShort { get; set; } = string.Empty;
 
         [Column("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Column("poster_description")]
         public string? PosterDescription { get; set; }
@@ -39,8 +39,8 @@ namespace Infrastructure.Models
         [Column("version")]
         public long Version { get; set; }
 
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
 
-        public ICollection<ProjectToExternalUrl> ExternalUrls { get; set; }
+        public ICollection<ProjectToExternalUrl> ExternalUrls { get; set; } = new List<ProjectToExternalUrl>();
     }
 }

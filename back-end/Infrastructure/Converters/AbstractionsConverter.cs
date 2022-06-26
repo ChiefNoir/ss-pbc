@@ -12,9 +12,9 @@ namespace Infrastructure.Converters
             {
                 Id = account.Id == null ? Guid.NewGuid() : account.Id,
                 Login = account.Login,
-                Password = hashedPassword.HexHash,
-                Salt = hashedPassword.HexSalt,
-                Role = account.Role
+                Password = hashedPassword.HexHash!,
+                Salt = hashedPassword.HexSalt!,
+                Role = account.Role!
             };
         }
 
@@ -36,7 +36,7 @@ namespace Infrastructure.Converters
             return new IntroductionToExternalUrl
             {
                 ExternalUrl = ext,
-                ExternalUrlId = ext.Id.Value,
+                ExternalUrlId = ext.Id!.Value,
             };
         }
 
@@ -53,7 +53,7 @@ namespace Infrastructure.Converters
                 PosterUrl = project.PosterUrl,
                 ReleaseDate = project.ReleaseDate == null ? null : DateTime.SpecifyKind(project.ReleaseDate.Value, DateTimeKind.Utc),
                 Version = project.Version,
-                CategoryId = project.Category.Id.Value,
+                CategoryId = project.Category!.Id!.Value,
                 ExternalUrls = new List<ProjectToExternalUrl>()
             };
 

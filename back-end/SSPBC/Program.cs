@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Security;
+using SSPBC.Helpers;
 using StackExchange.Redis;
 
 const string KeyDatabase = "PostgreSQL";
@@ -81,6 +83,15 @@ if (app.Environment.IsDevelopment())
 app.UseCors(builder => builder.AllowAnyOrigin()
                               .AllowAnyMethod()
                               .AllowAnyHeader());
+
+var path = builder.Configuration["Location:FileStorage"];
+Utils.CheckFileStorageDirectory(path);
+app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(path),
+    RequestPath = new PathString(builder.Configuration["Location:StaticFilesRequestPath"])
+});
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {

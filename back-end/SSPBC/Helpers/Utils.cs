@@ -9,5 +9,13 @@
 
             return $"{configuration["Endpoint"]}{configuration["Location:StaticFilesRequestPath"]}/{name}";
         }
+
+        public static void CheckFileStorageDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
     }
 }

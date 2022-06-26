@@ -75,7 +75,7 @@ class PrivateApi {
 
     intro.externalUrls.forEach(x => {
       // Hack: fix it
-      if (x.id != null && isNaN(+x.id)) {
+      if (x.id != null && !isNaN(+x.id)) {
         x.id = null;
       }
     });
@@ -123,13 +123,13 @@ class PrivateApi {
     const prj = project;
 
     // Hack: fix it
-    if (prj.id !== null && isNaN(+prj.id)) {
+    if (prj.id !== null && !isNaN(+prj.id)) {
       prj.id = null;
     }
 
     prj.externalUrls.forEach(x => {
       // Hack: fix it
-      if (x.id != null && isNaN(+x.id)) {
+      if (x.id != null && !isNaN(+x.id)) {
         x.id = null;
       }
     });

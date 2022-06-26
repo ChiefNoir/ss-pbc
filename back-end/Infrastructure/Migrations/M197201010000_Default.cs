@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.Migrations
 {
-    [Migration(197101010000, "Initialize default values")]
+    [Migration(197201010000, "Initialize default values")]
     [ExcludeFromCodeCoverage]
-    public class M197101010000_Default : Migration
+    public class M197201010000_Default : Migration
     {
         internal static Guid categoryId = new("A4517F51-9C85-4850-BE3F-F196742925D2");
         internal static string categoryDisplayName = "Everything";
@@ -15,22 +15,25 @@ namespace Infrastructure.Migrations
         internal static string introductionTitle = "Hello";
         internal static string introductionContent = "The service is on-line. Congratulations.";
 
+        private const string _categoryTable = "category";
+        private const string _introductionTable = "introduction";
+
         public override void Up()
         {
             Execute.Sql(
-                $@"INSERT INTO category(id, code, display_name, is_everything)
+                $@"INSERT INTO {DataContext.SchemaData}.{_categoryTable}(id, code, display_name, is_everything)
                     VALUES ('{categoryId}', '{categoryCode}', '{categoryDisplayName}', TRUE);");
 
             Execute.Sql(
-                $@"INSERT INTO introduction(id, title, content)
+                $@"INSERT INTO {DataContext.SchemaData}.{_introductionTable}(id, title, content)
                     VALUES ('{introductionId}', '{introductionTitle}', '{introductionContent}');");
         }
 
         public override void Down()
         {
-            Execute.Sql($@"DELETE FROM category WHERE id = '{categoryId}';"); ;
+            Execute.Sql($@"DELETE FROM {DataContext.SchemaData}.{_categoryTable} WHERE id = '{categoryId}';"); ;
 
-            Execute.Sql($@"DELETE FROM introduction WHERE id = '{introductionId}';");
+            Execute.Sql($@"DELETE FROM {DataContext.SchemaData}.{_introductionTable} WHERE id = '{introductionId}';");
         }
     }
 }

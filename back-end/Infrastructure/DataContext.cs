@@ -7,6 +7,9 @@ namespace Infrastructure
 {
     public class DataContext : DbContext
     {
+        public const string SchemaData = "data";
+        public const string SchemaHistory = "history";
+
         internal DbSet<Account> Accounts => Set<Account>();
         internal DbSet<Category> Categories => Set<Category>();
         internal DbSet<CategoryWithTotalProjects> CategoriesWithTotalProjects => Set<CategoryWithTotalProjects>();
@@ -30,6 +33,8 @@ namespace Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema(SchemaData);
+
             modelBuilder.Entity<ProjectToExternalUrl>().HasKey(sc => new { sc.ProjectId, sc.ExternalUrlId });
             modelBuilder.Entity<IntroductionToExternalUrl>().HasKey(sc => new { sc.IntroductionId, sc.ExternalUrlId });
         }

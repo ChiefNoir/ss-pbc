@@ -8,8 +8,8 @@ namespace GeneralTests
     {
         internal static readonly Introduction Introduction = new()
         {
-            Title = M197101010000_Default.introductionTitle,
-            Content = M197101010000_Default.introductionContent,
+            Title = M197201010000_Default.introductionTitle,
+            Content = M197201010000_Default.introductionContent,
             ExternalUrls = new List<ExternalUrl>(),
             Version = 0,
             PosterUrl = string.Empty,
@@ -26,9 +26,9 @@ namespace GeneralTests
 
         internal static readonly Category Category = new()
         {
-            Id = M197101010000_Default.categoryId,
-            Code = M197101010000_Default.categoryCode,
-            DisplayName = M197101010000_Default.categoryDisplayName,
+            Id = M197201010000_Default.categoryId,
+            Code = M197201010000_Default.categoryCode,
+            DisplayName = M197201010000_Default.categoryDisplayName,
             IsEverything = true,
             TotalProjects = 0,
             Version = 0,

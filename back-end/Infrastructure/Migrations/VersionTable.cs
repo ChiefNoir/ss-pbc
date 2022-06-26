@@ -7,8 +7,8 @@ namespace Infrastructure.Migrations
     [ExcludeFromCodeCoverage]
     public class VersionTable : IVersionTableMetaData
     {
-        public string SchemaName => "public";
-        public string TableName => "sspbc_version";
+        public string SchemaName => DataContext.SchemaHistory;
+        public string TableName => "version";
 
         public string ColumnName => "version";
         public string AppliedOnColumnName => "date";

@@ -36,7 +36,7 @@ function AdminProjectsPage() {
       setRowCountState(totalPages);
 
       const prjResponse = await PublicApi.getProjects(pg + 1, null);
-      if (prjResponse.isSucceed) {
+      if (!prjResponse.isSucceed) {
         setIncident(catResponse.error);
         return;
       }

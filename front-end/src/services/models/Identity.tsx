@@ -1,7 +1,6 @@
-import { Account } from "..";
-
 export type Identity = {
-  account: Account;
+  login: string;
+  role: string;
   token: string;
   tokenLifeTimeMinutes: number;
 }

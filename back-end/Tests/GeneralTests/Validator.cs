@@ -1,5 +1,6 @@
 ﻿using Abstractions.Models;
 using Security.Models;
+using SSPBC.Models;
 
 namespace GeneralTests
 {
@@ -147,6 +148,13 @@ namespace GeneralTests
                 var act = actual.First(x => x.Login == item.Login);
                 Compare(item, act);
             }
+        }
+
+        internal static void Compare(Account account, Identity identity)
+        {
+            Assert.Equal(account.Login, identity.Login);
+            Assert.Equal(account.Role, identity.Role);
+            Assert.NotNull(identity.Token);
         }
     }
 }

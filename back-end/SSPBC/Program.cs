@@ -115,8 +115,11 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    var context = services.GetRequiredService<IDataCache>();
-    await context.FlushAsync();
+    var cache = services.GetRequiredService<IDataCache>();
+    await cache.FlushAsync();
+
+    var sessionRepository = services.GetRequiredService<ISessionRepository>();
+    await sessionRepository.FlushAsync();
 }
 
 app.Run();

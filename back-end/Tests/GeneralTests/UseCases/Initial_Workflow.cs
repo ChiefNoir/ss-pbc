@@ -70,7 +70,7 @@ namespace GeneralTests.UseCases
                     ).Value;
 
                     Validator.CheckSucceed(responseLogin);
-                    Validator.Compare(Default.Account, responseLogin.Data!.Account);
+                    Validator.Compare(Default.Account, responseLogin.Data!);
 
                     Assert.Equal
                     (

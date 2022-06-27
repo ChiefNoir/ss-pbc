@@ -42,11 +42,13 @@ namespace SSPBC.Controllers
                 var account = await _accountRepository.GetAsync(credentials.Login, credentials.Password);
                 var token = _tokenManager.CreateToken(account.Login, account.Role);
 
-                await _sessionRepository.SaveSession(account, token, credentials.Fingerprint);
+                await _sessionRepository.SaveSessionAsync(account, token, credentials.Fingerprint);
 
                 return new Identity
                 {
-                    Account = account,
+                    AccountId = account.Id!.Value,
+                    Login = account.Login,
+                    Role = account.Role,
                     Token = token,
                     TokenLifeTimeMinutes = _configuration.GetSection("Token:LifeTime").Get<int>()
                 };

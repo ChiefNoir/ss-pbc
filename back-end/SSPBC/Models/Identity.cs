@@ -4,7 +4,14 @@ namespace SSPBC.Models
 {
     public class Identity
     {
-        public Account? Account { get; set; }
+        /// <summary> Account id </summary>
+        public Guid AccountId { get; set; }
+
+        /// <summary> Account login </summary>
+        public string Login { get; set; } = string.Empty;
+
+        /// <summary> Account role </summary>
+        public string Role { get; set; } = string.Empty;
 
         /// <summary> Account identification  token </summary>
         public string? Token { get; set; }

@@ -96,7 +96,7 @@ namespace GeneralTests.UseCases
                     ).Value;
 
                     Validator.CheckSucceed(response);
-                    Validator.Compare(Default.Account, response.Data.Account);
+                    Validator.Compare(Default.Account, response.Data);
 
                     Assert.Equal
                     (

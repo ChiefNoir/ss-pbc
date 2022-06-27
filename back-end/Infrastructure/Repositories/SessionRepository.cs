@@ -12,7 +12,13 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<bool> SaveSession(Account account, string token, string fingerprint)
+        public async Task FlushAsync()
+        {
+            _context.Sessions.RemoveRange(_context.Sessions);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task SaveSessionAsync(Account account, string token, string fingerprint)
         {
             var oldSessions = _context.Sessions.Where(x => x.AccountId == account.Id);
             _context.Sessions.RemoveRange(oldSessions);
@@ -27,13 +33,12 @@ namespace Infrastructure.Repositories
 
             _context.Sessions.Add(session);
             await _context.SaveChangesAsync();
-
-            return true;
         }
 
-        public Task<bool> CheckSession(string token, string fingerprint)
+        public Task CheckSessionAsync(string token, string fingerprint)
         {
             return Task.FromResult(true);
         }
+
     }
 }

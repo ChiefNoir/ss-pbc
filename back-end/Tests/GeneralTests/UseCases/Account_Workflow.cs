@@ -217,7 +217,7 @@ namespace GeneralTests.UseCases
                         await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(response);
-                    Validator.Compare(Default.Account, response.Data!.Account);
+                    Validator.Compare(Default.Account, response.Data!);
                     // *****************************
 
                     // Step 2: Try to add invalid account
@@ -319,7 +319,7 @@ namespace GeneralTests.UseCases
                         await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(response);
-                    Validator.Compare(Default.Account, response.Data!.Account);
+                    Validator.Compare(Default.Account, response.Data!);
                     // *****************************
 
                     // Step 2: Create filler account for tests
@@ -332,7 +332,7 @@ namespace GeneralTests.UseCases
                     // *****************************
 
                     // Step 3: Try to update default account with invalid data
-                    account.Id = response.Data.Account.Id;
+                    account.Id = response.Data!.AccountId;
                     var resultSave =
                     (
                         await api.SaveAccountAsync(account)
@@ -376,7 +376,7 @@ namespace GeneralTests.UseCases
                     var api = Initializer.CreatePrivateController(context, cache);
                     var resultGetAccount =
                     (
-                        await api.GetAccountAsync(responseLogin.Data!.Account.Id!.Value)
+                        await api.GetAccountAsync(responseLogin.Data!.AccountId!)
                     ).Value;
 
                     Validator.CheckSucceed(resultGetAccount);
@@ -461,8 +461,11 @@ namespace GeneralTests.UseCases
                     // *****************************
 
                     // Step 2: Try to delete account and fail
-                    var acc = responseLogin.Data!.Account;
-                    var accId = responseLogin.Data.Account.Id;
+                    var acc = new Account
+                    {
+                        Id = null
+                    };
+                    var accId = responseLogin.Data!.AccountId;
                     acc.Id = null;
 
                     var resultDel =
@@ -473,8 +476,10 @@ namespace GeneralTests.UseCases
                     // *****************************
 
                     // Step 2: Try to delete account and fail
-                    acc = responseLogin.Data.Account;
-                    acc.Id = Guid.NewGuid();
+                    acc = new Account
+                    {
+                        Id = Guid.NewGuid()
+                    };
 
                     resultDel =
                     (
@@ -484,9 +489,11 @@ namespace GeneralTests.UseCases
                     // *****************************
 
                     // Step 2: Try to delete account and fail (version)
-                    acc = responseLogin.Data.Account;
-                    acc.Id = accId;
-                    acc.Version++;
+                    acc = new Account
+                    {
+                        Id = accId,
+                        Version = 90
+                    };
                     resultDel =
                     (
                         await apiPrivate.DeleteAccountAsync(acc)
@@ -525,11 +532,14 @@ namespace GeneralTests.UseCases
                         await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
-                    Validator.Compare(Default.Account, responseLogin.Data!.Account);
+                    Validator.Compare(Default.Account, responseLogin.Data!);
                     // *****************************
 
                     // Step 2: Try to delete account
-                    var acc = responseLogin.Data.Account;
+                    var acc = new Account
+                    {
+                        Id = responseLogin.Data!.AccountId
+                    };
                     var resultDel =
                     (
                         await apiPrivate.DeleteAccountAsync(acc)
@@ -578,13 +588,18 @@ namespace GeneralTests.UseCases
                         await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
-                    Validator.Compare(Default.Account, responseLogin.Data!.Account);
+                    Validator.Compare(Default.Account, responseLogin.Data!);
 
-                    var account = responseLogin.Data.Account;
+                    var account = new Account
+                    {
+                        Id = responseLogin.Data!.AccountId,
+                        Login = responseLogin.Data!.Login,
+                        Role = responseLogin.Data.Role,
+                        Password = "red-green-blue"
+                    };
                     // *****************************
 
                     // Step 2: Change password
-                    account.Password = "red-green-blue";
                     var resultSave =
                     (
                         await apiPrivate.SaveAccountAsync(account)
@@ -643,13 +658,18 @@ namespace GeneralTests.UseCases
                         await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
-                    Validator.Compare(Default.Account, responseLogin.Data!.Account);
+                    Validator.Compare(Default.Account, responseLogin.Data!);
 
-                    var account = responseLogin.Data.Account;
+                    var account = new Account
+                    {
+                        Id = responseLogin.Data!.AccountId,
+                        Login = "red-green-blue",
+                        Role = responseLogin.Data.Role,
+                        Version = 0,
+                    };
                     // *****************************
 
                     // Step 2: Change login
-                    account.Login = "red-green-blue";
                     var resultSave =
                     (
                         await apiPrivate.SaveAccountAsync(account)

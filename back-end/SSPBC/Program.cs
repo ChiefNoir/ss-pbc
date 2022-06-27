@@ -45,6 +45,7 @@ builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IIntroductionRepository, IntroductionRepository>();
 builder.Services.AddTransient<IFileRepository, FileRepository>();
+builder.Services.AddTransient<ISessionRepository, SessionRepository>();
 builder.Services.AddTransient<ITokenManager, TokenManager>();
 builder.Services.AddTransient<IDataCache, DataCache>();
 builder.Services.AddTransient<Supervisor>();

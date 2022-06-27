@@ -80,9 +80,14 @@ namespace GeneralTests.UseCases
                     };
 
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
                     var responseSaveIntroduction =
                     (
-                        await apiPrivate.SaveIntroductionAsync(newIntroduction)
+                        await apiPrivate.SaveIntroductionAsync(newIntroduction, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveIntroduction);
 
@@ -106,7 +111,7 @@ namespace GeneralTests.UseCases
 
                     responseSaveIntroduction =
                     (
-                        await apiPrivate.SaveIntroductionAsync(newIntroduction)
+                        await apiPrivate.SaveIntroductionAsync(newIntroduction, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveIntroduction);
 
@@ -120,7 +125,7 @@ namespace GeneralTests.UseCases
 
                     responseSaveIntroduction =
                     (
-                        await apiPrivate.SaveIntroductionAsync(newIntroduction)
+                        await apiPrivate.SaveIntroductionAsync(newIntroduction, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveIntroduction);
 
@@ -133,7 +138,7 @@ namespace GeneralTests.UseCases
 
                     responseSaveIntroduction =
                     (
-                        await apiPrivate.SaveIntroductionAsync(newIntroduction)
+                        await apiPrivate.SaveIntroductionAsync(newIntroduction, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveIntroduction);
 
@@ -192,9 +197,15 @@ namespace GeneralTests.UseCases
                     };
 
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
+
                     var responseSaveIntroduction =
                     (
-                        await apiPrivate.SaveIntroductionAsync(newIntroduction)
+                        await apiPrivate.SaveIntroductionAsync(newIntroduction, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveIntroduction);
 
@@ -207,7 +218,7 @@ namespace GeneralTests.UseCases
                     newIntroduction.Version = 19;
                     responseSaveIntroduction =
                     (
-                        await apiPrivate.SaveIntroductionAsync(newIntroduction)
+                        await apiPrivate.SaveIntroductionAsync(newIntroduction, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckFail(responseSaveIntroduction);
 
@@ -216,7 +227,7 @@ namespace GeneralTests.UseCases
                     newIntroduction.ExternalUrls.ToList().ForEach(x => x.Version = 19);
                     responseSaveIntroduction =
                     (
-                        await apiPrivate.SaveIntroductionAsync(newIntroduction)
+                        await apiPrivate.SaveIntroductionAsync(newIntroduction, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckFail(responseSaveIntroduction);
                     // ****************************
@@ -227,7 +238,7 @@ namespace GeneralTests.UseCases
                     newIntroduction.ExternalUrls.Last().Version = 19;
                     responseSaveIntroduction =
                     (
-                        await apiPrivate.SaveIntroductionAsync(newIntroduction)
+                        await apiPrivate.SaveIntroductionAsync(newIntroduction, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckFail(responseSaveIntroduction);
                     // ****************************

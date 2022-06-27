@@ -61,10 +61,9 @@ namespace GeneralTests.UseCases
                     context.Migrator.MigrateUp();
 
                     var api = Initializer.CreateGatewayController(context);
-                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var response =
                     (
-                        await api.LoginAsync(new Credentials(login, password, fingerprint))
+                        await api.LoginAsync(new Credentials(login, password, Default.Credentials.Fingerprint))
                     ).Value;
 
                     Validator.CheckFail(response);
@@ -89,10 +88,9 @@ namespace GeneralTests.UseCases
 
                     var api = Initializer.CreateGatewayController(context);
 
-                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var response =
                     (
-                        await api.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
+                        await api.LoginAsync(Default.Credentials)
                     ).Value;
 
                     Validator.CheckSucceed(response);

@@ -14,13 +14,15 @@ namespace SSPBC.Controllers
     [Route("api/v{version:apiVersion}/")]
     public class PrivateController : ControllerBase
     {
+        private readonly string _tokenPrefix = "Bearer ";
+
         private readonly IAccountRepository _accountRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IConfiguration _configuration;
         private readonly IFileRepository _fileRepository;
         private readonly IIntroductionRepository _introductionRepository;
         private readonly IProjectRepository _projectRepository;
-        private readonly ITokenManager _tokenManager;
+        private readonly ISessionRepository _sessionRepository;
         private readonly Supervisor _supervisor;
 
         public PrivateController(IAccountRepository accountRepository,
@@ -29,7 +31,7 @@ namespace SSPBC.Controllers
                                  IFileRepository fileRepository, 
                                  IIntroductionRepository introductionRepository, 
                                  IProjectRepository projectRepository,
-                                 ITokenManager tokenManager,
+                                 ISessionRepository sessionRepository,
                                  Supervisor supervisor)
         {
             _accountRepository = accountRepository;
@@ -38,20 +40,22 @@ namespace SSPBC.Controllers
             _fileRepository = fileRepository;
             _introductionRepository = introductionRepository;
             _projectRepository = projectRepository;
-            _tokenManager = tokenManager;
+            _sessionRepository = sessionRepository;
             _supervisor = supervisor;
         }
 
         [HttpPost("accounts")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<ActionResult<ExecutionResult<Account>>> SaveAccountAsync([FromBody] Account account)
+        public async Task<ActionResult<ExecutionResult<Account>>> SaveAccountAsync([FromBody] Account account, [FromHeader] string authorization, [FromHeader] string fingerprint)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () =>
+                async () =>
                 {
-                    return _accountRepository.SaveAsync(account);
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
+                    return await _accountRepository.SaveAsync(account);
                 }
             );
 
@@ -61,17 +65,17 @@ namespace SSPBC.Controllers
         [HttpGet("accounts")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<ActionResult<ExecutionResult<Account[]>>> GetAccountsAsync([FromHeader] string authorization)
+        public async Task<ActionResult<ExecutionResult<Account[]>>> GetAccountsAsync([FromHeader] string authorization, [FromHeader] string fingerprint)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () =>
+                async () =>
                 {
-                    var token = authorization.Split("Bearer ").Last();
-                    _tokenManager.ValidateToken(token);
-                    return _accountRepository.GetAsync();
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
+                    return await _accountRepository.GetAsync();
                 }
-            ); ;
+            ); 
 
             return result;
         }
@@ -79,13 +83,15 @@ namespace SSPBC.Controllers
         [HttpDelete("accounts")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<ActionResult<ExecutionResult<bool>>> DeleteAccountAsync([FromBody] Account account)
+        public async Task<ActionResult<ExecutionResult<bool>>> DeleteAccountAsync([FromBody] Account account, [FromHeader] string authorization, [FromHeader] string fingerprint)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () =>
+                async () =>
                 {
-                    return _accountRepository.DeleteAsync(account);
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
+                    return await _accountRepository.DeleteAsync(account);
                 }
             );
 
@@ -95,13 +101,15 @@ namespace SSPBC.Controllers
         [HttpGet("accounts/{id}")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<ActionResult<ExecutionResult<Account>>> GetAccountAsync(Guid id)
+        public async Task<ActionResult<ExecutionResult<Account>>> GetAccountAsync(Guid id, [FromHeader] string authorization, [FromHeader] string fingerprint)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () =>
+                async () =>
                 {
-                    return _accountRepository.GetAsync(id);
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
+                    return await _accountRepository.GetAsync(id);
                 }
             );
 
@@ -111,12 +119,15 @@ namespace SSPBC.Controllers
         [HttpGet("roles")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public ActionResult<ExecutionResult<List<string>>> GetRoles()
+        public async Task<ActionResult<ExecutionResult<List<string>>>> GetRoles([FromHeader] string authorization, [FromHeader] string fingerprint)
         {
-            var result = _supervisor.SafeExecute
+            var result = await _supervisor.SafeExecuteAsync
             (
-                () =>
+                async () =>
                 {
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
+
                     return RoleNames.GetRoles();
                 }
             );
@@ -127,13 +138,15 @@ namespace SSPBC.Controllers
         [HttpPost("category")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<ActionResult<ExecutionResult<Category>>> SaveCategoryAsync([FromBody] Category category)
+        public async Task<ActionResult<ExecutionResult<Category>>> SaveCategoryAsync([FromBody] Category category, [FromHeader] string authorization, [FromHeader] string fingerprint)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () => 
-                { 
-                    return _categoryRepository.SaveAsync(category);
+                async () =>
+                {
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
+                    return await _categoryRepository.SaveAsync(category);
                 }
             );
 
@@ -143,13 +156,15 @@ namespace SSPBC.Controllers
         [HttpDelete("category")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<ActionResult<ExecutionResult<bool>>> DeleteCategoryAsync([FromBody] Category category)
+        public async Task<ActionResult<ExecutionResult<bool>>> DeleteCategoryAsync([FromBody] Category category, [FromHeader] string authorization, [FromHeader] string fingerprint)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () =>
+                async () =>
                 {
-                    return _categoryRepository.DeleteAsync(category);
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
+                    return await _categoryRepository.DeleteAsync(category);
                 }
             );
 
@@ -159,13 +174,15 @@ namespace SSPBC.Controllers
         [HttpPost("introduction")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<ActionResult<ExecutionResult<Introduction>>> SaveIntroductionAsync([FromBody] Introduction introduction)
+        public async Task<ActionResult<ExecutionResult<Introduction>>> SaveIntroductionAsync([FromBody] Introduction introduction, [FromHeader] string authorization, [FromHeader] string fingerprint)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () =>
+                async () =>
                 {
-                    return _introductionRepository.SaveAsync(introduction);
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
+                    return await _introductionRepository.SaveAsync(introduction);
                 }
             );
 
@@ -175,13 +192,15 @@ namespace SSPBC.Controllers
         [HttpPost("project")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<ActionResult<ExecutionResult<Project>>> SaveProjectAsync([FromBody] Project project)
+        public async Task<ActionResult<ExecutionResult<Project>>> SaveProjectAsync([FromBody] Project project, [FromHeader] string authorization, [FromHeader] string fingerprint)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () =>
+                async () =>
                 {
-                    return _projectRepository.SaveAsync(project);
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
+                    return await _projectRepository.SaveAsync(project);
                 }
             );
 
@@ -191,13 +210,15 @@ namespace SSPBC.Controllers
         [HttpDelete("project")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<ActionResult<ExecutionResult<bool>>> DeleteProjectAsync([FromBody] Project project)
+        public async Task<ActionResult<ExecutionResult<bool>>> DeleteProjectAsync([FromBody] Project project, [FromHeader] string authorization, [FromHeader] string fingerprint)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () => 
-                { 
-                    return _projectRepository.DeleteAsync(project); 
+                async () =>
+                {
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
+                    return await _projectRepository.DeleteAsync(project); 
                 }
             );
 
@@ -207,14 +228,16 @@ namespace SSPBC.Controllers
         [HttpPost("upload"), DisableRequestSizeLimit]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public ActionResult<ExecutionResult<string>> Upload([FromForm] IFormFile file)
+        public async Task<ActionResult<ExecutionResult<string>>> Upload([FromForm] IFormFile file, [FromHeader] string authorization, [FromHeader] string fingerprint)
         {
-            var result = _supervisor.SafeExecute
+            var result = await _supervisor.SafeExecuteAsync
             (
-                () =>
+                async () =>
                 {
-                    var fileName = _fileRepository.Save(file);
+                    var token = authorization.Split(_tokenPrefix).Last();
+                    await _sessionRepository.CheckSessionAsync(token, fingerprint);
 
+                    var fileName = _fileRepository.Save(file);
                     return Utils.AppendUrlToName(_configuration, fileName);
                 }
             );

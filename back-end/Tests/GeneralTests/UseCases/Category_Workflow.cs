@@ -117,6 +117,12 @@ namespace GeneralTests.UseCases
                 {
                     context.Migrator.MigrateUp();
 
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
+
                     // Step 1: Create new category and save
                     var newCategory = new Category
                     {
@@ -129,7 +135,7 @@ namespace GeneralTests.UseCases
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
                     var responseSaveCategory =
                     (
-                        await apiPrivate.SaveCategoryAsync(newCategory)
+                        await apiPrivate.SaveCategoryAsync(newCategory, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveCategory);
                     Validator.Compare(newCategory, responseSaveCategory.Data);
@@ -141,7 +147,7 @@ namespace GeneralTests.UseCases
 
                     responseSaveCategory =
                     (
-                        await apiPrivate.SaveCategoryAsync(newCategory)
+                        await apiPrivate.SaveCategoryAsync(newCategory, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveCategory);
 
@@ -196,6 +202,11 @@ namespace GeneralTests.UseCases
                     context.Migrator.MigrateUp();
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
                     var apiPublic = Initializer.CreatePublicController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
 
                     // Step 1: Create new category and save
                     var newCategory = new Category
@@ -208,7 +219,7 @@ namespace GeneralTests.UseCases
 
                     var responseSaveCategory =
                     (
-                        await apiPrivate.SaveCategoryAsync(newCategory)
+                        await apiPrivate.SaveCategoryAsync(newCategory, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveCategory);
                     Validator.Compare(newCategory, responseSaveCategory.Data);
@@ -218,7 +229,7 @@ namespace GeneralTests.UseCases
                     // Step 2: Delete category
                     var responseDeleteCategory =
                     (
-                        await apiPrivate.DeleteCategoryAsync(newCategory)
+                        await apiPrivate.DeleteCategoryAsync(newCategory, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseDeleteCategory);
                     // *****************************
@@ -353,10 +364,16 @@ namespace GeneralTests.UseCases
                 try
                 {
                     context.Migrator.MigrateUp();
+
                     var api = Initializer.CreatePrivateController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
 
                     // Step 1: Create/update category and fail to save
-                    var response = (await api.SaveCategoryAsync(update)).Value;
+                    var response = (await api.SaveCategoryAsync(update, resultLogin!.Token, Default.Credentials.Fingerprint)).Value;
 
                     Validator.CheckFail(response);
                     // *****************************
@@ -436,9 +453,14 @@ namespace GeneralTests.UseCases
                 {
                     context.Migrator.MigrateUp();
                     var api = Initializer.CreatePrivateController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
 
                     // Step 1: Create/update category and fail to save
-                    var response = (await api.DeleteCategoryAsync(update)).Value;
+                    var response = (await api.DeleteCategoryAsync(update, resultLogin!.Token, Default.Credentials.Fingerprint)).Value;
                     Validator.CheckFail(response);
                     // *****************************
                 }
@@ -551,11 +573,17 @@ namespace GeneralTests.UseCases
                 {
                     context.Migrator.MigrateUp();
                     var api = Initializer.CreatePrivateController(context, cache);
-                    var filler = (await api.SaveCategoryAsync(new Category { Code = "code", DisplayName = "name" })).Value;
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
+
+                    var filler = (await api.SaveCategoryAsync(new Category { Code = "code", DisplayName = "name" }, resultLogin!.Token, Default.Credentials.Fingerprint)).Value;
                     Validator.CheckSucceed(filler);
 
                     // Step 1: Create/update category and fail to save
-                    var response = (await api.SaveCategoryAsync(update)).Value;
+                    var response = (await api.SaveCategoryAsync(update, resultLogin!.Token, Default.Credentials.Fingerprint)).Value;
 
                     Validator.CheckFail(response);
                     // *****************************
@@ -582,11 +610,16 @@ namespace GeneralTests.UseCases
                 {
                     context.Migrator.MigrateUp();
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
 
                     // Step 1: Fail to update category
                     var responseSaveCategoryAsync =
                     (
-                        await apiPrivate.SaveCategoryAsync(new Category { Code = "code", DisplayName = "name" })
+                        await apiPrivate.SaveCategoryAsync(new Category { Code = "code", DisplayName = "name" }, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveCategoryAsync);
                     //*****************************
@@ -595,7 +628,7 @@ namespace GeneralTests.UseCases
                     var newCat = responseSaveCategoryAsync.Data;
                     newCat.IsEverything = true;
 
-                    var response = (await apiPrivate.SaveCategoryAsync(newCat)).Value;
+                    var response = (await apiPrivate.SaveCategoryAsync(newCat, resultLogin!.Token, Default.Credentials.Fingerprint)).Value;
                     Validator.CheckFail(response);
                     // *****************************
                 }
@@ -626,11 +659,16 @@ namespace GeneralTests.UseCases
                     context.Migrator.MigrateUp();
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
                     var apiPublic = Initializer.CreatePublicController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
 
                     // Step 1: Create and save new category
                     var responseSaveCategory =
                     (
-                        await apiPrivate.SaveCategoryAsync(new Category { Code = "code", DisplayName = "name" })
+                        await apiPrivate.SaveCategoryAsync(new Category { Code = "code", DisplayName = "name" }, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveCategory);
                     var newCat = responseSaveCategory.Data;
@@ -647,7 +685,7 @@ namespace GeneralTests.UseCases
                     };
                     var responseSaveProject =
                     (
-                        await apiPrivate.SaveProjectAsync(prj)
+                        await apiPrivate.SaveProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveProject);
                     // *****************************
@@ -655,7 +693,7 @@ namespace GeneralTests.UseCases
                     // Step 3: Fail to delete category
                     var responseDeleteCategory =
                     (
-                        await apiPrivate.DeleteCategoryAsync(newCat)
+                        await apiPrivate.DeleteCategoryAsync(newCat, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckFail(responseDeleteCategory);
                     // *****************************

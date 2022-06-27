@@ -1,5 +1,8 @@
-﻿using Abstractions.IRepositories;
+﻿using Abstractions.Exceptions;
+using Abstractions.IRepositories;
 using Abstractions.Models;
+using Infrastructure.Resources;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -35,9 +38,12 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task CheckSessionAsync(string token, string fingerprint)
+        public async Task CheckSessionAsync(string token, string fingerprint)
         {
-            return Task.FromResult(true);
+            var session = await _context.Sessions.AnyAsync(x => x.Token == token && x.Fingerprint == fingerprint);
+
+            if (!session)
+                throw new FraudException(TextMessages.SuspiciousBehavior);
         }
 
     }

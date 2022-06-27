@@ -70,10 +70,10 @@ namespace GeneralTests
             var intrRep = new IntroductionRepository(context, cache);
             var catRep = new CategoryRepository(context, cache);
             var prjRep = new ProjectRepository(context, catRep, cache);
-            var tokenManager = new TokenManager(conf);
+            var sessRep = new SessionRepository(context);
             var sup = new Supervisor();
 
-            return new PrivateController(accRep, catRep, conf, fileRep, intrRep, prjRep, tokenManager, sup);
+            return new PrivateController(accRep, catRep, conf, fileRep, intrRep, prjRep, sessRep, sup);
         }
     }
 }

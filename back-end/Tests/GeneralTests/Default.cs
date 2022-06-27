@@ -6,6 +6,8 @@ namespace GeneralTests
 {
     internal static class Default
     {
+        private readonly static string _fingerprint = $"TEST-FNGR: {Guid.NewGuid()}";
+
         internal static readonly Introduction Introduction = new()
         {
             Title = M197201010000_InitializeDefaults.introductionTitle,
@@ -23,6 +25,8 @@ namespace GeneralTests
             Role = RoleNames.Admin,
             Version = 0
         };
+        internal static readonly Credentials Credentials = new("sa", "sa", _fingerprint);
+
 
         internal static readonly Category Category = new()
         {

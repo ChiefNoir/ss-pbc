@@ -15,6 +15,7 @@ class PrivateApi {
       headers: {
         Accept: "application/json",
         ContentType: "application/json",
+        Fingerprint: store.getState().fingerprint.value,
         Authorization: `Bearer ${identity?.token}`
       }
     });

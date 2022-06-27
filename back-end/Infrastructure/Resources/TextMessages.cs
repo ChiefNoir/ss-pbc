@@ -62,5 +62,8 @@
 
         /// <summary> Project does not exist </summary>
         internal const string ProjectDoesNotExist = "Project does not exist";
+
+        /// <summary> Suspicious behavior </summary>
+        internal const string SuspiciousBehavior = "Suspicious behavior";
     }
 }

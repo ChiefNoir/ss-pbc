@@ -13,6 +13,11 @@ namespace GeneralTests
         {
             var apiPublic = Initializer.CreatePublicController(context, cache);
             var apiPrivate = Initializer.CreatePrivateController(context, cache);
+            var apiGateway = Initializer.CreateGatewayController(context);
+            var resultLogin =
+            (
+                await apiGateway.LoginAsync(Default.Credentials)
+            ).Value!.Data;
 
             // Step 1: Create/get category
             var category = await CreateNewCategory(context, cache, categoryCode);
@@ -36,7 +41,7 @@ namespace GeneralTests
             };
             var responseSaveProject =
             (
-                await apiPrivate.SaveProjectAsync(prj)
+                await apiPrivate.SaveProjectAsync(prj, resultLogin.Token, Default.Credentials.Fingerprint)
             ).Value;
             Validator.CheckSucceed(responseSaveProject);
             Validator.Compare(prj, responseSaveProject.Data);
@@ -118,9 +123,15 @@ namespace GeneralTests
                     Id = null
                 };
 
+
+                var apiGateway = Initializer.CreateGatewayController(context);
+                var resultLogin =
+                (
+                    await apiGateway.LoginAsync(Default.Credentials)
+                ).Value!.Data;
                 var responseSaveCategory =
                 (
-                    await apiPrivate.SaveCategoryAsync(category)
+                    await apiPrivate.SaveCategoryAsync(category, resultLogin!.Token, Default.Credentials.Fingerprint)
                 ).Value;
                 Validator.CheckSucceed(responseSaveCategory);
                 Validator.Compare(category, responseSaveCategory.Data);

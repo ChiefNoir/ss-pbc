@@ -31,15 +31,31 @@ namespace GeneralTests.UseCases
 
         [Theory]
         [ClassData(typeof(FormFileInvalid))]
-        internal void UploadFile_Negative(FormFile form)
+        internal async Task UploadFile_NegativeAsync(FormFile form)
         {
             var (context, cache) = Initializer.CreateDataContext();
             using (context)
             {
-                var apiPrivate = Initializer.CreatePrivateController(context, cache);
+                try
+                {
+                    context.Migrator.MigrateUp();
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value;
 
-                var responseUpload = apiPrivate.Upload(form).Value;
-                Validator.CheckFail(responseUpload);
+                    var responseUpload =
+                    (
+                        await apiPrivate.Upload(form, resultLogin!.Data.Token, Default.Credentials.Fingerprint)
+                    ).Value;
+                    Validator.CheckFail(responseUpload);
+                }
+                catch
+                {
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
+                }
             }
         }
     }

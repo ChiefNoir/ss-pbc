@@ -164,6 +164,11 @@ namespace GeneralTests.UseCases
                     context.Migrator.MigrateUp();
                     var apiPublic = Initializer.CreatePublicController(context, cache);
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
 
                     var prj = await Creator.CreateNewProject(context, cache, "code");
                     var newCategory =
@@ -174,7 +179,7 @@ namespace GeneralTests.UseCases
                     // Step 5: Delete project
                     var responseDeleteProject =
                     (
-                        await apiPrivate.DeleteProjectAsync(prj)
+                        await apiPrivate.DeleteProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseDeleteProject);
                     // *****************************
@@ -283,10 +288,15 @@ namespace GeneralTests.UseCases
                         IsEverything = false,
                         Id = null
                     };
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
 
                     var responseSaveCategory =
                     (
-                        await apiPrivate.SaveCategoryAsync(newCategory)
+                        await apiPrivate.SaveCategoryAsync(newCategory, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveCategory);
                     Validator.Compare(newCategory, responseSaveCategory.Data);
@@ -307,7 +317,7 @@ namespace GeneralTests.UseCases
                     };
                     var responseSaveProject =
                     (
-                        await apiPrivate.SaveProjectAsync(prj)
+                        await apiPrivate.SaveProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveProject);
                     prj.Category.TotalProjects = -1;
@@ -358,7 +368,7 @@ namespace GeneralTests.UseCases
 
                     responseSaveProject =
                     (
-                        await apiPrivate.SaveProjectAsync(prj)
+                        await apiPrivate.SaveProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveProject);
                     prj.Category!.TotalProjects = -1;
@@ -415,7 +425,7 @@ namespace GeneralTests.UseCases
 
                     responseSaveProject =
                     (
-                        await apiPrivate.SaveProjectAsync(prj)
+                        await apiPrivate.SaveProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveProject);
                     prj.Category!.TotalProjects = -1;
@@ -461,7 +471,7 @@ namespace GeneralTests.UseCases
 
                     responseSaveProject =
                     (
-                        await apiPrivate.SaveProjectAsync(prj)
+                        await apiPrivate.SaveProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveProject);
                     prj.Category!.TotalProjects = -1;
@@ -508,7 +518,7 @@ namespace GeneralTests.UseCases
 
                     responseSaveProject =
                     (
-                        await apiPrivate.SaveProjectAsync(prj)
+                        await apiPrivate.SaveProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveProject);
                     prj.Category!.TotalProjects = -1;
@@ -703,10 +713,15 @@ namespace GeneralTests.UseCases
                         IsEverything = false,
                         Id = null
                     };
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
 
                     var responseSaveCategory =
                     (
-                        await apiPrivate.SaveCategoryAsync(newCategory)
+                        await apiPrivate.SaveCategoryAsync(newCategory, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(responseSaveCategory);
                     Validator.Compare(newCategory, responseSaveCategory.Data);
@@ -727,7 +742,7 @@ namespace GeneralTests.UseCases
 
                     var responseSaveProject =
                     (
-                        await apiPrivate.SaveProjectAsync(prj)
+                        await apiPrivate.SaveProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckFail(responseSaveProject);
                     // *****************************
@@ -788,6 +803,11 @@ namespace GeneralTests.UseCases
 
                     var apiPublic = Initializer.CreatePublicController(context, cache);
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
 
                     // 
                     {
@@ -796,7 +816,7 @@ namespace GeneralTests.UseCases
                         failPrj!.Id = Guid.NewGuid();
                         var responseSaveProject =
                         (
-                            await apiPrivate.SaveProjectAsync(failPrj)
+                            await apiPrivate.SaveProjectAsync(failPrj, resultLogin!.Token, Default.Credentials.Fingerprint)
                         ).Value;
                         Validator.CheckFail(responseSaveProject);
                     }
@@ -812,7 +832,7 @@ namespace GeneralTests.UseCases
                         failPrj!.Code = string.Empty;
                         var responseSaveProject =
                         (
-                            await apiPrivate.SaveProjectAsync(failPrj)
+                            await apiPrivate.SaveProjectAsync(failPrj, resultLogin!.Token, Default.Credentials.Fingerprint)
                         ).Value;
                         Validator.CheckFail(responseSaveProject);
                     }
@@ -828,7 +848,7 @@ namespace GeneralTests.UseCases
                         failPrj!.Version++;
                         var responseSaveProject =
                         (
-                            await apiPrivate.SaveProjectAsync(failPrj)
+                            await apiPrivate.SaveProjectAsync(failPrj, resultLogin!.Token, Default.Credentials.Fingerprint)
                         ).Value;
                         Validator.CheckFail(responseSaveProject);
                     }
@@ -844,7 +864,7 @@ namespace GeneralTests.UseCases
                         failPrj!.Name = string.Empty;
                         var responseSaveProject =
                         (
-                            await apiPrivate.SaveProjectAsync(failPrj)
+                            await apiPrivate.SaveProjectAsync(failPrj, resultLogin!.Token, Default.Credentials.Fingerprint)
                         ).Value;
                         Validator.CheckFail(responseSaveProject);
                     }
@@ -861,7 +881,7 @@ namespace GeneralTests.UseCases
                         failPrj!.Code = "ss";
                         var responseSaveProject =
                         (
-                            await apiPrivate.SaveProjectAsync(failPrj)
+                            await apiPrivate.SaveProjectAsync(failPrj, resultLogin!.Token, Default.Credentials.Fingerprint)
                         ).Value;
                         Validator.CheckFail(responseSaveProject);
                     }
@@ -885,6 +905,12 @@ namespace GeneralTests.UseCases
                     context.Migrator.MigrateUp();
                     var apiPublic = Initializer.CreatePublicController(context, cache);
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
+                    var apiGateway = Initializer.CreateGatewayController(context);
+                    var resultLogin =
+                    (
+                        await apiGateway.LoginAsync(Default.Credentials)
+                    ).Value!.Data;
+
                     var code = "code";
                     _ = await Creator.CreateNewProject(context, cache, code);
 
@@ -897,7 +923,7 @@ namespace GeneralTests.UseCases
                         prj!.Id = null;
                         var responseSaveProject =
                         (
-                            await apiPrivate.DeleteProjectAsync(prj)
+                            await apiPrivate.DeleteProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                         ).Value;
                         Validator.CheckFail(responseSaveProject);
                     }
@@ -911,7 +937,7 @@ namespace GeneralTests.UseCases
                         prj!.Id = Guid.NewGuid();
                         var responseSaveProject =
                         (
-                            await apiPrivate.DeleteProjectAsync(prj)
+                            await apiPrivate.DeleteProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                         ).Value;
                         Validator.CheckFail(responseSaveProject);
                     }
@@ -925,7 +951,7 @@ namespace GeneralTests.UseCases
                         prj!.Version++;
                         var responseSaveProject =
                         (
-                            await apiPrivate.DeleteProjectAsync(prj)
+                            await apiPrivate.DeleteProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
                         ).Value;
                         Validator.CheckFail(responseSaveProject);
                     }

@@ -5,7 +5,7 @@ namespace Infrastructure.Migrations
 {
 	[ExcludeFromCodeCoverage]
 	[Migration(197101010000, "Initialize core tables")]
-	public sealed class M197101010000_BaseTables : Migration
+	public sealed class M197101010000_InitializeTables : Migration
     {
 		private const string _introductionTable = "introduction";
 		private const string _categoryTable = "category";

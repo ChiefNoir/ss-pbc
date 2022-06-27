@@ -20,6 +20,7 @@ namespace SSPBC.Controllers
         private readonly IFileRepository _fileRepository;
         private readonly IIntroductionRepository _introductionRepository;
         private readonly IProjectRepository _projectRepository;
+        private readonly ITokenManager _tokenManager;
         private readonly Supervisor _supervisor;
 
         public PrivateController(IAccountRepository accountRepository,
@@ -27,7 +28,8 @@ namespace SSPBC.Controllers
                                  IConfiguration configuration,
                                  IFileRepository fileRepository, 
                                  IIntroductionRepository introductionRepository, 
-                                 IProjectRepository projectRepository, 
+                                 IProjectRepository projectRepository,
+                                 ITokenManager tokenManager,
                                  Supervisor supervisor)
         {
             _accountRepository = accountRepository;
@@ -36,6 +38,7 @@ namespace SSPBC.Controllers
             _fileRepository = fileRepository;
             _introductionRepository = introductionRepository;
             _projectRepository = projectRepository;
+            _tokenManager = tokenManager;
             _supervisor = supervisor;
         }
 
@@ -46,7 +49,10 @@ namespace SSPBC.Controllers
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () => _accountRepository.SaveAsync(account)
+                () =>
+                {
+                    return _accountRepository.SaveAsync(account);
+                }
             );
 
             return result;
@@ -55,11 +61,16 @@ namespace SSPBC.Controllers
         [HttpGet("accounts")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]
-        public async Task<ActionResult<ExecutionResult<Account[]>>> GetAccountsAsync()
+        public async Task<ActionResult<ExecutionResult<Account[]>>> GetAccountsAsync([FromHeader] string authorization)
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () => _accountRepository.GetAsync()
+                () =>
+                {
+                    var token = authorization.Split("Bearer ").Last();
+                    _tokenManager.ValidateToken(token);
+                    return _accountRepository.GetAsync();
+                }
             ); ;
 
             return result;
@@ -72,7 +83,10 @@ namespace SSPBC.Controllers
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () => _accountRepository.DeleteAsync(account)
+                () =>
+                {
+                    return _accountRepository.DeleteAsync(account);
+                }
             );
 
             return result;
@@ -85,7 +99,10 @@ namespace SSPBC.Controllers
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () => _accountRepository.GetAsync(id)
+                () =>
+                {
+                    return _accountRepository.GetAsync(id);
+                }
             );
 
             return result;
@@ -114,7 +131,10 @@ namespace SSPBC.Controllers
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () => _categoryRepository.SaveAsync(category)
+                () => 
+                { 
+                    return _categoryRepository.SaveAsync(category);
+                }
             );
 
             return result;
@@ -127,7 +147,10 @@ namespace SSPBC.Controllers
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () => _categoryRepository.DeleteAsync(category)
+                () =>
+                {
+                    return _categoryRepository.DeleteAsync(category);
+                }
             );
 
             return result;
@@ -172,7 +195,10 @@ namespace SSPBC.Controllers
         {
             var result = await _supervisor.SafeExecuteAsync
             (
-                () => _projectRepository.DeleteAsync(project)
+                () => 
+                { 
+                    return _projectRepository.DeleteAsync(project); 
+                }
             );
 
             return result;

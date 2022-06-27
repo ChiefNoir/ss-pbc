@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories
             CheckBeforeDelete(dbItem, project);
 
             _context.Projects.Remove(dbItem);
-            var rows = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return true;
         }
 

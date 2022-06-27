@@ -17,13 +17,19 @@ namespace SSPBC.Controllers
         private readonly IConfiguration _configuration;
         private readonly Supervisor _supervisor;
         private readonly ITokenManager _tokenManager;
+        private readonly ISessionRepository _sessionRepository;
 
-        public GatewayController(IConfiguration configuration, IAccountRepository accountRepository, Supervisor supervisor, ITokenManager tokenManager)
+        public GatewayController(IConfiguration configuration, 
+                                 IAccountRepository accountRepository,
+                                 ITokenManager tokenManager,
+                                 ISessionRepository sessionRepository,
+                                 Supervisor supervisor)
         {
             _configuration = configuration;
             _accountRepository = accountRepository;
             _supervisor = supervisor;
             _tokenManager = tokenManager;
+            _sessionRepository = sessionRepository;
         }
 
         [AllowAnonymous]
@@ -33,12 +39,15 @@ namespace SSPBC.Controllers
         {
             var result = await _supervisor.SafeExecuteAsync(async () =>
             {
-                var user = await _accountRepository.GetAsync(credentials.Login, credentials.Password);
+                var account = await _accountRepository.GetAsync(credentials.Login, credentials.Password);
+                var token = _tokenManager.CreateToken(account.Login, account.Role);
+
+                await _sessionRepository.SaveSession(account, token, credentials.Fingerprint);
 
                 return new Identity
                 {
-                    Account = user,
-                    Token = _tokenManager.CreateToken(user.Login, user.Role),
+                    Account = account,
+                    Token = token,
                     TokenLifeTimeMinutes = _configuration.GetSection("Token:LifeTime").Get<int>()
                 };
             });

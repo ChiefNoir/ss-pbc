@@ -53,10 +53,11 @@ namespace GeneralTests
             var conf = CreateConfiguration();
             var hashManager = new HashManager(conf);
             var accRep = new AccountRepository(context, conf, hashManager);
+            var sessionRep = new SessionRepository(context);
             var sup = new Supervisor();
             var tokenManager = new TokenManager(conf);
 
-            return new GatewayController(conf, accRep, sup, tokenManager);
+            return new GatewayController(conf, accRep, tokenManager, sessionRep, sup);
         }
 
         public static PrivateController CreatePrivateController(DataContext context, IDataCache cache)
@@ -69,9 +70,10 @@ namespace GeneralTests
             var intrRep = new IntroductionRepository(context, cache);
             var catRep = new CategoryRepository(context, cache);
             var prjRep = new ProjectRepository(context, catRep, cache);
+            var tokenManager = new TokenManager(conf);
             var sup = new Supervisor();
 
-            return new PrivateController(accRep, catRep, conf, fileRep, intrRep, prjRep, sup);
+            return new PrivateController(accRep, catRep, conf, fileRep, intrRep, prjRep, tokenManager, sup);
         }
     }
 }

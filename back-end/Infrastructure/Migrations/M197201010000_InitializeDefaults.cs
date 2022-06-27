@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.Migrations
 {
-    [Migration(197201010000, "Initialize default values")]
     [ExcludeFromCodeCoverage]
-    public class M197201010000_Default : Migration
+    [Migration(197201010000, "Initialize default values")]
+    public class M197201010000_InitializeDefaults : Migration
     {
         internal static Guid categoryId = new("A4517F51-9C85-4850-BE3F-F196742925D2");
         internal static string categoryDisplayName = "Everything";

@@ -7,6 +7,7 @@ import { AppRouter } from "./AppRouter";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { store } from "./storage";
 import { Provider } from "react-redux";
+import { fetchFingerprint } from "./storage/slices/fingerprintSlice";
 
 const darkTheme = createTheme({
   palette: {
@@ -17,6 +18,7 @@ const darkTheme = createTheme({
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+store.dispatch(fetchFingerprint());
 
 root.render(
   <Provider store={store}>

@@ -21,6 +21,7 @@ class PrivateApi {
   };
 
   public static async login(credentials: Credentials) {
+    credentials.fingerprint = store.getState().fingerprint.value;
     return await this.init().post<ExecutionResult<Identity>>("/login", credentials)
       .then(response => {
         return response.data;

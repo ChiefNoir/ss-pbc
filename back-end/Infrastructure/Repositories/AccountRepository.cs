@@ -30,9 +30,9 @@ namespace Infrastructure.Repositories
 
 
             _context.Accounts.Remove(acc);
-            var rows = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            return rows == 1;
+            return true;
         }
 
         public async Task<Account[]> GetAsync()

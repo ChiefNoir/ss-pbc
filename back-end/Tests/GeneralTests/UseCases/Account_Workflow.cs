@@ -91,9 +91,10 @@ namespace GeneralTests.UseCases
 
                     // Step 2: Login with new account
                     var gateway = Initializer.CreateGatewayController(context);
+                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var resultLogin =
                     (
-                        await gateway.LoginAsync(new Credentials(account.Login, account.Password))
+                        await gateway.LoginAsync(new Credentials(account.Login, account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(resultLogin);
                     Assert.Equal
@@ -210,9 +211,10 @@ namespace GeneralTests.UseCases
                     var gateway = Initializer.CreateGatewayController(context);
 
                     // Step 1: Login (initialize default account)
+                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var response =
                     (
-                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
+                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(response);
                     Validator.Compare(Default.Account, response.Data!.Account);
@@ -311,9 +313,10 @@ namespace GeneralTests.UseCases
                     var gateway = Initializer.CreateGatewayController(context);
 
                     // Step 1: Login (initialize default account)
+                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var response =
                     (
-                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
+                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(response);
                     Validator.Compare(Default.Account, response.Data!.Account);
@@ -361,9 +364,10 @@ namespace GeneralTests.UseCases
 
                     // Step 1: Login (initialize default account)
                     var gateway = Initializer.CreateGatewayController(context);
+                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var responseLogin =
                     (
-                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
+                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     // *****************************
@@ -403,9 +407,10 @@ namespace GeneralTests.UseCases
 
                     // Step 1: Login (initialize default account)
                     var gateway = Initializer.CreateGatewayController(context);
+                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var responseLogin =
                     (
-                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
+                        await gateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     // *****************************
@@ -447,9 +452,10 @@ namespace GeneralTests.UseCases
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Login (initialize default account)
+                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
+                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     // *****************************
@@ -513,9 +519,10 @@ namespace GeneralTests.UseCases
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Login (initialize default account)
+                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
+                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     Validator.Compare(Default.Account, responseLogin.Data!.Account);
@@ -528,10 +535,9 @@ namespace GeneralTests.UseCases
                         await apiPrivate.DeleteAccountAsync(acc)
                     ).Value;
                     Validator.CheckSucceed(resultDel);
-
                     var resultNextGet =
                     (
-                        await apiPrivate.GetAccountsAsync()
+                        await apiPrivate.GetAccountsAsync(responseLogin.Data.Token)
                     ).Value;
 
                     Validator.CheckSucceed(resultNextGet);
@@ -566,9 +572,10 @@ namespace GeneralTests.UseCases
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Login (initialize default account)
+                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
+                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     Validator.Compare(Default.Account, responseLogin.Data!.Account);
@@ -590,7 +597,7 @@ namespace GeneralTests.UseCases
                     // Step 3: Login with a new password (win)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(new Credentials(account.Login, account.Password))
+                        await apiGateway.LoginAsync(new Credentials(account.Login, account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     // *****************************
@@ -598,7 +605,7 @@ namespace GeneralTests.UseCases
                     // Step 4: Login with an old password (fail)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(new Credentials(account.Login, Default.Account.Password))
+                        await apiGateway.LoginAsync(new Credentials(account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckFail(responseLogin);
                     // *****************************
@@ -630,9 +637,10 @@ namespace GeneralTests.UseCases
                     var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Login (initialize default account)
+                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var responseLogin =
                     (
-                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
+                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     Validator.Compare(Default.Account, responseLogin.Data!.Account);
@@ -654,7 +662,7 @@ namespace GeneralTests.UseCases
                     // Step 3: Step 3: Login with a new login (win)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(new Credentials(account.Login, Default.Account.Password))
+                        await apiGateway.LoginAsync(new Credentials(account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckSucceed(responseLogin);
                     // *****************************
@@ -662,7 +670,7 @@ namespace GeneralTests.UseCases
                     // Step 4: Login with an old login (fail)
                     responseLogin =
                     (
-                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
+                        await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
                     Validator.CheckFail(responseLogin);
                     // *****************************

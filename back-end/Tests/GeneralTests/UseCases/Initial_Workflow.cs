@@ -63,9 +63,10 @@ namespace GeneralTests.UseCases
                     //
                     var apiGateway = Initializer.CreateGatewayController(context);
 
+                    var fingerprint = $"AUTOTEST: {Guid.NewGuid()}";
                     var responseLogin =
                     (
-                       await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password))
+                       await apiGateway.LoginAsync(new Credentials(Default.Account.Login, Default.Account.Password, fingerprint))
                     ).Value;
 
                     Validator.CheckSucceed(responseLogin);
@@ -93,7 +94,7 @@ namespace GeneralTests.UseCases
                     //
                     var resultGetAccounts =
                     (
-                        await apiPrivate.GetAccountsAsync()
+                        await apiPrivate.GetAccountsAsync(responseLogin.Data.Token)
                     ).Value;
 
                     Validator.CheckSucceed(resultGetAccounts);

@@ -25,9 +25,9 @@ namespace Infrastructure.Repositories
             CheckBeforeDelete(dbCategory, category);
 
             _context.Categories.Remove(dbCategory);
-            var rows = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            return rows == 1;
+            return true;
         }
 
 

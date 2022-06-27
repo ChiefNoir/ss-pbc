@@ -21,6 +21,8 @@ namespace Infrastructure
         internal DbSet<Project> Projects => Set<Project>();
         internal DbSet<ProjectToExternalUrl> ProjectExternalUrls => Set<ProjectToExternalUrl>();
 
+        internal DbSet<Session> Sessions => Set<Session>();
+
         public Migrator Migrator { get; set; }
 
         public DataContext(DbContextOptions options) : base(options)

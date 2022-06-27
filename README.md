@@ -4,6 +4,7 @@
 [![Back-end/Test](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_test.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/ChiefNoir/ss-pbc/badge.svg?branch=master)](https://coveralls.io/github/ChiefNoir/ss-pbc?branch=master)
 
+[![Front-end/CodeQL](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_codeql.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_codeql.yml)
 # SSPBC
 This is my personal website.
 And it was built almost at an enterprise level.

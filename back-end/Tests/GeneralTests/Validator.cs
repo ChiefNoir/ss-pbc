@@ -1,5 +1,6 @@
 ﻿using Abstractions.Models;
 using Security.Models;
+using SSPBC.Admin.Models;
 using SSPBC.Models;
 
 namespace GeneralTests

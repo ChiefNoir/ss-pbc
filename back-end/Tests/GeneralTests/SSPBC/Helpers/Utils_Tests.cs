@@ -1,4 +1,4 @@
-﻿using SSPBC.Helpers;
+﻿using SSPBC.Admin.Helpers;
 
 namespace GeneralTests.SSPBC.Helpers
 {

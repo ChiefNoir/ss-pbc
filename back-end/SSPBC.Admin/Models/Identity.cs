@@ -1,6 +1,4 @@
-﻿using Abstractions.Models;
-
-namespace SSPBC.Models
+﻿namespace SSPBC.Admin.Models
 {
     public class Identity
     {

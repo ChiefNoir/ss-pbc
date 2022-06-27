@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Security;
-using SSPBC.Helpers;
 using StackExchange.Redis;
 
 const string KeyDatabase = "PostgreSQL";
@@ -51,7 +50,6 @@ builder.Services.AddTransient<IDataCache, DataCache>();
 builder.Services.AddTransient<Supervisor>();
 builder.Services.AddTransient<HashManager>();
 
-
 var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString(KeyCache));
 
 var multiplexer = ConnectionMultiplexer.Connect(options);
@@ -85,15 +83,6 @@ app.UseCors(builder => builder.AllowAnyOrigin()
                               .AllowAnyMethod()
                               .AllowAnyHeader());
 
-var path = builder.Configuration["Location:FileStorage"];
-Utils.CheckFileStorageDirectory(path);
-app.UseStaticFiles();
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(path),
-    RequestPath = new PathString(builder.Configuration["Location:StaticFilesRequestPath"])
-});
-
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -105,6 +94,13 @@ app.UseAuthorization();
 app.MapControllers();
 
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<DataContext>();
+    context.Migrator.MigrateUp();
+}
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;

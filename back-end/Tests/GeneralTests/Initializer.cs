@@ -5,6 +5,7 @@ using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Security;
+using SSPBC.Admin.Controllers;
 using SSPBC.Controllers;
 using StackExchange.Redis;
 

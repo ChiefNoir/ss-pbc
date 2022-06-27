@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Security;
 using Security.Models;
-using SSPBC.Helpers;
+using SSPBC.Admin.Helpers;
 
-namespace SSPBC.Controllers
+namespace SSPBC.Admin.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
@@ -26,10 +26,10 @@ namespace SSPBC.Controllers
         private readonly Supervisor _supervisor;
 
         public PrivateController(IAccountRepository accountRepository,
-                                 ICategoryRepository categoryRepository, 
+                                 ICategoryRepository categoryRepository,
                                  IConfiguration configuration,
-                                 IFileRepository fileRepository, 
-                                 IIntroductionRepository introductionRepository, 
+                                 IFileRepository fileRepository,
+                                 IIntroductionRepository introductionRepository,
                                  IProjectRepository projectRepository,
                                  ISessionRepository sessionRepository,
                                  Supervisor supervisor)
@@ -75,7 +75,7 @@ namespace SSPBC.Controllers
                     await _sessionRepository.CheckSessionAsync(token, fingerprint);
                     return await _accountRepository.GetAsync();
                 }
-            ); 
+            );
 
             return result;
         }
@@ -218,7 +218,7 @@ namespace SSPBC.Controllers
                 {
                     var token = authorization.Split(_tokenPrefix).Last();
                     await _sessionRepository.CheckSessionAsync(token, fingerprint);
-                    return await _projectRepository.DeleteAsync(project); 
+                    return await _projectRepository.DeleteAsync(project);
                 }
             );
 

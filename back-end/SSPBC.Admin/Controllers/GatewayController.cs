@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Security;
 using Security.Models;
-using SSPBC.Models;
+using SSPBC.Admin.Models;
 
-namespace SSPBC.Controllers
+namespace SSPBC.Admin.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
@@ -19,7 +19,7 @@ namespace SSPBC.Controllers
         private readonly ITokenManager _tokenManager;
         private readonly ISessionRepository _sessionRepository;
 
-        public GatewayController(IConfiguration configuration, 
+        public GatewayController(IConfiguration configuration,
                                  IAccountRepository accountRepository,
                                  ITokenManager tokenManager,
                                  ISessionRepository sessionRepository,

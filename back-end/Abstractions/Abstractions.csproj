@@ -7,8 +7,8 @@
     <Authors>Stanislav "Chief" Shevtsov</Authors>
     <Company>Fireplace of Despair</Company>
     <Copyright>Stanislav "Chief" Shevtsov</Copyright>
-    <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ChiefNoir/BusinessCard.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ChiefNoir/ss-pbc</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ChiefNoir/ss-pbc.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <NeutralLanguage>en</NeutralLanguage>
     <AssemblyVersion>0.0.1.0</AssemblyVersion>
@@ -17,6 +17,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="RepositoryPublic\" />
   </ItemGroup>
 
 </Project>

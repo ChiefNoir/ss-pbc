@@ -6,6 +6,12 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+
+    <RepositoryUrl>https://github.com/ChiefNoir/ss-pbc.git</RepositoryUrl>
+
+    <RepositoryType>git</RepositoryType>
+
+    <PackageProjectUrl>https://github.com/ChiefNoir/ss-pbc</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,6 +36,7 @@
     <ProjectReference Include="..\..\Abstractions\Abstractions.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\..\Security\Security.csproj" />
+    <ProjectReference Include="..\..\SSPBC.Admin\SSPBC.Admin.csproj" />
     <ProjectReference Include="..\..\SSPBC\SSPBC.csproj" />
   </ItemGroup>
 

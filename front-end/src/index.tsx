@@ -19,7 +19,6 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-
 store.dispatch(fetchFingerprint());
 
 root.render(

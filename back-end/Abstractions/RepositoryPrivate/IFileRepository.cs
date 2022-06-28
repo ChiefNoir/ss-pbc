@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Abstractions.IRepositories
+namespace Abstractions.RepositoryPrivate
 {
     /// <summary> File repository</summary>
     public interface IFileRepository

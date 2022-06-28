@@ -1,4 +1,4 @@
-﻿using Abstractions.IRepositories;
+﻿using Abstractions.RepositoryPrivate;
 using Abstractions.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

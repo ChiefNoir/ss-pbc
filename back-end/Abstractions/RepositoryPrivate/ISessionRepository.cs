@@ -1,6 +1,6 @@
 ﻿using Abstractions.Models;
 
-namespace Abstractions.IRepositories
+namespace Abstractions.RepositoryPrivate
 {
     public interface ISessionRepository
     {

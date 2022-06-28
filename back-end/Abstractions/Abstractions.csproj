@@ -19,8 +19,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="RepositoryPublic\" />
-  </ItemGroup>
-
 </Project>

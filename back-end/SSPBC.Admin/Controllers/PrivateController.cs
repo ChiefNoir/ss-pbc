@@ -1,5 +1,6 @@
 ﻿using Abstractions.IRepositories;
 using Abstractions.Models;
+using Abstractions.RepositoryPrivate;
 using Abstractions.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,20 +18,20 @@ namespace SSPBC.Admin.Controllers
         private readonly string _tokenPrefix = "Bearer ";
 
         private readonly IAccountRepository _accountRepository;
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IPrivateCategoryRepository _categoryRepository;
         private readonly IConfiguration _configuration;
         private readonly IFileRepository _fileRepository;
-        private readonly IIntroductionRepository _introductionRepository;
-        private readonly IProjectRepository _projectRepository;
+        private readonly IPrivateIntroductionRepository _introductionRepository;
+        private readonly IPrivateProjectRepository _projectRepository;
         private readonly ISessionRepository _sessionRepository;
         private readonly Supervisor _supervisor;
 
         public PrivateController(IAccountRepository accountRepository,
-                                 ICategoryRepository categoryRepository,
+                                 IPrivateCategoryRepository categoryRepository,
                                  IConfiguration configuration,
                                  IFileRepository fileRepository,
-                                 IIntroductionRepository introductionRepository,
-                                 IProjectRepository projectRepository,
+                                 IPrivateIntroductionRepository introductionRepository,
+                                 IPrivateProjectRepository projectRepository,
                                  ISessionRepository sessionRepository,
                                  Supervisor supervisor)
         {

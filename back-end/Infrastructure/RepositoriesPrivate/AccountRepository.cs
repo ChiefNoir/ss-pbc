@@ -1,6 +1,6 @@
 ﻿using Abstractions.Exceptions;
-using Abstractions.IRepositories;
 using Abstractions.Models;
+using Abstractions.RepositoryPrivate;
 using Abstractions.Security;
 using Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Security;
 using System.Security;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.RepositoriesPrivate
 {
     public class AccountRepository : IAccountRepository
     {

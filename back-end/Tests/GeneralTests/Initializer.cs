@@ -2,6 +2,7 @@
 using Infrastructure;
 using Infrastructure.Cache;
 using Infrastructure.Repositories;
+using Infrastructure.RepositoriesPrivate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Security;
@@ -68,9 +69,9 @@ namespace GeneralTests
             var hashManager = new HashManager(conf);
             var accRep = new AccountRepository(context, conf, hashManager);
             var fileRep = new FileRepository(conf);
-            var intrRep = new IntroductionRepository(context, cache);
-            var catRep = new CategoryRepository(context, cache);
-            var prjRep = new ProjectRepository(context, catRep, cache);
+            var intrRep = new PrivateIntroductionRepository(context, cache);
+            var catRep = new PrivateCategoryRepository(context, cache);
+            var prjRep = new PrivateProjectRepository(context, cache);
             var sessRep = new SessionRepository(context);
             var sup = new Supervisor();
 

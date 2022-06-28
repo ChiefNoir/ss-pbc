@@ -1,10 +1,11 @@
 ﻿using Abstractions.IRepositories;
+using Abstractions.RepositoryPrivate;
 using Infrastructure.Converters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.Globalization;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.RepositoriesPrivate
 {
     public class FileRepository : IFileRepository
     {

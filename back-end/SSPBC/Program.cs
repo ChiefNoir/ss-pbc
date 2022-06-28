@@ -1,9 +1,11 @@
 using Abstractions.Cache;
 using Abstractions.IRepositories;
+using Abstractions.RepositoryPrivate;
 using Abstractions.Security;
 using Infrastructure;
 using Infrastructure.Cache;
 using Infrastructure.Repositories;
+using Infrastructure.RepositoriesPrivate;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -20,14 +22,12 @@ const string KeyCache = "Redis";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 
 #if DEBUG
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
 #endif
-
-builder.Services.AddCors();
 
 builder.Services.AddApiVersioning(o =>
 {
@@ -40,37 +40,15 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString(KeyDatabase));
 });
-builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
-builder.Services.AddTransient<IAccountRepository, AccountRepository>();
-builder.Services.AddTransient<IIntroductionRepository, IntroductionRepository>();
-builder.Services.AddTransient<IFileRepository, FileRepository>();
-builder.Services.AddTransient<ISessionRepository, SessionRepository>();
-builder.Services.AddTransient<ITokenManager, TokenManager>();
-builder.Services.AddTransient<IDataCache, DataCache>();
-builder.Services.AddTransient<Supervisor>();
-builder.Services.AddTransient<HashManager>();
-
 
 var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString(KeyCache));
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(options));
 
-var multiplexer = ConnectionMultiplexer.Connect(options);
-builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = builder.Configuration.GetSection("Token:RequireHttpsMetadata").Get<bool>();
-                    options.TokenValidationParameters = TokenManager.CreateTokenValidationParameters(builder.Configuration);
-                });
-
-//MultiPartBodyLength
-builder.Services.Configure<FormOptions>(o =>
-{
-    o.ValueLengthLimit = int.MaxValue;
-    o.MultipartBodyLengthLimit = int.MaxValue;
-    o.MemoryBufferThreshold = int.MaxValue;
-});
+builder.Services.AddTransient<IDataCache, DataCache>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
+builder.Services.AddTransient<IIntroductionRepository, IntroductionRepository>();
+builder.Services.AddTransient<Supervisor>();
 
 var app = builder.Build();
 
@@ -85,12 +63,9 @@ app.UseCors(builder => builder.AllowAnyOrigin()
                               .AllowAnyMethod()
                               .AllowAnyHeader());
 
-var path = builder.Configuration["Location:FileStorage"];
-Utils.CheckFileStorageDirectory(path);
-app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(path),
+    FileProvider = new PhysicalFileProvider(builder.Configuration["Location:FileStorage"]),
     RequestPath = new PathString(builder.Configuration["Location:StaticFilesRequestPath"])
 });
 
@@ -99,21 +74,16 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
+    var context = services.GetRequiredService<DataContext>();
+    context.Migrator.MigrateUp();
+
     var cache = services.GetRequiredService<IDataCache>();
     await cache.FlushAsync();
-
-    var sessionRepository = services.GetRequiredService<ISessionRepository>();
-    await sessionRepository.FlushAsync();
 }
 
+app.MapControllers();
 app.Run();

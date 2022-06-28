@@ -1,10 +1,10 @@
 ﻿using Abstractions.Exceptions;
-using Abstractions.IRepositories;
 using Abstractions.Models;
+using Abstractions.RepositoryPrivate;
 using Infrastructure.Resources;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.RepositoriesPrivate
 {
     public class SessionRepository : ISessionRepository
     {

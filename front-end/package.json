@@ -27,7 +27,8 @@
     "react-router-dom": "^6.3.0",
     "sass": "^1.51.0",
     "typescript": "^4.6.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
@@ -42,7 +43,6 @@
     "eslint-plugin-only-warn": "^1.0.3",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.30.0",
-    "react-scripts": "5.0.1",
     "source-map-explorer": "^2.5.2",
     "stylelint": "^14.8.5",
     "stylelint-config-standard-scss": "^4.0.0"

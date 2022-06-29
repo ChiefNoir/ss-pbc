@@ -77,7 +77,7 @@ function EditProjectDialog(props:
     }));
   };
 
-  function handleClose() {
+  function closeDialog() {
     setOpen(false);
   };
 
@@ -181,7 +181,7 @@ function EditProjectDialog(props:
   }
 
   return (
-  <Dialog open={open} onClose={handleClose} fullWidth={true}
+  <Dialog open={open} onClose={closeDialog} fullWidth={true}
           aria-labelledby="scroll-dialog-title" aria-describedby="scroll-dialog-description">
     <DialogTitle>{`${t("Actions.Edit")}: ${t("Project.this")}`}</DialogTitle>
       {isLoading && <Loader /> }
@@ -300,7 +300,7 @@ function EditProjectDialog(props:
       }
 
         <DialogActions>
-          <Button onClick={close}> {t("Actions.Cancel")} </Button>
+          <Button onClick={closeDialog}> {t("Actions.Cancel")} </Button>
           <Button onClick={deleteProject}> {t("Actions.Delete")} </Button>
           <Button onClick={saveProject}> {t("Actions.Save")} </Button>
         </DialogActions>

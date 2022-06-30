@@ -9,8 +9,8 @@
 This is my personal website.
 And it was built almost at an enterprise level.
 
-# System architecture
-%Place for image%
+# System design
+![design](https://user-images.githubusercontent.com/10946721/176768176-1bcb51c9-2245-477e-a671-745a89e5ff76.png)
 
 ## Front-end
 - [React](https://reactjs.org/)

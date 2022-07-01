@@ -4,11 +4,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["SSPBC/SSPBC.csproj", "SSPBC/"]
-COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
-COPY ["Security/Security.csproj", "Security/"]
-COPY ["Abstractions/Abstractions.csproj", "Abstractions/"]
-COPY ["Infrastructure.Cache/Infrastructure.Cache.csproj", "Infrastructure.Cache/"]
+COPY . .
 RUN dotnet restore "SSPBC/SSPBC.csproj"
 COPY . .
 WORKDIR "/src/SSPBC"

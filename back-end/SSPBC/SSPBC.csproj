@@ -1,21 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <Authors>Stanislav "Chief" Shevtsov</Authors>
-    <Product>SSPBC</Product>
-    <Copyright>Stanislav "Chief" Shevtsov</Copyright>
-    <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
-    <RepositoryType>git</RepositoryType>
-    <NeutralLanguage>en</NeutralLanguage>
-    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <Company>Fireplace of Despair</Company>
-    <RepositoryUrl>https://github.com/ChiefNoir/ss-pbc.git</RepositoryUrl>
-    <AssemblyVersion>0.0.1.0</AssemblyVersion>
+    <Copyright>Stanislav "Chief" Shevtsov</Copyright>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Nullable>enable</Nullable>
     <PackageId>SSPBC</PackageId>
+    <PackageProjectUrl>https://github.com/ChiefNoir/ss-pbc</PackageProjectUrl>
+    <Product>SSPBC</Product>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ChiefNoir/ss-pbc.git</RepositoryUrl>
+    <TargetFramework>net6.0</TargetFramework>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +27,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
-    <PackageReference Include="StackExchange.Redis" Version="2.6.45" />
+    <PackageReference Include="StackExchange.Redis" Version="2.6.48" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
   </ItemGroup>
 

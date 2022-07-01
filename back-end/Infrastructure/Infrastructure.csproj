@@ -1,18 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <Authors>Stanislav "Chief" Shevtsov</Authors>
     <Company>Fireplace of Despair</Company>
     <Copyright>Stanislav "Chief" Shevtsov</Copyright>
-    <PackageProjectUrl>https://github.com/ChiefNoir/ss-pbc</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ChiefNoir/ss-pbc.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <NeutralLanguage>en</NeutralLanguage>
-    <AssemblyVersion>0.0.1.0</AssemblyVersion>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ImplicitUsings>enable</ImplicitUsings>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Nullable>enable</Nullable>
+    <PackageProjectUrl>https://github.com/ChiefNoir/ss-pbc</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ChiefNoir/ss-pbc.git</RepositoryUrl>
+    <TargetFramework>net6.0</TargetFramework>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

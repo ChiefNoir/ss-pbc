@@ -4,13 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
-
     <RepositoryUrl>https://github.com/ChiefNoir/ss-pbc.git</RepositoryUrl>
-
     <RepositoryType>git</RepositoryType>
-
     <PackageProjectUrl>https://github.com/ChiefNoir/ss-pbc</PackageProjectUrl>
   </PropertyGroup>
 

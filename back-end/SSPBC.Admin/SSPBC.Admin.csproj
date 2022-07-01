@@ -1,27 +1,29 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>a79e9967-54ac-47b9-b163-2a6614c15c6f</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <PackageId>SSPBC.Admin</PackageId>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <Authors>Stanislav "Chief" Shevtsov</Authors>
     <Company>Fireplace of Despair</Company>
-    <Product>SSPBC.Admin</Product>
     <Copyright>Stanislav "Chief" Shevtsov</Copyright>
-    <PackageProjectUrl>https://github.com/ChiefNoir/BusinessCard</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ChiefNoir/ss-pbc.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <NeutralLanguage>en</NeutralLanguage>
+    <Nullable>enable</Nullable>
+    <PackageId>SSPBC.Admin</PackageId>
+    <PackageProjectUrl>https://github.com/ChiefNoir/ss-pbc</PackageProjectUrl>
+    <Product>SSPBC.Admin</Product>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ChiefNoir/ss-pbc.git</RepositoryUrl>
+    <TargetFramework>net6.0</TargetFramework>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,14 +31,6 @@
     <ProjectReference Include="..\Infrastructure.Cache\Infrastructure.Cache.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Security\Security.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="..\.dockerignore" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="..\.dockerignore" />
   </ItemGroup>
 
 </Project>

@@ -10,6 +10,9 @@ jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./back-end
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -24,12 +27,12 @@ jobs:
         id: get_version
         uses: chiefnoir/gaction-version-getter@v1
         with:
-          projectPath: 'back-end/SSPBC/SSPBC.csproj'
+          projectPath: '/SSPBC/SSPBC.csproj'
 
       - name: docker-build-and-publish
         uses: philips-software/docker-ci-scripts@v4.2.0
         with:
-          dockerfile: "back-end/public.Dockerfile"
+          dockerfile: "public.Dockerfile"
           image-name: "test"
           tags: "${{ steps.get_version.outputs.projectVersion }}"
         env:

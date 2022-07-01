@@ -19,17 +19,17 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+
+      - name: get version
+        id: get_version
+        uses: chiefnoir/gaction-version-getter@v1
         with:
-          images: my-docker-hub-namespace/my-docker-hub-repository
-      
+          projectPath: '/back-end/SSPBC/SSPBC.csproj'
+
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: public.Dockerfile
+          context: /back-end/public.Dockerfile
           push: true
           tags: test-tag
-          labels: test-label
+          labels: test-label ${{ steps.get_version.outputs.projectVersion }}"

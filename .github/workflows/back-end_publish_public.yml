@@ -27,7 +27,7 @@ jobs:
         id: get_version
         uses: chiefnoir/gaction-version-getter@v1
         with:
-          projectPath: '/SSPBC/SSPBC.csproj'
+          projectPath: 'SSPBC/SSPBC.csproj'
 
       - name: docker-build-and-publish
         uses: philips-software/docker-ci-scripts@v4.2.0

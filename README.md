@@ -10,7 +10,7 @@
 # Personal Business card
 The personal web-site build almost at the enterprise level.
 It features:
-- Fully-fledged back-end: [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer) with microservices.
+- Fully-fledged back-end: REST API with microservices.
 - Relational and in-memory key–value databases.
 - Fully-fledged front-end.
 - Automated workflows with auto-tests, auto-codeQL and auto-publish docker images.

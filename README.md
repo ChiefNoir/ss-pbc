@@ -6,6 +6,10 @@
 
 [![Front/CodeQL](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_codeql.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_codeql.yml)
 
+[![Publish SSPBC](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_publish_public.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_publish_public.yml) 
+[![Publish SSPBC.Admin](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_publish_admin.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_publish_admin.yml)
+[![Publish SSPBC.Frontend](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_publish.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_publish.yml)
+
 # SSPBC: Personal Business card
 The personal web-site build almost at the enterprise level.
 It features:

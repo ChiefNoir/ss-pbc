@@ -1,10 +1,8 @@
 name: "Back-end/Publish SSPBC"
 
 on:
-#  release:
-#    types: [published]
-  push:
-    branches: [ master ]
+  release:
+    types: [published]
 
 jobs:
   push_to_registry:

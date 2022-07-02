@@ -8,7 +8,6 @@ const fpPromise = FingerprintJS.load({
 export const fetchFingerprint = createAsyncThunk("fingerprint/fetchFingerprint", async() => {
   const fp = await fpPromise;
   const result = await fp.get();
-  console.log("fetchUsers|visitorId " + result.visitorId);
   return result.visitorId;
 });
 

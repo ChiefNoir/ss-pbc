@@ -26,9 +26,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Test and cover
+      - name: Build and push to Docker hub
         run: |
           cd ./back-end/
           docker build -t pbc-public -f public.Dockerfile .
           docker tag pbc-public ssproduction/pbc-public:${{steps.get_version.outputs.projectVersion}}
-          docker image push pbc-public:${{steps.get_version.outputs.projectVersion}}
+          docker image push ssproduction/pbc-public:${{steps.get_version.outputs.projectVersion}}

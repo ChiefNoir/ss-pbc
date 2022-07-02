@@ -1,5 +1,8 @@
 # Back-end
-This is REST API for website.
+REST API for the website.
+Build on a [dotnet 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) stack.
+It uses  [PostgreSQL](https://www.postgresql.org/) as a long-term storage and [Redis](https://redis.io/) as a short-term storage
+
 
 ## Projects
 ### Abstractions
@@ -26,8 +29,8 @@ Every method must have Authorize attribute at the declaration and session valida
 
 ### Tests/GeneralTests
 Unit and e2e tests.
-Most of the tests requires a ready-to-use database. 
-Most of the test cases are simulates user stories: look at projects, create project, edit project, etc, with fully operational database and caching systems.
+Most of the tests require a ready-to-use database. 
+Most of the test cases are simulates user stories: look at projects, create projects, edit projects, etc, with fully operational database and caching systems.
 
 # Requirements
 - [Microsoft Visual Studio Community 2022](https://visualstudio.microsoft.com/vs/community/)

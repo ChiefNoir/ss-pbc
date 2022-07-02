@@ -6,7 +6,7 @@ import { Utils } from "./Utils";
 class PublicApi {
   private static init() {
     return axios.default.create({
-      baseURL: process.env.REACT_APP_API_PUBLIC_ENDPOINT,
+      baseURL: window._env_.REACT_APP_API_PUBLIC_ENDPOINT,
       timeout: 31000,
       headers: {
         Accept: "application/json"
@@ -45,7 +45,7 @@ class PublicApi {
   };
 
   public static async getProjects(page: number, categoryCode: string | null) {
-    const length : number = parseInt(process.env.REACT_APP_PAGING_PROJECTS_MAX ?? "10");
+    const length : number = parseInt(window._env_.REACT_APP_PAGING_PROJECTS_MAX ?? "10");
     const start : number = length * (page - 1);
 
     const categoryParam = categoryCode !== null && categoryCode

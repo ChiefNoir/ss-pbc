@@ -10,7 +10,7 @@ class PrivateApi {
     const identity = store.getState().identity.value;
 
     return axios.default.create({
-      baseURL: process.env.REACT_APP_API_PRIVATE_ENDPOINT,
+      baseURL: window._env_.REACT_APP_API_PRIVATE_ENDPOINT,
       timeout: 31000,
       headers: {
         Accept: "application/json",

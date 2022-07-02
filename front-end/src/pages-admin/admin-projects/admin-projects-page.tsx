@@ -17,7 +17,7 @@ function AdminProjectsPage() {
   const [page, setPage] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [rowCountState, setRowCountState] = useState(0);
-  const projectPerPage = Convert.ToRestrictedNumber(process.env.REACT_APP_PAGING_PROJECTS_MAX, 1);
+  const projectPerPage = Convert.ToRestrictedNumber(window._env_.REACT_APP_PAGING_PROJECTS_MAX, 1);
 
   useEffect(() => {
     const fetchData = async() => {

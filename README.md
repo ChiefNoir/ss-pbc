@@ -12,7 +12,9 @@ It features:
 - Fully-fledged back-end: REST API with microservices.
 - Relational and in-memory key–value databases.
 - Fully-fledged front-end.
-- Automated workflows with auto-tests, auto-codeQL and auto-publish docker images.
+- Automated workflows with auto-tests, auto-codeQL.
+- Automated publishing to the DockerHub: [pbc-public](https://hub.docker.com/r/ssproduction/pbc-public), [pbc-admin](https://hub.docker.com/r/ssproduction/pbc-admin), [pbc-front](https://hub.docker.com/r/ssproduction/pbc-front)
+
 
 # System design
 ![design](https://user-images.githubusercontent.com/10946721/176768176-1bcb51c9-2245-477e-a671-745a89e5ff76.png)

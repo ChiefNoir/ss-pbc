@@ -6,8 +6,7 @@
 
 [![Front/CodeQL](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_codeql.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_codeql.yml)
 
-# SSPBC
-# Personal Business card
+# SSPBC: Personal Business card
 The personal web-site build almost at the enterprise level.
 It features:
 - Fully-fledged back-end: REST API with microservices.

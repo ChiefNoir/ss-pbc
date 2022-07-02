@@ -29,4 +29,5 @@ jobs:
           cd ./back-end/
           docker build -t pbc-public -f public.Dockerfile .
           docker tag pbc-public ssproduction/pbc-public:${{steps.get_version.outputs.projectVersion}}
-          docker image push ssproduction/pbc-public:${{steps.get_version.outputs.projectVersion}}
+          docker tag pbc-public ssproduction/pbc-public:latest
+          docker image push ssproduction/pbc-public --all-tags

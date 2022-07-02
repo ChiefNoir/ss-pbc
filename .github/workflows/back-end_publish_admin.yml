@@ -29,4 +29,5 @@ jobs:
           cd ./back-end/
           docker build -t pbc-admin -f public.Dockerfile .
           docker tag pbc-admin ssproduction/pbc-admin:${{steps.get_version.outputs.projectVersion}}
-          docker image push ssproduction/pbc-admin:${{steps.get_version.outputs.projectVersion}}
+          docker tag pbc-admin ssproduction/pbc-admin:latest
+          docker image push ssproduction/pbc-admin --all-tags

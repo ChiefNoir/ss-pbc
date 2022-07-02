@@ -29,4 +29,5 @@ jobs:
           cd ./front-end/
           docker build -t pbc-front -f Dockerfile .
           docker tag pbc-front ssproduction/pbc-front:${{ steps.package-version.outputs.current-version}}
-          docker image push ssproduction/pbc-front:${{ steps.package-version.outputs.current-version}}
+          docker tag pbc-front ssproduction/pbc-front:latest
+          docker image push ssproduction/pbc-front --all-tags

@@ -1,0 +1,32 @@
+name: "Front-end/Publish SSPBC.Frontend"
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+        with:
+          path: front-end
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push to Docker hub
+        run: |
+          cd ./front-end/
+          docker build -t pbc-front -f Dockerfile .
+          docker tag pbc-front ssproduction/pbc-front:${{ steps.package-version.outputs.current-version}}
+          docker image push ssproduction/pbc-front:${{ steps.package-version.outputs.current-version}}

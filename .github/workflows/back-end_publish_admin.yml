@@ -27,7 +27,7 @@ jobs:
       - name: Build and push to Docker hub
         run: |
           cd ./back-end/
-          docker build -t pbc-admin -f private.Dockerfile .
+          docker build -t pbc-admin -f admin.Dockerfile .
           docker tag pbc-admin ssproduction/pbc-admin:${{steps.get_version.outputs.projectVersion}}
           docker tag pbc-admin ssproduction/pbc-admin:latest
           docker image push ssproduction/pbc-admin --all-tags

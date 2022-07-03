@@ -21,8 +21,7 @@ It features:
 
 
 # System design
-![design](https://user-images.githubusercontent.com/10946721/176768176-1bcb51c9-2245-477e-a671-745a89e5ff76.png)
-
+![system_design](https://user-images.githubusercontent.com/10946721/177055836-6bc27051-2bc2-48d1-a68b-968d8cda2719.png)
 
 # Tech
 ## Front-end
@@ -31,7 +30,7 @@ It features:
 - [TypeScript](https://www.typescriptlang.org/)
 - [MUI](https://mui.com/)
 - [i18next](https://www.i18next.com/)
-- and other dependencies
+- _and other dependencies_
 
 ## Back-end
 - [.Net Core 6](https://dotnet.microsoft.com/download)
@@ -40,13 +39,16 @@ It features:
 - [FluentMigrator](https://fluentmigrator.github.io/)
 - [Jwt](https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet)
 - [xUnit](https://xunit.net/)
-- and other dependencies
+- _and other dependencies_
 
 ## Database
 - [PostgreSQL](https://www.postgresql.org/)
 
 ## Cache
 - [Redis](https://redis.io/)
+
+## Reverse proxy
+- [nginx](https://www.nginx.com/)
 
 ## CI/CD
 - [GitHub Action](https://github.com/features/actions)

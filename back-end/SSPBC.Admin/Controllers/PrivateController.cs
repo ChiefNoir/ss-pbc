@@ -12,7 +12,7 @@ namespace SSPBC.Admin.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/admin/v{version:apiVersion}/")]
+    [Route("api/v{version:apiVersion}/")]
     public class PrivateController : ControllerBase
     {
         private readonly string _tokenPrefix = "Bearer ";

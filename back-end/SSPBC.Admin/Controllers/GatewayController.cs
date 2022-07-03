@@ -10,7 +10,7 @@ namespace SSPBC.Admin.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/")]
+    [Route("api/admin/v{version:apiVersion}/")]
     public class GatewayController : ControllerBase
     {
         private readonly IAccountRepository _accountRepository;

@@ -23,6 +23,10 @@ const AdminProjectsPage = lazy(() =>
   import("./pages-admin")
     .then(({ AdminProjectsPage }) => ({ default: AdminProjectsPage }))
 );
+const LoginPage = lazy(() =>
+  import("./pages")
+    .then(({ LoginPage }) => ({ default: LoginPage }))
+);
 
 const AppRouter = () => (
   <Routes>
@@ -38,7 +42,10 @@ const AppRouter = () => (
         <Route path="?category=:categoryCode&page=:page" element={<Pages.ShowcasePage />} />
       </Route>
 
-      <Route path="login" element={<Pages.LoginPage />} />
+      <Route path="login" element={
+                            <React.Suspense fallback={<Loader/>}>
+                              <LoginPage />
+                            </React.Suspense>} />
     </Route>
 
     <Route path="/admin" element={

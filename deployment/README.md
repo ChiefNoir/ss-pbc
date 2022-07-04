@@ -21,8 +21,13 @@ docker volume create ss-data-postgres
 Volume for Postgresql
 
 ### PostgreSQL
+Ah, yes.
+
+Docker makes changes directly on iptables, which are not shown with ufw status.
+So, it's better not to -p if there is no need. 
+
 ````
-docker run -d --name ss-postgres -e POSTGRES_PASSWORD= --mount source=ss-data-postgres,destination=/var/lib/postgresql/data -p 5432:5432 postgres
+docker run -d --name ss-postgres -e POSTGRES_PASSWORD= --mount source=ss-data-postgres,destination=/var/lib/postgresql/data postgres
 ````
 > POSTGRES_PASSWORD=
 

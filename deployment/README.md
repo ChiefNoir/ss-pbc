@@ -30,7 +30,7 @@ Must be specified.
 
 ### Redis
 ````
-docker run -d --name ss-redis -e REDIS_PASSWORD= -v ss-data-redis:/data -p 6379:6379 --restart always redis /bin/sh -c 'redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}'
+docker run -d --name ss-redis -e REDIS_PASSWORD= -v ss-data-redis:/data --restart always redis /bin/sh -c 'redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}'
 ````
 > REDIS_PASSWORD=
 

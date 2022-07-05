@@ -33,6 +33,7 @@
     "Code": "Code",
     "Name": "Name",
     "ReleaseDate": "Release date",
+    "ReleaseDateNull": "Work in progress",
     "Poster":"Poster",
     "PosterUrl": "Poster url",
     "PosterDescription":"Poster Description",

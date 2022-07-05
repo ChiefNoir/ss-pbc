@@ -45,6 +45,19 @@ namespace SSPBC.Admin.Controllers
             _supervisor = supervisor;
         }
 
+        [AllowAnonymous]
+        [ApiVersion("1.0")]
+        [HttpGet("ping")]
+        public ActionResult<ExecutionResult<string>> Ping()
+        {
+            var result = _supervisor.SafeExecute
+            (
+                () => "pong"
+            );
+
+            return result;
+        }
+
         [HttpPost("accounts")]
         [ApiVersion("1.0")]
         [Authorize(Roles = Restrictions.EditorRoles)]

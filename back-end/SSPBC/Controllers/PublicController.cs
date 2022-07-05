@@ -26,6 +26,18 @@ namespace SSPBC.Controllers
             _projectRepository = projectRepository;
         }
 
+        [AllowAnonymous]
+        [ApiVersion("1.0")]
+        [HttpGet("ping")]
+        public ActionResult<ExecutionResult<string>> Ping()
+        {
+            var result = _supervisor.SafeExecute
+            (
+                () => "pong"
+            );
+
+            return result;
+        }
 
         [AllowAnonymous]
         [ApiVersion("1.0")]

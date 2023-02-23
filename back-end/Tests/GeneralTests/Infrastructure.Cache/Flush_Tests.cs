@@ -1,7 +1,7 @@
 ﻿using Abstractions.Cache;
 using Abstractions.Models;
 
-namespace GeneralTests.Infrastructure.Cache
+namespace GeneralTests.UseCases // <-- HACK: to ensure sequential execution
 {
     [Trait("Category", "e2e")]
     [Collection(nameof(NonParallelCollection))]
@@ -59,6 +59,7 @@ namespace GeneralTests.Infrastructure.Cache
                     Assert.True(isSaved, "Cache is not working");
 
                     var cached = await cache.GetIntroductionAsync();
+                    Assert.NotNull(cached);
                     Validator.Compare(cached, intro);
 
                     await cache.FlushAsync(CachedItemType.Introduction);
@@ -89,6 +90,7 @@ namespace GeneralTests.Infrastructure.Cache
                     Assert.True(isSaved, "Cache is not working");
 
                     var cached = await cache.GetCategoriesAsync();
+                    Assert.NotNull(cached);
                     Validator.Compare(cached, items);
 
                     await cache.FlushAsync(CachedItemType.Categories);

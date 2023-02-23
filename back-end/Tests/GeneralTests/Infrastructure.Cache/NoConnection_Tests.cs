@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Abstractions.Cache;
 using Abstractions.Models;
-using Abstractions.Security;
-using Microsoft.Extensions.Configuration;
-using System.Collections;
 using Infrastructure.Cache;
 using StackExchange.Redis;
-using Abstractions.Cache;
 
-namespace GeneralTests.Infrastructure.Cache
+namespace GeneralTests.UseCases  // <-- HACK: to ensure sequential execution
 {
     [Trait("Category", "e2e")]
     [Collection(nameof(NonParallelCollection))]

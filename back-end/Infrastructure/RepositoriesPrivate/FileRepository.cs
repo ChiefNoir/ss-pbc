@@ -9,13 +9,21 @@ namespace Infrastructure.RepositoriesPrivate
     public class FileRepository : IFileRepository
     {
         private readonly int _maxFileSize;
-        private readonly string _fileStorage;
+        private readonly string? _fileStorage;
 
 
         public FileRepository(IConfiguration configuration)
         {
             _maxFileSize = configuration.GetSection("Location:MaxFileSizeBytes").Get<int>();
             _fileStorage = configuration.GetSection("Location:FileStorage").Get<string>();
+
+            if (string.IsNullOrEmpty(_fileStorage))
+            {
+                throw new ArgumentException
+                   (
+                        string.Format(Resources.TextMessages.Misconfiguration, nameof(FileRepository))
+                   );
+            }
         }
 
         public string Save(IFormFile file)

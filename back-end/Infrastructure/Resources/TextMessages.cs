@@ -65,5 +65,8 @@
 
         /// <summary> Suspicious behavior </summary>
         internal const string SuspiciousBehavior = "Suspicious behavior";
+
+        /// <summary> Misconfiguration </summary>
+        internal const string Misconfiguration = "Misconfiguration in {0}";
     }
 }

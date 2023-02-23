@@ -41,7 +41,7 @@ namespace GeneralTests
             };
             var responseSaveProject =
             (
-                await apiPrivate.SaveProjectAsync(prj, resultLogin.Token, Default.Credentials.Fingerprint)
+                await apiPrivate.SaveProjectAsync(prj, resultLogin!.Token, Default.Credentials.Fingerprint)
             ).Value;
             Validator.CheckSucceed(responseSaveProject);
             Validator.Compare(prj, responseSaveProject.Data);
@@ -84,7 +84,7 @@ namespace GeneralTests
                 await apiPublic.GetCategoryAsync(category.Id)
             ).Value;
             Validator.CheckSucceed(responseGetCategory);
-            Assert.Equal(category.TotalProjects + 1, responseGetCategory.Data.TotalProjects);
+            Assert.Equal(category.TotalProjects + 1, responseGetCategory!.Data!.TotalProjects);
             // *****************************
 
             // Step 6: Check category==all
@@ -93,11 +93,11 @@ namespace GeneralTests
                 await apiPublic.GetCategoryAsync(Default.Category.Id)
             ).Value;
             Validator.CheckSucceed(responseGetCategoryDef);
-            Assert.Equal(category.TotalProjects + 1, responseGetCategoryDef.Data.TotalProjects);
+            Assert.Equal(category.TotalProjects + 1, responseGetCategoryDef!.Data!.TotalProjects);
             // *****************************
 
             var result = await apiPublic.GetProjectAsync(prj.Code);
-            return result.Value.Data;
+            return result!.Value!.Data!;
         }
 
         public static async Task<Category> CreateNewCategory(DataContext context, IDataCache cache, string? categoryCode = null)

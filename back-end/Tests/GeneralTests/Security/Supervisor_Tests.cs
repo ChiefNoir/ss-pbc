@@ -24,14 +24,14 @@ namespace GeneralTests.Security
             var resultString = _supervisor.SafeExecute<string>(() => throw new Exception("one"));
 
             Validator.CheckFail(resultString);
-            Assert.Equal("one", resultString.Error.Message);
+            Assert.Equal("one", resultString!.Error!.Message);
             Assert.Null(resultString.Error.Detail);
 
 
             var resultInt = _supervisor.SafeExecute<int>(() => throw new Exception("one", new Exception("two")));
 
             Validator.CheckFail(resultInt);
-            Assert.Equal("one", resultInt.Error.Message);
+            Assert.Equal("one", resultInt!.Error!.Message);
             Assert.Equal("two", resultInt.Error.Detail);
         }
 
@@ -52,13 +52,13 @@ namespace GeneralTests.Security
             var resultString = await _supervisor.SafeExecuteAsync<string>(() => throw new Exception("One"));
 
             Validator.CheckFail(resultString);
-            Assert.Equal("One", resultString.Error.Message);
+            Assert.Equal("One", resultString!.Error!.Message);
             Assert.Null(resultString.Error.Detail);
 
             var result = await _supervisor.SafeExecuteAsync<int>(() => throw new Exception("Main", new Exception("Inner")));
             Validator.CheckFail(result);
 
-            Assert.Equal("Main", result.Error.Message);
+            Assert.Equal("Main", result!.Error!.Message);
             Assert.Equal("Inner", result.Error.Detail);
         }
 

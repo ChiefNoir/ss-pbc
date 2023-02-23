@@ -40,7 +40,7 @@ namespace Infrastructure.Repositories
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.CategoryDoesNotExist, "")
+                        string.Format(Resources.TextMessages.CategoryDoesNotExist, string.Empty)
                     );
             }
 
@@ -51,7 +51,7 @@ namespace Infrastructure.Repositories
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.CategoryDoesNotExist, "")
+                        string.Format(Resources.TextMessages.CategoryDoesNotExist, string.Empty)
                     );
             }
 

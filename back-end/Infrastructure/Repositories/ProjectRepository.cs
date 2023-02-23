@@ -51,8 +51,6 @@ namespace Infrastructure.Repositories
             if (!string.IsNullOrEmpty(categoryCode))
             {
                 var category = await _categoryRepository.GetAsync(categoryCode);
-                if (category == null)
-                    throw new InconsistencyException(string.Format(Resources.TextMessages.CategoryDoesNotExist, categoryCode));
 
                 categoryId = category.Id!.Value;
                 isEverything = category.IsEverything;

@@ -551,7 +551,7 @@ namespace GeneralTests.UseCases
                     ).Value;
                     var resultDel =
                     (
-                        await apiPrivate.DeleteAccountAsync(resultAdd.Data, responseLogin.Data!.Token, Default.Credentials.Fingerprint)
+                        await apiPrivate.DeleteAccountAsync(resultAdd!.Data, responseLogin.Data!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckSucceed(resultDel);
                     var resultNextGet =

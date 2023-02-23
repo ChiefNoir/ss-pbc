@@ -90,11 +90,6 @@ namespace Infrastructure.Converters
 
         private static IEnumerable<ProjectToExternalUrl> ToProjectExternalUrls(IEnumerable<Abstractions.Models.ExternalUrl> externalUrls)
         {
-            if (externalUrls == null)
-            {
-                return new List<ProjectToExternalUrl>();
-            }
-
             return externalUrls.Select(ToProjectExternalUrl);
         }
     }

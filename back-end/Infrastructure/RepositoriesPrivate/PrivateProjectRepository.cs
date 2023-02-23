@@ -62,12 +62,7 @@ namespace Infrastructure.RepositoriesPrivate
                                        .Include(x => x.Category)
                                        .Include(x => x.ExternalUrls)
                                        .ThenInclude(x => x.ExternalUrl)
-                                       .FirstOrDefaultAsync(x => x.Id == dbItem.Id);
-
-            if (result == null)
-            {
-                throw new InconsistencyException(Resources.TextMessages.ProjectDoesNotExist);
-            }
+                                       .FirstAsync(x => x.Id == dbItem.Id);
 
             return DataConverter.ToProject(result);
         }
@@ -94,7 +89,9 @@ namespace Infrastructure.RepositoriesPrivate
         {
             var category = _context.Categories.FirstOrDefault(x => x.Code == project.Category!.Code);
             if (category == null)
+            {
                 throw new InconsistencyException(string.Format(Resources.TextMessages.CategoryDoesNotExist, project.Category!.Code));
+            }
 
             dbProject.Category = category;
             dbProject.CategoryId = category.Id!.Value;
@@ -175,7 +172,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Code")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(project.Code))
                     );
             }
 
@@ -183,7 +180,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Description")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(project.Description))
                     );
             }
 
@@ -191,7 +188,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DescriptionShort")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(project.DescriptionShort))
                     );
             }
 
@@ -199,7 +196,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Category")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(project.Category))
                     );
             }
 
@@ -215,7 +212,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "DisplayName")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(project.Name))
                     );
             }
 
@@ -223,7 +220,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.PropertyDuplicate, "Code")
+                        string.Format(Resources.TextMessages.PropertyDuplicate, nameof(project.Code))
                     );
             }
 
@@ -233,7 +230,7 @@ namespace Infrastructure.RepositoriesPrivate
                 {
                     throw new InconsistencyException
                     (
-                       string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name of the External URL")
+                       string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, $"{nameof(item.DisplayName)} of {nameof(ExternalUrl)}")
                     );
                 }
 
@@ -241,7 +238,7 @@ namespace Infrastructure.RepositoriesPrivate
                 {
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "URL of the External URL")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, $"{nameof(item.Url)} of {nameof(ExternalUrl)}")
                     );
                 }
             }
@@ -313,7 +310,7 @@ namespace Infrastructure.RepositoriesPrivate
                 {
                     throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Display name of the External URL")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, $"{nameof(item.DisplayName)} of {nameof(ExternalUrl)}")
                     );
                 }
 
@@ -321,7 +318,7 @@ namespace Infrastructure.RepositoriesPrivate
                 {
                     throw new InconsistencyException
                     (
-                       string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "URL of the External URL")
+                       string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, $"{nameof(item.Url)} of {nameof(ExternalUrl)}")
                     );
                 }
             }

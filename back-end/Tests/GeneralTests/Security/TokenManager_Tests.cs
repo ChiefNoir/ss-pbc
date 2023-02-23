@@ -44,7 +44,7 @@ namespace GeneralTests.Security
             var token = _tokenManager.CreateToken(login, roles);
             var principal = _tokenManager.ValidateToken(token);
 
-            Assert.True(principal.Identity.Name == login);
+            Assert.True(principal!.Identity!.Name == login);
 
             foreach (var item in roles.Where(x => !string.IsNullOrEmpty(x)))
             {

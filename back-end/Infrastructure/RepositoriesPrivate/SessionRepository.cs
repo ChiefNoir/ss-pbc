@@ -43,7 +43,9 @@ namespace Infrastructure.RepositoriesPrivate
             var session = await _context.Sessions.AnyAsync(x => x.Token == token && x.Fingerprint == fingerprint);
 
             if (!session)
+            {
                 throw new FraudException(TextMessages.SuspiciousBehavior);
+            }
         }
 
     }

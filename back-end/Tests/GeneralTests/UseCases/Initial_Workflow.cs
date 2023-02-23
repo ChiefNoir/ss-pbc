@@ -74,7 +74,7 @@ namespace GeneralTests.UseCases
                     Assert.Equal
                     (
                         Initializer.CreateConfiguration().GetSection("Token:LifeTime").Get<int>(),
-                        responseLogin.Data.TokenLifeTimeMinutes
+                        responseLogin!.Data!.TokenLifeTimeMinutes
                     );
                     Assert.NotNull(responseLogin.Data.Token);
                     //

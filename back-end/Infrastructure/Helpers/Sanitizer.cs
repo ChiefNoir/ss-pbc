@@ -15,7 +15,7 @@ namespace Infrastructure.Helpers
             }
 
             var rgx = new Regex("[^a-zA-Z0-9_-]", RegexOptions.Compiled | RegexOptions.CultureInvariant);
-            var result = rgx.Replace(code, "").ToLower();
+            var result = rgx.Replace(code, string.Empty).ToLower();
 
             if (string.IsNullOrEmpty(result))
             {

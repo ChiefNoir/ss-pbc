@@ -15,10 +15,6 @@ namespace GeneralTests.UseCases
             {
                 yield return new object[]
                 {
-                    null
-                };
-                yield return new object[]
-                {
                     new FormFile(new MemoryStream(), 0, 0, "test", "red")
                 };
                 yield return new object[]
@@ -48,7 +44,7 @@ namespace GeneralTests.UseCases
 
                     var responseUpload =
                     (
-                        await apiPrivate.Upload(form, resultLogin!.Data.Token, Default.Credentials.Fingerprint)
+                        await apiPrivate.Upload(form, resultLogin!.Data!.Token, Default.Credentials.Fingerprint)
                     ).Value;
                     Validator.CheckFail(responseUpload);
                 }

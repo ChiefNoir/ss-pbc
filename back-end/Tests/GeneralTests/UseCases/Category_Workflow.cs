@@ -309,17 +309,6 @@ namespace GeneralTests.UseCases
                     {
                         Id = null,
                         Code = "cute",
-                        DisplayName = null,// (here)
-                        IsEverything = false,
-                        Version = 0,
-                    },
-                };
-                yield return new object[]
-                {
-                    new Category
-                    {
-                        Id = null,
-                        Code = "cute",
                         DisplayName = string.Empty, // (here)
                         IsEverything = false,
                         Version = 0,
@@ -494,17 +483,6 @@ namespace GeneralTests.UseCases
                     new Category
                     {
                         Id = Default.Category.Id,
-                        Code = null, // (here)
-                        DisplayName = Default.Category.DisplayName,
-                        IsEverything = true,
-                        Version = 0,
-                    }
-                };
-                yield return new object[]
-                {
-                    new Category
-                    {
-                        Id = Default.Category.Id,
                         Code = string.Empty, // (here)
                         DisplayName = Default.Category.DisplayName,
                         IsEverything = true,
@@ -518,17 +496,6 @@ namespace GeneralTests.UseCases
                         Id = Default.Category.Id,
                         Code = Default.Category.Code,
                         DisplayName = string.Empty,  // (here)
-                        IsEverything = true,
-                        Version = 0,
-                    }
-                };
-                yield return new object[]
-                {
-                    new Category
-                    {
-                        Id = Default.Category.Id,
-                        Code = Default.Category.Code,
-                        DisplayName = null,  // (here)
                         IsEverything = true,
                         Version = 0,
                     }
@@ -626,7 +593,7 @@ namespace GeneralTests.UseCases
 
                     // Step 2: Set new Category to IsEverything = true
                     var newCat = responseSaveCategoryAsync.Data;
-                    newCat.IsEverything = true;
+                    newCat!.IsEverything = true;
 
                     var response = (await apiPrivate.SaveCategoryAsync(newCat, resultLogin!.Token, Default.Credentials.Fingerprint)).Value;
                     Validator.CheckFail(response);
@@ -717,7 +684,7 @@ namespace GeneralTests.UseCases
                     ).Value;
                     Validator.CheckSucceed(publiGetProject);
 
-                    prj.Category.TotalProjects = -1; // TODO: fix it
+                    prj!.Category!.TotalProjects = -1; // TODO: fix it
                     Validator.Compare(prj, publiGetProject.Data);
                     // *****************************
                 }

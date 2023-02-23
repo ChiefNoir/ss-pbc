@@ -1,13 +1,7 @@
 ﻿using Abstractions.Cache;
 using Abstractions.Exceptions;
-using Abstractions.RepositoryPrivate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Abstractions.IRepositories;
 using Abstractions.Models;
+using Abstractions.RepositoryPrivate;
 using Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
 
@@ -205,8 +199,8 @@ namespace Infrastructure.RepositoriesPrivate
             if (dbItem.Code != category.Code && _context.Categories.Any(x => x.Code == category.Code))
             {
                 throw new InconsistencyException
-                    (
-                        string.Format(Resources.TextMessages.PropertyDuplicate, "The category code")
+                (
+                        string.Format(Resources.TextMessages.PropertyDuplicate, $"The {nameof(category.Code)} of {category.GetType().Name}")
                     );
             }
             if (dbItem.IsEverything && dbItem.IsEverything != category.IsEverything)
@@ -220,7 +214,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.MustBeOnlyOne, "System category ")
+                        string.Format(Resources.TextMessages.MustBeOnlyOne, "System category")
                     );
             }
         }

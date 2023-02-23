@@ -57,7 +57,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.WasAlreadyDeleted, "Account")
+                        string.Format(Resources.TextMessages.WasAlreadyDeleted, nameof(Account))
                     );
             }
 
@@ -146,7 +146,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Login")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(account.Login))
                     );
             }
 
@@ -154,7 +154,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Password")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(account.Password))
                     );
             }
 
@@ -162,7 +162,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Password")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(account.Role))
                     );
             }
 
@@ -180,7 +180,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.PropertyDuplicate, "Login")
+                        string.Format(Resources.TextMessages.PropertyDuplicate, nameof(account.Login))
                     );
             }
 
@@ -227,7 +227,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Login")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(account.Login))
                     );
             }
 
@@ -235,7 +235,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, "Role")
+                        string.Format(Resources.TextMessages.ThePropertyCantBeEmpty, nameof(account.Role))
                     );
             }
 
@@ -261,7 +261,7 @@ namespace Infrastructure.RepositoriesPrivate
             {
                 throw new InconsistencyException
                     (
-                        string.Format(Resources.TextMessages.PropertyDuplicate, "Login")
+                        string.Format(Resources.TextMessages.PropertyDuplicate, nameof(account.Login))
                     );
             }
 

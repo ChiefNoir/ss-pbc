@@ -1,5 +1,4 @@
-﻿using Abstractions.IRepositories;
-using Abstractions.RepositoryPrivate;
+﻿using Abstractions.RepositoryPrivate;
 using Infrastructure.Converters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;

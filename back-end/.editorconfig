@@ -3,8 +3,8 @@
 # IDE0063: Use simple 'using' statement
 csharp_prefer_simple_using_statement = false:suggestion
 csharp_indent_labels = one_less_than_current
-csharp_using_directive_placement = outside_namespace:silent
-csharp_prefer_braces = true:silent
+csharp_using_directive_placement = outside_namespace:suggestion
+csharp_prefer_braces = true:suggestion
 csharp_style_namespace_declarations = block_scoped:silent
 csharp_style_prefer_method_group_conversion = true:silent
 csharp_style_expression_bodied_methods = false:silent
@@ -46,6 +46,11 @@ csharp_space_around_binary_operators = before_and_after
 
 # CS8604: Possible null reference argument.
 dotnet_diagnostic.CS8604.severity = none
+csharp_style_prefer_top_level_statements = true:silent
+csharp_style_prefer_utf8_string_literals = true:suggestion
+csharp_style_prefer_readonly_struct = true:suggestion
+csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true:silent
+csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true:silent
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line

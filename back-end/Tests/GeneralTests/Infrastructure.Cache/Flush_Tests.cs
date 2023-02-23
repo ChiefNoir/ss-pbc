@@ -22,7 +22,6 @@ namespace GeneralTests.Infrastructure.Cache
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0); 
                     await cache.FlushAsync();
                 }
             }
@@ -42,7 +41,6 @@ namespace GeneralTests.Infrastructure.Cache
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
                     await cache.FlushAsync();
                 }
             }
@@ -69,7 +67,6 @@ namespace GeneralTests.Infrastructure.Cache
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
                     await cache.FlushAsync();
                 }
             }
@@ -100,7 +97,6 @@ namespace GeneralTests.Infrastructure.Cache
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
                     await cache.FlushAsync();
                 }
             }
@@ -124,6 +120,8 @@ namespace GeneralTests.Infrastructure.Cache
                     Assert.True(isSaved, "Cache is not working");
 
                     var cached = await cache.GetProjectPreviewAsync();
+
+                    Assert.NotNull(cached);
                     Validator.Compare(cached, items);
 
                     await cache.FlushAsync(CachedItemType.ProjectsPreview);
@@ -132,7 +130,6 @@ namespace GeneralTests.Infrastructure.Cache
                 }
                 finally
                 {
-                    context.Migrator.MigrateDown(0);
                     await cache.FlushAsync();
                 }
             }

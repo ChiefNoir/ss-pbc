@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <Authors>Stanislav "Chief" Shevtsov</Authors>
     <Company>Fireplace of Despair</Company>
     <Copyright>Stanislav "Chief" Shevtsov</Copyright>

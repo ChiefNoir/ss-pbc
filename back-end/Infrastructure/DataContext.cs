@@ -29,7 +29,7 @@ namespace Infrastructure
         {
             Migrator = new Migrator(Database.GetConnectionString());
 
-            //TODO: fix it
+            //HACK: after postgreSQL update timestamps has been broken down
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 

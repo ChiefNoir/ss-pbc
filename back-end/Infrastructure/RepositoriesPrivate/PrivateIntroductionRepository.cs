@@ -1,6 +1,5 @@
 ﻿using Abstractions.Cache;
 using Abstractions.Exceptions;
-using Abstractions.IRepositories;
 using Abstractions.Models;
 using Abstractions.RepositoryPrivate;
 using Infrastructure.Converters;

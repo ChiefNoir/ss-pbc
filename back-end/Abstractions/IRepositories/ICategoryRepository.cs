@@ -1,5 +1,5 @@
-﻿using Abstractions.Models;
-using Abstractions.Exceptions;
+﻿using Abstractions.Exceptions;
+using Abstractions.Models;
 
 namespace Abstractions.IRepositories
 {

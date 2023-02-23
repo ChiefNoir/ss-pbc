@@ -24,12 +24,12 @@ namespace Security
         {
             if (string.IsNullOrEmpty(plainText))
             {
-                throw new ArgumentException("plainText must have value", nameof(plainText));
+                throw new ArgumentNullException(nameof(plainText));
             }
 
             if (hexSalt != null && string.IsNullOrEmpty(hexSalt))
             {
-                throw new ArgumentException("hexSalt must have value", nameof(hexSalt));
+                throw new ArgumentNullException(nameof(hexSalt));
             }
 
             var text = AddExtraSalt

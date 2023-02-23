@@ -4,6 +4,8 @@ namespace Infrastructure.Helpers
 {
     internal static class Sanitizer
     {
+        private static readonly Regex codeRegex = new("[^a-zA-Z0-9_-]", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+
         /// <summary>Remove everything illegal from project/category code</summary>
         /// <param name="code">Project/category code</param>
         /// <returns>Sanitized code</returns>
@@ -14,8 +16,7 @@ namespace Infrastructure.Helpers
                 throw new ArgumentNullException(nameof(code));
             }
 
-            var rgx = new Regex("[^a-zA-Z0-9_-]", RegexOptions.Compiled | RegexOptions.CultureInvariant);
-            var result = rgx.Replace(code, string.Empty).ToLower();
+            var result = codeRegex.Replace(code, string.Empty).ToLower();
 
             if (string.IsNullOrEmpty(result))
             {

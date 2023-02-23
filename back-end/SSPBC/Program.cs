@@ -1,19 +1,13 @@
 using Abstractions.Cache;
 using Abstractions.IRepositories;
-using Abstractions.RepositoryPrivate;
-using Abstractions.Security;
 using Infrastructure;
 using Infrastructure.Cache;
 using Infrastructure.Repositories;
-using Infrastructure.RepositoriesPrivate;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Security;
-using SSPBC.Helpers;
 using StackExchange.Redis;
 
 const string KeyDatabase = "PostgreSQL";

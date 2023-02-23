@@ -1,4 +1,6 @@
 ﻿using Security;
+using System.Data.Common;
+using System.Runtime.Serialization;
 
 namespace GeneralTests.Security
 {
@@ -62,5 +64,41 @@ namespace GeneralTests.Security
             Assert.Equal("Inner", result.Error.Detail);
         }
 
+        [Fact]
+        public async Task SafeExecuteAsync_MustHideDbException()
+        {
+            var resultString = await _supervisor.SafeExecuteAsync<string>(() => throw new TestDbDbException("Database"));
+
+            Validator.CheckFail(resultString);
+            Assert.NotEqual("Database", resultString!.Error!.Message);            
+        }
+
+        [Fact]
+        public void SafeExecute_MustHideDbException()
+        {
+            var resultString = _supervisor.SafeExecute<string>(() => throw new TestDbDbException("Database"));
+
+            Validator.CheckFail(resultString);
+            Assert.NotEqual("Database", resultString!.Error!.Message);
+        }
+    }
+
+    class TestDbDbException : DbException
+    {
+        public TestDbDbException() : base()
+        {
+        }
+
+        public TestDbDbException(string message) : base(message)
+        {
+        }
+
+        public TestDbDbException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected TestDbDbException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
     }
 }

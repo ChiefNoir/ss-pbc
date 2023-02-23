@@ -49,6 +49,14 @@ namespace Security
                 result.Data = func();
                 result.IsSucceed = true;
             }
+            catch (DbException)
+            {
+                result.IsSucceed = false;
+                result.Error = new Incident
+                {
+                    Message = ErrorMessages.DatabaseException,
+                };
+            }
             catch (Exception ee)
             {
                 result.IsSucceed = false;

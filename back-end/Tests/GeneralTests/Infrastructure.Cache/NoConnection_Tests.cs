@@ -3,7 +3,7 @@ using Abstractions.Models;
 using Infrastructure.Cache;
 using StackExchange.Redis;
 
-namespace GeneralTests.UseCases  // <-- HACK: to ensure sequential execution
+namespace GeneralTests.Infrastructure.Cache
 {
     [Trait("Category", "e2e")]
     [Collection(nameof(NonParallelCollection))]

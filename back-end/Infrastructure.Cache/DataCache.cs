@@ -61,10 +61,8 @@ namespace Infrastructure.Cache
         {
             if (!_multiplexer.IsConnected) { return; }
 
-            foreach (var item in (CachedItemType[])Enum.GetValues(typeof(CachedItemType)))
-            {
-                await FlushAsync(item);
-            }
+            var db = _multiplexer.GetDatabase();
+            await db.KeyDeleteAsync(new RedisKey[] { KeyCategories, KeyIntroduction, KeyProjectsPreview });
         }
 
         public async Task FlushAsync(CachedItemType itemType)

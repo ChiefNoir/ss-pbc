@@ -1,7 +1,7 @@
 ﻿using Abstractions.Cache;
 using Abstractions.Models;
 
-namespace GeneralTests.UseCases // <-- HACK: to ensure sequential execution
+namespace GeneralTests.Infrastructure.Cache
 {
     [Trait("Category", "e2e")]
     [Collection(nameof(NonParallelCollection))]

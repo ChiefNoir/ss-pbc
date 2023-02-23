@@ -12,6 +12,8 @@ using StackExchange.Redis;
 
 const string KeyDatabase = "PostgreSQL";
 const string KeyCache = "Redis";
+const string ConfigFileStorage = "Location:FileStorage";
+const string ConfigStaticFilesRequestPath = "Location:StaticFilesRequestPath";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,8 +61,8 @@ app.UseCors(builder => builder.AllowAnyOrigin()
 
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(builder.Configuration["Location:FileStorage"]),
-    RequestPath = new PathString(builder.Configuration["Location:StaticFilesRequestPath"])
+    FileProvider = new PhysicalFileProvider(builder.Configuration[ConfigFileStorage]),
+    RequestPath = new PathString(builder.Configuration[ConfigStaticFilesRequestPath])
 });
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions

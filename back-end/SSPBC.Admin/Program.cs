@@ -12,8 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Security;
 using StackExchange.Redis;
 
-const string KeyDatabase = "PostgreSQL";
-const string KeyCache = "Redis";
+const string ConfigDatabase = "PostgreSQL";
+const string ConfigCache = "Redis";
+const string ConfigRequireHttpsMetadata = "Token:RequireHttpsMetadata";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,9 +35,9 @@ builder.Services.AddApiVersioning(o =>
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString(KeyDatabase));
+    options.UseNpgsql(builder.Configuration.GetConnectionString(ConfigDatabase));
 });
-var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString(KeyCache));
+var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString(ConfigCache));
 builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(options));
 builder.Services.AddTransient<IDataCache, DataCache>();
 builder.Services.AddTransient<IPrivateCategoryRepository, PrivateCategoryRepository>();
@@ -53,7 +54,7 @@ builder.Services
        .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        .AddJwtBearer(options =>
        {
-           options.RequireHttpsMetadata = builder.Configuration.GetSection("Token:RequireHttpsMetadata").Get<bool>();
+           options.RequireHttpsMetadata = builder.Configuration.GetSection(ConfigRequireHttpsMetadata).Get<bool>();
            options.TokenValidationParameters = TokenManager.CreateTokenValidationParameters(builder.Configuration);
        });
 

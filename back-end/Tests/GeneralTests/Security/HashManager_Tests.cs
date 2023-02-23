@@ -29,7 +29,7 @@ namespace GeneralTests.Security
             var config = Initializer.CreateConfiguration();
             var hashManager = new HashManager(config);
 
-            Assert.Throws<ArgumentException>(() => hashManager.Hash(plainText));
+            Assert.Throws<ArgumentNullException>(() => hashManager.Hash(plainText));
         }
 
         [Theory]
@@ -39,7 +39,7 @@ namespace GeneralTests.Security
             var config = Initializer.CreateConfiguration();
             var hashManager = new HashManager(config);
 
-            Assert.Throws<ArgumentException>(() => hashManager.Hash("text", salt));
+            Assert.Throws<ArgumentNullException>(() => hashManager.Hash("text", salt));
         }
 
 
@@ -68,7 +68,7 @@ namespace GeneralTests.Security
             var config = Initializer.CreateConfiguration();
             var hashManager = new HashManager(config);
 
-            Assert.Throws<ArgumentException>(() => hashManager.Hash(plainText, salt));
+            Assert.Throws<ArgumentNullException>(() => hashManager.Hash(plainText, salt));
         }
 
 

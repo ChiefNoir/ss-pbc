@@ -14,7 +14,7 @@ using Abstractions.Cache;
 namespace GeneralTests.Infrastructure.Cache
 {
     [Trait("Category", "e2e")]
-    [CollectionDefinition("database_sensitive", DisableParallelization = true)]
+    [Collection(nameof(NonParallelCollection))]
     public sealed class NoConnection_Tests
     {
         private static readonly string _fakeConnection = "127.0.0.1:9999,password=9999,abortConnect=false";

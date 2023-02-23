@@ -5,7 +5,7 @@ using System.Collections;
 namespace GeneralTests.UseCases
 {
     [Trait("Category", "e2e")]
-    [CollectionDefinition("database_sensitive", DisableParallelization = true)]
+    [Collection(nameof(NonParallelCollection))]
     public sealed class Gateway_Workflow
     {
         private class InvalidLogins : IEnumerable<object?[]>

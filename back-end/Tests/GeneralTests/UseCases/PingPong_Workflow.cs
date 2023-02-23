@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GeneralTests.UseCases
+﻿namespace GeneralTests.UseCases
 {
     [Trait("Category", "e2e")]
-    [CollectionDefinition("database_sensitive", DisableParallelization = true)]
+    [Collection(nameof(NonParallelCollection))]
     public sealed class PingPong_Workflow
     {
         [Fact]

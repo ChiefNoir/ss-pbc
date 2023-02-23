@@ -4,7 +4,7 @@ using Abstractions.Models;
 namespace GeneralTests.Infrastructure.Cache
 {
     [Trait("Category", "e2e")]
-    [CollectionDefinition("database_sensitive", DisableParallelization = true)]
+    [Collection(nameof(NonParallelCollection))]
     public sealed class Flush_Tests
     {
         [Fact]

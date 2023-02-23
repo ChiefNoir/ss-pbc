@@ -6,7 +6,7 @@ using SSPBC.Models;
 namespace GeneralTests.UseCases
 {
     [Trait("Category", "e2e")]
-    [CollectionDefinition("database_sensitive", DisableParallelization = true)]
+    [Collection(nameof(NonParallelCollection))]
     public sealed class Initial_Workflow
     {
         [Fact]

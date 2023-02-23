@@ -22,7 +22,9 @@ namespace Infrastructure.Repositories
         {
             var cacheItems = await _cache.GetCategoriesAsync();
             if (cacheItems != null)
+            {
                 return cacheItems;
+            }
 
             var dbItems = await _context.CategoriesWithTotalProjects
                                     .AsNoTracking()

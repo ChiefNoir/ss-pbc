@@ -1,4 +1,6 @@
 ﻿using Security.Models;
+using Security.Resources;
+using System.Data.Common;
 
 namespace Security
 {
@@ -16,6 +18,14 @@ namespace Security
             {
                 result.Data = await func();
                 result.IsSucceed = true;
+            }
+            catch (DbException)
+            {
+                result.IsSucceed = false;
+                result.Error = new Incident
+                {
+                    Message = ErrorMessages.DatabaseException,
+                };
             }
             catch (Exception ee)
             {

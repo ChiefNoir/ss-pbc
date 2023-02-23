@@ -1,4 +1,5 @@
 ﻿using Abstractions.Models;
+using Abstractions.Exceptions;
 
 namespace Abstractions.IRepositories
 {
@@ -12,7 +13,7 @@ namespace Abstractions.IRepositories
 
         /// <summary> Get <seealso cref="Category"/> by code </summary>
         /// <param name="code">Category code</param>
-        /// <returns><seealso cref="Category"/>  or <seealso cref="Exception"/> </returns>
+        /// <returns><seealso cref="Category"/>  or <seealso cref="InconsistencyException"/> </returns>
         Task<Category> GetAsync(string code);
 
         /// <summary>Get all categories from storage</summary>

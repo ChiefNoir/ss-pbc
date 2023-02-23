@@ -79,6 +79,70 @@ namespace GeneralTests.UseCases
             }
         }
 
+        private class InvalidGetProjectsPreview : IEnumerable<object[]>
+        {
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    -1, // start (sic!)
+                    10, // end
+                    string.Empty, //category code
+                };
+                yield return new object[]
+                {
+                    0, // start
+                    -1, // end (sic!)
+                    string.Empty, //category code
+                };
+                yield return new object[]
+                {
+                    0, // start
+                    10, // end
+                    "unexpected", //category code (sic!)
+                };
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(InvalidGetProjectsPreview))]
+        internal async Task CheckDefault_Nagative(int start, int length, string categoryCode)
+        {
+            // Story ***********************
+            // Step 1: Request projects preview from an empty database with wrong request
+            // *****************************
+
+            var (context, cache) = Initializer.CreateDataContext();
+            using (context)
+            {
+                try
+                {
+                    context.Migrator.MigrateUp();
+                    var apiPublic = Initializer.CreatePublicController(context, cache);
+                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
+
+                    var result =
+                        (
+                            await apiPublic.GetProjectsPreviewAsync
+                                 (
+                                    new Paging { Start = start, Length = length },
+                                    new ProjectSearch { CategoryCode = categoryCode }
+                                 )
+                         )!.Value;
+
+                    Validator.CheckFail(result);
+
+                    // *****************************
+                }
+                finally
+                {
+                    context.Migrator.MigrateDown(0); await cache.FlushAsync();
+                }
+            }
+        }
+
         [Fact]
         internal async Task CreateNewProject_Positive()
         {

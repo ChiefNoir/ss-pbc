@@ -7,12 +7,12 @@ namespace Abstractions.IRepositories
     {
         /// <summary> Get <seealso cref="Category"/> by id </summary>
         /// <param name="id">Category id</param>
-        /// <returns><seealso cref="Category"/>  or <b>null</b> </returns>
+        /// <returns><seealso cref="Category"/>  or <b>Exception</b> </returns>
         Task<Category> GetAsync(Guid? id);
 
         /// <summary> Get <seealso cref="Category"/> by code </summary>
         /// <param name="code">Category code</param>
-        /// <returns><seealso cref="Category"/>  or <b>null</b> </returns>
+        /// <returns><seealso cref="Category"/>  or <seealso cref="Exception"/> </returns>
         Task<Category> GetAsync(string code);
 
         /// <summary>Get all categories from storage</summary>

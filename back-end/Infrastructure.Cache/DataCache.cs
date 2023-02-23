@@ -59,8 +59,7 @@ namespace Infrastructure.Cache
 
         public async Task FlushAsync()
         {
-            if (!_multiplexer.IsConnected)
-                return;
+            if (!_multiplexer.IsConnected) { return; }
 
             foreach (var item in (CachedItemType[])Enum.GetValues(typeof(CachedItemType)))
             {
@@ -70,8 +69,7 @@ namespace Infrastructure.Cache
 
         public async Task FlushAsync(CachedItemType itemType)
         {
-            if (!_multiplexer.IsConnected)
-                return;
+            if (!_multiplexer.IsConnected) { return; }
 
             var db = _multiplexer.GetDatabase();
 
@@ -101,36 +99,33 @@ namespace Infrastructure.Cache
 
         private async Task<IEnumerable<T>?> GetCollection<T>(string key) where T : class
         {
-            if (!_multiplexer.IsConnected)
-                return null;
+            if (!_multiplexer.IsConnected) { return null; }
 
             var db = _multiplexer.GetDatabase();
             var result = await db.StringGetAsync(key);
+            if (result.IsNull) { return null; }
 
-            if (result.IsNull)
-                return null;
 
             return JsonSerializer.Deserialize<T[]>(result);
         }
 
         private async Task<T?> Get<T>(string key) where T : class
         {
-            if (!_multiplexer.IsConnected)
-                return null;
+            if (!_multiplexer.IsConnected) { return null; }
 
             var db = _multiplexer.GetDatabase();
             var result = await db.StringGetAsync(key);
-
             if (result.IsNull)
+            {
                 return null;
+            }
 
             return JsonSerializer.Deserialize<T>(result);
         }
 
         private async Task<bool> Save<T>(string key, T item)
         {
-            if (!_multiplexer.IsConnected)
-                return false;
+            if (!_multiplexer.IsConnected) { return false; }
 
             var db = _multiplexer.GetDatabase();
 

@@ -39,6 +39,17 @@ namespace GeneralTests
             return new Tuple<DataContext, IDataCache>(context, cache);
         }
 
+        public static IDataCache CreateCache()
+        {
+            var options = ConfigurationOptions.Parse(CreateConfiguration().GetConnectionString(KeyCache));
+            var multiplexer = ConnectionMultiplexer.Connect(options);
+
+            var cache = new DataCache(multiplexer, CachePrefix);
+            Task.Run(cache.FlushAsync);
+
+            return cache;
+        }
+
         public static PublicController CreatePublicController(DataContext context, IDataCache cache)
         {
             var sup = new Supervisor();

@@ -7,7 +7,7 @@ namespace Infrastructure.Migrations
     [Migration(202206262131, "Sessions management tables")]
     public sealed class M202206262131_Sessions : Migration
     {
-        private static string _sessionTable = "session";
+        private const string _sessionTable = "session";
         private const string _accountTable = "account";
 
         public override void Up()

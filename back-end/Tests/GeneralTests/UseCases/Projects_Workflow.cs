@@ -292,7 +292,6 @@ namespace GeneralTests.UseCases
         [Fact]
         internal async Task EditProject_Positive()
         {
-            // TODO: Too long, break it to smaller tests
             // Story ***********************
             // Step 1: Request projects preview from an empty database
             // Step 2: Request categories an empty database (Total projects count in system category = 0)
@@ -851,6 +850,7 @@ namespace GeneralTests.UseCases
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S1199:Nested code blocks should not be used", Justification = "Not really important here")]
         internal async Task EditProject_Negative()
         {
             var (context, cache) = Initializer.CreateDataContext();
@@ -956,6 +956,7 @@ namespace GeneralTests.UseCases
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S1199:Nested code blocks should not be used", Justification = "Not really important here")]
         internal async Task Delete_Negative()
         {
             var (context, cache) = Initializer.CreateDataContext();

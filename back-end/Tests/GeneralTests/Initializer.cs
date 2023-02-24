@@ -33,8 +33,8 @@ namespace GeneralTests
             var multiplexer = ConnectionMultiplexer.Connect(options);
 
             var cache = new DataCache(multiplexer, CachePrefix);
-            var task = cache.FlushAsync();
-            Task.Run(async () => await cache.FlushAsync());
+
+            Task.Run(cache.FlushAsync);
 
             return new Tuple<DataContext, IDataCache>(context, cache);
         }

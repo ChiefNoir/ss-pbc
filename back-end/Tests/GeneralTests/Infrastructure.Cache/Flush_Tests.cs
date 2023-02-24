@@ -1,5 +1,6 @@
 ﻿using Abstractions.Cache;
 using Abstractions.Models;
+using System;
 
 namespace GeneralTests.Infrastructure.Cache
 {
@@ -17,7 +18,8 @@ namespace GeneralTests.Infrastructure.Cache
                 {
                     foreach (var item in (CachedItemType[])Enum.GetValues(typeof(CachedItemType)))
                     {
-                        await cache.FlushAsync(item);
+                        var exception = await Record.ExceptionAsync(() => cache.FlushAsync(item));
+                        Assert.Null(exception);
                     }
                 }
                 finally

@@ -24,7 +24,6 @@ namespace GeneralTests.UseCases
                 {
                     context.Migrator.MigrateUp();
                     var apiPublic = Initializer.CreatePublicController(context, cache);
-                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     // Step 1: Request projects preview from an empty database
                     for (int i = 0; i < 100; i++)
@@ -121,7 +120,6 @@ namespace GeneralTests.UseCases
                 {
                     context.Migrator.MigrateUp();
                     var apiPublic = Initializer.CreatePublicController(context, cache);
-                    var apiPrivate = Initializer.CreatePrivateController(context, cache);
 
                     var result =
                         (
@@ -621,7 +619,6 @@ namespace GeneralTests.UseCases
                     };
 
                     Validator.Compare(preview, responseGetProjectsPreview.Data.First());
-                    prj = responseGetProject.Data;
                     // *****************************
                 }
                 finally

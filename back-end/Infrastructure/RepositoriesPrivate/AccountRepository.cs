@@ -73,7 +73,7 @@ namespace Infrastructure.RepositoriesPrivate
                 var newLogin = _configuration.GetSection("Default:Admin:Login").Get<string>();
                 var newPass = _configuration.GetSection("Default:Admin:Password").Get<string>();
 
-                await SaveAsync(new Account { Login = newLogin, Password = newPass, Role = RoleNames.Admin });
+                await SaveAsync(new Account { Login = newLogin!, Password = newPass, Role = RoleNames.Admin });
             }
 
 

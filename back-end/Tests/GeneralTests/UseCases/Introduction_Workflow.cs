@@ -144,7 +144,6 @@ namespace GeneralTests.UseCases
 
                     newIntroduction.Version++;
                     Validator.Compare(newIntroduction, responseSaveIntroduction.Data);
-                    newIntroduction = responseSaveIntroduction.Data;
                     // --
 
                     // ****************************

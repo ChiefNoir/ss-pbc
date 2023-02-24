@@ -5,7 +5,7 @@ using SSPBC.Models;
 
 namespace GeneralTests
 {
-    internal class Validator
+    internal static class Validator
     {
         internal static void CheckFail<T>(ExecutionResult<T> response)
         {

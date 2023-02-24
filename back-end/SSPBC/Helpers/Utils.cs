@@ -1,6 +1,6 @@
 ﻿namespace SSPBC.Helpers
 {
-    public class Utils
+    public static class Utils
     {
         public static void CheckFileStorageDirectory(string path)
         {

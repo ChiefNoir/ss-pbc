@@ -1,16 +1,18 @@
-[![Website status](https://img.shields.io/website?label=Website%20status&url=https%3A%2F%2Ffireplace-of-despair.org%2F)](https://fireplace-of-despair.org)
+# Badges
+[![Production](https://img.shields.io/website?label=Production&url=https%3A%2F%2Ffireplace-of-despair.org%2F)](https://fireplace-of-despair.org)
 
-[![Back/CodeQL](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_codeql.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_codeql.yml)
-[![Back/Test](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_test.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_test.yml)
+[![Back/CodeQL](https://github.com/ChiefNoir/ss-pbc/actions/workflows/backend_codeql.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_codeql.yml)
+[![Back/Test](https://github.com/ChiefNoir/ss-pbc/actions/workflows/backend_test.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/ChiefNoir/ss-pbc/badge.svg?branch=master)](https://coveralls.io/github/ChiefNoir/ss-pbc?branch=master)
 
-[![Front/CodeQL](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_codeql.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_codeql.yml)
+[![Front/CodeQL](https://github.com/ChiefNoir/ss-pbc/actions/workflows/frontend_codeql.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_codeql.yml)
 
-[![Publish SSPBC](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_publish_public.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_publish_public.yml) 
-[![Publish SSPBC.Admin](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_publish_admin.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_publish_admin.yml)
-[![Publish SSPBC.Frontend](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_publish.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_publish.yml)
+[![Publish SSPBC](https://github.com/ChiefNoir/ss-pbc/actions/workflows/backend_publish_public.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_publish_public.yml) 
+[![Publish SSPBC.Admin](https://github.com/ChiefNoir/ss-pbc/actions/workflows/backend_publish_admin.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/back-end_publish_admin.yml)
+[![Publish SSPBC.Frontend](https://github.com/ChiefNoir/ss-pbc/actions/workflows/frontend_publish.yml/badge.svg)](https://github.com/ChiefNoir/ss-pbc/actions/workflows/front-end_publish.yml)
 
-# SSPBC: Personal Business card
+
+# SS-PBC: Personal Business Card
 The personal web-site build almost at the enterprise level.
 It features:
 - Fully-fledged back-end: REST API with microservices.

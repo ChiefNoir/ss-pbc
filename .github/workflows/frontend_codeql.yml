@@ -1,4 +1,4 @@
-name: "Front-end/CodeQL"
+name: "Frontend/CodeQL"
 
 on:
   push:

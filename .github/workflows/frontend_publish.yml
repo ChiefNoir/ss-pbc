@@ -1,4 +1,4 @@
-name: "Publish SSPBC.Frontend"
+name: "Publish/SSPBC.Frontend"
 
 on:
   release:

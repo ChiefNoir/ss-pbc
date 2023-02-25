@@ -1,4 +1,4 @@
-name: "Back-end/Publish SSPBC"
+name: "Publish SSPBC"
 
 on:
   release:
